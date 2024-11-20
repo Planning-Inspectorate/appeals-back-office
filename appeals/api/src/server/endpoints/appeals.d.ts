@@ -331,6 +331,9 @@ interface SingleLPAQuestionnaireResponse {
 	isInfrastructureLevyFormallyAdopted?: boolean;
 	infrastructureLevyAdoptedDate: string | null;
 	infrastructureLevyExpectedDate: string | null;
+	lpaProcedurePreference: string | null;
+	lpaProcedurePreferenceDetails: string | null;
+	lpaProcedurePreferenceDuration: number | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -359,6 +362,9 @@ interface UpdateLPAQuestionnaireRequest {
 	isInfrastructureLevyFormallyAdopted?: boolean;
 	infrastructureLevyAdoptedDate?: string;
 	infrastructureLevyExpectedDate?: string;
+	lpaProcedurePreference: string;
+	lpaProcedurePreferenceDetails: string;
+	lpaProcedurePreferenceDuration: number;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

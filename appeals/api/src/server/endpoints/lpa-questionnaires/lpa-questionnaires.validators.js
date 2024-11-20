@@ -9,11 +9,16 @@ import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
+import { validateOptionalTextAreaParameter } from '#common/validators/string-parameter.js';
 import {
 	validateBooleanWithConditionalStringParameters,
 	validateBooleanWithConditionalTextareaParameters
 } from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
+import validateEnumParameter from '#common/validators/enum-parameter.js';
+import validateNumberParameter from '#common/validators/number-parameter.js';
+import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 const getLPAQuestionnaireValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -68,6 +73,10 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateBooleanParameter('hasProtectedSpecies'),
 	validateBooleanParameter('isAonbNationalLandscape'),
 	validateBooleanParameter('isGypsyOrTravellerSite'),
+	validateEnumParameter('lpaProcedurePreference', Object.values(APPEAL_CASE_PROCEDURE), true),
+	validateOptionalTextAreaParameter('lpaProcedurePreferenceDetails').optional(),
+	validateNumberParameter('lpaProcedurePreferenceDuration').optional(),
+	validateNumberRangeParameter('lpaProcedurePreferenceDuration', 0, 99).optional(),
 	validationErrorHandler
 );
 

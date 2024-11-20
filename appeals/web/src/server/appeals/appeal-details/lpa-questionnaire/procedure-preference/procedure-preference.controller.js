@@ -1,19 +1,17 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
-import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import {
 	changeProcedurePreferencePage,
 	changeProcedurePreferenceDetailsPage,
-	changeProcedurePreferenceDurationPage,
-	changeInquiryNumberOfWitnessesPage
+	changeProcedurePreferenceDurationPage
 } from './procedure-preference.mapper.js';
 import {
 	changeProcedurePreference,
 	changeProcedurePreferenceDetails,
-	changeProcedurePreferenceDuration,
-	changeInquiryNumberOfWitnesses
+	changeProcedurePreferenceDuration
 } from './procedure-preference.service.js';
+import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -23,15 +21,15 @@ const renderChangeProcedurePreference = async (request, response) => {
 	try {
 		const { errors, currentAppeal } = request;
 
-		const appellantCaseData = await getAppellantCaseFromAppealId(
+		const lpaQuestionnaireData = await getLpaQuestionnaireFromId(
 			request.apiClient,
 			currentAppeal.appealId,
-			currentAppeal.appellantCaseId
+			currentAppeal.lpaQuestionnaireId
 		);
 
 		const mappedPageContents = changeProcedurePreferencePage(
 			currentAppeal,
-			appellantCaseData,
+			lpaQuestionnaireData,
 			request.session.procedurePreference
 		);
 
@@ -70,18 +68,16 @@ export const postChangeProcedurePreference = async (request, response) => {
 		currentAppeal
 	} = request;
 
-	request.session.procedurePreference = {
+	request.session.lpaProcedurePreference = {
 		radio: request.body['procedurePreferenceRadio']
 	};
-
-	const appellantCaseId = currentAppeal.appellantCaseId;
 
 	try {
 		await changeProcedurePreference(
 			request.apiClient,
 			appealId,
-			appellantCaseId,
-			request.session.procedurePreference.radio
+			currentAppeal.lpaQuestionnaireId,
+			request.session.lpaProcedurePreference.radio
 		);
 
 		addNotificationBannerToSession(
@@ -92,10 +88,10 @@ export const postChangeProcedurePreference = async (request, response) => {
 			'Procedure preference updated'
 		);
 
-		delete request.session.procedurePreference;
+		delete request.session.lpaProcedurePreference;
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${currentAppeal.lpaQuestionnaireId}`
 		);
 	} catch (error) {
 		logger.error(error);
@@ -112,15 +108,15 @@ const renderChangeProcedurePreferenceDetails = async (request, response) => {
 	try {
 		const { errors, currentAppeal } = request;
 
-		const appellantCaseData = await getAppellantCaseFromAppealId(
+		const lpaQuestionnaireData = await getLpaQuestionnaireFromId(
 			request.apiClient,
 			currentAppeal.appealId,
-			currentAppeal.appellantCaseId
+			currentAppeal.lpaQuestionnaireId
 		);
 
 		const mappedPageContents = changeProcedurePreferenceDetailsPage(
 			currentAppeal,
-			appellantCaseData,
+			lpaQuestionnaireData,
 			request.session.procedurePreferenceDetails
 		);
 
@@ -159,18 +155,16 @@ export const postChangeProcedurePreferenceDetails = async (request, response) =>
 		currentAppeal
 	} = request;
 
-	request.session.procedurePreferenceDetails = {
+	request.session.lpaProcedurePreferenceDetails = {
 		textarea: request.body['procedurePreferenceDetailsTextarea']
 	};
-
-	const appellantCaseId = currentAppeal.appellantCaseId;
 
 	try {
 		await changeProcedurePreferenceDetails(
 			request.apiClient,
 			appealId,
-			appellantCaseId,
-			request.session.procedurePreferenceDetails.textarea
+			currentAppeal.lpaQuestionnaireId,
+			request.session.lpaProcedurePreferenceDetails.textarea
 		);
 
 		addNotificationBannerToSession(
@@ -181,20 +175,13 @@ export const postChangeProcedurePreferenceDetails = async (request, response) =>
 			'Reason for preference updated'
 		);
 
-		delete request.session.procedurePreferenceDetails;
+		delete request.session.lpaProcedurePreferenceDetails;
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${currentAppeal.lpaQuestionnaireId}`
 		);
 	} catch (error) {
 		logger.error(error);
-
-		// Check if it's a validation error (400)
-		if (error instanceof HTTPError && error.response.statusCode === 400) {
-			// @ts-ignore
-			request.errors = error.response.body.errors;
-			return renderChangeProcedurePreferenceDetails(request, response);
-		}
 	}
 
 	return response.status(500).render('app/500.njk');
@@ -208,15 +195,15 @@ const renderChangeProcedurePreferenceDuration = async (request, response) => {
 	try {
 		const { errors, currentAppeal } = request;
 
-		const appellantCaseData = await getAppellantCaseFromAppealId(
+		const lpaQuestionnaireData = await getLpaQuestionnaireFromId(
 			request.apiClient,
 			currentAppeal.appealId,
-			currentAppeal.appellantCaseId
+			currentAppeal.lpaQuestionnaireId
 		);
 
 		const mappedPageContents = changeProcedurePreferenceDurationPage(
 			currentAppeal,
-			appellantCaseData,
+			lpaQuestionnaireData,
 			request.session.procedurePreferenceDuration
 		);
 
@@ -259,13 +246,11 @@ export const postChangeProcedurePreferenceDuration = async (request, response) =
 		input: request.body['procedurePreferenceDurationInput']
 	};
 
-	const appellantCaseId = currentAppeal.appellantCaseId;
-
 	try {
 		await changeProcedurePreferenceDuration(
 			request.apiClient,
 			appealId,
-			appellantCaseId,
+			currentAppeal.lpaQuestionnaireId,
 			request.session.procedurePreferenceDuration.input
 		);
 
@@ -280,100 +265,13 @@ export const postChangeProcedurePreferenceDuration = async (request, response) =
 		delete request.session.procedurePreferenceDuration;
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${currentAppeal.lpaQuestionnaireId}`
 		);
 	} catch (error) {
+		delete request.session.procedurePreferenceDuration;
 		logger.error(error);
 	}
 
-	return response.status(500).render('app/500.njk');
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderChangeInquiryNumberOfWitnesses = async (request, response) => {
-	try {
-		const { errors, currentAppeal } = request;
-
-		const appellantCaseData = await getAppellantCaseFromAppealId(
-			request.apiClient,
-			currentAppeal.appealId,
-			currentAppeal.appellantCaseId
-		);
-
-		const mappedPageContents = changeInquiryNumberOfWitnessesPage(
-			currentAppeal,
-			appellantCaseData,
-			request.session.inquiryNumberOfWitnesses
-		);
-
-		return response.status(200).render('patterns/change-page.pattern.njk', {
-			pageContent: mappedPageContents,
-			errors
-		});
-	} catch (error) {
-		logger.error(error);
-
-		if (error instanceof HTTPError && error.response.statusCode === 404) {
-			return response.status(404).render('app/404.njk');
-		} else {
-			return response.status(500).render('app/500.njk');
-		}
-	}
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getChangeInquiryNumberOfWitnesses = renderChangeInquiryNumberOfWitnesses;
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const postChangeInquiryNumberOfWitnesses = async (request, response) => {
-	if (request.errors) {
-		return renderChangeInquiryNumberOfWitnesses(request, response);
-	}
-
-	const {
-		params: { appealId },
-		currentAppeal
-	} = request;
-
-	request.session.inquiryNumberOfWitnesses = {
-		input: request.body['inquiryNumberOfWitnessesInput']
-	};
-
-	const appellantCaseId = currentAppeal.appellantCaseId;
-
-	try {
-		await changeInquiryNumberOfWitnesses(
-			request.apiClient,
-			appealId,
-			appellantCaseId,
-			request.session.inquiryNumberOfWitnesses.input
-		);
-
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
-			appealId,
-			'',
-			'Expected number of witnesses updated'
-		);
-
-		delete request.session.inquiryNumberOfWitnesses;
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`
-		);
-	} catch (error) {
-		logger.error(error);
-	}
-
+	delete request.session.procedurePreferenceDuration;
 	return response.status(500).render('app/500.njk');
 };

@@ -13,19 +13,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 </main>"
 `;
 
-exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if appellantProcedurePreference is "hearing" 1`] = `
+exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "hearing" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -50,19 +50,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 </main>"
 `;
 
-exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if appellantProcedurePreference is "inquiry" 1`] = `
+exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "inquiry" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -87,19 +87,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 </main>"
 `;
 
-exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if appellantProcedurePreference is "written" 1`] = `
+exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "written" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -124,19 +124,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 </main>"
 `;
 
-exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the expected content if appellantProcedurePreferenceDetails is populated in the appellant case data 1`] = `
+exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the expected content if lpaProcedurePreferenceDetails is populated in the LPA questionnaire data 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -159,8 +159,8 @@ exports[`procedure-preference GET /details/change should render the change reaso
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
-                    name="procedurePreferenceDetailsTextarea" rows="5">Example procedure preference details text</textarea>
+                    <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
+                    rows="5">Example procedure preference details text</textarea>
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -170,7 +170,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
 </main>"
 `;
 
-exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea unpopulated if appellantProcedurePreferenceDetails is not populated in the appellant case data 1`] = `
+exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea unpopulated if lpaProcedurePreferenceDetails is not populated in the LPA questionnaire data 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -181,8 +181,8 @@ exports[`procedure-preference GET /details/change should render the change reaso
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
-                    name="procedurePreferenceDetailsTextarea" rows="5"></textarea>
+                    <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
+                    rows="5"></textarea>
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -192,7 +192,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
 </main>"
 `;
 
-exports[`procedure-preference GET /duration/change should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input unpopulated if appellantProcedurePreferenceDuration is not populated in the appellant case data 1`] = `
+exports[`procedure-preference GET /duration/change should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input unpopulated if lpaProcedurePreferenceDuration is not populated in the LPA questionnaire data 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -205,28 +205,6 @@ exports[`procedure-preference GET /duration/change should render the change expe
                 <div class="govuk-form-group">
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`procedure-preference GET /inquiry/witnesses/change should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input unpopulated if inquiryHowManyWitnesses is not populated in the appellant case data 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                    name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -392,138 +370,6 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                 <div class="govuk-form-group">
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`procedure-preference POST /inquiry/witnesses/change should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Provide the expected number of witnesses</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                    name="inquiryNumberOfWitnessesInput" type="text">
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`procedure-preference POST /inquiry/witnesses/change should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is greater than 9 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                    name="inquiryNumberOfWitnessesInput" type="text">
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`procedure-preference POST /inquiry/witnesses/change should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is less than 0 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                    name="inquiryNumberOfWitnessesInput" type="text">
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`procedure-preference POST /inquiry/witnesses/change should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is non-numeric 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
-                </div>
-            </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                    name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

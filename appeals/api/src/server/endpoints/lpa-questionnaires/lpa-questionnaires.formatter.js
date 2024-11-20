@@ -77,7 +77,10 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 			hasInfrastructureLevy: lpaQuestionnaire.hasInfrastructureLevy,
 			isInfrastructureLevyFormallyAdopted: lpaQuestionnaire.isInfrastructureLevyFormallyAdopted,
 			infrastructureLevyAdoptedDate: lpaQuestionnaire.infrastructureLevyAdoptedDate,
-			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate
+			infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate,
+			lpaProcedurePreference: lpaQuestionnaire.lpaProcedurePreference,
+			lpaProcedurePreferenceDetails: lpaQuestionnaire.lpaProcedurePreferenceDetails,
+			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration
 		};
 	} else {
 		return {};

@@ -26,283 +26,94 @@ describe('procedure-preference', () => {
 	afterEach(teardown);
 
 	describe('GET /appellant-case', () => {
-		it('should render a summary list row for preferred procedure with "Not answered" populated in the value column if appellantProcedurePreference is not present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
+		const testCases = [
+			{
+				fieldName: 'appellantProcedurePreference',
+				validFieldValue: 'hearing',
+				labelText: 'Procedure preference',
+				validValueText: 'Hearing',
+				defaultValueText: 'Not answered'
+			},
+			{
+				fieldName: 'appellantProcedurePreferenceDetails',
+				validFieldValue: 'Example reason for preference text',
+				labelText: 'Reason for preference',
+				validValueText: 'Example reason for preference text',
+				defaultValueText: 'Not applicable'
+			},
+			{
+				fieldName: 'appellantProcedurePreferenceDuration',
+				validFieldValue: 5,
+				labelText: 'Expected length of procedure',
+				validValueText: '5 days',
+				defaultValueText: 'Not applicable'
+			},
+			{
+				fieldName: 'inquiryHowManyWitnesses',
+				validFieldValue: 3,
+				labelText: 'Expected number of witnesses',
+				validValueText: '3',
+				defaultValueText: 'Not applicable'
+			}
+		];
 
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
+		for (const testCase of testCases) {
+			describe(`"${testCase.labelText}" row`, () => {
+				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is not present in the appellant case`, async () => {
+					nock('http://test/')
+						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.reply(200, appellantCaseDataNotValidated);
 
-			expect(element.innerHTML).toMatchSnapshot();
+					const response = await request.get(`${baseUrl}/2/appellant-case`);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Not answered</dd>'
-			);
-		});
-
-		it('should render a summary list row for preferred procedure with "Not answered" populated in the value column if appellantProcedurePreference is null', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreference: null
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dt class="govuk-summary-list__key"> ${testCase.labelText}</dt><dd class="govuk-summary-list__value"> ${testCase.defaultValueText}</dd>`
+					);
 				});
 
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is null`, async () => {
+					nock('http://test/')
+						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							[testCase.fieldName]: null
+						});
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Not answered</dd>'
-			);
-		});
+					const response = await request.get(`${baseUrl}/2/appellant-case`);
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-		it('should render a summary list row for preferred procedure with appellantProcedurePreference populated in the value column if appellantProcedurePreference is present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreference: 'hearing'
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dt class="govuk-summary-list__key"> ${testCase.labelText}</dt><dd class="govuk-summary-list__value"> ${testCase.defaultValueText}</dd>`
+					);
 				});
 
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
+				it(`should render a summary list row for ${testCase.labelText} with "${testCase.validValueText}" populated in the value column if ${testCase.fieldName} is "${testCase.validFieldValue}"`, async () => {
+					nock('http://test/')
+						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							[testCase.fieldName]: testCase.validFieldValue
+						});
 
-			expect(element.innerHTML).toMatchSnapshot();
+					const response = await request.get(`${baseUrl}/2/appellant-case`);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Procedure preference</dt><dd class="govuk-summary-list__value"> Hearing</dd>'
-			);
-		});
-
-		it('should render a summary list row for reason for preference with "Not applicable" populated in the value column if appellantProcedurePreferenceDetails is not present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Reason for preference</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for reason for preference with "Not applicable" populated in the value column if appellantProcedurePreferenceDetails is null', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDetails: null
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<dt class="govuk-summary-list__key"> ${testCase.labelText}</dt><dd class="govuk-summary-list__value"> ${testCase.validValueText}</dd>`
+					);
 				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Reason for preference</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for reason for preference with appellantProcedurePreferenceDetails populated in the value column if appellantProcedurePreferenceDetails is present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDetails: 'Lorem ipsum'
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Reason for preference</dt><dd class="govuk-summary-list__value"> Lorem ipsum</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected length of procedure with "Not applicable" populated in the value column if appellantProcedurePreferenceDuration is not present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected length of procedure</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected length of procedure with "Not applicable" populated in the value column if appellantProcedurePreferenceDuration null', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDuration: null
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected length of procedure</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected length of procedure with appellantProcedurePreferenceDuration populated in the value column if appellantProcedurePreferenceDuration is present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDuration: 5
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected length of procedure</dt><dd class="govuk-summary-list__value"> 5 days</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected number of witnesses with "Not applicable" populated in the value column if inquiryHowManyWitnesses is not present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, appellantCaseDataNotValidated);
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected number of witnesses</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected number of witnesses with "Not applicable" populated in the value column if inquiryHowManyWitnesses is null', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					inquiryHowManyWitnesses: null
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected number of witnesses</dt><dd class="govuk-summary-list__value"> Not applicable</dd>'
-			);
-		});
-
-		it('should render a summary list row for expected number of witnesses with inquiryHowManyWitnesses populated in the value column if inquiryHowManyWitnesses is present in the appellant case', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					inquiryHowManyWitnesses: 3
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Expected number of witnesses</dt><dd class="govuk-summary-list__value"> 3</dd>'
-			);
-		});
+			});
+		}
 	});
 
 	describe('GET /change', () => {
-		it('should render the change procedure preference page with "Hearing" radio option checked if appellantProcedurePreference is "Hearing"', async () => {
+		it('should render the change procedure preference page with the expected content', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreference: 'hearing'
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case/procedure-preference/change`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Change procedure preference</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="hearing" checked>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="inquiry">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="written">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-
-		it('should render the change procedure preference page with "inquiry" radio option checked if appellantProcedurePreference is "inquiry"', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreference: 'inquiry'
-				});
-
-			const response = await request.get(`${baseUrl}/2/appellant-case/procedure-preference/change`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Change procedure preference</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="hearing">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="inquiry" checked>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="written">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-
-		it('should render the change procedure preference page with "written" radio option checked if appellantProcedurePreference is "written"', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreference: 'written'
-				});
+				.reply(200, appellantCaseDataNotValidated);
 
 			const response = await request.get(`${baseUrl}/2/appellant-case/procedure-preference/change`);
 			const element = parseHtml(response.text);
@@ -319,10 +130,47 @@ describe('procedure-preference', () => {
 				'name="procedurePreferenceRadio" type="radio" value="inquiry">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="procedurePreferenceRadio" type="radio" value="written" checked>'
+				'name="procedurePreferenceRadio" type="radio" value="written">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
+
+		const testCases = [
+			{
+				value: 'hearing',
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="hearing" checked>'
+			},
+			{
+				value: 'inquiry',
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="inquiry" checked>'
+			},
+			{
+				value: 'written',
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="written" checked>'
+			}
+		];
+
+		for (const testCase of testCases) {
+			it(`should render the change procedure preference page with the expected content if appellantProcedurePreference is "${testCase.value}"`, async () => {
+				nock('http://test/')
+					.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+					.reply(200, {
+						...appellantCaseDataNotValidated,
+						appellantProcedurePreference: testCase.value
+					});
+
+				const response = await request.get(
+					`${baseUrl}/2/appellant-case/procedure-preference/change`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(testCase.expectedHtml);
+			});
+		}
 	});
 
 	describe('POST /change', () => {
@@ -330,7 +178,7 @@ describe('procedure-preference', () => {
 
 		for (const validValue of validValues) {
 			it(`should call appellant cases PATCH endpoint and redirect to the appellant case page if "${validValue}" is selected`, async () => {
-				const mockAppellantCasesPatchEndpoint = nock('http://test/')
+				const mockPatchEndpoint = nock('http://test/')
 					.patch(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 					.reply(200, {});
 
@@ -340,40 +188,16 @@ describe('procedure-preference', () => {
 						procedurePreferenceRadio: validValue
 					});
 
-				expect(mockAppellantCasesPatchEndpoint.isDone()).toBe(true);
+				expect(mockPatchEndpoint.isDone()).toBe(true);
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					'Found. Redirecting to /appeals-service/appeal-details/2/appellant-case'
+					`Found. Redirecting to /appeals-service/appeal-details/2/appellant-case`
 				);
 			});
 		}
 	});
 
 	describe('GET /details/change', () => {
-		it('should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the current preference details if appellantProcedurePreferenceDetails is populated in the appellant case data', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDetails: 'Lorem ipsum'
-				});
-
-			const response = await request.get(
-				`${baseUrl}/2/appellant-case/procedure-preference/details/change`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5">Lorem ipsum</textarea>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-
 		it('should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea unpopulated if appellantProcedurePreferenceDetails is not populated in the appellant case data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -394,13 +218,35 @@ describe('procedure-preference', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
+
+		it('should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the expected content if appellantProcedurePreferenceDetails is populated in the appellant case data', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appellantProcedurePreferenceDetails: 'Example procedure preference details text'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/2/appellant-case/procedure-preference/details/change`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5">Example procedure preference details text</textarea>'
+			);
+		});
 	});
 
 	describe('POST /details/change', () => {
 		const testText1000Characters = 'a'.repeat(1000);
 		const testText1001Characters = 'a'.repeat(1001);
 
-		it(`should re-render the change reason for preference page with the expected error message if "procedurePreferenceDetailsTextarea" textarea contains more than 1000 characters`, async () => {
+		it('should re-render the change reason for preference page with the expected error message if "procedurePreferenceDetailsTextarea" textarea contains more than 1000 characters', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 				.reply(200, appellantCaseDataNotValidated);
@@ -430,7 +276,7 @@ describe('procedure-preference', () => {
 
 		for (const validValue of validValues) {
 			it(`should call appellant cases PATCH endpoint and redirect to the appellant case page if "procedurePreferenceDetailsTextarea" textarea is ${
-				validValue.length ? `populated with a valid value` : 'empty'
+				validValue.length ? 'populated with a valid value' : 'empty'
 			}`, async () => {
 				const mockAppellantCasesPatchEndpoint = nock('http://test/')
 					.patch(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -445,37 +291,13 @@ describe('procedure-preference', () => {
 				expect(mockAppellantCasesPatchEndpoint.isDone()).toBe(true);
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					'Found. Redirecting to /appeals-service/appeal-details/2/appellant-case'
+					`Found. Redirecting to /appeals-service/appeal-details/2/appellant-case`
 				);
 			});
 		}
 	});
 
 	describe('GET /duration/change', () => {
-		it('should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input populated with the current procedure duration if appellantProcedurePreferenceDuration is populated in the appellant case data', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					appellantProcedurePreferenceDuration: 5
-				});
-
-			const response = await request.get(
-				`${baseUrl}/2/appellant-case/procedure-preference/duration/change`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Change expected length of procedure</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="5">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-
 		it('should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input unpopulated if appellantProcedurePreferenceDuration is not populated in the appellant case data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -496,6 +318,25 @@ describe('procedure-preference', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
+
+		it('should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input populated if appellantProcedurePreferenceDuration is populated in the appellant case data', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appellantProcedurePreferenceDuration: 5
+				});
+
+			const response = await request.get(
+				`${baseUrl}/2/appellant-case/procedure-preference/duration/change`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="5">'
+			);
+		});
 	});
 
 	describe('POST /duration/change', () => {
@@ -505,73 +346,52 @@ describe('procedure-preference', () => {
 				.reply(200, appellantCaseDataNotValidated);
 		});
 
-		it(`should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is empty`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/duration/change`)
-				.send({
-					procedurePreferenceDurationInput: ''
-				});
+		const testCases = [
+			{
+				label: 'empty',
+				value: '',
+				expectedErrorMessage: 'Provide the expected length of procedure'
+			},
+			{
+				label: 'non-numeric',
+				value: 'a',
+				expectedErrorMessage: 'Expected length of procedure must be a number'
+			},
+			{
+				label: 'less than 0',
+				value: '-1',
+				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 9'
+			},
+			{
+				label: 'greater than 9',
+				value: '10',
+				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 9'
+			}
+		];
 
-			const element = parseHtml(response.text);
+		for (const testCase of testCases) {
+			it(`should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is ${testCase.label}`, async () => {
+				const response = await request
+					.post(`${baseUrl}/2/appellant-case/procedure-preference/duration/change`)
+					.send({
+						procedurePreferenceDurationInput: testCase.value
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Provide the expected length of procedure</a>'
-			);
-		});
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-		it(`should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is not numeric`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/duration/change`)
-				.send({
-					procedurePreferenceDurationInput: 'a'
-				});
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(`${testCase.expectedErrorMessage}</a>`);
+			});
+		}
 
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Expected length of procedure must be a number</a>'
-			);
-		});
-
-		it(`should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is outside the range 0 - 9`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/duration/change`)
-				.send({
-					procedurePreferenceDurationInput: '10'
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Expected length of procedure must be a number between 0 and 9</a>'
-			);
-		});
-
-		it(`should call appellant cases PATCH endpoint and redirect to the appellant case page if "procedurePreferenceDurationInput" text input is populated with a valid value`, async () => {
+		it('should call appellant cases PATCH endpoint and redirect to the appellant case page if "procedurePreferenceDurationInput" text input is populated with a valid value', async () => {
 			const mockAppellantCasesPatchEndpoint = nock('http://test/')
 				.patch(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 				.reply(200, {});
@@ -585,36 +405,12 @@ describe('procedure-preference', () => {
 			expect(mockAppellantCasesPatchEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/2/appellant-case'
+				`Found. Redirecting to /appeals-service/appeal-details/2/appellant-case`
 			);
 		});
 	});
 
 	describe('GET /inquiry/witnesses/change', () => {
-		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input populated with the current procedure duration if inquiryHowManyWitnesses is populated in the appellant case data', async () => {
-			nock('http://test/')
-				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-				.reply(200, {
-					...appellantCaseDataNotValidated,
-					inquiryHowManyWitnesses: 5
-				});
-
-			const response = await request.get(
-				`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Change expected number of witnesses</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="5">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-
 		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input unpopulated if inquiryHowManyWitnesses is not populated in the appellant case data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -635,6 +431,25 @@ describe('procedure-preference', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
+
+		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input populated if inquiryHowManyWitnesses is populated in the appellant case data', async () => {
+			nock('http://test/')
+				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					inquiryHowManyWitnesses: 5
+				});
+
+			const response = await request.get(
+				`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="5">'
+			);
+		});
 	});
 
 	describe('POST /inquiry/witnesses/change', () => {
@@ -644,73 +459,52 @@ describe('procedure-preference', () => {
 				.reply(200, appellantCaseDataNotValidated);
 		});
 
-		it(`should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is empty`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`)
-				.send({
-					inquiryNumberOfWitnessesInput: ''
-				});
+		const testCases = [
+			{
+				label: 'empty',
+				value: '',
+				expectedErrorMessage: 'Provide the expected number of witnesses'
+			},
+			{
+				label: 'non-numeric',
+				value: 'a',
+				expectedErrorMessage: 'Expected number of witnesses must be a number'
+			},
+			{
+				label: 'less than 0',
+				value: '-1',
+				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 9'
+			},
+			{
+				label: 'greater than 9',
+				value: '10',
+				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 9'
+			}
+		];
 
-			const element = parseHtml(response.text);
+		for (const testCase of testCases) {
+			it(`should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is ${testCase.label}`, async () => {
+				const response = await request
+					.post(`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`)
+					.send({
+						inquiryNumberOfWitnessesInput: testCase.value
+					});
 
-			expect(element.innerHTML).toMatchSnapshot();
+				const element = parseHtml(response.text);
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Provide the expected number of witnesses</a>'
-			);
-		});
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-		it(`should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is not numeric`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`)
-				.send({
-					inquiryNumberOfWitnessesInput: 'a'
-				});
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(`${testCase.expectedErrorMessage}</a>`);
+			});
+		}
 
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Expected number of witnesses must be a number</a>'
-			);
-		});
-
-		it(`should re-render the change expected number of witnesses page with the expected error message if "inquiryNumberOfWitnessesInput" text input is outside the range 0 - 9`, async () => {
-			const response = await request
-				.post(`${baseUrl}/2/appellant-case/procedure-preference/inquiry/witnesses/change`)
-				.send({
-					inquiryNumberOfWitnessesInput: '10'
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Expected number of witnesses must be a number between 0 and 9</a>'
-			);
-		});
-
-		it(`should call appellant cases PATCH endpoint and redirect to the appellant case page if "inquiryNumberOfWitnessesInput" text input is populated with a valid value`, async () => {
+		it('should call appellant cases PATCH endpoint and redirect to the appellant case page if "inquiryNumberOfWitnessesInput" text input is populated with a valid value', async () => {
 			const mockAppellantCasesPatchEndpoint = nock('http://test/')
 				.patch(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 				.reply(200, {});
@@ -724,7 +518,7 @@ describe('procedure-preference', () => {
 			expect(mockAppellantCasesPatchEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/2/appellant-case'
+				`Found. Redirecting to /appeals-service/appeal-details/2/appellant-case`
 			);
 		});
 	});

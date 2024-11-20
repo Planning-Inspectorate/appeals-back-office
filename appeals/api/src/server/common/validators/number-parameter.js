@@ -21,3 +21,5 @@ export const validateRequiredNumberParameter = (parameterName) =>
 		.isInt()
 		.withMessage(ERROR_MUST_BE_NUMBER)
 		.toInt();
+
+export default validateNumberParameter;
