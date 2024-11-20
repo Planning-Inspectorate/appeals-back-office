@@ -41,7 +41,7 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                         </dd>
                 </div>
             </dl>
-            <p>We will send an email to the interested party to explain why you rejected
+            <p class="govuk-body">We will send an email to the interested party to explain why you rejected
                 their comment.</p>
             <form method="post" novalidate="novalidate">
                 <button class="govuk-button" data-module="govuk-button">Reject comment</button>
