@@ -326,13 +326,11 @@ describe('add-ip-comment', () => {
 
 		it('should redirect on valid today date input', async () => {
 			const response = await request
-				.post(
-					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
-				)
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					'date-day': '30',
-					'date-month': '10',
-					'date-year': '2024'
+					day: '30',
+					month: '10',
+					year: '2024'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -343,13 +341,11 @@ describe('add-ip-comment', () => {
 
 		it('should redirect on valid yesterday date input', async () => {
 			const response = await request
-				.post(
-					`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
-				)
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					'date-day': '30',
-					'date-month': '10',
-					'date-year': '2024'
+					day: '30',
+					month: '10',
+					year: '2024'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -362,9 +358,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					'date-day': '31',
-					'date-month': '10',
-					'date-year': '2024'
+					day: '31',
+					month: '10',
+					year: '2024'
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -378,16 +374,16 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must be today or in the past');
+			expect(errorSummaryHtml).toContain('Submitted date must be today or in the past');
 		});
 
 		it('should return 400 on empty date fields with appropriate error messages', async () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					'date-day': '',
-					'date-month': '',
-					'date-year': ''
+					day: '',
+					month: '',
+					year: ''
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -410,9 +406,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					'date-day': '99',
-					'date-month': '99',
-					'date-year': '9999'
+					day: '99',
+					month: '99',
+					year: '9999'
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -481,7 +477,7 @@ describe('add-ip-comment', () => {
 					path: 'representation/representationAttachments'
 				}
 			];
-			
+
 			nock('http://test/')
 				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
 				.reply(200, documentFolderInfo);
