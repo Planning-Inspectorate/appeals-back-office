@@ -61,9 +61,9 @@ router
 	.route('/date-submitted')
 	.get(asyncHandler(controller.renderDateSubmitted))
 	.post(
-		createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
-		createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
-		createDateInputDateInPastOrTodayValidator('', '', 'day', 'month', 'year'),
+		createDateInputFieldsValidator('', 'submitted date', 'day', 'month', 'year'),
+		createDateInputDateValidityValidator('', 'submitted date', 'day', 'month', 'year'),
+		createDateInputDateInPastOrTodayValidator('', 'submitted date', 'day', 'month', 'year'),
 		saveBodyToSession('addIpComment'),
 		asyncHandler(controller.postDateSubmitted)
 	);
