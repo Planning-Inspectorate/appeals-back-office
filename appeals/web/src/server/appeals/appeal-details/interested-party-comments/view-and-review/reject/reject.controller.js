@@ -31,7 +31,7 @@ export const renderSelectReason = async (request, response) => {
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
 			rejectionReasons,
-			errors
+			errors?.['']
 				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
 				: undefined
 		);
