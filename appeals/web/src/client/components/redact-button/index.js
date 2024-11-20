@@ -1,5 +1,7 @@
 const SELECTORS = {
-	BUTTON_IDENTIFIER: '#redact-button',
+	ORIGINAL_COMMENT_IDENTIFIER: '#original-comment',
+	REDACT_BUTTON_IDENTIFIER: '#redact-button',
+	UNDO_BUTTON_IDENTIFIER: '#undo-button',
 	TEXTAREA_IDENTIFIER: '#redact-textarea'
 };
 
@@ -20,8 +22,20 @@ const generateOnClick = (textarea) => (event) => {
 
 	const startBlock = value.substring(0, selectionStart);
 	const endBlock = value.substring(selectionEnd);
+	const replacement = '█'.repeat(selectionEnd - selectionStart);
 
-	textarea.value = startBlock + '(Redacted)' + endBlock;
+	textarea.value = startBlock + replacement + endBlock;
+};
+
+/**
+ * @param {HTMLTextAreaElement} textarea
+ * @param {string} originalComment
+ * @returns {HTMLButtonElement['onclick']}
+ * */
+const undoAllChanges = (textarea, originalComment) => (event) => {
+	event.preventDefault();
+
+	textarea.value = originalComment;
 };
 
 /**
@@ -36,13 +50,33 @@ const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElemen
  */
 const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
 
-export const initRedactButton = () => {
-	const button = document.querySelector(SELECTORS.BUTTON_IDENTIFIER);
+/**
+ * @param {Element} element
+ * @returns {element is HTMLDivElement}
+ * */
+const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
+
+export const initRedactButtons = () => {
+	const originalCommentText = document.querySelector(SELECTORS.ORIGINAL_COMMENT_IDENTIFIER);
+	const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
+	const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
 	const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
 
-	if (!button || !textarea || !isHTMLButtonElement(button) || !isHTMLTextAreaElement(textarea)) {
+	if (
+		!(
+			originalCommentText &&
+			redactButton &&
+			textarea &&
+			undoButton &&
+			isHTMLDivElement(originalCommentText) &&
+			isHTMLButtonElement(redactButton) &&
+			isHTMLButtonElement(undoButton) &&
+			isHTMLTextAreaElement(textarea)
+		)
+	) {
 		return;
 	}
 
-	button.onclick = generateOnClick(textarea);
+	redactButton.onclick = generateOnClick(textarea);
+	undoButton.onclick = undoAllChanges(textarea, originalCommentText.textContent?.trim() ?? '');
 };
