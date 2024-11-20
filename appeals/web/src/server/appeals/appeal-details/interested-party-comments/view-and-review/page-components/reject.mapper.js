@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
+import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -189,14 +190,13 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 	};
 
 	/** @type {PageComponent} */
-	const bottomText = {
-		type: 'html',
-		parameters: {
-			html: userProvidedEmail
-				? '<p>We will send an email to the interested party to explain why you rejected their comment.</p>'
-				: '<p>We will not send an email to explain why you rejected the comment, as the interested party did not give their email address.</p>'
-		}
-	};
+	const bottomText = simpleHtmlComponent(
+		'p',
+		{ class: 'govuk-body' },
+		userProvidedEmail
+			? 'We will send an email to the interested party to explain why you rejected their comment.'
+			: 'We will not send an email to explain why you rejected the comment, as the interested party did not give their email address.'
+	);
 
 	const backLinkPath = userProvidedEmail ? 'allow-resubmit' : 'select-reason';
 
