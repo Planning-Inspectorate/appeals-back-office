@@ -4,13 +4,13 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested Party Comments</h1>
+            <h1             class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
-                class="govuk-link">Add IP comment</a>
+                class="govuk-link">Add interested party comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
@@ -18,9 +18,9 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                 <ul class="govuk-tabs__list">
                     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Valid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Invalid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
                     </li>
                 </ul>
                 <div class="govuk-tabs__panel" id="awaiting-review">
@@ -117,7 +117,7 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn IP comments</a>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
             </p>
         </div>
     </div>
@@ -128,13 +128,13 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested Party Comments</h1>
+            <h1             class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
-                class="govuk-link">Add IP comment</a>
+                class="govuk-link">Add interested party comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
@@ -142,9 +142,9 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                 <ul class="govuk-tabs__list">
                     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Valid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Invalid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
                     </li>
                 </ul>
                 <div class="govuk-tabs__panel" id="awaiting-review">
@@ -241,7 +241,7 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn IP comments</a>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
             </p>
         </div>
     </div>
@@ -252,13 +252,13 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested Party Comments</h1>
+            <h1             class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
-                class="govuk-link">Add IP comment</a>
+                class="govuk-link">Add interested party comment</a>
             </p>
             <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
             data-module="govuk-tabs">
@@ -266,9 +266,9 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                 <ul class="govuk-tabs__list">
                     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Valid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
                     </li>
-                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Invalid</a>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
                     </li>
                 </ul>
                 <div class="govuk-tabs__panel" id="awaiting-review">
@@ -365,7 +365,7 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn IP comments</a>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
             </p>
         </div>
     </div>

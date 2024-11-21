@@ -325,7 +325,7 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                                     <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                     id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                    value="0" inputmode="numeric">
+                                    value="32" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
@@ -395,7 +395,7 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                                     <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                     id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                    value="0" inputmode="numeric">
+                                    value="13" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">

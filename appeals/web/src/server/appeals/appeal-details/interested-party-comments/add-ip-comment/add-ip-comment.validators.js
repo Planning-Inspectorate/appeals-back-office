@@ -20,7 +20,7 @@ export const validateCheckAddress = createValidator(
 );
 
 export const validateRedactionStatus = createValidator(
-	body('redactionStatus').exists().withMessage('Please select a redaction status.')
+	body('redactionStatus').exists().withMessage('Select a redaction status')
 );
 
 export const validateInterestedPartyDetails = createValidator(

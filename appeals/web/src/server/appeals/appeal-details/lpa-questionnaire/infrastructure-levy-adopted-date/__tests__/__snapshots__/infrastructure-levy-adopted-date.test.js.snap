@@ -55,9 +55,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-adopted-date-day">Date day cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -291,9 +289,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-adopted-date-month">Date month cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -527,9 +523,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-adopted-date-year">Date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a year</a>
                             </li>
                         </ul>
                     </div>

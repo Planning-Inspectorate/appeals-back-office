@@ -106,7 +106,7 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="rejectionReason-7" class="govuk-body govuk-!-margin-bottom-4">Why the comment is invalid?</label>
+                                                <label for="rejectionReason-7" class="govuk-body govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -156,8 +156,8 @@ exports[`interested-party-comments GET /review-comment with data should render r
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted</dt>
-                        <dd class="govuk-summary-list__value">9 October 2024</dd>
+                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
+                        <dd                         class="govuk-summary-list__value">9 October 2024</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
                         <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
@@ -181,18 +181,17 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 </div>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status" name="status" type="radio"
                                 value="valid">
-                                <label class="govuk-label govuk-radios__label" for="status">Comment valid</label>
+                                <label class="govuk-label govuk-radios__label" for="status">Accept comment</label>
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
                                 value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Comment invalid</label>
+                                <label class="govuk-label govuk-radios__label" for="status-2">Reject comment</label>
                             </div>
                         </div>
                     </fieldset>
@@ -228,8 +227,8 @@ exports[`interested-party-comments GET /view-comment with data should render vie
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
             <dd class="govuk-summary-list__value">No</dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Submitted</dt>
-            <dd class="govuk-summary-list__value">9 October 2024</dd>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
+            <dd             class="govuk-summary-list__value">9 October 2024</dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
             <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>

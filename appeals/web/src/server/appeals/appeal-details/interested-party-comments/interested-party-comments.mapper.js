@@ -35,11 +35,11 @@ export async function interestedPartyCommentsPage(
 	);
 
 	const pageContent = {
-		title: `Interested Party Comments`,
+		title: 'Interested party comments',
 		backLinkUrl: '/appeals-service/personal-list',
 		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Interested Party Comments',
+		heading: 'Interested party comments',
 		headingClasses: 'govuk-heading-l',
 		pageComponents: [...notificationBanners],
 		awaitingReviewTable: createTable(awaitingReview, true),

@@ -52,7 +52,7 @@ describe('redact', () => {
 		const { innerHTML } = parseHtml(response.text);
 		expect(innerHTML).toMatchSnapshot();
 
-		expect(innerHTML).toContain('Redact comment from Lee Thornton');
+		expect(innerHTML).toContain('Redact and accept comment');
 		expect(innerHTML).toContain(
 			'<dd class="govuk-summary-list__value">Awaiting review comment 47</dd>'
 		);

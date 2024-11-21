@@ -224,17 +224,16 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date day cannot be empty</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date month cannot be empty</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date year cannot be empty</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Final date must include a day, a month and a year'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
 			.send({
-				'change-appeal-final-date-day': 0,
+				'change-appeal-final-date-day': 32,
 				'change-appeal-final-date-month': 11,
 				'change-appeal-final-date-year': 2024
 			});
@@ -262,7 +261,7 @@ describe('change-appeal-type', () => {
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
 			.send({
 				'change-appeal-final-date-day': 1,
-				'change-appeal-final-date-month': 0,
+				'change-appeal-final-date-month': 13,
 				'change-appeal-final-date-year': 2024
 			});
 

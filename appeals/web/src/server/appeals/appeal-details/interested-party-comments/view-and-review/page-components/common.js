@@ -103,7 +103,7 @@ export function generateCommentSummaryList(
 					}
 			  ]),
 		{
-			key: { text: 'Submitted' },
+			key: { text: 'When did the interested party submit the comment?' },
 			value: { html: dateISOStringToDisplayDate(comment.created) }
 		},
 		{
@@ -145,7 +145,7 @@ export function generateCommentSummaryList(
 			? []
 			: [
 					{
-						key: { text: 'Why comment invalid' },
+						key: { text: 'Why was the comment rejected?' },
 						value: { html: generateRejectionReasonsList(comment) }
 					}
 			  ])

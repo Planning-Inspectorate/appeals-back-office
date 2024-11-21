@@ -81,7 +81,7 @@ export function mapStatusDependentNotifications(
 					session,
 					'interestedPartyCommentsAwaitingReview',
 					appealDetails.appealId,
-					`<p class="govuk-notification-banner__heading">Review comments</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
+					`<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
 				);
 			}
 			break;

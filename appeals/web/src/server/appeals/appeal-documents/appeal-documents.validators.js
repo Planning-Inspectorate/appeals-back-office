@@ -64,11 +64,12 @@ export const validateDocumentDetailsBodyFormat = createValidator(
 );
 
 export const validateDocumentDetailsReceivedDatesFields = createDateInputFieldsValidator(
-	'items.*.receivedDate',
+	'',
 	'Received date',
-	'[day]',
-	'[month]',
-	'[year]'
+	'day',
+	'month',
+	'year',
+	'items.*.receivedDate'
 );
 
 export const validateDocumentDetailsReceivedDateValid = createValidator(

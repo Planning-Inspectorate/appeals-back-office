@@ -43,7 +43,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 			idPrefix: 'status',
 			fieldset: {
 				legend: {
-					text: 'What is the outcome of your review?',
+					text: 'Review decision',
 					isPageHeading: false,
 					classes: 'govuk-fieldset__legend--m'
 				}
@@ -51,21 +51,21 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 			items: [
 				{
 					value: COMMENT_STATUS.VALID,
-					text: 'Comment valid',
+					text: 'Accept comment',
 					checked: comment?.status === COMMENT_STATUS.VALID
 				},
 				...[
 					comment.source === 'citizen'
 						? {
 								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
-								text: 'Comment valid but requires redaction',
+								text: 'Redact and accept comment',
 								checked: false // This status isn't persisted so will always be unchecked
 						  }
 						: null
 				].filter(Boolean),
 				{
 					value: COMMENT_STATUS.INVALID,
-					text: 'Comment invalid',
+					text: 'Reject comment',
 					checked: comment?.status === COMMENT_STATUS.INVALID
 				}
 			]

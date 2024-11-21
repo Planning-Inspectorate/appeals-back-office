@@ -115,12 +115,9 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date day cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date month cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date year cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date must be a valid date</a>');
-			expect(errorSummaryHtml).toContain('Start time hour cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Start time minute cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Visit date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
+			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit date day is invalid', async () => {
@@ -522,8 +519,8 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Start time hour cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Start time minute cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
+			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
 
 		it('should redirect to the site visit scheduled confirmation page if visit type is accompanied and end time is not populated but all other required fields are populated and valid', async () => {
@@ -567,8 +564,8 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Start time hour cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Start time minute cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
+			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and end time is not populated but all other required fields are populated and valid', async () => {
@@ -594,8 +591,8 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('End time hour cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('End time minute cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('End time must include an hour</a>');
+			expect(errorSummaryHtml).toContain('End time must include a minute</a>');
 		});
 	});
 
@@ -686,12 +683,9 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date day cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date month cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date year cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Visit date must be a valid date</a>');
-			expect(errorSummaryHtml).toContain('Start time hour cannot be empty</a>');
-			expect(errorSummaryHtml).toContain('Start time minute cannot be empty</a>');
+			expect(errorSummaryHtml).toContain('Visit date must include a day, a month and a year</a>');
+			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
+			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit date day is invalid', async () => {

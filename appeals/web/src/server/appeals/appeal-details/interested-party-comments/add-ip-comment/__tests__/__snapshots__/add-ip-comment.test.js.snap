@@ -151,7 +151,7 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
                 </div>
             </dl>
             <form method="post" novalidate="novalidate">
-                <button class="govuk-button" data-module="govuk-button">Add document</button>
+                <button class="govuk-button" data-module="govuk-button">Add comment</button>
             </form>
         </div>
     </div>
@@ -164,7 +164,7 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Enter date submitted</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">When did the interested party submit the comment?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">

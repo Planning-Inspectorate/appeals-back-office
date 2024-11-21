@@ -55,7 +55,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body govuk-!-margin-bottom-6">
-      <a href="{{ pageContent.addCommentUrl }}" class="govuk-link">Add IP comment</a>
+      <a href="{{ pageContent.addCommentUrl }}" class="govuk-link">Add interested party comment</a>
       </p>
       {{ govukTabs({
         id: "interested-party-comments-tabs",
@@ -69,14 +69,14 @@
             }
           },
           {
-            label: "Valid",
+            label: "Accepted",
             id: "valid",
             panel: {
               html: govukTable(pageContent.validTable) | safe if pageContent.validTable | length else '<p class="govuk-body">No valid comments</p>'
             }
           },
           {
-            label: "Invalid",
+            label: "Rejected",
             id: "invalid",
             panel: {
               html: govukTable(pageContent.invalidTable) | safe if pageContent.invalidTable | length else '<p class="govuk-body">No invalid comments</p>'
@@ -85,7 +85,7 @@
         ]
       }) }}
       <p class="govuk-body">
-        <a href="#" class="govuk-link">Withdrawn IP comments</a>
+        <a href="#" class="govuk-link">Withdrawn interested party comments</a>
       </p>
     </div>
   </div>
