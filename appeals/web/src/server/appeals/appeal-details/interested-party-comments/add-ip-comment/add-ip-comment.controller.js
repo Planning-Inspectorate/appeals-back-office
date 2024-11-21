@@ -298,7 +298,7 @@ export async function renderCheckYourAnswers(
 			heading: 'Check details and add comment',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
-			submitButtonText: 'Add document',
+			submitButtonText: 'Add comment',
 			responses: {
 				'Contact details': {
 					html: `${firstName || ''} ${lastName || ''}<br>${emailAddress || ''}`,

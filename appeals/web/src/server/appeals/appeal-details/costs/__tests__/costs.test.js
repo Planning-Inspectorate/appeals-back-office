@@ -400,7 +400,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date day cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a day' },
 							{ value: 'a', expectedError: 'Received date day must be a number' },
 							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -442,7 +442,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date month cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a month' },
 							{ value: 'a', expectedError: 'Received date month must be a number' },
 							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -484,7 +484,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date year cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a year' },
 							{ value: 'a', expectedError: 'Received date year must be a number' },
 							{ value: '202', expectedError: 'Received date year must be 4 digits' }
 						];
@@ -736,7 +736,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date day cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a day' },
 							{ value: 'a', expectedError: 'Received date day must be a number' },
 							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -778,7 +778,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date month cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a month' },
 							{ value: 'a', expectedError: 'Received date month must be a number' },
 							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -820,7 +820,7 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date year cannot be empty' },
+							{ value: '', expectedError: 'Received date must include a year' },
 							{ value: 'a', expectedError: 'Received date year must be a number' },
 							{ value: '202', expectedError: 'Received date year must be 4 digits' }
 						];
@@ -1839,7 +1839,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a day' },
 					{ value: 'a', expectedError: 'Received date day must be a number' },
 					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -1879,7 +1879,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a month' },
 					{ value: 'a', expectedError: 'Received date month must be a number' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -1919,7 +1919,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a year' },
 					{ value: 'a', expectedError: 'Received date year must be a number' },
 					{ value: '202', expectedError: 'Received date year must be 4 digits' }
 				];
@@ -2129,7 +2129,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a day' },
 					{ value: 'a', expectedError: 'Received date day must be a number' },
 					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -2169,7 +2169,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a month' },
 					{ value: 'a', expectedError: 'Received date month must be a number' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -2209,7 +2209,7 @@ describe('costs', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a year' },
 					{ value: 'a', expectedError: 'Received date year must be a number' },
 					{ value: '202', expectedError: 'Received date year must be 4 digits' }
 				];

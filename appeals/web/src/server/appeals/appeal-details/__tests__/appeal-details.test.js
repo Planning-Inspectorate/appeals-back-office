@@ -1041,7 +1041,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedElementHtml).toContain('Important</h3>');
 				expect(unprettifiedElementHtml).toContain(
-					'<p class="govuk-notification-banner__heading">Review comments</p>'
+					'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
 					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'

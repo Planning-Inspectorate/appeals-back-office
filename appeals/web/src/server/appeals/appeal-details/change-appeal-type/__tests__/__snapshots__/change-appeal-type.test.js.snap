@@ -543,13 +543,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Final date day cannot be empty</a>
-                            </li>
-                            <li><a href="#change-appeal-final-date-month">Final date month cannot be empty</a>
-                            </li>
-                            <li><a href="#change-appeal-final-date-year">Final date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Final date must be a valid date</a>
+                            <li><a href="#">Final date must include a day, a month and a year</a>
                             </li>
                         </ul>
                     </div>
@@ -634,7 +628,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                     id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="0" inputmode="numeric">
+                                    value="32" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">
@@ -768,7 +762,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
                                     <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                     id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="0" inputmode="numeric">
+                                    type="text" value="13" inputmode="numeric">
                                 </div>
                             </div>
                             <div class="govuk-date-input__item">

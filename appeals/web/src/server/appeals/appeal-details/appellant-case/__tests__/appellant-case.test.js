@@ -1760,10 +1760,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date day cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date month cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date year cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -2318,10 +2315,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date day cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date month cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date year cannot be empty</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
@@ -3371,7 +3365,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -3491,7 +3485,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -3611,7 +3605,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -4001,7 +3995,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -4121,7 +4115,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -4241,7 +4235,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year cannot be empty</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {

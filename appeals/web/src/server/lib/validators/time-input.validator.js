@@ -15,11 +15,7 @@ export const createTimeInputValidator = (
 			.if(continueValidationCondition)
 			.trim()
 			.notEmpty()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}hour cannot be empty`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} must include an hour`))
 			.bail()
 			.isInt()
 			.withMessage(
@@ -40,11 +36,7 @@ export const createTimeInputValidator = (
 			.if(continueValidationCondition)
 			.trim()
 			.notEmpty()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}minute cannot be empty`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} must include a minute`))
 			.bail()
 			.isInt()
 			.withMessage(

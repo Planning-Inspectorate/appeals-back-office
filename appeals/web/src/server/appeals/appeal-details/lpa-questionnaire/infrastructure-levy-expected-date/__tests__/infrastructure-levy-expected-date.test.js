@@ -71,7 +71,7 @@ describe('infrastructure-levy-expected-date', () => {
 
 		it('should re-render the expected levy adoption date change page if day is not valid', async () => {
 			const testCases = [
-				{ value: '', expectedError: 'Date day cannot be empty' },
+				{ value: '', expectedError: 'Date must include a day' },
 				{ value: 'a', expectedError: 'Date day must be a number' },
 				{ value: '0', expectedError: 'Date day must be between 1 and 31' },
 				{ value: '32', expectedError: 'Date day must be between 1 and 31' }
@@ -112,7 +112,7 @@ describe('infrastructure-levy-expected-date', () => {
 
 		it('should re-render the expected levy adoption date change page with an error message if the provided date month is invalid', async () => {
 			const testCases = [
-				{ value: '', expectedError: 'Date month cannot be empty' },
+				{ value: '', expectedError: 'Date must include a month' },
 				{ value: 'a', expectedError: 'Date month must be a number' },
 				{ value: '0', expectedError: 'Date month must be between 1 and 12' },
 				{ value: '13', expectedError: 'Date month must be between 1 and 12' }
@@ -153,7 +153,7 @@ describe('infrastructure-levy-expected-date', () => {
 
 		it('should re-render the levy expected date change page with an error message if the provided date year is invalid', async () => {
 			const testCases = [
-				{ value: '', expectedError: 'Date year cannot be empty' },
+				{ value: '', expectedError: 'Date must include a year' },
 				{ value: 'a', expectedError: 'Date year must be a number' },
 				{ value: '202', expectedError: 'Date year must be 4 digits' }
 			];

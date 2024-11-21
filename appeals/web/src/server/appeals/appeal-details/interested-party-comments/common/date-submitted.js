@@ -13,10 +13,10 @@ import { dateInput } from '#lib/mappers/index.js';
  * @returns {PageContent}
  * */
 export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
-	title: 'Enter date submitted',
+	title: 'When did the interested party submit the comment?',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Enter date submitted',
+	heading: 'When did the interested party submit the comment?',
 	pageComponents: [
 		dateInput({ id: 'date', name: 'date', value: date, hint: 'For example, 27 3 2024' })
 	]

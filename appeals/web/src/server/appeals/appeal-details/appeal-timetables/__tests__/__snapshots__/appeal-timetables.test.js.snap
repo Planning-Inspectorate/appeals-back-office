@@ -108,13 +108,7 @@ exports[`Appeal Timetables should render "Change Final Comment Review Date" with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#due-date-day">Date day cannot be empty</a>
-                            </li>
-                            <li><a href="#due-date-month">Date month cannot be empty</a>
-                            </li>
-                            <li><a href="#due-date-year">Date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a day, a month and a year</a>
                             </li>
                         </ul>
                     </div>

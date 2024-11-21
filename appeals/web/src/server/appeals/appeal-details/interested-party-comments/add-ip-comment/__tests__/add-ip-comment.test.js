@@ -302,7 +302,9 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+			expect(pageHtml.querySelector('h1')?.innerHTML).toBe(
+				'When did the interested party submit the comment?'
+			);
 		});
 
 		it('should render day, month, and year input fields', () => {
@@ -366,7 +368,9 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+			expect(element.querySelector('h1')?.innerHTML).toBe(
+				'When did the interested party submit the comment?'
+			);
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -389,7 +393,9 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+			expect(element.querySelector('h1')?.innerHTML).toBe(
+				'When did the interested party submit the comment?'
+			);
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -397,9 +403,7 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date day cannot be empty');
-			expect(errorSummaryHtml).toContain('Submitted date month cannot be empty');
-			expect(errorSummaryHtml).toContain('Submitted date year cannot be empty');
+			expect(errorSummaryHtml).toContain('Submitted date must include a day, a month and a year');
 		});
 
 		it('should return 400 on invalid date input with appropriate error messages', async () => {
@@ -414,7 +418,9 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe('Enter date submitted');
+			expect(element.querySelector('h1')?.innerHTML).toBe(
+				'When did the interested party submit the comment?'
+			);
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
