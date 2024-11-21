@@ -215,6 +215,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['viewIpComment'],
 		text: 'IP address updated'
+	},
+	interestedPartyCommentsDocumentAddedSuccess: {
+		type: 'success',
+		pages: ['viewIpComment', 'reviewIpComment'],
+		text: 'IP address updated'
 	}
 };
 
