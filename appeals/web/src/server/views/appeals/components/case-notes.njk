@@ -3,13 +3,17 @@
 
 {%- macro caseNotes(params) -%}
 	<form method="POST" novalidate="novalidate">
-		{{ govukCharacterCount({
-			name: "comment",
-			id: "comment",
-			maxlength: 300,
-			rows: 5,
-			value: params.sessionComment
-		})}}
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				{{ govukCharacterCount({
+					name: "comment",
+					id: "comment",
+					maxlength: 300,
+					rows: 5,
+					value: params.sessionComment
+				})}}
+			</div>
+		</div>
 		{{ govukButton({
 			text: "Add case note",
 			type: "submit",
