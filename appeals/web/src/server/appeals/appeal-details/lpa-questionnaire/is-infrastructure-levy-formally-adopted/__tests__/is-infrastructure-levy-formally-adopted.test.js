@@ -85,6 +85,35 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 	});
 
 	describe('POST /is-infrastructure-levy-formally-adopted/change', () => {
+		it('should re-render the change levy formally adopted page with a validation error if a radio option was not selected', async () => {
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/${appealData.lpaQuestionnaireId}`)
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			const mockLPAQPatchEndpoint = nock('http://test/')
+				.patch(`/appeals/1/lpa-questionnaires/${appealData.lpaQuestionnaireId}`)
+				.reply(200, {});
+
+			const response = await request
+				.post(
+					`${baseUrl}/1/lpa-questionnaire/${appealData.lpaQuestionnaireId}/is-infrastructure-levy-formally-adopted/change`
+				)
+				.send({});
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Change whether levy formally adopted</h1>');
+
+			const errorSummaryElement = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-error-summary'
+			});
+
+			expect(errorSummaryElement.innerHTML).toMatchSnapshot();
+			expect(errorSummaryElement.innerHTML).toContain('Select whether levy formally adopted</a>');
+			expect(mockLPAQPatchEndpoint.isDone()).toBe(false);
+		});
+
 		const validValues = ['yes', 'no'];
 
 		for (const validValue of validValues) {

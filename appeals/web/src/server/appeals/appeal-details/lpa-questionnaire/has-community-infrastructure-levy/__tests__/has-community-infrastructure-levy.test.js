@@ -89,6 +89,39 @@ describe('has-community-infrastructure-levy', () => {
 	});
 
 	describe('POST /has-community-infrastructure-levy/change', () => {
+		it('should re-render the change community infrastructure levy status page with a validation error if a radio option was not selected', async () => {
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/${appealData.lpaQuestionnaireId}`)
+				.reply(200, lpaQuestionnaireDataNotValidated);
+
+			const mockLPAQPatchEndpoint = nock('http://test/')
+				.patch(`/appeals/1/lpa-questionnaires/${appealData.lpaQuestionnaireId}`)
+				.reply(200, {});
+
+			const response = await request
+				.post(
+					`${baseUrl}/1/lpa-questionnaire/${appealData.lpaQuestionnaireId}/has-community-infrastructure-levy/change`
+				)
+				.send({});
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Change community infrastructure levy status</h1>'
+			);
+
+			const errorSummaryElement = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-error-summary'
+			});
+
+			expect(errorSummaryElement.innerHTML).toMatchSnapshot();
+			expect(errorSummaryElement.innerHTML).toContain(
+				'Select community infrastructure levy status</a>'
+			);
+			expect(mockLPAQPatchEndpoint.isDone()).toBe(false);
+		});
+
 		const validValues = ['yes', 'no'];
 
 		for (const validValue of validValues) {
