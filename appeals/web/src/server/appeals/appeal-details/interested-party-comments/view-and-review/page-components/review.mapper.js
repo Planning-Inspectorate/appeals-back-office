@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
@@ -8,9 +9,10 @@ import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} comment
+ * @param {import('@pins/express').Session} session
  * @returns {PageContent}
  */
-export function reviewInterestedPartyCommentPage(appealDetails, comment) {
+export function reviewInterestedPartyCommentPage(appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment, {
 		isReviewPage: true
@@ -78,6 +80,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment) {
 		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Confirm',
 		pageComponents: [
+			...buildNotificationBanners(session, 'reviewIpComment', appealDetails.appealId),
 			commentSummaryList,
 			siteVisitRequestCheckbox,
 			commentValidityRadioButtons,

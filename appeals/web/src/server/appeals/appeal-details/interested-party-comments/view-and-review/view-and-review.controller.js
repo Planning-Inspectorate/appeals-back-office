@@ -14,7 +14,7 @@ import { patchInterestedPartyCommentStatus } from './view-and-review.service.js'
  *
  * @param {(appealDetails: Appeal, comment: Representation, session: import('express-session').Session & Record<string, string>) => PageContent} contentMapper
  * @param {string} templatePath
- * @returns {import('@pins/express').RenderHandler<unknown>}
+ * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
 	const { errors, currentComment, currentAppeal, session } = request;
@@ -42,10 +42,9 @@ export const renderReviewInterestedPartyComment = render(
 );
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @type {import('@pins/express').RenderHandler<any, any, any>}
  */
-export const postReviewInterestedPartyComment = async (request, response) => {
+export const postReviewInterestedPartyComment = async (request, response, next) => {
 	try {
 		const {
 			errors,
@@ -62,15 +61,7 @@ export const postReviewInterestedPartyComment = async (request, response) => {
 		}
 
 		if (errors) {
-			const pageContent = reviewInterestedPartyCommentPage(
-				request.currentAppeal,
-				request.currentComment
-			);
-
-			return response.status(200).render('patterns/change-page.pattern.njk', {
-				errors,
-				pageContent
-			});
+			renderViewInterestedPartyComment(request, response, next);
 		}
 
 		if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {

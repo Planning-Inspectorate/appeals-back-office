@@ -3,6 +3,7 @@ import { asyncHandler } from '@pins/express';
 import * as controller from './view-and-review.controller.js';
 import { validateReviewComment } from './view-and-review.validators.js';
 import rejectRouter from './reject/reject.router.js';
+import { redirectIfCommentIsReviewed } from './view-and-review.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -12,7 +13,7 @@ router.route('/view').get(asyncHandler(controller.renderViewInterestedPartyComme
 
 router
 	.route('/review')
-	.get(asyncHandler(controller.renderReviewInterestedPartyComment))
+	.get(redirectIfCommentIsReviewed, asyncHandler(controller.renderReviewInterestedPartyComment))
 	.post(validateReviewComment, asyncHandler(controller.postReviewInterestedPartyComment));
 
 export default router;

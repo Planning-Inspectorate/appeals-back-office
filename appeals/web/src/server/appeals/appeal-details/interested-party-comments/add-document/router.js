@@ -15,6 +15,7 @@ import {
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import { validateRedactionStatus } from '../add-ip-comment/add-ip-comment.validators.js';
+import { renderCheckYourAnswers } from './controller/check-your-answers.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -34,9 +35,11 @@ router.post(
 	'/date-submitted',
 	createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
 	createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
-	createDateInputDateInPastOrTodayValidator(),
+	createDateInputDateInPastOrTodayValidator('', '', 'day', 'month', 'year'),
 	saveBodyToSession('addDocument'),
 	asyncHandler(postDateSubmitted)
 );
+
+router.get('/check-your-answers', asyncHandler(renderCheckYourAnswers));
 
 export default router;

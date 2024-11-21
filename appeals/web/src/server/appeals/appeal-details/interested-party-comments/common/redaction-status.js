@@ -5,6 +5,23 @@ import { radiosInput } from '#lib/mappers/index.js';
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
 /** @typedef {{ 'redactionStatus': string }} ReqBody */
 
+/** @typedef {'redacted' | 'unredacted' | 'not-required'} RedactionStatus */
+
+/** @type {Record<RedactionStatus, string>} */
+export const statusFormatMap = {
+	redacted: 'Redacted',
+	unredacted: 'Unredacted',
+	'not-required': 'No redaction required'
+};
+
+export const name = 'redactionStatus';
+
+/**
+ * @param {any} maybeRedactionStatus
+ *	@returns {maybeRedactionStatus is RedactionStatus}
+ */
+export const isValidRedactionStatus = (maybeRedactionStatus) =>
+	Object.keys(statusFormatMap).includes(maybeRedactionStatus);
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
@@ -18,21 +35,8 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 	heading: 'Select redaction status',
 	pageComponents: [
 		radiosInput({
-			name: 'redactionStatus',
-			items: [
-				{
-					value: 'redacted',
-					text: 'Redacted'
-				},
-				{
-					value: 'unredacted',
-					text: 'Unredacted'
-				},
-				{
-					value: 'not-required',
-					text: 'No redaction required'
-				}
-			]
+			name,
+			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text }))
 		})
 	]
 });
