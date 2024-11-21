@@ -52,8 +52,7 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment)
 		},
 		pageComponents: [
 			yesNoInput({
-				name: 'allowResubmit',
-				id: 'allowResubmit'
+				name: 'allowResubmit'
 			})
 		]
 	};

@@ -61,11 +61,10 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {ConditionalParams} [params.yesConditional]
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
- * @returns {PageComponent}
+ * @returns {RadiosPageComponent}
  */
 export function yesNoInput({
 	name,
-	id,
 	value,
 	legendText,
 	yesConditional,
@@ -88,12 +87,11 @@ export function yesNoInput({
 		);
 	}
 
-	/** @type {PageComponent} */
+	/** @type {RadiosPageComponent} */
 	const component = {
 		type: 'radios',
 		parameters: {
 			name,
-			id: id || kebabCase(name),
 			items: [
 				yes,
 				{

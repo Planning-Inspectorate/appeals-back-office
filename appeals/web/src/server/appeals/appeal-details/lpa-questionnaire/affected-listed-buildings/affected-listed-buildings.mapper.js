@@ -177,7 +177,6 @@ export function removeAffectedListedBuildingPage(
 			},
 			yesNoInput({
 				name: 'removeAffectedListedBuilding',
-				id: 'removeAffectedListedBuilding',
 				legendText: 'Do you want to remove this listed building?'
 			})
 		]

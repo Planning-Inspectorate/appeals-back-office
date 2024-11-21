@@ -5,7 +5,6 @@ describe('radio', () => {
 		it('supports simple yes/no case', () => {
 			const component = yesNoInput({ name: 'testNameHere' });
 			expect(component.type).toBe('radios');
-			expect(component.parameters.id).toBe('test-name-here');
 			expect(component.parameters.items.length).toBe(2);
 			expect(component.parameters.items[0].checked).toBe(false);
 			expect(component.parameters.items[1].checked).toBe(false);
