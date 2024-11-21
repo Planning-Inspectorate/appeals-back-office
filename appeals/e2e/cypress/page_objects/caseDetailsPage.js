@@ -29,8 +29,7 @@ export class CaseDetailsPage extends Page {
 		addCostsDecision: 'add-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
-		changeStartDate: 'change-start-case-date',
-		getAppealStartDate: '.appeal-start-date > .govuk-summary-list__value'
+		changeStartDate: 'change-start-case-date'
 	};
 
 	elements = {
@@ -205,7 +204,8 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyChangeStartDate() {
-		const formattedDate = dateTimeSection.formatDate();
+		const dateToday = new Date();
+		const formattedDate = dateTimeSection.formatDate(dateToday);
 		this.elements
 			.getAppealStartDate()
 			.invoke('text')
