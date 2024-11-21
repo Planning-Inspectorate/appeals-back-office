@@ -11,13 +11,10 @@ import validateIdParameter from '#common/validators/id-parameter.js';
 import {
 	validateStringParameter,
 	validateTextAreaParameter,
-	validateOptionalTextAreaParameter
+	validateOptionalTextAreaParameter,
+	validateNullableTextAreaParameter
 } from '#common/validators/string-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import {
-	validateBooleanWithConditionalStringParameters,
-	validateBooleanWithConditionalTextareaParameters
-} from '#common/validators/boolean-with-conditional-string-parameters.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
 import { APPEAL_KNOWS_OTHER_OWNERS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
@@ -73,21 +70,8 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateEnumParameter('knowsOtherLandowners', Object.values(APPEAL_KNOWS_OTHER_OWNERS), true),
 	validateBooleanParameter('hasAttemptedToIdentifyOwners'),
 	validateBooleanParameter('hasAdvertisedAppeal'),
-	validateBooleanWithConditionalStringParameters(
-		'isSiteVisibleFromPublicRoad',
-		'visibilityRestrictions',
-		false
-	),
-	validateBooleanWithConditionalStringParameters(
-		'hasHealthAndSafetyIssues',
-		'healthAndSafetyIssues',
-		true
-	),
-	validateBooleanWithConditionalTextareaParameters(
-		'doesSiteRequireInspectorAccess',
-		'siteAccessDetails',
-		true
-	),
+	validateNullableTextAreaParameter('siteAccessDetails'),
+	validateNullableTextAreaParameter('siteSafetyDetails'),
 	validateTextAreaParameter('developmentDescription.details'),
 	validateBooleanParameter('developmentDescription.isChanged'),
 	validateBooleanParameter('appellantCostsAppliedFor'),

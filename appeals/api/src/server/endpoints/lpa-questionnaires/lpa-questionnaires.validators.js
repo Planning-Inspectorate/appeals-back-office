@@ -9,11 +9,10 @@ import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import { validateOptionalTextAreaParameter } from '#common/validators/string-parameter.js';
 import {
-	validateBooleanWithConditionalStringParameters,
-	validateBooleanWithConditionalTextareaParameters
-} from '#common/validators/boolean-with-conditional-string-parameters.js';
+	validateOptionalTextAreaParameter,
+	validateNullableTextAreaParameter
+} from '#common/validators/string-parameter.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
@@ -58,17 +57,9 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateBooleanParameter('lpaCostsAppliedFor'),
 	validateBooleanParameter('isConservationArea'),
 	validateBooleanParameter('isCorrectAppealType'),
-	validateBooleanWithConditionalTextareaParameters(
-		'doesSiteHaveHealthAndSafetyIssues',
-		'siteSafetyDetails',
-		true
-	),
-	validateBooleanWithConditionalTextareaParameters('hasExtraConditions', 'extraConditions', true),
-	validateBooleanWithConditionalStringParameters(
-		'doesSiteRequireInspectorAccess',
-		'inspectorAccessDetails',
-		true
-	),
+	validateNullableTextAreaParameter('siteAccessDetails'),
+	validateNullableTextAreaParameter('siteSafetyDetails'),
+	validateNullableTextAreaParameter('extraConditions'),
 	validateBooleanParameter('affectsScheduledMonument'),
 	validateBooleanParameter('hasProtectedSpecies'),
 	validateBooleanParameter('isAonbNationalLandscape'),
