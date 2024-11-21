@@ -78,3 +78,20 @@ export const validateRequiredStringParameter = (parameterName, maxLength = LENGT
 		.withMessage(ERROR_CANNOT_BE_EMPTY_STRING)
 		.isLength({ max: maxLength })
 		.withMessage(stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [maxLength]));
+
+/**
+ * @param {string} parameterName
+ * @param {number} maxLength
+ * @returns {ValidationChain}
+ */
+export const validateNullableTextAreaParameter = (parameterName, maxLength = LENGTH_1000) =>
+	body(parameterName)
+		.optional({ nullable: true })
+		.custom((value) => {
+			if (value === null) return true;
+			if (typeof value !== 'string') throw new Error(ERROR_MUST_BE_STRING);
+			if (value.length === 0) throw new Error(ERROR_CANNOT_BE_EMPTY_STRING);
+			if (value.length > maxLength)
+				throw new Error(stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [maxLength]));
+			return true;
+		});
