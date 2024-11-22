@@ -12,6 +12,6 @@ export const mapDecisionLetter = ({ appellantCaseData, userHasUpdateCase }) =>
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'decision-letter',
-		text: 'Decision letter',
+		text: 'Application decision letter',
 		folderInfo: appellantCaseData.documents.applicationDecisionLetter
 	});

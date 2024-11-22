@@ -12,6 +12,6 @@ export const mapSupportingDocuments = ({ appellantCaseData, userHasUpdateCase })
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'supporting-documents',
-		text: 'Supporting documents submitted with statement',
+		text: 'Plans, drawings and list of plans',
 		folderInfo: appellantCaseData.documents.plansDrawings
 	});
