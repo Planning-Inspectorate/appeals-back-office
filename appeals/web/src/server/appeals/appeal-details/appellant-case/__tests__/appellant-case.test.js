@@ -132,7 +132,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Tenant of agricultural holding</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Other tenants</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Ownership certificate or land declaration</dt>'
+				'Ownership certificate and/or land declaration</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('New supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Procedure preference</dt>');
