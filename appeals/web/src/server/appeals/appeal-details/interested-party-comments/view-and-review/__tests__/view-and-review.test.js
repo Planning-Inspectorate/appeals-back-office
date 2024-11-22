@@ -1,6 +1,7 @@
 import {
 	appealDataFullPlanning,
 	interestedPartyCommentForReview,
+	interestedPartyCommentForView,
 	representationRejectionReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
@@ -76,7 +77,7 @@ describe('interested-party-comments', () => {
 
 	describe('GET /view-comment with data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForView);
 		});
 
 		it('should render view comment page with the provided comment details', async () => {

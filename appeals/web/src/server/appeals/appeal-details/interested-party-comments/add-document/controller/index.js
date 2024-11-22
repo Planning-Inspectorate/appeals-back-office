@@ -11,7 +11,7 @@ export const renderDocumentUpload = async (request, response) => {
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}`,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/review`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/add-document/redaction-status`,
 		pageHeadingTextOverride: 'Upload supporting document',
 		allowMultipleFiles: false,
