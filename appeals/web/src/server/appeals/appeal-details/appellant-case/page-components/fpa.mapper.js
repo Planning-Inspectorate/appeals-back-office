@@ -56,6 +56,7 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.partOfAgriculturalHolding.display.summaryListItem,
 					mappedAppellantCaseData.tenantOfAgriculturalHolding.display.summaryListItem,
 					mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
+					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 					mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 				]
@@ -141,8 +142,7 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem
+					mappedAppellantCaseData.costsDocument.display.summaryListItem
 				]
 			}
 		};
