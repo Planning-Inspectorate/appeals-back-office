@@ -12,9 +12,10 @@ import { kebabCase } from 'lodash-es';
  * @param {string} [params.namePrefix]
  * @param {DayMonthYearHourMinute|null} [params.value]
  * @param {string} [params.legendText]
+ * @param {string} [params.hint]
  * @returns {PageComponent}
  */
-export function dateInput({ name, id, namePrefix, value, legendText }) {
+export function dateInput({ name, id, namePrefix, value, legendText, hint }) {
 	const formattedNamePrefix = namePrefix ? `${namePrefix}-` : '';
 
 	/** @type {PageComponent} */
@@ -41,7 +42,10 @@ export function dateInput({ name, id, namePrefix, value, legendText }) {
 					classes: 'govuk-input--width-4',
 					value: value?.year
 				}
-			]
+			],
+			hint: hint && {
+				text: hint
+			}
 		}
 	};
 
@@ -54,5 +58,6 @@ export function dateInput({ name, id, namePrefix, value, legendText }) {
 			}
 		};
 	}
+
 	return component;
 }

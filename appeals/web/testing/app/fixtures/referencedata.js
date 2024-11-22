@@ -2420,6 +2420,29 @@ export const interestedPartyCommentForReview = {
 	}
 };
 
+export const interestedPartyCommentForView = {
+	id: 3670,
+	origin: 'citizen',
+	author: 'Lee Thornton',
+	status: 'valid',
+	originalRepresentation: 'Awaiting review comment 47',
+	redactedRepresentation: '',
+	created: '2024-10-09T17:23:24.406Z',
+	notes: '',
+	attachments: [],
+	representationType: 'comment',
+	siteVisitRequested: false,
+	represented: {
+		id: 3838,
+		name: 'Lee Thornton',
+		email: 'test1@example.com',
+		address: {
+			addressLine1: '',
+			postCode: ''
+		}
+	}
+};
+
 export const representationRejectionReasons = [
 	{
 		id: 1,
