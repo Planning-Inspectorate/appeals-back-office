@@ -189,22 +189,6 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verfifications ************************
 	 ****************************************************************/
 
-	/* getAllAnswers() {
-		return cy.get('.govuk-summary-list__value');
-	}
-
-	checkAnswersFirstPage(expectedAnswers) {
-		this.getAllAnswers().then((answers) => {
-			const myAnswers = [];
-			cy.wrap(answers)
-				.each((ans) => myAnswers.push(ans.text().trim()))
-				.then(() => {
-					myAnswers.shift();
-					expect(expectedAnswers[0]).should('include', myAnswers[0]);
-				});
-		});
-	}*/
-
 	checkAnswerWithdrawalRequest(rowName, rowAnswer) {
 		let answer = cy
 			.get('.govuk-summary-list__key')
@@ -284,6 +268,17 @@ export class CaseDetailsPage extends Page {
 		this.elements
 			.getAppealStartDate()
 			.invoke('text')
+			.then((dateText) => {
+				expect(dateText.trim()).to.equal(formattedDate);
+			});
+	}
+
+	verifyCheckYourAnswerDate(rowName, dateToday) {
+		const formattedDate = dateTimeSection.formatDate(dateToday);
+		cy.get('.govuk-summary-list__key')
+			.contains(rowName)
+			.next()
+			.invoke('prop', 'innerText')
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
 			});
