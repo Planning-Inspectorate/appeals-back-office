@@ -18,7 +18,7 @@ export const mapApplicationDecision = ({ appellantCaseData, currentRoute, userHa
 
 	return textSummaryListItem({
 		id: 'application-decision',
-		text: 'Outcome',
+		text: 'Application decision outcome',
 		value,
 		link: `${currentRoute}/application-outcome/change`,
 		editable: userHasUpdateCase

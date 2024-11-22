@@ -89,8 +89,8 @@ function createTable(commentsData, isReview = false) {
  */
 function generateTableRows(items, isReview = false) {
 	return items.map((comment) => [
-		{ text: comment.author },
-		{ text: dateISOStringToDisplayDate(comment.created) },
+		{ text: comment.author, classes: 'govuk-!-width-one-half' },
+		{ text: dateISOStringToDisplayDate(comment.created), classes: 'govuk-!-width-one-half' },
 		{
 			html: `<a href="./interested-party-comments/${comment.id}/${
 				isReview ? 'review' : 'view'
@@ -98,7 +98,8 @@ function generateTableRows(items, isReview = false) {
 				isReview ? 'Review' : 'View'
 			}<span class="govuk-visually-hidden"> interested party comments from ${
 				comment.author
-			}</span></a>`
+			}</span></a>`,
+			classes: 'govuk-!-width-one-half'
 		}
 	]);
 }

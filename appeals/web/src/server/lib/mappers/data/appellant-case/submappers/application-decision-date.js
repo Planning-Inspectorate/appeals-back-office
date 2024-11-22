@@ -9,7 +9,7 @@ export const mapApplicationDecisionDate = ({
 }) =>
 	textSummaryListItem({
 		id: 'application-decision-date',
-		text: 'Decision date',
+		text: 'Application decision date',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
 		link: `${currentRoute}/application-decision-date/change`,
 		editable: userHasUpdateCase

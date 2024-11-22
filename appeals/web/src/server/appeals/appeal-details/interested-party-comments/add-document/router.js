@@ -15,7 +15,7 @@ import {
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import { validateRedactionStatus } from '../add-ip-comment/add-ip-comment.validators.js';
-import { renderCheckYourAnswers } from './controller/check-your-answers.js';
+import { postCheckYourAnswers, renderCheckYourAnswers } from './controller/check-your-answers.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -41,5 +41,6 @@ router.post(
 );
 
 router.get('/check-your-answers', asyncHandler(renderCheckYourAnswers));
+router.post('/check-your-answers', asyncHandler(postCheckYourAnswers));
 
 export default router;
