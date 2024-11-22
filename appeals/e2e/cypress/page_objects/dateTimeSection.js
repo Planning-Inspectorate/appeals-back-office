@@ -140,4 +140,15 @@ export class DateTimeSection extends Page {
 	#getElement(dateSelectorPrefix, dateType) {
 		return cy.get(dateSelectorPrefix + dateType);
 	}
+
+	verifyCheckYourAnswerDate(rowName, dateToday) {
+		const formattedDate = dateTimeSection.formatDate(dateToday);
+		cy.get('.govuk-summary-list__key')
+			.contains(rowName)
+			.next()
+			.invoke('prop', 'innerText')
+			.then((dateText) => {
+				expect(dateText.trim()).to.equal(formattedDate);
+			});
+	}
 }

@@ -36,7 +36,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkAnswerWithdrawalRequest('Withdrawal request', 'sample-file.doc');
 			caseDetailsPage.checkAnswerRedactionStatus('Redaction status', 'Redacted');
-			caseDetailsPage.checkAnswerRequestDate();
+			caseDetailsPage.verifyCheckYourAnswerDate('Request date', withdrawalDate);
 			caseDetailsPage.checkEmailRelevantParties();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanel('Appeal withdrawn');
