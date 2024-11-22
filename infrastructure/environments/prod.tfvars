@@ -58,6 +58,7 @@ apps_config = {
       site_visit_schedule_accompanied_lpa_id                          = "47983ef3-f92c-47b8-bb0f-8debd9a19856"
       site_visit_schedule_unaccompanied_appellant_id                  = "3f3714f0-00f0-4fc8-8c49-551e4a844643"
       valid_appellant_case_id                                         = "76688636-beb1-4af5-8310-c99723c2ba41"
+      comment_rejected_id                                             = "55b7ade6-1f47-4fa6-abca-0116874e7d14"
     }
   }
 
