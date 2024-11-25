@@ -240,6 +240,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {
+		//verifys the date on check your answer page is correct
 		const formattedDate = dateTimeSection.formatDate(dateToday);
 		cy.get(this.selectors.summaryListKey)
 			.contains(rowName)
