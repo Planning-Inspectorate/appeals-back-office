@@ -246,13 +246,15 @@ export async function postIPComment(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function renderCheckYourAnswers(
-	{
+export async function renderCheckYourAnswers(request, response) {
+	const {
 		errors,
 		currentAppeal: { appealReference, appealId } = {},
 		currentComment: { id: commentId } = {},
 		session: {
-			fileUploadInfo: { files: [{ name, blobStoreUrl }] } = { files: [{}] },
+			fileUploadInfo: {
+				files: [{ name, blobStoreUrl }]
+			},
 			addIpComment: {
 				[redactionStatusFieldName]: redactionStatus,
 				day,
@@ -267,11 +269,10 @@ export async function renderCheckYourAnswers(
 				town,
 				county,
 				postCode
-			} = { redactionStatus: 'unredacted' }
-		}
-	},
-	response
-) {
+			}
+		} = { addIpComment: { redactionStatus: 'unredacted' }, fileUploadInfo: { files: [{}] } }
+	} = request;
+
 	if (!isValidRedactionStatus(redactionStatus)) {
 		throw new Error('Received invalid redaction status');
 	}
