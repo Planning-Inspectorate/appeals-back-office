@@ -3,19 +3,17 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-//import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { urlPaths } from '../../support/urlPaths';
-import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('link appeals', () => {
+describe('unlink appeals', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Link an unlinked appeal to an unlinked appeal', { tags: tag.smoke }, () => {
+	it('Unlink the only linked appeal from a child appeal', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLink) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
@@ -27,6 +25,13 @@ describe('link appeals', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('This appeal is now a child appeal of');
 				caseDetailsPage.checkStatusOfCase('Child', 1);
+				caseDetailsPage.clickManageLinkedAppeals();
+				caseDetailsPage.clickLinkByText('Unlink');
+				caseDetailsPage.selectRadioButtonByValue('Yes');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage(
+					'You have unlinked this appeal from appeal  ' + caseRef
+				);
 			});
 		});
 	});
