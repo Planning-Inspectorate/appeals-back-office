@@ -99,6 +99,7 @@ export class Page {
 		successBanner: () => cy.get(this.selectors.successBanner),
 		status: () => cy.get(this.selectors.status),
 		summaryListActions: () => cy.get(this.selectors.summaryListActions),
+		summaryListKey: () => cy.get(this.selectors.summaryListKey),
 		summaryListValue: () => cy.get(this.selectors.summaryListValue),
 		signOutLink: () =>
 			cy.contains(`${this.selectors.rightCol} ${this.selectors.link}`, 'Sign Out', {
