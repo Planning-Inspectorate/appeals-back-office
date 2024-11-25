@@ -174,7 +174,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreference: string | null;
 	appellantProcedurePreferenceDetails: string | null;
 	appellantProcedurePreferenceDuration: number | null;
-	inquiryHowManyWitnesses: number | null;
+	appellantProcedurePreferenceWitnessCount: number | null;
 	documents: {
 		appellantCaseCorrespondence?: FolderInfo | null;
 		appellantCaseWithdrawalLetter?: FolderInfo | null;
@@ -200,11 +200,10 @@ interface SingleAppellantCaseResponse {
 		isTenant: boolean | null;
 		hasOtherTenants: boolean | null;
 	};
-	ownershipCertificateSubmitted?: boolean | null;
 	appellantProcedurePreference?: string | null;
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
-	inquiryHowManyWitnesses?: number | null;
+	appellantProcedurePreferenceWitnessCount?: number | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -239,7 +238,6 @@ interface UpdateAppellantCaseRequest {
 	agriculturalHolding?: boolean | null;
 	tenantAgriculturalHolding?: boolean | null;
 	otherTenantsAgriculturalHolding?: boolean | null;
-	ownershipCertificateSubmitted?: boolean | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -601,7 +599,6 @@ interface UpdateLPAQuestionnaireRequest {
 	doesSiteHaveHealthAndSafetyIssues?: boolean;
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	hasProtectedSpecies?: boolean;
-	hasTreePreservationOrder?: boolean;
 	healthAndSafetyDetails?: string;
 	includesScreeningOption?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;

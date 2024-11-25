@@ -264,27 +264,23 @@ model AppellantCase {
   isGreenBelt                            Boolean?
 
   // S78 fields
-  agriculturalHolding                  Boolean?
-  tenantAgriculturalHolding            Boolean?
-  otherTenantsAgriculturalHolding      Boolean?
-  informedTenantsAgriculturalHolding   Boolean?
-  appellantProcedurePreference         String?
-  appellantProcedurePreferenceDetails  String?
-  appellantProcedurePreferenceDuration Int?
-  inquiryHowManyWitnesses              Int?
-  updateDevelopmentDescriptionUploaded Boolean?
-  ownershipCertificateSubmitted        Boolean?
-  designAccessStatementProvided        Boolean?
-  newPlansDrawingsProvided             Boolean?
-  planningObligation                   Boolean?
-  statusPlanningObligation             String?
-  siteViewableFromRoad                 Boolean?
-  caseworkReason                       String?
-  developmentType                      String?
-  jurisdiction                         String?
-  numberOfResidences                   Int?
-  siteGridReferenceEasting             String?
-  siteGridReferenceNorthing            String?
+  agriculturalHolding                      Boolean?
+  tenantAgriculturalHolding                Boolean?
+  otherTenantsAgriculturalHolding          Boolean?
+  informedTenantsAgriculturalHolding       Boolean?
+  appellantProcedurePreference             String?
+  appellantProcedurePreferenceDetails      String?
+  appellantProcedurePreferenceDuration     Int?
+  appellantProcedurePreferenceWitnessCount Int?
+  planningObligation                       Boolean?
+  statusPlanningObligation                 String?
+  siteViewableFromRoad                     Boolean?
+  caseworkReason                           String?
+  developmentType                          String?
+  jurisdiction                             String?
+  numberOfResidencesNetChange              Int?
+  siteGridReferenceEasting                 String?
+  siteGridReferenceNorthing                String?
 }
 
 /// AppellantCaseValidationOutcome model
@@ -396,7 +392,6 @@ model LPAQuestionnaire {
   hasProtectedSpecies                 Boolean?
   isAonbNationalLandscape             Boolean?
   designatedSitesNames                String?
-  hasTreePreservationOrder            Boolean?
   isGypsyOrTravellerSite              Boolean?
   isPublicRightOfWay                  Boolean?
   eiaEnvironmentalImpactSchedule      String?
@@ -408,9 +403,6 @@ model LPAQuestionnaire {
   eiaCompletedEnvironmentalStatement  Boolean?
   eiaConsultedBodiesDetails           String?
   hasStatutoryConsultees              Boolean?
-  hasConsultationResponses            Boolean?
-  hasEmergingPlan                     Boolean?
-  hasSupplementaryPlanningDocs        Boolean?
   hasInfrastructureLevy               Boolean?
   isInfrastructureLevyFormallyAdopted Boolean?
   infrastructureLevyAdoptedDate       DateTime?
@@ -421,7 +413,7 @@ model LPAQuestionnaire {
   lpaFinalCommentDetails              String?
   lpaAddedWitnesses                   Boolean?
   siteWithinSSSI                      Boolean?
-  inspectorNeedToEnterSite            Boolean?
+  reasonForNeighbourVisits            Boolean?
   importantInformation                String?
   redeterminedIndicator               String?
   dateCostsReportDespatched           DateTime?
@@ -429,7 +421,7 @@ model LPAQuestionnaire {
   dateRecovered                       DateTime?
   originalCaseDecisionDate            DateTime?
   targetDate                          DateTime?
-  siteNoticesSent                     String?
+  siteNoticesSentDate                 DateTime?
 }
 
 /// LPAQuestionnaireValidationOutcome model

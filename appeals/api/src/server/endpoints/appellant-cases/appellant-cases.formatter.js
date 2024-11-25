@@ -74,7 +74,8 @@ const formatAppellantCase = (appeal, folders = null) => {
 			appellantProcedurePreference: appellantCase.appellantProcedurePreference,
 			appellantProcedurePreferenceDetails: appellantCase.appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration: appellantCase.appellantProcedurePreferenceDuration,
-			inquiryHowManyWitnesses: appellantCase.inquiryHowManyWitnesses,
+			appellantProcedurePreferenceWitnessCount:
+				appellantCase.appellantProcedurePreferenceWitnessCount,
 			isGreenBelt: appellantCase.isGreenBelt,
 			planningObligation: {
 				hasObligation: appellantCase.planningObligation,
@@ -85,7 +86,6 @@ const formatAppellantCase = (appeal, folders = null) => {
 				isTenant: appellantCase.tenantAgriculturalHolding,
 				hasOtherTenants: appellantCase.otherTenantsAgriculturalHolding
 			},
-			ownershipCertificateSubmitted: appellantCase.ownershipCertificateSubmitted,
 			...formatFoldersAndDocuments(folders)
 		};
 	}

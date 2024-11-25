@@ -429,8 +429,7 @@ export const appellantCaseDataNotValidated = {
 		isPartOfAgriculturalHolding: true,
 		isTenant: true,
 		hasOtherTenants: false
-	},
-	ownershipCertificateSubmitted: false
+	}
 };
 
 export const lpaQuestionnaireData = {
@@ -737,7 +736,6 @@ export const lpaQuestionnaireData = {
 	extraConditions: 'Some extra conditions',
 	hasCommunityInfrastructureLevy: true,
 	hasCompletedAnEnvironmentalStatement: true,
-	hasEmergingPlan: true,
 	hasExtraConditions: true,
 	hasOtherAppeals: null,
 	hasProtectedSpecies: true,
@@ -746,7 +744,6 @@ export const lpaQuestionnaireData = {
 	hasStatementOfCase: true,
 	hasStatutoryConsultees: true,
 	hasSupplementaryPlanningDocuments: true,
-	hasTreePreservationOrder: true,
 	healthAndSafetyDetails: 'There is no mobile signal at the property',
 	inCAOrrelatesToCA: true,
 	includesScreeningOption: true,
@@ -1158,7 +1155,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	extraConditions: 'Some extra conditions',
 	hasCommunityInfrastructureLevy: true,
 	hasCompletedAnEnvironmentalStatement: true,
-	hasEmergingPlan: true,
 	hasExtraConditions: true,
 	hasOtherAppeals: null,
 	hasProtectedSpecies: true,
@@ -1167,7 +1163,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	hasStatementOfCase: true,
 	hasStatutoryConsultees: true,
 	hasSupplementaryPlanningDocuments: true,
-	hasTreePreservationOrder: true,
 	healthAndSafetyDetails: 'There is no mobile signal at the property',
 	inCAOrrelatesToCA: true,
 	includesScreeningOption: true,

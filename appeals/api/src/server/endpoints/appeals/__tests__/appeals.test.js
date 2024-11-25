@@ -810,7 +810,7 @@ describe('appeals routes', () => {
 					appellantProcedurePreference: 'Hearing',
 					appellantProcedurePreferenceDetails: 'Reason for preference',
 					appellantProcedurePreferenceDuration: 5,
-					inquiryHowManyWitnesses: 1,
+					appellantProcedurePreferenceWitnessCount: 1,
 					siteVisit: {
 						siteVisitId: householdAppeal.siteVisit.id,
 						visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
@@ -917,7 +917,7 @@ describe('appeals routes', () => {
 					appellantProcedurePreference: 'Hearing',
 					appellantProcedurePreferenceDetails: 'Reason for preference',
 					appellantProcedurePreferenceDuration: 5,
-					inquiryHowManyWitnesses: 1,
+					appellantProcedurePreferenceWitnessCount: 1,
 					siteVisit: {
 						siteVisitId: fullPlanningAppeal.siteVisit.id,
 						visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
@@ -1533,7 +1533,7 @@ describe('appeals/case-reference/:caseReference', () => {
 				appellantProcedurePreference: 'Hearing',
 				appellantProcedurePreferenceDetails: 'Reason for preference',
 				appellantProcedurePreferenceDuration: 5,
-				inquiryHowManyWitnesses: 1,
+				appellantProcedurePreferenceWitnessCount: 1,
 				siteVisit: {
 					siteVisitId: householdAppeal.siteVisit.id,
 					visitDate: householdAppeal.siteVisit.visitDate.toISOString(),
@@ -1641,7 +1641,7 @@ describe('appeals/case-reference/:caseReference', () => {
 				appellantProcedurePreference: 'Hearing',
 				appellantProcedurePreferenceDetails: 'Reason for preference',
 				appellantProcedurePreferenceDuration: 5,
-				inquiryHowManyWitnesses: 1,
+				appellantProcedurePreferenceWitnessCount: 1,
 				siteVisit: {
 					siteVisitId: fullPlanningAppeal.siteVisit.id,
 					visitDate: fullPlanningAppeal.siteVisit.visitDate.toISOString(),
