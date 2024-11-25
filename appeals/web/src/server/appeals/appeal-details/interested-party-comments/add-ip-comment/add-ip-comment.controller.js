@@ -1,26 +1,33 @@
+import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
 	renderDateSubmittedFactory,
 	renderRedactionStatusFactory
 } from '../common/index.js';
+import {
+	isValidRedactionStatus,
+	name as redactionStatusFieldName,
+	statusFormatMap
+} from '../common/redaction-status.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { postRepresentationComment } from './add-ip-comment.service.js';
-import config from '@pins/appeals.web/environment/config.js';
-import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 import {
 	checkAddressPage,
-	checkYourAnswersPage,
 	ipDetailsPage,
 	mapFileUploadInfoToMappedDocuments,
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
-import { getAttachmentsFolder } from '../interested-party-comments.service.js';
-
+import { postRepresentationComment } from './add-ip-comment.service.js';
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -239,20 +246,88 @@ export async function postIPComment(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function renderCheckYourAnswers(request, response) {
-	const pageContent = checkYourAnswersPage(
-		request.currentAppeal,
-		request.session?.addIpComment,
-		request.session?.fileUploadInfo,
-		request.errors
-	);
+export async function renderCheckYourAnswers(
+	{
+		errors,
+		currentAppeal: { appealReference, appealId } = {},
+		currentComment: { id: commentId } = {},
+		session: {
+			fileUploadInfo: { files: [{ name, blobStoreUrl }] } = { files: [{}] },
+			addIpComment: {
+				[redactionStatusFieldName]: redactionStatus,
+				day,
+				month,
+				year,
+				firstName,
+				lastName,
+				emailAddress,
+				addressProvided,
+				addressLine1,
+				addressLine2,
+				town,
+				county,
+				postCode
+			} = { redactionStatus: 'unredacted' }
+		}
+	},
+	response
+) {
+	if (!isValidRedactionStatus(redactionStatus)) {
+		throw new Error('Received invalid redaction status');
+	}
 
-	return response
-		.status(request.errors ? 400 : 200)
-		.render('patterns/check-and-confirm-page.pattern.njk', {
-			errors: request.errors,
-			pageContent
-		});
+	return renderCheckYourAnswersComponent(
+		{
+			title: 'Check details and add comment',
+			heading: 'Check details and add comment',
+			preHeading: `Appeal ${appealShortReference(appealReference)}`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
+			submitButtonText: 'Add document',
+			responses: {
+				'Contact details': {
+					html: `${firstName || ''} ${lastName || ''}<br>${emailAddress || ''}`,
+					actions: {
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details`
+					}
+				},
+				Address: {
+					html:
+						addressProvided === 'no'
+							? 'Not provided'
+							: addressToMultilineStringHtml({
+									addressLine1,
+									addressLine2,
+									town,
+									county,
+									postCode
+							  }),
+					actions: {
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`
+					}
+				},
+				Comment: {
+					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
+					actions: {
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/upload`
+					}
+				},
+				'Redaction status': {
+					value: statusFormatMap[redactionStatus],
+					actions: {
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/redaction-status`
+					}
+				},
+				'Date submitted': {
+					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
+					actions: {
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`
+					}
+				}
+			}
+		},
+		response,
+		errors
+	);
 }
 
 /**

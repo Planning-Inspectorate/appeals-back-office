@@ -1,5 +1,3 @@
-import config from '@pins/appeals.web/environment/config.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	errorAddressProvidedRadio,
@@ -7,6 +5,7 @@ import {
 	errorFirstName,
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
+import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
@@ -134,123 +133,6 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId) => 
 	documentType: DOCUMENT_TYPE,
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
 	errors
-});
-
-/**
- * @param {Appeal} appealDetails
- * @param {IpComment} values
- * @param {{ files: [{ name:string }] }} fileUpload
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @returns {PageContent}
- * */
-export const checkYourAnswersPage = (appealDetails, values, fileUpload, errors) => ({
-	title: 'Check details and add comment',
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Check details and add comment',
-	pageComponents: [
-		{
-			type: 'summary-list',
-			parameters: {
-				rows: [
-					{
-						key: {
-							text: 'Contact Details'
-						},
-						value: {
-							html: `
-								${values?.firstName || ''} ${values?.lastName || ''} <br>
-								${values?.emailAddress || ''}
-														`
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`
-								}
-							]
-						}
-					},
-					{
-						key: {
-							text: 'Address'
-						},
-						value: {
-							html: `${
-								values?.addressProvided === 'no'
-									? 'Not provided'
-									: addressToMultilineStringHtml(values)
-							}`
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
-								}
-							]
-						}
-					},
-					{
-						key: {
-							text: 'Comment'
-						},
-						value: {
-							html: `<a href='#'>${fileUpload?.files[0]?.name || ''}</a>`
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`
-								}
-							]
-						}
-					},
-					{
-						key: {
-							text: 'Redaction Status'
-						},
-						value: {
-							html: `
-								${values?.redactionStatus || ''}
-							`
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`
-								}
-							]
-						}
-					},
-					{
-						key: {
-							text: 'Date Submitted'
-						},
-						value: {
-							html: `
-								${values?.['date-day'] || ''}
-								${values?.['date-month'] || ''}
-								${values?.['date-year'] || ''}
-							`
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`
-								}
-							]
-						}
-					}
-				],
-				errors
-			}
-		}
-	]
 });
 
 /**
