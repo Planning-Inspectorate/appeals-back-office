@@ -151,7 +151,8 @@ export const changeInquiryNumberOfWitnessesPage = (
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	let inquiryNumberOfWitnesses = appellantCaseData.inquiryHowManyWitnesses?.toString();
+	let inquiryNumberOfWitnesses =
+		appellantCaseData.appellantProcedurePreferenceWitnessCount?.toString();
 
 	if (storedSessionData?.input) {
 		inquiryNumberOfWitnesses = storedSessionData.input;

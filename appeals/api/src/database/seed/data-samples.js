@@ -309,14 +309,13 @@ export const appellantCaseList = {
 		tenantAgriculturalHolding: false,
 		otherTenantsAgriculturalHolding: false,
 		informedTenantsAgriculturalHolding: false,
-		ownershipCertificateSubmitted: false,
 		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
 		appellantProcedurePreferenceDetails: randomArrayValue([
 			'Need for a detailed examination',
 			null
 		]),
 		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
-		inquiryHowManyWitnesses: 1,
+		appellantProcedurePreferenceWitnessCount: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 })
 	}
@@ -339,7 +338,6 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 			appellantCaseCreateInput.otherTenantsAgriculturalHolding =
 				appellantCaseCreateInput.agriculturalHolding && randomBool();
 			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
-			appellantCaseCreateInput.ownershipCertificateSubmitted = randomBool();
 			break;
 		default:
 			break;

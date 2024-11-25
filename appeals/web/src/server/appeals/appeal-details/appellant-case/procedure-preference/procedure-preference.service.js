@@ -63,7 +63,7 @@ export function changeProcedurePreferenceDuration(
 export function changeInquiryNumberOfWitnesses(apiClient, appealId, appellantCaseId, updatedValue) {
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
-			inquiryHowManyWitnesses: updatedValue
+			appellantProcedurePreferenceWitnessCount: updatedValue
 		}
 	});
 }

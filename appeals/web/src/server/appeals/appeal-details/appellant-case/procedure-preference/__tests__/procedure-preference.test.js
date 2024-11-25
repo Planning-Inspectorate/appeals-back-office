@@ -49,7 +49,7 @@ describe('procedure-preference', () => {
 				defaultValueText: 'Not applicable'
 			},
 			{
-				fieldName: 'inquiryHowManyWitnesses',
+				fieldName: 'appellantProcedurePreferenceWitnessCount',
 				validFieldValue: 3,
 				labelText: 'Expected number of witnesses',
 				validValueText: '3',
@@ -411,7 +411,7 @@ describe('procedure-preference', () => {
 	});
 
 	describe('GET /inquiry/witnesses/change', () => {
-		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input unpopulated if inquiryHowManyWitnesses is not populated in the appellant case data', async () => {
+		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input unpopulated if appellantProcedurePreferenceWitnessCount is not populated in the appellant case data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 				.reply(200, appellantCaseDataNotValidated);
@@ -432,12 +432,12 @@ describe('procedure-preference', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
-		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input populated if inquiryHowManyWitnesses is populated in the appellant case data', async () => {
+		it('should render the change expected number of witnesses page with "inquiryNumberOfWitnessesInput" text input populated if appellantProcedurePreferenceWitnessCount is populated in the appellant case data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
 				.reply(200, {
 					...appellantCaseDataNotValidated,
-					inquiryHowManyWitnesses: 5
+					appellantProcedurePreferenceWitnessCount: 5
 				});
 
 			const response = await request.get(

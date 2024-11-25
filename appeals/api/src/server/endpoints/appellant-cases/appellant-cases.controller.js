@@ -57,12 +57,11 @@ const updateAppellantCaseById = async (req, res) => {
 			agriculturalHolding,
 			tenantAgriculturalHolding,
 			otherTenantsAgriculturalHolding,
-			ownershipCertificateSubmitted,
 			appellantCostsAppliedFor,
 			appellantProcedurePreference,
 			appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration,
-			inquiryHowManyWitnesses
+			appellantProcedurePreferenceWitnessCount
 		},
 		params,
 		validationOutcome
@@ -127,12 +126,11 @@ const updateAppellantCaseById = async (req, res) => {
 					agriculturalHolding,
 					tenantAgriculturalHolding,
 					otherTenantsAgriculturalHolding,
-					ownershipCertificateSubmitted,
 					appellantCostsAppliedFor,
 					appellantProcedurePreference,
 					appellantProcedurePreferenceDetails,
 					appellantProcedurePreferenceDuration,
-					inquiryHowManyWitnesses
+					appellantProcedurePreferenceWitnessCount
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
@@ -185,7 +183,7 @@ const updateAppellantCaseById = async (req, res) => {
 				appellantProcedurePreference,
 				appellantProcedurePreferenceDetails,
 				appellantProcedurePreferenceDuration,
-				inquiryHowManyWitnesses
+				appellantProcedurePreferenceWitnessCount
 		  };
 
 	return res.send(response);

@@ -183,7 +183,7 @@ export const appealIngestionInput = {
 			appellantProcedurePreference: undefined,
 			appellantProcedurePreferenceDetails: undefined,
 			appellantProcedurePreferenceDuration: undefined,
-			inquiryHowManyWitnesses: undefined
+			appellantProcedurePreferenceWitnessCount: undefined
 		}
 	},
 	neighbouringSites: {

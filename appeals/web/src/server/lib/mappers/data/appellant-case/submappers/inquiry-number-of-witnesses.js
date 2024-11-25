@@ -7,7 +7,7 @@ export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute })
 				text: 'Expected number of witnesses'
 			},
 			value: {
-				text: appellantCaseData.inquiryHowManyWitnesses || 'Not applicable'
+				text: appellantCaseData.appellantProcedurePreferenceWitnessCount || 'Not applicable'
 			},
 			actions: {
 				items: [

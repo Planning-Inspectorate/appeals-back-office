@@ -154,7 +154,7 @@ export const householdAppeal = {
 		appellantProcedurePreference: 'Hearing',
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 5,
-		inquiryHowManyWitnesses: 1
+		appellantProcedurePreferenceWitnessCount: 1
 	},
 	caseOfficer: {
 		id: 1,
@@ -232,8 +232,7 @@ export const fullPlanningAppeal = {
 		isAgriculturalHolding: true,
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
-		ownershipCertificateSubmitted: false
+		newDevelopmentDescription: 'A new extension has been added at the back'
 	},
 	representations: []
 };

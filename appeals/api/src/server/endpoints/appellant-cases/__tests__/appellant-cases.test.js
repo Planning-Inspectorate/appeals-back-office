@@ -996,14 +996,15 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 2,
-					inquiryHowManyWitnesses: 1
+					appellantProcedurePreferenceWitnessCount: 1
 				};
 
 				const dataToSave = {
 					appellantProcedurePreference: patchBody.appellantProcedurePreference,
 					appellantProcedurePreferenceDetails: patchBody.appellantProcedurePreferenceDetails,
 					appellantProcedurePreferenceDuration: patchBody.appellantProcedurePreferenceDuration,
-					inquiryHowManyWitnesses: patchBody.inquiryHowManyWitnesses
+					appellantProcedurePreferenceWitnessCount:
+						patchBody.appellantProcedurePreferenceWitnessCount
 				};
 
 				const { appellantCase, id } = householdAppeal;
@@ -1023,7 +1024,7 @@ describe('appellant cases routes', () => {
 					'Need for a detailed examination.'
 				);
 				expect(response.body.appellantProcedurePreferenceDuration).toEqual(2);
-				expect(response.body.inquiryHowManyWitnesses).toEqual(1);
+				expect(response.body.appellantProcedurePreferenceWitnessCount).toEqual(1);
 			});
 			test('returns an error if appellantProcedurePreferenceDuration is not a number', async () => {
 				const { id, appellantCase } = householdAppeal;
@@ -1031,7 +1032,7 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 'not-a-number',
-					inquiryHowManyWitnesses: 1
+					appellantProcedurePreferenceWitnessCount: 1
 				};
 
 				const response = await request
@@ -1051,7 +1052,7 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'not-valid',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 1,
-					inquiryHowManyWitnesses: 1
+					appellantProcedurePreferenceWitnessCount: 1
 				};
 
 				const response = await request
@@ -1071,7 +1072,7 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 100,
-					inquiryHowManyWitnesses: 1
+					appellantProcedurePreferenceWitnessCount: 1
 				};
 
 				const response = await request
@@ -1085,31 +1086,13 @@ describe('appellant cases routes', () => {
 					'must be a number between 0 and 99'
 				);
 			});
-			test('returns an error if inquiryHowManyWitnesses is not a number', async () => {
+			test('returns an error if appellantProcedurePreferenceWitnessCount is not a number', async () => {
 				const { id, appellantCase } = householdAppeal;
 				const patchBody = {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
 					appellantProcedurePreferenceDuration: 1,
-					inquiryHowManyWitnesses: 'not-a-number'
-				};
-
-				const response = await request
-					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.send(patchBody)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body.errors).toHaveProperty('inquiryHowManyWitnesses', 'must be a number');
-			});
-
-			test('returns an error if inquiryHowManyWitnesses is outside the allowed range', async () => {
-				const { id, appellantCase } = householdAppeal;
-				const patchBody = {
-					appellantProcedurePreference: 'inquiry',
-					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
-					appellantProcedurePreferenceDuration: 2,
-					inquiryHowManyWitnesses: 100
+					appellantProcedurePreferenceWitnessCount: 'not-a-number'
 				};
 
 				const response = await request
@@ -1119,7 +1102,28 @@ describe('appellant cases routes', () => {
 
 				expect(response.status).toEqual(400);
 				expect(response.body.errors).toHaveProperty(
-					'inquiryHowManyWitnesses',
+					'appellantProcedurePreferenceWitnessCount',
+					'must be a number'
+				);
+			});
+
+			test('returns an error if appellantProcedurePreferenceWitnessCount is outside the allowed range', async () => {
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					appellantProcedurePreference: 'inquiry',
+					appellantProcedurePreferenceDetails: 'Need for a detailed examination.',
+					appellantProcedurePreferenceDuration: 2,
+					appellantProcedurePreferenceWitnessCount: 100
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'appellantProcedurePreferenceWitnessCount',
 					'must be a number between 0 and 99'
 				);
 			});
@@ -1130,7 +1134,7 @@ describe('appellant cases routes', () => {
 					appellantProcedurePreference: 'inquiry',
 					appellantProcedurePreferenceDetails: 'x'.repeat(1001),
 					appellantProcedurePreferenceDuration: 2,
-					inquiryHowManyWitnesses: 1
+					appellantProcedurePreferenceWitnessCount: 1
 				};
 
 				const response = await request

@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "feed9626-4b0a-4c8b-8808-dd1838f7ab7b" */
+		/** @example "53cfc6d5-45f1-44c9-ad5c-2a88ea7fe8a9" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -942,7 +942,7 @@ export interface SingleAppellantCaseResponse {
 	/** @example 0 */
 	appellantProcedurePreferenceDuration?: number;
 	/** @example 0 */
-	inquiryHowManyWitnesses?: number;
+	appellantProcedurePreferenceWitnessCount?: number;
 	/** @example true */
 	hasAdvertisedAppeal?: boolean;
 	/** @example true */
@@ -1377,8 +1377,6 @@ export interface SingleLPAQuestionnaireResponse {
 	/** @example true */
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	/** @example true */
-	hasEmergingPlan?: boolean;
-	/** @example true */
 	hasExtraConditions?: boolean;
 	/** @example true */
 	hasProtectedSpecies?: boolean;
@@ -1392,8 +1390,6 @@ export interface SingleLPAQuestionnaireResponse {
 	hasStatutoryConsultees?: boolean;
 	/** @example true */
 	hasSupplementaryPlanningDocuments?: boolean;
-	/** @example true */
-	hasTreePreservationOrder?: boolean;
 	/** @example "There is no mobile signal at the property" */
 	healthAndSafetyDetails?: string;
 	/** @example true */
@@ -1512,7 +1508,7 @@ export interface UpdateAppellantCaseRequest {
 	/** @example 3 */
 	appellantProcedurePreferenceDuration?: number;
 	/** @example 2 */
-	inquiryHowManyWitnesses?: number;
+	appellantProcedurePreferenceWitnessCount?: number;
 }
 
 export type UpdateAppellantCaseResponse = object;
@@ -1528,8 +1524,6 @@ export interface UpdateLPAQuestionnaireRequest {
 	hasCompletedAnEnvironmentalStatement?: boolean;
 	/** @example true */
 	hasProtectedSpecies?: boolean;
-	/** @example true */
-	hasTreePreservationOrder?: boolean;
 	/** @example true */
 	includesScreeningOption?: boolean;
 	incompleteReasons?: {
