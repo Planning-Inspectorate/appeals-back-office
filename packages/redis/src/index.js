@@ -21,7 +21,8 @@ export class RedisClient {
 				port: redisParams.port,
 				tls: redisParams.ssl
 			},
-			password: redisParams.password
+			password: redisParams.password,
+			pingInterval: redisParams.pingInterval
 		});
 
 		/** @param {Error} err */
