@@ -372,7 +372,8 @@ const formatAppeal = (
 				appeal.appellantCase?.appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration:
 				appeal.appellantCase?.appellantProcedurePreferenceDuration,
-			inquiryHowManyWitnesses: appeal.appellantCase?.inquiryHowManyWitnesses,
+			appellantProcedurePreferenceWitnessCount:
+				appeal.appellantCase?.appellantProcedurePreferenceWitnessCount,
 			createdAt: appeal.caseCreatedDate.toISOString(),
 			startedAt: appeal.caseStartedDate && appeal.caseStartedDate?.toISOString(),
 			validAt: appeal.caseValidDate && appeal.caseValidDate?.toISOString(),

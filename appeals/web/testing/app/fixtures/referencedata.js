@@ -429,8 +429,7 @@ export const appellantCaseDataNotValidated = {
 		isPartOfAgriculturalHolding: true,
 		isTenant: true,
 		hasOtherTenants: false
-	},
-	ownershipCertificateSubmitted: false
+	}
 };
 
 export const lpaQuestionnaireData = {
@@ -737,7 +736,6 @@ export const lpaQuestionnaireData = {
 	extraConditions: 'Some extra conditions',
 	hasCommunityInfrastructureLevy: true,
 	hasCompletedAnEnvironmentalStatement: true,
-	hasEmergingPlan: true,
 	hasExtraConditions: true,
 	hasOtherAppeals: null,
 	hasProtectedSpecies: true,
@@ -746,7 +744,6 @@ export const lpaQuestionnaireData = {
 	hasStatementOfCase: true,
 	hasStatutoryConsultees: true,
 	hasSupplementaryPlanningDocuments: true,
-	hasTreePreservationOrder: true,
 	healthAndSafetyDetails: 'There is no mobile signal at the property',
 	inCAOrrelatesToCA: true,
 	includesScreeningOption: true,
@@ -1158,7 +1155,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	extraConditions: 'Some extra conditions',
 	hasCommunityInfrastructureLevy: true,
 	hasCompletedAnEnvironmentalStatement: true,
-	hasEmergingPlan: true,
 	hasExtraConditions: true,
 	hasOtherAppeals: null,
 	hasProtectedSpecies: true,
@@ -1167,7 +1163,6 @@ export const lpaQuestionnaireDataNotValidated = {
 	hasStatementOfCase: true,
 	hasStatutoryConsultees: true,
 	hasSupplementaryPlanningDocuments: true,
-	hasTreePreservationOrder: true,
 	healthAndSafetyDetails: 'There is no mobile signal at the property',
 	inCAOrrelatesToCA: true,
 	includesScreeningOption: true,
@@ -2402,6 +2397,29 @@ export const interestedPartyCommentForReview = {
 	origin: 'citizen',
 	author: 'Lee Thornton',
 	status: 'awaiting_review',
+	originalRepresentation: 'Awaiting review comment 47',
+	redactedRepresentation: '',
+	created: '2024-10-09T17:23:24.406Z',
+	notes: '',
+	attachments: [],
+	representationType: 'comment',
+	siteVisitRequested: false,
+	represented: {
+		id: 3838,
+		name: 'Lee Thornton',
+		email: 'test1@example.com',
+		address: {
+			addressLine1: '',
+			postCode: ''
+		}
+	}
+};
+
+export const interestedPartyCommentForView = {
+	id: 3670,
+	origin: 'citizen',
+	author: 'Lee Thornton',
+	status: 'valid',
 	originalRepresentation: 'Awaiting review comment 47',
 	redactedRepresentation: '',
 	created: '2024-10-09T17:23:24.406Z',

@@ -396,7 +396,7 @@ export const spec = {
 			appellantProcedurePreference: 'Hearing',
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 0,
-			inquiryHowManyWitnesses: 0,
+			appellantProcedurePreferenceWitnessCount: 0,
 			hasAdvertisedAppeal: true,
 			hasDesignAndAccessStatement: true,
 			hasNewPlansOrDrawings: true,
@@ -500,7 +500,6 @@ export const spec = {
 			extraConditions: 'Some extra conditions',
 			hasCommunityInfrastructureLevy: true,
 			hasCompletedAnEnvironmentalStatement: true,
-			hasEmergingPlan: true,
 			hasExtraConditions: true,
 			hasProtectedSpecies: true,
 			hasRepresentationsFromOtherParties: true,
@@ -508,7 +507,6 @@ export const spec = {
 			hasStatementOfCase: true,
 			hasStatutoryConsultees: true,
 			hasSupplementaryPlanningDocuments: true,
-			hasTreePreservationOrder: true,
 			healthAndSafetyDetails: 'There is no mobile signal at the property',
 			inCAOrrelatesToCA: true,
 			includesScreeningOption: true,
@@ -584,7 +582,7 @@ export const spec = {
 			appellantProcedurePreference: 'Hearing',
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 3,
-			inquiryHowManyWitnesses: 2
+			appellantProcedurePreferenceWitnessCount: 2
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {
@@ -593,7 +591,6 @@ export const spec = {
 			doesAffectAScheduledMonument: true,
 			hasCompletedAnEnvironmentalStatement: true,
 			hasProtectedSpecies: true,
-			hasTreePreservationOrder: true,
 			includesScreeningOption: true,
 			incompleteReasons: [
 				{

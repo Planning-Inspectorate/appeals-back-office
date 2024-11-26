@@ -302,7 +302,6 @@ export interface SingleLPAQuestionnaireResponse {
 	extraConditions?: string | null;
 	hasCommunityInfrastructureLevy?: boolean | null;
 	hasCompletedAnEnvironmentalStatement?: boolean | null;
-	hasEmergingPlan?: boolean | null;
 	hasExtraConditions?: boolean | null;
 	hasOtherAppeals?: boolean | null;
 	hasProtectedSpecies?: boolean | null;
@@ -311,7 +310,6 @@ export interface SingleLPAQuestionnaireResponse {
 	hasStatementOfCase?: boolean | null;
 	hasStatutoryConsultees?: boolean | null;
 	hasSupplementaryPlanningDocuments?: boolean | null;
-	hasTreePreservationOrder?: boolean | null;
 	healthAndSafetyDetails?: string | null;
 	inCAOrrelatesToCA?: boolean | null;
 	includesScreeningOption?: boolean | null;

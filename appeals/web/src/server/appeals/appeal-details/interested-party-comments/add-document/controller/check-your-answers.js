@@ -70,7 +70,7 @@ export const renderCheckYourAnswers = (
  */
 export const postCheckYourAnswers = async (
 	{ apiClient, session, currentAppeal: { appealId }, currentComment: { id: commentId } },
-	{ redirect, status }
+	response
 ) => {
 	const {
 		fileUploadInfo: {
@@ -102,12 +102,12 @@ export const postCheckYourAnswers = async (
 		});
 	} catch (error) {
 		logger.error(error);
-		return status(500).render('app/500.njk');
+		return response.status(500).render('app/500.njk');
 	}
 
 	addNotificationBannerToSession(session, 'interestedPartyCommentsDocumentAddedSuccess', appealId);
 
-	return redirect(
+	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/review`
 	);
 };

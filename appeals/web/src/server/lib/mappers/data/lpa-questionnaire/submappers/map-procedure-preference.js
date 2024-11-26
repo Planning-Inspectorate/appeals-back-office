@@ -7,7 +7,7 @@ export const mapProcedurePreference = ({ lpaQuestionnaireData, currentRoute }) =
 		id: 'procedure-preference',
 		text: 'Procedure preference',
 		editable: true,
-		value: capitalize(lpaQuestionnaireData.lpaProcedurePreference || 'Not answered'),
+		value: capitalize(lpaQuestionnaireData.lpaProcedurePreference || 'Not applicable'),
 		link: `${currentRoute}/procedure-preference/change`,
 		cypressDataName: 'change-procedure-preference'
 	});

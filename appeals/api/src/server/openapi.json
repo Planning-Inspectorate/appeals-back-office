@@ -4603,7 +4603,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "feed9626-4b0a-4c8b-8808-dd1838f7ab7b"
+								"example": "53cfc6d5-45f1-44c9-ad5c-2a88ea7fe8a9"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -6342,7 +6342,7 @@
 						"type": "number",
 						"example": 0
 					},
-					"inquiryHowManyWitnesses": {
+					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
 						"example": 0
 					},
@@ -7339,10 +7339,6 @@
 						"type": "boolean",
 						"example": true
 					},
-					"hasEmergingPlan": {
-						"type": "boolean",
-						"example": true
-					},
 					"hasExtraConditions": {
 						"type": "boolean",
 						"example": true
@@ -7368,10 +7364,6 @@
 						"example": true
 					},
 					"hasSupplementaryPlanningDocuments": {
-						"type": "boolean",
-						"example": true
-					},
-					"hasTreePreservationOrder": {
 						"type": "boolean",
 						"example": true
 					},
@@ -7645,7 +7637,7 @@
 						"type": "number",
 						"example": 3
 					},
-					"inquiryHowManyWitnesses": {
+					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
 						"example": 2
 					}
@@ -7684,10 +7676,6 @@
 						"example": true
 					},
 					"hasProtectedSpecies": {
-						"type": "boolean",
-						"example": true
-					},
-					"hasTreePreservationOrder": {
 						"type": "boolean",
 						"example": true
 					},

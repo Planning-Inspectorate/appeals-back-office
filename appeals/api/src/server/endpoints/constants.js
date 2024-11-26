@@ -90,6 +90,11 @@ export const AUDIT_TRAIL_LPAQ_INFRASTRUCTURE_LEVY_ADOPTED_DATE_UPDATED =
 	'Levy adoption date changed';
 export const AUDIT_TRAIL_LPAQ_INFRASTRUCTURE_LEVY_EXPECTED_DATE_UPDATED =
 	'Expected levy adoption date changed';
+export const AUDIT_TRAIL_LPAQ_LPA_PROCEDURE_PREFERENCE_UPDATED = 'Procedure preference updated';
+export const AUDIT_TRAIL_LPAQ_LPA_PROCEDURE_PREFERENCE_DETAILS_UPDATED =
+	'Reason for preference updated';
+export const AUDIT_TRAIL_LPAQ_LPA_PROCEDURE_PREFERENCE_DURATION_UPDATED =
+	'Expected length of procedure updated';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';

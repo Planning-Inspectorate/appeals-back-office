@@ -185,7 +185,7 @@ export const notificationBannerDefinitions = {
 	},
 	changePage: {
 		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'ipComments']
 	},
 	interestedPartyCommentsAwaitingReview: {
 		pages: ['appealDetails'],

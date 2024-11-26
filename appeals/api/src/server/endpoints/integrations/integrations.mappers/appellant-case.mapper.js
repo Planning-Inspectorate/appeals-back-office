@@ -55,7 +55,7 @@ export const mapAppellantCaseIn = (command) => {
 		appellantProcedurePreference: casedata.appellantProcedurePreference,
 		appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
 		appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-		inquiryHowManyWitnesses: casedata.inquiryHowManyWitnesses
+		appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
 	};
 
 	// @ts-ignore
