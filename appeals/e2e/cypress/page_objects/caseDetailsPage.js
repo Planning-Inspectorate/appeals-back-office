@@ -21,6 +21,7 @@ export class CaseDetailsPage extends Page {
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
 		addLinkedAppeal: 'add-linked-appeal',
+		manageLinkedAppeals: 'manage-linked-appeals',
 		addRelatedAppeals: 'add-related-appeals',
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
@@ -46,6 +47,7 @@ export class CaseDetailsPage extends Page {
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
+		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		addRelatedAppeals: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -126,6 +128,10 @@ export class CaseDetailsPage extends Page {
 
 	clickAddRelatedAppeals() {
 		this.elements.addRelatedAppeals().click();
+	}
+
+	clickManageLinkedAppeals() {
+		this.elements.manageLinkedAppeals().click();
 	}
 
 	clickChangeAppealType() {

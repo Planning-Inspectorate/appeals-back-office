@@ -226,10 +226,10 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -469,10 +469,10 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -724,10 +724,10 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -967,10 +967,10 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1210,10 +1210,10 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1465,10 +1465,10 @@ exports[`appellant-case GET /appellant-case should render a success notification
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1790,10 +1790,10 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2118,10 +2118,10 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation"> Add<span class="govuk-visually-hidden"> Planning obligation</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -2336,10 +2336,10 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4607,10 +4607,10 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs document</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Costs application</dt>
                     <dd class="govuk-summary-list__value">No documents available</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs document</span></a>
+                        data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
                 </div>
             </dl>

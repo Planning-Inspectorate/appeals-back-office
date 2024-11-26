@@ -17,7 +17,9 @@ export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: 'Enter date submitted',
-	pageComponents: [dateInput({ id: 'date', name: 'date', value: date })]
+	pageComponents: [
+		dateInput({ id: 'date', name: 'date', value: date, hint: 'For example, 27 3 2024' })
+	]
 });
 
 /**

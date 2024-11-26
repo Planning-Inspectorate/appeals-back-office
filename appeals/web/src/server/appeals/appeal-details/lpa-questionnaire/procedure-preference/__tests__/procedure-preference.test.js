@@ -29,24 +29,40 @@ describe('procedure-preference', () => {
 		const testCases = [
 			{
 				fieldName: 'lpaProcedurePreference',
-				validFieldValue: 'hearing',
 				labelText: 'Procedure preference',
-				validValueText: 'Hearing',
-				defaultValueText: 'Not answered'
+				defaultValueText: 'Not applicable',
+				validData: [
+					{
+						value: 'hearing',
+						expectedText: 'Hearing'
+					}
+				]
 			},
 			{
 				fieldName: 'lpaProcedurePreferenceDetails',
-				validFieldValue: 'Example reason for preference text',
 				labelText: 'Reason for preference',
-				validValueText: 'Example reason for preference text',
-				defaultValueText: 'Not applicable'
+				defaultValueText: 'Not applicable',
+				validData: [
+					{
+						value: 'Example reason for preference text',
+						expectedText: 'Example reason for preference text'
+					}
+				]
 			},
 			{
 				fieldName: 'lpaProcedurePreferenceDuration',
-				validFieldValue: 5,
 				labelText: 'Expected length of procedure',
-				validValueText: '5 days',
-				defaultValueText: 'Not applicable'
+				defaultValueText: 'Not applicable',
+				validData: [
+					{
+						value: 1,
+						expectedText: '1 day'
+					},
+					{
+						value: 5,
+						expectedText: '5 days'
+					}
+				]
 			}
 		];
 
@@ -86,24 +102,26 @@ describe('procedure-preference', () => {
 					);
 				});
 
-				it(`should render a summary list row for ${testCase.labelText} with "${testCase.validValueText}" populated in the value column if ${testCase.fieldName} is "${testCase.validFieldValue}"`, async () => {
-					nock('http://test/')
-						.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
-						.reply(200, {
-							...lpaQuestionnaireDataNotValidated,
-							[testCase.fieldName]: testCase.validFieldValue
-						});
+				for (const validDatum of testCase.validData) {
+					it(`should render a summary list row for ${testCase.labelText} with "${validDatum.expectedText}" populated in the value column if ${testCase.fieldName} is "${validDatum.value}"`, async () => {
+						nock('http://test/')
+							.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+							.reply(200, {
+								...lpaQuestionnaireDataNotValidated,
+								[testCase.fieldName]: validDatum.value
+							});
 
-					const response = await request.get(
-						`${baseUrl}/2/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}`
-					);
+						const response = await request.get(
+							`${baseUrl}/2/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}`
+						);
 
-					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dt class="govuk-summary-list__key"> ${testCase.labelText}</dt><dd class="govuk-summary-list__value"> ${testCase.validValueText}</dd>`
-					);
-				});
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<dt class="govuk-summary-list__key"> ${testCase.labelText}</dt><dd class="govuk-summary-list__value"> ${validDatum.expectedText}</dd>`
+						);
+					});
+				}
 			});
 		}
 	});
