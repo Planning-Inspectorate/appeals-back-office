@@ -54,6 +54,12 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 		return false;
 	}
 
+	// TODO: remove this later
+	// @ts-ignore
+	if (msg.documentType === 'representationAttachments') {
+		return false;
+	}
+
 	const validationResult = await validateFromSchema(schemas.events.document, msg);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors?.map(
