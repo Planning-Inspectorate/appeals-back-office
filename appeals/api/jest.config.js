@@ -1,6 +1,7 @@
 export default {
 	transform: {},
 	moduleNameMapper: { '^uuid$': 'uuid' },
+	globalSetup: './global-setup.js',
 	setupFilesAfterEnv: ['<rootDir>/setup-tests.js'],
 	coverageThreshold: {
 		global: {
