@@ -17,7 +17,7 @@ describe('redis', () => {
 			},
 			{
 				name: 'too many parts',
-				str: 'some.example.org:6380,password=some_password,ssl=True,abortConnect=False,extra=thing',
+				str: 'some.example.org:6380,password=some_password,ssl=True,abortConnect=False,pingInterval=20000,extra=thing',
 				want: {},
 				error: true
 			},
@@ -40,15 +40,34 @@ describe('redis', () => {
 				error: true
 			},
 			{
-				name: 'valid config is parsed',
+				name: 'valid config without ping settings is parsed',
 				str: 'some.example.org:1234,password=some_password,ssl=True,abortConnect=False',
 				want: {
 					host: 'some.example.org',
 					port: 1234,
 					password: 'some_password',
 					ssl: true,
-					abortConnect: false
+					abortConnect: false,
+					pingInterval: 300000
 				}
+			},
+			{
+				name: 'valid config with ping settings is parsed',
+				str: 'some.example.org:1234,password=some_password,ssl=True,abortConnect=False,pingInterval=20000',
+				want: {
+					host: 'some.example.org',
+					port: 1234,
+					password: 'some_password',
+					ssl: true,
+					abortConnect: false,
+					pingInterval: 20000
+				}
+			},
+			{
+				name: 'invalid pingInterval',
+				str: 'some.example.org:1234,password=some_password,ssl=True,abortConnect=False,pingInterval=not-a-number',
+				want: {},
+				error: true
 			},
 			{
 				name: 'case insentive for true/false',
@@ -58,7 +77,8 @@ describe('redis', () => {
 					port: 1234,
 					password: 'some_password',
 					ssl: true,
-					abortConnect: false
+					abortConnect: false,
+					pingInterval: 300000
 				}
 			}
 		];
