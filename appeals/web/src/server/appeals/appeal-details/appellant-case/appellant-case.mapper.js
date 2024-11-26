@@ -28,7 +28,7 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
-import { generateFPAComponents } from './page-components/fpa.mapper.js';
+import { generateS78Components } from './page-components/s78.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /**
@@ -668,7 +668,7 @@ function generateCaseTypeSpecificComponents(
 			);
 		case APPEAL_TYPE.W:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateFPAComponents(
+				return generateS78Components(
 					appealDetails,
 					appellantCaseData,
 					mappedAppellantCaseData,

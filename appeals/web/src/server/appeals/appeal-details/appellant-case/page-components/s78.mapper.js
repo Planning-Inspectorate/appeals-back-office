@@ -14,7 +14,7 @@ import { generateHASComponents } from './has.mapper.js';
  * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
-export function generateFPAComponents(
+export function generateS78Components(
 	appealDetails,
 	appellantCaseData,
 	mappedAppellantCaseData,
@@ -100,8 +100,6 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
 					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem,
-					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
 					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 					mappedAppellantCaseData.applicationDecision.display.summaryListItem
@@ -142,7 +140,9 @@ export function generateFPAComponents(
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.costsDocument.display.summaryListItem
+					mappedAppellantCaseData.costsDocument.display.summaryListItem,
+					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
+					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
 				]
 			}
 		};
