@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQuestionnaireId GET gets a single lpa questionnaire with an outcome of Complete 1`] = `
+{
+  "appealId": 3,
+  "appealReference": "1345264",
+  "appealSite": {
+    "addressLine1": "96 The Avenue",
+    "addressLine2": "Leftfield",
+    "county": "Kent",
+    "postCode": "MD21 5XY",
+    "town": "Maidstone",
+  },
+  "costsAppliedFor": false,
+  "documents": {
+    "communityInfrastructureLevy": {},
+    "conservationMap": {},
+    "consultationResponses": {},
+    "definitiveMapStatement": {},
+    "developmentPlanPolicies": {},
+    "eiaEnvironmentalStatement": {},
+    "eiaScreeningDirection": {},
+    "eiaScreeningOpinion": {},
+    "emergingPlan": {},
+    "lpaCaseCorrespondence": {},
+    "otherPartyRepresentations": {},
+    "planningOfficerReport": {},
+    "plansDrawings": {},
+    "supplementaryPlanning": {},
+    "treePreservationPlan": {},
+    "whoNotified": {},
+    "whoNotifiedLetterToNeighbours": {},
+    "whoNotifiedPressAdvert": {},
+    "whoNotifiedSiteNotice": {},
+  },
+  "doesSiteHaveHealthAndSafetyIssues": true,
+  "doesSiteRequireInspectorAccess": true,
+  "extraConditions": null,
+  "hasExtraConditions": false,
+  "healthAndSafetyDetails": "There may be no mobile reception at the site",
+  "inspectorAccessDetails": "There is a tall hedge around the site which obstructs the view of the site",
+  "isConservationArea": true,
+  "isCorrectAppealType": true,
+  "listedBuildingDetails": [
+    {
+      "id": 2,
+      "listEntry": "2",
+    },
+  ],
+  "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaNotificationMethods": [
+    {
+      "name": "A site notice",
+    },
+  ],
+  "lpaQuestionnaireId": 1,
+  "lpaStatement": null,
+  "procedureType": "Written",
+  "receivedAt": "2024-06-24T00:00:00.000Z",
+  "submittedAt": "2024-06-24T00:00:00.000Z",
+  "validation": {
+    "outcome": "Complete",
+  },
+}
+`;
+
+exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQuestionnaireId GET gets a single lpa questionnaire with an outcome of Incomplete 1`] = `
+{
+  "appealId": 3,
+  "appealReference": "1345264",
+  "appealSite": {
+    "addressLine1": "96 The Avenue",
+    "addressLine2": "Leftfield",
+    "county": "Kent",
+    "postCode": "MD21 5XY",
+    "town": "Maidstone",
+  },
+  "costsAppliedFor": false,
+  "documents": {
+    "communityInfrastructureLevy": {},
+    "conservationMap": {},
+    "consultationResponses": {},
+    "definitiveMapStatement": {},
+    "developmentPlanPolicies": {},
+    "eiaEnvironmentalStatement": {},
+    "eiaScreeningDirection": {},
+    "eiaScreeningOpinion": {},
+    "emergingPlan": {},
+    "lpaCaseCorrespondence": {},
+    "otherPartyRepresentations": {},
+    "planningOfficerReport": {},
+    "plansDrawings": {},
+    "supplementaryPlanning": {},
+    "treePreservationPlan": {},
+    "whoNotified": {},
+    "whoNotifiedLetterToNeighbours": {},
+    "whoNotifiedPressAdvert": {},
+    "whoNotifiedSiteNotice": {},
+  },
+  "doesSiteHaveHealthAndSafetyIssues": true,
+  "doesSiteRequireInspectorAccess": true,
+  "extraConditions": null,
+  "hasExtraConditions": false,
+  "healthAndSafetyDetails": "There may be no mobile reception at the site",
+  "inspectorAccessDetails": "There is a tall hedge around the site which obstructs the view of the site",
+  "isConservationArea": true,
+  "isCorrectAppealType": true,
+  "listedBuildingDetails": [
+    {
+      "id": 2,
+      "listEntry": "2",
+    },
+  ],
+  "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaNotificationMethods": [
+    {
+      "name": "A site notice",
+    },
+  ],
+  "lpaQuestionnaireId": 1,
+  "lpaStatement": null,
+  "procedureType": "Written",
+  "receivedAt": "2024-06-24T00:00:00.000Z",
+  "submittedAt": "2024-06-24T00:00:00.000Z",
+  "validation": {
+    "incompleteReasons": [
+      {
+        "name": {
+          "name": "Documents or information are missing",
+        },
+        "text": [
+          "Policy is missing",
+        ],
+      },
+      {
+        "name": {
+          "name": "Other",
+        },
+        "text": [
+          "Addresses are incorrect or missing",
+        ],
+      },
+    ],
+    "outcome": "Incomplete",
+  },
+}
+`;
+
+exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQuestionnaireId GET gets a single lpa questionnaire with no outcome 1`] = `
+{
+  "appealId": 1,
+  "appealReference": "1345264",
+  "appealSite": {
+    "addressLine1": "96 The Avenue",
+    "addressLine2": "Leftfield",
+    "county": "Kent",
+    "postCode": "MD21 5XY",
+    "town": "Maidstone",
+  },
+  "costsAppliedFor": false,
+  "documents": {
+    "communityInfrastructureLevy": {},
+    "conservationMap": {},
+    "consultationResponses": {},
+    "definitiveMapStatement": {},
+    "developmentPlanPolicies": {},
+    "eiaEnvironmentalStatement": {},
+    "eiaScreeningDirection": {},
+    "eiaScreeningOpinion": {},
+    "emergingPlan": {},
+    "lpaCaseCorrespondence": {},
+    "otherPartyRepresentations": {},
+    "planningOfficerReport": {},
+    "plansDrawings": {},
+    "supplementaryPlanning": {},
+    "treePreservationPlan": {},
+    "whoNotified": {},
+    "whoNotifiedLetterToNeighbours": {},
+    "whoNotifiedPressAdvert": {},
+    "whoNotifiedSiteNotice": {},
+  },
+  "doesSiteHaveHealthAndSafetyIssues": true,
+  "doesSiteRequireInspectorAccess": true,
+  "extraConditions": null,
+  "hasExtraConditions": false,
+  "healthAndSafetyDetails": "There may be no mobile reception at the site",
+  "inspectorAccessDetails": "There is a tall hedge around the site which obstructs the view of the site",
+  "isConservationArea": true,
+  "isCorrectAppealType": true,
+  "listedBuildingDetails": [
+    {
+      "id": 2,
+      "listEntry": "2",
+    },
+  ],
+  "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaNotificationMethods": [
+    {
+      "name": "A site notice",
+    },
+  ],
+  "lpaQuestionnaireId": 1,
+  "lpaStatement": null,
+  "procedureType": "Written",
+  "receivedAt": "2024-06-24T00:00:00.000Z",
+  "submittedAt": "2024-06-24T00:00:00.000Z",
+  "validation": null,
+}
+`;

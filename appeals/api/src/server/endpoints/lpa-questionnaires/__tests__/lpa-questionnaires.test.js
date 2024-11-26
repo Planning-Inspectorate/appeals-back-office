@@ -29,7 +29,6 @@ import {
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete
 } from '#tests/appeals/mocks.js';
-import { baseExpectedLPAQuestionnaireResponse } from '#tests/appeals/expectation.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
@@ -59,7 +58,7 @@ describe('lpa questionnaires routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(baseExpectedLPAQuestionnaireResponse(householdAppeal));
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single lpa questionnaire with an outcome of Complete', async () => {
@@ -74,9 +73,7 @@ describe('lpa questionnaires routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedLPAQuestionnaireResponse(householdAppealLPAQuestionnaireComplete)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single lpa questionnaire with an outcome of Incomplete', async () => {
@@ -92,9 +89,7 @@ describe('lpa questionnaires routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedLPAQuestionnaireResponse(householdAppealLPAQuestionnaireIncomplete)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('returns an error if appealId is not numeric', async () => {

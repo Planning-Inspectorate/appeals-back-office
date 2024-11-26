@@ -23,7 +23,6 @@ import {
 	householdAppealAppellantCaseInvalid,
 	householdAppealAppellantCaseValid
 } from '#tests/appeals/mocks.js';
-import { baseExpectedAppellantCaseResponse } from '#tests/appeals/expectation.js';
 
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
@@ -54,7 +53,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(baseExpectedAppellantCaseResponse(householdAppeal));
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for a valid household appeal', async () => {
@@ -70,9 +69,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedAppellantCaseResponse(householdAppealAppellantCaseValid)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for an incomplete household appeal', async () => {
@@ -90,9 +87,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedAppellantCaseResponse(householdAppealAppellantCaseIncomplete)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for an invalid household appeal', async () => {
@@ -108,9 +103,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedAppellantCaseResponse(householdAppealAppellantCaseInvalid)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for a valid full planning appeal', async () => {
@@ -124,7 +117,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(baseExpectedAppellantCaseResponse(fullPlanningAppeal));
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for an incomplete full planning appeal', async () => {
@@ -142,9 +135,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedAppellantCaseResponse(fullPlanningAppealAppellantCaseIncomplete)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('gets a single appellant case for an invalid full planning appeal', async () => {
@@ -162,9 +153,7 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(
-					baseExpectedAppellantCaseResponse(fullPlanningAppealAppellantCaseInvalid)
-				);
+				expect(response.body).toMatchSnapshot();
 			});
 
 			test('returns an error if appealId is not numeric', async () => {
