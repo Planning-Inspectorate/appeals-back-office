@@ -50,28 +50,29 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 
 	// @ts-ignore
 	const msg = messageMappers.mapDocument(document);
-
-	if (msg) {
-		const validationResult = await validateFromSchema(schemas.events.document, msg);
-		if (validationResult !== true && validationResult.errors) {
-			const errorDetails = validationResult.errors?.map(
-				(e) => `${e.instancePath || '/'}: ${e.message}`
-			);
-
-			pino.error(`Error validating ${entityInfo.name} entity: ${errorDetails}`);
-			return false;
-		}
-
-		const topic = producers.boDocument;
-		const res = await eventClient.sendEvents(topic, [msg], updateType, {
-			entityType: entityInfo.name,
-			sourceSystem: ODW_SYSTEM_ID
-		});
-
-		if (res) {
-			return true;
-		}
+	if (!msg) {
+		return false;
 	}
 
-	return false;
+	const validationResult = await validateFromSchema(schemas.events.document, msg);
+	if (validationResult !== true && validationResult.errors) {
+		const errorDetails = validationResult.errors?.map(
+			(e) => `${e.instancePath || '/'}: ${e.message}`
+		);
+
+		pino.error(`Error validating ${entityInfo.name} entity: ${errorDetails}`);
+		return false;
+	}
+
+	const topic = producers.boDocument;
+	const res = await eventClient.sendEvents(topic, [msg], updateType, {
+		entityType: entityInfo.name,
+		sourceSystem: ODW_SYSTEM_ID
+	});
+
+	if (!res) {
+		return false;
+	}
+
+	return true;
 };
