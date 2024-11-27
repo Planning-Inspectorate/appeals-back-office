@@ -285,6 +285,9 @@ export const appealIngestionInput = {
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
 			},
 			{
+				path: 'lpa-questionnaire/otherRelevantPolicies'
+			},
+			{
 				path: 'costs/appellantCostsApplication'
 			},
 			{

@@ -269,6 +269,9 @@ export const getAddDocuments = async (request, response) => {
 		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
 			pageHeadingTextOverride = 'Upload press advert notification';
 			break;
+		case `${APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES}`:
+			pageHeadingTextOverride = 'Upload any other relevant policies';
+			break;
 		default:
 			break;
 	}
@@ -313,15 +316,24 @@ export const getAddDocumentDetails = async (request, response) => {
 	}
 
 	const documentType = currentFolder.path.split('/')[1];
-	const pageHeadingOverrides = {
-		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`]: 'Notification documents',
-		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`]: 'Notification documents',
-		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`]: 'Notification documents',
-		[`${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`]: 'Notification documents',
-		[`${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`]: 'Environmental impact assessment'
-	};
+	let pageHeadingTextOverride;
 
-	const pageHeadingTextOverride = pageHeadingOverrides[documentType] ?? '';
+	switch (documentType) {
+		case APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED:
+		case APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE:
+		case APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS:
+		case APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT:
+			pageHeadingTextOverride = 'Notification documents';
+			break;
+		case APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT:
+			pageHeadingTextOverride = 'Environmental impact assessment';
+			break;
+		case APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES:
+			pageHeadingTextOverride = 'Other relevant policies';
+			break;
+		default:
+			break;
+	}
 
 	await renderDocumentDetails({
 		request,
@@ -375,9 +387,9 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAddDocumentsCheckAndConfirm = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 
-	if (!currentAppeal) {
+	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
@@ -456,6 +468,9 @@ export const getManageFolder = async (request, response) => {
 			break;
 		case `${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`:
 			managePageHeadingText = `Screening direction documents`;
+			break;
+		case `${APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES}`:
+			managePageHeadingText = `Other relevant policies`;
 			break;
 		default:
 			managePageHeadingText = '';

@@ -299,6 +299,7 @@ interface SingleLPAQuestionnaireResponse {
 		eiaEnvironmentalStatement?: FolderInfo | null;
 		eiaScreeningOpinion?: FolderInfo | null;
 		eiaScreeningDirection?: FolderInfo | null;
+		otherRelevantPolicies?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
