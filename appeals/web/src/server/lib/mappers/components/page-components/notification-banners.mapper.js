@@ -194,7 +194,7 @@ export const notificationBannerDefinitions = {
 	interestedPartyCommentsValidSuccess: {
 		type: 'success',
 		pages: ['ipComments'],
-		text: 'Comment valid'
+		text: 'Comment accepted'
 	},
 	interestedPartyCommentsRejectedSuccess: {
 		type: 'success',
@@ -209,17 +209,17 @@ export const notificationBannerDefinitions = {
 	interestedPartyCommentsAddressAddedSuccess: {
 		type: 'success',
 		pages: ['viewIpComment'],
-		text: 'IP address added'
+		text: 'Interested party address added'
 	},
 	interestedPartyCommentsAddressUpdatedSuccess: {
 		type: 'success',
 		pages: ['viewIpComment'],
-		text: 'IP address updated'
+		text: 'Interested party address changed'
 	},
 	interestedPartyCommentsDocumentAddedSuccess: {
 		type: 'success',
 		pages: ['viewIpComment', 'reviewIpComment'],
-		text: 'IP address updated'
+		text: 'Interested party address changed'
 	}
 };
 

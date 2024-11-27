@@ -303,7 +303,7 @@ describe('issue-decision', () => {
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
-					'decision-letter-date-day': 0,
+					'decision-letter-date-day': 32,
 					'decision-letter-date-month': 11,
 					'decision-letter-date-year': 2024
 				});
@@ -334,7 +334,7 @@ describe('issue-decision', () => {
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterDatePath}`)
 				.send({
 					'decision-letter-date-day': 1,
-					'decision-letter-date-month': 0,
+					'decision-letter-date-month': 13,
 					'decision-letter-date-year': 2024
 				});
 

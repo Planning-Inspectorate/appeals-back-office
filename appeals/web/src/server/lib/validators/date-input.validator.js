@@ -14,119 +14,69 @@ export const createDateInputFieldsValidator = (
 	messageFieldNamePrefix = 'date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
-	yearFieldName = '-year'
-) =>
-	createValidator(
-		body(`${fieldNamePrefix}${dayFieldName}`)
-			.exists()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' d') || 'D'}ay cannot be empty`
-				)
-			)
-			.bail()
-			.trim()
-			.notEmpty()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' d') || 'D'}ay cannot be empty`
-				)
-			)
-			.bail()
+	yearFieldName = '-year',
+	bodyScope = ''
+) => {
+	const _day = bodyScope ? `[${dayFieldName}]` : dayFieldName;
+	const _month = bodyScope ? `[${monthFieldName}]` : monthFieldName;
+	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
+
+	return createValidator(
+		body(bodyScope).custom((value) => {
+			const day = value[`${fieldNamePrefix}${dayFieldName}`];
+			const month = value[`${fieldNamePrefix}${monthFieldName}`];
+			const year = value[`${fieldNamePrefix}${yearFieldName}`];
+
+			if (day && month && year) {
+				return true;
+			}
+
+			let missingParts = [];
+			if (!day) missingParts.push('a day');
+			if (!month) missingParts.push('a month');
+			if (!year) missingParts.push('a year');
+
+			const messageSuffix = missingParts.reduce((acc, part, index) => {
+				if (index === missingParts.length - 1) {
+					return `${acc}${part}`;
+				}
+				if (index === missingParts.length - 2) {
+					return `${acc}${part} and `;
+				}
+				return `${acc}${part}, `;
+			}, '');
+
+			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
+		}),
+		body(`${bodyScope}${fieldNamePrefix}${_day}`)
+			.if(Boolean)
 			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' d') || 'D'}ay must be a number`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} day must be a number`))
 			.bail()
 			.isLength({ min: 1, max: 2 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' d') || 'D'
-					}ay must be 1 or 2 digits`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} day must be 1 or 2 digits`))
 			.bail()
 			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' d') || 'D'
-					}ay must be between 1 and 31`
-				)
-			),
-		body(`${fieldNamePrefix}${monthFieldName}`)
-			.exists()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' m') || 'M'}onth cannot be empty`
-				)
-			)
-			.bail()
-			.trim()
-			.notEmpty()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' m') || 'M'}onth cannot be empty`
-				)
-			)
-			.bail()
+			.withMessage(capitalize(`${messageFieldNamePrefix} day must be between 1 and 31`)),
+		body(`${bodyScope}${fieldNamePrefix}${_month}`)
+			.if(Boolean)
 			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' m') || 'M'}onth must be a number`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} month must be a number`))
 			.bail()
 			.isLength({ min: 1, max: 2 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' m') || 'M'
-					}onth must be 1 or 2 digits`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} month must be 1 or 2 digits`))
 			.bail()
 			.matches(/^0?[1-9]$|^1[0-2]$/)
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' m') || 'M'
-					}onth must be between 1 and 12`
-				)
-			),
-		body(`${fieldNamePrefix}${yearFieldName}`)
-			.exists()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' y') || 'Y'}ear cannot be empty`
-				)
-			)
-			.bail()
-			.trim()
-			.notEmpty()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' y') || 'Y'}ear cannot be empty`
-				)
-			)
-			.bail()
+			.withMessage(capitalize(`${messageFieldNamePrefix} month must be between 1 and 12`)),
+		body(`${bodyScope}${fieldNamePrefix}${_year}`)
+			.if(Boolean)
 			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' y') || 'Y'}ear must be a number`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} year must be a number`))
 			.bail()
 			.isLength({ min: 4, max: 4 })
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' y') || 'Y'}ear must be 4 digits`
-				)
-			)
+			.withMessage(capitalize(`${messageFieldNamePrefix} year must be 4 digits`))
 	);
+};
 
 export const createDateInputDateValidityValidator = (
 	fieldNamePrefix = 'date',
@@ -142,8 +92,8 @@ export const createDateInputDateValidityValidator = (
 				const month = bodyFields[`${fieldNamePrefix}${monthFieldName}`];
 				const year = bodyFields[`${fieldNamePrefix}${yearFieldName}`];
 
-				if (!day || !month || !year) {
-					return false;
+				if (!(day && month && year)) {
+					return true;
 				}
 
 				const dayNumber = Number.parseInt(day, 10);
@@ -259,8 +209,8 @@ export const createDateInputDateInPastOrTodayValidator = (
 				const month = bodyFields[`${fieldNamePrefix}${monthFieldName}`];
 				const year = bodyFields[`${fieldNamePrefix}${yearFieldName}`];
 
-				if (!day || !month || !year) {
-					return false;
+				if (!(day && month && year)) {
+					return true;
 				}
 
 				const dayNumber = Number.parseInt(day, 10);
@@ -292,8 +242,8 @@ export const createDateInputDateInPastValidator = (
 				const month = bodyFields[`${fieldNamePrefix}${monthFieldName}`];
 				const year = bodyFields[`${fieldNamePrefix}${yearFieldName}`];
 
-				if (!day || !month || !year) {
-					return false;
+				if (!(day && month && year)) {
+					return true;
 				}
 
 				const dayNumber = Number.parseInt(day, 10);

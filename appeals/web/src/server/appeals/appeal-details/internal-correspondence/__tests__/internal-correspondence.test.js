@@ -469,7 +469,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a day' },
 					{ value: 'a', expectedError: 'Received date day must be a number' },
 					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -515,7 +515,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a month' },
 					{ value: 'a', expectedError: 'Received date month must be a number' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -561,7 +561,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a year' },
 					{ value: 'a', expectedError: 'Received date year must be a number' },
 					{ value: '202', expectedError: 'Received date year must be 4 digits' }
 				];
@@ -858,7 +858,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a day' },
 					{ value: 'a', expectedError: 'Received date day must be a number' },
 					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -904,7 +904,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a month' },
 					{ value: 'a', expectedError: 'Received date month must be a number' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -950,7 +950,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a year' },
 					{ value: 'a', expectedError: 'Received date year must be a number' },
 					{ value: '202', expectedError: 'Received date year must be 4 digits' }
 				];
@@ -1763,7 +1763,7 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate day is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date day cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a day' },
 					{ value: 'a', expectedError: 'Received date day must be a number' },
 					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
 					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
@@ -1807,7 +1807,7 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate month is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date month cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a month' },
 					{ value: 'a', expectedError: 'Received date month must be a number' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
@@ -1851,7 +1851,7 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate year is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date year cannot be empty' },
+					{ value: '', expectedError: 'Received date must include a year' },
 					{ value: 'a', expectedError: 'Received date year must be a number' },
 					{ value: '202', expectedError: 'Received date year must be 4 digits' }
 				];

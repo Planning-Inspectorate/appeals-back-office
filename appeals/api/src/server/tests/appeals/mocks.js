@@ -13,42 +13,42 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 export const auditTrails = [
 	{
 		details: 'The case officer 13de469c-8de6-4908-97cd-330ea73df618 was added to the team',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}
 	},
 	{
 		details: 'Document blank.pdf uploaded (version 1)',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}
 	},
 	{
 		details: 'Version 1 of document blank.pdf received date changed',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}
 	},
 	{
 		details: 'Document blank.pdf (version 1) marked as redacted',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}
 	},
 	{
 		details: 'Document blank.pdf (version 1) marked as unredacted',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}
 	},
 	{
 		details: 'Document blank.pdf (version 1) marked as requiring no redaction',
-		loggedAt: new Date().toISOString(),
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
 		}

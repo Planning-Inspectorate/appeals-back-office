@@ -50,7 +50,7 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Interested Party Comments</h1>');
+			expect(elementInnerHtml).toContain('Interested party comments</h1>');
 			const selectedTab = parseHtml(response.text, {
 				rootElement: '.govuk-tabs__list-item--selected',
 				skipPrettyPrint: true
@@ -81,7 +81,7 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = dom.innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Interested Party Comments</h1>');
+			expect(elementInnerHtml).toContain('Interested party comments</h1>');
 
 			// Check the first row of the valid comments table
 			const validTable = dom.querySelector('#valid .govuk-table__body');
@@ -107,7 +107,7 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = dom.innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Interested Party Comments</h1>');
+			expect(elementInnerHtml).toContain('Interested party comments</h1>');
 
 			// Check the first row of the invalid comments table
 			const invalidTable = dom.querySelector('#invalid .govuk-table__body');

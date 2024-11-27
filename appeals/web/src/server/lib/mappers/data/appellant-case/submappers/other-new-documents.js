@@ -12,6 +12,6 @@ export const mapOtherNewDocuments = ({ appellantCaseData, userHasUpdateCase }) =
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'new-supporting-documents',
-		text: 'New supporting documents',
+		text: 'Other new documents with appeal',
 		folderInfo: appellantCaseData.documents.otherNewDocuments
 	});

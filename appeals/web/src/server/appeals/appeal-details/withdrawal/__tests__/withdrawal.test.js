@@ -159,7 +159,7 @@ describe('withdrawal', () => {
 			expect(withdrawalRequestDateResponse.statusCode).toBe(302);
 
 			const testCases = [
-				{ value: '', expectedError: 'Withdrawal request date day cannot be empty' },
+				{ value: '', expectedError: 'Withdrawal request date must include a day' },
 				{ value: 'a', expectedError: 'Withdrawal request date day must be a number' },
 				{ value: '0', expectedError: 'Withdrawal request date day must be between 1 and 31' },
 				{ value: '32', expectedError: 'Withdrawal request date day must be between 1 and 31' }
@@ -194,7 +194,7 @@ describe('withdrawal', () => {
 			expect(withdrawalRequestDateResponse.statusCode).toBe(302);
 
 			const testCases = [
-				{ value: '', expectedError: 'Withdrawal request date month cannot be empty' },
+				{ value: '', expectedError: 'Withdrawal request date must include a month' },
 				{ value: 'a', expectedError: 'Withdrawal request date month must be a number' },
 				{ value: '0', expectedError: 'Withdrawal request date month must be between 1 and 12' },
 				{ value: '13', expectedError: 'Withdrawal request date month must be between 1 and 12' }
@@ -229,7 +229,7 @@ describe('withdrawal', () => {
 			expect(withdrawalRequestDateResponse.statusCode).toBe(302);
 
 			const testCases = [
-				{ value: '', expectedError: 'Withdrawal request date year cannot be empty' },
+				{ value: '', expectedError: 'Withdrawal request date must include a year' },
 				{ value: 'a', expectedError: 'Withdrawal request date year must be a number' },
 				{ value: '202', expectedError: 'Withdrawal request date year must be 4 digits' },
 				{ value: 3000, expectedError: 'Date must be today or in the past' }

@@ -29,10 +29,10 @@ export const isValidRedactionStatus = (maybeRedactionStatus) =>
  * @returns {PageContent}
  */
 const mapper = (appealDetails, errors, backLinkUrl) => ({
-	title: 'Select redaction status',
+	title: 'Redaction status',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Select redaction status',
+	heading: 'Redaction status',
 	pageComponents: [
 		radiosInput({
 			name,

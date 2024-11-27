@@ -76,9 +76,7 @@ describe('Appeal Timetables', () => {
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('Change LPA final comments due date</h1>');
 		expect(element.innerHTML).toContain('There is a problem</h2>');
-		expect(element.innerHTML).toContain('Date day cannot be empty</a>');
-		expect(element.innerHTML).toContain('Date month cannot be empty</a>');
-		expect(element.innerHTML).toContain('Date year cannot be empty</a>');
+		expect(element.innerHTML).toContain('Date must include a day, a month and a year');
 	});
 
 	it('should render "Change Final Comment Review Date" with error (api error)', async () => {

@@ -2083,17 +2083,11 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#visit-date-day">Visit date day cannot be empty</a>
+                            <li><a href="#">Visit date must include a day, a month and a year</a>
                             </li>
-                            <li><a href="#visit-date-month">Visit date month cannot be empty</a>
+                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
-                            <li><a href="#visit-date-year">Visit date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Visit date must be a valid date</a>
-                            </li>
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be empty</a>
-                            </li>
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be empty</a>
+                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
                             </li>
                         </ul>
                     </div>
@@ -3941,9 +3935,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">End time hour cannot be empty</a>
+                            <li><a href="#visit-end-time-hour">End time must include an hour</a>
                             </li>
-                            <li><a href="#visit-end-time-minute">End time minute cannot be empty</a>
+                            <li><a href="#visit-end-time-minute">End time must include a minute</a>
                             </li>
                             <li><a href="#">start time must be before end time</a>
                             </li>
@@ -4076,9 +4070,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be empty</a>
+                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be empty</a>
+                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
                             </li>
                         </ul>
                     </div>
@@ -4209,9 +4203,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be empty</a>
+                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be empty</a>
+                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
                             </li>
                         </ul>
                     </div>
@@ -4344,17 +4338,11 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#visit-date-day">Visit date day cannot be empty</a>
+                            <li><a href="#">Visit date must include a day, a month and a year</a>
                             </li>
-                            <li><a href="#visit-date-month">Visit date month cannot be empty</a>
+                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
-                            <li><a href="#visit-date-year">Visit date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Visit date must be a valid date</a>
-                            </li>
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be empty</a>
-                            </li>
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be empty</a>
+                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
                             </li>
                         </ul>
                     </div>

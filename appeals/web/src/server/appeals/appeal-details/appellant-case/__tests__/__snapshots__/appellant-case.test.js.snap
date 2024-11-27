@@ -2030,16 +2030,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New supporting documents</dt>
-                    <dd                     class="govuk-summary-list__value">No documents available</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents"> Add<span class="govuk-visually-hidden"> New supporting documents</span></a>
-                        </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings</dt>
-                    <dd class="govuk-summary-list__value">No documents available</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings"> Add<span class="govuk-visually-hidden"> New plans or drawings</span></a>
-                    </dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application decision date</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
@@ -2123,6 +2113,16 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                         data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                     </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings with appeal</dt>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings"> Add<span class="govuk-visually-hidden"> New plans or drawings with appeal</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new documents with appeal</dt>
+                    <dd                     class="govuk-summary-list__value">No documents available</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents"> Add<span class="govuk-visually-hidden"> Other new documents with appeal</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -6415,13 +6415,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#due-date-day">Date day cannot be empty</a>
-                            </li>
-                            <li><a href="#due-date-month">Date month cannot be empty</a>
-                            </li>
-                            <li><a href="#due-date-year">Date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a day, a month and a year</a>
                             </li>
                         </ul>
                     </div>
@@ -7829,13 +7823,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#valid-date-day">Date day cannot be empty</a>
-                            </li>
-                            <li><a href="#valid-date-month">Date month cannot be empty</a>
-                            </li>
-                            <li><a href="#valid-date-year">Date year cannot be empty</a>
-                            </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must include a day, a month and a year</a>
                             </li>
                         </ul>
                     </div>
