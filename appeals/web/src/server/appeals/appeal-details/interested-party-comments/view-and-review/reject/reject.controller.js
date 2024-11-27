@@ -20,7 +20,7 @@ import {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderSelectReason = async (request, response) => {
-	const { currentAppeal, currentComment, apiClient, errors } = request;
+	const { currentAppeal, currentComment, apiClient, session, errors } = request;
 
 	if (!currentAppeal || !currentComment) {
 		return response.status(404).render('app/404.njk');
@@ -28,9 +28,11 @@ export const renderSelectReason = async (request, response) => {
 
 	try {
 		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
+
 		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 			currentComment,
 			rejectionReasons,
+			session,
 			errors?.['']
 				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
 				: undefined
@@ -57,16 +59,12 @@ export const postRejectReason = async (request, response) => {
 	const {
 		currentComment,
 		params: { appealId, commentId },
-		errors,
-		session,
-		body
+		errors
 	} = request;
 
 	if (errors) {
 		return renderSelectReason(request, response);
 	}
-
-	session.rejectIpComment = body;
 
 	if (currentComment.represented.email) {
 		return response
@@ -107,6 +105,8 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 
 		addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
 
+		delete session.rejectIpComment;
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
 		);
@@ -121,7 +121,7 @@ export const postRejectInterestedPartyComment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export const renderAllowResubmit = async (request, response) => {
-	const { currentAppeal, currentComment, errors } = request;
+	const { currentAppeal, currentComment, session, errors } = request;
 
 	if (!currentAppeal || !currentComment) {
 		return response.status(404).render('app/404.njk');
@@ -131,7 +131,8 @@ export const renderAllowResubmit = async (request, response) => {
 		const pageContent = await rejectAllowResubmitPage(
 			request.apiClient,
 			currentAppeal,
-			currentComment
+			currentComment,
+			session
 		);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
@@ -151,16 +152,12 @@ export const renderAllowResubmit = async (request, response) => {
 export const postAllowResubmit = async (request, response) => {
 	const {
 		errors,
-		session,
-		params: { appealId, commentId },
-		body
+		params: { appealId, commentId }
 	} = request;
 
 	if (errors) {
 		return renderAllowResubmit(request, response);
 	}
-
-	session.rejectIpComment.allowResubmit = body.allowResubmit;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject/check-your-answers`

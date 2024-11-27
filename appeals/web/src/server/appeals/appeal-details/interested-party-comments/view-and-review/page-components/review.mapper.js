@@ -66,7 +66,10 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 				{
 					value: COMMENT_STATUS.INVALID,
 					text: 'Reject comment',
-					checked: comment?.status === COMMENT_STATUS.INVALID
+					checked:
+						comment?.status === COMMENT_STATUS.INVALID ||
+						(comment?.status === COMMENT_STATUS.AWAITING_REVIEW &&
+							session.rejectIpComment?.commentId === comment.id)
 				}
 			]
 		}
