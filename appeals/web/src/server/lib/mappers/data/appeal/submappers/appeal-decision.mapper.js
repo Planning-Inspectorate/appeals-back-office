@@ -1,6 +1,7 @@
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { generateDecisionDocumentDownloadHtml } from '../common.js';
+import { documentationFolderTableItem } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -29,29 +30,18 @@ function generateAppealDecisionActionListItems(appealDetails) {
 }
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppealDecision = ({ appealDetails }) => ({
-	id: 'appeal-decision',
-	display: {
-		tableItem: [
-			{
-				text: 'Appeal decision',
-				classes: 'appeal-decision-documentation'
-			},
-			{
-				text:
-					appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ? 'Sent' : 'Awaiting decision',
-				classes: 'appeal-decision-status'
-			},
-			{
-				text: 'Not applicable',
-				classes: 'appeal-decision-due-date'
-			},
-			{
-				html: `<ul class="govuk-summary-list__actions-list">${generateAppealDecisionActionListItems(
-					appealDetails
-				)}</ul>`,
-				classes: 'appeal-decision-actions'
-			}
-		]
-	}
-});
+export const mapAppealDecision = ({ appealDetails }) =>
+	documentationFolderTableItem({
+		id: 'appeal-decision',
+		text: 'Appeal decision',
+		textClasses: 'appeal-decision-documentation',
+		statusText:
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ? 'Sent' : 'Awaiting decision',
+		statusTextClasses: 'appeal-decision-status',
+		receivedText: 'Not applicable',
+		receivedTextClasses: 'appeal-decision-due-date',
+		actionHtml: `<ul class="govuk-summary-list__actions-list">${generateAppealDecisionActionListItems(
+			appealDetails
+		)}</ul>`,
+		actionHtmlClasses: 'appeal-decision-actions'
+	});
