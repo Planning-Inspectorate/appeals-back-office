@@ -296,11 +296,7 @@ export const specialisms = [
  */
 export const representationRejectionReasons = [
 	{
-		name: 'Received after deadline',
-		hasText: false
-	},
-	{
-		name: 'Includes personal and/or medical information',
+		name: 'Includes personal or medical information',
 		hasText: false
 	},
 	{
@@ -308,7 +304,7 @@ export const representationRejectionReasons = [
 		hasText: false
 	},
 	{
-		name: 'Duplicated comment',
+		name: 'Duplicated or repeated comment',
 		hasText: false
 	},
 	{
@@ -320,7 +316,11 @@ export const representationRejectionReasons = [
 		hasText: false
 	},
 	{
-		name: 'Other',
+		name: 'Received after deadline',
+		hasText: false
+	},
+	{
+		name: 'Other reason',
 		hasText: true
 	}
 ];
