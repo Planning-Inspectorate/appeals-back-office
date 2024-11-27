@@ -33,12 +33,21 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
  * @param {import('got').Got} apiClient
  * @param {Appeal} appealDetails
  * @param {Representation} comment
+ * @param {import('@pins/express').Session} [session]
  * @returns {Promise<PageContent>}
  * */
-export async function rejectAllowResubmitPage(apiClient, appealDetails, comment) {
+export async function rejectAllowResubmitPage(apiClient, appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const deadline = await addBusinessDays(apiClient, new Date(), 7);
 	const deadlineString = dateISOStringToDisplayDate(deadline.toISOString());
+
+	const sessionValue = (() => {
+		if (session?.rejectIpComment?.commentId !== comment.id) {
+			return null;
+		}
+
+		return session?.rejectIpComment?.allowResubmit;
+	})();
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -52,7 +61,8 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment)
 		},
 		pageComponents: [
 			yesNoInput({
-				name: 'allowResubmit'
+				name: 'allowResubmit',
+				value: sessionValue
 			})
 		]
 	};
@@ -122,12 +132,16 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						html: commentHtml
 					}
 				},
-				{
-					key: {
-						text: 'Supporting documents'
-					},
-					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
-				},
+				...(attachmentsList
+					? [
+							{
+								key: {
+									text: 'Supporting documents'
+								},
+								value: { html: attachmentsList }
+							}
+					  ]
+					: []),
 				{
 					key: {
 						text: 'Review decision'
@@ -217,26 +231,49 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 /**
  * @param {Representation} comment
  * @param {RepresentationRejectionReason[]} rejectionReasonOptions
+ * @param {import('@pins/express').Session} session
  * @param {{ optionId: number, message: string }} [error]
  * @returns {import('../../../../../appeals/appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapRejectionReasonOptionsToCheckboxItemParameters(
 	comment,
 	rejectionReasonOptions,
+	session,
 	error
 ) {
 	const rejectionReasons = comment.rejectionReasons || [];
 	const rejectionReasonMap = new Map(rejectionReasons.map((reason) => [reason.id, reason]));
 
+	const selectedReasons = (() => {
+		const value = session.rejectIpComment?.rejectionReason;
+		if (!value) {
+			return [];
+		}
+
+		return Array.isArray(value) ? value : [value];
+	})();
+
 	return rejectionReasonOptions.map((reason) => {
 		const selectedReason = rejectionReasonMap.get(reason.id);
+		const id = reason.id.toString();
+
+		const selectedTextItems = (() => {
+			const value = session.rejectIpComment?.[`rejectionReason-${reason.id}`];
+			if (!value || session.rejectIpComment?.commentId !== comment.id) {
+				return null;
+			}
+
+			return Array.isArray(value) ? value : [value];
+		})();
+
 		return {
-			value: reason.id.toString(),
+			value: id,
 			text: reason.name,
-			checked: error?.optionId === reason.id || Boolean(selectedReason),
+			checked:
+				error?.optionId === reason.id || Boolean(selectedReason) || selectedReasons.includes(id),
 			error: error?.message,
 			hasText: reason.hasText,
-			textItems: selectedReason?.text || ['']
+			textItems: selectedReason?.text || selectedTextItems || ['']
 		};
 	});
 }

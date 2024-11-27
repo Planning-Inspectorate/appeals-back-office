@@ -18,9 +18,6 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                         <div class="pins-show-more">Awaiting review comment 47</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                     <dd class="govuk-summary-list__value">Comment rejected</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/review"> Change<span class="govuk-visually-hidden"> Review decision</span></a>
