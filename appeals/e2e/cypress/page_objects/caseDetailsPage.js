@@ -190,8 +190,8 @@ export class CaseDetailsPage extends Page {
 	 ****************************************************************/
 
 	checkAnswerWithdrawalRequest(rowName, rowAnswer) {
-		let answer = cy
-			.get(this.selectors.summaryListKey)
+		let answer = this.basePageElements
+			.summaryListKey()
 			.contains(rowName)
 			.next()
 			.children()
@@ -200,8 +200,8 @@ export class CaseDetailsPage extends Page {
 	}
 
 	checkAnswerRedactionStatus(rowName, rowAnswer) {
-		let answer = cy
-			.get(this.selectors.summaryListKey)
+		let answer = this.basePageElements
+			.summaryListKey()
 			.contains(rowName)
 			.next()
 			.invoke('prop', 'innerText');
@@ -242,7 +242,8 @@ export class CaseDetailsPage extends Page {
 	verifyCheckYourAnswerDate(rowName, dateToday) {
 		//verifys the date on check your answer page is correct
 		const formattedDate = dateTimeSection.formatDate(dateToday);
-		cy.get(this.selectors.summaryListKey)
+		let answer = this.basePageElements
+			.summaryListKey()
 			.contains(rowName)
 			.next()
 			.invoke('prop', 'innerText')
