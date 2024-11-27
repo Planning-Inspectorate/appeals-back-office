@@ -2139,8 +2139,8 @@ describe('appeal-details', () => {
 					expect(columnHtml).toMatchSnapshot();
 					expect(columnHtml).toContain(
 						status === 'awaiting_transfer'
-							? '<td class="govuk-table__cell appeal-decision-actions"></td>'
-							: '<td class="govuk-table__cell appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
+							? '<td class="govuk-table__cell pins-table__cell--align-right appeal-decision-actions"></td>'
+							: '<td class="govuk-table__cell pins-table__cell--align-right appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
 					);
 				}
 			});

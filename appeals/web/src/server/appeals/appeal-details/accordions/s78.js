@@ -52,7 +52,7 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 				{ text: 'Documentation' },
 				{ text: 'Status' },
 				{ text: 'Received' },
-				{ text: 'Action' }
+				{ text: 'Action', classes: 'pins-table__header--align-right' }
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,

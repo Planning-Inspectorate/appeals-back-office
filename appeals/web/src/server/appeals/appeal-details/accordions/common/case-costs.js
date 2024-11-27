@@ -7,7 +7,11 @@ import { isDefined } from '#lib/ts-utilities.js';
 export const getCaseCosts = (mappedData) => ({
 	type: 'table',
 	parameters: {
-		head: [{ text: 'Documentation' }, { text: 'Status' }, { text: 'Action' }],
+		head: [
+			{ text: 'Documentation' },
+			{ text: 'Status' },
+			{ text: 'Action', classes: 'pins-table__header--align-right' }
+		],
 		rows: [
 			mappedData.appeal.costsAppellantApplication.display.tableItem,
 			mappedData.appeal.costsAppellantWithdrawal.display.tableItem,
