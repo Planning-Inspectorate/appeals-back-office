@@ -21,6 +21,7 @@ import { mapEiaDevelopmentDescription } from './submappers/map-eia-development-d
 import { mapProcedurePreference } from './submappers/map-procedure-preference.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
+import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-policies.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -45,5 +46,6 @@ export const submaps = {
 	eiaDevelopmentDescription: mapEiaDevelopmentDescription,
 	procedurePreference: mapProcedurePreference,
 	procedurePreferenceDetails: mapProcedurePreferenceDetails,
-	procedurePreferenceDuration: mapProcedurePreferenceDuration
+	procedurePreferenceDuration: mapProcedurePreferenceDuration,
+	otherRelevantPolicies: mapOtherRelevantPolicies
 };
