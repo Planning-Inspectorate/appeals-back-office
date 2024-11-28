@@ -1,24 +1,22 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
 /** @typedef {{ 'redactionStatus': string }} ReqBody */
 
-/** @typedef {'redacted' | 'unredacted' | 'not-required'} RedactionStatus */
-
-/** @type {Record<RedactionStatus, string>} */
 export const statusFormatMap = {
-	redacted: 'Redacted',
-	unredacted: 'Unredacted',
-	'not-required': 'No redaction required'
+	[APPEAL_REDACTED_STATUS.REDACTED]: 'Redacted',
+	[APPEAL_REDACTED_STATUS.NOT_REDACTED]: 'Unredacted',
+	[APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED]: 'No redaction required'
 };
 
 export const name = 'redactionStatus';
 
 /**
  * @param {any} maybeRedactionStatus
- *	@returns {maybeRedactionStatus is RedactionStatus}
+ *	@returns {maybeRedactionStatus is keyof APPEAL_REDACTED_STATUS}
  */
 export const isValidRedactionStatus = (maybeRedactionStatus) =>
 	Object.keys(statusFormatMap).includes(maybeRedactionStatus);
@@ -36,7 +34,8 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 	pageComponents: [
 		radiosInput({
 			name,
-			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text }))
+			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
+			value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
 		})
 	]
 });
