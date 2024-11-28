@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`appellant-case GET /appellant-case should render a "Application decision date removed" notification banner when the application decision date is removed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Application decision date removed</p>
-    </div>
-</div>"
-`;
-
 exports[`appellant-case GET /appellant-case should render a "Application decision date updated" notification banner when the application decision date is updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -19,7 +7,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Application decision date updated</p>
+        <p class="govuk-notification-banner__heading">Application decision date changed</p>
     </div>
 </div>"
 `;

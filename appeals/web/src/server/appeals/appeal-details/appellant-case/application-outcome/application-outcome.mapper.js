@@ -2,6 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 
 /**
  * @param {Appeal} appealData
@@ -14,48 +15,38 @@ export const changeApplicationOutcomePage = (appealData, appellantCaseData, stor
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change the application outcome',
+		title: 'Change application decision outcome',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `What was the application decision?`,
+		heading: `Change application decision outcome`,
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'application-outcome',
-					idPrefix: 'application-outcome',
-					fieldSet: {
-						legend: {
-							text: `What was the application decision?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--1'
-						}
+			radiosInput({
+				name: 'applicationOutcome',
+				idPrefix: 'application-outcome',
+				items: [
+					{
+						value: 'granted',
+						text: 'Granted with conditions',
+						checked: storedSessionData
+							? storedSessionData === 'granted'
+							: appellantCaseData.applicationDecision === 'granted'
 					},
-					items: [
-						{
-							value: 'granted',
-							text: 'Granted with conditions',
-							checked: storedSessionData
-								? storedSessionData === 'granted'
-								: appellantCaseData.applicationDecision === 'granted'
-						},
-						{
-							value: 'refused',
-							text: 'Refused',
-							checked: storedSessionData
-								? storedSessionData === 'refused'
-								: appellantCaseData.applicationDecision === 'refused'
-						},
-						{
-							value: 'not_received',
-							text: 'Not received',
-							checked: storedSessionData
-								? storedSessionData === 'not_received'
-								: appellantCaseData.applicationDecision === 'not_received'
-						}
-					]
-				}
-			}
+					{
+						value: 'refused',
+						text: 'Refused',
+						checked: storedSessionData
+							? storedSessionData === 'refused'
+							: appellantCaseData.applicationDecision === 'refused'
+					},
+					{
+						value: 'not_received',
+						text: 'Not received',
+						checked: storedSessionData
+							? storedSessionData === 'not_received'
+							: appellantCaseData.applicationDecision === 'not_received'
+					}
+				]
+			})
 		]
 	};
 

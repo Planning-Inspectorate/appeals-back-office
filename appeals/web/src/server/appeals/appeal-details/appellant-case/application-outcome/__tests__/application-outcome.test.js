@@ -23,14 +23,14 @@ describe('application-outcome', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('What was the application decision?</h1>');
+			expect(elementInnerHtml).toContain('Change application decision outcome</h1>');
 		});
 	});
 
 	describe('POST /change', () => {
 		it('should redirect appellant case if data is valid', async () => {
 			const validData = {
-				'application-outcome': 'refused'
+				applicationOutcome: 'refused'
 			};
 
 			nock('http://test/')
@@ -47,7 +47,7 @@ describe('application-outcome', () => {
 
 		it('should re-render applicationOutcome change page if data is invalid', async () => {
 			const invalidData = {
-				'application-outcome': 'invalid'
+				applicationOutcome: 'invalid'
 			};
 			nock('http://test/')
 				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
@@ -63,7 +63,7 @@ describe('application-outcome', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('What was the application decision?</h1>');
+			expect(elementInnerHtml).toContain('Change application decision outcome</h1>');
 			expect(elementInnerHtml).toContain('Select one of the options');
 		});
 	});

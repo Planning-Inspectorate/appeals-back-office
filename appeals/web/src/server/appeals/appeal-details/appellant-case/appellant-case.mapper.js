@@ -689,13 +689,15 @@ function generateCaseTypeSpecificComponents(
 export function getPageHeadingTextOverrideForFolder(folder) {
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
-			return 'supporting documents submitted with statement';
+			return 'Plans, drawings and list of plans';
 		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
 			return 'design and access statement';
 		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
 			return 'ownership certificate and/or land declaration';
+		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
+			return 'application decision letter';
 		default:
 			return;
 	}

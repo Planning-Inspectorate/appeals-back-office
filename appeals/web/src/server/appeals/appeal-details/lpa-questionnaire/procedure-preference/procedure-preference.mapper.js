@@ -49,8 +49,7 @@ export const changeProcedurePreferencePage = (
 						text: 'Written',
 						checked: procedurePreference === APPEAL_CASE_PROCEDURE.WRITTEN
 					}
-				],
-				id: 'procedure-preference'
+				]
 			})
 		]
 	};

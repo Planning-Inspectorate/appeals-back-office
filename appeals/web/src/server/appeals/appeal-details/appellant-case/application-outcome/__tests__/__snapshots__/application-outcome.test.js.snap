@@ -6,24 +6,24 @@ exports[`application-outcome GET /change should render the applicationOutcome ch
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What was the application decision?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision outcome</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome" name="applicationOutcome"
                             type="radio" value="granted">
                             <label class="govuk-label govuk-radios__label" for="application-outcome">Granted with conditions</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome-2" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome-2" name="applicationOutcome"
                             type="radio" value="refused">
                             <label class="govuk-label govuk-radios__label" for="application-outcome-2">Refused</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome-3" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome-3" name="applicationOutcome"
                             type="radio" value="not_received">
                             <label class="govuk-label govuk-radios__label" for="application-outcome-3">Not received</label>
                         </div>
@@ -54,24 +54,24 @@ exports[`application-outcome POST /change should re-render applicationOutcome ch
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What was the application decision?</h1>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision outcome</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome" name="applicationOutcome"
                             type="radio" value="granted">
                             <label class="govuk-label govuk-radios__label" for="application-outcome">Granted with conditions</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome-2" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome-2" name="applicationOutcome"
                             type="radio" value="refused">
                             <label class="govuk-label govuk-radios__label" for="application-outcome-2">Refused</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="application-outcome-3" name="application-outcome"
+                            <input class="govuk-radios__input" id="application-outcome-3" name="applicationOutcome"
                             type="radio" value="not_received">
                             <label class="govuk-label govuk-radios__label" for="application-outcome-3">Not received</label>
                         </div>
