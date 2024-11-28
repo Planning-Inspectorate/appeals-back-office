@@ -199,7 +199,7 @@ export const notificationBannerDefinitions = {
 	interestedPartyCommentsRejectedSuccess: {
 		type: 'success',
 		pages: ['ipComments'],
-		text: 'Comment invalid'
+		text: 'Comment rejected'
 	},
 	interestedPartyCommentsRedactionSuccess: {
 		type: 'success',
