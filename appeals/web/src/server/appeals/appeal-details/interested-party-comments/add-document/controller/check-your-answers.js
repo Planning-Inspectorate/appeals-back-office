@@ -10,6 +10,7 @@ import {
 	name as redactionStatusFieldName,
 	statusFormatMap
 } from '../../common/redaction-status.js';
+import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @type {import('@pins/express').RenderHandler<{}>}
@@ -80,6 +81,17 @@ export const postCheckYourAnswers = async (
 		addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
 	} = session;
 	try {
+		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
+
+		if (!redactionStatuses) throw new Error('Redaction statuses could not be retrieved');
+
+		const redactionStatusId = redactionStatuses.find(({ key }) => redactionStatus === key)?.id;
+
+		if (!redactionStatusId)
+			throw new Error(
+				'Submitted redaction status did not correspond with a known redaction status key'
+			);
+
 		await createNewDocument(apiClient, appealId, {
 			blobStorageHost:
 				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
@@ -95,7 +107,7 @@ export const postCheckYourAnswers = async (
 					folderId: folderId,
 					GUID: document.GUID,
 					receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
-					redactionStatusId: redactionStatus,
+					redactionStatusId,
 					blobStoragePath: document.blobStoreUrl
 				}
 			]
