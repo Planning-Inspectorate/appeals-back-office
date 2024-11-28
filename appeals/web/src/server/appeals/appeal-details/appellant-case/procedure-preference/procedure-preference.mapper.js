@@ -30,7 +30,6 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 				type: 'radios',
 				parameters: {
 					name: 'procedurePreferenceRadio',
-					idPrefix: 'procedure-preference',
 					items: [
 						{
 							value: 'hearing',

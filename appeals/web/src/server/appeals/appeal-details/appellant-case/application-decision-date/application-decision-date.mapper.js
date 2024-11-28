@@ -2,7 +2,6 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/index.js';
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 
 /**
@@ -12,41 +11,10 @@ import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 /**
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
- * @param {{day: string, month: string, year: string, radio: string}} storedSessionData
- * @returns {PageContent}
- */
-export const changeApplicationHasDecisionDatePage = (
-	appealData,
-	appellantCaseData,
-	storedSessionData
-) => {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `Change the application decision date`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Was an application decision made?`,
-		pageComponents: [
-			yesNoInput({
-				name: 'application-decision-radio',
-				value:
-					storedSessionData?.radio === 'yes' || Boolean(appellantCaseData.applicationDecisionDate)
-			})
-		]
-	};
-
-	return pageContent;
-};
-
-/**
- * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {DayMonthYearHourMinute} storedSessionData
  * @returns {PageContent}
  */
-export const changeApplicationSetDecisionDatePage = (
+export const changeApplicationDecisionDatePage = (
 	appealData,
 	appellantCaseData,
 	storedSessionData
@@ -73,10 +41,10 @@ export const changeApplicationSetDecisionDatePage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the application decision date`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/application-decision-date/change`,
+		title: 'Change application decision date',
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the application decision date`,
+		heading: 'Change application decision date',
 		pageComponents: [
 			{
 				type: 'date-input',
@@ -86,13 +54,6 @@ export const changeApplicationSetDecisionDatePage = (
 					namePrefix: 'application-decision-date',
 					hint: {
 						text: 'For example, 27 3 2007'
-					},
-					fieldSet: {
-						legend: {
-							text: `When was the decision made for the application?`,
-							isPageHeading: false,
-							classes: 'govuk-fieldset__legend--l'
-						}
 					},
 					items: [
 						{

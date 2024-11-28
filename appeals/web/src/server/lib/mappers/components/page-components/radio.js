@@ -1,5 +1,3 @@
-import { kebabCase } from 'lodash-es';
-
 /**
  * @typedef {'textarea'} ConditionalTypes
  */
@@ -112,18 +110,18 @@ export function yesNoInput({
  * @param {Object} params
  * @param {string} params.name
  * @param {RadioItem[]} params.items
- * @param {string} [params.id]
+ * @param {string} [params.idPrefix]
  * @param {string|null} [params.value]
  * @param {string} [params.legendText]
  * @returns {PageComponent}
  */
-export function radiosInput({ name, items, id, value, legendText }) {
+export function radiosInput({ name, items, idPrefix, value, legendText }) {
 	/** @type {PageComponent} */
 	const component = {
 		type: 'radios',
 		parameters: {
 			name,
-			id: id || kebabCase(name),
+			idPrefix,
 			items,
 			value
 		}

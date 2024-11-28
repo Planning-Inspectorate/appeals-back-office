@@ -7,17 +7,12 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/change')
-	.get(asyncHandler(controllers.getChangeApplicationHasDecisionDate))
-	.post(asyncHandler(controllers.postChangeApplicationHasDecisionDate));
-
-router
-	.route('/change/set-date')
-	.get(controllers.getChangeApplicationSetDecisionDate)
+	.get(asyncHandler(controllers.getChangeApplicationDecisionDate))
 	.post(
 		validators.validateDateFields,
 		validators.validateDateValid,
 		validators.validatePastDate,
-		controllers.postChangeApplicationSetDecisionDate
+		asyncHandler(controllers.postChangeApplicationDecisionDate)
 	);
 
 export default router;

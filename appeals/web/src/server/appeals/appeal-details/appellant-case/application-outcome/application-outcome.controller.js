@@ -59,7 +59,7 @@ export const postChangeApplicationOutcome = async (request, response) => {
 	}
 
 	try {
-		const applicationOutcome = request.body['application-outcome'];
+		const applicationOutcome = request.body['applicationOutcome'];
 		const { currentAppeal, apiClient } = request;
 		const { appealId, appellantCaseId } = currentAppeal;
 
@@ -70,7 +70,7 @@ export const postChangeApplicationOutcome = async (request, response) => {
 			'changePage',
 			appealId,
 			'',
-			'Application outcome has been updated'
+			'Application decision outcome changed'
 		);
 
 		delete request.session.applicationOutcome;

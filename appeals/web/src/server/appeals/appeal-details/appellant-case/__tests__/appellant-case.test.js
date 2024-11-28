@@ -237,32 +237,6 @@ describe('appellant-case', () => {
 			expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
 		});
 
-		it('should render a "Application decision date removed" notification banner when the application decision date is removed', async () => {
-			const appealId = appealData.appealId;
-			const appellantCaseId = appealData.appellantCaseId;
-			const validData = {
-				'application-decision-radio': 'no'
-			};
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, validData);
-
-			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change`)
-				.send(validData);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Application decision date removed</p>');
-		});
-
 		it('should render a "Application decision date updated" notification banner when the application decision date is updated', async () => {
 			const appealId = appealData.appealId.toString();
 			const appellantCaseId = appealData.appellantCaseId;
@@ -277,7 +251,7 @@ describe('appellant-case', () => {
 				.reply(200, { ...validData });
 
 			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change/set-date`)
+				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change`)
 				.send(validData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
@@ -288,7 +262,7 @@ describe('appellant-case', () => {
 
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Application decision date updated');
+			expect(notificationBannerElementHTML).toContain('Application decision date changed');
 		});
 
 		it('should render a "Green belt status updated" notification banner when the green belt response is changed', async () => {

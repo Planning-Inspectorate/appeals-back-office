@@ -13,19 +13,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -50,19 +50,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -87,19 +87,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
@@ -124,19 +124,19 @@ exports[`procedure-preference GET /change should render the change procedure pre
                 <div class="govuk-form-group">
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
                             type="radio" value="hearing">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference">Hearing</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-2" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
                             type="radio" value="inquiry">
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-2">Inquiry</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="procedure-preference-3" name="procedurePreferenceRadio"
+                            <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
                             type="radio" value="written" checked>
-                            <label class="govuk-label govuk-radios__label" for="procedure-preference-3">Written</label>
+                            <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
                         </div>
                     </div>
                 </div>
