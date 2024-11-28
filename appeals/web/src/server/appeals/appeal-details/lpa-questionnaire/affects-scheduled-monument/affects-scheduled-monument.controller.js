@@ -5,22 +5,16 @@ import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import * as mapper from './affects-scheduled-monument.mapper.js';
 import * as service from './affects-scheduled-monument.service.js';
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getChangeAffectsScheduledMonument = async (request, response) => {
-	return renderChangeAffectsScheduledMonument(request, response);
-};
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeAffectsScheduledMonument = async (request, response) => {
+export const renderChangeAffectsScheduledMonument = async (request, response) => {
+	const { currentAppeal, session, errors, originalUrl, apiClient } = request;
+	const origin = originalUrl.split('/').slice(0, -2).join('/');
+
 	try {
-		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
-		const origin = originalUrl.split('/').slice(0, -2).join('/');
 		const data = await getLpaQuestionnaireFromId(
 			apiClient,
 			currentAppeal.appealId,
@@ -52,11 +46,11 @@ const renderChangeAffectsScheduledMonument = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeAffectsScheduledMonument = async (request, response) => {
-	request.session.affectsScheduledMonument = request.body['affectsScheduledMonumentRadio'];
-
 	if (request.errors) {
 		return renderChangeAffectsScheduledMonument(request, response);
 	}
+
+	request.session.affectsScheduledMonument = request.body['affectsScheduledMonumentRadio'];
 
 	try {
 		const {

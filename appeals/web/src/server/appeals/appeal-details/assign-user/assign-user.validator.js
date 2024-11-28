@@ -1,5 +1,6 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 
 export const validateSearchTerm = createValidator(
 	body('searchTerm')
@@ -11,30 +12,16 @@ export const validateSearchTerm = createValidator(
 		.withMessage('Search term must be between 2 and 80 characters in length')
 );
 
-export const validatePostConfirmation = (isUnassign = false, isInspector = false) => {
-	return createValidator(
-		body('confirm')
-			.notEmpty()
-			.withMessage(
-				`Select yes if you would like to ${isUnassign ? 'unassign' : 'assign'} this ${
-					isInspector ? 'inspector' : 'case officer'
-				}`
-			)
-			.bail()
-			.isIn(['yes', 'no'])
-			.withMessage('Something went wrong')
+export const validatePostConfirmation = (isUnassign = false, isInspector = false) =>
+	createYesNoRadioValidator(
+		'confirm',
+		`Select yes if you would like to ${isUnassign ? 'unassign' : 'assign'} this ${
+			isInspector ? 'inspector' : 'case officer'
+		}`
 	);
-};
 
-export const validateNewUserPostConfirmation = (isInspector = false) => {
-	return createValidator(
-		body('confirm')
-			.notEmpty()
-			.withMessage(
-				`Select yes if you would like to assign a new ${isInspector ? 'inspector' : 'case officer'}`
-			)
-			.bail()
-			.isIn(['yes', 'no'])
-			.withMessage('Something went wrong')
+export const validateNewUserPostConfirmation = (isInspector = false) =>
+	createYesNoRadioValidator(
+		'confirm',
+		`Select yes if you would like to assign a new ${isInspector ? 'inspector' : 'case officer'}`
 	);
-};
