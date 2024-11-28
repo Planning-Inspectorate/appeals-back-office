@@ -28,6 +28,7 @@ import {
 	uploadPage
 } from './add-ip-comment.mapper.js';
 import { postRepresentationComment } from './add-ip-comment.service.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -270,7 +271,7 @@ export async function renderCheckYourAnswers(
 				county,
 				postCode
 			} = {
-				redactionStatus: 'unredacted',
+				redactionStatus: APPEAL_REDACTED_STATUS.NOT_REDACTED,
 				day: '',
 				month: '',
 				year: '',
