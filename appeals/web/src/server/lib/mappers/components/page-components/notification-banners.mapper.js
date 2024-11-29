@@ -219,7 +219,7 @@ export const notificationBannerDefinitions = {
 	interestedPartyCommentsDocumentAddedSuccess: {
 		type: 'success',
 		pages: ['viewIpComment', 'reviewIpComment'],
-		text: 'Interested party address changed'
+		text: 'Supporting document added'
 	}
 };
 
