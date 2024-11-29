@@ -1,3 +1,4 @@
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import addressRepository from '#repositories/address.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
@@ -12,76 +13,44 @@ import formatDate from '#utils/date-formatter.js';
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 
+export class RepresentationTypeError extends Error {
+	/**
+	 * @param {string} representationTypeValue
+	 * */
+	constructor(representationTypeValue) {
+		super();
+
+		this.message = `unrecognised Representation type: ${representationTypeValue}`;
+	}
+}
+
 /**
- *
  * @param {number} appealId
  * @param {number} pageNumber
  * @param {number} pageSize
- * @param {string|undefined} status // APPEAL_REPRESENTATION_STATUS
- * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
- */
-export const getThirdPartComments = async (
-	appealId,
-	pageNumber = 1,
-	pageSize = 30,
-	status = undefined
-) => {
-	const { itemCount, comments } = await representationRepository.getThirdPartyCommentsByAppealId(
+ * @param {{ representationType?: string[], status?: string }} [options]
+ * */
+export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30, options = {}) => {
+	if (
+		options.representationType &&
+		!options.representationType.every((t) => Object.values(APPEAL_REPRESENTATION_TYPE).includes(t))
+	) {
+		throw new RepresentationTypeError(String(options.representationType));
+	}
+
+	return await representationRepository.getRepresentations(
 		appealId,
 		pageNumber - 1,
 		pageSize,
-		status
+		options
 	);
-	return { itemCount, comments };
-};
-
-/**
- *
- * @param {number} appealId
- * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
- */
-export const getLPAFinalComments = async (appealId, status = undefined) => {
-	const data = await representationRepository.getLPAFinalCommentsByAppealId(appealId);
-	if (status) {
-		return data.filter((rep) => rep.status === status);
-	}
-
-	return data;
-};
-
-/**
- *
- * @param {number} appealId
- * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
- */
-export const getAppellantFinalComments = async (appealId, status = undefined) => {
-	const data = await representationRepository.getAppellantFinalComments(appealId);
-	if (status) {
-		return data.filter((rep) => rep.status === status);
-	}
-
-	return data;
-};
-
-/**
- *
- * @param {number} appealId
- * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
- */
-export const getStatements = async (appealId, status = undefined) => {
-	const data = await representationRepository.getStatementsByAppealId(appealId);
-	if (status) {
-		return data.filter((rep) => rep.status === status);
-	}
-
-	return data;
 };
 
 /**
  *
  * @param {number} id
  */
-export const getRepresentation = async (id) => await representationRepository.getById(id);
+export const getRepresentation = representationRepository.getById;
 
 /**
  *

@@ -3344,10 +3344,10 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/reps/statements": {
+		"/appeals/{appealId}/reps": {
 			"get": {
 				"tags": ["Representations"],
-				"description": "Get all statements",
+				"description": "Get all representations",
 				"parameters": [
 					{
 						"name": "appealId",
@@ -3362,6 +3362,33 @@
 						"in": "header",
 						"required": true,
 						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"example": "statement",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageNumber",
+						"in": "query",
+						"required": false,
+						"example": "1",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"required": false,
+						"example": "30",
 						"schema": {
 							"type": "string"
 						}
@@ -3397,254 +3424,6 @@
 					},
 					"404": {
 						"description": "Not Found"
-					}
-				}
-			}
-		},
-		"/appeals/{appealId}/reps/lpa-final-comments": {
-			"get": {
-				"tags": ["Representations"],
-				"description": "Get final comments",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "status",
-						"in": "query",
-						"required": false,
-						"example": "awaiting_review",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get final comments for an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
-		},
-		"/appeals/{appealId}/reps/appellant-final-comments": {
-			"get": {
-				"tags": ["Representations"],
-				"description": "Get final comments",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "status",
-						"in": "query",
-						"required": false,
-						"example": "awaiting_review",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get final comments for an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
-		},
-		"/appeals/{appealId}/reps/comments": {
-			"get": {
-				"tags": ["Representations"],
-				"description": "Get comments",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "status",
-						"in": "query",
-						"required": false,
-						"example": "awaiting_review",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "pageNumber",
-						"in": "query",
-						"required": false,
-						"example": "1",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "pageSize",
-						"in": "query",
-						"required": false,
-						"example": "30",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get comments for an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			},
-			"post": {
-				"tags": ["Representations"],
-				"description": "Create a representation",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Create a Representation against an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateRepRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateRepRequest"
-							}
-						}
 					}
 				}
 			}
@@ -3843,6 +3622,67 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/RepRedactionRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/comments": {
+			"post": {
+				"tags": ["Representations"],
+				"description": "Create a representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Create a Representation against an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
 							}
 						}
 					}
@@ -4660,7 +4500,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "608fd3d6-1236-44de-ace7-12cb32dc16ec"
+								"example": "8487935f-723a-46d9-8450-52107da2e51b"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

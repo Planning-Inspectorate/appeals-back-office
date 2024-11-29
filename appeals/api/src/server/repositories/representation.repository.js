@@ -1,5 +1,4 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
 /** @typedef {import('#db-client').Prisma.RepresentationUncheckedCreateInput} RepresentationCreateInput */
@@ -40,74 +39,22 @@ const getById = (id) => {
 };
 
 /**
- *
- * @param {number} appealId
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
- */
-const getStatementsByAppealId = (appealId) => {
-	return databaseConnector.representation.findMany({
-		where: {
-			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT
-		},
-		include: {
-			representative: true,
-			represented: true,
-			lpa: true
-		}
-	});
-};
-
-/**
- *
- * @param {number} appealId
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
- */
-const getLPAFinalCommentsByAppealId = (appealId) => {
-	return databaseConnector.representation.findMany({
-		where: {
-			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		},
-		include: {
-			representative: true,
-			represented: true,
-			lpa: true
-		}
-	});
-};
-
-/**
- *
- * @param {number} appealId
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
- */
-const getAppellantFinalComments = (appealId) => {
-	return databaseConnector.representation.findMany({
-		where: {
-			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		},
-		include: {
-			representative: true,
-			represented: true,
-			lpa: true
-		}
-	});
-};
-
-/**
  * @param {number} appealId
  * @param {number} pageNumber
  * @param {number} pageSize
- * @param {string|undefined} status
- * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
- */
-const getThirdPartyCommentsByAppealId = async (appealId, pageNumber = 0, pageSize = 30, status) => {
+ * @param {{ representationType?: string[], status?: string }} options
+ * */
+const getRepresentations = async (appealId, pageNumber, pageSize, options) => {
 	const whereClause = {
 		appealId,
-		representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-		...(status && { status })
+		status: options.status,
+		...(options.representationType
+			? {
+					representationType: {
+						in: options.representationType
+					}
+			  }
+			: {})
 	};
 
 	const transaction = await databaseConnector.$transaction([
@@ -258,10 +205,7 @@ const updateRejectionReasons = async (repId, rejectionReasons) => {
 
 export default {
 	getById,
-	getStatementsByAppealId,
-	getLPAFinalCommentsByAppealId,
-	getAppellantFinalComments,
-	getThirdPartyCommentsByAppealId,
+	getRepresentations,
 	updateRepresentationById,
 	countAppealRepresentationsByStatus,
 	createRepresentation,

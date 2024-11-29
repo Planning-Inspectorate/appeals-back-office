@@ -747,7 +747,7 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
 					originalRepresentation: `Final comment from appellant`,
 					represented: {
 						connect: {
@@ -768,7 +768,7 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
 					originalRepresentation: `Final comment from LPA`,
 					lpa: {
 						connect: {
