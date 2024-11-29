@@ -15,7 +15,9 @@ import { Prisma } from '#utils/db-client/index.js';
 export const getStatements = async (req, res) => {
 	const { appeal, query } = req;
 	const status = query.status ? String(query.status) : undefined;
+
 	const data = await representationService.getStatements(appeal.id, status);
+
 	return res.send(data.map((rep) => formatRepresentation(rep)));
 };
 
@@ -24,11 +26,27 @@ export const getStatements = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-export const getFinalComments = async (req, res) => {
+export const getAppellantFinalComments = async (req, res) => {
 	const { appeal, query } = req;
 	const status = query.status ? String(query.status) : undefined;
-	const data = await representationService.getFinalComments(appeal.id, status);
-	return res.send(data.map((rep) => formatRepresentation(rep)));
+
+	const data = await representationService.getAppellantFinalComments(appeal.id, status);
+
+	return res.send(data.map(formatRepresentation));
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const getLPAFinalComments = async (req, res) => {
+	const { appeal, query } = req;
+	const status = query.status ? String(query.status) : undefined;
+
+	const data = await representationService.getLPAFinalComments(appeal.id, status);
+
+	return res.send(data.map(formatRepresentation));
 };
 
 /**

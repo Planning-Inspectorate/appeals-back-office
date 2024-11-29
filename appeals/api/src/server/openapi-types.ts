@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "4e94ce98-a05e-4d69-b741-5d3d84a1d69e" */
+		/** @example "608fd3d6-1236-44de-ace7-12cb32dc16ec" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;

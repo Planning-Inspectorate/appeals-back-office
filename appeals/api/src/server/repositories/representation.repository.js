@@ -63,11 +63,30 @@ const getStatementsByAppealId = (appealId) => {
  * @param {number} appealId
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
  */
-const getFinalCommentsByAppealId = (appealId) => {
+const getLPAFinalCommentsByAppealId = (appealId) => {
 	return databaseConnector.representation.findMany({
 		where: {
 			appealId,
-			representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+		},
+		include: {
+			representative: true,
+			represented: true,
+			lpa: true
+		}
+	});
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
+ */
+const getAppellantFinalComments = (appealId) => {
+	return databaseConnector.representation.findMany({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 		},
 		include: {
 			representative: true,
@@ -240,7 +259,8 @@ const updateRejectionReasons = async (repId, rejectionReasons) => {
 export default {
 	getById,
 	getStatementsByAppealId,
-	getFinalCommentsByAppealId,
+	getLPAFinalCommentsByAppealId,
+	getAppellantFinalComments,
 	getThirdPartyCommentsByAppealId,
 	updateRepresentationById,
 	countAppealRepresentationsByStatus,

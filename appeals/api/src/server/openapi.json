@@ -3401,7 +3401,64 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/reps/final-comments": {
+		"/appeals/{appealId}/reps/lpa-final-comments": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get final comments",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"example": "awaiting_review",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get final comments for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/appellant-final-comments": {
 			"get": {
 				"tags": ["Representations"],
 				"description": "Get final comments",
@@ -4603,7 +4660,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "4e94ce98-a05e-4d69-b741-5d3d84a1d69e"
+								"example": "608fd3d6-1236-44de-ace7-12cb32dc16ec"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
