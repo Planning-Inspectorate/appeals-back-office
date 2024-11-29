@@ -1,6 +1,15 @@
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import {
+	DEFAULT_PAGE_NUMBER,
+	DEFAULT_PAGE_SIZE,
+	ERROR_NOT_FOUND,
+	ERROR_REP_ONLY_STATEMENT_INCOMPLETE
+} from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
 
@@ -11,73 +20,45 @@ import { Prisma } from '#utils/db-client/index.js';
  * @param {Request} req
  * @param {Response} res
  * @returns {Promise<Response>}
- */
-export const getStatements = async (req, res) => {
+ * */
+export const getRepresentations = async (req, res) => {
 	const { appeal, query } = req;
-	const status = query.status ? String(query.status) : undefined;
+	const { type, status } = query;
 
-	const data = await representationService.getStatements(appeal.id, status);
-
-	return res.send(data.map((rep) => formatRepresentation(rep)));
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const getAppellantFinalComments = async (req, res) => {
-	const { appeal, query } = req;
-	const status = query.status ? String(query.status) : undefined;
-
-	const data = await representationService.getAppellantFinalComments(appeal.id, status);
-
-	return res.send(data.map(formatRepresentation));
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const getLPAFinalComments = async (req, res) => {
-	const { appeal, query } = req;
-	const status = query.status ? String(query.status) : undefined;
-
-	const data = await representationService.getLPAFinalComments(appeal.id, status);
-
-	return res.send(data.map(formatRepresentation));
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const getComments = async (req, res) => {
-	const { appeal, query } = req;
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
-	const status = query.status ? String(query.status) : undefined;
 
-	const { itemCount, comments } = await representationService.getThirdPartComments(
-		appeal.id,
-		pageNumber,
-		pageSize,
-		status
-	);
+	const representationType = type
+		? String(type)
+				.split(',')
+				.map(/** @type {string} */ (t) => t.trim())
+		: undefined;
 
-	const formattedItems = comments.map((rep) => formatRepresentation(rep));
+	try {
+		const { itemCount, comments } = await representationService.getRepresentations(
+			appeal.id,
+			pageNumber,
+			pageSize,
+			{
+				representationType,
+				status: status ? String(status) : undefined
+			}
+		);
 
-	const responsePayload = {
-		itemCount: itemCount,
-		items: formattedItems,
-		page: pageNumber,
-		pageCount: getPageCount(itemCount, pageSize),
-		pageSize: pageSize
-	};
+		return res.send({
+			itemCount: itemCount,
+			items: comments.map(formatRepresentation),
+			page: pageNumber,
+			pageCount: getPageCount(itemCount, pageSize),
+			pageSize
+		});
+	} catch (/** @type {*} */ error) {
+		if (error instanceof representationService.RepresentationTypeError) {
+			return res.status(400).send({ errors: error.message });
+		}
 
-	return res.send(responsePayload);
+		return res.status(500).send({ errors: error.message });
+	}
 };
 
 /**
@@ -135,13 +116,7 @@ export const changeRepresentationStatus = async (req, res) => {
 	const { repId } = req.params;
 	const { status, notes, allowResubmit } = req.body;
 
-	const rep = await representationService.updateRepresentationStatus(
-		Number(repId),
-		status,
-		notes,
-		String(req.get('azureAdUserId'))
-	);
-
+	const rep = await representationService.getRepresentation(parseInt(repId));
 	if (!rep) {
 		return res.status(404).send({
 			errors: {
@@ -150,9 +125,27 @@ export const changeRepresentationStatus = async (req, res) => {
 		});
 	}
 
+	if (
+		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
+		rep.representationType !== APPEAL_REPRESENTATION_TYPE.STATEMENT
+	) {
+		return res.status(400).send({
+			errors: {
+				status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE
+			}
+		});
+	}
+
+	const updatedRep = await representationService.updateRepresentationStatus(
+		Number(repId),
+		status,
+		notes,
+		String(req.get('azureAdUserId'))
+	);
+
 	await representationService.notifyRejection(req.notifyClient, req.appeal, rep, allowResubmit);
 
-	return res.send(formatRepresentation(rep));
+	return res.send(formatRepresentation(updatedRep));
 };
 
 /**

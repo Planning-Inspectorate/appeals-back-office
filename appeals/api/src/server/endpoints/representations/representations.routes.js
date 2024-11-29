@@ -13,16 +13,31 @@ import { checkRepresentationExistsById } from '#middleware/check-representation-
 const router = createRouter();
 
 router.get(
-	'/:appealId/reps/statements',
+	'/:appealId/reps',
 	/*
 	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/statements'
-	#swagger.description = Get all statements
+	#swagger.path = '/appeals/{appealId}/reps'
+	#swagger.description = "Get all representations"
 	#swagger.parameters['azureAdUserId'] = {
 		in: 'header',
 		required: true,
 		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 	}
+  #swagger.parameters['types'] = {
+    in: 'query',
+    required: false,
+    example: 'statement'
+  }
+  #swagger.parameters['pageNumber'] = {
+    in: 'query',
+    required: false,
+    example: '1'
+  }
+  #swagger.parameters['pageSize'] = {
+    in: 'query',
+    required: false,
+    example: '30'
+  }
 	#swagger.parameters['status'] = {
 		in: 'query',
 		required: false,
@@ -37,101 +52,7 @@ router.get(
  */
 	getRepresentationRouteValidator,
 	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.getStatements)
-);
-
-router.get(
-	'/:appealId/reps/lpa-final-comments',
-	/*
-	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/lpa-final-comments'
-	#swagger.description = Get final comments
-	#swagger.parameters['azureAdUserId'] = {
-		in: 'header',
-		required: true,
-		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-	}
-	#swagger.parameters['status'] = {
-		in: 'query',
-		required: false,
-		example: 'awaiting_review'
-	}
-	#swagger.responses[200] = {
-		description: 'Get final comments for an appeal',
-		schema: { $ref: '#/components/schemas/RepResponse' }
-	}
-	#swagger.responses[400] = {}
-	#swagger.responses[404] = {}
- */
-	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.getLPAFinalComments)
-);
-
-router.get(
-	'/:appealId/reps/appellant-final-comments',
-	/*
-	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/appellant-final-comments'
-	#swagger.description = Get final comments
-	#swagger.parameters['azureAdUserId'] = {
-		in: 'header',
-		required: true,
-		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-	}
-	#swagger.parameters['status'] = {
-		in: 'query',
-		required: false,
-		example: 'awaiting_review'
-	}
-	#swagger.responses[200] = {
-		description: 'Get final comments for an appeal',
-		schema: { $ref: '#/components/schemas/RepResponse' }
-	}
-	#swagger.responses[400] = {}
-	#swagger.responses[404] = {}
- */
-	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.getAppellantFinalComments)
-);
-
-router.get(
-	'/:appealId/reps/comments',
-	/*
-	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/comments'
-	#swagger.description = Get comments
-	#swagger.parameters['azureAdUserId'] = {
-		in: 'header',
-		required: true,
-		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-	}
-	#swagger.parameters['status'] = {
-		in: 'query',
-		required: false,
-		example: 'awaiting_review'
-	}
-	#swagger.parameters['pageNumber'] = {
-		in: 'query',
-		required: false,
-		example: '1'
-	}
-	#swagger.parameters['pageSize'] = {
-		in: 'query',
-		required: false,
-		example: '30'
-	}
-	#swagger.responses[200] = {
-		description: 'Get comments for an appeal',
-		schema: { $ref: '#/components/schemas/RepResponse' }
-	}
-	#swagger.responses[400] = {}
-	#swagger.responses[404] = {}
- */
-	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.getComments)
+	asyncHandler(controller.getRepresentations)
 );
 
 router.get(
