@@ -5,7 +5,7 @@ import {
 	createAddressLine1Validator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
-import * as controller from './controller.js';
+import * as controller from './edit-ip-comment.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 
 const router = createRouter({ mergeParams: true });

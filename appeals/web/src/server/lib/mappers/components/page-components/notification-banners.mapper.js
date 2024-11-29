@@ -208,12 +208,12 @@ export const notificationBannerDefinitions = {
 	},
 	interestedPartyCommentsAddressAddedSuccess: {
 		type: 'success',
-		pages: ['viewIpComment'],
+		pages: ['viewIpComment', 'reviewIpComment'],
 		text: 'Interested party address added'
 	},
 	interestedPartyCommentsAddressUpdatedSuccess: {
 		type: 'success',
-		pages: ['viewIpComment'],
+		pages: ['viewIpComment', 'reviewIpComment'],
 		text: 'Interested party address changed'
 	},
 	interestedPartyCommentsDocumentAddedSuccess: {
