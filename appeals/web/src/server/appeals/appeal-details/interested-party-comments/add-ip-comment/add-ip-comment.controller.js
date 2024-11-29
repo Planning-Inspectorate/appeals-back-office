@@ -251,7 +251,6 @@ export async function renderCheckYourAnswers(
 	{
 		errors,
 		currentAppeal: { appealReference, appealId } = {},
-		currentComment: { id: commentId } = {},
 		session: {
 			fileUploadInfo: { files: [{ name, blobStoreUrl }] } = {
 				files: [{ name: '', blobStoreUrl: '' }]
@@ -298,7 +297,7 @@ export async function renderCheckYourAnswers(
 			title: 'Check details and add comment',
 			heading: 'Check details and add comment',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`,
 			submitButtonText: 'Add comment',
 			responses: {
 				'Contact details': {
@@ -331,13 +330,13 @@ export async function renderCheckYourAnswers(
 				'Redaction status': {
 					value: statusFormatMap[redactionStatus],
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/redaction-status`
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/redaction-status`
 					}
 				},
 				'Date submitted': {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comment/add/date-submitted`
 					}
 				}
 			}
