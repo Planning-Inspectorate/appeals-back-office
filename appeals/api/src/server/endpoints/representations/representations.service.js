@@ -40,8 +40,22 @@ export const getThirdPartComments = async (
  * @param {number} appealId
  * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
  */
-export const getFinalComments = async (appealId, status = undefined) => {
-	const data = await representationRepository.getFinalCommentsByAppealId(appealId);
+export const getLPAFinalComments = async (appealId, status = undefined) => {
+	const data = await representationRepository.getLPAFinalCommentsByAppealId(appealId);
+	if (status) {
+		return data.filter((rep) => rep.status === status);
+	}
+
+	return data;
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
+ */
+export const getAppellantFinalComments = async (appealId, status = undefined) => {
+	const data = await representationRepository.getAppellantFinalComments(appealId);
 	if (status) {
 		return data.filter((rep) => rep.status === status);
 	}
