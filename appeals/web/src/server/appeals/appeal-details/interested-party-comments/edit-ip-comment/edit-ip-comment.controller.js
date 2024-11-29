@@ -1,6 +1,7 @@
+import url from 'url';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { updateAddress } from './service.js';
-import { checkAddressPage } from './mappers.js';
+import { updateAddress } from './edit-ip-comment.service.js';
+import { checkAddressPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
@@ -93,6 +94,11 @@ export async function postEditAddress(request, response) {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/edit/check/address`
+		url.format({
+			pathname: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/edit/check/address`,
+			query: {
+				editAddress: request.query.editAddress === 'true'
+			}
+		})
 	);
 }

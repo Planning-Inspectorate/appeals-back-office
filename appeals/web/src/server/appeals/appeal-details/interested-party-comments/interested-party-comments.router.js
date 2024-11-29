@@ -2,7 +2,7 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import addIpCommentRouter from './add-ip-comment/add-ip-comment.router.js';
-import editIpCommentRouter from './edit-ip-comment/router.js';
+import editIpCommentRouter from './edit-ip-comment/edit-ip-comment.router.js';
 import addDocumentRouter from './add-document/router.js';
 import viewAndReviewIpCommentRouter from './view-and-review/view-and-review.router.js';
 import redactIpCommentRouter from './redact/redact.router.js';

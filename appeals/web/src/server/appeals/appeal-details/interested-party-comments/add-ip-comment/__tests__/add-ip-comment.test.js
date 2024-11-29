@@ -454,7 +454,9 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Check details and add comment');
+			expect(pageHtml.querySelector('h1')?.innerHTML).toBe(
+				'Check details and add interested party comment'
+			);
 		});
 
 		it('should render a summary list', () => {

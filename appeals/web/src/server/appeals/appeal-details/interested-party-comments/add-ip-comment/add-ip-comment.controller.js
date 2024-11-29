@@ -294,8 +294,8 @@ export async function renderCheckYourAnswers(
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: 'Check details and add comment',
-			heading: 'Check details and add comment',
+			title: 'Check details and add interested party comment',
+			heading: 'Check details and add interested party comment',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`,
 			submitButtonText: 'Add comment',
