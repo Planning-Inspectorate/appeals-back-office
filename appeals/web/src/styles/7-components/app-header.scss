@@ -5,7 +5,6 @@
 #pins-applications-header {
   background: white;
   color: colors.govuk-colour("black");
-  height: 8rem;
   display: inline-block;
   width: 100%;
   padding: 1rem 0;
@@ -40,6 +39,9 @@
 	  font-size: 1.5rem;
 	  width: 35%;
 	  text-align: center;
+	  @media (max-width: 48.0624em) {
+		margin-left: 10rem;
+	  }
 	}
 
 	&--right {
@@ -55,3 +57,4 @@
   }
 
 }
+
