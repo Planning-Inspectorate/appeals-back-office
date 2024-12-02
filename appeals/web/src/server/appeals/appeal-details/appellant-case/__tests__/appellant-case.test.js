@@ -2033,7 +2033,7 @@ describe('appellant-case', () => {
 				.send({
 					'due-date-day': '2',
 					'due-date-month': '12',
-					'due-date-year': '2024'
+					'due-date-year': '3000'
 				});
 
 			expect(response.statusCode).toBe(302);
