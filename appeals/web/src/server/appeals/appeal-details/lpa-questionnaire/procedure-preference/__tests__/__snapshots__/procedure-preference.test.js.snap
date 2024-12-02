@@ -280,7 +280,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
 </main>"
 `;
 
-exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is greater than 9 1`] = `
+exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is greater than 99 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -289,7 +289,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 9</a>
+                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 99</a>
                             </li>
                         </ul>
                     </div>
@@ -322,7 +322,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 9</a>
+                            <li><a href="#procedure-preference-duration-input">Expected length of procedure must be a number between 0 and 99</a>
                             </li>
                         </ul>
                     </div>
