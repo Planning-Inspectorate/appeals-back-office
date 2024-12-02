@@ -60,6 +60,7 @@ export function generateCommentSummaryList(
 		comment.represented.address.postCode;
 
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
+	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	const attachmentsList =
 		comment.attachments.length > 0
@@ -131,7 +132,13 @@ export function generateCommentSummaryList(
 			actions: {
 				items: [
 					...(comment.attachments?.length > 0
-						? [{ text: 'Manage', href: '#', visuallyHiddenText: 'supporting documents' }]
+						? [
+								{
+									text: 'Manage',
+									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}`,
+									visuallyHiddenText: 'supporting documents'
+								}
+						  ]
 						: []),
 					{
 						text: 'Add',
