@@ -18,8 +18,8 @@ export const validateProcedurePreferenceDuration = createValidator(
 		.isNumeric()
 		.withMessage('Expected length of procedure must be a number')
 		.bail()
-		.isInt({ min: 0, max: 9 })
-		.withMessage('Expected length of procedure must be a number between 0 and 9')
+		.isInt({ min: 0, max: 99 })
+		.withMessage('Expected length of procedure must be a number between 0 and 99')
 );
 
 export const validateInquiryNumberOfWitnesses = createValidator(
@@ -31,6 +31,6 @@ export const validateInquiryNumberOfWitnesses = createValidator(
 		.isNumeric()
 		.withMessage('Expected number of witnesses must be a number')
 		.bail()
-		.isInt({ min: 0, max: 9 })
+		.isInt({ min: 0, max: 99 })
 		.withMessage('Expected number of witnesses must be a number between 0 and 9')
 );

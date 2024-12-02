@@ -385,12 +385,12 @@ describe('procedure-preference', () => {
 			{
 				label: 'less than 0',
 				value: '-1',
-				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 9'
+				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 99'
 			},
 			{
-				label: 'greater than 9',
-				value: '10',
-				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 9'
+				label: 'greater than 99',
+				value: '100',
+				expectedErrorMessage: 'Expected length of procedure must be a number between 0 and 99'
 			}
 		];
 
