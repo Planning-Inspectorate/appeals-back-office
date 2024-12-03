@@ -68,14 +68,13 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                     <div class="govuk-grid-column-two-thirds">
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
                             </div>
                         </div>
                         <form method="POST" novalidate="novalidate">
                             <div class="govuk-form-group">
-                                <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
-                                <input class="govuk-input govuk-input govuk-input--width-10"
-                                id="appeal-reference" name="appeal-reference" type="text">
+                                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                                <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                                name="appeal-reference" type="text">
                             </div>
                             <button type="submit" data-prevent-double-click="true" class="govuk-button"
                             data-module="govuk-button">Continue</button>
@@ -922,14 +921,13 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="appeal-reference" name="appeal-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                    name="appeal-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -956,14 +954,13 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="appeal-reference" name="appeal-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                    name="appeal-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -990,14 +987,13 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="appeal-reference" name="appeal-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                    name="appeal-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -1024,14 +1020,13 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the appeal reference?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="appeal-reference">Appeal reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="appeal-reference" name="appeal-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                    name="appeal-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

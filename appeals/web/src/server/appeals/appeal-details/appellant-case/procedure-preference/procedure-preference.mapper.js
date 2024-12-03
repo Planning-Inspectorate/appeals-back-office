@@ -79,13 +79,17 @@ export const changeProcedurePreferenceDetailsPage = (
 		title: `Change reason for preference`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change reason for preference`,
 		pageComponents: [
 			{
 				type: 'textarea',
 				parameters: {
 					name: 'procedurePreferenceDetailsTextarea',
 					id: 'procedure-preference-details-textarea',
+					label: {
+						text: 'Change reason for preference',
+						classes: 'govuk-label--l',
+						isPageHeading: true
+					},
 					value: procedurePreferenceDetails || ''
 				}
 			}
@@ -120,13 +124,17 @@ export const changeProcedurePreferenceDurationPage = (
 		title: `Change expected length of procedure`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change expected length of procedure`,
 		pageComponents: [
 			{
 				type: 'input',
 				parameters: {
 					name: 'procedurePreferenceDurationInput',
 					id: 'procedure-preference-duration',
+					label: {
+						text: 'Change expected length of procedure',
+						classes: 'govuk-label--l',
+						isPageHeading: true
+					},
 					classes: 'govuk-input--width-2',
 					value: procedurePreferenceDuration || ''
 				}
@@ -162,13 +170,17 @@ export const changeInquiryNumberOfWitnessesPage = (
 		title: `Change expected number of witnesses`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change expected number of witnesses`,
 		pageComponents: [
 			{
 				type: 'input',
 				parameters: {
 					name: 'inquiryNumberOfWitnessesInput',
 					id: 'inquiry-number-of-witnesses',
+					label: {
+						text: 'Change expected number of witnesses',
+						classes: 'govuk-label--l',
+						isPageHeading: true
+					},
 					classes: 'govuk-input--width-2',
 					value: inquiryNumberOfWitnesses || ''
 				}

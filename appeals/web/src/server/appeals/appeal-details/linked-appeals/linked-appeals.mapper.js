@@ -163,7 +163,6 @@ export function addLinkedAppealPage(appealData) {
 		title: `Add linked appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the appeal reference?',
 		pageComponents: [
 			{
 				type: 'input',
@@ -173,9 +172,9 @@ export function addLinkedAppealPage(appealData) {
 					type: 'text',
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
-						isPageHeading: false,
-						text: 'Appeal reference',
-						classes: 'govuk-visually-hidden'
+						isPageHeading: true,
+						text: 'What is the appeal reference?',
+						classes: 'govuk-label--l'
 					}
 				}
 			}

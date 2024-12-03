@@ -100,15 +100,19 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
@@ -220,15 +224,19 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="38">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
@@ -466,15 +474,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -597,15 +609,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -730,15 +746,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -863,15 +883,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -996,15 +1020,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1129,15 +1157,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1262,15 +1294,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1395,15 +1431,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1526,15 +1566,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1657,15 +1701,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="60">
                 </fieldset>
@@ -1790,15 +1838,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -1921,15 +1973,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
@@ -2052,15 +2108,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="60">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2189,15 +2249,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
@@ -2320,15 +2384,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2451,15 +2519,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2584,15 +2656,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2717,15 +2793,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2850,15 +2930,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -2983,15 +3067,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -3116,15 +3204,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -3249,15 +3341,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -3380,15 +3476,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -3511,15 +3611,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="60">
                 </fieldset>
@@ -3644,15 +3748,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -3775,15 +3883,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="00">
                 </fieldset>
@@ -3906,15 +4018,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="60">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -4041,15 +4157,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="00">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
@@ -4174,15 +4294,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="30">
                 </fieldset>
@@ -4307,15 +4431,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>
@@ -4444,15 +4572,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
                     name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                     name="visit-start-time-minute" type="number" value="">
                 </fieldset>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
                     name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                     name="visit-end-time-minute" type="number" value="">
                 </fieldset>

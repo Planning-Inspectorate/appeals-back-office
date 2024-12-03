@@ -6,14 +6,13 @@ exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the reference of the new appeal on Horizon?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="horizon-reference">Horizon reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="horizon-reference" name="horizon-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                    name="horizon-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -215,7 +214,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -223,14 +222,13 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the reference of the new appeal on Horizon?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="horizon-reference">Horizon reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="horizon-reference" name="horizon-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                    name="horizon-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>
@@ -249,7 +247,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#horizon-reference">Enter a Horizon appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -257,14 +255,13 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the reference of the new appeal on Horizon?</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-visually-hidden" for="horizon-reference">Horizon reference</label>
-                    <input class="govuk-input govuk-input govuk-input--width-10"
-                    id="horizon-reference" name="horizon-reference" type="text">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                    name="horizon-reference" type="text">
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
                 data-module="govuk-button">Continue</button>

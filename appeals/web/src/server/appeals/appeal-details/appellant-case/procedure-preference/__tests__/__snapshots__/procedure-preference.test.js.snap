@@ -154,11 +154,11 @@ exports[`procedure-preference GET /details/change should render the change reaso
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change reason for preference</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Change reason for preference</label></h1>
                     <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
                     name="procedurePreferenceDetailsTextarea" rows="5">Example procedure preference details text</textarea>
                 </div>
@@ -176,11 +176,11 @@ exports[`procedure-preference GET /details/change should render the change reaso
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change reason for preference</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Change reason for preference</label></h1>
                     <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
                     name="procedurePreferenceDetailsTextarea" rows="5"></textarea>
                 </div>
@@ -198,11 +198,11 @@ exports[`procedure-preference GET /duration/change should render the change expe
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -220,11 +220,11 @@ exports[`procedure-preference GET /inquiry/witnesses/change should render the ch
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
                     name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
@@ -245,7 +245,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Enter the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -253,11 +253,11 @@ exports[`procedure-preference POST /details/change should re-render the change r
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -278,7 +278,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Enter the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -286,11 +286,11 @@ exports[`procedure-preference POST /duration/change should re-render the change 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -319,11 +319,11 @@ exports[`procedure-preference POST /duration/change should re-render the change 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -352,11 +352,11 @@ exports[`procedure-preference POST /duration/change should re-render the change 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -385,11 +385,11 @@ exports[`procedure-preference POST /duration/change should re-render the change 
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected length of procedure</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
                     name="procedurePreferenceDurationInput" type="text">
                 </div>
@@ -410,7 +410,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Provide the expected number of witnesses</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Enter the expected number of witnesses</a>
                             </li>
                         </ul>
                     </div>
@@ -418,11 +418,11 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
                     name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
@@ -451,11 +451,11 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
                     name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
@@ -484,11 +484,11 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
                     name="inquiryNumberOfWitnessesInput" type="text">
                 </div>
@@ -517,11 +517,11 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change expected number of witnesses</h1>
                 </div>
             </div>
             <form method="POST" novalidate="novalidate">
                 <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
                     <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
                     name="inquiryNumberOfWitnessesInput" type="text">
                 </div>

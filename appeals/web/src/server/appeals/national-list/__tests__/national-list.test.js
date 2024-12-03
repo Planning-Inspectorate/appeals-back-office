@@ -39,7 +39,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<select class="govuk-select" id="" name="appealStatusFilter"'
+				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="assign_case_officer"');
@@ -49,7 +49,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('<option value="complete"');
 			expect(unprettifiedElement.innerHTML).toContain('Filter by inspector status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<select class="govuk-select" id="" name="inspectorStatusFilter"'
+				'<select class="govuk-select" id="inspector-status-filter" name="inspectorStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="assigned"');
@@ -183,7 +183,7 @@ describe('national-list', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<select class="govuk-select" id="" name="appealStatusFilter"'
+				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
@@ -213,7 +213,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('1 result (filters applied)</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<select class="govuk-select" id="" name="appealStatusFilter"'
+				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');

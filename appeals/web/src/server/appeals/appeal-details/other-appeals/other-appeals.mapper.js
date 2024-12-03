@@ -31,6 +31,11 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 			parameters: {
 				id: 'add-other-appeals-reference',
 				name: 'addOtherAppealsReference',
+				label: {
+					text: 'What is the appeal reference?',
+					classes: 'govuk-label--l',
+					isPageHeading: true
+				},
 				classes: 'govuk-input--width-10',
 				value: appealReferenceInputValue
 			}
@@ -58,7 +63,6 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 		title: `Add related appeal - ${appealData.appealReference}`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${appealData.appealReference}`,
-		heading: 'What is the appeal reference?',
 		pageComponents: [...addOtherAppealsPageContent]
 	};
 

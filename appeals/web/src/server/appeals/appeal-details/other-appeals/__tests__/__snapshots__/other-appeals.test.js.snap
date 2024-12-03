@@ -4,11 +4,11 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
         </div>
     </div>
     <form method="POST">
         <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
             <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
             name="addOtherAppealsReference" type="text">
         </div>
@@ -227,11 +227,11 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
         </div>
     </div>
     <form method="POST">
         <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
             <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
             name="addOtherAppealsReference" type="text" value="7654321">
         </div>
@@ -260,11 +260,11 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
         </div>
     </div>
     <form method="POST">
         <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
             <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
             name="addOtherAppealsReference" type="text">
         </div>
@@ -293,11 +293,11 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
         </div>
     </div>
     <form method="POST">
         <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
             <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
             name="addOtherAppealsReference" type="text" value="12345678">
         </div>
@@ -326,11 +326,11 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">What is the appeal reference?</h1>
         </div>
     </div>
     <form method="POST">
         <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
             <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
             name="addOtherAppealsReference" type="text" value="123456">
         </div>

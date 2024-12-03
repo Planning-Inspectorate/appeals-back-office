@@ -34,7 +34,6 @@ export const ipDetailsPage = (appealDetails, values, errors) => ({
 				name: 'firstName',
 				type: 'text',
 				label: {
-					isPageHeading: false,
 					text: 'First name'
 				},
 				value: values.firstName,
@@ -48,7 +47,6 @@ export const ipDetailsPage = (appealDetails, values, errors) => ({
 				name: 'lastName',
 				type: 'text',
 				label: {
-					isPageHeading: false,
 					text: 'Last name'
 				},
 				value: values.lastName,
@@ -62,7 +60,6 @@ export const ipDetailsPage = (appealDetails, values, errors) => ({
 				name: 'emailAddress',
 				type: 'text',
 				label: {
-					isPageHeading: false,
 					text: 'Email address (optional)'
 				},
 				value: values.emailAddress,

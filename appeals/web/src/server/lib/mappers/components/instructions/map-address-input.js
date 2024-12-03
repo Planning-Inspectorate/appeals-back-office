@@ -14,8 +14,7 @@ export function mapAddressInput(appealSite) {
 				name: 'addressLine1',
 				value: displayPageFormatter.nullToEmptyString(appealSite.addressLine1),
 				label: {
-					text: 'Address Line 1',
-					isPageHeading: false
+					text: 'Address Line 1'
 				}
 			}
 		},
@@ -26,8 +25,7 @@ export function mapAddressInput(appealSite) {
 				name: 'addressLine2',
 				value: displayPageFormatter.nullToEmptyString(appealSite.addressLine2),
 				label: {
-					text: 'Address Line 2',
-					isPageHeading: false
+					text: 'Address Line 2'
 				}
 			}
 		},
@@ -38,8 +36,7 @@ export function mapAddressInput(appealSite) {
 				name: 'addressTown',
 				value: displayPageFormatter.nullToEmptyString(appealSite.town),
 				label: {
-					text: 'Town',
-					isPageHeading: false
+					text: 'Town'
 				}
 			}
 		},
@@ -50,8 +47,7 @@ export function mapAddressInput(appealSite) {
 				name: 'addressCounty',
 				value: displayPageFormatter.nullToEmptyString(appealSite.county),
 				label: {
-					text: 'County',
-					isPageHeading: false
+					text: 'County'
 				}
 			}
 		},
@@ -62,8 +58,7 @@ export function mapAddressInput(appealSite) {
 				name: 'addressPostcode',
 				value: displayPageFormatter.nullToEmptyString(appealSite.postCode),
 				label: {
-					text: 'Postcode',
-					isPageHeading: false
+					text: 'Postcode'
 				}
 			}
 		}

@@ -12,7 +12,7 @@ export const validateProcedurePreferenceDuration = createValidator(
 	body('procedurePreferenceDurationInput')
 		.trim()
 		.notEmpty()
-		.withMessage('Provide the expected length of procedure')
+		.withMessage('Enter the expected length of procedure')
 		.bail()
 		.isNumeric()
 		.withMessage('Expected length of procedure must be a number')

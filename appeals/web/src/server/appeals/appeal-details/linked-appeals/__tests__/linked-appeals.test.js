@@ -102,7 +102,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
 			expect(element.innerHTML).toContain('name="appeal-reference" type="text">');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
@@ -122,7 +122,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -146,7 +146,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -170,7 +170,7 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -195,7 +195,7 @@ describe('linked-appeals', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 
-			expect(element.innerHTML).toContain('What is the appeal reference?</h1>');
+			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

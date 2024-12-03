@@ -388,13 +388,13 @@ describe('change-appeal-type', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</h1>'
+				'What is the reference of the new appeal on Horizon?</label></h1>'
 			);
 
 			const unprettifiedElement = parseHtml(element.innerHTML, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'id="horizon-reference" name="horizon-reference" type="text">'
+			expect(unprettifiedElement.innerHTML).toMatch(
+				/id="horizon-reference"[\s\n]*name="horizon-reference"[\s\n]*type="text"/
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -414,7 +414,7 @@ describe('change-appeal-type', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</h1>'
+				'What is the reference of the new appeal on Horizon?</label></h1>'
 			);
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
@@ -423,7 +423,7 @@ describe('change-appeal-type', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a Horizon appeal reference</a>');
 		});
 
 		it('should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon', async () => {
@@ -443,7 +443,7 @@ describe('change-appeal-type', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</h1>'
+				'What is the reference of the new appeal on Horizon?</label></h1>'
 			);
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
