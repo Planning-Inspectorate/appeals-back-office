@@ -26,6 +26,7 @@ export const appellantCaseInvalidReasons = lookupListData;
 export const lpaQuestionnaireIncompleteReasons = lookupListData;
 export const knowledgeOfOtherLandowners = lookupListData;
 export const lpaNotificationMethods = lookupListData;
+export const lpas = lookupListData;
 export const planningObligationStatuses = lookupListData;
 export const procedureTypes = lookupListData;
 export const scheduleTypes = lookupListData;

@@ -4170,6 +4170,43 @@
 					}
 				}
 			}
+		},
+		"/appeals/lpas": {
+			"get": {
+				"tags": ["LPAs"],
+				"description": "Gets LPAs",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "LPAs",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllLPAsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllLPAsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -4500,7 +4537,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "8487935f-723a-46d9-8450-52107da2e51b"
+								"example": "245ab090-8f4b-426d-84ae-eb74c85e2824"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
