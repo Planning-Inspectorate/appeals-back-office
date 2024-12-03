@@ -319,6 +319,35 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 6</li>');
 		});
 
+		it('should not render an "LPA questionnaire incomplete" notification banner when the LPA questionnaire is marked as incomplete and then marked as complete', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
+
+			const incompleteOutcomeResponse = await request.get(baseUrl);
+
+			const unprettifiedNotificationBannerElementHTML = parseHtml(incompleteOutcomeResponse.text, {
+				rootElement: notificationBannerElement,
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedNotificationBannerElementHTML).toContain(
+				'LPA Questionnaire is incomplete</h3>'
+			);
+
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataCompleteOutcome);
+
+			const completeOutcomeResponse = await request.get(baseUrl);
+
+			const unprettifiedCompleteOutcomeHTML = parseHtml(completeOutcomeResponse.text, {
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedCompleteOutcomeHTML).not.toContain('LPA Questionnaire is incomplete</h3>');
+		});
+
 		it('should render a "Notification methods updated" success notification banner when notification methods are changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
 			nock('http://test/')

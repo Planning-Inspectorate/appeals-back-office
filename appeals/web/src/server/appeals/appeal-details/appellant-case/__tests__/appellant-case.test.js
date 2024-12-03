@@ -524,6 +524,37 @@ describe('appellant-case', () => {
 			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
 		});
 
+		it('should not render an "Appeal is incomplete" notification banner when the appellant case has been reviewed with an outcome of "incomplete" and then re-reviewed with an outcome of "valid"', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataIncompleteOutcome);
+
+			const incompleteOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const unprettifiedNotificationBannerHTML = parseHtml(incompleteOutcomeResponse.text, {
+				rootElement: '.govuk-notification-banner',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataValidOutcome);
+
+			const validOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+			const unprettifiedHTML = parseHtml(validOutcomeResponse.text, {
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedHTML).not.toContain('Appeal is incomplete</h3>');
+		});
+
 		it('should render a "Planning obligation status updated" notification banner when the planning obligation status is changed', async () => {
 			const appealId = appealData.appealId.toString();
 			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;

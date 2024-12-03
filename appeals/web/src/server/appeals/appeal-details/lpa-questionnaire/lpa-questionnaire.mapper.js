@@ -458,7 +458,13 @@ export function checkAndConfirmPage(
 function mapNotificationBannerComponentParameters(session, lpaqData, appealId, lpaqDueDate) {
 	const validationOutcome = lpaqData.validation?.outcome?.toLowerCase();
 
-	if (validationOutcome === 'incomplete') {
+	if (
+		validationOutcome === 'complete' &&
+		'notificationBanners' in session &&
+		'lpaQuestionnaireNotValid' in session.notificationBanners
+	) {
+		delete session.notificationBanners.lpaQuestionnaireNotValid;
+	} else if (validationOutcome === 'incomplete') {
 		if (!('notificationBanners' in session)) {
 			session.notificationBanners = {};
 		}
