@@ -38,7 +38,8 @@ export const PROCEDURE_TYPE_MAP = Object.freeze({
 export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	STATEMENT: 'statement',
 	COMMENT: 'comment',
-	FINAL_COMMENT: 'final_comment'
+	APPELLANT_FINAL_COMMENT: 'appellant_final_comment',
+	LPA_FINAL_COMMENT: 'lpa_final_comment'
 });
 
 //TODO: remove when available in appeal-representation.schema - here just for reference

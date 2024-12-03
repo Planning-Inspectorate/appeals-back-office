@@ -52,6 +52,32 @@ export const getFinalComments = async (appealId, status = undefined) => {
 /**
  *
  * @param {number} appealId
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {string} [status] // APPEAL_REPRESENTATION_STATUS
+ * @param {string[]} [types] // APPEAL_REPRESENTATION_TYPE
+ * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
+ */
+export const getRepresentations = async (
+	appealId,
+	pageNumber = 1,
+	pageSize = 30,
+	status = undefined,
+	types
+) => {
+	const { itemCount, comments } = await representationRepository.getRepresentationsByAppealId(
+		appealId,
+		pageNumber - 1,
+		pageSize,
+		status,
+		types
+	);
+	return { itemCount, comments };
+};
+
+/**
+ *
+ * @param {number} appealId
  * @param {string|undefined} status //APPEAL_REPRESENTATION_STATUS
  */
 export const getStatements = async (appealId, status = undefined) => {

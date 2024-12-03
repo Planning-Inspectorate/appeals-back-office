@@ -67,6 +67,47 @@ export const getComments = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
+export const getRepresentations = async (req, res) => {
+	const { appeal, query } = req;
+	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
+	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
+	const status = query.status ? String(query.status) : undefined;
+	// const types = Array.isArray(query.type) ? query.type : query.type;
+	const types = (() => {
+		if (Array.isArray(query.type)) {
+			return query.type.map((repType) => String(repType));
+		} else if (typeof query.type === 'string') {
+			return [query.type];
+		}
+		return [];
+	})();
+
+	const { itemCount, comments } = await representationService.getRepresentations(
+		appeal.id,
+		pageNumber,
+		pageSize,
+		status,
+		types
+	);
+
+	const formattedItems = comments.map((rep) => formatRepresentation(rep));
+
+	const responsePayload = {
+		itemCount: itemCount,
+		items: formattedItems,
+		page: pageNumber,
+		pageCount: getPageCount(itemCount, pageSize),
+		pageSize: pageSize
+	};
+
+	return res.send(responsePayload);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
 export const getRepresentation = async (req, res) => {
 	const { repId } = req.params;
 	const rep = await representationService.getRepresentation(Number(repId));

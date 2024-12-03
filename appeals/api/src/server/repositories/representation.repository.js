@@ -114,6 +114,53 @@ const getThirdPartyCommentsByAppealId = async (appealId, pageNumber = 0, pageSiz
 };
 
 /**
+ * @param {number} appealId
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {string} [status]
+ * @param {string[]} [types]
+ * @returns {Promise<{ itemCount: number, comments: import('@pins/appeals.api').Schema.Representation[] }>}
+ */
+const getRepresentationsByAppealId = async (
+	appealId,
+	pageNumber = 0,
+	pageSize = 30,
+	status,
+	types
+) => {
+	const whereClause = {
+		appealId,
+		...(types?.length && {
+			representationType: {
+				in: types
+			}
+		}),
+		...(status && { status })
+	};
+
+	const transaction = await databaseConnector.$transaction([
+		databaseConnector.representation.count({
+			where: whereClause
+		}),
+		databaseConnector.representation.findMany({
+			where: whereClause,
+			include: {
+				representative: true,
+				represented: true,
+				lpa: true
+			},
+			orderBy: { dateCreated: 'desc' },
+			skip: pageNumber * pageSize,
+			take: pageSize
+		})
+	]);
+
+	const [itemCount, comments] = transaction;
+
+	return { itemCount, comments };
+};
+
+/**
  *
  * @param {number} id
  * @param {RepresentationUpdateInput} data
@@ -246,5 +293,6 @@ export default {
 	countAppealRepresentationsByStatus,
 	createRepresentation,
 	addAttachments,
-	updateRejectionReasons
+	updateRejectionReasons,
+	getRepresentationsByAppealId
 };

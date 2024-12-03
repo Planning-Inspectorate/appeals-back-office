@@ -107,6 +107,44 @@ router.get(
 );
 
 router.get(
+	'/:appealId/reps',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/comments'
+	#swagger.description = Get comments
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.parameters['status'] = {
+		in: 'query',
+		required: false,
+		example: 'awaiting_review'
+	}
+	#swagger.parameters['pageNumber'] = {
+		in: 'query',
+		required: false,
+		example: '1'
+	}
+	#swagger.parameters['pageSize'] = {
+		in: 'query',
+		required: false,
+		example: '30'
+	}
+	#swagger.responses[200] = {
+		description: 'Get comments for an appeal',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {}
+	#swagger.responses[404] = {}
+ */
+	getRepresentationRouteValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(controller.getRepresentations)
+);
+
+router.get(
 	'/:appealId/reps/:repId',
 	/*
 	#swagger.tags = ['Representations']

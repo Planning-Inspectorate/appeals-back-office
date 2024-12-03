@@ -1,4 +1,5 @@
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
@@ -20,7 +21,7 @@ export const getInterestedPartyComments = (
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
-	let url = `appeals/${appealId}/reps/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+	let url = `appeals/${appealId}/reps?pageNumber=${pageNumber}&pageSize=${pageSize}&type=${APPEAL_REPRESENTATION_TYPE.COMMENT}`;
 
 	if (statusFilter && statusFilter !== 'all') {
 		url += `&status=${encodeURIComponent(statusFilter)}`;
