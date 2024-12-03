@@ -442,7 +442,13 @@ export function mapNotificationBannerComponentParameters(
 	appealId,
 	appealDueDate
 ) {
-	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
+	if (
+		validationOutcome === 'valid' &&
+		'notificationBanners' in session &&
+		'appellantCaseNotValid' in session.notificationBanners
+	) {
+		delete session.notificationBanners.appellantCaseNotValid;
+	} else if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
 		if (!Array.isArray(notValidReasons)) {
 			notValidReasons = [notValidReasons];
 		}
