@@ -1,5 +1,3 @@
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
-
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
 
 /**
@@ -8,12 +6,15 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
  * @returns {PageComponent[]}
  */
 export const redactInput = (comment, session) => [
-	simpleHtmlComponent('h3', {}, 'Redacted comment'),
 	{
 		type: 'textarea',
 		parameters: {
 			name: 'redactedRepresentation',
 			id: 'redact-textarea',
+			label: {
+				text: 'Redacted comment',
+				classes: 'govuk-label--s'
+			},
 			value:
 				session?.redactedRepresentation ||
 				comment.redactedRepresentation ||

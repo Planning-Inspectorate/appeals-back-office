@@ -290,9 +290,7 @@ describe('procedure-preference', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Provide the expected length of procedure</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the expected length of procedure</a>');
 		});
 
 		const validValues = [testText1000Characters, ''];
@@ -375,7 +373,7 @@ describe('procedure-preference', () => {
 			{
 				label: 'empty',
 				value: '',
-				expectedErrorMessage: 'Provide the expected length of procedure'
+				expectedErrorMessage: 'Enter the expected length of procedure'
 			},
 			{
 				label: 'non-numeric',

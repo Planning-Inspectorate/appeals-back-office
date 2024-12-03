@@ -31,9 +31,9 @@ exports[`national-list GET / should render national list - 10 pages - all page i
             <div class="govuk-details__text">
                 <form method="GET">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -43,9 +43,9 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -164,9 +164,9 @@ exports[`national-list GET / should render national list - 15 pages - pagination
             <div class="govuk-details__text">
                 <form method="GET">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -176,9 +176,9 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -277,9 +277,9 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
             <div class="govuk-details__text">
                 <form method="GET">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -289,9 +289,9 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -376,9 +376,9 @@ exports[`national-list GET / should render national list - no search term - filt
             <div class="govuk-details__text">
                 <form method="GET">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -388,9 +388,9 @@ exports[`national-list GET / should render national list - no search term - filt
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -467,9 +467,9 @@ exports[`national-list GET / should render national list - search term - filter 
                 <form method="GET">
                     <input type="hidden" name="searchTerm" value="BS7 8LQ" data-cy="search-term">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -479,9 +479,9 @@ exports[`national-list GET / should render national list - search term - filter 
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -558,9 +558,9 @@ exports[`national-list GET / should render national list - search term - no resu
                 <form method="GET">
                     <input type="hidden" name="searchTerm" value="NORESULT" data-cy="search-term">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -570,9 +570,9 @@ exports[`national-list GET / should render national list - search term - no resu
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -626,9 +626,9 @@ exports[`national-list GET / should render national list - search term 1`] = `
                 <form method="GET">
                     <input type="hidden" name="searchTerm" value="BS7 8LQ" data-cy="search-term">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -638,9 +638,9 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>
@@ -722,9 +722,9 @@ exports[`national-list GET / should render the header with navigation containing
             <div class="govuk-details__text">
                 <form method="GET">
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by case status</label>
-                        <select class="govuk-select" id="" name="appealStatusFilter"
-                        data-cy="filter-by-case-status">
+                        <label class="govuk-label" for="appeal-status-filter">Filter by case status</label>
+                        <select class="govuk-select" id="appeal-status-filter"
+                        name="appealStatusFilter" data-cy="filter-by-case-status">
                             <option value="all">All</option>
                             <option value="assign_case_officer">Assign case officer</option>
                             <option value="ready_to_start">Ready to start</option>
@@ -734,9 +734,9 @@ exports[`national-list GET / should render the header with navigation containing
                         </select>
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label">Filter by inspector status</label>
-                        <select class="govuk-select" id="" name="inspectorStatusFilter"
-                        data-cy="filter-by-inspector-status">
+                        <label class="govuk-label" for="inspector-status-filter">Filter by inspector status</label>
+                        <select class="govuk-select" id="inspector-status-filter"
+                        name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
                             <option value="all">All</option>
                             <option value="assigned">Assigned</option>
                             <option value="unassigned">Unassigned</option>

@@ -41,10 +41,10 @@ exports[`redact renders the redact page 1`] = `
         <form method="POST" class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">Awaiting review comment 47</div>
-            <h3>Redacted comment</h3>
             <div class="govuk-form-group">
-                <textarea class="govuk-textarea" id="redact-textarea" name="redactedRepresentation"
-                rows="5">Awaiting review comment 47</textarea>
+                <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted comment</label>
+                <textarea class="govuk-textarea" id="redact-textarea"
+                name="redactedRepresentation" rows="5">Awaiting review comment 47</textarea>
             </div>
             <div>
                 <div class="govuk-button-group">

@@ -166,10 +166,11 @@ export function nationalListPage(
 					{
 						type: 'select',
 						parameters: {
+							name: 'appealStatusFilter',
+							id: 'appeal-status-filter',
 							label: {
 								text: 'Filter by case status'
 							},
-							name: 'appealStatusFilter',
 							value: 'all',
 							items: appealStatusFilterItemsArray,
 							attributes: { 'data-cy': 'filter-by-case-status' }
@@ -178,10 +179,11 @@ export function nationalListPage(
 					{
 						type: 'select',
 						parameters: {
+							name: 'inspectorStatusFilter',
+							id: 'inspector-status-filter',
 							label: {
 								text: 'Filter by inspector status'
 							},
-							name: 'inspectorStatusFilter',
 							value: 'all',
 							items: inspectorStatusFilterItemsArray,
 							attributes: { 'data-cy': 'filter-by-inspector-status' }

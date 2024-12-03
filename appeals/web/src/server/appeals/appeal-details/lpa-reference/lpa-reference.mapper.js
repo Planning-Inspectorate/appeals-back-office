@@ -34,7 +34,6 @@ export const changeLpaReferencePage = (
 					name: 'planningApplicationReference',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: 'LPA application reference'
 					},
 					value: storedPlanningApplicationReference ?? appealData.planningApplicationReference,

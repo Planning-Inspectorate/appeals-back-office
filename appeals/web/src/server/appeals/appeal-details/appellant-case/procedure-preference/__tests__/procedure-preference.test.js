@@ -212,7 +212,7 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</label></h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
 			);
@@ -267,9 +267,7 @@ describe('procedure-preference', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Provide the expected length of procedure</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the expected length of procedure</a>');
 		});
 
 		const validValues = [testText1000Characters, ''];
@@ -312,7 +310,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change expected length of procedure</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Change expected length of procedure</label></h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text">'
 			);
@@ -350,7 +350,7 @@ describe('procedure-preference', () => {
 			{
 				label: 'empty',
 				value: '',
-				expectedErrorMessage: 'Provide the expected length of procedure'
+				expectedErrorMessage: 'Enter the expected length of procedure'
 			},
 			{
 				label: 'non-numeric',
@@ -425,7 +425,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change expected number of witnesses</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Change expected number of witnesses</label></h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text">'
 			);
@@ -463,7 +465,7 @@ describe('procedure-preference', () => {
 			{
 				label: 'empty',
 				value: '',
-				expectedErrorMessage: 'Provide the expected number of witnesses'
+				expectedErrorMessage: 'Enter the expected number of witnesses'
 			},
 			{
 				label: 'non-numeric',

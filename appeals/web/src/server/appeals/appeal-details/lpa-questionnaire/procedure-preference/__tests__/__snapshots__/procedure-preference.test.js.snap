@@ -223,7 +223,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Enter the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>
@@ -256,7 +256,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#procedure-preference-duration-input">Provide the expected length of procedure</a>
+                            <li><a href="#procedure-preference-duration-input">Enter the expected length of procedure</a>
                             </li>
                         </ul>
                     </div>

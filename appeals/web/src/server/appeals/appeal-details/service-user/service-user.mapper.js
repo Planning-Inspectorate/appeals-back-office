@@ -51,7 +51,6 @@ export const changeServiceUserPage = (
 					name: 'firstName',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: `${capitalize(userType)}'s first name`
 					},
 					value: serviceUserDetails?.firstName ?? '',
@@ -65,7 +64,6 @@ export const changeServiceUserPage = (
 					name: 'lastName',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: `${capitalize(userType)}'s last name`
 					},
 					value: serviceUserDetails?.lastName ?? '',
@@ -79,7 +77,6 @@ export const changeServiceUserPage = (
 					name: 'organisationName',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: `${capitalize(userType)}'s company or organisation name`
 					},
 					value: serviceUserDetails?.organisationName ?? '',
@@ -93,7 +90,6 @@ export const changeServiceUserPage = (
 					name: 'emailAddress',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: `${capitalize(userType)}'s email address`
 					},
 					value: serviceUserDetails?.email ?? '',
@@ -107,7 +103,6 @@ export const changeServiceUserPage = (
 					name: 'phoneNumber',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: `${capitalize(userType)}'s phone number`
 					},
 					value: serviceUserDetails?.phoneNumber ?? '',

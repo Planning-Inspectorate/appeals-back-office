@@ -28,7 +28,6 @@ export const changeSiteAreaPage = (appealData, appellantCaseData, storedSessionD
 					name: 'siteArea',
 					id: 'site-area',
 					label: {
-						isPageHeading: false,
 						text: 'Site area in square metres '
 					},
 					classes: 'govuk-input--width-10',

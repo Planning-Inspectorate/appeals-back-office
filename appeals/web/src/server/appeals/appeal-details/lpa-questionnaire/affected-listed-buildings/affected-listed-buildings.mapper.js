@@ -28,7 +28,6 @@ export function addAffectedListedBuildingPage(appealData, currentListedBuilding)
 					name: 'affectedListedBuilding',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: 'Listed building number'
 					},
 					value: currentListedBuilding ?? ''
@@ -221,7 +220,6 @@ export function changeAffectedListedBuildingPage(
 					name: 'affectedListedBuilding',
 					type: 'text',
 					label: {
-						isPageHeading: false,
 						text: 'Listed building number'
 					},
 					value: listedBuildingValue

@@ -22,7 +22,6 @@ export function addressInputs({ address, operationType, errors }) {
 				name: 'addressLine1',
 				type: 'text',
 				label: {
-					isPageHeading: false,
 					text: 'Address line 1'
 				},
 				value: address?.addressLine1 ?? '',
@@ -36,7 +35,6 @@ export function addressInputs({ address, operationType, errors }) {
 				name: 'addressLine2',
 				type: 'text',
 				label: {
-					isPageHeading: false,
 					text: 'Address line 2 (optional)'
 				},
 				value: address?.addressLine2 ?? ''
@@ -50,7 +48,6 @@ export function addressInputs({ address, operationType, errors }) {
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-20',
 				label: {
-					isPageHeading: false,
 					text: 'Town or city'
 				},
 				value: address?.town ?? '',
@@ -65,7 +62,6 @@ export function addressInputs({ address, operationType, errors }) {
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-20',
 				label: {
-					isPageHeading: false,
 					text: 'County (optional)'
 				},
 				value: address?.county ?? ''
@@ -79,7 +75,6 @@ export function addressInputs({ address, operationType, errors }) {
 				type: 'text',
 				classes: 'govuk-input govuk-input--width-10',
 				label: {
-					isPageHeading: false,
 					text: 'Postcode'
 				},
 				value: address?.postCode ?? '',

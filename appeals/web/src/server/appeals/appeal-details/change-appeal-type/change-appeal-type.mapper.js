@@ -124,7 +124,6 @@ export function addHorizonReferencePage(appealDetails) {
 		title: `What is the reference of the new appeal on Horizon? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the reference of the new appeal on Horizon?',
 		pageComponents: [
 			{
 				type: 'input',
@@ -134,9 +133,9 @@ export function addHorizonReferencePage(appealDetails) {
 					type: 'text',
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
-						isPageHeading: false,
-						text: 'Horizon reference',
-						classes: 'govuk-visually-hidden'
+						text: 'What is the reference of the new appeal on Horizon?',
+						isPageHeading: true,
+						classes: 'govuk-label--l'
 					}
 				}
 			}
