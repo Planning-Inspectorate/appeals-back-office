@@ -32,5 +32,5 @@ export const validateInquiryNumberOfWitnesses = createValidator(
 		.withMessage('Expected number of witnesses must be a number')
 		.bail()
 		.isInt({ min: 0, max: 99 })
-		.withMessage('Expected number of witnesses must be a number between 0 and 9')
+		.withMessage('Expected number of witnesses must be a number between 0 and 99')
 );
