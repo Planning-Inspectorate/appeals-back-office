@@ -17,17 +17,17 @@ exports[`eia-development-description GET /change should render the development d
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription" name="eiaDevelopmentDescription"
                                     type="radio" value="agriculture-aquaculture" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription">Agriculture aquaculture</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription">Agriculture and aquaculture</label>
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-2" name="eiaDevelopmentDescription"
                                     type="radio" value="change-extensions">
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-2">Change extensions</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-2">Changes and extensions</label>
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-3" name="eiaDevelopmentDescription"
                                     type="radio" value="chemical-industry">
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-3">Chemical industry</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-3">Chemical industry (unless included in Schedule 1)</label>
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-4" name="eiaDevelopmentDescription"
@@ -62,7 +62,7 @@ exports[`eia-development-description GET /change should render the development d
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-10" name="eiaDevelopmentDescription"
                                     type="radio" value="production-processing-of-metals">
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-10">Production processing of metals</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-10">Production and processing of metals</label>
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-11" name="eiaDevelopmentDescription"
@@ -72,12 +72,12 @@ exports[`eia-development-description GET /change should render the development d
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-12" name="eiaDevelopmentDescription"
                                     type="radio" value="textile-industries">
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-12">Textile industries</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-12">Textile, leather, wood and paper industries</label>
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eiaDevelopmentDescription-13" name="eiaDevelopmentDescription"
                                     type="radio" value="tourism-leisure">
-                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-13">Tourism leisure</label>
+                                    <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription-13">Tourism and leisure</label>
                                 </div>
                             </div>
                         </div>

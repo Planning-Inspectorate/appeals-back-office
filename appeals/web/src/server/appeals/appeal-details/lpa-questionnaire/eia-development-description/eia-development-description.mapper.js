@@ -1,12 +1,30 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
 import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from 'pins-data-model';
-import { snakeCaseToSpaceSeparated, capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
  */
+
+export const eiaDescriptions = {
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.AGRICULTURE_AQUACULTURE]: 'Agriculture and aquaculture',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.CHANGE_EXTENSIONS]: 'Changes and extensions',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.CHEMICAL_INDUSTRY]:
+		'Chemical industry (unless included in Schedule 1)',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.ENERGY_INDUSTRY]: 'Energy industry',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.EXTRACTIVE_INDUSTRY]: 'Extractive industry',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.FOOD_INDUSTRY]: 'Food industry',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.INFRASTRUCTURE_PROJECTS]: 'Infrastructure projects',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.MINERAL_INDUSTRY]: 'Mineral industry',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.OTHER_PROJECTS]: 'Other projects',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.PRODUCTION_PROCESSING_OF_METALS]:
+		'Production and processing of metals',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.RUBBER_INDUSTRY]: 'Rubber industry',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.TEXTILE_INDUSTRIES]:
+		'Textile, leather, wood and paper industries',
+	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.TOURISM_LEISURE]: 'Tourism and leisure'
+};
 
 /**
  * @param {Appeal} appealData
@@ -25,9 +43,9 @@ export function changeEiaDevelopmentDescriptionPage(appealData, existingValue) {
 		pageComponents: [
 			radiosInput({
 				name: 'eiaDevelopmentDescription',
-				items: Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).map((description) => ({
-					text: capitalizeFirstLetter(snakeCaseToSpaceSeparated(description)),
-					value: description
+				items: Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).map((value) => ({
+					text: eiaDescriptions[value],
+					value
 				})),
 				value: existingValue
 			})
