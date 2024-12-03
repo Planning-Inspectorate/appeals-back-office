@@ -473,12 +473,12 @@ describe('procedure-preference', () => {
 			{
 				label: 'less than 0',
 				value: '-1',
-				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 9'
+				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 99'
 			},
 			{
 				label: 'greater than 99',
 				value: '100',
-				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 9'
+				expectedErrorMessage: 'Expected number of witnesses must be a number between 0 and 99'
 			}
 		];
 

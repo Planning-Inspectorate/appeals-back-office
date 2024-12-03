@@ -443,7 +443,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 99</a>
                             </li>
                         </ul>
                     </div>
@@ -476,7 +476,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 9</a>
+                            <li><a href="#inquiry-number-of-witnesses-input">Expected number of witnesses must be a number between 0 and 99</a>
                             </li>
                         </ul>
                     </div>
