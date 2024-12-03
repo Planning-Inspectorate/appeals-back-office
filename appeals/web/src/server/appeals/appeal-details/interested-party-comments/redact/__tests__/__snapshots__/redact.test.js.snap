@@ -44,7 +44,7 @@ exports[`redact renders the redact page 1`] = `
             <h3>Redacted comment</h3>
             <div class="govuk-form-group">
                 <textarea class="govuk-textarea" id="redact-textarea" name="redactedRepresentation"
-                rows="5">Awaiting review comment 47</textarea>
+                rows="5" readonly="true">Awaiting review comment 47</textarea>
             </div>
             <div>
                 <div class="govuk-button-group">
