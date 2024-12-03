@@ -16,7 +16,7 @@ export function textareaInput({ name, id, value, readonly }) {
 			name,
 			id: id || kebabCase(name),
 			value,
-			attributes: { readonly }
+			attributes: { ...(readonly && { readonly }) }
 		}
 	};
 
