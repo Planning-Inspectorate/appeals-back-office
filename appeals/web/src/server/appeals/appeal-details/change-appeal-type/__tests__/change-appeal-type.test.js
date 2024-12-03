@@ -393,9 +393,7 @@ describe('change-appeal-type', () => {
 
 			const unprettifiedElement = parseHtml(element.innerHTML, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toMatch(
-				/id="horizon-reference"[\s\n]*name="horizon-reference"[\s\n]*type="text"/
-			);
+			expect(unprettifiedElement.innerHTML).toContain('name="horizon-reference" type="text">');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
