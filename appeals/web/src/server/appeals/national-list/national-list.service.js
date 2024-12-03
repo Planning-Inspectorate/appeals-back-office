@@ -45,6 +45,22 @@ export const getAppeals = (
 		}
 	}
 
+	if (localPlanningAuthorityFilter && localPlanningAuthorityFilter !== 'all') {
+		urlAppendix += `&lpa=${localPlanningAuthorityFilter}`;
+	}
+
+	if (caseOfficerFilter && caseOfficerFilter !== 'all') {
+		urlAppendix += `&caseOfficer=${caseOfficerFilter}`;
+	}
+
+	if (inspectorFilter && inspectorFilter !== 'all') {
+		urlAppendix += `&inspector=${inspectorFilter}`;
+	}
+
+	if (greenBeltFilter) {
+		urlAppendix += `&greenBelt=${greenBeltFilter}`;
+	}
+
 	return apiClient
 		.get(`appeals?pageNumber=${pageNumber}&pageSize=${pageSize}${urlAppendix}`)
 		.json();
