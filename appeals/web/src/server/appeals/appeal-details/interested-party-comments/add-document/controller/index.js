@@ -2,10 +2,11 @@ import {
 	postDocumentUpload as postDocumentUploadHelper,
 	renderDocumentUpload as renderDocumentUploadHelper
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { DOCUMENT_TYPE } from '../../interested-party-comments.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
-	const { currentComment, currentAppeal, session } = request;
+	const { currentComment, currentAppeal } = request;
 
 	return renderDocumentUploadHelper({
 		request,
@@ -15,7 +16,7 @@ export const renderDocumentUpload = async (request, response) => {
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/add-document/redaction-status`,
 		pageHeadingTextOverride: 'Upload supporting document',
 		allowMultipleFiles: false,
-		documentType: session.costsDocumentType
+		documentType: DOCUMENT_TYPE
 	});
 };
 
