@@ -32,6 +32,11 @@ export const viewNationalList = async (request, response) => {
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 	const inspectorStatusFilter = query.inspectorStatusFilter && String(query.inspectorStatusFilter);
+	const localPlanningAuthorityFilter =
+		query.localPlanningAuthorityFilter && String(query.localPlanningAuthorityFilter);
+	const caseOfficerFilter = query.caseOfficerFilter && String(query.caseOfficerFilter);
+	const inspectorFilter = query.inspectorFilter && String(query.inspectorFilter);
+	const greenBeltFilter = query.greenBeltFilter && String(query.greenBeltFilter);
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
 
@@ -47,6 +52,10 @@ export const viewNationalList = async (request, response) => {
 		searchTerm,
 		appealStatusFilter,
 		inspectorStatusFilter,
+		localPlanningAuthorityFilter,
+		caseOfficerFilter,
+		inspectorFilter,
+		greenBeltFilter,
 		paginationParameters.pageNumber,
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));
@@ -61,7 +70,11 @@ export const viewNationalList = async (request, response) => {
 		searchTerm,
 		searchTermError,
 		appealStatusFilter,
-		inspectorStatusFilter
+		inspectorStatusFilter,
+		localPlanningAuthorityFilter,
+		caseOfficerFilter,
+		inspectorFilter,
+		greenBeltFilter
 	);
 
 	const pagination = mapPagination(

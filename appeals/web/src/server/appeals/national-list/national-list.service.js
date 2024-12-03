@@ -7,6 +7,10 @@ import { paginationDefaultSettings } from '../appeal.constants.js';
  * @param {string|undefined} searchTerm
  * @param {string|undefined} appealStatusFilter
  * @param {string|undefined} inspectorStatusFilter
+ * @param {string|undefined} localPlanningAuthorityFilter
+ * @param {string|undefined} caseOfficerFilter
+ * @param {string|undefined} inspectorFilter
+ * @param {string|undefined} greenBeltFilter
  * @param {number} pageNumber
  * @param {number} pageSize
  * @returns {Promise<AppealList>}
@@ -16,6 +20,10 @@ export const getAppeals = (
 	searchTerm,
 	appealStatusFilter,
 	inspectorStatusFilter,
+	localPlanningAuthorityFilter,
+	caseOfficerFilter,
+	inspectorFilter,
+	greenBeltFilter,
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
