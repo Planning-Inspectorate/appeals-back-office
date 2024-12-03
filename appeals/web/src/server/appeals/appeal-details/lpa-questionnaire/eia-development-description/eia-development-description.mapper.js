@@ -7,7 +7,7 @@ import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from 'pins-data-model';
  * @typedef {import('../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
  */
 
-export const eiaDescriptionDict = {
+export const eiaDescriptions = {
 	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.AGRICULTURE_AQUACULTURE]: 'Agriculture and aquaculture',
 	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.CHANGE_EXTENSIONS]: 'Changes and extensions',
 	[APPEAL_EIA_DEVELOPMENT_DESCRIPTION.CHEMICAL_INDUSTRY]:
@@ -44,7 +44,7 @@ export function changeEiaDevelopmentDescriptionPage(appealData, existingValue) {
 			radiosInput({
 				name: 'eiaDevelopmentDescription',
 				items: Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).map((value) => ({
-					text: eiaDescriptionDict[value],
+					text: eiaDescriptions[value],
 					value
 				})),
 				value: existingValue
