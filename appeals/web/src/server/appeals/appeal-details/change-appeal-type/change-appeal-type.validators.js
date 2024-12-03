@@ -39,9 +39,7 @@ export const validateChangeAppealFinalDateIsBusinessDay =
 	await createDateInputDateBusinessDayValidator('change-appeal-final-date');
 
 export const validateHorizonReference = createValidator(
-	body('horizon-reference')
-		.notEmpty()
-		.withMessage('Enter a Horizon appeal reference')
+	body()
 		.custom(async (bodyFields, { req }) => {
 			if (!('horizon-reference' in bodyFields) || bodyFields['horizon-reference'].length === 0) {
 				return Promise.reject();
