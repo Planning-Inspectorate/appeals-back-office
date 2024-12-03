@@ -336,7 +336,7 @@ export async function renderCheckYourAnswers(
 				'Date submitted': {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comment/add/date-submitted`
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`
 					}
 				}
 			}
