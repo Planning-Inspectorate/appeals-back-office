@@ -99,6 +99,7 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
  * @property {string} redactionStatus
+ * @property {string} source
  *
  * @param {number} appealId
  * @param {CreateRepresentationInput} input
@@ -127,7 +128,8 @@ export const createRepresentation = async (appealId, input) => {
 	const representation = await representationRepository.createRepresentation({
 		appealId,
 		representedId: represented.id,
-		representationType: input.representationType
+		representationType: input.representationType,
+		source: input.source
 	});
 
 	if (input.attachments.length > 0) {

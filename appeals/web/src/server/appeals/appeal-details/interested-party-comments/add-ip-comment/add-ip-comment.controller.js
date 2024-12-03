@@ -202,7 +202,6 @@ export async function postIPComment(request, response) {
 		const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
 
 		const payload = mapSessionToRepresentationRequest(
-			currentAppeal,
 			request.session?.addIpComment,
 			request.session?.fileUploadInfo
 		);

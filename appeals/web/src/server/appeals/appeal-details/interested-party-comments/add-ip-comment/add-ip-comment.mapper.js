@@ -7,6 +7,7 @@ import {
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').interestedPartyComment} IpComment */
@@ -133,12 +134,11 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId) => 
 });
 
 /**
- * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'date-day': string, 'date-month': string, 'date-year': string }} values
  * @param {{ files: [{ GUID: string }] }} fileUpload
  * @returns {RepresentationRequest}
  */
-export const mapSessionToRepresentationRequest = (appealDetails, values, fileUpload) => ({
+export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
 	ipDetails: {
 		firstName: values.firstName,
 		lastName: values.lastName,
@@ -152,8 +152,8 @@ export const mapSessionToRepresentationRequest = (appealDetails, values, fileUpl
 		postCode: values.postCode
 	},
 	attachments: fileUpload.files.map((file) => file.GUID) || [],
-
-	redactionStatus: values.redactionStatus
+	redactionStatus: values.redactionStatus,
+	source: ODW_SYSTEM_ID
 });
 
 /**
