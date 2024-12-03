@@ -421,7 +421,7 @@ describe('change-appeal-type', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a Horizon appeal reference</a>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
 		});
 
 		it('should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon', async () => {

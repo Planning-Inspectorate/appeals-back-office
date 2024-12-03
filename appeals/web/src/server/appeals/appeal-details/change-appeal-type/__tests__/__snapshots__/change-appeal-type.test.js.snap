@@ -214,7 +214,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#">Enter a valid Horizon appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -247,7 +247,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#horizon-reference">Enter a Horizon appeal reference</a>
+                            <li><a href="#">Enter a valid Horizon appeal reference</a>
                             </li>
                         </ul>
                     </div>
