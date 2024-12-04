@@ -32,4 +32,17 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.validateBannerMessage('Document updated');
 		});
 	});
+
+	it('add an additional doc and then remove on file upload page', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.uploadDocAppellantCase(caseRef);
+			caseDetailsPage.clickAddAdditionalDocs();
+			caseDetailsPage.uploadSampleDoc();
+			caseDetailsPage.checkFileNameDisplays('sample-file.doc');
+			caseDetailsPage.clickRemoveFileUpload(0);
+			caseDetailsPage.checkFileNameRemoved('sample-file.doc');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.checkErrorMessageDisplays('Select a file');
+		});
+	});
 });
