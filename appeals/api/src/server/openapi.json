@@ -1105,6 +1105,15 @@
 						}
 					},
 					{
+						"name": "lpaCode",
+						"in": "query",
+						"description": "The lpa filter is assigned an an lpa code",
+						"example": "BRIS",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
 						"name": "isGreenBelt",
 						"in": "query",
 						"description": "The Green belt filter is applied",
@@ -3376,7 +3385,7 @@
 						}
 					},
 					{
-						"name": "type",
+						"name": "types",
 						"in": "query",
 						"required": false,
 						"example": "statement",
@@ -4179,43 +4188,6 @@
 					}
 				}
 			}
-		},
-		"/appeals/lpas": {
-			"get": {
-				"tags": ["LPAs"],
-				"description": "Gets LPAs",
-				"parameters": [
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "LPAs",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AllLPAsResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/AllLPAsResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
 		}
 	},
 	"components": {
@@ -4546,7 +4518,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "0783e3f5-8684-40ab-86ac-7fc4c1caef61"
+								"example": "01be0191-bf80-4224-b431-b41aea9d56dc"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5533,6 +5505,29 @@
 								"dueDate": {
 									"type": "string",
 									"example": "2024-06-18T00:00:00.000Z"
+								}
+							}
+						}
+					},
+					"statuses": {
+						"type": "array",
+						"example": ["lpa_questionnaire_due"],
+						"items": {
+							"type": "string"
+						}
+					},
+					"lpas": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"example": "Bristol City Council"
+								},
+								"lpaCode": {
+									"type": "string",
+									"example": "BRIS"
 								}
 							}
 						}
