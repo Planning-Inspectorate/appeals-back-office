@@ -35,7 +35,6 @@ import { representationRoutes } from './representations/representations.routes.j
 import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representations-rejection-reasons.routes.js';
-import { lpasRoutes } from '#endpoints/lpas/lpas.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -53,7 +52,6 @@ router.use(knowledgeOfOtherLandownersRoutes);
 router.use(lpaNotificationMethodsRoutes);
 router.use(lpaQuestionnaireIncompleteReasonsRoutes);
 router.use(lpaQuestionnaireValidationOutcomesRoutes);
-router.use(lpasRoutes);
 router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);

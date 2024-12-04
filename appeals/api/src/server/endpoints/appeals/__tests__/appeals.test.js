@@ -25,7 +25,7 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
-import { mapAppealStatuses } from '../appeals.controller.js';
+import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
@@ -43,18 +43,10 @@ describe('appeals list routes', () => {
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(2);
-				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
 
 				const response = await request.get('/appeals').set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-					expect.objectContaining({
-						skip: 0,
-						take: 30
-					})
-				);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					itemCount: 2,
@@ -130,6 +122,12 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -139,20 +137,12 @@ describe('appeals list routes', () => {
 
 			test('gets appeals when given pagination params', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([fullPlanningAppeal]);
+				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
 
 				const response = await request
 					.get('/appeals?pageNumber=2&pageSize=1')
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-					expect.objectContaining({
-						skip: 1,
-						take: 1
-					})
-				);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					itemCount: 1,
@@ -193,6 +183,12 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
 					page: 2,
 					pageCount: 1,
 					pageSize: 1,
@@ -201,8 +197,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given an uppercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -278,6 +272,12 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -286,8 +286,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a lowercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -363,6 +361,12 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -371,8 +375,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a search term with a space', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -448,6 +450,12 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -456,8 +464,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a valid status', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -520,6 +526,13 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
+
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -528,8 +541,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a true hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -594,6 +605,13 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
+
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -602,8 +620,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a false hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -666,6 +682,13 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas: [
+						{
+							lpaCode: 'MAID',
+							name: 'Maidstone Borough Council'
+						}
+					],
+
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,

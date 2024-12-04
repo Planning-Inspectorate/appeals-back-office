@@ -29,6 +29,7 @@ export interface AppealList {
 	itemCount: number;
 	items: AppealSummary[];
 	statuses: string[];
+	lpas: { name: string; lpaCode: string }[];
 	page: number;
 	pageCount: number;
 	pageSize: number;

@@ -46,7 +46,7 @@ export const getAppeals = (
 	}
 
 	if (localPlanningAuthorityFilter && localPlanningAuthorityFilter !== 'all') {
-		urlAppendix += `&lpa=${localPlanningAuthorityFilter}`;
+		urlAppendix += `&lpaCode=${localPlanningAuthorityFilter}`;
 	}
 
 	if (caseOfficerFilter && caseOfficerFilter !== 'all') {
