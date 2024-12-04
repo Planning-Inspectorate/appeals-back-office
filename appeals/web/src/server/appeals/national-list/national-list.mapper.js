@@ -51,10 +51,13 @@ export function nationalListPage(
 		})
 	);
 
-	const localPlanningAuthorityFilterItemsArray = ['all'].map((localPlanningAuthority) => ({
-		text: capitalizeFirstLetter(localPlanningAuthority),
-		value: localPlanningAuthority,
-		selected: localPlanningAuthorityFilter === localPlanningAuthority
+	const localPlanningAuthorityFilterItemsArray = [
+		{ name: 'All', lpaCode: 'all' },
+		...(appeals?.lpas || [])
+	].map((localPlanningAuthority) => ({
+		text: localPlanningAuthority.name,
+		value: localPlanningAuthority.lpaCode,
+		selected: localPlanningAuthorityFilter === localPlanningAuthority.lpaCode
 	}));
 
 	const caseOfficerFilterItemsArray = ['all'].map((caseOfficer) => ({
