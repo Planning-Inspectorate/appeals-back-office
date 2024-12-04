@@ -158,14 +158,12 @@ describe('other-appeals', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</strong></td>');
-			expect(unprettifiedElement.innerHTML).toContain('Appeal type</strong></td>');
-			expect(unprettifiedElement.innerHTML).toContain('Site address</strong></td>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Local planning authority (LPA)</strong></td>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Appellant name</strong></td>');
-			expect(unprettifiedElement.innerHTML).toContain('Agent name</strong></td>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal type</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Site address</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Local planning authority (LPA)</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Agent name</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Do you want to relate these appeals?</legend>'
 			);

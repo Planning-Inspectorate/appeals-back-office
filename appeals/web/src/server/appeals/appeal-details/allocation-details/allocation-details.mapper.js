@@ -73,31 +73,30 @@ export function allocationDetailsSpecialismPage(
 		heading: 'Select allocation specialism(s)',
 		pageComponents: [
 			{
-				type: 'table',
+				type: 'summary-list',
 				wrapperHtml: {
 					opening:
 						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds govuk-!-margin-top-5 govuk-!-margin-bottom-6">',
 					closing: '</div></div>'
 				},
 				parameters: {
-					firstCellIsHeader: false,
 					rows: [
-						[
-							{
-								html: '<strong>Level</strong>'
+						{
+							key: {
+								text: 'Level'
 							},
-							{
-								html: selectedAllocationLevel && selectedAllocationLevel.level
+							value: {
+								text: selectedAllocationLevel && selectedAllocationLevel.level
 							}
-						],
-						[
-							{
-								html: '<strong>Band</strong>'
+						},
+						{
+							key: {
+								text: 'Band'
 							},
-							{
-								html: selectedAllocationLevel && selectedAllocationLevel.band
+							value: {
+								text: selectedAllocationLevel && selectedAllocationLevel.band
 							}
-						]
+						}
 					]
 				}
 			},
@@ -153,48 +152,56 @@ export function allocationDetailsCheckAnswersPage(
 		heading: 'Check answers',
 		pageComponents: [
 			{
-				type: 'table',
+				type: 'summary-list',
 				wrapperHtml: {
 					opening:
 						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds govuk-!-margin-top-5 govuk-!-margin-bottom-6">',
 					closing: '</div></div>'
 				},
 				parameters: {
-					firstCellIsHeader: false,
 					rows: [
-						[
-							{
-								html: '<strong>Level</strong>'
+						{
+							key: {
+								text: 'Level'
 							},
-							{
-								html: selectedAllocationLevel.level
+							value: {
+								text: selectedAllocationLevel.level
 							},
-							{
-								html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-level">Change</a>`
+							actions: {
+								items: [
+									{
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-level`,
+										text: 'Change',
+										visuallyHiddenText: 'level'
+									}
+								]
 							}
-						],
-						[
-							{
-								html: '<strong>Band</strong>'
+						},
+						{
+							key: {
+								text: 'Band'
 							},
-							{
-								html: selectedAllocationLevel.band
-							},
-							{
-								text: ''
+							value: {
+								text: selectedAllocationLevel.band
 							}
-						],
-						[
-							{
-								html: '<strong>Specialism</strong>'
+						},
+						{
+							key: {
+								text: 'Specialism'
 							},
-							{
+							value: {
 								html: `<ul class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-left-4">${selectedAllocationSpecialismsHtml}</ul>`
 							},
-							{
-								html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-specialism">Change</a>`
+							actions: {
+								items: [
+									{
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-specialism`,
+										text: 'Change',
+										visuallyHiddenText: 'specialism'
+									}
+								]
 							}
-						]
+						}
 					]
 				}
 			},

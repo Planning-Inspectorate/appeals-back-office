@@ -141,9 +141,9 @@ describe('Allocation Details', () => {
 
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('Check answers</h1>');
-		expect(element.innerHTML).toContain('Level</strong>');
-		expect(element.innerHTML).toContain('Band</strong>');
-		expect(element.innerHTML).toContain('Specialism</strong>');
+		expect(element.innerHTML).toContain('Level</dt>');
+		expect(element.innerHTML).toContain('Band</dt>');
+		expect(element.innerHTML).toContain('Specialism</dt>');
 		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
