@@ -76,65 +76,64 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
-			type: 'table',
+			type: 'summary-list',
 			wrapperHtml: {
 				opening:
 					'<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-top-5 govuk-!-margin-bottom-6">',
 				closing: '</div></div>'
 			},
 			parameters: {
-				firstCellIsHeader: false,
 				rows: [
-					[
-						{
-							html: '<strong>Appeal reference</strong>'
+					{
+						key: {
+							text: 'Appeal reference'
 						},
-						{
-							html: `${relatedAppeal.appealReference}${
+						value: {
+							text: `${relatedAppeal.appealReference}${
 								relatedAppeal.source === 'horizon' ? ' (Horizon)' : ''
 							}`
 						}
-					],
-					[
-						{
-							html: '<strong>Appeal type</strong>'
+					},
+					{
+						key: {
+							text: 'Appeal type'
 						},
-						{
-							html: relatedAppeal.appealType || ''
+						value: {
+							text: relatedAppeal.appealType || ''
 						}
-					],
-					[
-						{
-							html: '<strong>Site address</strong>'
+					},
+					{
+						key: {
+							text: 'Site address'
 						},
-						{
-							html: relatedAppeal.siteAddress ? addressToString(relatedAppeal.siteAddress) : ''
+						value: {
+							text: relatedAppeal.siteAddress ? addressToString(relatedAppeal.siteAddress) : ''
 						}
-					],
-					[
-						{
-							html: '<strong>Local planning authority (LPA)</strong>'
+					},
+					{
+						key: {
+							text: 'Local planning authority (LPA)'
 						},
-						{
-							html: relatedAppeal.localPlanningDepartment || ''
+						value: {
+							text: relatedAppeal.localPlanningDepartment || ''
 						}
-					],
-					[
-						{
-							html: '<strong>Appellant name</strong>'
+					},
+					{
+						key: {
+							text: 'Appellant name'
 						},
-						{
-							html: relatedAppeal.appellantName || ''
+						value: {
+							text: relatedAppeal.appellantName || ''
 						}
-					],
-					[
-						{
-							html: '<strong>Agent name</strong>'
+					},
+					{
+						key: {
+							text: 'Agent name'
 						},
-						{
-							html: relatedAppeal.agentName || ''
+						value: {
+							text: relatedAppeal.agentName || ''
 						}
-					]
+					}
 				]
 			}
 		}
