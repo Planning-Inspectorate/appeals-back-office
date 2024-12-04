@@ -51,6 +51,7 @@ export class Page {
 		textArea: '.govuk-textarea',
 		status: '.govuk-tag',
 		successBanner: '.govuk-notification-banner--success',
+		summaryCardActions: '.govuk-summary-card__actions',
 		summaryListActions: '.govuk-summary-list__actions',
 		summaryListKey: '.govuk-summary-list__key',
 		summaryListValue: '.govuk-summary-list__value',
@@ -66,6 +67,7 @@ export class Page {
 			cy.get(this.selectors.accordion).contains('span', text, { matchCase: false }),
 		accordionButton: (text) =>
 			cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
+		additionalDocumentsAdd: () => cy.get(this.selectors.summaryCardActions).children(),
 		answerCell: (question) =>
 			cy.contains(this.selectors.summaryListKey, question, { matchCase: false }).next(),
 		applicationHeaderCentral: () => cy.get(`${this.selectors.centralCol} > p`),

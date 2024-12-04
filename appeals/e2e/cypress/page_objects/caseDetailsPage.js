@@ -64,7 +64,8 @@ export class CaseDetailsPage extends Page {
 		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
 		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
-		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value')
+		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
+		removeFileUpload: () => cy.get('Button').contains('Remove')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -73,6 +74,10 @@ export class CaseDetailsPage extends Page {
 	searchForCaseOfficer(text) {
 		this.fillInput(text);
 		this.clickButtonByText('Search');
+	}
+
+	clickAddAdditionalDocs() {
+		this.basePageElements.additionalDocumentsAdd().click();
 	}
 
 	clickChooseCaseOfficerResult(email) {
@@ -202,9 +207,26 @@ export class CaseDetailsPage extends Page {
 		cy.getByData('remove-appeal-' + caseRefToRelate).click();
 	}
 
+	clickRemoveFileUpload(buttonIndex) {
+		this.elements.removeFileUpload(buttonIndex).click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
+
+	checkErrorMessageDisplays(errorMessage) {
+		cy.get('li').contains(errorMessage).should('be.visible');
+	}
+
+	checkFileNameDisplays(fileName) {
+		cy.get('p').contains(fileName).should('be.visible');
+	}
+
+	checkFileNameRemoved(fileName) {
+		let savedFile = cy.get('p').contains(fileName);
+		savedFile.should('not.exist');
+	}
 
 	checkAnswerWithdrawalRequest(rowName, rowAnswer) {
 		let answer = this.basePageElements
