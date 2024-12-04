@@ -50,6 +50,11 @@ router.get(
 			description: 'The Inspector Filter assigned status',
 			example: 'true',
 		}
+		#swagger.parameters['isGreenBelt'] = {
+			in: 'query',
+			description: 'The Green belt filter is applied',
+			example: 'true',
+		}
 		#swagger.responses[200] = {
 			description: 'Requested appeals',
 			schema: { $ref: '#/components/schemas/AllAppeals' },
