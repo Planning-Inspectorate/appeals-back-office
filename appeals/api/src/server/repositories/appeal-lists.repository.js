@@ -17,9 +17,10 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
+ * @param {boolean} isGreenBelt
  * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
  */
-const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) => {
+const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector, isGreenBelt) => {
 	const where = {
 		appealStatus: {
 			some: {
@@ -53,6 +54,11 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 		}),
 		...(hasInspector === 'false' && {
 			inspectorUserId: null
+		}),
+		...(isGreenBelt && {
+			appellantCase: {
+				isGreenBelt: true
+			}
 		})
 	};
 
@@ -70,7 +76,8 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 					}
 				},
 				appealType: true,
-				lpa: true
+				lpa: true,
+				appellantCase: true
 			},
 			orderBy: { caseUpdatedDate: 'desc' },
 			skip: getSkipValue(pageNumber, pageSize),

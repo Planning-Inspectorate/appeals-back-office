@@ -58,7 +58,7 @@ export const getAppeals = (
 	}
 
 	if (greenBeltFilter) {
-		urlAppendix += `&greenBelt=${greenBeltFilter}`;
+		urlAppendix += `&isGreenBelt=true`;
 	}
 
 	return apiClient

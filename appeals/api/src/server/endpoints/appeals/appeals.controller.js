@@ -48,13 +48,24 @@ const getAppeals = async (req, res) => {
 	const searchTerm = String(query.searchTerm);
 	const status = String(query.status);
 	const hasInspector = String(query.hasInspector);
+	const isGreenBelt = query.isGreenBelt === 'true';
 
-	const [itemCount, appeals = [], rawStatuses = []] = await appealListRepository.getAllAppeals(
+	console.log(isGreenBelt);
+
+	const [
+		itemCount,
+		appeals = [],
+		rawStatuses = []
+		// rawLPAs = [],
+		// rawcaseOfficers = [],
+		// rawInspectors = []
+	] = await appealListRepository.getAllAppeals(
 		pageNumber,
 		pageSize,
 		searchTerm,
 		status,
-		hasInspector
+		hasInspector,
+		isGreenBelt
 	);
 
 	const formattedAppeals = await Promise.all(
