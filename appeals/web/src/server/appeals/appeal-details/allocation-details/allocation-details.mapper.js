@@ -66,11 +66,11 @@ export function allocationDetailsSpecialismPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Select allocation specialism(s) - ${shortAppealReference}`,
+		title: `Select allocation specialisms - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-level`,
 		backLinkText: 'Back',
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Select allocation specialism(s)',
+		heading: 'Select allocation specialisms',
 		pageComponents: [
 			{
 				type: 'summary-list',

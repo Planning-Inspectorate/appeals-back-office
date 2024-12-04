@@ -42,7 +42,7 @@ exports[`Allocation Details should render "Select allocation specialism" Page 1`
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation specialism(s)</h1>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation specialisms</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -110,7 +110,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation specialism(s)</h1>
+            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation specialisms</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
