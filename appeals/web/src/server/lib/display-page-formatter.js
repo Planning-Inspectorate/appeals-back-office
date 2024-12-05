@@ -235,7 +235,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocu
 		htmlProperty.pageComponents.push({
 			type: 'html',
 			parameters: {
-				html: '	No documents available'
+				html: 'Not provided'
 			}
 		});
 		logger.debug('No documents in this folder');
