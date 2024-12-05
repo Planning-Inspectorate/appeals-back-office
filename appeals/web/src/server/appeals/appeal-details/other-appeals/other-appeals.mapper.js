@@ -263,7 +263,7 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 				text: otherAppeal.appealType || otherAppeal.externalAppealType || 'Unknown'
 			},
 			{
-				html: `<a class="govuk-link" data-cy="remove-appeal-${appealData.appealReference}" href="${origin}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
+				html: `<a class="govuk-link" data-cy="remove-appeal-${shortAppealReference}" href="${origin}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
 			}
 		];
 	});
