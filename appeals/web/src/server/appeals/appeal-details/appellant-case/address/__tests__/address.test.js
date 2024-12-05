@@ -142,7 +142,7 @@ describe('site-address', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Enter postcode</a>');
+			expect(element.innerHTML).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-render updateSiteAddress page if the postcode is invalid', async () => {
@@ -188,7 +188,7 @@ describe('site-address', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Enter postcode</a>');
+			expect(element.innerHTML).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should redirect to the appellant case page', async () => {

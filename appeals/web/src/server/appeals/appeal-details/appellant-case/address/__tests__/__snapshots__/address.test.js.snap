@@ -84,7 +84,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter postcode</a>
+                <li><a href="#post-code">Enter a full UK postcode</a>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@ exports[`site-address POST /change/:siteId should re-render updateSiteAddress pa
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter postcode</a>
+                <li><a href="#post-code">Enter a full UK postcode</a>
                 </li>
             </ul>
         </div>
