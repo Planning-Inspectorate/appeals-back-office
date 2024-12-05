@@ -35,13 +35,11 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
 					caseDetailsPage.clickManageRelatedAppeals();
-					//caseDetailsPage.removeFirstRelatedAppeal();
 					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate);
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
-						'You have removed the relationship between this appeal and appeal' +
-							secondCaseRefToRelate
+						'You have removed the relationship between this appeal and appeal' + caseRefToRelate
 					);
 				});
 			});
