@@ -73,9 +73,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -94,9 +108,23 @@ describe('appeals list routes', () => {
 							appealType: fullPlanningAppeal.appealType.type,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -143,9 +171,23 @@ describe('appeals list routes', () => {
 							appealType: fullPlanningAppeal.appealType.type,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -214,9 +256,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -285,9 +341,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -356,9 +426,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -414,9 +498,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -474,9 +572,23 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
 							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							isParentAppeal: false,
 							isChildAppeal: false,
 							commentCounts: {}
@@ -532,8 +644,22 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							appellantCaseStatus: '',
-							lpaQuestionnaireStatus: '',
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received'
+								}
+							},
 							dueDate: null,
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -768,6 +894,9 @@ describe('appeals routes', () => {
 						},
 						ipComments: {
 							status: 'not_received'
+						},
+						lpaStatement: {
+							status: 'not_received'
 						}
 					},
 					healthAndSafety: {
@@ -882,6 +1011,9 @@ describe('appeals routes', () => {
 							receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 						},
 						ipComments: {
+							status: 'not_received'
+						},
+						lpaStatement: {
 							status: 'not_received'
 						}
 					},
@@ -1491,6 +1623,9 @@ describe('appeals/case-reference/:caseReference', () => {
 					},
 					ipComments: {
 						status: 'not_received'
+					},
+					lpaStatement: {
+						status: 'not_received'
 					}
 				},
 				healthAndSafety: {
@@ -1606,6 +1741,9 @@ describe('appeals/case-reference/:caseReference', () => {
 						receivedAt: householdAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 					},
 					ipComments: {
+						status: 'not_received'
+					},
+					lpaStatement: {
 						status: 'not_received'
 					}
 				},

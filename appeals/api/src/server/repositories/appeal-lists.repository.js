@@ -167,7 +167,8 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 						},
 						listedBuildingDetails: true
 					}
-				}
+				},
+				representations: true
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize
