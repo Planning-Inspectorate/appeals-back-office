@@ -197,9 +197,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.costDecisionStatus().contains(text);
 	}
 
-	clickRemoveRelatedAppealByRef(caseRef) {
-		cy.log(caseRef);
-		cy.getByData('remove-appeal-' + caseRef).click();
+	clickRemoveRelatedAppealByRef(caseRefToRelate) {
+		cy.log(caseRefToRelate);
+		cy.getByData('remove-appeal-' + caseRefToRelate).click();
 	}
 
 	/***************************************************************
