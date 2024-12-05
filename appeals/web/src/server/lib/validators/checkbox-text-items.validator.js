@@ -35,9 +35,7 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) =>
 
 				return true;
 			})
-			.withMessage(
-				'All selected checkboxes with text fields must have at least one reason provided'
-			)
+			.withMessage('Enter a reason')
 			.bail()
 			.custom((bodyFields) => {
 				const characterLimit = textInputCharacterLimits.defaultInputLength;
