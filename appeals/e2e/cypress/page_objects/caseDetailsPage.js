@@ -65,7 +65,8 @@ export class CaseDetailsPage extends Page {
 		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
-		removeFileUpload: () => cy.get('Button').contains('Remove')
+		removeFileUpload: () => cy.get('Button').contains('Remove'),
+		fileUploadRow: () => cy.get('.govuk-heading-s')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -207,8 +208,8 @@ export class CaseDetailsPage extends Page {
 		cy.getByData('remove-appeal-' + caseRefToRelate).click();
 	}
 
-	clickRemoveFileUpload(buttonIndex) {
-		this.elements.removeFileUpload(buttonIndex).click();
+	clickRemoveFileUpload(fileName) {
+		this.elements.removeFileUpload().contains(fileName).next().click();
 	}
 
 	/***************************************************************
