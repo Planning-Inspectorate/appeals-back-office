@@ -16,13 +16,14 @@ export const mapAdditionalDocuments = ({ appellantCaseData }) => ({
 								text: 'Additional documents',
 								classes: 'govuk-visually-hidden'
 							},
-							value: formatDocumentValues(
-								appellantCaseData.appealId,
-								isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
+							value: formatDocumentValues({
+								appealId: appellantCaseData.appealId,
+								documents: isFolderInfo(appellantCaseData.documents.appellantCaseCorrespondence)
 									? appellantCaseData.documents.appellantCaseCorrespondence.documents || []
 									: [],
-								true
-							),
+								displayMode: 'list',
+								isAdditionalDocuments: true
+							}),
 							actions: {
 								items: []
 							}

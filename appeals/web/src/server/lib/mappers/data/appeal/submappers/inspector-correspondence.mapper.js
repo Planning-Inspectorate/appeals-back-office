@@ -9,7 +9,7 @@ export const mapInspectorCorrespondence = ({ appealDetails, currentRoute, sessio
 		text: 'Inspector correspondence',
 		appealId: appealDetails.appealId,
 		folderInfo: appealDetails.internalCorrespondence?.inspector,
-		showDocuments: false,
+		displayMode: 'number',
 		editable: userHasPermission(permissionNames.viewCaseDetails, session),
 		uploadUrlTemplate: `${currentRoute}/internal-correspondence/inspector/upload-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`,
 		manageUrl: `${currentRoute}/internal-correspondence/inspector/manage-documents/${appealDetails.internalCorrespondence?.inspector?.folderId}`

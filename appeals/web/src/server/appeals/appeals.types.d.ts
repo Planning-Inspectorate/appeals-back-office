@@ -26,6 +26,7 @@ export interface DayMonthYearHourMinute {
 }
 
 export type DocumentVirusCheckStatus = 'not_scanned' | 'scanned' | 'affected';
+export type DocumentRowDisplayMode = 'none' | 'number' | 'list';
 
 declare global {
 	namespace Express {
