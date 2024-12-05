@@ -21,7 +21,9 @@ export class CaseDetailsPage extends Page {
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
 		addLinkedAppeal: 'add-linked-appeal',
+		manageLinkedAppeals: 'manage-linked-appeals',
 		addRelatedAppeals: 'add-related-appeals',
+		manageRelatedAppeals: 'manage-related-appeals',
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -48,6 +50,8 @@ export class CaseDetailsPage extends Page {
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
 		addRelatedAppeals: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
+		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
+		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
@@ -126,8 +130,16 @@ export class CaseDetailsPage extends Page {
 		this.elements.addLinkedAppeal().click();
 	}
 
+	clickManageLinkedAppeals() {
+		this.elements.manageLinkedAppeals().click();
+	}
+
 	clickAddRelatedAppeals() {
 		this.elements.addRelatedAppeals().click();
+	}
+
+	clickManageRelatedAppeals() {
+		this.elements.manageRelatedAppeals().click();
 	}
 
 	clickChangeAppealType() {
@@ -183,6 +195,20 @@ export class CaseDetailsPage extends Page {
 
 	confirmCostDecisionStatus(text) {
 		this.elements.costDecisionStatus().contains(text);
+	}
+
+	removeFirstRelatedAppeal() {
+		this.basePageElements
+			.tableCell() //.eq(index)
+			//.first()
+			.contains('Remove')
+			//.first()
+			.click({ force: true });
+	}
+
+	clickRemoveRelatedAppealByRef(caseRef) {
+		cy.log(caseRef);
+		cy.getByData('remove-appeal-' + caseRef).click();
 	}
 
 	/***************************************************************
