@@ -27,8 +27,9 @@ export function startCasePage(appealId, appealReference, today) {
 			{
 				type: 'button',
 				wrapperHtml: {
-					opening: '<form action="" method="POST" novalidate>',
-					closing: '</form>'
+					opening:
+						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><form action="" method="POST" novalidate>',
+					closing: '</form></div></div>'
 				},
 				parameters: {
 					text: 'Confirm',

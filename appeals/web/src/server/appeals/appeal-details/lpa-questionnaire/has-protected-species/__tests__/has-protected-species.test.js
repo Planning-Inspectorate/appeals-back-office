@@ -13,7 +13,7 @@ const appealId = appealData.appealId;
 const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
-describe('protected-species', () => {
+describe('has-protected-species', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {

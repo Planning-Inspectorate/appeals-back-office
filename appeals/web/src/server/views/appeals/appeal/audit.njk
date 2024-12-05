@@ -23,14 +23,18 @@
 {%- endblock -%}
 
 {%- block pageContent -%}
-{{
-		govukTable({
-			head: [
-				{ text: "Date and time", classes: "govuk-!-width-one-quarter" },
-				{ text: "Details", classes: "govuk-!-width-two-quarters" },
-				{ text: "User", classes: "govuk-!-width-one-quarter" }
-			],
-			rows: rows
-		})
-	}}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			{{
+				govukTable({
+					head: [
+						{ text: "Date and time", classes: "govuk-!-width-one-quarter" },
+						{ text: "Details", classes: "govuk-!-width-two-quarters" },
+						{ text: "User", classes: "govuk-!-width-one-quarter" }
+					],
+					rows: rows
+				})
+			}}
+		</div>
+	</div>
 {%- endblock -%}

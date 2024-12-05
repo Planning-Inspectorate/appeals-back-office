@@ -142,8 +142,9 @@ export function nationalListPage(
 		{
 			type: 'details',
 			wrapperHtml: {
-				opening: '<div class="govuk-grid-row govuk-!-padding-left-3">',
-				closing: '</div>'
+				opening:
+					'<div class="govuk-grid-row govuk-!-padding-left-3"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
 			},
 			parameters: {
 				summaryText: 'Filters',
@@ -221,6 +222,10 @@ export function nationalListPage(
 		? [
 				{
 					type: 'table',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
 					parameters: {
 						head: [
 							{

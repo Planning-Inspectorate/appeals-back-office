@@ -38,6 +38,10 @@ export function generateS78Components(
 		 */
 		const appealSiteSummary = {
 			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				attributes: {
 					id: 'site-details'
@@ -78,6 +82,10 @@ export function generateS78Components(
 		 */
 		const applicationSummary = {
 			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				attributes: {
 					id: 'application-summary'
@@ -121,6 +129,10 @@ export function generateS78Components(
 		 */
 		const appealSummary = {
 			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				attributes: {
 					id: 'appeal-summary'

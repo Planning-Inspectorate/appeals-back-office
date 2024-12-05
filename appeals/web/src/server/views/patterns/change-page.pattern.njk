@@ -15,14 +15,18 @@
 {%- endblock -%}
 
 {%- block pageContent -%}
-	<form method="POST" novalidate="novalidate">
-		{%- for component in pageContent.pageComponents -%}
-			{%- include "../appeals/components/page-component.njk" -%}
-		{%- endfor -%}
-		{{ govukButton({
-			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
-			type: "submit",
-			preventDoubleClick: true
-		}) }}
-	</form>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<form method="POST" novalidate="novalidate">
+				{%- for component in pageContent.pageComponents -%}
+					{%- include "../appeals/components/page-component.njk" -%}
+				{%- endfor -%}
+				{{ govukButton({
+					text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
+					type: "submit",
+					preventDoubleClick: true
+				}) }}
+			</form>
+		</div>
+	</div>
 {%- endblock -%}

@@ -9,24 +9,28 @@ exports[`is-gypsy-or-traveller-site GET /change should render the greenBelt chan
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether Gypsy or Traveller communities affected</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio" name="isGypsyOrTravellerSiteRadio"
-                            type="radio" value="yes" checked>
-                            <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio">Affected</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio" name="isGypsyOrTravellerSiteRadio"
+                                    type="radio" value="yes" checked>
+                                    <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio">Affected</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio-2"
+                                    name="isGypsyOrTravellerSiteRadio" type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio-2">Not affected</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio-2"
-                            name="isGypsyOrTravellerSiteRadio" type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio-2">Not affected</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

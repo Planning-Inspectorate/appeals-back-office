@@ -70,15 +70,19 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                             <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                             </div>
                         </div>
-                        <form method="POST" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                                <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                                name="appeal-reference" type="text">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                                        <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                                        name="appeal-reference" type="text">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 </main>
@@ -157,33 +161,37 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                                 <dd class="govuk-summary-list__value">21 February 2024</dd>
                             </div>
                         </dl>
-                        <form method="post" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <fieldset class="govuk-fieldset">
-                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                    <div class="govuk-radios"
-                                    data-module="govuk-radios">
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                            type="radio" value="lead">
-                                            <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                                        </div>
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                            type="radio" value="child">
-                                            <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                                        </div>
-                                        <div class="govuk-radios__divider">or</div>
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                            type="radio" value="cancel">
-                                            <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
-                                        </div>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="post" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <fieldset class="govuk-fieldset">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
+                                            <div class="govuk-radios"
+                                            data-module="govuk-radios">
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input" id="confirmation" name="confirmation"
+                                                    type="radio" value="lead">
+                                                    <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
+                                                </div>
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
+                                                    type="radio" value="child">
+                                                    <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
+                                                </div>
+                                                <div class="govuk-radios__divider">or</div>
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
+                                                    type="radio" value="cancel">
+                                                    <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                     </div>
-                                </fieldset>
+                                    <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 </main>
@@ -237,9 +245,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -284,9 +296,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -331,9 +347,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -378,9 +398,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -425,9 +449,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -472,9 +500,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -519,9 +551,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -566,9 +602,13 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
+                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -609,28 +649,32 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                type="radio" value="child">
-                                <label class="govuk-label govuk-radios__label" for="confirmation">Yes, this is a child appeal of 351062</label>
-                            </div>
-                            <div class="govuk-radios__divider">or</div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
-                                type="radio" value="cancel">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
+                                <div class="govuk-radios"
+                                data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
+                                        type="radio" value="child">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, this is a child appeal of 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
+                                        type="radio" value="cancel">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -671,28 +715,32 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                type="radio" value="lead">
-                                <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                            </div>
-                            <div class="govuk-radios__divider">or</div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
-                                type="radio" value="cancel">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
+                                <div class="govuk-radios"
+                                data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
+                                        type="radio" value="lead">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
+                                        type="radio" value="cancel">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -733,33 +781,37 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                type="radio" value="lead">
-                                <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                type="radio" value="child">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                            </div>
-                            <div class="govuk-radios__divider">or</div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                type="radio" value="cancel">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
+                                <div class="govuk-radios"
+                                data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
+                                        type="radio" value="lead">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
+                                        type="radio" value="child">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
+                                        type="radio" value="cancel">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -923,15 +975,19 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                    name="appeal-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                            name="appeal-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -956,15 +1012,19 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                    name="appeal-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                            name="appeal-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -989,15 +1049,19 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                    name="appeal-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                            name="appeal-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -1022,15 +1086,19 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                    name="appeal-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
+                            name="appeal-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -1082,33 +1150,37 @@ exports[`linked-appeals POST /linked-appeals/add/check-and-confirm should re-ren
                     <dd class="govuk-summary-list__value">21 February 2024</dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                type="radio" value="lead">
-                                <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                type="radio" value="child">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                            </div>
-                            <div class="govuk-radios__divider">or</div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                type="radio" value="cancel">
-                                <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
+                                <div class="govuk-radios"
+                                data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
+                                        type="radio" value="lead">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
+                                        type="radio" value="child">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
+                                        type="radio" value="cancel">
+                                        <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

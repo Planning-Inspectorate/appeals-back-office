@@ -9,18 +9,22 @@ exports[`change-site-area GET /change should render changeSiteArea page when loa
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site area</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="site-area">Site area in square metres</label>
-                    <div class="govuk-input__wrapper">
-                        <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
-                        type="text" value="30.1">
-                        <div class="govuk-input__suffix" aria-hidden="true">m²</div>
-                    </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-area">Site area in square metres</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
+                                type="text" value="30.1">
+                                <div class="govuk-input__suffix" aria-hidden="true">m²</div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -46,18 +50,22 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site area</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="site-area">Site area in square metres</label>
-                    <div class="govuk-input__wrapper">
-                        <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
-                        type="text">
-                        <div class="govuk-input__suffix" aria-hidden="true">m²</div>
-                    </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-area">Site area in square metres</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
+                                type="text">
+                                <div class="govuk-input__suffix" aria-hidden="true">m²</div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -83,18 +91,22 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the site area</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="site-area">Site area in square metres</label>
-                    <div class="govuk-input__wrapper">
-                        <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
-                        type="text" value="blah">
-                        <div class="govuk-input__suffix" aria-hidden="true">m²</div>
-                    </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-area">Site area in square metres</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
+                                type="text" value="blah">
+                                <div class="govuk-input__suffix" aria-hidden="true">m²</div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

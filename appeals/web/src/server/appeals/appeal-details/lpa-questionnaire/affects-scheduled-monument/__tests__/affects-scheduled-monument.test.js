@@ -13,7 +13,7 @@ const appealId = appealData.appealId;
 const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
-describe('scheduled-monument', () => {
+describe('affects-scheduled-monument', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {

@@ -96,6 +96,10 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 	/** @type {PageComponent} */
 	const appealDetailsAccordion = {
 		type: 'accordion',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			id: 'accordion-default' + appealDetails.appealId,
 			items: [

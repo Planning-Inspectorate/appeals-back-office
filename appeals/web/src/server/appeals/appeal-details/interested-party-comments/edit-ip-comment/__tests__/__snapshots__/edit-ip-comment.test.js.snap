@@ -47,10 +47,14 @@ exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] =
                                     </dd>
                             </div>
                         </dl>
-                        <form method="post" novalidate="novalidate">
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Confirm</button>
-                        </form>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="post" novalidate="novalidate">
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -105,39 +109,43 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 1`
                                 <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
                             </div>
                         </div>
-                        <form method="POST" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-1">Address line 1</label>
-                                <input class="govuk-input" id="address-line-1" name="addressLine1"
-                                type="text">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="add">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
-                                <input class="govuk-input" id="address-line-2"
-                                name="addressLine2" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="town">Town or city</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="town" name="town" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="county">County (optional)</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="county" name="county" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="post-code">Postcode</label>
-                                <input class="govuk-input govuk-input govuk-input--width-10"
-                                id="post-code" name="postCode" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
-                                value="add">
-                            </div>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -192,39 +200,43 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 2`
                                 <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
                             </div>
                         </div>
-                        <form method="POST" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-1">Address line 1</label>
-                                <input class="govuk-input" id="address-line-1" name="addressLine1"
-                                type="text">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="update">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
-                                <input class="govuk-input" id="address-line-2"
-                                name="addressLine2" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="town">Town or city</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="town" name="town" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="county">County (optional)</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="county" name="county" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="post-code">Postcode</label>
-                                <input class="govuk-input govuk-input govuk-input--width-10"
-                                id="post-code" name="postCode" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
-                                value="update">
-                            </div>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -279,39 +291,43 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 1`]
                                 <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
                             </div>
                         </div>
-                        <form method="POST" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-1">Address line 1</label>
-                                <input class="govuk-input" id="address-line-1" name="addressLine1"
-                                type="text">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="add">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
-                                <input class="govuk-input" id="address-line-2"
-                                name="addressLine2" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="town">Town or city</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="town" name="town" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="county">County (optional)</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="county" name="county" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="post-code">Postcode</label>
-                                <input class="govuk-input govuk-input govuk-input--width-10"
-                                id="post-code" name="postCode" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
-                                value="add">
-                            </div>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -366,39 +382,43 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 2`]
                                 <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
                             </div>
                         </div>
-                        <form method="POST" novalidate="novalidate">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-1">Address line 1</label>
-                                <input class="govuk-input" id="address-line-1" name="addressLine1"
-                                type="text">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="update">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
                             </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
-                                <input class="govuk-input" id="address-line-2"
-                                name="addressLine2" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="town">Town or city</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="town" name="town" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="county">County (optional)</label>
-                                <input class="govuk-input govuk-input govuk-input--width-20"
-                                id="county" name="county" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="post-code">Postcode</label>
-                                <input class="govuk-input govuk-input govuk-input--width-10"
-                                id="post-code" name="postCode" type="text">
-                            </div>
-                            <div class="govuk-form-group">
-                                <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
-                                value="update">
-                            </div>
-                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                            data-module="govuk-button">Continue</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </main>

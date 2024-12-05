@@ -83,21 +83,30 @@ export function textSummaryListItem({
  * @param {string} options.id
  * @param {string|HtmlProperty} options.value
  * @param {string} [options.cypressDataName]
+ * @param {PageComponentWrapperHtml} [options.wrapperHtml]
  * @returns {Instructions}
  */
-export function textHtmlItem({ id, value, cypressDataName = id }) {
+export function textHtmlItem({
+	id,
+	value,
+	cypressDataName = id,
+	wrapperHtml = { opening: '', closing: '' }
+}) {
 	const html = `
 		<p class="govuk-body govuk-!-margin-bottom-6" id="${id}" data-cy="${cypressDataName}">${value}</p>
 	`;
+	/** @type {PageComponent} */
+	const htmlItem = {
+		type: 'html',
+		wrapperHtml,
+		parameters: {
+			html
+		}
+	};
 	return {
 		id,
 		display: {
-			htmlItem: {
-				type: 'html',
-				parameters: {
-					html
-				}
-			}
+			htmlItem
 		}
 	};
 }
