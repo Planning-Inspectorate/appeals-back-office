@@ -1023,7 +1023,7 @@ describe('appeal-details', () => {
 						appealStatus: 'statements'
 					});
 				nock('http://test/')
-					.get('/appeals/2/reps?type=comments&pageNumber=1&pageSize=30&status=awaiting_review')
+					.get('/appeals/2/reps?type=comment&pageNumber=1&pageSize=30&status=awaiting_review')
 					.reply(200, interestedPartyCommentsAwaitingReview);
 				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
 				const caseDetailsResponse = await request.get(`${baseUrl}/2`);

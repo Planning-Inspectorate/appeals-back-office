@@ -468,7 +468,7 @@ describe('add-ip-comment', () => {
 		const appealId = 2;
 
 		beforeEach(() => {
-			nock('http://test/').post(`/appeals/${appealId}/reps?type=comments`).reply(200);
+			nock('http://test/').post(`/appeals/${appealId}/reps?type=comment`).reply(200);
 			nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
