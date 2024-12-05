@@ -9,29 +9,33 @@ exports[`planning-obligation GET /status/change should render the change plannin
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change planning obligation status</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
-                            name="planningObligationStatusRadio" type="radio" value="not_started">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio"
+                                    name="planningObligationStatusRadio" type="radio" value="not_started">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
+                                    name="planningObligationStatusRadio" type="radio" value="finalised" checked>
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
+                                    name="planningObligationStatusRadio" type="radio" value="not-applicable">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
-                            name="planningObligationStatusRadio" type="radio" value="finalised" checked>
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
-                            name="planningObligationStatusRadio" type="radio" value="not-applicable">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -46,30 +50,34 @@ exports[`planning-obligation GET /status/change should render the change plannin
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change planning obligation status</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
-                            name="planningObligationStatusRadio" type="radio" value="not_started">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio"
+                                    name="planningObligationStatusRadio" type="radio" value="not_started">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
+                                    name="planningObligationStatusRadio" type="radio" value="finalised">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
+                                    name="planningObligationStatusRadio" type="radio" value="not-applicable"
+                                    checked>
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
-                            name="planningObligationStatusRadio" type="radio" value="finalised">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
-                            name="planningObligationStatusRadio" type="radio" value="not-applicable"
-                            checked>
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -84,29 +92,33 @@ exports[`planning-obligation GET /status/change should render the change plannin
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change planning obligation status</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio"
-                            name="planningObligationStatusRadio" type="radio" value="not_started" checked>
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio"
+                                    name="planningObligationStatusRadio" type="radio" value="not_started" checked>
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
+                                    name="planningObligationStatusRadio" type="radio" value="finalised">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
+                                    name="planningObligationStatusRadio" type="radio" value="not-applicable">
+                                    <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
-                            name="planningObligationStatusRadio" type="radio" value="finalised">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
-                            name="planningObligationStatusRadio" type="radio" value="not-applicable">
-                            <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

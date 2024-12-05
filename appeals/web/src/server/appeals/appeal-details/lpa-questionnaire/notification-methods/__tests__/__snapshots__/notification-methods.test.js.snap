@@ -9,29 +9,33 @@ exports[`notification-methods GET /change should render the change notification 
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change notification methods</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes"
-                            name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked>
-                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes">A site notice</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes"
+                                    name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked>
+                                    <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes">A site notice</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-2"
+                                    name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked>
+                                    <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-2">Letter/email to interested parties</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-3"
+                                    name="notificationMethodsCheckboxes" type="checkbox" value="9031">
+                                    <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-3">A press advert</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-2"
-                            name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked>
-                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-2">Letter/email to interested parties</label>
-                        </div>
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-3"
-                            name="notificationMethodsCheckboxes" type="checkbox" value="9031">
-                            <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-3">A press advert</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

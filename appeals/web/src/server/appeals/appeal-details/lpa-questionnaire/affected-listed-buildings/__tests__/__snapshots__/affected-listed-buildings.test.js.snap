@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`affected-listed-building GET /add should render the add affected listed building page 1`] = `
+exports[`affected-listed-buildings GET /add should render the add affected listed building page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -9,21 +9,25 @@ exports[`affected-listed-building GET /add should render the add affected listed
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add affected listed building</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
-                    <input class="govuk-input" id="affectedListedBuilding"
-                    name="affectedListedBuilding" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
+                            <input class="govuk-input" id="affectedListedBuilding"
+                            name="affectedListedBuilding" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`affected-listed-building GET /add/check-and-confirm should render the add affected listed building check and confirm page 1`] = `
+exports[`affected-listed-buildings GET /add/check-and-confirm should render the add affected listed building check and confirm page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -41,16 +45,20 @@ exports[`affected-listed-building GET /add/check-and-confirm should render the a
                     </dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`affected-listed-building GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
+exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -68,16 +76,20 @@ exports[`affected-listed-building GET /change/:listedBuildingId/check-and-confir
                     </dd>
                 </div>
             </dl>
-            <form method="post" novalidate="novalidate">
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`affected-listed-building POST /add should re-render the add affected listed building page with an error when listed building is empty 1`] = `
+exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building is empty 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -97,21 +109,25 @@ exports[`affected-listed-building POST /add should re-render the add affected li
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Add affected listed building</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
-                    <input class="govuk-input" id="affectedListedBuilding"
-                    name="affectedListedBuilding" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
+                            <input class="govuk-input" id="affectedListedBuilding"
+                            name="affectedListedBuilding" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`affected-listed-building POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -131,15 +147,19 @@ exports[`affected-listed-building POST /change/:listedBuildingId should re-rende
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change affected listed building</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
-                    <input class="govuk-input" id="affectedListedBuilding"
-                    name="affectedListedBuilding" type="text" value="123456">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
+                            <input class="govuk-input" id="affectedListedBuilding"
+                            name="affectedListedBuilding" type="text" value="123456">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

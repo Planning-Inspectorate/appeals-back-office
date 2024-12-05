@@ -46,8 +46,8 @@ export function personalListPage(
 	/** @type {PageComponent} */
 	const searchAllCasesButton = {
 		wrapperHtml: {
-			opening: '',
-			closing: ''
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
 		},
 		type: 'button',
 		parameters: {
@@ -61,6 +61,10 @@ export function personalListPage(
 	/** @type {PageComponent} */
 	const filterComponent = {
 		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			summaryText: 'Filters',
 			html: '',
@@ -111,6 +115,10 @@ export function personalListPage(
 	/** @type {PageComponent} */
 	const casesComponent = {
 		type: 'table',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			head: [
 				{

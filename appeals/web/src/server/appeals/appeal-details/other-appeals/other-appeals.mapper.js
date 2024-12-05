@@ -22,6 +22,10 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 	const addOtherAppealsPageContent = [
 		{
 			type: 'html',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: ''
+			},
 			parameters: {
 				html: `<form method="POST">`
 			}
@@ -52,6 +56,10 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 		},
 		{
 			type: 'html',
+			wrapperHtml: {
+				opening: '',
+				closing: '</div></div>'
+			},
 			parameters: {
 				html: '</form>'
 			}
@@ -167,6 +175,10 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
 	} else {
 		pageComponents.push({
 			type: 'radios',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				name: 'relateAppealsAnswer',
 				idPrefix: 'relate-appeals-answer',

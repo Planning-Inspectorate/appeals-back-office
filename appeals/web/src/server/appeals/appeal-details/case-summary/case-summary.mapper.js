@@ -8,6 +8,10 @@ import { isDefined } from '#lib/ts-utilities.js';
 export const generateCaseSummary = (mappedData) => {
 	return {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			rows: [
 				removeSummaryListActions(mappedData.appeal.siteAddress.display.summaryListItem),

@@ -18,6 +18,10 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	if (mappedData.appeal.appealStatus.display?.statusTag) {
 		statusTag = {
 			type: 'status-tag',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				...mappedData.appeal.appealStatus.display.statusTag
 			}

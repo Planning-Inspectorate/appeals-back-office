@@ -8,15 +8,19 @@ exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                    name="horizon-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                            name="horizon-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -31,26 +35,30 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What type should this appeal be?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-type" name="appealType"
-                                type="radio" value="75">
-                                <label class="govuk-label govuk-radios__label" for="appeal-type">(A) Planning appeal</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
-                                type="radio" value="76">
-                                <label class="govuk-label govuk-radios__label" for="appeal-type-2">(C) Enforcement notice appeal</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type" name="appealType"
+                                        type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">(A) Planning appeal</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
+                                        type="radio" value="76">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">(C) Enforcement notice appeal</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -65,43 +73,47 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -153,19 +165,23 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
                 <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
                     the appellant to let them know the appeal type has been changed.</strong>
             </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                            value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
+                                    value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -180,26 +196,30 @@ exports[`change-appeal-type GET /change-appeal-type/resubmit should render the r
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Should the appellant be asked to resubmit this appeal?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"
-                                type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" for="appeal-resubmit">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-resubmit-2" name="appealResubmit"
-                                type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" for="appeal-resubmit-2">No</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"
+                                        type="radio" value="true">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-resubmit">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-resubmit-2" name="appealResubmit"
+                                        type="radio" value="false">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-resubmit-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -224,15 +244,19 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                    name="horizon-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                            name="horizon-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -257,15 +281,19 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
-                    <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                    name="horizon-reference" type="text">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                            name="horizon-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -304,26 +332,30 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What type should this appeal be?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-type" name="appealType"
-                                type="radio" value="75">
-                                <label class="govuk-label govuk-radios__label" for="appeal-type">(A) Planning appeal</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
-                                type="radio" value="76">
-                                <label class="govuk-label govuk-radios__label" for="appeal-type-2">(C) Enforcement notice appeal</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type" name="appealType"
+                                        type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">(A) Planning appeal</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
+                                        type="radio" value="76">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">(C) Enforcement notice appeal</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -373,19 +405,23 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-re
                 <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
                     the appellant to let them know the appeal type has been changed.</strong>
             </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                            value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
+                                    value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -444,26 +480,30 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Should the appellant be asked to resubmit this appeal?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"
-                                type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" for="appeal-resubmit">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="appeal-resubmit-2" name="appealResubmit"
-                                type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" for="appeal-resubmit-2">No</label>
-                            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"
+                                        type="radio" value="true">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-resubmit">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-resubmit-2" name="appealResubmit"
+                                        type="radio" value="false">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-resubmit-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -489,43 +529,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="29" inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="29" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="2" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="3000" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="2" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" value="3000" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -551,43 +595,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -615,43 +663,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="32" inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="32" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="11" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="2024" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="11" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" value="2024" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -677,43 +729,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="4" inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="4" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="1" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="2030" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="1" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" value="2030" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -741,43 +797,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="1" inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="1" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="13" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="2024" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="13" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" value="2024" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -805,43 +865,47 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the final date the appellant must resubmit by?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                        <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                        <div class="govuk-date-input" id="change-appeal-final-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                    value="11" inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
+                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="11" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="11" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="x" inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                    type="text" value="11" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                    type="text" value="x" inputmode="numeric">
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                    type</div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

@@ -69,10 +69,14 @@
 		</div>
 	{%- endif -%}
 	{% if pagination.items|length %}
-		{{
-			govukPagination(
-				pagination
-			)
-		}}
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				{{
+					govukPagination(
+						pagination
+					)
+				}}
+			</div>
+		</div>
 	{% endif %}
 {%- endblock -%}

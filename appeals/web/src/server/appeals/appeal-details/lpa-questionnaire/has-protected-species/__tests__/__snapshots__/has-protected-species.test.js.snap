@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`protected-species GET /change should render the hasProtectedSpecies change page when accessed from LPAQ page 1`] = `
+exports[`has-protected-species GET /change should render the hasProtectedSpecies change page when accessed from LPAQ page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -9,24 +9,28 @@ exports[`protected-species GET /change should render the hasProtectedSpecies cha
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether protected species affected</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="protectedSpeciesRadio" name="protectedSpeciesRadio"
-                            type="radio" value="yes" checked>
-                            <label class="govuk-label govuk-radios__label" for="protectedSpeciesRadio">Affected</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="protectedSpeciesRadio" name="protectedSpeciesRadio"
+                                    type="radio" value="yes" checked>
+                                    <label class="govuk-label govuk-radios__label" for="protectedSpeciesRadio">Affected</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="protectedSpeciesRadio-2" name="protectedSpeciesRadio"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="protectedSpeciesRadio-2">Not affected</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="protectedSpeciesRadio-2" name="protectedSpeciesRadio"
-                            type="radio" value="no">
-                            <label class="govuk-label govuk-radios__label" for="protectedSpeciesRadio-2">Not affected</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

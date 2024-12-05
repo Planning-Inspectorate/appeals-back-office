@@ -21,48 +21,52 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
             <h1             class="govuk-heading-l">Supporting documents</h1>
         </div>
     </div>
-    <table class="govuk-table" id="documents-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Name</th>
-                <th scope="col" class="govuk-table__header">Date received</th>
-                <th scope="col" class="govuk-table__header">Redaction status</th>
-                <th scope="col" class="govuk-table__header">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
-                        target="_blank">test-pdf-documentFolderInfo.pdf</a>
-                    </div>
-                    <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                        <dd>PDF, 129 KB</dd>
-                    </dl>
-                </td>
-                <td class="govuk-table__cell">1 February 2023</td>
-                <td class="govuk-table__cell">No redaction required</td>
-                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-                    class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
-                </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
-                        target="_blank">sample-20s-documentFolderInfo.mp4</a>
-                    </div>
-                    <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                        <dd>MP4, 11.8 MB</dd>
-                    </dl>
-                </td>
-                <td class="govuk-table__cell">2 March 2024</td>
-                <td class="govuk-table__cell">No redaction required</td>
-                <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
-                    class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                                target="_blank">test-pdf-documentFolderInfo.pdf</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                                target="_blank">sample-20s-documentFolderInfo.mp4</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>"
 `;
 
@@ -213,9 +217,13 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
             </dl>
             <p class="govuk-body">We will send an email to the interested party to explain why you rejected
                 their comment.</p>
-            <form method="post" novalidate="novalidate">
-                <button class="govuk-button" data-module="govuk-button">Reject comment</button>
-            </form>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button class="govuk-button" data-module="govuk-button">Reject comment</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"
@@ -313,63 +321,71 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Review comment</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
-                        <dd class="govuk-summary-list__value">Lee Thornton</dd>
-                    </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
-                        <dd class="govuk-summary-list__value">test1@example.com</dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
-                        <dd class="govuk-summary-list__value">Not provided</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
-                        <dd                         class="govuk-summary-list__value">9 October 2024</dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
-                        <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                        <dd class="govuk-summary-list__value">Not provided</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-                        </dd>
-                    </div>
-                </dl>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
-                            type="checkbox" value="site-visit">
-                            <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">The comment includes a site visit request</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="status" name="status" type="radio"
-                                value="valid">
-                                <label class="govuk-label govuk-radios__label" for="status">Accept comment</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="status-2" name="status" type="radio"
-                                value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Reject comment</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <dl class="govuk-summary-list">
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+                                        <dd class="govuk-summary-list__value">Lee Thornton</dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
+                                        <dd class="govuk-summary-list__value">test1@example.com</dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+                                        <dd class="govuk-summary-list__value">Not provided</dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
+                                        </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
+                                        <dd                                         class="govuk-summary-list__value">9 October 2024</dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+                                        <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
+                                        </dd>
+                                    </div>
+                                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                                        <dd class="govuk-summary-list__value">Not provided</dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                                        </dd>
+                                    </div>
+                                </dl>
                             </div>
                         </div>
-                    </fieldset>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
+                                    type="checkbox" value="site-visit">
+                                    <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">The comment includes a site visit request</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                        value="valid">
+                                        <label class="govuk-label govuk-radios__label" for="status">Accept comment</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="status-2" name="status" type="radio"
+                                        value="invalid">
+                                        <label class="govuk-label govuk-radios__label" for="status-2">Reject comment</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-!-margin-bottom-3"></div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <div class="govuk-!-margin-bottom-3"></div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -382,36 +398,41 @@ exports[`interested-party-comments GET /view-comment with data should render vie
             <h1             class="govuk-heading-l">View comment</h1>
         </div>
     </div>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
-            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+                    <dd class="govuk-summary-list__value">Lee Thornton</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
+                    <dd class="govuk-summary-list__value">test1@example.com</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=false&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
+                    <dd class="govuk-summary-list__value">No</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
+                    <dd                     class="govuk-summary-list__value">9 October 2024</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+                    <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
-            <dd class="govuk-summary-list__value">test1@example.com</dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
-            <dd class="govuk-summary-list__value">Not provided</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=false&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
-            <dd class="govuk-summary-list__value">No</dd>
-        </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
-            <dd             class="govuk-summary-list__value">9 October 2024</dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
-            <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-            <dd class="govuk-summary-list__value">Not provided</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-            </dd>
-        </div>
-    </dl>
-    <div class="govuk-!-margin-bottom-3"></div>
+    </div>
+    <div class="govuk-!-margin-bottom-3"><a class="govuk-link" href="#">Withdraw comment</a>
+    </div>
 </main>"
 `;
 

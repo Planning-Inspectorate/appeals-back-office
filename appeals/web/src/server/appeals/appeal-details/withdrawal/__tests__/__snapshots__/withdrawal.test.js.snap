@@ -9,67 +9,79 @@ exports[`withdrawal GET /redaction-status should render the redaction status pag
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the redaction status of this document?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                            type="radio" value="redacted">
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
+                                    name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
+                                    name="withdrawal-redaction-status" type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                            name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                            name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
 `;
 
 exports[`withdrawal GET /start should render the withdrawal request upload page with a file upload component 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main"><span class="govuk-caption-xl">Appeal 351062</span>
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant&#39;s withdrawal request</h1>
-    <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"
-    data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="437"
-    data-document-type="appellantCaseWithdrawalLetter" data-document-stage="appellant-case"
-    data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-    data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
-        data-filenames-in-folder="">
-            <div class="pins-file-upload__container">
-                <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                    <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
-                    <div                     class="middle-errors-hook"></div>
-            </div>
-            <div class="pins-file-upload__upload">
-                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
-            </div>
-            <div id="file-list-1">
-                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
-                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
-                aria-live="polite"></ul>
-            </div>
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant&#39;s withdrawal request</h1>
+        </div>
     </div>
-    <div class="display--flex">
-        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-        id="submit-button-1">Continue</button>
-        <div class="progress-hook"></div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"
+            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="437"
+            data-document-type="appellantCaseWithdrawalLetter" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+                <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
+                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be smaller than 1 GB.</span><span>The file must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span>
+                            <div                             class="middle-errors-hook"></div>
+                    </div>
+                    <div class="pins-file-upload__upload">
+                        <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                        type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                        <button type='button' class="pins-file-upload__button govuk-button">Choose file</button><span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'> No file chosen</span>
+                    </div>
+                    <div id="file-list-1">
+                        <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                        <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                        aria-live="polite"></ul>
+                    </div>
+            </div>
+            <div class="display--flex">
+                <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                id="submit-button-1">Continue</button>
+                <div class="progress-hook"></div>
+            </div>
+            </form>
+        </div>
     </div>
-    </form>
     </div>
 </main>"
 `;
@@ -95,33 +107,37 @@ exports[`withdrawal GET /view should render the view withdrawal request document
             <h1             class="govuk-heading-l">Appeal withdrawal request</h1>
         </div>
     </div>
-    <table class="govuk-table" id="documents-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Name</th>
-                <th scope="col" class="govuk-table__header">Request date</th>
-                <th scope="col" class="govuk-table__header">Redaction status</th>
-                <th scope="col" class="govuk-table__header">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                    <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
-                        target="_blank">withdrawal-request-document.pdf</a>
-                    </div>
-                    <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                        <dd>PDF, 3 KB</dd>
-                    </dl>
-                </td>
-                <td class="govuk-table__cell">8 July 2024</td>
-                <td class="govuk-table__cell">No redaction required</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
-                    target="_blank">View<span class="govuk-visually-hidden"> document</span></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Request date</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                                target="_blank">withdrawal-request-document.pdf</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 3 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">8 July 2024</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/38/download/614dbbaa-da49-40df-8e39-e6f299225425/withdrawal-request-document.pdf"
+                            target="_blank">View<span class="govuk-visually-hidden"> document</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>"
 `;
 
@@ -134,44 +150,48 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Check your answers</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                        <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
-                            target="_blank">test-document.txt</a>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                        <dd class="govuk-summary-list__value">1 January 2024</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                        <dd class="govuk-summary-list__value">Unredacted</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
-                        </dd>
-                    </div>
-                </dl>
-                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You are about
-                        to tell the relevant parties the appeal has been withdrawn and it is being
-                        closed. Any appointments for this case should be cancelled. Only limited
-                        changes can be made to the case once it is closed.</strong>
-                </div>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
-                            type="checkbox" value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
+                                <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                                    target="_blank">test-document.txt</a>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
+                                <dd class="govuk-summary-list__value">1 January 2024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                                <dd class="govuk-summary-list__value">Unredacted</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                            <strong                             class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You are about
+                                to tell the relevant parties the appeal has been withdrawn and it is being
+                                closed. Any appointments for this case should be cancelled. Only limited
+                                changes can be made to the case once it is closed.</strong>
                         </div>
-                    </div>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
+                                    type="checkbox" value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -206,43 +226,47 @@ exports[`withdrawal GET /withdrawal-request-date should render the withdrawal re
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Date of withdrawal request</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-hint">This is the date on the withdrawal correspondence from the appellant</div>
-                <div                 class="govuk-form-group">
-                    <fieldset class="govuk-fieldset" role="group" aria-describedby="withdrawal-request-date-hint">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Enter date</legend>
-                        <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 11 2023</div>
-                        <div class="govuk-date-input" id="withdrawal-request-date">
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-day">Day</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="withdrawal-request-date-day" name="withdrawal-request-date-day" type="text"
-                                    inputmode="numeric">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-hint">This is the date on the withdrawal correspondence from the appellant</div>
+                        <div                         class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="withdrawal-request-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Enter date</legend>
+                                <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 11 2023</div>
+                                <div class="govuk-date-input" id="withdrawal-request-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="withdrawal-request-date-day" name="withdrawal-request-date-day" type="text"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="withdrawal-request-date-month" name="withdrawal-request-date-month"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="withdrawal-request-date-year" name="withdrawal-request-date-year" type="text"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-month">Month</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                    id="withdrawal-request-date-month" name="withdrawal-request-date-month"
-                                    type="text" inputmode="numeric">
-                                </div>
-                            </div>
-                            <div class="govuk-date-input__item">
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-year">Year</label>
-                                    <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                    id="withdrawal-request-date-year" name="withdrawal-request-date-year" type="text"
-                                    inputmode="numeric">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+                            </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
         </div>
-        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-        data-module="govuk-button">Continue</button>
-        </form>
     </div>
     </div>
 </main>"
@@ -268,29 +292,33 @@ exports[`withdrawal POST /redaction-status should re-render the redaction status
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the redaction status of this document?</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                            type="radio" value="redacted">
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
+                                    name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
+                                    name="withdrawal-redaction-status" type="radio" value="no redaction required">
+                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                            name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                        </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                            name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                            <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                        </div>
-                    </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -329,44 +357,48 @@ exports[`withdrawal POST /withdrawal/check-your-answers should render the check 
                     <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Check your answers</h1>
                 </div>
             </div>
-            <form method="POST" novalidate="novalidate">
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                        <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
-                            target="_blank">test-document.txt</a>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                        <dd class="govuk-summary-list__value">1 January 2024</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                        <dd class="govuk-summary-list__value">Unredacted</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
-                        </dd>
-                    </div>
-                </dl>
-                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You are about
-                        to tell the relevant parties the appeal has been withdrawn and it is being
-                        closed. Any appointments for this case should be cancelled. Only limited
-                        changes can be made to the case once it is closed.</strong>
-                </div>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
-                            type="checkbox" value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
+                                <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                                    target="_blank">test-document.txt</a>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
+                                <dd class="govuk-summary-list__value">1 January 2024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                                <dd class="govuk-summary-list__value">Unredacted</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                            <strong                             class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You are about
+                                to tell the relevant parties the appeal has been withdrawn and it is being
+                                closed. Any appointments for this case should be cancelled. Only limited
+                                changes can be made to the case once it is closed.</strong>
                         </div>
-                    </div>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
+                                    type="checkbox" value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

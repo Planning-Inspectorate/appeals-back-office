@@ -28,17 +28,21 @@
 			{%- include "../appeals/components/page-component.njk" -%}
 		{%- endif -%}
 	{%- endfor -%}
-	<form method="post" novalidate="novalidate">
-		{%- for component in pageContent.pageComponents -%}
-			{%- if component.type === 'checkboxes' or component.type === 'radios' -%}
-				{%- include "../appeals/components/page-component.njk" -%}
-			{%- endif -%}
-		{%- endfor -%}
-		{%- set defaultButtonProperties = {
-			text:"Confirm",
-			type: "submit",
-			preventDoubleClick: true
-		} -%}
-		{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
-	</form>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<form method="post" novalidate="novalidate">
+				{%- for component in pageContent.pageComponents -%}
+					{%- if component.type === 'checkboxes' or component.type === 'radios' -%}
+						{%- include "../appeals/components/page-component.njk" -%}
+					{%- endif -%}
+				{%- endfor -%}
+				{%- set defaultButtonProperties = {
+					text:"Confirm",
+					type: "submit",
+					preventDoubleClick: true
+				} -%}
+				{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
+			</form>
+		</div>
+	</div>
 {%- endblock -%}

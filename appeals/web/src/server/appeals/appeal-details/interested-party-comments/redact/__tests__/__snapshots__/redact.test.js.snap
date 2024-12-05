@@ -7,19 +7,23 @@ exports[`redact renders the confirm redaction page 1`] = `
             <h1             class="govuk-heading-l">Check details and redact comment</h1>
         </div>
     </div>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
-            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+                    <dd class="govuk-summary-list__value">Lee Thornton</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original comment</dt>
+                    <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Change</a>
+                    </dd>
+                </div>
+            </dl>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original comment</dt>
-            <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
-            <dd class="govuk-summary-list__value"></dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Change</a>
-            </dd>
-        </div>
-    </dl>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>

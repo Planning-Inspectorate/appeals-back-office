@@ -9,6 +9,10 @@
  */
 export const summaryList = (appealDetails, comment, session) => ({
 	type: 'summary-list',
+	wrapperHtml: {
+		opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+		closing: '</div></div>'
+	},
 	parameters: {
 		rows: [
 			{

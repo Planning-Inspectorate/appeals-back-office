@@ -71,6 +71,10 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	 */
 	const caseSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			classes: 'govuk-summary-list--no-border',
 			rows: [
@@ -99,6 +103,10 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	 */
 	const additionalDocumentsSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: { ...mappedLpaqDetails.lpaq?.additionalDocuments?.display.cardItem }
 	};
 
@@ -132,6 +140,10 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	) {
 		reviewOutcomeComponents.push({
 			type: 'html',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
 			parameters: {
 				html: '<h2>What is the outcome of your review?</h2>'
 			}
@@ -722,6 +734,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			attributes: {
 				id: 'constraints-summary'
@@ -743,6 +759,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -765,6 +785,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -781,6 +805,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -803,6 +831,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -823,6 +855,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -855,6 +891,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			attributes: {
 				id: 'constraints-summary'
@@ -882,6 +922,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -903,6 +947,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -922,6 +970,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -938,6 +990,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -963,6 +1019,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -980,6 +1040,10 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {

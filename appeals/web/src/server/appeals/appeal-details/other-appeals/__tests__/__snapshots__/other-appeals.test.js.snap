@@ -6,15 +6,19 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
-    <form method="POST">
-        <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
-            <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-            name="addOtherAppealsReference" type="text">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
         </div>
-        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-        id="filters-submit">Continue</button>
-    </form>
+    </div>
 </main>"
 `;
 
@@ -51,27 +55,35 @@ exports[`other-appeals GET /other-appeals/confirm should render the "Related app
                     </dl>
                 </div>
             </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to relate these appeals?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="relate-appeals-answer" name="relateAppealsAnswer"
-                                type="radio" value="yes">
-                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer">Yes, relate this appeal to APP/Q9999/D/21/351062</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="relate-appeals-answer-2" name="relateAppealsAnswer"
-                                type="radio" value="no">
-                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer-2">No, return to search</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <div class="govuk-form-group">
+                                    <fieldset class="govuk-fieldset">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to relate these appeals?</legend>
+                                        <div class="govuk-radios"
+                                        data-module="govuk-radios">
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="relate-appeals-answer" name="relateAppealsAnswer"
+                                                type="radio" value="yes">
+                                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer">Yes, relate this appeal to APP/Q9999/D/21/351062</label>
+                                            </div>
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="relate-appeals-answer-2" name="relateAppealsAnswer"
+                                                type="radio" value="no">
+                                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer-2">No, return to search</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
+                        <button class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -215,15 +227,19 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
-    <form method="POST">
-        <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
-            <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-            name="addOtherAppealsReference" type="text" value="7654321">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text" value="7654321">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
         </div>
-        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-        id="filters-submit">Continue</button>
-    </form>
+    </div>
 </main>"
 `;
 
@@ -248,15 +264,19 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
-    <form method="POST">
-        <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
-            <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-            name="addOtherAppealsReference" type="text">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
         </div>
-        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-        id="filters-submit">Continue</button>
-    </form>
+    </div>
 </main>"
 `;
 
@@ -281,15 +301,19 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
-    <form method="POST">
-        <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
-            <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-            name="addOtherAppealsReference" type="text" value="12345678">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text" value="12345678">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
         </div>
-        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-        id="filters-submit">Continue</button>
-    </form>
+    </div>
 </main>"
 `;
 
@@ -314,15 +338,19 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
-    <form method="POST">
-        <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
-            <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-            name="addOtherAppealsReference" type="text" value="123456">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text" value="123456">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
         </div>
-        <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-        id="filters-submit">Continue</button>
-    </form>
+    </div>
 </main>"
 `;
 
@@ -370,27 +398,35 @@ exports[`other-appeals POST /other-appeals/confirm should re-render the "Related
                     </dl>
                 </div>
             </div>
-            <form method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to relate these appeals?</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="relate-appeals-answer" name="relateAppealsAnswer"
-                                type="radio" value="yes">
-                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer">Yes, relate this appeal to APP/Q9999/D/21/351062</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="relate-appeals-answer-2" name="relateAppealsAnswer"
-                                type="radio" value="no">
-                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer-2">No, return to search</label>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <div class="govuk-form-group">
+                                    <fieldset class="govuk-fieldset">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to relate these appeals?</legend>
+                                        <div class="govuk-radios"
+                                        data-module="govuk-radios">
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="relate-appeals-answer" name="relateAppealsAnswer"
+                                                type="radio" value="yes">
+                                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer">Yes, relate this appeal to APP/Q9999/D/21/351062</label>
+                                            </div>
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="relate-appeals-answer-2" name="relateAppealsAnswer"
+                                                type="radio" value="no">
+                                                <label class="govuk-label govuk-radios__label" for="relate-appeals-answer-2">No, return to search</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
+                        <button class="govuk-button" data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>"

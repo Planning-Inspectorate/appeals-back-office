@@ -908,6 +908,10 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			{
 				type: 'table',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
 				parameters: {
 					head: [
 						{

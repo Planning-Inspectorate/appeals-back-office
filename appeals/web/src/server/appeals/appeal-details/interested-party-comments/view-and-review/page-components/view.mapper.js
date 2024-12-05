@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/interested-party-comments/interested-party-comments.types.js").Representation} Representation */
@@ -29,6 +30,8 @@ export function viewInterestedPartyCommentPage(appealDetails, comment, session) 
 		headingClasses: 'govuk-heading-l',
 		pageComponents: [...notificationBanners, commentSummaryList, withdrawLink]
 	};
+
+	preRenderPageComponents(pageContent.pageComponents);
 
 	return pageContent;
 }

@@ -9,7 +9,7 @@ const request = supertest(app);
 const appealId = appealData.appealId;
 const appellantCaseId = appealData.appellantCaseId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-describe('application-date', () => {
+describe('application-decision-date', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {

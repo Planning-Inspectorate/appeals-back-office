@@ -10,7 +10,7 @@ const baseUrl = '/appeals-service/appeal-details';
 const appealId = appealData.appealId;
 const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 
-describe('affected-listed-building', () => {
+describe('affected-listed-buildings', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')

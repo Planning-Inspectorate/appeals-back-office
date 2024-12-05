@@ -30,6 +30,10 @@ export function generateHASComponents(
 	 */
 	const appellantCaseSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			classes: 'govuk-summary-list--no-border',
 			rows: [
@@ -58,6 +62,10 @@ export function generateHASComponents(
 	 */
 	const appellantSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			card: {
 				title: {
@@ -76,6 +84,10 @@ export function generateHASComponents(
 	 */
 	const appealSiteSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			attributes: {
 				id: 'site-details'
@@ -102,6 +114,10 @@ export function generateHASComponents(
 	 */
 	const applicationSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			attributes: {
 				id: 'application-summary'
@@ -134,6 +150,10 @@ export function generateHASComponents(
 	 */
 	const appealSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			attributes: {
 				id: 'appeal-summary'
@@ -157,6 +177,10 @@ export function generateHASComponents(
 	 */
 	const additionalDocumentsSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			classes: 'pins-summary-list--fullwidth-value',
 			card: {

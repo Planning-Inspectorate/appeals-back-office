@@ -65,6 +65,10 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	 */
 	const appellantCaseSummary = {
 		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			classes: 'govuk-summary-list--no-border',
 			rows: [

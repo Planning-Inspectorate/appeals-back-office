@@ -12,6 +12,10 @@ export const generateCaseNotes = async (appealCaseNotes, request) => {
 
 	return {
 		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			summaryText: `${mappedCaseNotes.caseNotes.length} case note${
 				mappedCaseNotes.caseNotes.length === 1 ? '' : 's'
