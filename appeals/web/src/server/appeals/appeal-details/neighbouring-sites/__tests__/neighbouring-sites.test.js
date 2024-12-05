@@ -203,7 +203,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-render getAllNeighbouringSite page if the postcode is invalid', async () => {
@@ -263,7 +263,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {
@@ -713,7 +713,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is invalid', async () => {
@@ -773,7 +773,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {
