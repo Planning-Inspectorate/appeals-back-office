@@ -5237,7 +5237,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5403,7 +5403,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5569,7 +5569,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5734,7 +5734,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -6973,7 +6973,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7070,7 +7070,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7167,7 +7167,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7263,7 +7263,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">All selected checkboxes with text fields must have at least one reason provided</a>
+                            <li><a href="#">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
