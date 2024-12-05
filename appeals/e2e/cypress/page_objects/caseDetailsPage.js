@@ -216,10 +216,6 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verfifications ************************
 	 ****************************************************************/
 
-	checkErrorMessageDisplays(errorMessage) {
-		cy.get('li').contains(errorMessage).should('be.visible');
-	}
-
 	checkFileNameDisplays(fileName) {
 		cy.get('p').contains(fileName).should('be.visible');
 	}
