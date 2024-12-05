@@ -863,9 +863,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
@@ -884,9 +882,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -906,9 +902,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
@@ -931,9 +925,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {
