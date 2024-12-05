@@ -115,7 +115,8 @@ export const getManageFolder = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/review`,
 		viewAndEditUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}/{{documentId}}`,
-		pageHeadingTextOverride: 'Supporting documents'
+		pageHeadingTextOverride: 'Supporting documents',
+		dateColumnLabelTextOverride: 'Date submitted'
 	});
 };
 
@@ -129,7 +130,9 @@ export const getManageDocument = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}`,
 		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/add-documents/{{folderId}}/{{documentId}}`,
-		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`
+		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`,
+		pageTitleTextOverride: 'Manage versions',
+		dateRowLabelTextOverride: 'Date submitted'
 	});
 };
 
