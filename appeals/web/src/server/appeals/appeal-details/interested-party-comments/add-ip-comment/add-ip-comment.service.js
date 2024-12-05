@@ -10,7 +10,7 @@ export const DOCUMENT_TYPE = 'appellantStatement';
  */
 export async function postRepresentationComment(apiClient, appealId, payload) {
 	try {
-		const response = await apiClient.post(`appeals/${appealId}/reps?type=comment`, {
+		const response = await apiClient.post(`appeals/${appealId}/reps/comments`, {
 			json: payload
 		});
 		return response.body;
