@@ -258,7 +258,7 @@ describe('interested-party-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Supporting documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Date submitted</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
 
@@ -327,7 +327,7 @@ describe('interested-party-comments', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Manage document</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Manage versions</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Virus scanning</strong>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Virus detected</strong>');
