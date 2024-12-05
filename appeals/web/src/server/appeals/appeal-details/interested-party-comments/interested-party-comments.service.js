@@ -20,7 +20,7 @@ export const getInterestedPartyComments = (
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
-	let url = `appeals/${appealId}/reps?type=comments&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+	let url = `appeals/${appealId}/reps?type=comment&pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
 	if (statusFilter && statusFilter !== 'all') {
 		url += `&status=${encodeURIComponent(statusFilter)}`;

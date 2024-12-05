@@ -33,15 +33,15 @@ describe('interested-party-comments', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'awaiting_review', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'awaiting_review', type: 'comment' })
 				.reply(200, interestedPartyCommentsAwaitingReview);
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'valid', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'valid', type: 'comment' })
 				.reply(200, interestedPartyCommentsValid);
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'invalid', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'invalid', type: 'comment' })
 				.reply(200, interestedPartyCommentsInvalid);
 		});
 		it('should render interestedPartyComments page with awaiting review comments', async () => {
@@ -127,15 +127,15 @@ describe('interested-party-comments', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'awaiting_review', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'awaiting_review', type: 'comment' })
 				.reply(200, {});
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'valid', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'valid', type: 'comment' })
 				.reply(200, {});
 			nock('http://test/')
 				.get('/appeals/2/reps')
-				.query({ pageNumber: '1', pageSize: '1000', status: 'invalid', type: 'comments' })
+				.query({ pageNumber: '1', pageSize: '1000', status: 'invalid', type: 'comment' })
 				.reply(200, {});
 		});
 		it('should render interestedPartyComments page with "Awaiting comments" message when no awaiting review data', async () => {
