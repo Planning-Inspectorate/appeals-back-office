@@ -487,11 +487,10 @@ interface AppealListResponse {
 	appealType?: string;
 	createdAt: Date;
 	localPlanningDepartment: string;
+	dueDate: Date | undefined | null;
 	lpaQuestionnaireId?: number | null;
 	appealTimetable?: AppealTimetable;
-	appellantCaseStatus: string;
-	lpaQuestionnaireStatus: string;
-	dueDate: Date | undefined | null;
+	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
 	commentCounts: Record<string, number>;
@@ -500,11 +499,14 @@ interface AppealListResponse {
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
+	ipComments?: DocumentationSummaryEntry;
+	lpaStatement?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {
 	status: string;
-	dueDate: Date | undefined | null;
+	dueDate?: Date | string | undefined | null;
+	receivedAt?: Date | string | undefined | null;
 }
 
 interface FolderInfo {
