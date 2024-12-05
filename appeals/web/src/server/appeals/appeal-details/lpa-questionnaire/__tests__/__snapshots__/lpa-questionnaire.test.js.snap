@@ -111,17 +111,17 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                            <dd class="govuk-summary-list__value">No documents available</dd>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
@@ -199,22 +199,22 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                                 </dd>
                         </div>
@@ -475,17 +475,17 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                            <dd class="govuk-summary-list__value">No documents available</dd>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
@@ -563,22 +563,22 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                                 </dd>
                         </div>
@@ -865,17 +865,17 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                            <dd class="govuk-summary-list__value">No documents available</dd>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
@@ -953,22 +953,22 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                                 </dd>
                         </div>
@@ -1214,17 +1214,17 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                            <dd class="govuk-summary-list__value">No documents available</dd>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
@@ -1302,22 +1302,22 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                                 </dd>
                         </div>
@@ -3620,17 +3620,17 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
-                            <dd class="govuk-summary-list__value">No documents available</dd>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-site-notice"> Add<span class="govuk-visually-hidden"> Site notice</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Letter or email notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-letter-or-email-notification"> Add<span class="govuk-visually-hidden"> Letter or email notification</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
@@ -3708,22 +3708,22 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings"> Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies"> Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supplementary planning documents</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning"> Add<span class="govuk-visually-hidden"> Supplementary planning documents</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents available</dd>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan"> Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal</span></a>
                                 </dd>
                         </div>
