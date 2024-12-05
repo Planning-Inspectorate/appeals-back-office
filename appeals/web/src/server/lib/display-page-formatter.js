@@ -131,21 +131,42 @@ export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) =
 };
 
 /**
- * @param {number} appealId
- * @param {*[]} listOfDocuments
- * @param {boolean} [isAdditionalDocuments]
+ * @param {Object} options
+ * @param {number} options.appealId
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
+ * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
+ * @param {boolean} [options.isAdditionalDocuments]
+ * @returns {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty}
+ */
+export function formatDocumentValues({ appealId, documents, displayMode, isAdditionalDocuments }) {
+	switch (displayMode) {
+		case 'none':
+			return { text: '' };
+		case 'number':
+			return formatDocumentValuesAsNumber({ documents });
+		case 'list':
+		default:
+			return formatDocumentValuesAsList({ appealId, documents, isAdditionalDocuments });
+	}
+}
+
+/**
+ * @param {Object} options
+ * @param {number} options.appealId
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
+ * @param {boolean} [options.isAdditionalDocuments]
  * @returns {HtmlProperty & ClassesProperty}
  */
-export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocuments = false) => {
+const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments }) => {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
 		pageComponents: []
 	};
 
-	if (listOfDocuments.length > 0) {
-		for (let i = 0; i < listOfDocuments.length; i++) {
-			const document = listOfDocuments[i];
+	if (documents.length > 0) {
+		for (let i = 0; i < documents.length; i++) {
+			const document = documents[i];
 			const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
 
 			/** @type {PageComponent[]} */
@@ -211,9 +232,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocu
 					opening: isAdditionalDocuments
 						? `<li class="govuk-!-margin-bottom-0${
 								i > 0 ? ' govuk-!-padding-top-2' : ''
-						  } govuk-!-padding-bottom-2${
-								i < listOfDocuments.length - 1 ? ' pins-border-bottom' : ''
-						  }">`
+						  } govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}">`
 						: '<li>',
 					closing: '</li>'
 				},
@@ -241,7 +260,7 @@ export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocu
 		logger.debug('No documents in this folder');
 	}
 
-	if (listOfDocuments.length > SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING && isAdditionalDocuments) {
+	if (documents.length > SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING && isAdditionalDocuments) {
 		htmlProperty.pageComponents = [
 			{
 				type: 'show-more',
@@ -271,26 +290,25 @@ export const formatDocumentValues = (appealId, listOfDocuments, isAdditionalDocu
 };
 
 /**
+ * @param {Object} options
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
+ * @returns {TextProperty & ClassesProperty}
+ */
+const formatDocumentValuesAsNumber = ({ documents }) => {
+	return {
+		html: `${documents.length > 0 ? documents.length : 'No'} document${
+			documents.length === 1 ? '' : 's'
+		}`
+	};
+};
+
+/**
  * @param {number} appealId
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').FolderInfo|undefined} folder
  * @returns {HtmlProperty & ClassesProperty}
  */
 export const formatFolderValues = (appealId, folder) => {
-	const mappedDocumentInfo =
-		folder?.documents?.map((document) => {
-			const documentInfo = {
-				id: document.id,
-				name: document.name,
-				folderId: folder.folderId,
-				caseId: appealId,
-				virusCheckStatus: document.latestDocumentVersion?.virusCheckStatus,
-				isLateEntry: document.latestDocumentVersion?.isLateEntry
-			};
-
-			return documentInfo;
-		}) || [];
-
-	const result = formatDocumentValues(appealId, mappedDocumentInfo);
+	const result = formatDocumentValuesAsList({ appealId, documents: folder?.documents || [] });
 
 	return result;
 };

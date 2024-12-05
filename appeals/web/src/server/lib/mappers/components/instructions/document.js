@@ -13,7 +13,7 @@ import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-pag
  * @param {string} options.manageUrl
  * @param {string} options.uploadUrlTemplate
  * @param {string} [options.cypressDataName]
- * @param {boolean} [options.showDocuments]
+ * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
  * @returns {Instructions}
  */
 export function documentSummaryListItem({
@@ -25,7 +25,7 @@ export function documentSummaryListItem({
 	manageUrl,
 	uploadUrlTemplate,
 	cypressDataName = id,
-	showDocuments = true
+	displayMode = 'list'
 }) {
 	const documents = (isFolderInfo(folderInfo) && folderInfo.documents) || [];
 	/** @type {ActionItemProperties[]} */
@@ -51,7 +51,7 @@ export function documentSummaryListItem({
 		display: {
 			summaryListItem: {
 				key: { text },
-				value: showDocuments ? formatDocumentValues(appealId, documents) : '',
+				value: formatDocumentValues({ appealId, documents, displayMode }),
 				actions: { items: actions }
 			}
 		}

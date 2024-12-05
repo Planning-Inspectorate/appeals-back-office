@@ -16,13 +16,13 @@ export const mapAdditionalDocumentsContents = ({ lpaQuestionnaireData }) => ({
 								text: 'Additional documents',
 								classes: 'govuk-visually-hidden'
 							},
-							value: formatDocumentValues(
-								lpaQuestionnaireData.appealId,
-								isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
+							value: formatDocumentValues({
+								appealId: lpaQuestionnaireData.appealId,
+								documents: isFolderInfo(lpaQuestionnaireData.documents.lpaCaseCorrespondence)
 									? lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents || []
 									: [],
-								true
-							),
+								isAdditionalDocuments: true
+							}),
 							actions: {
 								items: []
 							}
