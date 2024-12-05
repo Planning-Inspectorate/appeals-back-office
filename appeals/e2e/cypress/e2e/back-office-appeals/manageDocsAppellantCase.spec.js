@@ -39,7 +39,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickAddAdditionalDocs();
 			caseDetailsPage.uploadSampleDoc();
 			caseDetailsPage.checkFileNameDisplays('sample-file.doc');
-			caseDetailsPage.clickRemoveFileUpload(0);
+			caseDetailsPage.clickRemoveFileUpload('sample-file.doc');
 			caseDetailsPage.checkFileNameRemoved('sample-file.doc');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkErrorMessageDisplays('Select a file');
