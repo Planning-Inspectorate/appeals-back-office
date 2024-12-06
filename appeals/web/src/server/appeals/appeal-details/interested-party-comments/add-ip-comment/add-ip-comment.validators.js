@@ -16,7 +16,7 @@ const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 export const validateCheckAddress = createValidator(
 	body('addressProvided')
 		.exists()
-		.withMessage('Please indicate whether the interested party provided an address.')
+		.withMessage('Select yes if the interested party provided an address')
 );
 
 export const validateRedactionStatus = createValidator(
@@ -26,13 +26,13 @@ export const validateRedactionStatus = createValidator(
 export const validateInterestedPartyDetails = createValidator(
 	createTextInputValidator(
 		'firstName',
-		'Enter the first name',
+		'Enter a first name',
 		maxLength,
 		`First name must be ${maxLength} characters or less`
 	),
 	createTextInputValidator(
 		'lastName',
-		'Enter the last name',
+		'Enter a last name',
 		maxLength,
 		`Last name must be ${maxLength} characters or less`
 	),

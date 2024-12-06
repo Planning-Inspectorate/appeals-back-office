@@ -1126,9 +1126,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty array', async () => {
@@ -1147,9 +1145,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -1169,9 +1165,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if multiple invalid reasons with text were provided but any of the matching text properties are empty arays', async () => {
@@ -1191,9 +1185,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property exceeds the character limit', async () => {
@@ -1381,9 +1373,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty array', async () => {
@@ -1402,9 +1392,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty strings', async () => {
@@ -1424,9 +1412,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties are empty arrays', async () => {
@@ -1446,9 +1432,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'All selected checkboxes with text fields must have at least one reason provided</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property exceeds the character limit', async () => {

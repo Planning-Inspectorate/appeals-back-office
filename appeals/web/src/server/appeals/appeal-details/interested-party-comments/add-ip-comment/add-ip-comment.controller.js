@@ -227,7 +227,7 @@ export async function postIPComment(request, response) {
 			'changePage',
 			currentAppeal.appealId,
 			'',
-			'Comment added'
+			'Interested party comment added'
 		);
 
 		redirectToIPComments(request, response);

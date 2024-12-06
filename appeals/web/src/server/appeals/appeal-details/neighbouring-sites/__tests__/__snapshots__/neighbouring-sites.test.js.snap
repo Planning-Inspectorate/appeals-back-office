@@ -503,7 +503,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter postcode</a>
+                            <li><a href="#post-code">Enter a full UK postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -627,7 +627,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter postcode</a>
+                            <li><a href="#post-code">Enter a full UK postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -939,7 +939,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter postcode</a>
+                            <li><a href="#post-code">Enter a full UK postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -1063,7 +1063,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter postcode</a>
+                            <li><a href="#post-code">Enter a full UK postcode</a>
                             </li>
                         </ul>
                     </div>

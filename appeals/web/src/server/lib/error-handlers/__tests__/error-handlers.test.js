@@ -8,7 +8,7 @@ describe('Address', () => {
 				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' },
 				postCode: {
 					value: '',
-					msg: 'Enter postcode',
+					msg: 'Enter a full UK postcode',
 					param: 'postCode',
 					location: 'body'
 				}
@@ -57,7 +57,7 @@ describe('Address', () => {
 				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' },
 				postCode: {
 					value: '',
-					msg: 'Enter postcode',
+					msg: 'Enter a full UK postcode',
 					param: 'postCode',
 					location: 'body'
 				}

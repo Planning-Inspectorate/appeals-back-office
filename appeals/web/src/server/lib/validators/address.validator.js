@@ -6,7 +6,7 @@ const maxAddressLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const createPostcodeValidator = (
 	fieldName = 'postCode',
-	emptyErrorMessage = 'Enter postcode',
+	emptyErrorMessage = 'Enter a full UK postcode',
 	invalidErrorMessage = 'Invalid postcode'
 ) =>
 	createValidator(
