@@ -172,8 +172,9 @@ export function personalListPage(
 							appeal.appealStatus,
 							Boolean(appeal.commentCounts?.awaiting_review),
 							appeal.lpaQuestionnaireId,
-							appeal.appellantCaseStatus,
-							appeal.lpaQuestionnaireStatus,
+							appeal.documentationSummary?.appellantCase.status,
+							appeal.documentationSummary?.lpaQuestionnaire.status,
+							appeal.documentationSummary?.lpaStatement.status,
 							appeal.dueDate,
 							isCaseOfficer
 						)
@@ -249,6 +250,7 @@ export function personalListPage(
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {string} appellantCaseStatus
  * @param {string} lpaQuestionnaireStatus
+ * @param {string} lpaStatementStatus
  * @param {string} appealDueDate
  * @param {boolean} [isCaseOfficer]
  * @returns {string}
@@ -260,6 +262,7 @@ export function mapAppealStatusToActionRequiredHtml(
 	lpaQuestionnaireId,
 	appellantCaseStatus,
 	lpaQuestionnaireStatus,
+	lpaStatementStatus,
 	appealDueDate,
 	isCaseOfficer = false
 ) {
@@ -299,14 +302,21 @@ export function mapAppealStatusToActionRequiredHtml(
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`;
-		case APPEAL_CASE_STATUS.STATEMENTS:
-			if (dueDatePassed && !hasAwaitingComments) {
-				return '<a class="govuk-link" href="#">Share IP comments and statements</a>';
-			}
+		case APPEAL_CASE_STATUS.STATEMENTS: {
+			const lpaStatementAction =
+				lpaStatementStatus === 'received'
+					? `<a class="govuk-link" href="#">Review LPA Statement</a>`
+					: '<span>Awaiting LPA statement</span>';
 
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">${
-				hasAwaitingComments ? 'Review IP comments' : 'Awaiting IP comments'
-			}</a>`;
+			const ipCommentsAction =
+				!dueDatePassed && hasAwaitingComments
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">${
+							hasAwaitingComments ? 'Review IP comments' : 'Awaiting IP comments'
+					  }</a>`
+					: '';
+
+			return [lpaStatementAction, ipCommentsAction].join('<br>');
+		}
 		default:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`;
 	}
