@@ -183,13 +183,13 @@ export const spec = {
 			],
 			inspectors: [
 				{
-					name: 'Fred Bloggs',
+					azureAdUserId: '927c9ef9-071d-46f2-bc9e-f9071d26f26b',
 					inspectorId: 22
 				}
 			],
 			caseOfficers: [
 				{
-					name: 'John Doe',
+					name: 'db7481a7-f77f-40e8-b481-a7f77fc0e805',
 					inspectorId: 18
 				}
 			],

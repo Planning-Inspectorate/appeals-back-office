@@ -94,7 +94,7 @@ const mapAppealLPAs = (appeals) => {
 };
 
 const mapInspectors = async (appeals) => {
-	const inspectors = appeals.reduce((inspectorList, { inspector }) => {
+	return appeals.reduce((inspectorList, { inspector }) => {
 		if (!inspector) {
 			return inspectorList;
 		}
@@ -103,16 +103,10 @@ const mapInspectors = async (appeals) => {
 		}
 		return [...inspectorList, inspector];
 	}, []);
-	const namedInspectors = await Promise.all(
-		inspectors.map(async ({ id, azureAdUserId }) => {
-			return { id, name: `Inspector-${azureAdUserId}` };
-		})
-	);
-	return Array.from(new Set(namedInspectors)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
 const mapCaseOfficers = async (appeals) => {
-	const caseOfficers = appeals.reduce((caseOfficerList, { caseOfficer }) => {
+	return appeals.reduce((caseOfficerList, { caseOfficer }) => {
 		if (!caseOfficer) {
 			return caseOfficerList;
 		}
@@ -121,12 +115,6 @@ const mapCaseOfficers = async (appeals) => {
 		}
 		return [...caseOfficerList, caseOfficer];
 	}, []);
-	const namedCaseOfficers = await Promise.all(
-		caseOfficers.map(async ({ id, azureAdUserId }) => {
-			return { id, name: `CaseOfficer-${azureAdUserId}` };
-		})
-	);
-	return Array.from(new Set(namedCaseOfficers)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
 /**

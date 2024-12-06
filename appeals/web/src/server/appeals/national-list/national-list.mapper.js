@@ -10,6 +10,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 
 /**
+ * @param {{azureAdUserId: string, id: number, name: string}[]} users
  * @param {AppealList|void} appeals
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
@@ -24,6 +25,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  */
 
 export function nationalListPage(
+	users,
 	appeals,
 	urlWithoutQuery,
 	searchTerm,
@@ -62,20 +64,24 @@ export function nationalListPage(
 
 	const caseOfficerFilterItemsArray = [
 		{ name: 'All', id: 'all' },
-		...(appeals?.caseOfficers || [])
+		...(appeals?.caseOfficers.map(({ azureAdUserId }) =>
+			users.find((user) => user.azureAdUserId === azureAdUserId)
+		) || [])
 	].map((caseOfficer) => ({
-		text: caseOfficer.name,
-		value: caseOfficer.id,
-		selected: caseOfficerFilter === String(caseOfficer.id)
+		text: caseOfficer?.name,
+		value: caseOfficer?.id,
+		selected: caseOfficerFilter === String(caseOfficer?.id)
 	}));
 
 	const inspectorFilterItemsArray = [
 		{ name: 'All', id: 'all' },
-		...(appeals?.inspectors || [])
+		...(appeals?.inspectors.map(({ azureAdUserId }) =>
+			users.find((user) => user.azureAdUserId === azureAdUserId)
+		) || [])
 	].map((inspector) => ({
-		text: inspector.name,
-		value: inspector.id,
-		selected: inspectorFilter === String(inspector.id)
+		text: inspector?.name,
+		value: inspector?.id,
+		selected: inspectorFilter === String(inspector?.id)
 	}));
 
 	let searchResultsHeader = '';
