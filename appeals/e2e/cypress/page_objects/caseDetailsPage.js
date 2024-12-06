@@ -73,7 +73,6 @@ export class CaseDetailsPage extends Page {
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
-		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
 		fileUploadRow: () => cy.get('.govuk-heading-s')
 	};
