@@ -30,7 +30,7 @@ describe('link appeals', () => {
 		});
 	});
 
-	it.only('click on the first linked appeal', () => {
+	it('click on the first linked appeal', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLink) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
