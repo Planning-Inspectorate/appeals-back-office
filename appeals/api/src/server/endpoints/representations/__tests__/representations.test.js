@@ -1,7 +1,9 @@
+// @ts-nocheck
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { request } from '#tests/../app-test.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
+import config from '#config/config.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -120,6 +122,145 @@ describe('/appeals/:id/representations', () => {
 					redactedRepresentation: 'must be a string'
 				}
 			});
+		});
+
+		test('200 when representation status is successfully updated', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: 'valid',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: 'Redacted text of the representation',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				attachments: ['attachment1.pdf', 'attachment2.pdf'],
+				representationType: 'typeA',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: [
+					{
+						representationRejectionReason: {
+							id: 1,
+							name: 'Invalid submission',
+							hasText: false
+						},
+						representationRejectionReasonText: []
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			// @ts-ignore
+			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
+
+			const response = await request
+				.patch('/appeals/1/reps/1/status')
+				.send({
+					status: 'valid',
+					notes: 'Some notes',
+					allowResubmit: false
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.commentRejected.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						deadline_date: '',
+						reasons: ['Invalid submission'],
+						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+					},
+					reference: null
+				}
+			);
+		});
+
+		test('200 when representation status is successfully updated with extended deadline template selected', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: 'valid',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: 'Redacted text of the representation',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				attachments: ['attachment1.pdf', 'attachment2.pdf'],
+				representationType: 'typeA',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: [
+					{
+						representationRejectionReason: {
+							id: 1,
+							name: 'Invalid submission',
+							hasText: false
+						},
+						representationRejectionReasonText: []
+					},
+					{
+						representationRejectionReason: {
+							id: 7,
+							name: 'Other',
+							hasText: true
+						},
+						representationRejectionReasonText: ['Provided documents were incomplete']
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			// @ts-ignore
+			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
+
+			const response = await request
+				.patch('/appeals/1/reps/1/status')
+				.send({
+					status: 'valid',
+					notes: 'Some notes',
+					allowResubmit: true,
+					extendedDeadline: true
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.commentRejectedDeadlineExtended.id,
+				'test@136s7.com',
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						deadline_date: '17 December 2024',
+						reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+					},
+					reference: null
+				}
+			);
 		});
 	});
 
