@@ -172,6 +172,9 @@ export default joi
 						}),
 						commentRejected: joi.object({
 							id: joi.string().required()
+						}),
+						commentRejectedDeadlineExtended: joi.object({
+							id: joi.string().required()
 						})
 					})
 					.required(),

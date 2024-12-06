@@ -231,6 +231,11 @@ const { value, error } = schema.validate({
 			},
 			commentRejected: {
 				id: environment.GOV_NOTIFY_COMMENT_REJECTED || 'mock-comment-rejected-id'
+			},
+			commentRejectedDeadlineExtended: {
+				id:
+					environment.GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED ||
+					'mock-comment-rejected-extended-id'
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'
