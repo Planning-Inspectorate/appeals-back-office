@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "93217488-eabc-4453-9f9c-037dacab2f1e" */
+		/** @example "85f71bde-6891-45c2-8057-2900e3d9b5a6" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -605,13 +605,13 @@ export interface AllAppeals {
 		lpaCode?: string;
 	}[];
 	inspectors?: {
-		/** @example "Fred Bloggs" */
-		name?: string;
+		/** @example "927c9ef9-071d-46f2-bc9e-f9071d26f26b" */
+		azureAdUserId?: string;
 		/** @example 22 */
 		inspectorId?: number;
 	}[];
 	caseOfficers?: {
-		/** @example "John Doe" */
+		/** @example "db7481a7-f77f-40e8-b481-a7f77fc0e805" */
 		name?: string;
 		/** @example 18 */
 		inspectorId?: number;

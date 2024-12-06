@@ -15,6 +15,22 @@ const statuses = [
 	'complete'
 ];
 
+/**
+ *
+ * @type {{ lpaCode: string; name: string }[]}
+ */
+const lpas = [];
+/**
+ *
+ * @type {{ azureAdUserId: string; id: number }[]}
+ */
+const inspectors = [];
+/**
+ *
+ * @type {{ azureAdUserId: string; id: number }[]}
+ */
+const caseOfficers = [];
+
 describe('national-list', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
@@ -84,6 +100,9 @@ describe('national-list', () => {
 				itemCount: 0,
 				items: [],
 				statuses,
+				lpas,
+				inspectors,
+				caseOfficers,
 				page: 1,
 				pageCount: 0,
 				pageSize: 30
@@ -163,6 +182,9 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -197,6 +219,9 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30

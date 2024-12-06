@@ -64,7 +64,16 @@ export const viewNationalList = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const users = [...appeals.caseOfficers, ...appeals.inspectors].map(({ id, azureAdUserId }) => {
+		return {
+			id,
+			azureAdUserId,
+			name: 'Cheese-' + azureAdUserId
+		};
+	});
+
 	const mappedPageContent = nationalListPage(
+		users,
 		appeals,
 		urlWithoutQuery,
 		searchTerm,

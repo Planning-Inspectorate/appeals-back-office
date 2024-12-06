@@ -4536,7 +4536,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "93217488-eabc-4453-9f9c-037dacab2f1e"
+								"example": "85f71bde-6891-45c2-8057-2900e3d9b5a6"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5555,9 +5555,9 @@
 						"items": {
 							"type": "object",
 							"properties": {
-								"name": {
+								"azureAdUserId": {
 									"type": "string",
-									"example": "Fred Bloggs"
+									"example": "927c9ef9-071d-46f2-bc9e-f9071d26f26b"
 								},
 								"inspectorId": {
 									"type": "number",
@@ -5573,7 +5573,7 @@
 							"properties": {
 								"name": {
 									"type": "string",
-									"example": "John Doe"
+									"example": "db7481a7-f77f-40e8-b481-a7f77fc0e805"
 								},
 								"inspectorId": {
 									"type": "number",
