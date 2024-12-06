@@ -23,6 +23,8 @@ export class CaseDetailsPage extends Page {
 		addLinkedAppeal: 'add-linked-appeal',
 		manageLinkedAppeals: 'manage-linked-appeals',
 		addRelatedAppeals: 'add-related-appeals',
+		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
+		addInspectorCorrespondence: 'add-inspector-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
@@ -50,7 +52,12 @@ export class CaseDetailsPage extends Page {
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
 		addRelatedAppeals: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
+		addCrossTeamCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.addCrossTeamCorrespondence),
+		addInspectorCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.addInspectorCorrespondence),
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
+		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -64,6 +71,8 @@ export class CaseDetailsPage extends Page {
 		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
 		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
+		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
+		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
 		fileUploadRow: () => cy.get('.govuk-heading-s')
@@ -148,6 +157,14 @@ export class CaseDetailsPage extends Page {
 		this.elements.manageRelatedAppeals().click();
 	}
 
+	clickAddCrossTeamCorrespondence() {
+		this.elements.addCrossTeamCorrespondence().click();
+	}
+
+	clickAddInspectorCorrespondence() {
+		this.elements.addInspectorCorrespondence().click();
+	}
+
 	clickChangeAppealType() {
 		this.elements.changeAppealType().click();
 	}
@@ -208,6 +225,10 @@ export class CaseDetailsPage extends Page {
 		cy.getByData('remove-appeal-' + caseRefToRelate).click();
 	}
 
+	clickLinkedAppeal(caseRef) {
+		cy.getByData('linked-appeal-' + caseRef).click();
+	}
+
 	clickRemoveFileUpload(fileName) {
 		this.elements.fileUploadRow().contains(fileName).next().click();
 	}
@@ -245,6 +266,16 @@ export class CaseDetailsPage extends Page {
 			.contains(rowName)
 			.next()
 			.invoke('prop', 'innerText');
+		answer.should('eq', rowAnswer);
+	}
+
+	checkAnswerCorrespondenceDoc(rowName, rowAnswer) {
+		let answer = this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.next()
+			.children()
+			.invoke('prop', 'textContent');
 		answer.should('eq', rowAnswer);
 	}
 
@@ -290,5 +321,9 @@ export class CaseDetailsPage extends Page {
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
 			});
+	}
+
+	verifyAppealRefOnCaseDetails(caseRef) {
+		this.elements.getAppealRefCaseDetails().contains(caseRef);
 	}
 }
