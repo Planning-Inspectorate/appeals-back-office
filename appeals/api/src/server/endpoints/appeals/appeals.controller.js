@@ -38,22 +38,27 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
  */
 const getAppeals = async (req, res) => {
 	const { query } = req;
-	let { searchTerm, status, hasInspector, lpaCode } = query;
+	let { searchTerm, status, hasInspector, lpaCode, inspectorId, caseOfficerId } = query;
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
-	// searchTerm = query.searchTerm && String(query.searchTerm);
-	// status = String(query.status) || undefined;
-	// hasInspector = String(query.hasInspector) || undefined;
-	// lpaCode = String(query.lpaCode) || undefined;
 	const isGreenBelt = query.isGreenBelt === 'true';
 
-	const { itemCount, mappedAppeals, mappedStatuses, mappedLPAs } = await retrieveAppealListData(
+	const {
+		itemCount,
+		mappedAppeals,
+		mappedStatuses,
+		mappedLPAs,
+		mappedInspectors,
+		mappedCaseOfficers
+	} = await retrieveAppealListData(
 		pageNumber,
 		pageSize,
 		searchTerm,
 		status,
 		hasInspector,
 		lpaCode,
+		inspectorId,
+		caseOfficerId,
 		isGreenBelt
 	);
 
@@ -62,6 +67,8 @@ const getAppeals = async (req, res) => {
 		items: mappedAppeals,
 		statuses: mappedStatuses,
 		lpas: mappedLPAs,
+		inspectors: mappedInspectors,
+		caseOfficers: mappedCaseOfficers,
 		page: pageNumber,
 		pageCount: getPageCount(itemCount, pageSize),
 		pageSize

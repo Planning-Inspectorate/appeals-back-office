@@ -31,6 +31,27 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
+const lpas = [
+	{
+		lpaCode: householdAppeal.lpa.lpaCode,
+		name: householdAppeal.lpa.name
+	}
+];
+
+const caseOfficers = [
+	{
+		id: 1,
+		name: 'CaseOfficer-a8973f33-4d2e-486b-87b0-d068343ad9eb'
+	}
+];
+
+const inspectors = [
+	{
+		id: 2,
+		name: 'Inspector-e8f89175-d02c-4a60-870e-dc954d5b530a'
+	}
+];
+
 describe('appeals list routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
@@ -122,12 +143,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -183,12 +201,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 2,
 					pageCount: 1,
 					pageSize: 1,
@@ -272,12 +287,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -361,12 +373,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -450,12 +459,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -526,13 +532,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
-
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -605,13 +607,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
-
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -682,13 +680,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
-					lpas: [
-						{
-							lpaCode: 'MAID',
-							name: 'Maidstone Borough Council'
-						}
-					],
-
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,

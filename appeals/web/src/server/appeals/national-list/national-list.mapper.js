@@ -60,16 +60,22 @@ export function nationalListPage(
 		selected: localPlanningAuthorityFilter === localPlanningAuthority.lpaCode
 	}));
 
-	const caseOfficerFilterItemsArray = ['all'].map((caseOfficer) => ({
-		text: capitalizeFirstLetter(caseOfficer),
-		value: caseOfficer,
-		selected: caseOfficerFilter === caseOfficer
+	const caseOfficerFilterItemsArray = [
+		{ name: 'All', id: 'all' },
+		...(appeals?.caseOfficers || [])
+	].map((caseOfficer) => ({
+		text: caseOfficer.name,
+		value: caseOfficer.id,
+		selected: caseOfficerFilter === String(caseOfficer.id)
 	}));
 
-	const inspectorFilterItemsArray = ['all'].map((inspector) => ({
-		text: capitalizeFirstLetter(inspector),
-		value: inspector,
-		selected: inspectorFilter === inspector
+	const inspectorFilterItemsArray = [
+		{ name: 'All', id: 'all' },
+		...(appeals?.inspectors || [])
+	].map((inspector) => ({
+		text: inspector.name,
+		value: inspector.id,
+		selected: inspectorFilter === String(inspector.id)
 	}));
 
 	let searchResultsHeader = '';
