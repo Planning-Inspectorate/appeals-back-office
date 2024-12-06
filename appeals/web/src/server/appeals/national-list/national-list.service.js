@@ -50,11 +50,11 @@ export const getAppeals = (
 	}
 
 	if (caseOfficerFilter && caseOfficerFilter !== 'all') {
-		urlAppendix += `&caseOfficer=${caseOfficerFilter}`;
+		urlAppendix += `&caseOfficerId=${caseOfficerFilter}`;
 	}
 
 	if (inspectorFilter && inspectorFilter !== 'all') {
-		urlAppendix += `&inspector=${inspectorFilter}`;
+		urlAppendix += `&inspectorId=${inspectorFilter}`;
 	}
 
 	if (greenBeltFilter) {

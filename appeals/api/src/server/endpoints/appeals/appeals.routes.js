@@ -55,6 +55,16 @@ router.get(
 			description: 'The lpa filter is assigned an an lpa code',
 			example: 'BRIS',
 		}
+		#swagger.parameters['inspectorId'] = {
+			in: 'query',
+			description: 'The inspector filter is assigned an an inspector id',
+			example: 22,
+		}
+		#swagger.parameters['caseOfficerId'] = {
+			in: 'query',
+			description: 'The case officer filter is assigned an an case officer id',
+			example: 19,
+		}
 		#swagger.parameters['isGreenBelt'] = {
 			in: 'query',
 			description: 'The Green belt filter is applied',

@@ -93,6 +93,42 @@ const mapAppealLPAs = (appeals) => {
 	return Array.from(new Set(lpas)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
+const mapInspectors = async (appeals) => {
+	const inspectors = appeals.reduce((inspectorList, { inspector }) => {
+		if (!inspector) {
+			return inspectorList;
+		}
+		if (inspectorList.some(({ id }) => id === inspector.id)) {
+			return inspectorList;
+		}
+		return [...inspectorList, inspector];
+	}, []);
+	const namedInspectors = await Promise.all(
+		inspectors.map(async ({ id, azureAdUserId }) => {
+			return { id, name: `Inspector-${azureAdUserId}` };
+		})
+	);
+	return Array.from(new Set(namedInspectors)).sort((a, b) => a.name.localeCompare(b.name));
+};
+
+const mapCaseOfficers = async (appeals) => {
+	const caseOfficers = appeals.reduce((caseOfficerList, { caseOfficer }) => {
+		if (!caseOfficer) {
+			return caseOfficerList;
+		}
+		if (caseOfficerList.some(({ id }) => id === caseOfficer.id)) {
+			return caseOfficerList;
+		}
+		return [...caseOfficerList, caseOfficer];
+	}, []);
+	const namedCaseOfficers = await Promise.all(
+		caseOfficers.map(async ({ id, azureAdUserId }) => {
+			return { id, name: `CaseOfficer-${azureAdUserId}` };
+		})
+	);
+	return Array.from(new Set(namedCaseOfficers)).sort((a, b) => a.name.localeCompare(b.name));
+};
+
 /**
  *
  * @param appeals
@@ -123,8 +159,10 @@ const mapAppeals = async (appeals) =>
  * @param status
  * @param hasInspector
  * @param lpaCode
+ * @param inspectorId
+ * @param caseOfficerId
  * @param isGreenBelt
- * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -133,6 +171,8 @@ const retrieveAppealListData = async (
 	status,
 	hasInspector,
 	lpaCode,
+	inspectorId,
+	caseOfficerId,
 	isGreenBelt
 ) => {
 	const [appeals = []] = await appealListRepository.getAllAppeals(
@@ -140,6 +180,8 @@ const retrieveAppealListData = async (
 		status,
 		hasInspector,
 		lpaCode,
+		inspectorId && Number(inspectorId),
+		caseOfficerId && Number(caseOfficerId),
 		isGreenBelt
 	);
 
@@ -148,12 +190,16 @@ const retrieveAppealListData = async (
 	const mappedAppeals = await mapAppeals(appeals.slice(start, end));
 	const mappedStatuses = mapAppealStatuses(appeals);
 	const mappedLPAs = mapAppealLPAs(appeals);
+	const mappedInspectors = await mapInspectors(appeals);
+	const mappedCaseOfficers = await mapCaseOfficers(appeals);
 
 	return {
-		itemCount: mappedAppeals.length,
-		mappedAppeals,
 		mappedStatuses,
-		mappedLPAs
+		mappedLPAs,
+		mappedInspectors,
+		mappedCaseOfficers,
+		mappedAppeals,
+		itemCount: mappedAppeals.length
 	};
 };
 

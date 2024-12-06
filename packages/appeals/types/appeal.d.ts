@@ -30,6 +30,8 @@ export interface AppealList {
 	items: AppealSummary[];
 	statuses: string[];
 	lpas: { name: string; lpaCode: string }[];
+	inspectors: { name: string; id: number }[];
+	caseOfficers: { name: string; id: number }[];
 	page: number;
 	pageCount: number;
 	pageSize: number;

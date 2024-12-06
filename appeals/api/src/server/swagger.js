@@ -174,11 +174,23 @@ export const spec = {
 					dueDate: '2024-06-18T00:00:00.000Z'
 				}
 			],
-			statuses: ['lpa_questionnaire_due'],
+			statuses: ['lpa_questionnaire'],
 			lpas: [
 				{
 					name: 'Bristol City Council',
 					lpaCode: 'BRIS'
+				}
+			],
+			inspectors: [
+				{
+					name: 'Fred Bloggs',
+					inspectorId: 22
+				}
+			],
+			caseOfficers: [
+				{
+					name: 'John Doe',
+					inspectorId: 18
 				}
 			],
 			page: 1,

@@ -16,10 +16,20 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {string} status
  * @param {string} hasInspector
  * @param {string} lpaCode
+ * @param {number} inspectorId
+ * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[]]>}
  */
-const getAllAppeals = (searchTerm, status, hasInspector, lpaCode, isGreenBelt) => {
+const getAllAppeals = (
+	searchTerm,
+	status,
+	hasInspector,
+	lpaCode,
+	inspectorId,
+	caseOfficerId,
+	isGreenBelt
+) => {
 	const where = {
 		appealStatus: {
 			some: {
@@ -63,6 +73,12 @@ const getAllAppeals = (searchTerm, status, hasInspector, lpaCode, isGreenBelt) =
 			lpa: {
 				lpaCode
 			}
+		}),
+		...(!!inspectorId && {
+			inspectorUserId: inspectorId
+		}),
+		...(!!caseOfficerId && {
+			caseOfficerUserId: caseOfficerId
 		})
 	};
 
@@ -78,7 +94,9 @@ const getAllAppeals = (searchTerm, status, hasInspector, lpaCode, isGreenBelt) =
 				},
 				appealType: true,
 				lpa: true,
-				appellantCase: true
+				appellantCase: true,
+				inspector: true,
+				caseOfficer: true
 			},
 			orderBy: { caseUpdatedDate: 'desc' }
 		})

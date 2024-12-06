@@ -1114,6 +1114,24 @@
 						}
 					},
 					{
+						"name": "inspectorId",
+						"in": "query",
+						"description": "The inspector filter is assigned an an inspector id",
+						"example": 22,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "caseOfficerId",
+						"in": "query",
+						"description": "The case officer filter is assigned an an case officer id",
+						"example": 19,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
 						"name": "isGreenBelt",
 						"in": "query",
 						"description": "The Green belt filter is applied",
@@ -4518,7 +4536,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "01be0191-bf80-4224-b431-b41aea9d56dc"
+								"example": "93217488-eabc-4453-9f9c-037dacab2f1e"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5511,7 +5529,7 @@
 					},
 					"statuses": {
 						"type": "array",
-						"example": ["lpa_questionnaire_due"],
+						"example": ["lpa_questionnaire"],
 						"items": {
 							"type": "string"
 						}
@@ -5528,6 +5546,38 @@
 								"lpaCode": {
 									"type": "string",
 									"example": "BRIS"
+								}
+							}
+						}
+					},
+					"inspectors": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"example": "Fred Bloggs"
+								},
+								"inspectorId": {
+									"type": "number",
+									"example": 22
+								}
+							}
+						}
+					},
+					"caseOfficers": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"example": "John Doe"
+								},
+								"inspectorId": {
+									"type": "number",
+									"example": 18
 								}
 							}
 						}
