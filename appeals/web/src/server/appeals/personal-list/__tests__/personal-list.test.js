@@ -238,6 +238,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
+			'',
 			true
 		);
 		expect(result).toEqual(
@@ -252,6 +253,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			false,
 			lpaQuestionnaireId,
 			'Incomplete',
+			'',
 			'',
 			'',
 			true
@@ -270,6 +272,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'Incomplete',
 			'',
 			'',
+			'',
 			false
 		);
 		expect(result).toEqual('Awaiting appellant update');
@@ -281,6 +284,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'ready_to_start',
 			false,
 			lpaQuestionnaireId,
+			'',
 			'',
 			'',
 			'',
@@ -300,6 +304,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
+			'',
 			false
 		);
 		expect(result).toEqual('Start case');
@@ -311,6 +316,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			null,
+			'',
 			'',
 			'',
 			'',
@@ -328,6 +334,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'Incomplete',
 			'',
+			'',
 			true
 		);
 		expect(result).toEqual(
@@ -344,6 +351,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'Incomplete',
 			'',
+			'',
 			false
 		);
 		expect(result).toEqual('Awaiting LPA update');
@@ -355,6 +363,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			lpaQuestionnaireId,
+			'',
 			'',
 			'',
 			'',
@@ -374,6 +383,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
+			'',
 			false
 		);
 		expect(result).toEqual('Review LPA questionnaire');
@@ -385,6 +395,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			null,
+			'',
 			'',
 			'',
 			'2024-01-01',
@@ -399,6 +410,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'issue_determination',
 			false,
 			null,
+			'',
 			'',
 			'',
 			'',
@@ -418,6 +430,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'',
 			'',
 			'',
+			'',
 			true
 		);
 		expect(result).toEqual(
@@ -431,6 +444,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'some_other_status',
 			false,
 			null,
+			'',
 			'',
 			'',
 			'',
