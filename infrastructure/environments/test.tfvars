@@ -59,6 +59,7 @@ apps_config = {
       site_visit_schedule_unaccompanied_appellant_id                  = "a33bb800-56d9-46a4-ba64-35d9d0263666"
       valid_appellant_case_id                                         = "3b4b74b4-b604-411b-9c98-5be2c6f3bdfd"
       comment_rejected_id                                             = "13924f23-8b50-4e2e-86f2-70b92360889b"
+      comment_rejected_deadline_extended_id                           = "ccffeb37-c7e0-4c38-888c-6cf2755f6703"
     }
   }
 

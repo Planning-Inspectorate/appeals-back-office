@@ -167,6 +167,8 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
+	console.log(JSON.stringify(comment));
+
 	const reasons =
 		comment.representationRejectionReasonsSelected?.map((selectedReason) => {
 			if (selectedReason.representationRejectionReason.hasText) {
@@ -185,13 +187,14 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		return formatDate(date, false);
 	})();
 
+	console.log(JSON.stringify(reasons));
+
 	const emailVariables = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
 		url: FRONT_OFFICE_URL,
 		reasons,
-		deadlineExtended: extendedDeadline ? 'true' : 'false',
 		deadline_date: extendedDeadline ?? ''
 	};
 
@@ -200,12 +203,12 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
+	const templateId = extendedDeadline
+		? config.govNotify.template.commentRejectedDeadlineExtended
+		: config.govNotify.template.commentRejected;
+
 	try {
-		await notifyClient.sendEmail(
-			config.govNotify.template.commentRejected,
-			recipientEmail,
-			emailVariables
-		);
+		await notifyClient.sendEmail(templateId, recipientEmail, emailVariables);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
