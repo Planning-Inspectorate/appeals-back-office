@@ -209,12 +209,16 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickRemoveFileUpload(fileName) {
-		this.elements.removeFileUpload().contains(fileName).next().click();
+		this.elements.fileUploadRow().contains(fileName).next().click();
 	}
 
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
+
+	checkErrorMessageDisplays(errorMessage) {
+		cy.get('li').contains(errorMessage).should('be.visible');
+	}
 
 	checkFileNameDisplays(fileName) {
 		cy.get('p').contains(fileName).should('be.visible');
