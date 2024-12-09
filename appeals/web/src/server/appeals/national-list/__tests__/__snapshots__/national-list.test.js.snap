@@ -63,6 +63,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             <select class="govuk-select" id="" name="localPlanningAuthorityFilter"
                             data-cy="filter-by-local-planning-authority">
                                 <option value="all">All</option>
+                                <option value="1">Test LPA</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -70,6 +71,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -77,6 +79,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -238,6 +241,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             <select class="govuk-select" id="" name="localPlanningAuthorityFilter"
                             data-cy="filter-by-local-planning-authority">
                                 <option value="all">All</option>
+                                <option value="1">Test LPA</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -245,6 +249,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -252,6 +257,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -393,6 +399,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             <select class="govuk-select" id="" name="localPlanningAuthorityFilter"
                             data-cy="filter-by-local-planning-authority">
                                 <option value="all">All</option>
+                                <option value="1">Test LPA</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -400,6 +407,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -407,6 +415,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -537,6 +546,10 @@ exports[`national-list GET / should render national list - no search term - filt
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -544,6 +557,10 @@ exports[`national-list GET / should render national list - no search term - filt
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -666,6 +683,10 @@ exports[`national-list GET / should render national list - search term - filter 
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -673,6 +694,10 @@ exports[`national-list GET / should render national list - search term - filter 
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -795,6 +820,10 @@ exports[`national-list GET / should render national list - search term - no resu
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -802,6 +831,10 @@ exports[`national-list GET / should render national list - search term - no resu
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -890,6 +923,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             <select class="govuk-select" id="" name="localPlanningAuthorityFilter"
                             data-cy="filter-by-local-planning-authority">
                                 <option value="all">All</option>
+                                <option value="1">Test LPA</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -897,6 +931,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -904,6 +939,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1024,6 +1060,7 @@ exports[`national-list GET / should render the header with navigation containing
                             <select class="govuk-select" id="" name="localPlanningAuthorityFilter"
                             data-cy="filter-by-local-planning-authority">
                                 <option value="all">All</option>
+                                <option value="1">Test LPA</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1031,6 +1068,7 @@ exports[`national-list GET / should render the header with navigation containing
                             <select class="govuk-select" id="" name="caseOfficerFilter"
                             data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1038,6 +1076,7 @@ exports[`national-list GET / should render the header with navigation containing
                             <select class="govuk-select" id="" name="inspectorFilter"
                             data-cy="filter-by-inspector">
                                 <option value="all">All</option>
+                                <option value="0">Smith, John</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
