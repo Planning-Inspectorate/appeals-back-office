@@ -38,17 +38,17 @@ const lpas = [
 	}
 ];
 
-const caseOfficers = [
+const inspectors = [
 	{
-		id: 1,
-		name: 'CaseOfficer-a8973f33-4d2e-486b-87b0-d068343ad9eb'
+		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a',
+		id: 2
 	}
 ];
 
-const inspectors = [
+const caseOfficers = [
 	{
-		id: 2,
-		name: 'Inspector-e8f89175-d02c-4a60-870e-dc954d5b530a'
+		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb',
+		id: 1
 	}
 ];
 

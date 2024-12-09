@@ -141,15 +141,15 @@ const mapAppeals = async (appeals) =>
 
 /**
  *
- * @param pageNumber
- * @param pageSize
- * @param searchTerm
- * @param status
- * @param hasInspector
- * @param lpaCode
- * @param inspectorId
- * @param caseOfficerId
- * @param isGreenBelt
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {string} searchTerm
+ * @param {string} status
+ * @param {string} hasInspector
+ * @param {string} lpaCode
+ * @param {number} inspectorId
+ * @param {number} caseOfficerId
+ * @param {boolean} isGreenBelt
  * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
