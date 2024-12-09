@@ -187,7 +187,7 @@ const retrieveAppealListData = async (
 		mappedInspectors,
 		mappedCaseOfficers,
 		mappedAppeals,
-		itemCount: mappedAppeals.length
+		itemCount: appeals.length
 	};
 };
 
