@@ -28,7 +28,7 @@ export const getCaseOfficers = async (
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const viewNationalList = async (request, response) => {
-	const { originalUrl, query } = request;
+	const { originalUrl, query, session } = request;
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 	const inspectorStatusFilter = query.inspectorStatusFilter && String(query.inspectorStatusFilter);
@@ -64,13 +64,16 @@ export const viewNationalList = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const users = [...appeals.caseOfficers, ...appeals.inspectors].map(({ id, azureAdUserId }) => {
-		return {
-			id,
-			azureAdUserId,
-			name: 'Cheese-' + azureAdUserId
-		};
-	});
+	const users = await Promise.all(
+		[...appeals.caseOfficers, ...appeals.inspectors].map(async ({ id, azureAdUserId }) => {
+			const user = await usersService.getUserById(azureAdUserId, session);
+			return {
+				id,
+				azureAdUserId,
+				name: user ? user.name : `User not found (${id})`
+			};
+		})
+	);
 
 	const mappedPageContent = nationalListPage(
 		users,

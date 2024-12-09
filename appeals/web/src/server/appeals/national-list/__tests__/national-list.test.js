@@ -1,8 +1,13 @@
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { appealsNationalList } from '#testing/app/fixtures/referencedata.js';
+import {
+	activeDirectoryUsersData,
+	appealsNationalList
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { jest } from '@jest/globals';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -20,19 +25,33 @@ const statuses = [
  * @type {{ lpaCode: string; name: string }[]}
  */
 const lpas = [];
+
 /**
  *
  * @type {{ azureAdUserId: string; id: number }[]}
  */
-const inspectors = [];
+const inspectors = activeDirectoryUsersData.map(({ id }, index) => ({
+	azureAdUserId: id,
+	id: index
+}));
+
 /**
  *
  * @type {{ azureAdUserId: string; id: number }[]}
  */
-const caseOfficers = [];
+const caseOfficers = activeDirectoryUsersData.map(({ id }, index) => ({
+	azureAdUserId: id,
+	id: index
+}));
 
 describe('national-list', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		// @ts-ignore
+		usersService.getUserById = jest
+			.fn()
+			.mockImplementation((id) => activeDirectoryUsersData.find((user) => user.id === id));
+	});
 	afterEach(teardown);
 
 	describe('GET /', () => {
