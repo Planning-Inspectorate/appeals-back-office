@@ -82,7 +82,10 @@ const formatLpaQuestionnaire = (appeal, folders = null) => {
 		infrastructureLevyExpectedDate: lpaQuestionnaire.infrastructureLevyExpectedDate,
 		lpaProcedurePreference: lpaQuestionnaire.lpaProcedurePreference,
 		lpaProcedurePreferenceDetails: lpaQuestionnaire.lpaProcedurePreferenceDetails,
-		lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration
+		lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration,
+		eiaSensitiveAreaDetails: lpaQuestionnaire.eiaSensitiveAreaDetails,
+		eiaConsultedBodiesDetails: lpaQuestionnaire.eiaConsultedBodiesDetails,
+		reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits
 	};
 };
 

@@ -14,4 +14,14 @@ router
 	.get(asyncHandler(controllers.getChangeEiaRequiresEnvironmentalStatement))
 	.post(asyncHandler(controllers.postChangeEiaRequiresEnvironmentalStatement));
 
+router
+	.route('/sensitive-area-details/change')
+	.get(asyncHandler(controllers.getChangeEiaSensitiveAreaDetails))
+	.post(asyncHandler(controllers.postChangeEiaSensitiveAreaDetails));
+
+router
+	.route('/consulted-bodies-details/change')
+	.get(asyncHandler(controllers.getChangeEiaConsultedBodiesDetails))
+	.post(asyncHandler(controllers.postChangeEiaConsultedBodiesDetails));
+
 export default router;

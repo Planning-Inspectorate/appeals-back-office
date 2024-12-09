@@ -49,7 +49,10 @@ const updateLPAQuestionnaireById = (id, data) => {
 				infrastructureLevyExpectedDate: data.infrastructureLevyExpectedDate,
 				lpaProcedurePreference: data.lpaProcedurePreference,
 				lpaProcedurePreferenceDetails: data.lpaProcedurePreferenceDetails,
-				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration
+				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration,
+				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
+				eiaConsultedBodiesDetails: data.eiaConsultedBodiesDetails,
+				reasonForNeighbourVisits: data.reasonForNeighbourVisits
 			}
 		})
 	);

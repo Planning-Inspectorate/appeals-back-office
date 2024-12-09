@@ -34,3 +34,59 @@ export function changeEiaRequiresEnvironmentalStatement(
 		}
 	});
 }
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} lpaQuestionnaireId
+ * @param {{radio: string, details: string}} updatedSensitiveAreaDetails
+ * @returns {Promise<{}>}
+ */
+export function changeEiaSensitiveAreaDetails(
+	apiClient,
+	appealId,
+	lpaQuestionnaireId,
+	updatedSensitiveAreaDetails
+) {
+	/** @type {string|null} */
+	let eiaSensitiveAreaDetails = updatedSensitiveAreaDetails.details;
+
+	if (!convertFromYesNoToBoolean(updatedSensitiveAreaDetails.radio)) {
+		eiaSensitiveAreaDetails = null;
+	}
+
+	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+		json: {
+			eiaSensitiveAreaDetails
+		}
+	});
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} lpaQuestionnaireId
+ * @param {{radio: string, details: string}} updatedConsultedBodiesDetails
+ * @returns {Promise<{}>}
+ */
+export function changeEiaConsultedBodiesDetails(
+	apiClient,
+	appealId,
+	lpaQuestionnaireId,
+	updatedConsultedBodiesDetails
+) {
+	/** @type {string|null} */
+	let eiaConsultedBodiesDetails = updatedConsultedBodiesDetails.details;
+
+	if (!convertFromYesNoToBoolean(updatedConsultedBodiesDetails.radio)) {
+		eiaConsultedBodiesDetails = null;
+	}
+
+	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+		json: {
+			eiaConsultedBodiesDetails
+		}
+	});
+}

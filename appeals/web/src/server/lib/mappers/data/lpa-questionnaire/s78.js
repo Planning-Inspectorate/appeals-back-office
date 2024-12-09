@@ -22,6 +22,9 @@ import { mapProcedurePreference } from './submappers/map-procedure-preference.js
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
 import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-policies.js';
+import { mapEiaSensitiveAreaDetails } from './submappers/map-eia-sensitive-area-details.js';
+import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bodies-details.js';
+import { mapReasonForNeighbourVisits } from './submappers/map-reason-for-neighbour-visits.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -47,5 +50,8 @@ export const submaps = {
 	procedurePreference: mapProcedurePreference,
 	procedurePreferenceDetails: mapProcedurePreferenceDetails,
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
-	otherRelevantPolicies: mapOtherRelevantPolicies
+	otherRelevantPolicies: mapOtherRelevantPolicies,
+	eiaSensitiveAreaDetails: mapEiaSensitiveAreaDetails,
+	eiaConsultedBodiesDetails: mapEiaConsultedBodiesDetails,
+	reasonForNeighbourVisits: mapReasonForNeighbourVisits
 };
