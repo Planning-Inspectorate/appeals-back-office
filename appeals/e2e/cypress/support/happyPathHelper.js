@@ -92,5 +92,35 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.validateBannerMessage('Document updated');
+	},
+
+	uploadDocsLpaq(caseRef) {
+		caseDetailsPage.clickReviewLpaq();
+		caseDetailsPage.clickAddNotifyingParties();
+		caseDetailsPage.uploadSampleDoc();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateBannerMessage('Document added');
+	},
+
+	uploadDocVersionLpaq(caseRef) {
+		caseDetailsPage.clickManageNotifyingParties();
+		caseDetailsPage.clickLinkByText('View and edit');
+		caseDetailsPage.clickButtonByText('Upload a new version');
+		caseDetailsPage.uploadSampleImg();
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateBannerMessage('Document updated');
+	},
+
+	removeDocLpaq(caseRef) {
+		caseDetailsPage.clickManageNotifyingParties();
+		caseDetailsPage.clickLinkByText('View and edit');
+		caseDetailsPage.clickButtonByText('Remove current version');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.validateBannerMessage('Document removed');
 	}
 };
