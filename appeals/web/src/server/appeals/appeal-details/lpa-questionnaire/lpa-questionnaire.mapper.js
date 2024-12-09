@@ -945,7 +945,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem
+				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -988,7 +989,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			},
 			rows: [
 				mappedLPAQData.lpaq?.representations?.display.summaryListItem,
-				mappedLPAQData.lpaq?.consultationResponses?.display.summaryListItem
+				mappedLPAQData.lpaq?.consultationResponses?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaConsultedBodiesDetails?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -1038,7 +1040,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
-				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
+				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem,
+				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
