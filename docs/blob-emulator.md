@@ -23,7 +23,7 @@ docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 -v ./:/workspace --name 
 
 ```shell
 Allowed Origins: *
-Allowed Methods: GET;PUT;HEAD;DELETE
+Allowed Methods: GET,PUT,HEAD,DELETE
 Allowed Headers: *
 Exposed Headers: *
 Max Age (in seconds): 5
