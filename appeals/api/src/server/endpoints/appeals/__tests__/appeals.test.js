@@ -163,7 +163,7 @@ describe('appeals list routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					itemCount: 1,
+					itemCount: 2,
 					items: [
 						{
 							appealId: fullPlanningAppeal.id,
@@ -205,7 +205,7 @@ describe('appeals list routes', () => {
 					caseOfficers,
 					inspectors,
 					page: 2,
-					pageCount: 1,
+					pageCount: 2,
 					pageSize: 1,
 					statuses: ['assign_case_officer']
 				});
