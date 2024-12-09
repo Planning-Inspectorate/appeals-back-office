@@ -30,6 +30,8 @@ export class CaseDetailsPage extends Page {
 		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
+		addNotifyingParties: 'add-notifying-parties',
+		manageNotifyingParties: 'manage-notifying-parties',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
 		addCostsDecision: 'add-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
@@ -59,12 +61,14 @@ export class CaseDetailsPage extends Page {
 		addInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.addInspectorCorrespondence),
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
+		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.get(this.selectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
+		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
 		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
@@ -165,6 +169,14 @@ export class CaseDetailsPage extends Page {
 
 	clickAddCrossTeamCorrespondence() {
 		this.elements.addCrossTeamCorrespondence().click();
+	}
+
+	clickAddNotifyingParties() {
+		this.elements.addNotifiyingParties().click();
+	}
+
+	clickManageNotifyingParties() {
+		this.elements.manageNotifyingParties().click();
 	}
 
 	clickAddInspectorCorrespondence() {
@@ -283,6 +295,15 @@ export class CaseDetailsPage extends Page {
 			.children()
 			.invoke('prop', 'textContent');
 		answer.should('eq', rowAnswer);
+	}
+
+	checkAnswerNotifyingParties(rowName, rowAnswer) {
+		let answer = this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.next()
+			.invoke('prop', 'textContent');
+		answer.should('include', rowAnswer);
 	}
 
 	verifyAnswerSummaryValue(answer) {
