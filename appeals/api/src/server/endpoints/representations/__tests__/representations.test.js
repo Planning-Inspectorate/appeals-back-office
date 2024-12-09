@@ -190,13 +190,17 @@ describe('/appeals/:id/representations', () => {
 		});
 
 		test('200 when representation status is successfully updated with extended deadline template selected', async () => {
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-12-11'));
+
 			const mockRepresentation = {
 				id: 1,
 				lpa: false,
 				status: 'valid',
 				originalRepresentation: 'Original text of the representation',
 				redactedRepresentation: 'Redacted text of the representation',
-				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				dateCreated: new Date('2024-12-11T12:00:00Z'),
 				notes: 'Some notes',
 				attachments: ['attachment1.pdf', 'attachment2.pdf'],
 				representationType: 'typeA',
@@ -254,7 +258,7 @@ describe('/appeals/:id/representations', () => {
 						appeal_reference_number: '1345264',
 						lpa_reference: '48269/APP/2021/1482',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						deadline_date: '17 December 2024',
+						deadline_date: '20 December 2024',
 						reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 						url: 'https://www.gov.uk/appeal-planning-inspectorate'
 					},
