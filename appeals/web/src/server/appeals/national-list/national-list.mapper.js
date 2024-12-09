@@ -37,6 +37,16 @@ export function nationalListPage(
 	inspectorFilter,
 	greenBeltFilter
 ) {
+	const filtersApplied =
+		greenBeltFilter ||
+		[
+			appealStatusFilter,
+			inspectorStatusFilter,
+			localPlanningAuthorityFilter,
+			caseOfficerFilter,
+			inspectorFilter
+		].some((filter) => filter && filter !== 'all');
+
 	const appealStatusFilterItemsArray = ['all', ...(appeals?.statuses || [])].map(
 		(appealStatus) => ({
 			text: capitalizeFirstLetter(appealStatusToStatusTag(appealStatus)),
@@ -94,20 +104,11 @@ export function nationalListPage(
 		} for ${searchTerm}`;
 	} else if (!searchTerm && appeals?.itemCount === 0) {
 		searchResultsHeader = `No results found`;
-	} else if (
-		!searchTerm &&
-		appeals?.itemCount &&
-		appeals?.itemCount > 0 &&
-		((appealStatusFilter && appealStatusFilter !== 'all') ||
-			(inspectorStatusFilter && inspectorStatusFilter !== 'all'))
-	) {
+	} else if (!searchTerm && appeals?.itemCount && appeals?.itemCount > 0 && filtersApplied) {
 		searchResultsHeader = `${appeals?.itemCount} result${appeals?.itemCount !== 1 ? 's' : ''}`;
 	}
 
-	if (
-		(appealStatusFilter && appealStatusFilter !== 'all') ||
-		(inspectorStatusFilter && inspectorStatusFilter !== 'all')
-	) {
+	if (filtersApplied) {
 		searchResultsHeader += ' (filters applied)';
 	}
 
