@@ -21,13 +21,8 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	AUDIT_TRAIL_SYSTEM_UUID
 } from '../constants.js';
-import {
-	formatAppeal,
-	formatAppeals,
-	formatMyAppeals,
-	getIdsOfReferencedAppeals
-} from './appeals.formatter.js';
-import { assignUser, assignedUserType } from './appeals.service.js';
+import { formatAppeal, formatMyAppeals, getIdsOfReferencedAppeals } from './appeals.formatter.js';
+import { assignUser, assignedUserType, retrieveAppealListData } from './appeals.service.js';
 import transitionState from '#state/transition-state.js';
 import { getDocumentById } from '#repositories/document.repository.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
@@ -43,42 +38,37 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
  */
 const getAppeals = async (req, res) => {
 	const { query } = req;
+	let { searchTerm, status, hasInspector, lpaCode, inspectorId, caseOfficerId } = query;
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
-	const searchTerm = String(query.searchTerm);
-	const status = String(query.status);
-	const hasInspector = String(query.hasInspector);
+	const isGreenBelt = query.isGreenBelt === 'true';
 
-	const [itemCount, appeals = [], rawStatuses = []] = await appealListRepository.getAllAppeals(
+	const {
+		itemCount,
+		mappedAppeals,
+		mappedStatuses,
+		mappedLPAs,
+		mappedInspectors,
+		mappedCaseOfficers
+	} = await retrieveAppealListData(
 		pageNumber,
 		pageSize,
 		searchTerm,
 		status,
-		hasInspector
+		hasInspector,
+		lpaCode,
+		inspectorId,
+		caseOfficerId,
+		isGreenBelt
 	);
-
-	const formattedAppeals = await Promise.all(
-		appeals.map(async (appeal) => {
-			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-			const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
-				appeal.id,
-				'comment'
-			);
-
-			return formatAppeals(
-				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
-				commentCounts
-			);
-		})
-	);
-
-	const formattedStatuses = mapAppealStatuses(rawStatuses);
 
 	return res.send({
 		itemCount,
-		items: formattedAppeals,
-		statuses: formattedStatuses,
+		items: mappedAppeals,
+		statuses: mappedStatuses,
+		lpas: mappedLPAs,
+		inspectors: mappedInspectors,
+		caseOfficers: mappedCaseOfficers,
 		page: pageNumber,
 		pageCount: getPageCount(itemCount, pageSize),
 		pageSize
@@ -98,7 +88,7 @@ const getMyAppeals = async (req, res) => {
 	const azureUserId = req.get('azureAdUserId');
 
 	if (azureUserId) {
-		const [itemCount, appeals = [], rawStatuses = []] = await appealListRepository.getUserAppeals(
+		const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
 			azureUserId,
 			pageNumber,
 			pageSize,
@@ -121,12 +111,11 @@ const getMyAppeals = async (req, res) => {
 			})
 		);
 		const sortedAppeals = sortAppeals(formattedAppeals);
-		const formattedStatuses = mapAppealStatuses(rawStatuses);
 
 		return res.send({
 			itemCount,
 			items: sortedAppeals,
-			statuses: formattedStatuses,
+			statuses,
 			page: pageNumber,
 			pageCount: getPageCount(itemCount, pageSize),
 			pageSize
@@ -267,31 +256,4 @@ const updateAppealById = async (req, res) => {
 	return res.status(200).send(response);
 };
 
-/**
- * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
- * @returns {string[]}
- */
-const mapAppealStatuses = (rawStatuses) => {
-	const statusOrder = [
-		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-		APPEAL_CASE_STATUS.VALIDATION,
-		APPEAL_CASE_STATUS.READY_TO_START,
-		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
-		APPEAL_CASE_STATUS.COMPLETE
-	];
-
-	const extractedStatuses = [
-		...new Set(
-			rawStatuses
-				.flat()
-				.flatMap((/** @type {*} */ item) =>
-					item.appealStatus.map((/** @type {{ status: any; }} */ statusItem) => statusItem.status)
-				)
-		)
-	];
-	return statusOrder.filter((status) => extractedStatuses.includes(status));
-};
-
-export { getAppeal, getAppeals, getMyAppeals, updateAppealById, mapAppealStatuses };
+export { getAppeal, getAppeals, getMyAppeals, updateAppealById };

@@ -1,8 +1,13 @@
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { appealsNationalList } from '#testing/app/fixtures/referencedata.js';
+import {
+	activeDirectoryUsersData,
+	appealsNationalList
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { jest } from '@jest/globals';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -15,8 +20,38 @@ const statuses = [
 	'complete'
 ];
 
+/**
+ *
+ * @type {{ lpaCode: string; name: string }[]}
+ */
+const lpas = [];
+
+/**
+ *
+ * @type {{ azureAdUserId: string; id: number }[]}
+ */
+const inspectors = activeDirectoryUsersData.map(({ id }, index) => ({
+	azureAdUserId: id,
+	id: index
+}));
+
+/**
+ *
+ * @type {{ azureAdUserId: string; id: number }[]}
+ */
+const caseOfficers = activeDirectoryUsersData.map(({ id }, index) => ({
+	azureAdUserId: id,
+	id: index
+}));
+
 describe('national-list', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		// @ts-ignore
+		usersService.getUserById = jest
+			.fn()
+			.mockImplementation((id) => activeDirectoryUsersData.find((user) => user.id === id));
+	});
 	afterEach(teardown);
 
 	describe('GET /', () => {
@@ -37,7 +72,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('name="searchTerm" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain('Search</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
-			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('Case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
@@ -47,15 +82,15 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="complete"');
-			expect(unprettifiedElement.innerHTML).toContain('Filter by inspector status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('Inspector status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="inspector-status-filter" name="inspectorStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="assigned"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="unassigned"');
-			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
-			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
 			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Site address</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Local planning authority (LPA)</th>');
@@ -84,6 +119,9 @@ describe('national-list', () => {
 				itemCount: 0,
 				items: [],
 				statuses,
+				lpas,
+				inspectors,
+				caseOfficers,
 				page: 1,
 				pageCount: 0,
 				pageSize: 30
@@ -163,6 +201,9 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -181,13 +222,13 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'1 result for BS7 8LQ (filters applied)</h2>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('Case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
-			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
-			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
 		});
 
 		it('should render national list - no search term - filter applied', async () => {
@@ -197,6 +238,9 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -211,13 +255,13 @@ describe('national-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('1 result (filters applied)</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Filter by case status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('Case status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
-			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
-			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
 		});
 
 		it('should render the header with navigation containing links to the personal list, national list (with active modifier class), and sign out route', async () => {

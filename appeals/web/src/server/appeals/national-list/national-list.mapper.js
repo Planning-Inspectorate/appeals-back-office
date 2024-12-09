@@ -10,23 +10,43 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 
 /**
+ * @param {{azureAdUserId: string, id: number, name: string}[]} users
  * @param {AppealList|void} appeals
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
  * @param {string|undefined} searchTermError
  * @param {string|undefined} appealStatusFilter
  * @param {string|undefined} inspectorStatusFilter
+ * @param {string|undefined} localPlanningAuthorityFilter
+ * @param {string|undefined} caseOfficerFilter
+ * @param {string|undefined} inspectorFilter
+ * @param {string|undefined} greenBeltFilter
  * @returns {PageContent}
  */
 
 export function nationalListPage(
+	users,
 	appeals,
 	urlWithoutQuery,
 	searchTerm,
 	searchTermError,
 	appealStatusFilter,
-	inspectorStatusFilter
+	inspectorStatusFilter,
+	localPlanningAuthorityFilter,
+	caseOfficerFilter,
+	inspectorFilter,
+	greenBeltFilter
 ) {
+	const filtersApplied =
+		greenBeltFilter ||
+		[
+			appealStatusFilter,
+			inspectorStatusFilter,
+			localPlanningAuthorityFilter,
+			caseOfficerFilter,
+			inspectorFilter
+		].some((filter) => filter && filter !== 'all');
+
 	const appealStatusFilterItemsArray = ['all', ...(appeals?.statuses || [])].map(
 		(appealStatus) => ({
 			text: capitalizeFirstLetter(appealStatusToStatusTag(appealStatus)),
@@ -43,6 +63,37 @@ export function nationalListPage(
 		})
 	);
 
+	const localPlanningAuthorityFilterItemsArray = [
+		{ name: 'All', lpaCode: 'all' },
+		...(appeals?.lpas || [])
+	].map((localPlanningAuthority) => ({
+		text: localPlanningAuthority.name,
+		value: localPlanningAuthority.lpaCode,
+		selected: localPlanningAuthorityFilter === localPlanningAuthority.lpaCode
+	}));
+
+	const caseOfficerFilterItemsArray = [
+		{ name: 'All', id: 'all' },
+		...(appeals?.caseOfficers.map(({ azureAdUserId }) =>
+			users.find((user) => user.azureAdUserId === azureAdUserId)
+		) || [])
+	].map((caseOfficer) => ({
+		text: caseOfficer?.name,
+		value: caseOfficer?.id,
+		selected: caseOfficerFilter === String(caseOfficer?.id)
+	}));
+
+	const inspectorFilterItemsArray = [
+		{ name: 'All', id: 'all' },
+		...(appeals?.inspectors.map(({ azureAdUserId }) =>
+			users.find((user) => user.azureAdUserId === azureAdUserId)
+		) || [])
+	].map((inspector) => ({
+		text: inspector?.name,
+		value: inspector?.id,
+		selected: inspectorFilter === String(inspector?.id)
+	}));
+
 	let searchResultsHeader = '';
 
 	if (searchTerm && appeals?.itemCount === 0) {
@@ -53,20 +104,11 @@ export function nationalListPage(
 		} for ${searchTerm}`;
 	} else if (!searchTerm && appeals?.itemCount === 0) {
 		searchResultsHeader = `No results found`;
-	} else if (
-		!searchTerm &&
-		appeals?.itemCount &&
-		appeals?.itemCount > 0 &&
-		((appealStatusFilter && appealStatusFilter !== 'all') ||
-			(inspectorStatusFilter && inspectorStatusFilter !== 'all'))
-	) {
+	} else if (!searchTerm && appeals?.itemCount && appeals?.itemCount > 0 && filtersApplied) {
 		searchResultsHeader = `${appeals?.itemCount} result${appeals?.itemCount !== 1 ? 's' : ''}`;
 	}
 
-	if (
-		(appealStatusFilter && appealStatusFilter !== 'all') ||
-		(inspectorStatusFilter && inspectorStatusFilter !== 'all')
-	) {
+	if (filtersApplied) {
 		searchResultsHeader += ' (filters applied)';
 	}
 
@@ -159,35 +201,15 @@ export function nationalListPage(
 					{
 						type: 'html',
 						parameters: {
+							html: '<h2 class="govuk-heading-m">Filter</h2>'
+						}
+					},
+					{
+						type: 'html',
+						parameters: {
 							html: searchTerm
 								? `<input type="hidden" name="searchTerm" value="${searchTerm}" data-cy="search-term" />`
 								: ''
-						}
-					},
-					{
-						type: 'select',
-						parameters: {
-							name: 'appealStatusFilter',
-							id: 'appeal-status-filter',
-							label: {
-								text: 'Filter by case status'
-							},
-							value: 'all',
-							items: appealStatusFilterItemsArray,
-							attributes: { 'data-cy': 'filter-by-case-status' }
-						}
-					},
-					{
-						type: 'select',
-						parameters: {
-							name: 'inspectorStatusFilter',
-							id: 'inspector-status-filter',
-							label: {
-								text: 'Filter by inspector status'
-							},
-							value: 'all',
-							items: inspectorStatusFilterItemsArray,
-							attributes: { 'data-cy': 'filter-by-inspector-status' }
 						}
 					},
 					{
@@ -201,15 +223,103 @@ export function nationalListPage(
 						parameters: {
 							id: 'filters-submit',
 							type: 'submit',
-							classes: 'govuk-button--secondary',
-							text: 'Apply',
+							text: 'Apply filters',
 							attributes: { 'data-cy': 'filter-submit' }
 						}
 					},
 					{
 						type: 'html',
 						parameters: {
-							html: `<a class="govuk-link" href="${clearFilterUrl}" data-cy="filter-clear">Clear filter</a></div></form>`
+							html: `<a class="govuk-link" href="${clearFilterUrl}" data-cy="filter-clear">Clear filters</a></div>`
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							name: 'appealStatusFilter',
+							id: 'appeal-status-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Case status'
+							},
+							value: 'all',
+							items: appealStatusFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-case-status' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							name: 'inspectorStatusFilter',
+							id: 'inspector-status-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Inspector status'
+							},
+							value: 'all',
+							items: inspectorStatusFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-inspector-status' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Local planning authority'
+							},
+							name: 'localPlanningAuthorityFilter',
+							value: 'all',
+							items: localPlanningAuthorityFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-local-planning-authority' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Case officer'
+							},
+							name: 'caseOfficerFilter',
+							value: 'all',
+							items: caseOfficerFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-case-officer' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Inspector'
+							},
+							name: 'inspectorFilter',
+							value: 'all',
+							items: inspectorFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-inspector' }
+						}
+					},
+					{
+						type: 'checkboxes',
+						parameters: {
+							name: 'greenBeltFilter',
+							classes: 'govuk-checkboxes--small',
+							items: [
+								{
+									text: 'Green belt',
+									value: 'yes',
+									checked: greenBeltFilter === 'yes'
+								}
+							],
+							value: greenBeltFilter,
+							attributes: { 'data-cy': 'filter-by-green-belt' }
+						}
+					},
+					{
+						type: 'html',
+						parameters: {
+							html: `</form>`
 						}
 					}
 				]

@@ -12,25 +12,35 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  */
 
 /**
- * @param {number} pageNumber
- * @param {number} pageSize
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
+ * @param {string} lpaCode
+ * @param {number} inspectorId
+ * @param {number} caseOfficerId
+ * @param {boolean} isGreenBelt
+ * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[]]>}
  */
-const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) => {
+const getAllAppeals = (
+	searchTerm,
+	status,
+	hasInspector,
+	lpaCode,
+	inspectorId,
+	caseOfficerId,
+	isGreenBelt
+) => {
 	const where = {
 		appealStatus: {
 			some: {
 				valid: true,
-				...(status !== 'undefined' && { status })
+				...(String(status) !== 'undefined' && { status })
 			}
 		},
 		appealType: {
 			key: { in: getEnabledAppealTypes() }
 		},
-		...(searchTerm !== 'undefined' && {
+		...(String(searchTerm) !== 'undefined' && {
 			OR: [
 				{
 					reference: {
@@ -53,13 +63,26 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 		}),
 		...(hasInspector === 'false' && {
 			inspectorUserId: null
+		}),
+		...(isGreenBelt && {
+			appellantCase: {
+				isGreenBelt: true
+			}
+		}),
+		...(!!lpaCode && {
+			lpa: {
+				lpaCode
+			}
+		}),
+		...(!!inspectorId && {
+			inspectorUserId: inspectorId
+		}),
+		...(!!caseOfficerId && {
+			caseOfficerUserId: caseOfficerId
 		})
 	};
 
 	return databaseConnector.$transaction([
-		databaseConnector.appeal.count({
-			where
-		}),
 		databaseConnector.appeal.findMany({
 			where,
 			include: {
@@ -70,13 +93,13 @@ const getAllAppeals = (pageNumber, pageSize, searchTerm, status, hasInspector) =
 					}
 				},
 				appealType: true,
-				lpa: true
+				lpa: true,
+				appellantCase: true,
+				inspector: true,
+				caseOfficer: true
 			},
-			orderBy: { caseUpdatedDate: 'desc' },
-			skip: getSkipValue(pageNumber, pageSize),
-			take: pageSize
-		}),
-		getAppealsStatusesInNationalList(searchTerm, hasInspector)
+			orderBy: { caseUpdatedDate: 'desc' }
+		})
 	]);
 };
 
@@ -197,53 +220,6 @@ const getAppealsStatusesInPersonalList = (userId) => {
 				{ inspector: { azureAdUserId: { equals: userId } } },
 				{ caseOfficer: { azureAdUserId: { equals: userId } } }
 			]
-		})
-	};
-
-	return databaseConnector.appeal.findMany({
-		where,
-		select: {
-			appealStatus: {
-				select: {
-					status: true
-				},
-				where: {
-					valid: true
-				}
-			}
-		}
-	});
-};
-
-/**
- * @param {string} searchTerm
- * @param {string} hasInspector
- */
-const getAppealsStatusesInNationalList = (searchTerm, hasInspector) => {
-	const where = {
-		...(searchTerm !== 'undefined' && {
-			OR: [
-				{
-					reference: {
-						contains: searchTerm
-					}
-				},
-				{
-					address: {
-						postcode: {
-							contains: searchTerm
-						}
-					}
-				}
-			]
-		}),
-		...(hasInspector === 'true' && {
-			inspectorUserId: {
-				not: null
-			}
-		}),
-		...(hasInspector === 'false' && {
-			inspectorUserId: null
 		})
 	};
 

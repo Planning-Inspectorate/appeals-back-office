@@ -25,11 +25,32 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
-import { mapAppealStatuses } from '../appeals.controller.js';
+import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+
+const lpas = [
+	{
+		lpaCode: householdAppeal.lpa.lpaCode,
+		name: householdAppeal.lpa.name
+	}
+];
+
+const inspectors = [
+	{
+		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a',
+		id: 2
+	}
+];
+
+const caseOfficers = [
+	{
+		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb',
+		id: 1
+	}
+];
 
 describe('appeals list routes', () => {
 	beforeEach(() => {
@@ -43,18 +64,10 @@ describe('appeals list routes', () => {
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(2);
-				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
 
 				const response = await request.get('/appeals').set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-					expect.objectContaining({
-						skip: 0,
-						take: 30
-					})
-				);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					itemCount: 2,
@@ -130,6 +143,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -139,23 +155,15 @@ describe('appeals list routes', () => {
 
 			test('gets appeals when given pagination params', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([fullPlanningAppeal]);
+				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
 
 				const response = await request
 					.get('/appeals?pageNumber=2&pageSize=1')
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-					expect.objectContaining({
-						skip: 1,
-						take: 1
-					})
-				);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					itemCount: 1,
+					itemCount: 2,
 					items: [
 						{
 							appealId: fullPlanningAppeal.id,
@@ -193,16 +201,17 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 2,
-					pageCount: 1,
+					pageCount: 2,
 					pageSize: 1,
 					statuses: ['assign_case_officer']
 				});
 			});
 
 			test('gets appeals when given an uppercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -278,6 +287,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -286,8 +298,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a lowercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -363,6 +373,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -371,8 +384,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a search term with a space', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -448,6 +459,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -456,8 +470,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a valid status', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -520,6 +532,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -528,8 +543,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a true hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -594,6 +607,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -602,8 +618,6 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a false hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.count.mockResolvedValue(1);
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
 
@@ -666,6 +680,9 @@ describe('appeals list routes', () => {
 							commentCounts: {}
 						}
 					],
+					lpas,
+					caseOfficers,
+					inspectors,
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
