@@ -95,6 +95,12 @@ export const AUDIT_TRAIL_LPAQ_LPA_PROCEDURE_PREFERENCE_DETAILS_UPDATED =
 	'Reason for preference updated';
 export const AUDIT_TRAIL_LPAQ_LPA_PROCEDURE_PREFERENCE_DURATION_UPDATED =
 	'Expected length of procedure updated';
+export const AUDIT_TRAIL_LPAQ_EIA_SENSITIVE_AREA_DETAILS_UPDATED =
+	'In, partly in, or likely to affect a sensitive area changed';
+export const AUDIT_TRAIL_LPAQ_EIA_CONSULTED_BODIES_DETAILS_UPDATED =
+	'Consulted relevant statutory consultees changed';
+export const AUDIT_TRAIL_LPAQ_REASON_FOR_NEIGHBOUR_VISITS_UPDATED =
+	'Inspector needs neighbouring site access changed';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';

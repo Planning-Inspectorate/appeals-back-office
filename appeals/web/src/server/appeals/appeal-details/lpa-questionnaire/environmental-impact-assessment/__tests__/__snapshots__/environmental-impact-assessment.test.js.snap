@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`environmental-impact-assessment GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Does not meet or exceed" radio option checked if eiaColumnTwoThreshold is false 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Does not meet or exceed" radio option checked if eiaColumnTwoThreshold is false 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -36,7 +36,7 @@ exports[`environmental-impact-assessment GET /environmental-impact-assessment/co
 </main>"
 `;
 
-exports[`environmental-impact-assessment GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Meets or exceeds" radio option checked if eiaColumnTwoThreshold is true 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Meets or exceeds" radio option checked if eiaColumnTwoThreshold is true 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -72,7 +72,95 @@ exports[`environmental-impact-assessment GET /environmental-impact-assessment/co
 </main>"
 `;
 
-exports[`environmental-impact-assessment GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Needed" radio option checked if eiaRequiresEnvironmentalStatement is true 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/consulted-bodies-details/change should render the change consulted bodies details page with "No" radio option checked, and no text populated in the textarea, if eiaConsultedBodiesDetails is null 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change consulted relevant statutory consultees</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaConsultedBodiesDetailsRadio"
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" data-aria-controls="conditional-eiaConsultedBodiesDetailsRadio">
+                                    <label class="govuk-label govuk-radios__label" for="eiaConsultedBodiesDetailsRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-eiaConsultedBodiesDetailsRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="eia-consulted-bodies-details">Consulted relevant statutory consultees details</label>
+                                        <textarea class="govuk-textarea"
+                                        id="eia-consulted-bodies-details" name="eiaConsultedBodiesDetails" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaConsultedBodiesDetailsRadio-2"
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="no" checked>
+                                    <label class="govuk-label govuk-radios__label" for="eiaConsultedBodiesDetailsRadio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/consulted-bodies-details/change should render the change consulted bodies details page with "Yes" radio option checked, and "test consulted bodies details" populated in the textarea, if eiaConsultedBodiesDetails is "test consulted bodies details" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change consulted relevant statutory consultees</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaConsultedBodiesDetailsRadio"
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked
+                                    data-aria-controls="conditional-eiaConsultedBodiesDetailsRadio">
+                                    <label class="govuk-label govuk-radios__label" for="eiaConsultedBodiesDetailsRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional" id="conditional-eiaConsultedBodiesDetailsRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="eia-consulted-bodies-details">Consulted relevant statutory consultees details</label>
+                                        <textarea class="govuk-textarea"
+                                        id="eia-consulted-bodies-details" name="eiaConsultedBodiesDetails" rows="3">test consulted bodies details</textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaConsultedBodiesDetailsRadio-2"
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="eiaConsultedBodiesDetailsRadio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Needed" radio option checked if eiaRequiresEnvironmentalStatement is true 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -108,7 +196,7 @@ exports[`environmental-impact-assessment GET /environmental-impact-assessment/re
 </main>"
 `;
 
-exports[`environmental-impact-assessment GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Not needed" radio option checked if eiaRequiresEnvironmentalStatement is false 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Not needed" radio option checked if eiaRequiresEnvironmentalStatement is false 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -131,6 +219,93 @@ exports[`environmental-impact-assessment GET /environmental-impact-assessment/re
                                     <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement-2"
                                     name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
                                     <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2">Not needed</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/sensitive-area-details/change should render the change sensitive area details page with "No" radio option checked, and no text populated in the textarea, if eiaSensitiveAreaDetails is null 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether in, partly in, or likely to affect a sensitive area</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaSensitiveAreaDetailsRadio" name="eiaSensitiveAreaDetailsRadio"
+                                    type="radio" value="yes" data-aria-controls="conditional-eiaSensitiveAreaDetailsRadio">
+                                    <label class="govuk-label govuk-radios__label" for="eiaSensitiveAreaDetailsRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-eiaSensitiveAreaDetailsRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="eia-sensitive-area-details">In, partly in, or likely to affect a sensitive area details</label>
+                                        <textarea                                         class="govuk-textarea" id="eia-sensitive-area-details" name="eiaSensitiveAreaDetails"
+                                        rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaSensitiveAreaDetailsRadio-2"
+                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="no" checked>
+                                    <label class="govuk-label govuk-radios__label" for="eiaSensitiveAreaDetailsRadio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/sensitive-area-details/change should render the change sensitive area details page with "Yes" radio option checked, and "test sensitive area details" populated in the textarea, if eiaSensitiveAreaDetails is "test sensitive area details" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether in, partly in, or likely to affect a sensitive area</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaSensitiveAreaDetailsRadio" name="eiaSensitiveAreaDetailsRadio"
+                                    type="radio" value="yes" checked data-aria-controls="conditional-eiaSensitiveAreaDetailsRadio">
+                                    <label class="govuk-label govuk-radios__label" for="eiaSensitiveAreaDetailsRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional" id="conditional-eiaSensitiveAreaDetailsRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="eia-sensitive-area-details">In, partly in, or likely to affect a sensitive area details</label>
+                                        <textarea                                         class="govuk-textarea" id="eia-sensitive-area-details" name="eiaSensitiveAreaDetails"
+                                        rows="3">test sensitive area details</textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="eiaSensitiveAreaDetailsRadio-2"
+                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="eiaSensitiveAreaDetailsRadio-2">No</label>
                                 </div>
                             </div>
                         </div>

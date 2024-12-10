@@ -31,3 +31,22 @@ export const createTextareaOptionalValidator = (
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)
 	);
+
+export const createTextareaConditionalValidator = (
+	fieldName = 'textarea',
+	conditionalFieldName = 'radio',
+	conditionalFieldValue = 'yes',
+	emptyErrorMessage = 'Enter text',
+	maxCharactersAllowed = TEXTAREA_MAX_CHARACTERS,
+	maxCharactersErrorMessage = `Text must be ${TEXTAREA_MAX_CHARACTERS} characters or less`
+) =>
+	createValidator(
+		body(fieldName)
+			.if(body(conditionalFieldName).equals(conditionalFieldValue))
+			.trim()
+			.isLength({ min: 1 })
+			.withMessage(emptyErrorMessage)
+			.bail()
+			.isLength({ max: maxCharactersAllowed })
+			.withMessage(maxCharactersErrorMessage)
+	);

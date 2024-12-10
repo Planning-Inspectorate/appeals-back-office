@@ -13,5 +13,6 @@ export const mapEiaColumnTwoThreshold = ({
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/environmental-impact-assessment/column-two-threshold/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		classes: 'lpa-eia-column-two-threshold'
 	});

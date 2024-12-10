@@ -13,5 +13,6 @@ export const mapEiaRequiresEnvironmentalStatement = ({
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/environmental-impact-assessment/requires-environmental-statement/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		classes: 'lpa-eia-requires-environmental-statement'
 	});
