@@ -25,11 +25,12 @@ export const changeExtraConditionsPage = (appealData, lpaqData, storedSessionDat
 		title: `Change extra conditions`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change extra conditions`,
 		pageComponents: [
 			yesNoInput({
 				name: 'extraConditionsRadio',
 				value: currentRadioValue,
+				legendText: 'Change extra conditions',
+				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'extra-conditions-details',
 					name: 'extraConditionsDetails',

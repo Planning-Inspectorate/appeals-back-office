@@ -19,11 +19,12 @@ export const changeInfrastructureLevyExpectedDate = (appealData, existingValue, 
 		title: 'Expected levy adoption date',
 		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change expected levy adoption date',
 		pageComponents: [
 			dateInput({
 				name: 'infrastructureLevyExpectedDate',
 				namePrefix: 'levy-expected-date',
+				legendText: 'Change expected levy adoption date',
+				legendIsPageHeading: true,
 				value: dateISOStringToDayMonthYearHourMinute(existingValue)
 			})
 		]

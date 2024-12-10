@@ -51,18 +51,19 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment,
 
 	/** @type {PageContent} */
 	const pageContent = {
-		heading: 'Do you want to allow the interested party to resubmit a comment?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
 		preHeading: `Appeal ${shortReference}`,
 		headingClasses: 'govuk-heading-l',
-		hint: `The interested party can resubmit their comment by ${deadlineString}.`,
 		submitButtonProperties: {
 			text: 'Continue'
 		},
 		pageComponents: [
 			yesNoInput({
 				name: 'allowResubmit',
-				value: sessionValue
+				value: sessionValue,
+				legendText: 'Do you want to allow the interested party to resubmit a comment?',
+				legendIsPageHeading: true,
+				hint: `The interested party can resubmit their comment by ${deadlineString}.`
 			})
 		]
 	};

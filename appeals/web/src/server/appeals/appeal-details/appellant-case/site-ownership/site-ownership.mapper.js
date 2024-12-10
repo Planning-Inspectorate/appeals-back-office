@@ -25,17 +25,16 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 		title: `Change the site ownership`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the site ownership`,
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
 					name: 'siteOwnershipRadio',
 					idPrefix: 'site-ownership-radio',
-					fieldSet: {
+					fieldset: {
 						legend: {
-							text: `Is the site fully owned or partially owned by the appellant`,
-							isPageHeading: false,
+							text: 'Change the site ownership',
+							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},

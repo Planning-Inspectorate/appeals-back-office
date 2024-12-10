@@ -79,7 +79,6 @@ export const checkAddressPage = (appealDetails, errors) => ({
 	title: 'Did the interested party provide an address?',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Did the interested party provide an address?',
 	submitButtonProperties: {
 		text: 'Continue'
 	},
@@ -89,6 +88,13 @@ export const checkAddressPage = (appealDetails, errors) => ({
 			parameters: {
 				name: 'addressProvided',
 				idPrefix: 'address-provided',
+				fieldset: {
+					legend: {
+						text: 'Did the interested party provide an address?',
+						isPageHeading: true,
+						classes: 'govuk-fieldset__legend--l'
+					}
+				},
 				items: [
 					{
 						value: 'yes',

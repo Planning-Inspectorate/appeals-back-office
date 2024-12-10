@@ -12,10 +12,8 @@ export const redactInput = (comment, session) => [
 		name: 'redactedRepresentation',
 		id: 'redact-textarea',
 		readonly: true,
-		label: {
-			text: 'Redacted comment',
-			classes: 'govuk-label--s'
-		},
+		labelText: 'Redacted comment',
+		labelClasses: 'govuk-label--s',
 		value:
 			session?.redactedRepresentation ||
 			comment.redactedRepresentation ||

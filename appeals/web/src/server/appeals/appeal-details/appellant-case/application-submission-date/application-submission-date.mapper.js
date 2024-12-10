@@ -42,7 +42,6 @@ export const changeApplicationSubmissionDatePage = (
 		title: `Change date application submitted`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change date application submitted`,
 		pageComponents: [
 			{
 				type: 'date-input',
@@ -53,10 +52,10 @@ export const changeApplicationSubmissionDatePage = (
 					hint: {
 						text: 'For example, 27 3 2007'
 					},
-					fieldSet: {
+					fieldset: {
 						legend: {
-							text: `When was the application submitted?`,
-							isPageHeading: false,
+							text: 'Change date application submitted',
+							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
