@@ -6,30 +6,34 @@ exports[`withdrawal GET /redaction-status should render the redaction status pag
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the redaction status of this document?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                                    type="radio" value="redacted">
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What is the redaction status of this document?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
+                                        type="radio" value="redacted">
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
+                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
+                                        name="withdrawal-redaction-status" type="radio" value="no redaction required">
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                    name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                                    name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -289,30 +293,34 @@ exports[`withdrawal POST /redaction-status should re-render the redaction status
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the redaction status of this document?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                                    type="radio" value="redacted">
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What is the redaction status of this document?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
+                                        type="radio" value="redacted">
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
+                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
+                                        name="withdrawal-redaction-status" type="radio" value="no redaction required">
+                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                    name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                                    name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                                    <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

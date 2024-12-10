@@ -6,31 +6,35 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change development category</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1">
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule">Schedule 1</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change development category</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1">
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule">Schedule 1</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-2"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-2">
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-2">Schedule 2</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-4"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-4">Other</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-2"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-2">
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-2">Schedule 2</label>
-                                </div>
-                                <div class="govuk-radios__divider">or</div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-4"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-4">Other</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -48,31 +52,35 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change development category</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule">Schedule 1</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change development category</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule">Schedule 1</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-2"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-2">
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-2">Schedule 2</label>
+                                    </div>
+                                    <div class="govuk-radios__divider">or</div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-4"
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="other">
+                                        <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-4">Other</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-2"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-2">
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-2">Schedule 2</label>
-                                </div>
-                                <div class="govuk-radios__divider">or</div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-4"
-                                    name="eiaEnvironmentalImpactSchedule" type="radio" value="other">
-                                    <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-4">Other</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

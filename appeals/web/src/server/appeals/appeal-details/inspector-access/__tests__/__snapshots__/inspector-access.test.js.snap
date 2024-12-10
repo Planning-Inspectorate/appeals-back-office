@@ -6,33 +6,37 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (appellant answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (appellant answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -50,33 +54,37 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (appellant answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (appellant answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -94,33 +102,37 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (LPA answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (LPA answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -138,33 +150,37 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (LPA answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (LPA answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -193,32 +209,36 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (LPA answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (LPA answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -247,32 +267,36 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change the inspector access (LPA answer)</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                    type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
-                                        <textarea class="govuk-textarea"
-                                        id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (LPA answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
-                                    type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

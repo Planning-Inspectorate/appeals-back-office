@@ -4,7 +4,6 @@ exports[`linked-appeals GET /change-appeal-type/unlink-appeal should render the 
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Do you want to unlink the appeal from appeal 351062?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -12,6 +11,9 @@ exports[`linked-appeals GET /change-appeal-type/unlink-appeal should render the 
             <form action="" method="POST" novalidate>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Do you want to unlink the appeal 725284 from appeal 351062?</h1>
+                        </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="unlink-appeal" name="unlinkAppeal"
@@ -860,7 +862,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/2">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/2">Unlink</a>
                 </td>
             </tr>
         </tbody>
@@ -892,7 +894,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="APP/Q9999/D/21/725284">725284</a>
                 </td>
                 <td class="govuk-table__cell">Householder</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/3046/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/1/1">Unlink</a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
@@ -900,7 +902,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/3047/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/1">Unlink</a>
                 </td>
             </tr>
         </tbody>
@@ -927,7 +929,6 @@ exports[`linked-appeals POST /change-appeal-type/unlink-appeal should re-render 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Do you want to unlink the appeal from appeal 351062?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -935,6 +936,9 @@ exports[`linked-appeals POST /change-appeal-type/unlink-appeal should re-render 
             <form action="" method="POST" novalidate>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Do you want to unlink the appeal 725284 from appeal 351062?</h1>
+                        </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="unlink-appeal" name="unlinkAppeal"
