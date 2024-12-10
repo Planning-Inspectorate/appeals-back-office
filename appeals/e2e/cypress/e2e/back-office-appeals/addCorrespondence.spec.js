@@ -17,16 +17,18 @@ describe('Add correspondence', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let sampleFiles = caseDetailsPage.sampleFiles;
+
 	it('Add cross-team correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Case management');
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
-			caseDetailsPage.uploadSampleDoc();
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', 'sample-file.doc');
+			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkAnswerRedactionStatus('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -40,10 +42,10 @@ describe('Add correspondence', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Case management');
 			caseDetailsPage.clickAddInspectorCorrespondence();
-			caseDetailsPage.uploadSampleDoc();
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', 'sample-file.doc');
+			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkAnswerRedactionStatus('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');

@@ -20,6 +20,8 @@ describe('Issue Decision', () => {
 
 	const issueDecisionCompleteStatus = ['Allowed', 'Dismissed', 'Split Decision'];
 
+	let sampleFiles = caseDetailsPage.sampleFiles;
+
 	issueDecisionCompleteStatus.forEach((issueDecision, index) => {
 		it(`Change to ${issueDecision} type`, { tags: tag.smoke }, () => {
 			let todaysDate = new Date();
@@ -33,7 +35,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickIssueDecision(caseRef);
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleDoc();
+				caseDetailsPage.uploadSampleFile(sampleFiles.document);
 				caseDetailsPage.clickButtonByText('Continue');
 				dateTimeSection.enterDecisionLetterDate(todaysDate);
 				caseDetailsPage.clickButtonByText('Continue');

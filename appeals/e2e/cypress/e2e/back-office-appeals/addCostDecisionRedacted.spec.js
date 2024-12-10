@@ -17,7 +17,7 @@ describe('add cost decision and redact', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
-
+	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -25,7 +25,7 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickAccordionByButton('Costs');
 			caseDetailsPage.clickAddCostsDecision();
-			caseDetailsPage.uploadSampleDoc();
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
