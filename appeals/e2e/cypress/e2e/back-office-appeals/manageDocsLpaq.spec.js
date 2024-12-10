@@ -13,6 +13,7 @@ describe('Remove doc from upload page', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('add a doc and then remove on file upload page', () => {
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -21,10 +22,10 @@ describe('Remove doc from upload page', () => {
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.clickAddNotifyingParties();
-			caseDetailsPage.uploadSampleDoc();
-			caseDetailsPage.checkFileNameDisplays('sample-file.doc');
-			caseDetailsPage.clickRemoveFileUpload('sample-file.doc');
-			caseDetailsPage.checkFileNameRemoved('sample-file.doc');
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
+			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
+			caseDetailsPage.clickRemoveFileUpload(sampleFiles.document);
+			caseDetailsPage.checkFileNameRemoved(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkErrorMessageDisplays('Select a file');
 		});
@@ -39,9 +40,10 @@ describe('Remove doc from upload page', () => {
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.uploadDocVersionLpaq();
 			caseDetailsPage.clickManageNotifyingParties();
+			cy.reload(); //refresh page to get rid of possible virus scanning tag
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
-			caseDetailsPage.uploadSampleImg();
+			caseDetailsPage.uploadSampleFile(sampleFiles.img);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');

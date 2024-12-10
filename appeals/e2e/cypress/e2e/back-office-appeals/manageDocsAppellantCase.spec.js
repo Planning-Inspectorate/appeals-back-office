@@ -17,7 +17,7 @@ describe('manage docs on appellant case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
-
+	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
@@ -25,7 +25,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
-			caseDetailsPage.uploadSampleImg();
+			caseDetailsPage.uploadSampleFile(sampleFiles.img);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -37,10 +37,10 @@ describe('manage docs on appellant case', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickAddAdditionalDocs();
-			caseDetailsPage.uploadSampleDoc();
-			caseDetailsPage.checkFileNameDisplays('sample-file.doc');
-			caseDetailsPage.clickRemoveFileUpload('sample-file.doc');
-			caseDetailsPage.checkFileNameRemoved('sample-file.doc');
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
+			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
+			caseDetailsPage.clickRemoveFileUpload(sampleFiles.document);
+			caseDetailsPage.checkFileNameRemoved(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkErrorMessageDisplays('Select a file');
 		});

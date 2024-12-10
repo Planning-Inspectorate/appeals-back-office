@@ -26,7 +26,6 @@ export class CaseDetailsPage extends Page {
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
-		uploadFile: '#upload-file-1',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
 		addNotifyingParties: 'add-notifying-parties',
@@ -37,6 +36,14 @@ export class CaseDetailsPage extends Page {
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
 		startAppealWithdrawal: 'start-appeal-withdrawal'
+	};
+
+	fixturesPath = 'cypress/fixtures/';
+
+	sampleFiles = {
+		document: 'sample-file.doc',
+		img: 'sample-img.jpeg',
+		pdf: 'test.pdf'
 	};
 
 	elements = {
@@ -62,7 +69,7 @@ export class CaseDetailsPage extends Page {
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
-		uploadFile: () => cy.get(this.selectors.uploadFile),
+		uploadFile: () => cy.get('#upload-file-1'),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
@@ -201,16 +208,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.startAppealWithdrawal().click();
 	}
 
-	uploadSampleDoc() {
-		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-file.doc', { force: true });
-	}
-
-	uploadSampleImg() {
-		cy.get('#upload-file-1').selectFile('cypress/fixtures/sample-img.jpeg', { force: true });
-	}
-
-	uploadSamplePdf() {
-		cy.get('#upload-file-1').selectFile('cypress/fixtures/test.pdf', { force: true });
+	uploadSampleFile(fileName) {
+		this.elements.uploadFile().selectFile(this.fixturesPath + fileName, { force: true });
 	}
 
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
