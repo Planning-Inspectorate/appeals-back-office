@@ -6,25 +6,29 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether meets or exceeds column 2 threshold criteria</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaColumnTwoThreshold" name="eiaColumnTwoThreshold"
-                                    type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold">Meets or exceeds</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change whether meets or exceeds column 2 threshold criteria</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaColumnTwoThreshold" name="eiaColumnTwoThreshold"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold">Meets or exceeds</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaColumnTwoThreshold-2" name="eiaColumnTwoThreshold"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2">Does not meet or exceed</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaColumnTwoThreshold-2" name="eiaColumnTwoThreshold"
-                                    type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2">Does not meet or exceed</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -42,25 +46,29 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether meets or exceeds column 2 threshold criteria</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaColumnTwoThreshold" name="eiaColumnTwoThreshold"
-                                    type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold">Meets or exceeds</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change whether meets or exceeds column 2 threshold criteria</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaColumnTwoThreshold" name="eiaColumnTwoThreshold"
+                                        type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold">Meets or exceeds</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaColumnTwoThreshold-2" name="eiaColumnTwoThreshold"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2">Does not meet or exceed</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaColumnTwoThreshold-2" name="eiaColumnTwoThreshold"
-                                    type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2">Does not meet or exceed</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -166,25 +174,29 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change opinion that environmental statement needed</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement"
-                                    name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement">Needed</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change opinion that environmental statement needed</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement"
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement">Needed</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement-2"
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2">Not needed</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement-2"
-                                    name="eiaRequiresEnvironmentalStatement" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2">Not needed</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -202,25 +214,29 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change opinion that environmental statement needed</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement"
-                                    name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement">Needed</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change opinion that environmental statement needed</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement"
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement">Needed</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement-2"
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2">Not needed</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="eiaRequiresEnvironmentalStatement-2"
-                                    name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2">Not needed</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

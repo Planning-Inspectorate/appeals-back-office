@@ -6,25 +6,29 @@ exports[`correct-appeal-type GET /change should render the correctAppealType cha
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Is the appeal type correct (LPA response)?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="correctAppealTypeRadio" name="correctAppealTypeRadio"
-                                    type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="correctAppealTypeRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is the appeal type correct (LPA response)?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="correctAppealTypeRadio" name="correctAppealTypeRadio"
+                                        type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="correctAppealTypeRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="correctAppealTypeRadio-2" name="correctAppealTypeRadio"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="correctAppealTypeRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="correctAppealTypeRadio-2" name="correctAppealTypeRadio"
-                                    type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="correctAppealTypeRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

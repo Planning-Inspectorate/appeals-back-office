@@ -6,30 +6,34 @@ exports[`procedure-preference GET /change should render the change procedure pre
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change procedure preference</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
-                                    type="radio" value="hearing">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
-                                    type="radio" value="inquiry">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
-                                    type="radio" value="written">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -47,30 +51,34 @@ exports[`procedure-preference GET /change should render the change procedure pre
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change procedure preference</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
-                                    type="radio" value="hearing" checked>
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
+                                        type="radio" value="hearing" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
-                                    type="radio" value="inquiry">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
-                                    type="radio" value="written">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -88,30 +96,34 @@ exports[`procedure-preference GET /change should render the change procedure pre
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change procedure preference</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
-                                    type="radio" value="hearing">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
+                                        type="radio" value="inquiry" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
-                                    type="radio" value="inquiry" checked>
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
-                                    type="radio" value="written">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -129,30 +141,34 @@ exports[`procedure-preference GET /change should render the change procedure pre
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change procedure preference</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio" name="procedurePreferenceRadio"
-                                    type="radio" value="hearing">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio">Hearing</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
+                                        type="radio" value="written" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-2" name="procedurePreferenceRadio"
-                                    type="radio" value="inquiry">
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-2">Inquiry</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="procedurePreferenceRadio-3" name="procedurePreferenceRadio"
-                                    type="radio" value="written" checked>
-                                    <label class="govuk-label govuk-radios__label" for="procedurePreferenceRadio-3">Written</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
