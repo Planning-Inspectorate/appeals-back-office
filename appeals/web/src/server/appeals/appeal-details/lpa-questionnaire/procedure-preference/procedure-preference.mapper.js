@@ -29,10 +29,11 @@ export const changeProcedurePreferencePage = (
 		title: `Change procedure preference`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change procedure preference`,
 		pageComponents: [
 			radiosInput({
 				name: 'procedurePreferenceRadio',
+				legendText: 'Change procedure preference',
+				legendIsPageHeading: true,
 				items: [
 					{
 						value: 'hearing',
@@ -81,11 +82,12 @@ export const changeProcedurePreferenceDetailsPage = (
 		title: `Change reason for preference`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change reason for preference`,
 		pageComponents: [
 			textareaInput({
 				name: 'procedurePreferenceDetailsTextarea',
 				id: 'procedure-preference-details',
+				labelText: 'Change reason for preference',
+				labelIsPageHeading: true,
 				value: procedurePreferenceDetails || ''
 			})
 		]

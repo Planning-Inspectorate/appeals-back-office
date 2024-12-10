@@ -18,8 +18,14 @@ export const changeGreenBeltPage = (appealData, data, origin) => {
 		title: `Is the site in a green belt?`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Is the site in a green belt?`,
-		pageComponents: [yesNoInput({ name: 'greenBeltRadio', value: data })]
+		pageComponents: [
+			yesNoInput({
+				name: 'greenBeltRadio',
+				value: data,
+				legendText: 'Is the site in a green belt?',
+				legendIsPageHeading: true
+			})
+		]
 	};
 	return pageContent;
 };

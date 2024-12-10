@@ -6,26 +6,30 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether levy formally adopted</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio"
-                                    name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes"
-                                    checked>
-                                    <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio">Formally adopted</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change whether levy formally adopted</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio"
+                                        name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes"
+                                        checked>
+                                        <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio">Formally adopted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio-2"
+                                        name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2">Not formally adopted</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio-2"
-                                    name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2">Not formally adopted</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -43,26 +47,30 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether levy formally adopted</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio"
-                                    name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio">Formally adopted</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change whether levy formally adopted</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio"
+                                        name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio">Formally adopted</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio-2"
+                                        name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no"
+                                        checked>
+                                        <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2">Not formally adopted</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isInfrastructureLevyFormallyAdoptedRadio-2"
-                                    name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no"
-                                    checked>
-                                    <label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2">Not formally adopted</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

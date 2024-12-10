@@ -38,11 +38,11 @@ export function changeEiaDevelopmentDescriptionPage(appealData, existingValue) {
 		title: `Change description of development`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change description of development`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			radiosInput({
 				name: 'eiaDevelopmentDescription',
+				legendText: 'Change description of development',
+				legendIsPageHeading: true,
 				items: Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).map((value) => ({
 					text: eiaDescriptions[value],
 					value

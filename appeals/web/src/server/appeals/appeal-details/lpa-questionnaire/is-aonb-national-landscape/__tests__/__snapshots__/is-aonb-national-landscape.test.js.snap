@@ -6,25 +6,29 @@ exports[`is-aonb-national-landscape GET /change should render the isAonbNational
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether in area of outstanding natural beauty</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio" name="isAonbNationalLandscapeRadio"
-                                    type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio">In area</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change whether in area of outstanding natural beauty</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio" name="isAonbNationalLandscapeRadio"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio">In area</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio-2"
+                                        name="isAonbNationalLandscapeRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio-2">Not in area</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio-2"
-                                    name="isAonbNationalLandscapeRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio-2">Not in area</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

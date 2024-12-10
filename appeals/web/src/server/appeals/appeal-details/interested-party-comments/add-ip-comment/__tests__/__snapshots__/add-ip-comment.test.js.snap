@@ -6,25 +6,29 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Did the interested party provide an address?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="address-provided" name="addressProvided"
-                                    type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="address-provided">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Did the interested party provide an address?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="address-provided" name="addressProvided"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="address-provided">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="address-provided-2" name="addressProvided"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="address-provided-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="address-provided-2" name="addressProvided"
-                                    type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="address-provided-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button class="govuk-button" data-module="govuk-button">Continue</button>
                     </form>
@@ -180,37 +184,41 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">When did the interested party submit the comment?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="date-hint" class="govuk-hint">For example, 27 3 2024</div>
-                            <div class="govuk-date-input" id="date">
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="date-day" name="day" type="text" inputmode="numeric">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> When did the interested party submit the comment?</h1>
+                                </legend>
+                                <div id="date-hint" class="govuk-hint">For example, 27 3 2024</div>
+                                <div class="govuk-date-input" id="date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="date-day" name="day" type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="date-month" name="month" type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="date-year" name="year" type="text" inputmode="numeric">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="date-month" name="month" type="text" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="date-year" name="year" type="text" inputmode="numeric">
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

@@ -18,12 +18,12 @@ export function changeEiaColumnTwoThresholdPage(appealData, existingValue) {
 		title: `Change whether meets or exceeds column 2 threshold criteria`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change whether meets or exceeds column 2 threshold criteria`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaColumnTwoThreshold',
 				value: existingValue,
+				legendText: 'Change whether meets or exceeds column 2 threshold criteria',
+				legendIsPageHeading: true,
 				customYesLabel: 'Meets or exceeds',
 				customNoLabel: 'Does not meet or exceed'
 			})
@@ -45,12 +45,12 @@ export function changeEiaRequiresEnvironmentalStatementPage(appealData, existing
 		title: `Change opinion that environmental statement needed`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change opinion that environmental statement needed`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaRequiresEnvironmentalStatement',
 				value: existingValue,
+				legendText: 'Change opinion that environmental statement needed',
+				legendIsPageHeading: true,
 				customYesLabel: 'Needed',
 				customNoLabel: 'Not needed'
 			})

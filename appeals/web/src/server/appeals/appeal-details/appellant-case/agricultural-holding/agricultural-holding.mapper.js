@@ -28,11 +28,12 @@ export const changePartOfAgriculturalHoldingPage = (
 		title: `Change part of agricultural holding`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change part of agricultural holding`,
 		pageComponents: [
 			yesNoInput({
 				name: 'partOfAgriculturalHoldingRadio',
-				value: partOfAgriculturalHolding
+				value: partOfAgriculturalHolding,
+				legendText: 'Change part of agricultural holding',
+				legendIsPageHeading: true
 			})
 		]
 	};
@@ -64,11 +65,12 @@ export const changeTenantOfAgriculturalHoldingPage = (
 		title: `Change tenant of agricultural holding`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change tenant of agricultural holding`,
 		pageComponents: [
 			yesNoInput({
 				name: 'tenantOfAgriculturalHoldingRadio',
-				value: tenantOfAgriculturalHolding
+				value: tenantOfAgriculturalHolding,
+				legendText: 'Change tenant of agricultural holding',
+				legendIsPageHeading: true
 			})
 		]
 	};
@@ -100,11 +102,12 @@ export const changeOtherTenantsOfAgriculturalHoldingPage = (
 		title: `Change other tenants of agricultural holding`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change other tenants of agricultural holding`,
 		pageComponents: [
 			yesNoInput({
 				name: 'otherTenantsOfAgriculturalHoldingRadio',
-				value: otherTenantsOfAgriculturalHolding
+				value: otherTenantsOfAgriculturalHolding,
+				legendText: 'Change other tenants of agricultural holding',
+				legendIsPageHeading: true
 			})
 		]
 	};

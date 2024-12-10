@@ -16,9 +16,15 @@ export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
 	title: 'When did the interested party submit the comment?',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'When did the interested party submit the comment?',
 	pageComponents: [
-		dateInput({ id: 'date', name: 'date', value: date, hint: 'For example, 27 3 2024' })
+		dateInput({
+			id: 'date',
+			name: 'date',
+			value: date,
+			legendText: 'When did the interested party submit the comment?',
+			legendIsPageHeading: true,
+			hint: 'For example, 27 3 2024'
+		})
 	]
 });
 

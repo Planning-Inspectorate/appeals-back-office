@@ -233,7 +233,7 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</label></h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
 			);

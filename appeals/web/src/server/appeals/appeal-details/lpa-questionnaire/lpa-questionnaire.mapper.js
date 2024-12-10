@@ -139,16 +139,6 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
 		reviewOutcomeComponents.push({
-			type: 'html',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				html: '<h2>What is the outcome of your review?</h2>'
-			}
-		});
-		reviewOutcomeComponents.push({
 			type: 'radios',
 			parameters: reviewOutcomeRadiosInputInstruction.properties
 		});

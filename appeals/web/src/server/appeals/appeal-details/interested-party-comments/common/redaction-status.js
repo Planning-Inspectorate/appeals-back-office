@@ -30,10 +30,11 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 	title: 'Redaction status',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	heading: 'Redaction status',
 	pageComponents: [
 		radiosInput({
 			name,
+			legendText: 'Redaction status',
+			legendIsPageHeading: true,
 			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
 			value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
 		})

@@ -25,18 +25,20 @@ export function allocationDetailsLevelPage(
 		backLinkText: 'Back to case details',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Select allocation level',
 		pageComponents: [
 			{
 				type: 'radios',
-				wrapperHtml: {
-					opening: '<div class="govuk-!-margin-top-8">',
-					closing: '</div>'
-				},
 				parameters: {
 					name: 'allocation-level',
 					idPrefix: 'allocation-level',
 					value: selectedAllocationLevel || null,
+					fieldset: {
+						legend: {
+							text: 'Select allocation level',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
 					items: allocationDetailsData.allocationDetailsLevels.map((item) => ({
 						value: item.level,
 						text: item.level

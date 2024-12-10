@@ -28,11 +28,12 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 		title: `Change the inspector access (${formattedSource} answer)`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the inspector access (${formattedSource} answer)`,
 		pageComponents: [
 			yesNoInput({
 				name: 'inspectorAccessRadio',
 				value: currentRadioValue,
+				legendText: `Change the inspector access (${formattedSource} answer)`,
+				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'inspector-access-details',
 					name: 'inspectorAccessDetails',

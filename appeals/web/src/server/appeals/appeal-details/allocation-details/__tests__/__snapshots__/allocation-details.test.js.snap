@@ -163,14 +163,16 @@ exports[`Allocation Details should render "Select the allocation level" Page 1`]
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation level</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <div class="govuk-!-margin-top-8">
-                    <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Select allocation level</h1>
+                        </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="allocation-level" name="allocation-level"
@@ -183,7 +185,7 @@ exports[`Allocation Details should render "Select the allocation level" Page 1`]
                                 <label class="govuk-label govuk-radios__label" for="allocation-level-2">B</label>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
@@ -211,14 +213,16 @@ exports[`Allocation Details should render "Select the allocation level" with err
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Select allocation level</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <div class="govuk-!-margin-top-8">
-                    <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Select allocation level</h1>
+                        </legend>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="allocation-level" name="allocation-level"
@@ -231,7 +235,7 @@ exports[`Allocation Details should render "Select the allocation level" with err
                                 <label class="govuk-label govuk-radios__label" for="allocation-level-2">B</label>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
                 <button class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
