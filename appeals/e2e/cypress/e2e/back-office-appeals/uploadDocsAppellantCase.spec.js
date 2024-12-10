@@ -17,7 +17,9 @@ describe('Upload Documents to appellant case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
+
 	it('Upload documents to appellent case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -27,7 +29,7 @@ describe('Upload Documents to appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.verifyAnswerSummaryValue('sample-file.doc');
+			caseDetailsPage.verifyAnswerSummaryValue(sampleFiles.document);
 		});
 	});
 });
