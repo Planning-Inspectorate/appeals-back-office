@@ -174,6 +174,25 @@ export const spec = {
 					dueDate: '2024-06-18T00:00:00.000Z'
 				}
 			],
+			statuses: ['lpa_questionnaire'],
+			lpas: [
+				{
+					name: 'Bristol City Council',
+					lpaCode: 'BRIS'
+				}
+			],
+			inspectors: [
+				{
+					azureAdUserId: '927c9ef9-071d-46f2-bc9e-f9071d26f26b',
+					inspectorId: 22
+				}
+			],
+			caseOfficers: [
+				{
+					name: 'db7481a7-f77f-40e8-b481-a7f77fc0e805',
+					inspectorId: 18
+				}
+			],
 			page: 1,
 			pageCount: 27,
 			pageSize: 30

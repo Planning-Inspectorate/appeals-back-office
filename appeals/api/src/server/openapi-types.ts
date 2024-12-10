@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "8487935f-723a-46d9-8450-52107da2e51b" */
+		/** @example "85f71bde-6891-45c2-8057-2900e3d9b5a6" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -595,6 +595,26 @@ export interface AllAppeals {
 		lpaQuestionnaireStatus?: string;
 		/** @example "2024-06-18T00:00:00.000Z" */
 		dueDate?: string;
+	}[];
+	/** @example ["lpa_questionnaire"] */
+	statuses?: string[];
+	lpas?: {
+		/** @example "Bristol City Council" */
+		name?: string;
+		/** @example "BRIS" */
+		lpaCode?: string;
+	}[];
+	inspectors?: {
+		/** @example "927c9ef9-071d-46f2-bc9e-f9071d26f26b" */
+		azureAdUserId?: string;
+		/** @example 22 */
+		inspectorId?: number;
+	}[];
+	caseOfficers?: {
+		/** @example "db7481a7-f77f-40e8-b481-a7f77fc0e805" */
+		name?: string;
+		/** @example 18 */
+		inspectorId?: number;
 	}[];
 	/** @example 1 */
 	page?: number;

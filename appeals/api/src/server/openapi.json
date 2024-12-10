@@ -1103,6 +1103,42 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "lpaCode",
+						"in": "query",
+						"description": "The lpa filter is assigned an an lpa code",
+						"example": "BRIS",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "inspectorId",
+						"in": "query",
+						"description": "The inspector filter is assigned an an inspector id",
+						"example": 22,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "caseOfficerId",
+						"in": "query",
+						"description": "The case officer filter is assigned an an case officer id",
+						"example": 19,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "isGreenBelt",
+						"in": "query",
+						"description": "The Green belt filter is applied",
+						"example": "true",
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -3367,7 +3403,7 @@
 						}
 					},
 					{
-						"name": "type",
+						"name": "types",
 						"in": "query",
 						"required": false,
 						"example": "statement",
@@ -4500,7 +4536,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "8487935f-723a-46d9-8450-52107da2e51b"
+								"example": "85f71bde-6891-45c2-8057-2900e3d9b5a6"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -5487,6 +5523,61 @@
 								"dueDate": {
 									"type": "string",
 									"example": "2024-06-18T00:00:00.000Z"
+								}
+							}
+						}
+					},
+					"statuses": {
+						"type": "array",
+						"example": ["lpa_questionnaire"],
+						"items": {
+							"type": "string"
+						}
+					},
+					"lpas": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"example": "Bristol City Council"
+								},
+								"lpaCode": {
+									"type": "string",
+									"example": "BRIS"
+								}
+							}
+						}
+					},
+					"inspectors": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"azureAdUserId": {
+									"type": "string",
+									"example": "927c9ef9-071d-46f2-bc9e-f9071d26f26b"
+								},
+								"inspectorId": {
+									"type": "number",
+									"example": 22
+								}
+							}
+						}
+					},
+					"caseOfficers": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"example": "db7481a7-f77f-40e8-b481-a7f77fc0e805"
+								},
+								"inspectorId": {
+									"type": "number",
+									"example": 18
 								}
 							}
 						}

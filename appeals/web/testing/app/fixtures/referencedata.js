@@ -46,6 +46,33 @@ export const localPlanningDepartments = [
 	'Bristol City Council'
 ];
 
+export const activeDirectoryUsersData = [
+	{
+		'@odata.type': '#microsoft.graph.user',
+		id: '923ac03b-9031-4cf4-8b17-348c274321f9',
+		name: 'Smith, John',
+		email: 'John.Smith@planninginspectorate.gov.uk'
+	},
+	{
+		'@odata.type': '#microsoft.graph.user',
+		id: '2',
+		name: 'Doe, Jane',
+		email: 'Jane.Doe@planninginspectorate.gov.uk'
+	},
+	{
+		'@odata.type': '#microsoft.graph.user',
+		id: '3',
+		name: 'Bloggs, Joe',
+		email: 'Joe.Bloggs@planninginspectorate.gov.uk'
+	},
+	{
+		'@odata.type': '#microsoft.graph.user',
+		id: '4',
+		name: 'Jenkins, Leeroy',
+		email: 'Leeroy.Jenkins@planninginspectorate.gov.uk'
+	}
+];
+
 export const appealsNationalList = {
 	itemCount: 2,
 	items: [
@@ -94,6 +121,9 @@ export const appealsNationalList = {
 		'issue_determination',
 		'complete'
 	],
+	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
+	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
+	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
 	page: 1,
 	pageCount: 1,
 	pageSize: 30
@@ -1400,33 +1430,6 @@ export const inspectorDecisionData = {
 	documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 	letterDate: '2023-12-25T00:00:00.000Z'
 };
-
-export const activeDirectoryUsersData = [
-	{
-		'@odata.type': '#microsoft.graph.user',
-		id: '923ac03b-9031-4cf4-8b17-348c274321f9',
-		name: 'Smith, John',
-		email: 'John.Smith@planninginspectorate.gov.uk'
-	},
-	{
-		'@odata.type': '#microsoft.graph.user',
-		id: '2',
-		name: 'Doe, Jane',
-		email: 'Jane.Doe@planninginspectorate.gov.uk'
-	},
-	{
-		'@odata.type': '#microsoft.graph.user',
-		id: '3',
-		name: 'Bloggs, Joe',
-		email: 'Joe.Bloggs@planninginspectorate.gov.uk'
-	},
-	{
-		'@odata.type': '#microsoft.graph.user',
-		id: '4',
-		name: 'Jenkins, Leeroy',
-		email: 'Leeroy.Jenkins@planninginspectorate.gov.uk'
-	}
-];
 
 export const allocationDetailsData = {
 	levels: [

@@ -29,6 +29,9 @@ export interface AppealList {
 	itemCount: number;
 	items: AppealSummary[];
 	statuses: string[];
+	lpas: { name: string; lpaCode: string }[];
+	inspectors: { azureAdUserId: string; id: number }[];
+	caseOfficers: { azureAdUserId: string; id: number }[];
 	page: number;
 	pageCount: number;
 	pageSize: number;
