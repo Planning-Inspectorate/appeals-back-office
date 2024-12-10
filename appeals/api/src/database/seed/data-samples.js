@@ -234,7 +234,10 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				eiaDevelopmentDescription: randomEnumValue(APPEAL_EIA_DEVELOPMENT_DESCRIPTION, false),
 				lpaProcedurePreference: randomEnumValue(APPEAL_LPA_PROCEDURE_PREFERENCE),
 				lpaProcedurePreferenceDetails: randomArrayValue(['Need for a detailed examination', null]),
-				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues)
+				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+				eiaSensitiveAreaDetails: randomArrayValue(['test sensitive area details text', null]),
+				eiaConsultedBodiesDetails: randomArrayValue(['test consulted bodies details text', null]),
+				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null])
 			};
 		default:
 			return;

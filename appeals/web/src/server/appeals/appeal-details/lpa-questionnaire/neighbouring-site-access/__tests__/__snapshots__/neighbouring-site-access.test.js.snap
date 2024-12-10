@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`neighbouring-site-access change page GET /neighbouring-site-access/change should render the change neighbouring site access page with "No" radio option checked, and no text populated in the textarea, if reasonForNeighbourVisits is null 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether inspector needs neighbouring site access</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio" name="neighbouringSiteAccessRadio"
+                                    type="radio" value="yes" data-aria-controls="conditional-neighbouringSiteAccessRadio">
+                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                id="conditional-neighbouringSiteAccessRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="neighbouring-site-access-details">Inspector needs neighbouring site access details</label>
+                                        <textarea class="govuk-textarea"
+                                        id="neighbouring-site-access-details" name="neighbouringSiteAccess" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio-2"
+                                    name="neighbouringSiteAccessRadio" type="radio" value="no" checked>
+                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`neighbouring-site-access change page GET /neighbouring-site-access/change should render the change neighbouring site access page with "Yes" radio option checked, and "test neighbouring site access details" populated in the textarea, if reasonForNeighbourVisits is "test neighbouring site access details" 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change whether inspector needs neighbouring site access</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio" name="neighbouringSiteAccessRadio"
+                                    type="radio" value="yes" checked data-aria-controls="conditional-neighbouringSiteAccessRadio">
+                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__conditional" id="conditional-neighbouringSiteAccessRadio">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="neighbouring-site-access-details">Inspector needs neighbouring site access details</label>
+                                        <textarea class="govuk-textarea"
+                                        id="neighbouring-site-access-details" name="neighbouringSiteAccess" rows="3">test neighbouring site access details</textarea>
+                                    </div>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio-2"
+                                    name="neighbouringSiteAccessRadio" type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

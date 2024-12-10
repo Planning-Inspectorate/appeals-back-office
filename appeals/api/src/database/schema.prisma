@@ -413,7 +413,7 @@ model LPAQuestionnaire {
   lpaFinalCommentDetails              String?
   lpaAddedWitnesses                   Boolean?
   siteWithinSSSI                      Boolean?
-  reasonForNeighbourVisits            Boolean?
+  reasonForNeighbourVisits            String?
   importantInformation                String?
   redeterminedIndicator               String?
   dateCostsReportDespatched           DateTime?
