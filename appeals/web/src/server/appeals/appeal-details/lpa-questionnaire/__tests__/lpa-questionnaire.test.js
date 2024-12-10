@@ -505,7 +505,9 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('What is the outcome of your review?</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the outcome of your review?</legend>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="review-outcome" type="radio" value="complete">'
 			);
@@ -539,7 +541,7 @@ describe('LPA Questionnaire review', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'What is the outcome of your review?</h2>'
+					'What is the outcome of your review?</legend>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'name="reviewOutcome" type="radio" value="valid">'

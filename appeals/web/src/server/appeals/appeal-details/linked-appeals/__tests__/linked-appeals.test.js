@@ -29,7 +29,7 @@ const leadAppealDataWithLinkedAppeals = {
 			isParentAppeal: false,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Householder',
-			relationshipId: 3046
+			relationshipId: 1
 		},
 		{
 			appealId: 3,
@@ -37,7 +37,7 @@ const leadAppealDataWithLinkedAppeals = {
 			isParentAppeal: false,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Unknown',
-			relationshipId: 3047,
+			relationshipId: 1,
 			externalSource: true,
 			externalAppealType: 'Commercial'
 		}
@@ -1218,7 +1218,7 @@ describe('linked-appeals', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				'Do you want to unlink the appeal from appeal 351062?</h1>'
+				'Do you want to unlink the appeal 725284 from appeal 351062?</h1>'
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -1275,7 +1275,7 @@ describe('linked-appeals', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				'Do you want to unlink the appeal from appeal 351062?</h1>'
+				'Do you want to unlink the appeal 725284 from appeal 351062?</h1>'
 			);
 
 			const errorSummaryHtml = parseHtml(response.text, {
