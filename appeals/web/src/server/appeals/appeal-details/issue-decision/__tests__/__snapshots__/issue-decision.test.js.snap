@@ -49,35 +49,39 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">What is the decision?</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="decision" name="decision" type="radio"
-                                    value="Allowed">
-                                    <label class="govuk-label govuk-radios__label" for="decision">Allowed</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What is the decision?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision" name="decision" type="radio"
+                                        value="Allowed">
+                                        <label class="govuk-label govuk-radios__label" for="decision">Allowed</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision-2" name="decision" type="radio"
+                                        value="Dismissed">
+                                        <label class="govuk-label govuk-radios__label" for="decision-2">Dismissed</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
+                                        value="Split">
+                                        <label class="govuk-label govuk-radios__label" for="decision-3">Split Decision</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
+                                        value="Invalid">
+                                        <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="decision-2" name="decision" type="radio"
-                                    value="Dismissed">
-                                    <label class="govuk-label govuk-radios__label" for="decision-2">Dismissed</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
-                                    value="Split">
-                                    <label class="govuk-label govuk-radios__label" for="decision-3">Split Decision</label>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
-                                    value="Invalid">
-                                    <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

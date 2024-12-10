@@ -6,40 +6,44 @@ exports[`application-decision-date GET /change should render the application dec
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision date</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                            <div class="govuk-date-input" id="application-decision-date">
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-day" name="application-decision-date-day"
-                                        type="text" inputmode="numeric">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change application decision date</h1>
+                                </legend>
+                                <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div class="govuk-date-input" id="application-decision-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-day" name="application-decision-date-day"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-month" name="application-decision-date-month"
+                                            type="text" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="application-decision-date-year" name="application-decision-date-year"
+                                            type="text" inputmode="numeric">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-month" name="application-decision-date-month"
-                                        type="text" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="application-decision-date-year" name="application-decision-date-year"
-                                        type="text" inputmode="numeric">
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -70,40 +74,44 @@ exports[`application-decision-date POST /change should re-render applicationdeci
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision date</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                            <div class="govuk-date-input" id="application-decision-date">
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-day" name="application-decision-date-day"
-                                        type="text" value="32" inputmode="numeric">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change application decision date</h1>
+                                </legend>
+                                <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div class="govuk-date-input" id="application-decision-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-day" name="application-decision-date-day"
+                                            type="text" value="32" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-month" name="application-decision-date-month"
+                                            type="text" value="06" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="application-decision-date-year" name="application-decision-date-year"
+                                            type="text" value="2021" inputmode="numeric">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-month" name="application-decision-date-month"
-                                        type="text" value="06" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="application-decision-date-year" name="application-decision-date-year"
-                                        type="text" value="2021" inputmode="numeric">
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -134,40 +142,44 @@ exports[`application-decision-date POST /change should re-render applicationdeci
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision date</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                            <div class="govuk-date-input" id="application-decision-date">
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-day" name="application-decision-date-day"
-                                        type="text" value="15" inputmode="numeric">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change application decision date</h1>
+                                </legend>
+                                <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div class="govuk-date-input" id="application-decision-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-day" name="application-decision-date-day"
+                                            type="text" value="15" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-month" name="application-decision-date-month"
+                                            type="text" value="15" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="application-decision-date-year" name="application-decision-date-year"
+                                            type="text" value="2021" inputmode="numeric">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-month" name="application-decision-date-month"
-                                        type="text" value="15" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="application-decision-date-year" name="application-decision-date-year"
-                                        type="text" value="2021" inputmode="numeric">
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -198,40 +210,44 @@ exports[`application-decision-date POST /change should re-render to applicationd
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change application decision date</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                            <div class="govuk-date-input" id="application-decision-date">
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-day" name="application-decision-date-day"
-                                        type="text" value="15" inputmode="numeric">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change application decision date</h1>
+                                </legend>
+                                <div id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div class="govuk-date-input" id="application-decision-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-day" name="application-decision-date-day"
+                                            type="text" value="15" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="application-decision-date-month" name="application-decision-date-month"
+                                            type="text" value="12" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            id="application-decision-date-year" name="application-decision-date-year"
+                                            type="text" value="a" inputmode="numeric">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="application-decision-date-month" name="application-decision-date-month"
-                                        type="text" value="12" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="application-decision-date-year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="application-decision-date-year" name="application-decision-date-year"
-                                        type="text" value="a" inputmode="numeric">
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
