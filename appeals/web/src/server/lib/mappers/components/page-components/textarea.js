@@ -5,11 +5,21 @@ import { kebabCase } from 'lodash-es';
  * @param {string} params.name
  * @param {string} [params.id]
  * @param {string|null} [params.value]
+ * @param {string} [params.labelText]
+ * @param {boolean} [params.labelIsPageHeading]
+ * @param {string} [params.labelClasses]
  * @param {boolean} [params.readonly]
- * @param {{ text: string, classes: string }} [params.label]
  * @returns {PageComponent}
  */
-export function textareaInput({ name, id, value, readonly, label }) {
+export function textareaInput({
+	name,
+	id,
+	value,
+	labelText,
+	labelIsPageHeading = false,
+	labelClasses,
+	readonly
+}) {
 	/** @type {PageComponent} */
 	const component = {
 		type: 'textarea',
@@ -17,7 +27,11 @@ export function textareaInput({ name, id, value, readonly, label }) {
 			name,
 			id: id || kebabCase(name),
 			value,
-			label,
+			label: labelText && {
+				text: labelText,
+				isPageHeading: labelIsPageHeading,
+				classes: labelClasses || 'govuk-label--l'
+			},
 			attributes: { ...(readonly && { readonly }) }
 		}
 	};
