@@ -112,10 +112,15 @@ const getMyAppeals = async (req, res) => {
 		);
 		const sortedAppeals = sortAppeals(formattedAppeals);
 
+		// Flatten to an array of strings
+		const formattedStatuses = statuses?.statuses
+			?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
+			.flat();
+
 		return res.send({
 			itemCount,
 			items: sortedAppeals,
-			statuses,
+			statuses: formattedStatuses,
 			page: pageNumber,
 			pageCount: getPageCount(itemCount, pageSize),
 			pageSize
