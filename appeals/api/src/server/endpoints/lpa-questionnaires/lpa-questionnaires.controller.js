@@ -60,7 +60,10 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			infrastructureLevyExpectedDate,
 			lpaProcedurePreference,
 			lpaProcedurePreferenceDetails,
-			lpaProcedurePreferenceDuration
+			lpaProcedurePreferenceDuration,
+			eiaSensitiveAreaDetails,
+			eiaConsultedBodiesDetails,
+			reasonForNeighbourVisits
 		},
 		params,
 		validationOutcome
@@ -110,7 +113,10 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					infrastructureLevyExpectedDate,
 					lpaProcedurePreference,
 					lpaProcedurePreferenceDetails,
-					lpaProcedurePreferenceDuration
+					lpaProcedurePreferenceDuration,
+					eiaSensitiveAreaDetails,
+					eiaConsultedBodiesDetails,
+					reasonForNeighbourVisits
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

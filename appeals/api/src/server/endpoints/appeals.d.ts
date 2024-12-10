@@ -333,6 +333,9 @@ interface SingleLPAQuestionnaireResponse {
 	lpaProcedurePreference: string | null;
 	lpaProcedurePreferenceDetails: string | null;
 	lpaProcedurePreferenceDuration: number | null;
+	eiaSensitiveAreaDetails: string | null;
+	eiaConsultedBodiesDetails: string | null;
+	reasonForNeighbourVisits: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -364,6 +367,9 @@ interface UpdateLPAQuestionnaireRequest {
 	lpaProcedurePreference: string;
 	lpaProcedurePreferenceDetails: string;
 	lpaProcedurePreferenceDuration: number;
+	eiaSensitiveAreaDetails: string | null;
+	eiaConsultedBodiesDetails: string | null;
+	reasonForNeighbourVisits: string | null;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
