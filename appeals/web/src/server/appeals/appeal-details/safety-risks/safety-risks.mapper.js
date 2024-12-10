@@ -27,11 +27,12 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 		title: `Change the site health and safety risks (${formattedSource} answer)`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change the site health and safety risks (${formattedSource} answer)`,
 		pageComponents: [
 			yesNoInput({
 				name: 'safetyRisksRadio',
 				value: currentRadioValue,
+				legendText: `Change the site health and safety risks (${formattedSource} answer)`,
+				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'safety-risks-details',
 					name: 'safetyRisksDetails',

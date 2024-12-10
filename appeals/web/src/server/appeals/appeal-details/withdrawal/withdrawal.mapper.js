@@ -251,13 +251,19 @@ export function withdrawalDocumentRedactionStatusPage(
 		title: `What is the redaction status of this document? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/withdrawal/withdrawal-request-date`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the redaction status of this document?',
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
 					name: 'withdrawal-redaction-status',
 					idPrefix: 'withdrawal-redaction-status',
+					fieldset: {
+						legend: {
+							text: 'What is the redaction status of this document?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
 					items: redactionStatusesItems
 				}
 			}

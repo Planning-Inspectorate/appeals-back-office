@@ -308,6 +308,9 @@ export function manageOtherAppealsPage(appealData, request, origin) {
  * @returns {PageContent}
  */
 export function removeAppealRelationshipPage(appealData, relatedAppealShortReference, origin) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const titleAndHeading = `Do you want to remove the relationship between appeal ${relatedAppealShortReference} and appeal ${shortAppealReference}?`;
+
 	/** @type {PageComponent} */
 	const selectAppealTypeRadiosComponent = {
 		type: 'radios',
@@ -316,7 +319,9 @@ export function removeAppealRelationshipPage(appealData, relatedAppealShortRefer
 			idPrefix: 'remove-appeal-relationship',
 			fieldset: {
 				legend: {
-					classes: 'govuk-fieldset__legend--m'
+					text: titleAndHeading,
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
 			},
 			items: [
@@ -332,15 +337,11 @@ export function removeAppealRelationshipPage(appealData, relatedAppealShortRefer
 		}
 	};
 
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const titleAndHeading = `Do you want to remove the relationship between appeal ${relatedAppealShortReference} and appeal ${shortAppealReference}?`;
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleAndHeading,
 		backLinkUrl: `${origin}/other-appeals/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: titleAndHeading,
 		pageComponents: [selectAppealTypeRadiosComponent]
 	};
 

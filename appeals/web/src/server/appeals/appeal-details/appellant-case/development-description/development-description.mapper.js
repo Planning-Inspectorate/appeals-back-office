@@ -30,8 +30,7 @@ export const changeDevelopmentDescriptionPage = (
 					id: 'development-description',
 					maxlength: 1000,
 					label: {
-						text: 'Enter the original description of the development',
-						isPageHeading: false
+						text: 'Enter the original description of the development'
 					},
 					value: storedSessionData ?? appellantCaseData.developmentDescription?.details ?? ''
 				}
