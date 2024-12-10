@@ -48,7 +48,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Interested party&#39;s details');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party&#39;s details');
 		});
 
 		it('should render a First name field', () => {
@@ -86,7 +86,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe(
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
 				'Did the interested party provide an address?'
 			);
 		});
@@ -119,7 +119,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe('Interested party&#39;s address');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party&#39;s address');
 		});
 
 		it('should render an Address line 1 field', () => {
@@ -302,7 +302,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe(
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
 				'When did the interested party submit the comment?'
 			);
 		});
@@ -368,7 +368,7 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe(
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
 				'When did the interested party submit the comment?'
 			);
 
@@ -393,7 +393,7 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe(
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
 				'When did the interested party submit the comment?'
 			);
 
@@ -418,7 +418,7 @@ describe('add-ip-comment', () => {
 			expect(response.statusCode).toBe(400);
 
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML).toBe(
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
 				'When did the interested party submit the comment?'
 			);
 
@@ -454,7 +454,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML).toBe(
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
 				'Check details and add interested party comment'
 			);
 		});
