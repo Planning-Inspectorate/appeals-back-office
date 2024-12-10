@@ -25,11 +25,12 @@ export const changeCorrectAppealTypePage = (
 		title: `Change the LPA response to "Is the appeal type correct"?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Is the appeal type correct (LPA response)?`,
 		pageComponents: [
 			yesNoInput({
 				name: 'correctAppealTypeRadio',
-				value: currentRadioValue
+				value: currentRadioValue,
+				legendText: 'Is the appeal type correct (LPA response)?',
+				legendIsPageHeading: true
 			})
 		]
 	};

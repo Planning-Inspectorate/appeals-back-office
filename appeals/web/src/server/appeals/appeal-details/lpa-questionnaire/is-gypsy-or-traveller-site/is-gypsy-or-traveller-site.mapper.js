@@ -18,11 +18,12 @@ export const changeIsGypsyOrTravellerSite = (appealData, data, origin) => {
 		title: `Gypsy or Traveller communities status`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change whether Gypsy or Traveller communities affected`,
 		pageComponents: [
 			yesNoInput({
 				name: 'isGypsyOrTravellerSiteRadio',
 				value: data,
+				legendText: 'Change whether Gypsy or Traveller communities affected',
+				legendIsPageHeading: true,
 				customYesLabel: 'Affected',
 				customNoLabel: 'Not affected'
 			})

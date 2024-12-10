@@ -20,11 +20,11 @@ export function changeEiaEnvironmentalImpactSchedulePage(appealData, existingVal
 		title: `Change development category`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change development category`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			radiosInput({
 				name: 'eiaEnvironmentalImpactSchedule',
+				legendText: 'Change development category',
+				legendIsPageHeading: true,
 				items: [
 					...Object.values(APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE).map((schedule) => ({
 						text: capitalizeFirstLetter(snakeCaseToSpaceSeparated(schedule)),

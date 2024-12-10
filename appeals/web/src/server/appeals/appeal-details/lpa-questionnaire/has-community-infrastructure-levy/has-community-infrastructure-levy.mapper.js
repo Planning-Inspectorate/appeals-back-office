@@ -18,11 +18,12 @@ export const changeHasCommunityInfrastructureLevy = (appealData, existingValue, 
 		title: 'Community infrastructure levy status',
 		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change community infrastructure levy status',
 		pageComponents: [
 			yesNoInput({
 				name: 'hasCommunityInfrastructureLevyRadio',
 				value: existingValue,
+				legendText: 'Change community infrastructure levy status',
+				legendIsPageHeading: true,
 				customYesLabel: 'Has infrastructure levy',
 				customNoLabel: 'Does not have infrastructure levy'
 			})
