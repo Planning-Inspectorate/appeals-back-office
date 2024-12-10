@@ -17,13 +17,13 @@ describe('Upload Documents to appellant case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
-
+	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Upload documents to appellent case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-			caseDetailsPage.uploadSampleDoc();
+			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');

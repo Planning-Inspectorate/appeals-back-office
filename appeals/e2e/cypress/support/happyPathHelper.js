@@ -10,6 +10,8 @@ const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 
+let sampleFiles = caseDetailsPage.sampleFiles;
+
 export const happyPathHelper = {
 	assignCaseOfficer(caseRef) {
 		cy.visit(urlPaths.appealsList);
@@ -71,7 +73,7 @@ export const happyPathHelper = {
 		happyPathHelper.assignCaseOfficer(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-		caseDetailsPage.uploadSampleDoc();
+		caseDetailsPage.uploadSampleFile(sampleFiles.document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -87,7 +89,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('upload a new version');
-		caseDetailsPage.uploadSampleImg();
+		caseDetailsPage.uploadSampleFile(sampleFiles.img);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -97,7 +99,7 @@ export const happyPathHelper = {
 	uploadDocsLpaq(caseRef) {
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.clickAddNotifyingParties();
-		caseDetailsPage.uploadSampleDoc();
+		caseDetailsPage.uploadSampleFile(sampleFiles.document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -108,7 +110,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageNotifyingParties();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
-		caseDetailsPage.uploadSampleImg();
+		caseDetailsPage.uploadSampleFile(sampleFiles.img);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
