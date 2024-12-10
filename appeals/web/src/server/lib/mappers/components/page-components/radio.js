@@ -5,13 +5,14 @@
 /**
  * @param {RadiosPageComponent} component
  * @param {string} legendText
+ * @param {boolean} [isPageHeading=false]
  * @returns
  */
-function addFieldsetLegendText(component, legendText) {
+function addFieldsetLegendText(component, legendText, isPageHeading = false) {
 	component.parameters.fieldset = {
 		legend: {
 			text: legendText,
-			isPageHeading: false,
+			isPageHeading,
 			classes: 'govuk-fieldset__legend--l'
 		}
 	};
@@ -56,18 +57,22 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {string} [params.id]
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
+ * @param {boolean} [params.legendIsPageHeading]
  * @param {ConditionalParams} [params.yesConditional]
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
+ * @param {string} [params.hint]
  * @returns {RadiosPageComponent}
  */
 export function yesNoInput({
 	name,
 	value,
 	legendText,
+	legendIsPageHeading = false,
 	yesConditional,
 	customYesLabel,
-	customNoLabel
+	customNoLabel,
+	hint
 }) {
 	/** @type {RadioItem} */
 	const yes = {
@@ -101,7 +106,10 @@ export function yesNoInput({
 		}
 	};
 	if (legendText) {
-		addFieldsetLegendText(component, legendText);
+		addFieldsetLegendText(component, legendText, legendIsPageHeading);
+	}
+	if (hint) {
+		component.parameters.hint = { text: hint };
 	}
 	return component;
 }
@@ -113,9 +121,17 @@ export function yesNoInput({
  * @param {string} [params.idPrefix]
  * @param {string|null} [params.value]
  * @param {string} [params.legendText]
+ * @param {boolean} [params.legendIsPageHeading]
  * @returns {PageComponent}
  */
-export function radiosInput({ name, items, idPrefix, value, legendText }) {
+export function radiosInput({
+	name,
+	items,
+	idPrefix,
+	value,
+	legendText,
+	legendIsPageHeading = false
+}) {
 	/** @type {PageComponent} */
 	const component = {
 		type: 'radios',
@@ -127,7 +143,7 @@ export function radiosInput({ name, items, idPrefix, value, legendText }) {
 		}
 	};
 	if (legendText) {
-		addFieldsetLegendText(component, legendText);
+		addFieldsetLegendText(component, legendText, legendIsPageHeading);
 	}
 	return component;
 }
