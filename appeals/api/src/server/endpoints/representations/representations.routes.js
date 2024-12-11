@@ -13,6 +13,34 @@ import { checkRepresentationExistsById } from '#middleware/check-representation-
 const router = createRouter();
 
 router.get(
+	'/:appealId/reps/count',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/count'
+	#swagger.description = "Get all representations"
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.parameters['status'] = {
+		in: 'query',
+		required: false,
+		example: 'awaiting_review'
+	}
+	#swagger.responses[200] = {
+		description: 'Get statements for an appeal',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {}
+	#swagger.responses[404] = {}
+ */
+	getRepresentationRouteValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(controller.getRepresentationCounts)
+);
+
+router.get(
 	'/:appealId/reps',
 	/*
 	#swagger.tags = ['Representations']

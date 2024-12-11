@@ -65,6 +65,28 @@ export const getRepresentations = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  * @returns {Promise<Response>}
+ * */
+export const getRepresentationCounts = async (req, res) => {
+	const { appeal, query } = req;
+	const { status } = query;
+
+	try {
+		const counts = await representationService.getRepresentationCounts(appeal.id, {
+			status: status ? String(status) : undefined
+		});
+
+		return res.send({
+			...counts
+		});
+	} catch (/** @type {*} */ error) {
+		return res.status(500).send({ errors: error.message });
+	}
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
  */
 export const getRepresentation = async (req, res) => {
 	const { repId } = req.params;

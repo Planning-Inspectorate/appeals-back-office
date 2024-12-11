@@ -1,4 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
 /** @typedef {import('#db-client').Prisma.RepresentationUncheckedCreateInput} RepresentationCreateInput */
@@ -77,6 +78,37 @@ const getRepresentations = async (appealId, pageNumber, pageSize, options) => {
 	const [itemCount, comments] = transaction;
 
 	return { itemCount, comments };
+};
+
+/**
+ * @param {number} appealId
+ * @param {{ status?: string }} options
+ * @returns {Promise<{ [key: string]: number }>}
+ */
+const getRepresentationCounts = async (appealId, options) => {
+	const whereClause = {
+		appealId,
+		status: options.status
+	};
+
+	const queries = Object.values(APPEAL_REPRESENTATION_TYPE).map((representationType) =>
+		databaseConnector.representation.count({
+			where: { ...whereClause, representationType }
+		})
+	);
+
+	const transaction = await databaseConnector.$transaction(queries);
+
+	/** @type {{ [key: string]: number }} */
+	const counts = Object.values(APPEAL_REPRESENTATION_TYPE).reduce(
+		(acc, key, ii) => ({
+			...acc,
+			[key]: transaction[ii]
+		}),
+		{}
+	);
+
+	return counts;
 };
 
 /**
@@ -206,6 +238,7 @@ const updateRejectionReasons = async (repId, rejectionReasons) => {
 export default {
 	getById,
 	getRepresentations,
+	getRepresentationCounts,
 	updateRepresentationById,
 	countAppealRepresentationsByStatus,
 	createRepresentation,
