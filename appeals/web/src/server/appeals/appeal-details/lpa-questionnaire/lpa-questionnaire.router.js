@@ -33,6 +33,7 @@ import infrastructureLevyExpectedDateRouter from './infrastructure-levy-expected
 import eiaEnvironmentalImpactScheduleRouter from './eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
 import eiaDevelopmentDescriptionRouter from './eia-development-description/eia-development-description.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -183,6 +184,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	procedurePreferenceRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/neighbouring-site-access',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	neighbouringSiteAccessRouter
 );
 
 router
