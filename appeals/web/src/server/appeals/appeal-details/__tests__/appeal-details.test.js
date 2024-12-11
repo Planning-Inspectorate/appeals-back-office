@@ -19,7 +19,6 @@ import {
 	appealCostsDocumentItem,
 	linkedAppealsWithExternalLead,
 	fileUploadInfo,
-	interestedPartyCommentsAwaitingReview,
 	caseNotes,
 	activeDirectoryUsersData,
 	text300Characters,
@@ -1022,9 +1021,12 @@ describe('appeal-details', () => {
 						appealId: 2,
 						appealStatus: 'statements'
 					});
-				nock('http://test/')
-					.get('/appeals/2/reps?type=comment&pageNumber=1&pageSize=30&status=awaiting_review')
-					.reply(200, interestedPartyCommentsAwaitingReview);
+				nock('http://test/').get('/appeals/2/reps/count?status=awaiting_review').reply(200, {
+					statement: 2,
+					comment: 4,
+					lpa_final_comment: 1,
+					appellant_final_comment: 1
+				});
 				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
 				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
 
