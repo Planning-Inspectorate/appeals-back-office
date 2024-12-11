@@ -47,6 +47,14 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 };
 
 /**
+ * @param {number} appealId
+ * @param {{ status?: string }} [options]
+ * */
+export const getRepresentationCounts = async (appealId, options = {}) => {
+	return await representationRepository.getRepresentationCounts(appealId, options);
+};
+
+/**
  *
  * @param {number} id
  */
