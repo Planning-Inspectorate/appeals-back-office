@@ -507,6 +507,9 @@ const clientActions = (container) => {
 
 	function bindEvents() {
 		uploadButton?.addEventListener('click', (clickEvent) => {
+			if (uploadInput) {
+				uploadInput.value = '';
+			}
 			clickEvent.preventDefault();
 			uploadInput?.click();
 		});
