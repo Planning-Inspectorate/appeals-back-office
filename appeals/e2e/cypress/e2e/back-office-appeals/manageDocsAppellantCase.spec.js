@@ -17,6 +17,7 @@ describe('manage docs on appellant case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
