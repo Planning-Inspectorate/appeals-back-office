@@ -17,7 +17,9 @@ describe('add cost decision and redact', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
+
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);

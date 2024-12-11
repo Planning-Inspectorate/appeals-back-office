@@ -17,6 +17,7 @@ describe('Withdraw a Has appeal', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('withdraw appeal', () => {
 		const withdrawalDate = new Date();
