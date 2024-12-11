@@ -5,6 +5,7 @@ import {
 import { appealDetailsPage } from './appeal-details.mapper.js';
 import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getRepresentationCounts } from './representations/representations.service.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  *
@@ -20,12 +21,15 @@ export const viewAppealDetails = async (request, response) => {
 			return response.status(404).render('app/404.njk');
 		}
 
-		const { [APPEAL_REPRESENTATION_TYPE.COMMENT]: unreviewedIPComments } =
-			await getRepresentationCounts(
+		let unreviewedIPComments;
+		if (appealDetails.appealType === APPEAL_TYPE.W) {
+			const counts = await getRepresentationCounts(
 				request.apiClient,
 				appealDetails.appealId.toString(),
 				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			);
+			unreviewedIPComments = counts[APPEAL_REPRESENTATION_TYPE.COMMENT];
+		}
 
 		const appealCaseNotes = await getAppealCaseNotes(
 			request.apiClient,
@@ -47,6 +51,7 @@ export const viewAppealDetails = async (request, response) => {
 			errors
 		});
 	} catch (error) {
+		console.log('🚀 ~ viewAppealDetails ~ error:', error);
 		return response.status(500).render('app/500.njk');
 	}
 };
