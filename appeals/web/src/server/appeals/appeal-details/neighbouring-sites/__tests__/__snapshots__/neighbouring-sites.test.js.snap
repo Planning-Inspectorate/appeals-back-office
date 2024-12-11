@@ -547,7 +547,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" aria-describedby="post-code-error">
                         </div>
@@ -609,7 +609,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" value="111" aria-describedby="post-code-error">
                         </div>
@@ -671,7 +671,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" aria-describedby="post-code-error">
                         </div>
@@ -983,7 +983,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" aria-describedby="post-code-error">
                         </div>
@@ -1045,7 +1045,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" value="111" aria-describedby="post-code-error">
                         </div>
@@ -1107,7 +1107,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" aria-describedby="post-code-error">
                         </div>

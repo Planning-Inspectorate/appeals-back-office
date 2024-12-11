@@ -63,7 +63,7 @@ describe('Address', () => {
 				}
 			};
 			expect(errorPostcode(errors)).toEqual({
-				text: 'Enter a valid postcode'
+				text: 'Enter a full UK postcode'
 			});
 		});
 	});

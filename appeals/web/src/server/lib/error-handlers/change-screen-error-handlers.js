@@ -18,7 +18,7 @@ export const errorTown = (/** @type {Error}*/ errors) => {
 export const errorPostcode = (/** @type {Error}*/ errors) => {
 	return errors?.postCode
 		? {
-				text: 'Enter a valid postcode'
+				text: 'Enter a full UK postcode'
 		  }
 		: undefined;
 };
@@ -26,7 +26,7 @@ export const errorPostcode = (/** @type {Error}*/ errors) => {
 export const errorFirstName = (/** @type {Error}*/ errors) => {
 	return errors?.firstName
 		? {
-				text: 'Enter first name'
+				text: 'Enter a first name'
 		  }
 		: undefined;
 };
@@ -34,7 +34,7 @@ export const errorFirstName = (/** @type {Error}*/ errors) => {
 export const errorLastName = (/** @type {Error}*/ errors) => {
 	return errors?.lastName
 		? {
-				text: 'Enter last name'
+				text: 'Enter a last name'
 		  }
 		: undefined;
 };
