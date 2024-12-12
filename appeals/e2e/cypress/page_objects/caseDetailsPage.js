@@ -102,6 +102,10 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.additionalDocumentsAdd().click();
 	}
 
+	clickManageAdditionalDocs() {
+		this.basePageElements.additonalDocumentManage().click();
+	}
+
 	clickChooseCaseOfficerResult(email) {
 		cy.getByData(email.toLocaleLowerCase()).click();
 	}
@@ -267,6 +271,10 @@ export class CaseDetailsPage extends Page {
 		savedFile.should('not.exist');
 	}
 
+	checkAdditonalDocsAppellantCase(value) {
+		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
+	}
+
 	checkAnswerWithdrawalRequest(rowName, rowAnswer) {
 		let answer = this.basePageElements
 			.summaryListKey()
@@ -277,7 +285,7 @@ export class CaseDetailsPage extends Page {
 		answer.should('eq', rowAnswer);
 	}
 
-	checkAnswerRedactionStatus(rowName, rowAnswer) {
+	checkCorrectAnswerDisplays(rowName, rowAnswer) {
 		let answer = this.basePageElements
 			.summaryListKey()
 			.contains(rowName)
