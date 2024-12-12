@@ -134,9 +134,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Ownership certificate and/or land declaration</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Other new supporting documents with appeal</dt>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Procedure preference</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Reason for preference</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Expected length of procedure</dt>');
