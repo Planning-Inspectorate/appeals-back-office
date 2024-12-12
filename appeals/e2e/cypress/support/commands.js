@@ -90,6 +90,10 @@ Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
 	});
 });
 
+Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
+	cy.reload();
+});
+
 export function setLocalCookies(userId) {
 	cy.readFile(
 		`${BrowserAuthData.BrowserAuthDataFolder}/${userId}-${BrowserAuthData.CookiesFile}`
