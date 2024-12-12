@@ -33,6 +33,12 @@ export const mapReviewOutcome = ({ lpaQuestionnaireData, session }) => ({
 					name: 'review-outcome',
 					idPrefix: 'review-outcome',
 					value: lpaQuestionnaireData.validation?.outcome,
+					fieldset: {
+						legend: {
+							text: 'What is the outcome of your review?',
+							classes: 'govuk-fieldset__legend--m'
+						}
+					},
 					items: [
 						{
 							value: 'complete',

@@ -511,6 +511,10 @@ export function addLinkedAppealCheckAndConfirmPage(
  * @returns {PageContent}
  */
 export function unlinkAppealPage(appealData, childRef, appealId, relationshipId, backLinkAppealId) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const shortChildAppealReference = appealShortReference(childRef);
+	const titleAndHeading = `Do you want to unlink the appeal ${shortChildAppealReference} from appeal ${shortAppealReference}?`;
+
 	/** @type {PageComponent} */
 	const selectAppealTypeRadiosComponent = {
 		type: 'radios',
@@ -519,7 +523,9 @@ export function unlinkAppealPage(appealData, childRef, appealId, relationshipId,
 			idPrefix: 'unlink-appeal',
 			fieldset: {
 				legend: {
-					classes: 'govuk-fieldset__legend--m'
+					text: titleAndHeading,
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
 			},
 			items: [
@@ -535,16 +541,11 @@ export function unlinkAppealPage(appealData, childRef, appealId, relationshipId,
 		}
 	};
 
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const shortChildAppealReference = appealShortReference(childRef);
-	const titleAndHeading = `Do you want to unlink the appeal ${shortChildAppealReference} from appeal ${shortAppealReference}?`;
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleAndHeading,
 		backLinkUrl: generateUnlinkAppealBackLinkUrl(appealId, relationshipId, backLinkAppealId),
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: titleAndHeading,
 		pageComponents: [selectAppealTypeRadiosComponent]
 	};
 

@@ -6,25 +6,29 @@ exports[`agricultural-holding GET /change should render the change part of agric
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change part of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio"
-                                    name="partOfAgriculturalHoldingRadio" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change part of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio"
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio-2"
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio-2"
-                                    name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -42,25 +46,29 @@ exports[`agricultural-holding GET /change should render the change part of agric
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change part of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio"
-                                    name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change part of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio"
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio-2"
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="partOfAgriculturalHoldingRadio-2"
-                                    name="partOfAgriculturalHoldingRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="partOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -78,25 +86,29 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change other tenants of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio"
-                                    name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change other tenants of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio"
+                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio-2"
+                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio-2"
-                                    name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -114,26 +126,30 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change other tenants of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio"
-                                    name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes"
-                                    checked>
-                                    <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change other tenants of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio"
+                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes"
+                                        checked>
+                                        <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio-2"
+                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="otherTenantsOfAgriculturalHoldingRadio-2"
-                                    name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="otherTenantsOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -151,25 +167,29 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change tenant of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio"
-                                    name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change tenant of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio"
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio-2"
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio-2"
-                                    name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -187,25 +207,29 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change tenant of agricultural holding</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio"
-                                    name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio">Yes</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change tenant of agricultural holding</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio"
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio-2"
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio-2">No</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="tenantOfAgriculturalHoldingRadio-2"
-                                    name="tenantOfAgriculturalHoldingRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="tenantOfAgriculturalHoldingRadio-2">No</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

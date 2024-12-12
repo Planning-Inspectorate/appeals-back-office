@@ -18,11 +18,12 @@ export const changeIsAonbNationalLandscape = (appealData, data, origin) => {
 		title: `Outstanding natural beauty area`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change whether in area of outstanding natural beauty`,
 		pageComponents: [
 			yesNoInput({
 				name: 'isAonbNationalLandscapeRadio',
 				value: data,
+				legendText: 'Change whether in area of outstanding natural beauty',
+				legendIsPageHeading: true,
 				customYesLabel: 'In area',
 				customNoLabel: 'Not in area'
 			})
