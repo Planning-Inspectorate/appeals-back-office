@@ -2288,14 +2288,14 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 data-cy="add-costs-document"> Add<span class="govuk-visually-hidden"> Costs application</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings with appeal</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings"> Add<span class="govuk-visually-hidden"> New plans or drawings with appeal</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings"> Add<span class="govuk-visually-hidden"> New plans or drawings</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new documents with appeal</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new supporting documents with appeal</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents"> Add<span class="govuk-visually-hidden"> Other new documents with appeal</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents"> Add<span class="govuk-visually-hidden"> Other new supporting documents with appeal</span></a>
                                 </dd>
                         </div>
                     </dl>
