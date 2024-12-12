@@ -22,7 +22,7 @@ describe('manage docs on appellant case', () => {
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
@@ -51,7 +51,7 @@ describe('manage docs on appellant case', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.changeFileManageDocuments('Name');
 			caseDetailsPage.fillInput('new-file.doc', 1);

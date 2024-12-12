@@ -77,15 +77,14 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		cy.reload();
-		//caseDetailsPage.verifyAnswerSummaryValue('sample-doc.pdf'); - Success banners are currently missing, fix incoming
+		caseDetailsPage.validateBannerMessage('Document added');
 	},
 
 	manageDocsAppellantCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
 		happyPathHelper.uploadDocAppellantCase(caseRef);
-		cy.reload();
+		cy.reloadUntilVirusCheckComplete();
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('upload a new version');
