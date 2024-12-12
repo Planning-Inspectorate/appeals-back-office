@@ -19,7 +19,7 @@ describe('manage docs on appellant case', () => {
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	/*it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
+	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			cy.reload();
@@ -32,7 +32,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Document updated');
 		});
-	});*/
+	});
 
 	it('upload doc and remove when final version', () => {
 		cy.createCase().then((caseRef) => {
@@ -43,15 +43,15 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc')
+			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc');
 			caseDetailsPage.clickManageAdditionalDocs();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkCorrectAnswerDisplays('Version', '1');
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Remove current version');
-			caseDetailsPage.selectRadioButtonByValue('Yes')
+			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.checkAdditonalDocsAppellantCase('No documents available')			
+			caseDetailsPage.checkAdditonalDocsAppellantCase('No documents available');
 		});
 	});
 
@@ -64,31 +64,31 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc')
+			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc');
 			caseDetailsPage.clickManageAdditionalDocs();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.img);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Redacted')
+			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageAdditionalDocs();
 			caseDetailsPage.clickLinkByText('View and edit');
-			caseDetailsPage.checkCorrectAnswerDisplays('Version', '2')
-			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'Redacted')
+			caseDetailsPage.checkCorrectAnswerDisplays('Version', '2');
+			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'Redacted');
 			caseDetailsPage.clickButtonByText('Remove current version');
-			caseDetailsPage.selectRadioButtonByValue('Yes')
+			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc')
+			caseDetailsPage.checkAdditonalDocsAppellantCase('sample-file.doc');
 			caseDetailsPage.clickManageAdditionalDocs();
-			caseDetailsPage.clickLinkByText('View and edit')
-			caseDetailsPage.checkCorrectAnswerDisplays('Version', '1')
-			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required')		
+			caseDetailsPage.clickLinkByText('View and edit');
+			caseDetailsPage.checkCorrectAnswerDisplays('Version', '1');
+			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 		});
 	});
 
-	/*it('add an additional doc and then remove on file upload page', () => {
+	it('add an additional doc and then remove on file upload page', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickAddAdditionalDocs();
@@ -99,5 +99,5 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkErrorMessageDisplays('Select a file');
 		});
-	});*/
+	});
 });
