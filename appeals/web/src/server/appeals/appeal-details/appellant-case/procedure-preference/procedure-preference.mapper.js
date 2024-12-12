@@ -24,12 +24,19 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 		title: `Change procedure preference`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change procedure preference`,
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
 					name: 'procedurePreferenceRadio',
+					idPrefix: 'procedure-preference-radio',
+					fieldset: {
+						legend: {
+							text: 'Change procedure preference',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
 					items: [
 						{
 							value: 'hearing',

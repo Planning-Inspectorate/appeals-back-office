@@ -331,25 +331,24 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <h2>What is the outcome of your review?</h2>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
                 <div class="govuk-form-group">
-                    <div class="govuk-radios" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="review-outcome" name="review-outcome"
-                            type="radio" value="complete">
-                            <label class="govuk-label govuk-radios__label" for="review-outcome">Complete</label>
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="review-outcome" name="review-outcome"
+                                type="radio" value="complete">
+                                <label class="govuk-label govuk-radios__label" for="review-outcome">Complete</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="review-outcome-2" name="review-outcome"
+                                type="radio" value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="review-outcome-2">Incomplete</label>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="review-outcome-2" name="review-outcome"
-                            type="radio" value="incomplete">
-                            <label class="govuk-label govuk-radios__label" for="review-outcome-2">Incomplete</label>
-                        </div>
-                    </div>
+                    </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome.</div>
                 <div                 class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>

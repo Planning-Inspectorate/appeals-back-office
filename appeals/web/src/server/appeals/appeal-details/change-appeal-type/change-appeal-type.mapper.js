@@ -28,7 +28,9 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 			idPrefix: 'appeal-type',
 			fieldset: {
 				legend: {
-					classes: 'govuk-fieldset__legend--m'
+					text: 'What type should this appeal be?',
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
 			},
 			items: mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal)
@@ -42,7 +44,6 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 		title: `What type should this appeal be? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What type should this appeal be?',
 		pageComponents: [selectAppealTypeRadiosComponent]
 	};
 
@@ -80,7 +81,9 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 			idPrefix: 'appeal-resubmit',
 			fieldset: {
 				legend: {
-					classes: 'govuk-fieldset__legend--m'
+					text: 'Should the appellant be asked to resubmit this appeal?',
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
 			},
 			items: [
@@ -105,7 +108,6 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 		title: `Should the appellant be asked to resubmit this appeal? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Should the appellant be asked to resubmit this appeal?',
 		pageComponents: [selectResubmitAppealComponent]
 	};
 
@@ -305,8 +307,9 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 			namePrefix: 'change-appeal-final-date',
 			fieldset: {
 				legend: {
-					text: '',
-					classes: 'govuk-fieldset__legend--m'
+					text: 'What is the final date the appellant must resubmit by?',
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
 			},
 			hint: {
@@ -347,7 +350,6 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 		title: `What is the final date the appellant must resubmit by? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the final date the appellant must resubmit by?',
 		pageComponents: [selectDateComponent, insetTextComponent],
 		submitButtonText: 'Confirm'
 	};

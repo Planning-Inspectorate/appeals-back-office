@@ -317,11 +317,12 @@ export function changeNeighbouringSiteAffectedPage(appealData, origin) {
 		title: 'Update neighbouring site affected',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Could a neighbouring site be affected?',
 		pageComponents: [
 			yesNoInput({
 				name: 'neighbouringSiteAffected',
-				value: appealData.isAffectingNeighbouringSites
+				value: appealData.isAffectingNeighbouringSites,
+				legendText: 'Could a neighbouring site be affected?',
+				legendIsPageHeading: true
 			})
 		]
 	};

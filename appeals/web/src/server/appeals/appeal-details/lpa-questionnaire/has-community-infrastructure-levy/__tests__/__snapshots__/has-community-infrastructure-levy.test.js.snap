@@ -6,25 +6,29 @@ exports[`has-community-infrastructure-levy GET /has-community-infrastructure-lev
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change community infrastructure levy status</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
-                                    name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes">
-                                    <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change community infrastructure levy status</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
-                                    name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -42,25 +46,29 @@ exports[`has-community-infrastructure-levy GET /has-community-infrastructure-lev
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change community infrastructure levy status</h1>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
-                                    name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>
-                                    <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change community infrastructure levy status</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
+                                    </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
-                                    name="hasCommunityInfrastructureLevyRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

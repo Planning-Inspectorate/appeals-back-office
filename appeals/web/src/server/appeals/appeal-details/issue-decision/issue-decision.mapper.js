@@ -23,6 +23,13 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 		parameters: {
 			name: 'decision',
 			idPrefix: 'decision',
+			fieldset: {
+				legend: {
+					text: 'What is the decision?',
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
 			items: [
 				{
 					value: 'Allowed',
@@ -55,7 +62,6 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 		title: `What is the decision? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the decision?',
 		pageComponents: [selectVisitTypeComponent]
 	};
 

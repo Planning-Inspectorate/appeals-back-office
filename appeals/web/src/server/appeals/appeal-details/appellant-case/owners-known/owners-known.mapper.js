@@ -24,17 +24,16 @@ export const changeOwnersKnownPage = (appealData, appellantCaseData, storedSessi
 		title: `Change owners known`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change owners known`,
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
 					name: 'ownersKnownRadio',
 					idPrefix: 'owners-known-radio',
-					fieldSet: {
+					fieldset: {
 						legend: {
-							text: `Does the appellant know the other landowners?`,
-							isPageHeading: false,
+							text: 'Change owners known',
+							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},

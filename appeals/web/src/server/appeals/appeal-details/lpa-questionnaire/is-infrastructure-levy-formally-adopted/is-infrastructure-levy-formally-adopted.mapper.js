@@ -22,11 +22,12 @@ export const changeIsInfrastructureLevyFormallyAdopted = (
 		title: 'Levy formally adopted',
 		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change whether levy formally adopted',
 		pageComponents: [
 			yesNoInput({
 				name: 'isInfrastructureLevyFormallyAdoptedRadio',
 				value: existingValue,
+				legendText: 'Change whether levy formally adopted',
+				legendIsPageHeading: true,
 				customYesLabel: 'Formally adopted',
 				customNoLabel: 'Not formally adopted'
 			})

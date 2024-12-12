@@ -31,17 +31,16 @@ export const changeNotificationMethodsPage = (
 		title: `Change notification methods`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change notification methods`,
 		pageComponents: [
 			{
 				type: 'checkboxes',
 				parameters: {
 					name: 'notificationMethodsCheckboxes',
 					id: 'notification-methods-checkboxes',
-					fieldSet: {
+					fieldset: {
 						legend: {
-							text: `Which notification methods apply?`,
-							isPageHeading: false,
+							text: 'Change notification methods',
+							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
