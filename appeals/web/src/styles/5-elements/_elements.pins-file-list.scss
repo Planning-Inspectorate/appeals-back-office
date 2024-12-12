@@ -1,0 +1,19 @@
+.pins-file-list {
+	> li {
+		> span {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: baseline;
+			list-style-position: inside;
+
+			> * {
+				margin-left: 5px;
+
+				&:first-child {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}

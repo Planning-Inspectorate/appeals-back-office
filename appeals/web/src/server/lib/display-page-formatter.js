@@ -182,10 +182,6 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 			} else {
 				documentPageComponents.push({
 					type: 'html',
-					wrapperHtml: {
-						opening: '<span>',
-						closing: ''
-					},
 					parameters: {
 						html: '',
 						pageComponents: [
@@ -200,10 +196,6 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 				});
 				documentPageComponents.push({
 					type: 'html',
-					wrapperHtml: {
-						opening: '',
-						closing: '</span>'
-					},
 					parameters: {
 						html: '',
 						pageComponents: [
@@ -229,12 +221,14 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 
 			htmlProperty.pageComponents.push({
 				wrapperHtml: {
-					opening: isAdditionalDocuments
-						? `<li class="govuk-!-margin-bottom-0${
-								i > 0 ? ' govuk-!-padding-top-2' : ''
-						  } govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}">`
-						: '<li>',
-					closing: '</li>'
+					opening: `<li${
+						isAdditionalDocuments
+							? ` class="govuk-!-margin-bottom-0${
+									i > 0 ? ' govuk-!-padding-top-2' : ''
+							  } govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}"`
+							: ''
+					}><span>`,
+					closing: '</span></li>'
 				},
 				type: 'html',
 				parameters: {
@@ -244,9 +238,14 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 			});
 		}
 
-		if (htmlProperty.pageComponents.length > 0) {
+		if (htmlProperty.pageComponents.length > 1) {
 			htmlProperty.wrapperHtml = {
-				opening: '<ul class="govuk-list">',
+				opening: '<ol class="govuk-list govuk-list--number pins-file-list">',
+				closing: '</ol>'
+			};
+		} else if (htmlProperty.pageComponents.length > 0) {
+			htmlProperty.wrapperHtml = {
+				opening: '<ul class="govuk-list pins-file-list">',
 				closing: '</ul>'
 			};
 		}
