@@ -20,6 +20,7 @@ export { collapse } from './collapse.js';
 export { default as className } from 'classnames';
 export { endsWith } from './ends-with.js';
 export { errorMessage } from './error-message.js';
+export { formatLineBreaks } from './format-line-breaks.js';
 export { json } from './json.js';
 export { mapToErrorSummary } from './error-summary.js';
 export { hasOneOf } from './object.js';
