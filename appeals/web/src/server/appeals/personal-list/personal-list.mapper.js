@@ -172,9 +172,13 @@ export function personalListPage(
 							appeal.appealStatus,
 							Boolean(appeal.commentCounts?.awaiting_review),
 							appeal.lpaQuestionnaireId,
-							appeal.documentationSummary?.appellantCase.status,
-							appeal.documentationSummary?.lpaQuestionnaire.status,
-							appeal.documentationSummary?.lpaStatement.status,
+							{
+								appellantCase: appeal.documentationSummary?.appellantCase.status,
+								lpaQuestionnaire: appeal.documentationSummary?.lpaQuestionnaire.status,
+								lpaStatement: appeal.documentationSummary?.lpaStatement.status,
+								lpaFinalComments: appeal.documentationSummary?.lpaFinalComments.status,
+								appellantFinalComments: appeal.documentationSummary?.appellantFinalComments.status
+							},
 							appeal.dueDate,
 							isCaseOfficer
 						)
@@ -248,9 +252,12 @@ export function personalListPage(
  * @param {string} appealStatus
  * @param {boolean} hasAwaitingComments
  * @param {number|null|undefined} lpaQuestionnaireId
- * @param {string} appellantCaseStatus
- * @param {string} lpaQuestionnaireStatus
- * @param {string} lpaStatementStatus
+ * @param {Object} statuses
+ * @param {string} statuses.appellantCase
+ * @param {string} statuses.lpaQuestionnaire
+ * @param {string} statuses.lpaStatement
+ * @param {string} statuses.lpaFinalComments
+ * @param {string} statuses.appellantFinalComments
  * @param {string} appealDueDate
  * @param {boolean} [isCaseOfficer]
  * @returns {string}
@@ -260,9 +267,13 @@ export function mapAppealStatusToActionRequiredHtml(
 	appealStatus,
 	hasAwaitingComments,
 	lpaQuestionnaireId,
-	appellantCaseStatus,
-	lpaQuestionnaireStatus,
-	lpaStatementStatus,
+	{
+		appellantCase: appellantCaseStatus,
+		lpaQuestionnaire: lpaQuestionnaireStatus,
+		lpaStatement: lpaStatementStatus,
+		lpaFinalComments: lpaFinalCommentsStatus,
+		appellantFinalComments: appellantFinalCommentsStatus
+	},
 	appealDueDate,
 	isCaseOfficer = false
 ) {
@@ -316,6 +327,23 @@ export function mapAppealStatusToActionRequiredHtml(
 					: '';
 
 			return [lpaStatementAction, ipCommentsAction].join('<br>');
+		}
+		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
+			const lpaReceived = lpaFinalCommentsStatus === 'received';
+			const appellantReceived = appellantFinalCommentsStatus === 'received';
+
+			if (!lpaReceived && !appellantReceived) {
+				return 'Awaiting final comments';
+			}
+
+			const lpaAction = lpaReceived
+				? '<a class="govuk-link" href="#">Review LPA final comments</a>'
+				: null;
+			const appellantAction = appellantReceived
+				? '<a class="govuk-link" href="#">Review appellant final comments</a>'
+				: null;
+
+			return [lpaAction, appellantAction].filter(Boolean).join('<br>');
 		}
 		default:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`;
