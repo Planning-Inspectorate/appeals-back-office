@@ -36,7 +36,8 @@ export class CaseDetailsPage extends Page {
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
-		startAppealWithdrawal: 'start-appeal-withdrawal'
+		startAppealWithdrawal: 'start-appeal-withdrawal',
+		viewAppealWithdrawal: 'view-appeal-withdrawal'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -87,7 +88,8 @@ export class CaseDetailsPage extends Page {
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
-		fileUploadRow: () => cy.get('.govuk-heading-s')
+		fileUploadRow: () => cy.get('.govuk-heading-s'),
+		viewAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.viewAppealWithdrawal)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -217,6 +219,10 @@ export class CaseDetailsPage extends Page {
 
 	uploadSampleFile(fileName) {
 		this.elements.uploadFile().selectFile(this.fixturesPath + fileName, { force: true });
+	}
+
+	clickViewAppealWithdrawal() {
+		this.elements.viewAppealWithdrawal().click();
 	}
 
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
