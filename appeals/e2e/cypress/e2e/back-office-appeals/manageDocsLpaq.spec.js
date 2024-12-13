@@ -40,7 +40,7 @@ describe('Remove doc from upload page', () => {
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.uploadDocVersionLpaq();
 			caseDetailsPage.clickManageNotifyingParties();
-			cy.reload(); //refresh page to get rid of possible virus scanning tag
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.img);

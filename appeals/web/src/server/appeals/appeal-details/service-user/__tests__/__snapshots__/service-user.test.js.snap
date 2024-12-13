@@ -192,7 +192,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="first-name">Agent&#39;s first name</label>
-                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter first name</p>
+                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a first name</p>
                             <input                             class="govuk-input govuk-input--error" id="first-name" name="firstName"
                             type="text" aria-describedby="first-name-error">
                         </div>
@@ -251,7 +251,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="first-name">Agent&#39;s first name</label>
-                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter first name</p>
+                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a first name</p>
                             <input                             class="govuk-input govuk-input--error" id="first-name" name="firstName"
                             type="text" aria-describedby="first-name-error">
                         </div>
@@ -315,7 +315,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="last-name">Agent&#39;s last name</label>
-                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter last name</p>
+                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a last name</p>
                             <input                             class="govuk-input govuk-input--error" id="last-name" name="lastName" type="text"
                             aria-describedby="last-name-error">
                         </div>
@@ -374,7 +374,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="last-name">Agent&#39;s last name</label>
-                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter last name</p>
+                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a last name</p>
                             <input                             class="govuk-input govuk-input--error" id="last-name" name="lastName" type="text"
                             aria-describedby="last-name-error">
                         </div>
@@ -488,7 +488,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="first-name">Agent&#39;s first name</label>
-                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter first name</p>
+                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a first name</p>
                             <input                             class="govuk-input govuk-input--error" id="first-name" name="firstName"
                             type="text" aria-describedby="first-name-error">
                         </div>
@@ -552,7 +552,7 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="last-name">Agent&#39;s last name</label>
-                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter last name</p>
+                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a last name</p>
                             <input                             class="govuk-input govuk-input--error" id="last-name" name="lastName" type="text"
                             aria-describedby="last-name-error">
                         </div>

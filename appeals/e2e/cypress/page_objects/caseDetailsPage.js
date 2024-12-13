@@ -254,6 +254,16 @@ export class CaseDetailsPage extends Page {
 		this.elements.fileUploadRow().contains(fileName).next().click();
 	}
 
+	changeFileManageDocuments(rowName) {
+		this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.next()
+			.next()
+			.invoke('prop', 'firstChildElement', 'href')
+			.click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
