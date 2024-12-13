@@ -235,9 +235,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'validation',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -252,9 +256,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'validation',
 			false,
 			lpaQuestionnaireId,
-			'Incomplete',
-			'',
-			'',
+			{
+				appellantCase: 'Incomplete',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -269,9 +277,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'validation',
 			false,
 			lpaQuestionnaireId,
-			'Incomplete',
-			'',
-			'',
+			{
+				appellantCase: 'Incomplete',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			false
 		);
@@ -284,9 +296,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'ready_to_start',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -301,9 +317,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'ready_to_start',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			false
 		);
@@ -316,9 +336,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			null,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -331,9 +355,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'Incomplete',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: 'Incomplete',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -348,9 +376,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'Incomplete',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: 'Incomplete',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			false
 		);
@@ -363,9 +395,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -380,9 +416,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			lpaQuestionnaireId,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			false
 		);
@@ -395,9 +435,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'lpa_questionnaire',
 			false,
 			null,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'2024-01-01',
 			true
 		);
@@ -410,9 +454,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'issue_determination',
 			false,
 			null,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -427,9 +475,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'awaiting_transfer',
 			false,
 			null,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
@@ -444,9 +496,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			'some_other_status',
 			false,
 			null,
-			'',
-			'',
-			'',
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				appellantFinalComments: ''
+			},
 			'',
 			true
 		);
