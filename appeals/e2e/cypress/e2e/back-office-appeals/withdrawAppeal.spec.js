@@ -35,7 +35,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.checkAnswerWithdrawalRequest('Withdrawal request', 'sample-file.doc');
+			caseDetailsPage.checkAnswerWithdrawalRequest('Withdrawal request', sampleFiles.document);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'Redacted');
 			caseDetailsPage.verifyCheckYourAnswerDate('Request date', withdrawalDate);
 			caseDetailsPage.checkEmailRelevantParties();

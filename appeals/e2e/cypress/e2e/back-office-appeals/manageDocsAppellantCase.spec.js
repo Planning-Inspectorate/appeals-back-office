@@ -60,7 +60,7 @@ describe('manage docs on appellant case', () => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickAddAdditionalDocs();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
-			caseDetailsPage.checkFileNameDisplays('sample-file.doc');
+			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
