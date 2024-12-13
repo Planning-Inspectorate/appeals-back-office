@@ -31,6 +31,7 @@ import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './interested-party-comments/interested-party-comments.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
+import representationsRouter from './representations/representations.router.js';
 
 const router = createRouter();
 
@@ -157,5 +158,7 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	withdrawalRouter
 );
+
+router.use('/:appealId', representationsRouter);
 
 export default router;

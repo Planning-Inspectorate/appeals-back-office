@@ -752,7 +752,8 @@ export async function seedTestData(databaseConnector) {
 						connect: {
 							id: lpaId
 						}
-					}
+					},
+					source: 'lpa'
 				},
 				include: {
 					represented: true
