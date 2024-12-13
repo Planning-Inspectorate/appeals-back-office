@@ -101,6 +101,12 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
+									status: 'not_received'
 								}
 							},
 							isParentAppeal: false,
@@ -135,6 +141,12 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
+									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
 									status: 'not_received'
 								}
 							},
@@ -193,6 +205,12 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
+									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
 									status: 'not_received'
 								}
 							},
@@ -280,6 +298,12 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
+									status: 'not_received'
 								}
 							},
 							isParentAppeal: false,
@@ -365,6 +389,12 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
+									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
 									status: 'not_received'
 								}
 							},
@@ -452,6 +482,12 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
+									status: 'not_received'
 								}
 							},
 							isParentAppeal: false,
@@ -524,6 +560,12 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
+									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
 									status: 'not_received'
 								}
 							},
@@ -600,6 +642,12 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
+									status: 'not_received'
 								}
 							},
 							isParentAppeal: false,
@@ -671,6 +719,12 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
+									status: 'not_received'
+								},
+								lpaFinalComments: {
+									status: 'not_received'
+								},
+								appellantFinalComments: {
 									status: 'not_received'
 								}
 							},
@@ -914,6 +968,12 @@ describe('appeals routes', () => {
 						},
 						lpaStatement: {
 							status: 'not_received'
+						},
+						lpaFinalComments: {
+							status: 'not_received'
+						},
+						appellantFinalComments: {
+							status: 'not_received'
 						}
 					},
 					healthAndSafety: {
@@ -1031,6 +1091,12 @@ describe('appeals routes', () => {
 							status: 'not_received'
 						},
 						lpaStatement: {
+							status: 'not_received'
+						},
+						lpaFinalComments: {
+							status: 'not_received'
+						},
+						appellantFinalComments: {
 							status: 'not_received'
 						}
 					},
@@ -1643,6 +1709,12 @@ describe('appeals/case-reference/:caseReference', () => {
 					},
 					lpaStatement: {
 						status: 'not_received'
+					},
+					lpaFinalComments: {
+						status: 'not_received'
+					},
+					appellantFinalComments: {
+						status: 'not_received'
 					}
 				},
 				healthAndSafety: {
@@ -1761,6 +1833,12 @@ describe('appeals/case-reference/:caseReference', () => {
 						status: 'not_received'
 					},
 					lpaStatement: {
+						status: 'not_received'
+					},
+					lpaFinalComments: {
+						status: 'not_received'
+					},
+					appellantFinalComments: {
 						status: 'not_received'
 					}
 				},

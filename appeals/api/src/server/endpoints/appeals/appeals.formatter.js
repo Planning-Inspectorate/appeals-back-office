@@ -133,6 +133,24 @@ const formatDocumentationSummary = (appeal) => ({
 		)
 			? DOCUMENT_STATUS_RECEIVED
 			: DOCUMENT_STATUS_NOT_RECEIVED
+	},
+	lpaFinalComments: {
+		status: appeal.representations?.find(
+			(rep) =>
+				rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
+				rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		)
+			? DOCUMENT_STATUS_RECEIVED
+			: DOCUMENT_STATUS_NOT_RECEIVED
+	},
+	appellantFinalComments: {
+		status: appeal.representations?.find(
+			(rep) =>
+				rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
+				rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		)
+			? DOCUMENT_STATUS_RECEIVED
+			: DOCUMENT_STATUS_NOT_RECEIVED
 	}
 });
 

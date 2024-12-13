@@ -507,6 +507,8 @@ interface DocumentationSummary {
 	lpaQuestionnaire?: DocumentationSummaryEntry;
 	ipComments?: DocumentationSummaryEntry;
 	lpaStatement?: DocumentationSummaryEntry;
+	lpaFinalComments?: DocumentationSummaryEntry;
+	appellantFinalComments?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {
