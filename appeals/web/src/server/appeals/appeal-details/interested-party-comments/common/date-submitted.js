@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} ReqBody */
 
 /**

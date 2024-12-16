@@ -168,6 +168,7 @@ const initialiseComponentInstance = (
 	const button = document.createElement('button');
 	button.className = CLASSES.toggleButton;
 	button.setAttribute('aria-expanded', 'false');
+	button.setAttribute('type', 'button');
 
 	const buttonLabel = document.createElement('span');
 	buttonLabel.className = CLASSES.toggleButtonLabel;

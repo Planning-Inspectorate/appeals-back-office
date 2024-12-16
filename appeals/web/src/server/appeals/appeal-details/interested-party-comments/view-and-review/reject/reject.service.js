@@ -12,7 +12,7 @@ export async function getRepresentationRejectionReasonOptions(apiClient) {
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} commentId
- * @param {import('../../interested-party-comments.types.js').RejectionReasonUpdateInput[]} rejectionReasons
+ * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
  * */
 export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) =>
 	apiClient

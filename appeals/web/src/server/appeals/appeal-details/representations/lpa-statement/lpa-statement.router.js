@@ -1,11 +1,8 @@
 import { Router } from 'express';
+import { renderReviewLpaStatement } from './lpa-statement.controller.js';
 
 const router = Router({ mergeParams: true });
 
-router.get('/', (req, res) => {
-	// Placeholder code, replace when you make the real view :)
-	console.log('🚀 ~ router.get ~ req.currentRepresentation:', req.currentRepresentation);
-	res.send(`LPA Statement Placeholder `);
-});
+router.get('/', renderReviewLpaStatement);
 
 export default router;

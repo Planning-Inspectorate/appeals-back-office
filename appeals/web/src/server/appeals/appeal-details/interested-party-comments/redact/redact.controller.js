@@ -1,4 +1,3 @@
-import { render } from '../view-and-review/view-and-review.controller.js';
 import { redactInterestedPartyCommentPage } from './redact.mapper.js';
 import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -6,9 +5,10 @@ import logger from '#lib/logger.js';
 import { patchInterestedPartyCommentRedaction } from './redact.service.js';
 import { patchInterestedPartyCommentStatus } from '../view-and-review/view-and-review.service.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 export const renderRedactInterestedPartyComment = render(
 	redactInterestedPartyCommentPage,

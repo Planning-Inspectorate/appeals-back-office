@@ -5,17 +5,16 @@ import { addressInputs } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
 /** @typedef {import("../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("./interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationList} RepresentationList */
 
 /**
  *
  * @param {Appeal} appealDetails
- * @param {IPCommentsList} awaitingReview
- * @param {IPCommentsList} valid
- * @param {IPCommentsList} invalid
+ * @param {RepresentationList} awaitingReview
+ * @param {RepresentationList} valid
+ * @param {RepresentationList} invalid
  * @param {import('@pins/express').Session} session
  * @returns {Promise<PageContent>}
  */
@@ -68,7 +67,7 @@ export const ipAddressPage = (appealDetails, address, errors, backPath, operatio
 
 /**
  * Creates a table object for the interested party comments.
- * @param {IPCommentsList} commentsData - The comments data including items and metadata.
+ * @param {RepresentationList} commentsData - The comments data including items and metadata.
  * @param {boolean} isReview - Whether the table is for comments awaiting review.
  * @returns {Object} The table object or an empty object if there are no items.
  */
@@ -83,7 +82,7 @@ function createTable(commentsData, isReview = false) {
 
 /**
  * Generates table rows for the interested party comments.
- * @param {Array<IPComments>} items - List of comments to generate rows for.
+ * @param {Representation[]} items - List of comments to generate rows for.
  * @param {boolean} isReview - Whether the table is for comments awaiting review.
  * @returns {Array<Array<{text?: string, html?: string}>>} The formatted table rows.
  */
