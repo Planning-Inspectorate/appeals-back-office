@@ -515,7 +515,7 @@ describe('environmental-impact-assessment', () => {
 				);
 			});
 
-			it('should re-render the change sensitive area details page with the expected validation error and the "yes" radio option checked, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
+			it('should re-render the change sensitive area details page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
@@ -524,13 +524,15 @@ describe('environmental-impact-assessment', () => {
 						eiaSensitiveAreaDetails: null
 					});
 
+				const submittedText = 'a'.repeat(1001);
+
 				const response = await request
 					.post(
 						`${baseUrl}/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/environmental-impact-assessment/sensitive-area-details/change`
 					)
 					.send({
 						eiaSensitiveAreaDetailsRadio: 'yes',
-						eiaSensitiveAreaDetails: 'a'.repeat(1001)
+						eiaSensitiveAreaDetails: submittedText
 					});
 
 				expect(response.statusCode).toBe(200);
@@ -546,6 +548,7 @@ describe('environmental-impact-assessment', () => {
 				expect(elementInnerHtml).toContain(
 					'name="eiaSensitiveAreaDetailsRadio" type="radio" value="no"'
 				);
+				expect(elementInnerHtml).toContain(`${submittedText}</textarea>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -711,7 +714,7 @@ describe('environmental-impact-assessment', () => {
 				);
 			});
 
-			it('should re-render the change consulted bodies details page with the expected validation error and the "yes" radio option checked, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
+			it('should re-render the change consulted bodies details page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
@@ -720,13 +723,15 @@ describe('environmental-impact-assessment', () => {
 						eiaConsultedBodiesDetails: null
 					});
 
+				const submittedText = 'a'.repeat(1001);
+
 				const response = await request
 					.post(
 						`${baseUrl}/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/environmental-impact-assessment/consulted-bodies-details/change`
 					)
 					.send({
 						eiaConsultedBodiesDetailsRadio: 'yes',
-						eiaConsultedBodiesDetails: 'a'.repeat(1001)
+						eiaConsultedBodiesDetails: submittedText
 					});
 
 				expect(response.statusCode).toBe(200);
@@ -740,6 +745,7 @@ describe('environmental-impact-assessment', () => {
 				expect(elementInnerHtml).toContain(
 					'name="eiaConsultedBodiesDetailsRadio" type="radio" value="no"'
 				);
+				expect(elementInnerHtml).toContain(`${submittedText}</textarea>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',

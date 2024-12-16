@@ -5,9 +5,15 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {import('../../appeal-details.types.js').WebAppeal} appealData
  * @param {string|null} existingValue
  * @param {string|undefined} [sessionRadioValue]
+ * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}
  */
-export function changeNeighbouringSiteAccessPage(appealData, existingValue, sessionRadioValue) {
+export function changeNeighbouringSiteAccessPage(
+	appealData,
+	existingValue,
+	sessionRadioValue,
+	sessionDetailsValue
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -24,7 +30,7 @@ export function changeNeighbouringSiteAccessPage(appealData, existingValue, sess
 					id: 'neighbouring-site-access-details',
 					name: 'neighbouringSiteAccess',
 					hint: 'Inspector needs neighbouring site access details',
-					details: existingValue || ''
+					details: sessionDetailsValue || existingValue || ''
 				}
 			})
 		]

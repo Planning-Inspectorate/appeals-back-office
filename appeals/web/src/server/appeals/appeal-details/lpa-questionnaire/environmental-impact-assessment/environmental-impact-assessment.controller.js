@@ -189,7 +189,8 @@ const renderChangeEiaSensitiveAreaDetails = async (request, response) => {
 	const mappedPageContents = changeEiaSensitiveAreaDetailsPage(
 		request.currentAppeal,
 		lpaQuestionnaire.eiaSensitiveAreaDetails,
-		request.session.eiaSensitiveAreaDetails?.radio
+		request.session.eiaSensitiveAreaDetails?.radio,
+		request.session.eiaSensitiveAreaDetails?.details
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -268,7 +269,8 @@ const renderChangeEiaConsultedBodiesDetails = async (request, response) => {
 	const mappedPageContents = changeEiaConsultedBodiesDetailsPage(
 		request.currentAppeal,
 		lpaQuestionnaire.eiaConsultedBodiesDetails,
-		request.session.eiaConsultedBodiesDetails?.radio
+		request.session.eiaConsultedBodiesDetails?.radio,
+		request.session.eiaConsultedBodiesDetails?.details
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
