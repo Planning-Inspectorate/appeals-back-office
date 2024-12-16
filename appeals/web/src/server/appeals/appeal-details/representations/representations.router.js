@@ -7,7 +7,7 @@ const router = Router({ mergeParams: true });
 
 router.use(
 	'/lpa-statement',
-	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.STATEMENT),
+	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT),
 	lpaStatementRouter
 );
 
