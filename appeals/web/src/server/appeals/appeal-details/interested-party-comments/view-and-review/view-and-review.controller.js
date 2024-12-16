@@ -16,30 +16,10 @@ import {
 	renderManageDocument,
 	renderManageFolder
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
-
-/**
- *
- * @param {(appealDetails: Appeal, comment: Representation, session: import('express-session').Session & Record<string, string>) => PageContent} contentMapper
- * @param {string} templatePath
- * @returns {import('@pins/express').RenderHandler<any, any, any>}
- */
-export const render = (contentMapper, templatePath) => (request, response) => {
-	const { errors, currentComment, currentAppeal, session } = request;
-
-	if (!currentComment) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const pageContent = contentMapper(currentAppeal, currentComment, session);
-
-	return response.status(200).render(templatePath, {
-		errors,
-		pageContent
-	});
-};
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 export const renderViewInterestedPartyComment = render(
 	viewInterestedPartyCommentPage,

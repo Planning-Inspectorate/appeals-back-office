@@ -4,7 +4,7 @@ import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
-/** @typedef {import("../../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**
  * Generates the withdraw link component.
@@ -21,7 +21,7 @@ export function generateWithdrawLink() {
 }
 
 /**
- * @param {import('./reject.mapper.js').RepresentationRejectionReason} rejectionReason
+ * @param {import('#appeals/appeal-details/representations/types.js').RepresentationRejectionReason} rejectionReason
  * @returns {string}
  */
 const textToListItems = (rejectionReason) =>
