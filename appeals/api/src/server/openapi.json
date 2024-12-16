@@ -3463,7 +3463,7 @@
 						"name": "types",
 						"in": "query",
 						"required": false,
-						"example": "statement",
+						"example": "lpa_statement",
 						"schema": {
 							"type": "string"
 						}

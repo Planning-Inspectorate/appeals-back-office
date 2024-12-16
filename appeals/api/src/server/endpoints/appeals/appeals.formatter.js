@@ -109,8 +109,7 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 const formatDocumentationSummary = (appeal) => {
 	const lpaStatement = appeal.representations?.find(
 		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.STATEMENT &&
-			rep.source === 'lpa' &&
+			rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT &&
 			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 	);
 	return {
