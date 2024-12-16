@@ -67,7 +67,8 @@ export class Page {
 			cy.get(this.selectors.accordion).contains('span', text, { matchCase: false }),
 		accordionButton: (text) =>
 			cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
-		additionalDocumentsAdd: () => cy.get(this.selectors.summaryCardActions).children(),
+		additionalDocumentsAdd: () => cy.get(this.selectors.summaryCardActions).children().last(),
+		additonalDocumentManage: () => cy.get(this.selectors.summaryCardActions).children().first(),
 		answerCell: (question) =>
 			cy.contains(this.selectors.summaryListKey, question, { matchCase: false }).next(),
 		applicationHeaderCentral: () => cy.get(`${this.selectors.centralCol} > p`),

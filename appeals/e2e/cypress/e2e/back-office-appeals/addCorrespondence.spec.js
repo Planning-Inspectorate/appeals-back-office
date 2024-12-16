@@ -30,7 +30,7 @@ describe('Add correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
-			caseDetailsPage.checkAnswerRedactionStatus('Redaction status', 'No redaction required');
+			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Cross-team correspondence documents uploaded');
 		});
@@ -47,7 +47,7 @@ describe('Add correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
-			caseDetailsPage.checkAnswerRedactionStatus('Redaction status', 'No redaction required');
+			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Inspector correspondence documents uploaded');
 		});
