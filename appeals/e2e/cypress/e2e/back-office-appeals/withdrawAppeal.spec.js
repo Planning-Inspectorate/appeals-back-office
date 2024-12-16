@@ -72,7 +72,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 			caseDetailsPage.clickViewAppealWithdrawal();
 			caseDetailsPage.clickLinkByText('View');
-			cy.readFile(`${Cypress.config('downloadsFolder')}/sample-file.doc`);
+			cy.readFile(`${Cypress.config('downloadsFolder')}/${sampleFiles.document}`);
 		});
 	});
 });
