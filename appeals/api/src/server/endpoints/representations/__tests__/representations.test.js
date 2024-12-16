@@ -345,6 +345,23 @@ describe('/appeals/:id/representations', () => {
 				}
 			});
 		});
+		test('400 when attachment guids are invalid and email is empty', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: '' },
+					redactionStatus: 'test',
+					attachments: [0]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'must be an array of strings'
+				}
+			});
+		});
 	});
 	describe('PATCH /appeals/:appealId/reps/:repId/rejection-reasons', () => {
 		test('400 when payload id is not a number', async () => {
