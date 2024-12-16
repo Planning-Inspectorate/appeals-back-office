@@ -21,7 +21,7 @@ export const getRepresentationCounts = (apiClient, appealId, statusFilter = 'all
 };
 
 /**
- * Fetch paginated appeal comments based on appeal ID and status.
+ * Fetch unique representations (eg final comments) based on appeal id and representation type
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
