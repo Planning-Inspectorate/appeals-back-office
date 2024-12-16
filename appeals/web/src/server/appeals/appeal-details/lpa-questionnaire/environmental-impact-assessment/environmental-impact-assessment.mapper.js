@@ -64,9 +64,15 @@ export function changeEiaRequiresEnvironmentalStatementPage(appealData, existing
  * @param {Appeal} appealData
  * @param {string|null} existingValue
  * @param {string|undefined} [sessionRadioValue]
+ * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}
  */
-export function changeEiaSensitiveAreaDetailsPage(appealData, existingValue, sessionRadioValue) {
+export function changeEiaSensitiveAreaDetailsPage(
+	appealData,
+	existingValue,
+	sessionRadioValue,
+	sessionDetailsValue
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -83,7 +89,7 @@ export function changeEiaSensitiveAreaDetailsPage(appealData, existingValue, ses
 					id: 'eia-sensitive-area-details',
 					name: 'eiaSensitiveAreaDetails',
 					hint: 'In, partly in, or likely to affect a sensitive area details',
-					details: existingValue || ''
+					details: sessionDetailsValue || existingValue || ''
 				}
 			})
 		]
@@ -96,9 +102,15 @@ export function changeEiaSensitiveAreaDetailsPage(appealData, existingValue, ses
  * @param {Appeal} appealData
  * @param {string|null} existingValue
  * @param {string|undefined} [sessionRadioValue]
+ * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}
  */
-export function changeEiaConsultedBodiesDetailsPage(appealData, existingValue, sessionRadioValue) {
+export function changeEiaConsultedBodiesDetailsPage(
+	appealData,
+	existingValue,
+	sessionRadioValue,
+	sessionDetailsValue
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -115,7 +127,7 @@ export function changeEiaConsultedBodiesDetailsPage(appealData, existingValue, s
 					id: 'eia-consulted-bodies-details',
 					name: 'eiaConsultedBodiesDetails',
 					hint: 'Consulted relevant statutory consultees details',
-					details: existingValue || ''
+					details: sessionDetailsValue || existingValue || ''
 				}
 			})
 		]

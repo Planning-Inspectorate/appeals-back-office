@@ -28,7 +28,8 @@ const renderChangeNeighbouringSiteAccess = async (request, response) => {
 	const mappedPageContents = changeNeighbouringSiteAccessPage(
 		request.currentAppeal,
 		lpaQuestionnaire.reasonForNeighbourVisits,
-		request.session.neighbouringSiteAccess?.radio
+		request.session.neighbouringSiteAccess?.radio,
+		request.session.neighbouringSiteAccess?.details
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

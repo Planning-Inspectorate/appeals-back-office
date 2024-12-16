@@ -190,7 +190,7 @@ describe('neighbouring-site-access', () => {
 				);
 			});
 
-			it('should re-render the change neighbouring site access page with the expected validation error and the "yes" radio option checked, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
+			it('should re-render the change neighbouring site access page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
@@ -199,13 +199,15 @@ describe('neighbouring-site-access', () => {
 						reasonForNeighbourVisits: null
 					});
 
+				const submittedText = 'a'.repeat(1001);
+
 				const response = await request
 					.post(
 						`${baseUrl}/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-site-access/change`
 					)
 					.send({
 						neighbouringSiteAccessRadio: 'yes',
-						neighbouringSiteAccess: 'a'.repeat(1001)
+						neighbouringSiteAccess: submittedText
 					});
 
 				expect(response.statusCode).toBe(200);
@@ -221,6 +223,7 @@ describe('neighbouring-site-access', () => {
 				expect(elementInnerHtml).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="no"'
 				);
+				expect(elementInnerHtml).toContain(`${submittedText}</textarea>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
