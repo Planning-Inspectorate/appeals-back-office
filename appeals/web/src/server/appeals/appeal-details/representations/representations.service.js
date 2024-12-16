@@ -1,5 +1,7 @@
 /** @typedef {import('pins-data-model/src/schemas.js').Representation} Representation */
 
+import logger from '#lib/logger.js';
+
 /**
  * Fetch counts of appeal representations by type
  *
@@ -27,9 +29,13 @@ export const getRepresentationCounts = (apiClient, appealId, statusFilter = 'all
  * @returns {Promise<Representation>}
  */
 export const getSingularRepresentationByType = async (apiClient, appealId, type) => {
-	let url = `appeals/${appealId}/reps?type=${type}`;
+	const url = `appeals/${appealId}/reps?type=${type}`;
 
 	const apiResponse = await apiClient.get(url).json();
 
-	return apiResponse.items.find((/** @type {Representation} */ { origin }) => origin === 'lpa');
+	if (apiResponse.items.length > 1) {
+		logger.warn(`Multiple representations of type ${type} found on appeal ${appealId}`);
+	}
+
+	return apiResponse.items[0];
 };
