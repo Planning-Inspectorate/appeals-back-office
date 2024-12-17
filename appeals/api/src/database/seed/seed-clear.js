@@ -70,10 +70,10 @@ export async function deleteAllRecords(databaseConnector) {
 		`UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
 		UPDATE Representation SET lpaCode = NULL, representedId = NULL, representativeId = NULL;`
 	);
-	await deleteRepsAttachments;
 	// delete references to internal users on appeals
 	await databaseConnector.$queryRawUnsafe(`UPDATE Appeal SET appellantId = NULL, agentId = NULL;`);
 	await deleteDocAvScans;
+	await deleteRepsAttachments;
 	await deleteDecisions;
 	await deleteDocAudits;
 	await batchDelete(
