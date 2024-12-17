@@ -1,6 +1,6 @@
 export const DOCUMENT_STAGE = 'appellant-case';
 export const DOCUMENT_TYPE = 'appellantStatement';
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationRequest} RepresentationRequest */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 /**
  * @param {import('got').Got} apiClient
