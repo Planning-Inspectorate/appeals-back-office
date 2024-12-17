@@ -13,8 +13,9 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
 				? appealDetails?.documentationSummary?.lpaStatement?.receivedAt.toDateString()
 				: appealDetails?.documentationSummary?.lpaStatement?.receivedAt
 		),
-		actionHtml: `<a href="${currentRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">${
-			appealDetails?.documentationSummary?.lpaStatement?.status === 'received' ? 'Review' : 'Add'
-		} <span class="govuk-visually-hidden">LPA statement</span></a>`
+		actionHtml:
+			appealDetails?.documentationSummary?.lpaStatement?.status === 'received'
+				? `<a href="${currentRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden">LPA statement</span></a>`
+				: ''
 	});
 };
