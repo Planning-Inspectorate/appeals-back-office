@@ -17,7 +17,7 @@ export const pageHeading = 'Case details';
  * @param {string} currentRoute
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {boolean} [ipCommentsAwaitingReview]
+ * @param {import('./accordions/index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
@@ -26,7 +26,7 @@ export async function appealDetailsPage(
 	currentRoute,
 	session,
 	request,
-	ipCommentsAwaitingReview
+	representationTypesAwaitingReview
 ) {
 	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
@@ -40,7 +40,7 @@ export async function appealDetailsPage(
 		appealDetails,
 		mappedData,
 		session,
-		ipCommentsAwaitingReview
+		representationTypesAwaitingReview
 	);
 
 	const pageComponents = [

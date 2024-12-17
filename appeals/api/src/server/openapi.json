@@ -3380,6 +3380,63 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/reps/count": {
+			"get": {
+				"tags": ["Representations"],
+				"description": "Get all representations",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": false,
+						"example": "awaiting_review",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get statements for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/reps": {
 			"get": {
 				"tags": ["Representations"],
@@ -4536,7 +4593,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "85f71bde-6891-45c2-8057-2900e3d9b5a6"
+								"example": "6d489ad9-8de5-4459-8315-34cb999cfc9e"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",

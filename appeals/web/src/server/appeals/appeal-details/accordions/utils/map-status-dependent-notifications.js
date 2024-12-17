@@ -10,14 +10,14 @@ import {
  * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {PageComponent[]} accordionComponents
- * @param {boolean} [ipCommentsAwaitingReview]
+ * @param {import('../index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {void}
  */
 export function mapStatusDependentNotifications(
 	appealDetails,
 	session,
 	accordionComponents,
-	ipCommentsAwaitingReview = false
+	representationTypesAwaitingReview
 ) {
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
@@ -76,12 +76,30 @@ export function mapStatusDependentNotifications(
 			removeAccordionComponentsActions(accordionComponents);
 			break;
 		case APPEAL_CASE_STATUS.STATEMENTS:
-			if (ipCommentsAwaitingReview) {
+			if (representationTypesAwaitingReview?.ipComments) {
 				addNotificationBannerToSession(
 					session,
 					'interestedPartyCommentsAwaitingReview',
 					appealDetails.appealId,
 					`<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
+				);
+			}
+			break;
+		case APPEAL_CASE_STATUS.FINAL_COMMENTS:
+			if (representationTypesAwaitingReview?.appellantFinalComments) {
+				addNotificationBannerToSession(
+					session,
+					'appellantFinalCommentsAwaitingReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/appellant-final-comment" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
+				);
+			}
+			if (representationTypesAwaitingReview?.lpaFinalComments) {
+				addNotificationBannerToSession(
+					session,
+					'lpaFinalCommentsAwaitingReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-final-comment" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
 				);
 			}
 			break;

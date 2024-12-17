@@ -220,6 +220,14 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['viewIpComment', 'reviewIpComment'],
 		text: 'Supporting document added'
+	},
+	appellantFinalCommentsAwaitingReview: {
+		pages: ['appealDetails'],
+		persist: true
+	},
+	lpaFinalCommentsAwaitingReview: {
+		pages: ['appealDetails'],
+		persist: true
 	}
 };
 
