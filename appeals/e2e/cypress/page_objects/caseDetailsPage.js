@@ -266,9 +266,17 @@ export class CaseDetailsPage extends Page {
 			.click();
 	}
 
+	clickManageAdditionalDocs() {
+		this.basePageElements.additonalDocumentManage().click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
+
+	checkAdditonalDocsAppellantCase(value) {
+		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
+	}
 
 	checkErrorMessageDisplays(errorMessage) {
 		cy.get('li').contains(errorMessage).should('be.visible');
@@ -290,6 +298,15 @@ export class CaseDetailsPage extends Page {
 			.next()
 			.children()
 			.invoke('prop', 'textContent');
+		answer.should('eq', rowAnswer);
+	}
+
+	checkCorrectAnswerDisplays(rowName, rowAnswer) {
+		let answer = this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.next()
+			.invoke('prop', 'innerText');
 		answer.should('eq', rowAnswer);
 	}
 
