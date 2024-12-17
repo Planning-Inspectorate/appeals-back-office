@@ -676,6 +676,7 @@ export async function seedTestData(databaseConnector) {
 			const originalRepresentation =
 				'I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.';
 
+			const rejectionReason = await databaseConnector.representationRejectionReason.findFirst();
 			for (let ii in appellantsList) {
 				const represented = appellantsList[ii];
 				const source = Number(ii) % 2 ? 'citizen' : ODW_SYSTEM_ID;
@@ -713,7 +714,7 @@ export async function seedTestData(databaseConnector) {
 								connect: { id: repRecord.id }
 							},
 							representationRejectionReason: {
-								connect: { id: 1 }
+								connect: { id: rejectionReason?.id }
 							}
 						}
 					});

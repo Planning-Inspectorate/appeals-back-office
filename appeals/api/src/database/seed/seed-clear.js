@@ -7,10 +7,10 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteRepsText = databaseConnector.representationRejectionReasonText.deleteMany();
 	const deleteRepsSelected = databaseConnector.representationRejectionReasonsSelected.deleteMany();
 	const deleteRepsAttachments = databaseConnector.representationAttachment.deleteMany();
+	const deleteRepsInvalidReasons = databaseConnector.representationRejectionReason.deleteMany();
 	const deleteReps = databaseConnector.representation.deleteMany();
 	const deleteDecisions = databaseConnector.inspectorDecision.deleteMany();
 	const deleteDocAudits = databaseConnector.documentVersionAudit.deleteMany();
-	const deleteDocAvScans = databaseConnector.documentVersionAvScan.deleteMany();
 	const deleteLPAs = databaseConnector.lPA.deleteMany();
 	const deleteAudits = databaseConnector.auditTrail.deleteMany();
 	const deleteFolders = databaseConnector.folder.deleteMany();
@@ -62,32 +62,32 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteLPAQUestionnaireIncompleteReason =
 		databaseConnector.lPAQuestionnaireIncompleteReason.deleteMany();
 
-	// delete document versions, documents, and THEN the folders.  Has to be in this order for integrity constraints
-	// TODO: Currently an issue with cyclic references, hence this hack to clear the latestVersionId
-	await databaseConnector.$queryRawUnsafe(`UPDATE Document SET latestVersionId = NULL;`);
-	// delete references to external users on appeals
-	await databaseConnector.$queryRawUnsafe(
-		`UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
-		UPDATE Representation SET lpaCode = NULL, representedId = NULL, representativeId = NULL;`
-	);
-	// delete references to internal users on appeals
-	await databaseConnector.$queryRawUnsafe(`UPDATE Appeal SET appellantId = NULL, agentId = NULL;`);
-	await deleteDocAvScans;
-	await deleteRepsAttachments;
-	await deleteDecisions;
-	await deleteDocAudits;
+	await databaseConnector.$queryRawUnsafe(`
+		UPDATE Document SET latestVersionId = NULL;
+		UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
+		UPDATE Representation SET lpaCode = NULL, representedId = NULL, representativeId = NULL;
+		UPDATE Appeal SET appellantId = NULL, agentId = NULL;
+		DELETE FROM DocumentVersionAvScan;
+	`);
+
+	await databaseConnector.$transaction([
+		deleteRepsAttachments,
+		deleteDecisions,
+		deleteDocAudits,
+		deleteAudits
+	]);
+
 	await batchDelete(
 		databaseConnector.documentVersion.findMany.bind(databaseConnector.documentVersion),
 		databaseConnector.documentVersion.deleteMany.bind(databaseConnector.documentVersion),
 		500
 	);
-	await deleteDocuments;
 
 	await databaseConnector.$transaction([
+		deleteDocuments,
 		deleteRepsText,
 		deleteRepsSelected,
 		deleteReps,
-		deleteAudits,
 		deleteCaseNotes,
 		deleteUsers,
 		deleteAppealAllocationLevels,
@@ -115,14 +115,33 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteListedBuildingDetails
 	]);
 
-	// after deleting the case data, can delete the reference lookup tables
-	await deleteAppealTypes;
-	await deletelpaNotificationMethods;
-	await knowledgeOfOtherLandowners;
-	await deleteAppellantCaseIncompleteReason;
-	await deleteAppellantCaseInvalidReason;
-	await deleteAppellantCaseValidationOutcome;
-	await deleteLPAQuestionnaireValidationOutcome;
-	await deleteSpecialisms;
-	await deleteLPAQUestionnaireIncompleteReason;
+	await databaseConnector.$transaction([
+		deleteLPANotificationSelected,
+		deleteLPAQuestionnaireIncompleteReasonText,
+		deleteLPAQuestionnaireIncompleteReasonOnLPAQuestionnaire,
+		deleteNeighbouringSites,
+		deleteLPAQuestionnaire,
+		deleteSiteVisit,
+		deleteAppealTimetable,
+		deleteInspectorDecision,
+		deleteServiceCustomers,
+		deleteFolders,
+		deleteAppeals,
+		deleteAddresses,
+		deleteLPAs,
+		deleteListedBuildingDetails
+	]);
+
+	await databaseConnector.$transaction([
+		deleteAppealTypes,
+		deletelpaNotificationMethods,
+		knowledgeOfOtherLandowners,
+		deleteAppellantCaseIncompleteReason,
+		deleteAppellantCaseInvalidReason,
+		deleteAppellantCaseValidationOutcome,
+		deleteLPAQuestionnaireValidationOutcome,
+		deleteSpecialisms,
+		deleteLPAQUestionnaireIncompleteReason,
+		deleteRepsInvalidReasons
+	]);
 }
