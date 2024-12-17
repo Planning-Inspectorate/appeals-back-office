@@ -17,10 +17,15 @@ import {
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {boolean} [ipCommentsAwaitingReview]
+ * @param {import('./index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {SharedPageComponentProperties & AccordionPageComponent}
  */
-export function generateAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
+export function generateAccordion(
+	appealDetails,
+	mappedData,
+	session,
+	representationTypesAwaitingReview
+) {
 	const caseOverview = getCaseOverview(mappedData);
 
 	const siteDetails = getSiteDetails(mappedData);
@@ -86,7 +91,7 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 		appealDetails,
 		session,
 		accordionComponents,
-		ipCommentsAwaitingReview
+		representationTypesAwaitingReview
 	);
 
 	if (!userHasPermission(permissionNames.viewCaseDetails, session)) {

@@ -5,18 +5,25 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
+ * @typedef {Object} RepresentationTypesAwaitingReview
+ * @property {boolean} ipComments
+ * @property {boolean} appellantFinalComments
+ * @property {boolean} lpaFinalComments
+ */
+
+/**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
- * @param {boolean} [ipCommentsAwaitingReview]
+ * @param {RepresentationTypesAwaitingReview} [representationsAwaitingReview]
  * @returns {PageComponent}
  */
 export function generateAccordionItems(
 	appealDetails,
 	mappedData,
 	session,
-	ipCommentsAwaitingReview
+	representationsAwaitingReview
 ) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.D:
@@ -25,7 +32,12 @@ export function generateAccordionItems(
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				throw new Error('Feature flag inactive for S78');
 			}
-			return generateS78Accordion(appealDetails, mappedData, session, ipCommentsAwaitingReview);
+			return generateS78Accordion(
+				appealDetails,
+				mappedData,
+				session,
+				representationsAwaitingReview
+			);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}

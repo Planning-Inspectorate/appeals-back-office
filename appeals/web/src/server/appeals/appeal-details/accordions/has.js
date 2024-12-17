@@ -89,12 +89,11 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 		caseManagement
 	];
 
-	mapStatusDependentNotifications(
-		appealDetails,
-		session,
-		accordionComponents,
-		ipCommentsAwaitingReview
-	);
+	mapStatusDependentNotifications(appealDetails, session, accordionComponents, {
+		ipComments: ipCommentsAwaitingReview || false,
+		appellantFinalComments: false,
+		lpaFinalComments: false
+	});
 
 	if (!userHasPermission(permissionNames.viewCaseDetails, session)) {
 		removeAccordionComponentsActions(accordionComponents);
