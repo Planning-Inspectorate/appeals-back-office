@@ -1763,7 +1763,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text, if the folder is not additional documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
@@ -1809,11 +1809,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1844,19 +1844,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                     </div>
             </div>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
-                    should only be used when no other document folder is suitable. Please check
-                    the box below to confirm the document cannot be placed anywhere else before
-                    proceeding.</strong>
-            </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Only upload
+                    files to additional documents when no other folder is applicable.</strong>
             </div>
             <div class="display--flex">
                 <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
@@ -1870,11 +1859,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1905,19 +1894,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                     </div>
             </div>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
-                    should only be used when no other document folder is suitable. Please check
-                    the box below to confirm the document cannot be placed anywhere else before
-                    proceeding.</strong>
-            </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Only upload
+                    files to additional documents when no other folder is applicable.</strong>
             </div>
             <div class="display--flex">
                 <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
@@ -1931,11 +1909,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Add additional documents</h1>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1996,7 +1974,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
@@ -2042,7 +2020,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
@@ -2077,19 +2055,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                     </div>
             </div>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
-                    should only be used when no other document folder is suitable. Please check
-                    the box below to confirm the document cannot be placed anywhere else before
-                    proceeding.</strong>
-            </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Only upload
+                    files to additional documents when no other folder is applicable.</strong>
             </div>
             <div class="display--flex">
                 <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
@@ -2103,7 +2070,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
@@ -2138,19 +2105,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                     </div>
             </div>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Additional documents
-                    should only be used when no other document folder is suitable. Please check
-                    the box below to confirm the document cannot be placed anywhere else before
-                    proceeding.</strong>
-            </div>
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="additional-documents-confirmation"
-                        name="additionalDocumentsConfirmation" type="checkbox" value="confirm">
-                        <label class="govuk-label govuk-checkboxes__label" for="additional-documents-confirmation">This document doesn&#39;t belong anywhere else</label>
-                    </div>
-                </div>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Only upload
+                    files to additional documents when no other folder is applicable.</strong>
             </div>
             <div class="display--flex">
                 <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
@@ -2164,7 +2120,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>

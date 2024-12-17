@@ -258,7 +258,7 @@ function mapAddDocumentsPageHeading(folderPath, documentId) {
 	const isExistingDocument = !!documentId;
 
 	if (folderIsAdditionalDocuments(folderPath)) {
-		return isExistingDocument ? 'Update additional document' : 'Add additional documents';
+		return isExistingDocument ? 'Update additional document' : 'Upload additional documents';
 	} else if (isExistingDocument) {
 		return 'Upload an updated document';
 	}
