@@ -1625,7 +1625,7 @@ describe('LPA Questionnaire review', () => {
 			nock.cleanAll();
 		});
 
-		it('should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it('should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -1652,11 +1652,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -1673,7 +1673,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -1685,11 +1685,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
@@ -1706,7 +1706,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -1718,11 +1718,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
+		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
@@ -1739,7 +1739,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -1751,7 +1751,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 	});
@@ -1769,7 +1769,7 @@ describe('LPA Questionnaire review', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -1796,11 +1796,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -1829,11 +1829,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
@@ -1862,11 +1862,11 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
+		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
@@ -1895,7 +1895,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 	});

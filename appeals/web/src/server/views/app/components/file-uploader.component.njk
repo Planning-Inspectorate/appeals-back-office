@@ -68,17 +68,7 @@
 			{% endif %}
 			{%- if params.displayCorrectFolderConfirmationContent -%}
 				{{ govukWarningText({
-					text: 'Additional documents should only be used when no other document folder is suitable. Please check the box below to confirm the document cannot be placed anywhere else before proceeding.'
-				}) }}
-				{{ govukCheckboxes({
-					name: 'additionalDocumentsConfirmation',
-					idPrefix: 'additional-documents-confirmation',
-					items: [
-						{
-							value: 'confirm',
-							text: "This document doesn't belong anywhere else"
-						}
-					]
+					text: 'Only upload files to additional documents when no other folder is applicable.'
 				}) }}
 			{%- endif -%}
 			<div class="display--flex">

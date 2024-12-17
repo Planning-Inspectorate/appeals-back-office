@@ -2601,7 +2601,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -2628,11 +2628,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -2647,7 +2647,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2659,11 +2659,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
@@ -2678,7 +2678,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2690,11 +2690,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
@@ -2709,7 +2709,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2721,11 +2721,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the appellant case validation outcome is valid', async () => {
+		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the appellant case validation outcome is valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
@@ -2740,7 +2740,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add additional documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2752,7 +2752,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 	});
@@ -2773,7 +2773,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text and confirmation checkbox, if the folder is not additional documents', async () => {
+		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -2798,11 +2798,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -2829,11 +2829,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
@@ -2860,11 +2860,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with additional documents warning text and confirmation checkbox, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
@@ -2891,11 +2891,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 
-		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text and confirmation checkbox, if the folder is additional documents, and the appellant case validation outcome is valid', async () => {
+		it('should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the appellant case validation outcome is valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
@@ -2922,7 +2922,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<input class="govuk-checkboxes__input" id="additional-documents-confirmation"'
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 	});
