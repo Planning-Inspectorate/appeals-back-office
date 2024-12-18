@@ -311,12 +311,17 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 		if (match) {
 			const id = parseInt(match[1], 10);
 			if (!isNaN(id)) {
-				addReason(id);
-
 				const texts = Array.isArray(value) ? value : [value];
-				mappedReasons[id].text = texts
+				const trimmedTexts = texts
 					.filter((text) => typeof text === 'string' && text.trim() !== '')
 					.map((text) => (typeof text === 'string' ? text.trim() : ''));
+
+				if (trimmedTexts.length > 0 || reasonsArray.includes(String(id))) {
+					addReason(id);
+					mappedReasons[id].text = texts
+						.filter((text) => typeof text === 'string' && text.trim() !== '')
+						.map((text) => text?.toString().trim() ?? '');
+				}
 			}
 		}
 	});
