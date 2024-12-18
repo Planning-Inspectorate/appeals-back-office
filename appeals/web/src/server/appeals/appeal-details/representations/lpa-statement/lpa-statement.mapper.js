@@ -101,7 +101,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 
 				{
 					value: COMMENT_STATUS.INVALID,
-					text: 'Reject statement',
+					text: 'Statement incomplete',
 					checked: lpaStatement?.status === COMMENT_STATUS.INVALID
 				}
 			]
