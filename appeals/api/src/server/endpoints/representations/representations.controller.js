@@ -149,7 +149,7 @@ export const changeRepresentationStatus = async (req, res) => {
 
 	if (
 		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
-		rep.representationType !== APPEAL_REPRESENTATION_TYPE.STATEMENT
+		rep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	) {
 		return res.status(400).send({
 			errors: {
@@ -171,7 +171,7 @@ export const changeRepresentationStatus = async (req, res) => {
 };
 
 /**
- * @param {'comment' | 'statement' | 'final_comment'} representationType
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
 export const createRepresentation = (representationType) => async (req, res) => {

@@ -728,7 +728,7 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
 					originalRepresentation: `Statement from appellant`,
 					represented: {
 						create: appellantsList[pickRandom(appellantsList)]
@@ -746,13 +746,14 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 					originalRepresentation: `Statement from LPA`,
 					lpa: {
 						connect: {
 							id: lpaId
 						}
-					}
+					},
+					source: 'lpa'
 				},
 				include: {
 					represented: true

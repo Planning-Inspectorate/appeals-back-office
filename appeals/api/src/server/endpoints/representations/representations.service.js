@@ -102,7 +102,7 @@ export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
 
 /**
  * @typedef {Object} CreateRepresentationInput
- * @property {'comment' | 'statement' | 'final_comment'} representationType
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments

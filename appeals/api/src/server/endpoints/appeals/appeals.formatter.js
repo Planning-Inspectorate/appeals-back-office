@@ -106,53 +106,55 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
  * @param {Appeal} appeal
  * @returns {DocumentationSummary}
  * */
-const formatDocumentationSummary = (appeal) => ({
-	appellantCase: {
-		status: formatAppellantCaseDocumentationStatus(appeal),
-		dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-		receivedAt: appeal.caseCreatedDate.toISOString()
-	},
-	lpaQuestionnaire: {
-		status: formatLpaQuestionnaireDocumentationStatus(appeal),
-		dueDate:
-			appeal.appealTimetable?.lpaQuestionnaireDueDate &&
-			appeal.appealTimetable?.lpaQuestionnaireDueDate.toISOString(),
-		receivedAt:
-			appeal.lpaQuestionnaire?.lpaqCreatedDate &&
-			appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
-	},
-	ipComments: {
-		status:
-			appeal.representations?.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED
-	},
-	lpaStatement: {
-		status: appeal.representations?.find(
-			(rep) =>
-				rep.representationType === APPEAL_REPRESENTATION_TYPE.STATEMENT &&
-				rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-		)
-			? DOCUMENT_STATUS_RECEIVED
-			: DOCUMENT_STATUS_NOT_RECEIVED
-	},
-	lpaFinalComments: {
-		status: appeal.representations?.find(
-			(rep) =>
-				rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
-				rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-		)
-			? DOCUMENT_STATUS_RECEIVED
-			: DOCUMENT_STATUS_NOT_RECEIVED
-	},
-	appellantFinalComments: {
-		status: appeal.representations?.find(
-			(rep) =>
-				rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
-				rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-		)
-			? DOCUMENT_STATUS_RECEIVED
-			: DOCUMENT_STATUS_NOT_RECEIVED
-	}
-});
+const formatDocumentationSummary = (appeal) => {
+	const lpaStatement = appeal.representations?.find(
+		(rep) =>
+			rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT &&
+			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+	);
+	return {
+		appellantCase: {
+			status: formatAppellantCaseDocumentationStatus(appeal),
+			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
+			receivedAt: appeal.caseCreatedDate.toISOString()
+		},
+		lpaQuestionnaire: {
+			status: formatLpaQuestionnaireDocumentationStatus(appeal),
+			dueDate:
+				appeal.appealTimetable?.lpaQuestionnaireDueDate &&
+				appeal.appealTimetable?.lpaQuestionnaireDueDate.toISOString(),
+			receivedAt:
+				appeal.lpaQuestionnaire?.lpaqCreatedDate &&
+				appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
+		},
+		ipComments: {
+			status:
+				appeal.representations?.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED
+		},
+		lpaStatement: {
+			status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			receivedAt: lpaStatement?.dateCreated
+		},
+		lpaFinalComments: {
+			status: appeal.representations?.find(
+				(rep) =>
+					rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
+					rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			)
+				? DOCUMENT_STATUS_RECEIVED
+				: DOCUMENT_STATUS_NOT_RECEIVED
+		},
+		appellantFinalComments: {
+			status: appeal.representations?.find(
+				(rep) =>
+					rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
+					rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			)
+				? DOCUMENT_STATUS_RECEIVED
+				: DOCUMENT_STATUS_NOT_RECEIVED
+		}
+	};
+};
 
 /**
  * @param {Appeal} appeal
