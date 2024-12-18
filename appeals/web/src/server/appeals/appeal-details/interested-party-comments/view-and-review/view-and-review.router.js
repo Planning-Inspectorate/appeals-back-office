@@ -1,7 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './view-and-review.controller.js';
-import { validateReviewComment } from './view-and-review.validators.js';
 import rejectRouter from './reject/reject.router.js';
 import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
 import {
@@ -15,6 +14,7 @@ import {
 	validateCaseFolderId
 } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import { validateStatus } from '#appeals/appeal-details/representations/common/validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -27,7 +27,7 @@ router
 router
 	.route('/review')
 	.get(redirectIfCommentIsReviewed, asyncHandler(controller.renderReviewInterestedPartyComment))
-	.post(validateReviewComment, asyncHandler(controller.postReviewInterestedPartyComment));
+	.post(validateStatus, asyncHandler(controller.postReviewInterestedPartyComment));
 
 router
 	.route('/manage-documents/:folderId/')
