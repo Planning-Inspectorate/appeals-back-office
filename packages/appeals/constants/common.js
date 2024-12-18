@@ -57,5 +57,6 @@ export const COMMENT_STATUS = Object.freeze({
 	AWAITING_REVIEW: 'awaiting_review',
 	VALID: 'valid',
 	INVALID: 'invalid',
-	VALID_REQUIRES_REDACTION: 'valid_requires_redaction'
+	VALID_REQUIRES_REDACTION: 'valid_requires_redaction',
+	INCOMPLETE: 'incomplete'
 });

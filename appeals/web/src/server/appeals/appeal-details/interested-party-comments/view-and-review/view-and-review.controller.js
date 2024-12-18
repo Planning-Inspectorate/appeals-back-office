@@ -38,17 +38,11 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 	try {
 		const {
 			errors,
-			currentAppeal,
 			params: { appealId, commentId },
 			body: { status },
 			apiClient,
 			session
 		} = request;
-
-		if (!currentAppeal) {
-			logger.error('Current appeal not found.');
-			return response.status(500).render('app/500.njk');
-		}
 
 		if (errors) {
 			return renderViewInterestedPartyComment(request, response, next);

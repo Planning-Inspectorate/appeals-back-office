@@ -99,9 +99,9 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 				},
 
 				{
-					value: COMMENT_STATUS.INVALID,
+					value: COMMENT_STATUS.INCOMPLETE,
 					text: 'Statement incomplete',
-					checked: lpaStatement?.status === COMMENT_STATUS.INVALID
+					checked: lpaStatement?.status === COMMENT_STATUS.INCOMPLETE
 				}
 			]
 		}
