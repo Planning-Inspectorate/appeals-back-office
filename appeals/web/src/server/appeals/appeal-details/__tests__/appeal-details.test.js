@@ -1867,6 +1867,116 @@ describe('appeal-details', () => {
 			);
 		});
 
+		describe('Documentation', () => {
+			describe('Final comments', () => {
+				const appealId = 3;
+				const testCases = [
+					{
+						name: 'appellant',
+						rowLabel: 'Appellant final comments',
+						documentationSummaryKey: 'appellantFinalComments',
+						reviewPageRoute: 'appellant-final-comment',
+						cyAttribute: 'review-appellant-final-comments',
+						actionLinkHiddenText: 'appellant final comments'
+					},
+					{
+						name: 'LPA',
+						rowLabel: 'LPA final comments',
+						documentationSummaryKey: 'lpaFinalComments',
+						reviewPageRoute: 'lpa-final-comment',
+						cyAttribute: 'review-lpa-final-comments',
+						actionLinkHiddenText: 'L P A final comments'
+					}
+				];
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+						.reply(200, {
+							statement: 0,
+							comment: 0,
+							lpa_final_comment: 0,
+							appellant_final_comment: 0
+						});
+				});
+
+				for (const testCase of testCases) {
+					it(`should not render an "${testCase.rowLabel}" row, if the appeal type is "householder" (HAS)`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
+					});
+
+					it(`should render an "${testCase.rowLabel}" row with a status of "Not received" and nothing in the "Received" column, and no action link, if the appeal type is "planning appeal", and the appeal does not have ${testCase.name} final comments awaiting review`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								appealId,
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[testCase.documentationSummaryKey]: {
+										status: 'not_received',
+										receivedAt: null
+									}
+								}
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).toContain(
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Not received</td><td class="govuk-table__cell"></td><td class="govuk-table__cell pins-table__cell--align-right"></td>`
+						);
+					});
+
+					it(`should render an "${testCase.rowLabel}" row with a status of "Received", and the expected date in the "Received" column, and a "Review" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has ${testCase.name} final comments awaiting review`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								appealId,
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[testCase.documentationSummaryKey]: {
+										status: 'received',
+										receivedAt: '2024-12-17T17:36:19.631Z'
+									}
+								}
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).toContain(
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell pins-table__cell--align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+						);
+					});
+				}
+			});
+		});
+
 		describe('Costs', () => {
 			const appealIdWithoutCostsDocuments = 2;
 			const appealIdWithCostsDocuments = 3;
