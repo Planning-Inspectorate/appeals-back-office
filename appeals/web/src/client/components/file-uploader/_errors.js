@@ -53,7 +53,7 @@ const buildTopErrorsMarkup = (errors) => {
  */
 export const showErrors = (error, uploadForm) => {
 	const formContainer = uploadForm.querySelector(SELECTORS.container);
-	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
+	const topHook = document.querySelector(SELECTORS.topErrorsHook);
 
 	if (!formContainer || !topHook) return;
 
@@ -100,7 +100,7 @@ export const showErrors = (error, uploadForm) => {
  */
 export const hideErrors = (uploadForm) => {
 	const formContainer = uploadForm.querySelector(SELECTORS.container);
-	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
+	const topHook = document.querySelector(SELECTORS.topErrorsHook);
 	const filesRows = uploadForm.querySelector(SELECTORS.filesRows);
 
 	if (!formContainer || !topHook || !filesRows) return;
