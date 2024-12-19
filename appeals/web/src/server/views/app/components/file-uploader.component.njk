@@ -38,21 +38,24 @@
 						<span>The file must be smaller than 1 GB.</span>
 					{% endif %}
 					{{ extensionsHtml(params) }}
-					<div class="middle-errors-hook"></div>
 				</div>
-				<div class="pins-file-upload__upload">
-					<input class="display--none"
-						   id="upload-file-{{ params.formId }}"
-						   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
-						   type="file" name="files" value="Choose file"
-						   aria-controls="file-list-{{ params.formId }}"
-						   {% if params.multiple %}multiple{% endif %}>
-					<button type='button' class="pins-file-upload__button govuk-button">
-						Choose file
-					</button>
-					<span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'>
-					No file chosen
-				</span>
+				<div class="middle-errors-hook">
+					<div class="pins-file-upload__upload">
+						<input class="display--none"
+							   id="upload-file-{{ params.formId }}"
+							   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
+							   type="file" name="files" value="Choose file"
+							   aria-controls="file-list-{{ params.formId }}"
+							   {% if params.multiple %}multiple{% endif %}>
+						<button type='button' class="pins-file-upload__button govuk-button">
+							Choose file
+						</button>
+						<span role="status"
+							  aria-live="assertive"
+							  class='govuk-body pins-file-upload__counter'>
+					        No file chosen
+						</span>
+					</div>
 				</div>
 				<div id="file-list-{{ params.formId }}">
 					<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>
