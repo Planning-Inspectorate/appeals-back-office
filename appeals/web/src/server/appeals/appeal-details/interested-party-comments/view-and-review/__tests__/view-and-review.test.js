@@ -147,7 +147,7 @@ describe('interested-party-comments', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test')
-				.get('/appeals/representation-rejection-reasons')
+				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
 		});
 		afterEach(teardown);
@@ -194,7 +194,7 @@ describe('interested-party-comments', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test')
-				.get('/appeals/representation-rejection-reasons')
+				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
 		});
 
