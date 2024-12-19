@@ -1,6 +1,7 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './representation-rejection-reasons.controller.js';
+import { validateRepresentationType } from './representation-rejection-reasons.validators.js';
 
 const router = createRouter();
 
@@ -26,6 +27,7 @@ router.get(
 		}
 		#swagger.responses[400] = {}
 	 */
+	validateRepresentationType,
 	asyncHandler(controller.getRejectionReasons)
 );
 
