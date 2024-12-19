@@ -4,7 +4,7 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 
 {%- macro extensionsHtml(params) -%}
-<span>{{ 'The files must be ' if params.multiple else 'The file must be ' }}
+<span>{{ 'Each file must be a ' if params.multiple else 'The file must be a ' }}
 {%- for extension in params.allowedTypes -%}
 	{%- if loop.index !== params.allowedTypes.length -%}{{ extension|upper }}{{", "}}
 	{%- else -%}{{"	or " }}{{ extension|upper }}.
@@ -31,14 +31,11 @@
 		<form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds" data-filenames-in-folder="{{ params.filenamesInFolder }}">
 			<div class="pins-file-upload__container">
 				<div class="govuk-body colour--secondary pins-file-upload__instructions">
-					{% if params.multiple %}
-						<label for="upload-file-{{ params.formId }}">Choose a single or multiple files to upload.</label>
-						<span>The total size of the files must be smaller than 1 GB.</span>
-					{% else %}
-						<label for="upload-file-{{ params.formId }}">Choose a single file to upload.</label>
-						<span>The file must be smaller than 1 GB.</span>
-					{% endif %}
+					{%- set hintText = 'Choose a single file or multiple files to upload.' if params.multiple else 'Choose a single file to upload.' -%}
+					{%- set totalSizeText = 'The total size of your uploaded files must be smaller than 1GB.' if params.multiple else 'The file must be smaller than 25MB.' -%}
+					<label for="upload-file-{{ params.formId }}">{{ hintText }}</label>
 					{{ extensionsHtml(params) }}
+					<span>{{ totalSizeText }}</span>
 					<div class="middle-errors-hook"></div>
 				</div>
 				<div class="pins-file-upload__upload">
@@ -48,12 +45,12 @@
 						   type="file" name="files" value="Choose file"
 						   aria-controls="file-list-{{ params.formId }}"
 						   {% if params.multiple %}multiple{% endif %}>
+					{% if params.multiple %}
+						<span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
+					{% endif %}
 					<button type='button' class="pins-file-upload__button govuk-button">
-						Choose file
+						Select files
 					</button>
-					<span role="status" aria-live="assertive" class='govuk-body pins-file-upload__counter'>
-					No file chosen
-				</span>
 				</div>
 				<div id="file-list-{{ params.formId }}">
 					<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>
