@@ -6,6 +6,9 @@ import { mapLpaFinalCommentDueDate } from './submappers/lpa-final-comment-due-da
 import { mapLpaStatementDueDate } from './submappers/lpa-statement-due-date.mapper.js';
 import { mapS106ObligationDue } from './submappers/s106-obligation-due-date.mapper.js';
 import { mapAppellantStatementDueDate } from './submappers/appellant-statement-due-date.mapper.js';
+import { mapLpaStatement } from './submappers/lpa-statement.mapper.js';
+import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
+import { mapLPAFinalComments } from './submappers/lpa-final-comments.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -16,5 +19,8 @@ export const submaps = {
 	appellantFinalCommentDueDate: mapAppellantFinalCommentDueDate,
 	lpaFinalCommentDueDate: mapLpaFinalCommentDueDate,
 	s106ObligationDueDate: mapS106ObligationDue,
-	ipComments: mapIpComments
+	ipComments: mapIpComments,
+	lpaStatement: mapLpaStatement,
+	appellantFinalComments: mapAppellantFinalComments,
+	lpaFinalComments: mapLPAFinalComments
 };

@@ -319,6 +319,33 @@ const newS78Appeals = [
 		validAt: getPastDate({ months: 6 }),
 		assignCaseOfficer: true,
 		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 4 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 1 }),
+		validAt: getPastDate({ months: 3 }),
+		assignCaseOfficer: true,
+		agent: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 12 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 4 }),
+		validAt: getPastDate({ months: 5 }),
+		assignCaseOfficer: false,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 10 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 8 }),
+		validAt: getPastDate({ months: 9 }),
+		assignCaseOfficer: false,
+		agent: true
 	})
 ];
 
@@ -652,6 +679,10 @@ export async function seedTestData(databaseConnector) {
 	const appealStatus = await databaseConnector.appealStatus.findMany();
 	const siteVisitType = await databaseConnector.siteVisitType.findMany();
 
+	const counters = {
+		finalComment: 0
+	};
+
 	for (const { appealTypeId, id, caseStartedDate, lpaId, appellantId } of appeals) {
 		const appealType =
 			appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_TYPE_SHORTHAND_HAS;
@@ -728,7 +759,7 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
 					originalRepresentation: `Statement from appellant`,
 					represented: {
 						create: appellantsList[pickRandom(appellantsList)]
@@ -746,59 +777,25 @@ export async function seedTestData(databaseConnector) {
 							id
 						}
 					},
-					representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
-					originalRepresentation: `Statement from LPA`,
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+					originalRepresentation: `Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.
+
+The secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.
+
+You don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.`,
 					lpa: {
 						connect: {
 							id: lpaId
 						}
-					}
+					},
+					source: 'lpa'
 				},
 				include: {
 					represented: true
 				}
 			});
 
-			await databaseConnector.representation.create({
-				data: {
-					appeal: {
-						connect: {
-							id
-						}
-					},
-					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
-					originalRepresentation: `Final comment from appellant`,
-					represented: {
-						connect: {
-							// @ts-ignore
-							id: appellantId
-						}
-					}
-				},
-				include: {
-					represented: true
-				}
-			});
-
-			await databaseConnector.representation.create({
-				data: {
-					appeal: {
-						connect: {
-							id
-						}
-					},
-					representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
-					originalRepresentation: `Final comment from LPA`,
-					lpa: {
-						connect: {
-							id: lpaId
-						}
-					}
-				},
-				include: {
-					represented: true
-				}
-			});
+			await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
 		}
 
 		const statusWithSiteVisitSet = appealStatus.find(
@@ -907,6 +904,80 @@ export async function seedTestData(databaseConnector) {
 		}
 	}
 }
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {number} appellantId
+ * @param {number} lpaId
+ * @param {Object<string, number>} counters
+ */
+async function addFinalComments(databaseConnector, id, appellantId, lpaId, counters) {
+	switch (counters.finalComment) {
+		case 1:
+			await addFinalComment(databaseConnector, id, 'appellant', appellantId);
+			break;
+		case 2:
+			await addFinalComment(databaseConnector, id, 'LPA', lpaId);
+			break;
+		case 3:
+			await addFinalComment(databaseConnector, id, 'appellant', appellantId);
+			await addFinalComment(databaseConnector, id, 'LPA', lpaId);
+			break;
+		default:
+			break;
+	}
+
+	if (counters.finalComment > 2) {
+		counters.finalComment = 0;
+	} else {
+		counters.finalComment++;
+	}
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {'appellant'|'LPA'} source
+ * @param {number} sourceId
+ */
+async function addFinalComment(databaseConnector, id, source, sourceId) {
+	await databaseConnector.representation.create({
+		data: {
+			appeal: {
+				connect: {
+					id
+				}
+			},
+			representationType:
+				source === 'appellant'
+					? APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+					: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+			originalRepresentation: `Final comment from ${source}`,
+			...(source === 'appellant'
+				? {
+						represented: {
+							connect: {
+								// @ts-ignore
+								id: sourceId
+							}
+						}
+				  }
+				: {
+						lpa: {
+							connect: {
+								// @ts-ignore
+								id: sourceId
+							}
+						}
+				  })
+		},
+		include: {
+			represented: true
+		}
+	});
+}
+
 function getRandomReviewStatus() {
 	const pmf = [0.6, 0.2, 0.2];
 	const cdf = pmf.map(

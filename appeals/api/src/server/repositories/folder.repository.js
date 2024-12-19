@@ -79,7 +79,7 @@ export const getByCaseIdAndPaths = (caseId, paths) => {
 					}
 				},
 				orderBy: {
-					createdAt: 'desc'
+					createdAt: 'asc'
 				}
 			}
 		}

@@ -54,7 +54,7 @@ router.get(
   #swagger.parameters['types'] = {
     in: 'query',
     required: false,
-    example: 'statement'
+    example: 'lpa_statement'
   }
   #swagger.parameters['pageNumber'] = {
     in: 'query',

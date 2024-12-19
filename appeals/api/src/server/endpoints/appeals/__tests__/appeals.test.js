@@ -103,9 +103,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -144,9 +146,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -208,9 +212,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -300,9 +306,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -392,9 +400,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -484,9 +494,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -563,9 +575,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -644,9 +658,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -722,9 +738,11 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
+									receivedAt: null,
 									status: 'not_received'
 								}
 							},
@@ -970,9 +988,11 @@ describe('appeals routes', () => {
 							status: 'not_received'
 						},
 						lpaFinalComments: {
+							receivedAt: null,
 							status: 'not_received'
 						},
 						appellantFinalComments: {
+							receivedAt: null,
 							status: 'not_received'
 						}
 					},
@@ -1094,9 +1114,11 @@ describe('appeals routes', () => {
 							status: 'not_received'
 						},
 						lpaFinalComments: {
+							receivedAt: null,
 							status: 'not_received'
 						},
 						appellantFinalComments: {
+							receivedAt: null,
 							status: 'not_received'
 						}
 					},
@@ -1711,9 +1733,11 @@ describe('appeals/case-reference/:caseReference', () => {
 						status: 'not_received'
 					},
 					lpaFinalComments: {
+						receivedAt: null,
 						status: 'not_received'
 					},
 					appellantFinalComments: {
+						receivedAt: null,
 						status: 'not_received'
 					}
 				},
@@ -1836,9 +1860,11 @@ describe('appeals/case-reference/:caseReference', () => {
 						status: 'not_received'
 					},
 					lpaFinalComments: {
+						receivedAt: null,
 						status: 'not_received'
 					},
 					appellantFinalComments: {
+						receivedAt: null,
 						status: 'not_received'
 					}
 				},
