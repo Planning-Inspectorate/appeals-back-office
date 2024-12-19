@@ -12,6 +12,6 @@ export const mapNewPlansDrawings = ({ appellantCaseData, userHasUpdateCase }) =>
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'new-plans-drawings',
-		text: 'New plans or drawings with appeal',
+		text: 'New plans or drawings',
 		folderInfo: appellantCaseData.documents.newPlansDrawings
 	});

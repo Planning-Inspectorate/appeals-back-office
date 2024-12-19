@@ -1,7 +1,7 @@
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').Representation} IPComments */
-/** @typedef {import('#appeals/appeal-details/interested-party-comments/interested-party-comments.types').RepresentationList} IPCommentsList */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} IPComments */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationList} IPCommentsList */
 
 /**
  * Fetch paginated appeal comments based on appeal ID and status.

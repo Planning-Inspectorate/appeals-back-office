@@ -1,5 +1,6 @@
 import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { randomUUID } from 'node:crypto';
+import { renameDuplicateDocuments } from '../integrations.utils.js';
 
 describe('document import', () => {
 	describe('mapping/encoding', () => {
@@ -34,6 +35,59 @@ describe('document import', () => {
 				const blobPath = destinationComponents[1];
 
 				expect(blobStoragePath).toEqual(blobPath);
+			});
+		}
+	});
+
+	describe('mapping/processing-duplicates', () => {
+		const tests = [
+			{
+				it: 'success small dupe set',
+				input: [
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name.pdf' }
+				],
+				output: [
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name_1.pdf' },
+					{ documentType: 'A', originalFilename: 'name_2.pdf' }
+				]
+			},
+			{
+				it: 'success big dupe set',
+				input: [
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name_1.pdf' },
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'B', originalFilename: 'name.pdf' },
+					{ documentType: 'B', originalFilename: 'name_1.pdf' },
+					{ documentType: 'C', originalFilename: 'name_3.pdf' },
+					{ documentType: 'AC', originalFilename: 'name_3.docx' },
+					{ documentType: 'AC', originalFilename: 'name_3.docx' },
+					{ documentType: 'C', originalFilename: 'name_3.pdf' }
+				],
+				output: [
+					{ documentType: 'A', originalFilename: 'name.pdf' },
+					{ documentType: 'A', originalFilename: 'name_1.pdf' },
+					{ documentType: 'A', originalFilename: 'name_2.pdf' },
+					{ documentType: 'A', originalFilename: 'name_3.pdf' },
+					{ documentType: 'B', originalFilename: 'name.pdf' },
+					{ documentType: 'B', originalFilename: 'name_1.pdf' },
+					{ documentType: 'C', originalFilename: 'name_3.pdf' },
+					{ documentType: 'AC', originalFilename: 'name_3.docx' },
+					{ documentType: 'AC', originalFilename: 'name_3_1.docx' },
+					{ documentType: 'C', originalFilename: 'name_3_1.pdf' }
+				]
+			}
+		];
+
+		for (const { it, input, output } of tests) {
+			test(`${it}`, async () => {
+				// @ts-ignore
+				const processed = renameDuplicateDocuments(input);
+				expect(processed).toEqual(output);
 			});
 		}
 	});

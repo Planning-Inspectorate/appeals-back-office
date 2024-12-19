@@ -124,7 +124,7 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings with appeal</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
@@ -134,7 +134,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Ownership certificate and/or land declaration</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Other new documents with appeal</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Procedure preference</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Reason for preference</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Expected length of procedure</dt>');

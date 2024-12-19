@@ -3,7 +3,7 @@ import { radiosInput } from '#lib/mappers/index.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("../interested-party-comments.types.js").Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {{ 'redactionStatus': string }} ReqBody */
 
 export const statusFormatMap = {
