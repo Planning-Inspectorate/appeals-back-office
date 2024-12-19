@@ -246,7 +246,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -267,7 +267,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -307,7 +307,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -366,7 +366,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Awaiting LPA update<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -406,7 +406,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -465,7 +465,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -486,7 +486,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 
@@ -507,7 +507,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			true
 		);
 		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case</a>`
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
 	});
 });
