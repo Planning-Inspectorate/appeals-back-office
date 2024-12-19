@@ -84,6 +84,14 @@ export function mapStatusDependentNotifications(
 					`<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
 				);
 			}
+			if (representationTypesAwaitingReview?.lpaStatement) {
+				addNotificationBannerToSession(
+					session,
+					'lpaStatementAwaitingReview',
+					appealDetails.appealId,
+					`<p class="govuk-notification-banner__heading">LPA statement awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/review" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>`
+				);
+			}
 			break;
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 			if (representationTypesAwaitingReview?.appellantFinalComments) {
