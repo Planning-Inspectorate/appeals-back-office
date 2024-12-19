@@ -24,7 +24,6 @@
 		 {% if params.accessToken %} data-access-token="{{ params.accessToken }}"{% endif %}
 		 {% if params.uncommittedFiles %} data-uncommitted-files="{{ params.uncommittedFiles }}"{% endif %}
 		 data-allowed-types="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}">
-		<div class="top-errors-hook govuk-grid-column-two-thirds"></div>
 		{% if params.formTitle %}
 			<h1 class="govuk-heading-m govuk-grid-column-full">{{ params.formTitle }}</h1>
 		{% endif %}
@@ -36,26 +35,27 @@
 					<label for="upload-file-{{ params.formId }}">{{ hintText }}</label>
 					{{ extensionsHtml(params) }}
 					<span>{{ totalSizeText }}</span>
-					<div class="middle-errors-hook"></div>
 				</div>
-				<div class="pins-file-upload__upload">
-					<input class="display--none"
-						   id="upload-file-{{ params.formId }}"
-						   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
-						   type="file" name="files" value="Choose file"
-						   aria-controls="file-list-{{ params.formId }}"
-						   {% if params.multiple %}multiple{% endif %}>
-					{% if params.multiple %}
-						<span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-					{% endif %}
-					<button type='button' class="pins-file-upload__button govuk-button">
-						Select files
-					</button>
-				</div>
-				<div id="file-list-{{ params.formId }}">
-					<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>
-					<ul class="pins-file-upload__files-rows"
-						aria-describedby="file-list-title-{{ params.formId }}" aria-live="polite"></ul>
+				<div class="middle-errors-hook">
+					<div class="pins-file-upload__upload">
+						<input class="display--none"
+							   id="upload-file-{{ params.formId }}"
+							   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
+							   type="file" name="files" value="Choose file"
+							   aria-controls="file-list-{{ params.formId }}"
+							   {% if params.multiple %}multiple{% endif %}>
+						{% if params.multiple %}
+							<span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
+						{% endif %}
+						<button type='button' class="pins-file-upload__button govuk-button">
+							Select files
+						</button>
+					</div>
+					<div id="file-list-{{ params.formId }}">
+						<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>
+						<ul class="pins-file-upload__files-rows"
+							aria-describedby="file-list-title-{{ params.formId }}" aria-live="polite"></ul>
+					</div>
 				</div>
 			</div>
 			{% if params.disclaimerText %}

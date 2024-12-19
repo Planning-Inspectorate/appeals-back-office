@@ -4,13 +4,20 @@ const CLASSES = {
 	topErrors: 'govuk-error-summary pins-file-upload__errors-top',
 	errorSummaryTitle: 'govuk-error-summary__title',
 	errorSummaryList: 'govuk-list govuk-error-summary__list',
+	errorTitle: 'govuk-error__title',
+	errorList: 'middle-errors-list',
+	visuallyHidden: 'govuk-visually-hidden',
+	errorMessage: 'govuk-error-message',
 	fileRowRed: 'colour--red'
 };
 const SELECTORS = {
 	container: '.pins-file-upload__container',
 	topErrorsHook: '.top-errors-hook',
+	middleErrorsHook: '.middle-errors-hook',
+	middleErrorsContainer: '.middle-errors-list',
 	filesRows: '.pins-file-upload__files-rows',
-	errorRow: '.error-row'
+	errorRow: '.error-row',
+	pageHeading: '.govuk-heading-xl'
 };
 
 /**
@@ -47,13 +54,43 @@ const buildTopErrorsMarkup = (errors) => {
 };
 
 /**
+ * @param {{message: string; guid: string;}[]} errors
+ * @returns {HTMLElement}
+ */
+const buildMiddleErrorsMarkup = (errors) => {
+	const pageHeading = document.querySelector(SELECTORS.pageHeading);
+	const div = document.createElement('div');
+	div.className = CLASSES.errorList;
+	const h2 = document.createElement('h2');
+	h2.className = CLASSES.errorTitle;
+	h2.textContent = pageHeading?.textContent || 'Upload Documents';
+	div.appendChild(h2);
+
+	errors.forEach((errorItem) => {
+		const p = document.createElement('p');
+		p.className = CLASSES.errorMessage;
+		const hidden = document.createElement('span');
+		hidden.textContent = 'Error: ';
+		hidden.className = CLASSES.visuallyHidden;
+		p.appendChild(hidden);
+		const textNode = document.createTextNode(errorItem.message);
+		p.appendChild(textNode);
+		div.appendChild(p);
+	});
+
+	return div;
+};
+
+/**
  *
  * @param {{message: string, details?: import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]}} error
  * @param {Element} uploadForm
  */
 export const showErrors = (error, uploadForm) => {
 	const formContainer = uploadForm.querySelector(SELECTORS.container);
-	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
+	const topHook = document.querySelector(SELECTORS.topErrorsHook);
+	const middleHook = document.querySelector(SELECTORS.middleErrorsHook);
+	const middleErrors = middleHook?.querySelector(SELECTORS.middleErrorsContainer);
 
 	if (!formContainer || !topHook) return;
 
@@ -61,12 +98,17 @@ export const showErrors = (error, uploadForm) => {
 
 	topHook.textContent = '';
 
-	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
-		const errors = error.details.map((errorDetails) => ({
+	middleHook?.classList.remove('govuk-form-group', 'govuk-form-group--error');
+
+	middleErrors?.remove();
+
+	const errors =
+		error.details?.map((errorDetails) => ({
 			message: errorMessage(errorDetails.message || '', errorDetails.name),
 			guid: errorDetails.guid
-		}));
+		})) || [];
 
+	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
 		for (const errorDetails of error.details) {
 			const fileRow = uploadForm.querySelector(`#${CSS.escape(errorDetails.guid)}`);
 
@@ -85,13 +127,18 @@ export const showErrors = (error, uploadForm) => {
 		formContainer.classList.add('error');
 
 		const replaceValue = error.details ? error.details[0].message : null;
+		const message = errorMessage(error.message, replaceValue);
 		const topErrorsElement = buildTopErrorsMarkup([
 			{
-				message: errorMessage(error.message, replaceValue),
+				message,
 				guid: '#'
 			}
 		]);
 		topHook.appendChild(topErrorsElement);
+	}
+	if (errors?.length && middleHook) {
+		middleHook.classList.add('govuk-form-group', 'govuk-form-group--error');
+		middleHook.insertBefore(buildMiddleErrorsMarkup(errors), middleHook.firstElementChild);
 	}
 };
 
@@ -100,7 +147,9 @@ export const showErrors = (error, uploadForm) => {
  */
 export const hideErrors = (uploadForm) => {
 	const formContainer = uploadForm.querySelector(SELECTORS.container);
-	const topHook = uploadForm.querySelector(SELECTORS.topErrorsHook);
+	const topHook = document.querySelector(SELECTORS.topErrorsHook);
+	const middleHook = document.querySelector(SELECTORS.middleErrorsHook);
+	const middleErrors = middleHook?.querySelector(SELECTORS.middleErrorsContainer);
 	const filesRows = uploadForm.querySelector(SELECTORS.filesRows);
 
 	if (!formContainer || !topHook || !filesRows) return;
@@ -111,4 +160,7 @@ export const hideErrors = (uploadForm) => {
 	}
 	topHook.textContent = '';
 	formContainer.classList.remove('error');
+
+	middleHook?.classList.remove('govuk-form-group', 'govuk-form-group--error');
+	middleErrors?.remove();
 };

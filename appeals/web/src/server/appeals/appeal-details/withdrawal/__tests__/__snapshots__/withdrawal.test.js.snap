@@ -48,6 +48,7 @@ exports[`withdrawal GET /redaction-status should render the redaction status pag
 exports[`withdrawal GET /start should render the withdrawal request upload page with a file upload component 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
         <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant&#39;s withdrawal request</h1>
         </div>
@@ -59,33 +60,33 @@ exports[`withdrawal GET /start should render the withdrawal request upload page 
             data-document-type="appellantCaseWithdrawalLetter" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
-                <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
                         <div class="govuk-body colour--secondary pins-file-upload__instructions">
                             <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
-                            <div                             class="middle-errors-hook"></div>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="pins-file-upload__upload">
-                        <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
-                        type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                        <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
                     </div>
-                    <div id="file-list-1">
-                        <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
-                        <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
-                        aria-live="polite"></ul>
-                    </div>
+                </form>
             </div>
-            <div class="display--flex">
-                <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
-                id="submit-button-1">Continue</button>
-                <div class="progress-hook"></div>
-            </div>
-            </form>
         </div>
-    </div>
     </div>
 </main>"
 `;
