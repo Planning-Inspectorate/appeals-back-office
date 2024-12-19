@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
+import * as controller from './representation-rejection-reasons.controller.js';
 
 const router = createRouter();
 
@@ -15,13 +15,18 @@ router.get(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
+    #swagger.parameters['type'] = {
+      in: 'query',
+      required: false,
+      example: 'comment'
+    }
 		#swagger.responses[200] = {
 			description: 'Representation rejection reasons',
 			schema: { $ref: '#/components/schemas/AllRepresentationRejectionReasonsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
-	asyncHandler(getLookupData('representationRejectionReason'))
+	asyncHandler(controller.getRejectionReasons)
 );
 
 export { router as representationRejectionReasonsRoutes };
