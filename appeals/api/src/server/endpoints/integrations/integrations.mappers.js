@@ -32,6 +32,7 @@ import {
 import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { mapSiteVisitOut } from './integrations.mappers/site-visit.mapper.js';
+import { renameDuplicateDocuments } from './integrations.utils.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
@@ -113,7 +114,7 @@ const mapAppealSubmission = (data) => {
 		}
 	};
 
-	const documentsInput = (documents || []).map((document) =>
+	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
 		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)
 	);
 
@@ -145,7 +146,7 @@ const mapQuestionnaireSubmission = (data) => {
 		}
 	};
 
-	const documentsInput = (documents || []).map((document) =>
+	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
 		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
 	);
 

@@ -221,7 +221,7 @@ describe('/appeals/:id/representations', () => {
 							name: 'Other',
 							hasText: true
 						},
-						representationRejectionReasonText: ['Provided documents were incomplete']
+						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
 					}
 				]
 			};

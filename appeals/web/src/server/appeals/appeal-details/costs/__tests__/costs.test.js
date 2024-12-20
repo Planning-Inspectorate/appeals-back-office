@@ -97,7 +97,7 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<div class="govuk-grid-row pins-file-upload"'
 						);
-						expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+						expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 					});
 				}
 			}
@@ -186,7 +186,7 @@ describe('costs', () => {
 						expect(element.innerHTML).toMatchSnapshot();
 						expect(element.innerHTML).toContain('Upload an updated document</h1>');
 						expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-						expect(element.innerHTML).toContain('Choose file</button>');
+						expect(element.innerHTML).toContain('Select files</button>');
 					});
 				}
 			}
@@ -1594,7 +1594,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<div class="govuk-grid-row pins-file-upload"'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 			});
 		});
 
@@ -1667,7 +1667,7 @@ describe('costs', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('Upload an updated document</h1>');
 				expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-				expect(element.innerHTML).toContain('Choose file</button>');
+				expect(element.innerHTML).toContain('Select files</button>');
 			});
 		});
 

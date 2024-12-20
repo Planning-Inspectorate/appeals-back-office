@@ -41,7 +41,7 @@ describe('withdrawal', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				`Upload appellant&#39;s withdrawal request</h1>`
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 		});
 	});
 

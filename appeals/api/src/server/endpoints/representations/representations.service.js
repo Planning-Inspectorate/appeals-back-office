@@ -175,14 +175,16 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
-	console.log(JSON.stringify(comment));
-
 	const reasons =
 		comment.representationRejectionReasonsSelected?.map((selectedReason) => {
 			if (selectedReason.representationRejectionReason.hasText) {
-				return `Other: ${selectedReason.representationRejectionReasonText}`;
+				const reasonText =
+					selectedReason.representationRejectionReasonText
+						?.map((reason) => reason.text)
+						.filter((text) => typeof text === 'string' && text.trim() !== '')
+						.join(', ') || 'No details provided';
+				return `Other: ${reasonText}`;
 			}
-
 			return selectedReason.representationRejectionReason.name;
 		}) ?? [];
 
@@ -194,8 +196,6 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		const date = await addDays(new Date().toISOString(), 7);
 		return formatDate(date, false);
 	})();
-
-	console.log(JSON.stringify(reasons));
 
 	const emailVariables = {
 		appeal_reference_number: appeal.reference,

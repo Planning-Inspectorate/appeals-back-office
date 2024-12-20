@@ -305,21 +305,26 @@ export async function renderCheckYourAnswers(
 						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details`
 					}
 				},
-				Address: {
-					html:
-						addressProvided === 'no'
-							? 'Not provided'
-							: addressToMultilineStringHtml({
-									addressLine1,
-									addressLine2,
-									town,
-									county,
-									postCode
-							  }),
+				'Address Provided': {
+					html: addressProvided === 'no' ? 'No' : 'Yes',
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`
+						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/check-address`
 					}
 				},
+				...(addressProvided !== 'no' && {
+					Address: {
+						html: addressToMultilineStringHtml({
+							addressLine1,
+							addressLine2,
+							town,
+							county,
+							postCode
+						}),
+						actions: {
+							Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`
+						}
+					}
+				}),
 				Comment: {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
