@@ -65,7 +65,8 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem
+				mappedData.appeal.appealDecision.display.tableItem,
+				mappedData.appeal.environmentalImpactAssessment.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}
