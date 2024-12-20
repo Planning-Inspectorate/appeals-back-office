@@ -1,3 +1,4 @@
+import BackOfficeAppError from '#utils/app-error.js';
 import { ERROR_NOT_FOUND } from '../constants.js';
 
 /** @typedef {import('express').Request} Request */
@@ -15,10 +16,14 @@ const checkAddressExists = async (req, res, next) => {
 		appeal,
 		params: { addressId }
 	} = req;
-	const hasAddress = appeal.address?.id === Number(addressId);
 
+	const hasAddress = appeal.address?.id === Number(addressId);
 	if (!hasAddress) {
-		return res.status(404).send({ errors: { addressId: ERROR_NOT_FOUND } });
+		throw new BackOfficeAppError(
+			`Address with ID ${addressId} does not exist on appeal with ID ${appeal.id}`,
+			404,
+			{ addressId: ERROR_NOT_FOUND }
+		);
 	}
 
 	next();

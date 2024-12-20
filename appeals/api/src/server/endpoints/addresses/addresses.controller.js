@@ -1,5 +1,4 @@
-import logger from '#utils/logger.js';
-import { AUDIT_TRAIL_ADDRESS_UPDATED, ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
+import { AUDIT_TRAIL_ADDRESS_UPDATED } from '../constants.js';
 import { formatAddress } from './addresses.formatter.js';
 import addressRepository from '#repositories/address.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
@@ -39,14 +38,7 @@ const updateAddressById = async (req, res) => {
 		addressTown: town
 	};
 
-	try {
-		await addressRepository.updateAddressById(Number(addressId), updateAddress);
-	} catch (error) {
-		if (error) {
-			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
-		}
-	}
+	await addressRepository.updateAddressById(Number(addressId), updateAddress);
 
 	await createAuditTrail({
 		appealId: parseInt(appealId),

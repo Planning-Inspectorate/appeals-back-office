@@ -6,16 +6,15 @@ import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '#utils/business-days.js';
-import logger from '#utils/logger.js';
 import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	AUDIT_TRAIL_SYSTEM_UUID,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
 	FRONT_OFFICE_URL
 } from '../constants.js';
 import transitionState from '#state/transition-state.js';
+import BackOfficeAppError from '#utils/app-error.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
@@ -39,10 +38,14 @@ const checkAppealTimetableExists = async (req, res, next) => {
 		appeal,
 		params: { appealTimetableId }
 	} = req;
-	const hasAppealTimetable = appeal.appealTimetable?.id === Number(appealTimetableId);
 
+	const hasAppealTimetable = appeal.appealTimetable?.id === Number(appealTimetableId);
 	if (!hasAppealTimetable) {
-		return res.status(404).send({ errors: { appealTimetableId: ERROR_NOT_FOUND } });
+		throw new BackOfficeAppError(
+			`Timetable with ID ${appealTimetableId} does not exist on appeal with ID ${appeal.id}`,
+			404,
+			{ appealTimetableId: ERROR_NOT_FOUND }
+		);
 	}
 
 	next();
@@ -58,89 +61,75 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @returns
  */
 const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUserId) => {
-	try {
-		const appealType = appeal.appealType || null;
-		if (!appealType) {
-			throw new Error('Appeal type is required to start a case.');
-		}
-
-		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-		const timetable = await calculateTimetable(appealType.key, startedAt);
-		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
-
-		const appellantTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.appellant
-			: config.govNotify.template.appealValidStartCase.appellant;
-
-		const lpaTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.lpa
-			: config.govNotify.template.appealValidStartCase.lpa;
-
-		if (timetable) {
-			await Promise.all([
-				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				appealRepository.updateAppealById(appeal.id, {
-					caseStartedDate: startDateWithTimeCorrection.toISOString()
-				})
-			]);
-
-			await createAuditTrail({
-				appealId: appeal.id,
-				azureAdUserId,
-				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
-			});
-
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-			const lpaEmail = appeal.lpa?.email || '';
-
-			const emailVariables = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				url: FRONT_OFFICE_URL,
-				start_date: formatDate(new Date(startDate || ''), false),
-				questionnaire_due_date: formatDate(
-					new Date(timetable.lpaQuestionnaireDueDate || ''),
-					false
-				),
-				local_planning_authority: appeal.lpa?.name || '',
-				appeal_type: appeal.appealType?.type || '',
-				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
-				appellant_email_address: recipientEmail || ''
-			};
-
-			if (recipientEmail) {
-				try {
-					await notifyClient.sendEmail(appellantTemplate, recipientEmail, emailVariables);
-				} catch (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
-
-			if (lpaEmail) {
-				try {
-					await notifyClient.sendEmail(lpaTemplate, lpaEmail, emailVariables);
-				} catch (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
-
-			await transitionState(
-				appeal.id,
-				appealType,
-				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				appeal.appealStatus,
-				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-			);
-
-			await broadcasters.broadcastAppeal(appeal.id);
-			return { success: true, timetable };
-		}
-	} catch (error) {
-		logger.error(`Error starting case for appeal ID ${appeal.id}: ${error}`);
+	const appealType = appeal.appealType || null;
+	if (!appealType) {
+		throw new BackOfficeAppError('Appeal type is required to start a case', 400);
 	}
 
-	return { success: false };
+	const startedAt = await recalculateDateIfNotBusinessDay(startDate);
+	const timetable = await calculateTimetable(appealType.key, startedAt);
+	const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
+
+	const appellantTemplate = appeal.caseStartedDate
+		? config.govNotify.template.appealStartDateChange.appellant
+		: config.govNotify.template.appealValidStartCase.appellant;
+
+	const lpaTemplate = appeal.caseStartedDate
+		? config.govNotify.template.appealStartDateChange.lpa
+		: config.govNotify.template.appealValidStartCase.lpa;
+
+	if (!timetable) {
+		return { success: false };
+	}
+
+	await Promise.all([
+		appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
+		appealRepository.updateAppealById(appeal.id, {
+			caseStartedDate: startDateWithTimeCorrection.toISOString()
+		})
+	]);
+
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId,
+		details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
+	});
+
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email || '';
+
+	const emailVariables = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		url: FRONT_OFFICE_URL,
+		start_date: formatDate(new Date(startDate || ''), false),
+		questionnaire_due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
+		local_planning_authority: appeal.lpa?.name || '',
+		appeal_type: appeal.appealType?.type || '',
+		procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
+		appellant_email_address: recipientEmail || ''
+	};
+
+	if (recipientEmail) {
+		await notifyClient.sendEmail(appellantTemplate, recipientEmail, emailVariables);
+	}
+
+	if (lpaEmail) {
+		await notifyClient.sendEmail(lpaTemplate, lpaEmail, emailVariables);
+	}
+
+	await transitionState(
+		appeal.id,
+		appealType,
+		azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
+		appeal.appealStatus,
+		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+	);
+
+	await broadcasters.broadcastAppeal(appeal.id);
+
+	return { success: true, timetable };
 };
 
 /**
