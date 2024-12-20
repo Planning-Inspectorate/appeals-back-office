@@ -302,13 +302,19 @@ export async function renderCheckYourAnswers(
 				'Contact details': {
 					html: `${firstName || ''} ${lastName || ''}<br>${emailAddress || ''}`,
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details`,
+							visuallyHiddenText: 'Contact details'
+						}
 					}
 				},
 				'Address Provided': {
 					html: addressProvided === 'no' ? 'No' : 'Yes',
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/check-address`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`,
+							visuallyHiddenText: 'Address'
+						}
 					}
 				},
 				...(addressProvided !== 'no' && {
@@ -328,19 +334,28 @@ export async function renderCheckYourAnswers(
 				Comment: {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/upload`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/upload`,
+							visuallyHiddenText: 'Comment'
+						}
 					}
 				},
 				'Redaction status': {
 					value: statusFormatMap[redactionStatus],
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/redaction-status`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/redaction-status`,
+							visuallyHiddenText: 'Redaction Status'
+						}
 					}
 				},
 				'Date submitted': {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`,
+							visuallyHiddenText: 'Date submitted'
+						}
 					}
 				}
 			}

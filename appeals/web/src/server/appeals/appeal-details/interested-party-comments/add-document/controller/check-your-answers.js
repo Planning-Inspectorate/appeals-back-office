@@ -44,19 +44,28 @@ export const renderCheckYourAnswers = (
 				'Supporting document': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							visuallyHiddenText: 'supporting document'
+						}
 					}
 				},
 				'Redaction status': {
 					value: statusFormatMap[redactionStatus],
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/redaction-status`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							visuallyHiddenText: 'redaction status'
+						}
 					}
 				},
 				'Date submitted': {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							visuallyHiddenText: 'date submitted'
+						}
 					}
 				}
 			}
