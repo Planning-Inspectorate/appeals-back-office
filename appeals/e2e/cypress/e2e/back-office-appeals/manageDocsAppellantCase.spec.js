@@ -34,7 +34,7 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('add an additional doc and then remove on file upload page', () => {
+	it('add an additional doc and then remove on file upload page1', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickAddAdditionalDocs();
