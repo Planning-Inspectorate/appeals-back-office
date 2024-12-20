@@ -5,7 +5,7 @@
  * @property {string} preHeading
  * @property {string} heading
  * @property {string} submitButtonText
- * @property {{ [key: string]: {value?: string, html?: string, actions?: { [text: string]: string }} }} responses
+	@property {{ [key: string]: {value?: string, html?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
  */
 
 /**
@@ -34,10 +34,12 @@ export const checkYourAnswersComponent = ({
 								html
 						  },
 					actions: {
-						items: Object.entries(actions).map(([text, href]) => ({
-							text,
-							href
-						}))
+						items: Object.entries(actions).map(([text, item]) => {
+							return {
+								html: `${text} <span class="govuk-visually-hidden">${item.visuallyHiddenText}</span>`,
+								href: item.href
+							};
+						})
 					}
 				}))
 			}
