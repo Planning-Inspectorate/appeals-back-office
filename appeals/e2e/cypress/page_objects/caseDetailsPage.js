@@ -104,6 +104,10 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.additionalDocumentsAdd().click();
 	}
 
+	clickManageAdditionalDocs() {
+		this.basePageElements.additonalDocumentManage().click();
+	}
+
 	clickChooseCaseOfficerResult(email) {
 		cy.getByData(email.toLocaleLowerCase()).click();
 	}
@@ -270,6 +274,10 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verfifications ************************
 	 ****************************************************************/
 
+	checkAdditonalDocsAppellantCase(value) {
+		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
+	}
+
 	checkErrorMessageDisplays(errorMessage) {
 		cy.get('li').contains(errorMessage).should('be.visible');
 	}
@@ -294,6 +302,15 @@ export class CaseDetailsPage extends Page {
 	}
 
 	checkAnswerRedactionStatus(rowName, rowAnswer) {
+		let answer = this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.next()
+			.invoke('prop', 'innerText');
+		answer.should('eq', rowAnswer);
+	}
+
+	checkCorrectAnswerDisplays(rowName, rowAnswer) {
 		let answer = this.basePageElements
 			.summaryListKey()
 			.contains(rowName)
