@@ -16,7 +16,7 @@ describe('add case notes', () => {
 	});
 
 	it('add a case note of more than 300 characters', () => {
-		let text = Cypress._.repeat('Here is a case note that is more than 300 characters ', 6);
+		let text = Cypress._.repeat('Here is a case note that is more than 300 characters ', 6); //Text is 53 characters X 6 = 318
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickCaseNotes();
