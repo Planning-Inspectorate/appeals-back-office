@@ -89,7 +89,10 @@ export class CaseDetailsPage extends Page {
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
 		fileUploadRow: () => cy.get('.govuk-heading-s'),
-		viewAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.viewAppealWithdrawal)
+		viewAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.viewAppealWithdrawal),
+		caseNotes: () => cy.get('.govuk-details__summary-text'),
+		inputCaseNotes: () => cy.get('textArea'),
+		checkCaseNoteAdded: () => cy.get('section')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -148,6 +151,18 @@ export class CaseDetailsPage extends Page {
 
 	clickReadyToStartCase() {
 		this.elements.readyToStart().click();
+	}
+
+	clickCaseNotes() {
+		this.elements.caseNotes().click();
+	}
+
+	inputCaseNotes(text, index = 0) {
+		this.elements.inputCaseNotes().eq(index).clear().type(text);
+	}
+
+	checkCaseNoteAdded(text) {
+		this.elements.checkCaseNoteAdded().contains(text);
 	}
 
 	clickArrangeVisitTypeHasCaseTimetable() {
