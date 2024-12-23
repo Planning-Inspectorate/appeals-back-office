@@ -11,7 +11,7 @@ export const mapAppellantFinalCommentDueDate = ({
 		id: 'appellant-final-comment-due-date',
 		text: 'Appellant final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantFinalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/appellant-final-comments`,
+		link: `${currentRoute}/appeal-timetables/final-comments/appellants`,
 		editable: Boolean(userHasUpdateCasePermission && appealDetails.startedAt),
 		classes: 'appeal-final-comments-due-date'
 	});

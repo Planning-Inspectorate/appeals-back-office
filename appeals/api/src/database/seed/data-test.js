@@ -953,7 +953,7 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
 				source === 'appellant'
 					? APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 					: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
-			originalRepresentation: `Final comment from ${source}`,
+			originalRepresentation: `Final comment from ${source}. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
 			...(source === 'appellant'
 				? {
 						represented: {

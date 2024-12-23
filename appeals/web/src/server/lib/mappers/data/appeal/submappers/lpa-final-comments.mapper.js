@@ -13,6 +13,6 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) =>
 		),
 		actionHtml:
 			appealDetails?.documentationSummary?.lpaFinalComments?.status === 'received'
-				? `<a href="${currentRoute}/lpa-final-comment" data-cy="review-lpa-final-comments" class="govuk-link">Review <span class="govuk-visually-hidden">L P A final comments</span></a>`
+				? `<a href="${currentRoute}/final-comments/lpa" data-cy="review-lpa-final-comments" class="govuk-link">Review <span class="govuk-visually-hidden">L P A final comments</span></a>`
 				: ''
 	});

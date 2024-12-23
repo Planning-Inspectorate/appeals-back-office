@@ -1076,13 +1076,13 @@ describe('appeal-details', () => {
 					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-final-comment" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
 				);
 				expect(unprettifiedElementHtml).not.toContain(
 					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).not.toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/lpa-final-comment" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
 				);
 			});
 
@@ -1112,13 +1112,13 @@ describe('appeal-details', () => {
 					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/lpa-final-comment" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
 				);
 				expect(unprettifiedElementHtml).not.toContain(
 					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).not.toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-final-comment" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
 				);
 			});
 
@@ -1149,13 +1149,13 @@ describe('appeal-details', () => {
 					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-final-comment" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
 					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/lpa-final-comment" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
 				);
 			});
 
@@ -1875,7 +1875,7 @@ describe('appeal-details', () => {
 						name: 'appellant',
 						rowLabel: 'Appellant final comments',
 						documentationSummaryKey: 'appellantFinalComments',
-						reviewPageRoute: 'appellant-final-comment',
+						reviewPageRoute: 'final-comments/appellant',
 						cyAttribute: 'review-appellant-final-comments',
 						actionLinkHiddenText: 'appellant final comments'
 					},
@@ -1883,7 +1883,7 @@ describe('appeal-details', () => {
 						name: 'LPA',
 						rowLabel: 'LPA final comments',
 						documentationSummaryKey: 'lpaFinalComments',
-						reviewPageRoute: 'lpa-final-comment',
+						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
 						actionLinkHiddenText: 'L P A final comments'
 					}

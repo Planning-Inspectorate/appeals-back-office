@@ -2418,6 +2418,37 @@ export const interestedPartyCommentForReview = {
 	}
 };
 
+export const finalCommentsForReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 3670,
+			origin: 'citizen',
+			author: 'Lee Thornton',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting final comments review',
+			redactedRepresentation: '',
+			created: '2024-10-09T17:23:24.406Z',
+			notes: '',
+			attachments: [],
+			representationType: 'comment',
+			siteVisitRequested: false,
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const interestedPartyCommentForView = {
 	id: 3670,
 	origin: 'citizen',
