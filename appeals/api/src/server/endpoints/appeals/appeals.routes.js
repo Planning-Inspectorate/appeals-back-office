@@ -7,7 +7,7 @@ import {
 } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
 	getAppealsValidator,
-	getAppealValidator,
+	//getAppealValidator,
 	patchAppealValidator
 } from './appeals.validators.js';
 import { validateAppealStatus, validateHasInspector } from './appeals.middleware.js';
@@ -119,28 +119,28 @@ router.get(
 	asyncHandler(getMyAppeals)
 );
 
-router.get(
-	'/:appealId',
-	/*
-		#swagger.tags = ['Appeals']
-		#swagger.path = '/appeals/{appealId}'
-		#swagger.description = Gets a single appeal by id
-		#swagger.parameters['azureAdUserId'] = {
-			in: 'header',
-			required: true,
-			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-		}
-		#swagger.responses[200] = {
-			description: 'Gets a single appeal by id',
-			schema: { $ref: '#/components/schemas/SingleAppealResponse' }
-		}
-		#swagger.responses[400] = {}
-		#swagger.responses[404] = {}
-	 */
-	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(getAppeal)
-);
+// router.get(
+// 	'/:appealId',
+// 	/*
+// 		#swagger.tags = ['Appeals']
+// 		#swagger.path = '/appeals/{appealId}'
+// 		#swagger.description = Gets a single appeal by id
+// 		#swagger.parameters['azureAdUserId'] = {
+// 			in: 'header',
+// 			required: true,
+// 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+// 		}
+// 		#swagger.responses[200] = {
+// 			description: 'Gets a single appeal by id',
+// 			schema: { $ref: '#/components/schemas/SingleAppealResponse' }
+// 		}
+// 		#swagger.responses[400] = {}
+// 		#swagger.responses[404] = {}
+// 	 */
+// 	getAppealValidator,
+// 	checkAppealExistsByIdAndAddToRequest,
+// 	asyncHandler(getAppeal)
+// );
 
 router.get(
 	'/case-reference/:caseReference',

@@ -1,4 +1,6 @@
 import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import has from './has.js';
+import s78 from './s78.js';
 
 import {
 	azureAdUserId,
@@ -73,6 +75,15 @@ export const caseNotes = [
 		}
 	}
 ];
+
+export const appealHas = {
+	...has
+};
+
+export const appealS78 = {
+	...s78
+};
+
 export const householdAppeal = {
 	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
 	id: 1,
