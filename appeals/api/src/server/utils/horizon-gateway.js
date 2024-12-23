@@ -42,7 +42,7 @@ import {
 /**
  * @typedef {Object} HorizonAttributeMultiple
  * @property {HorizonAttributeValue} Name
- * @property {HorizonAttributeMap} Values
+ * @property {HorizonAttributeMap} Value
  */
 
 /**

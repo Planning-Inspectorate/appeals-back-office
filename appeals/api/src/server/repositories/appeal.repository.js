@@ -94,6 +94,19 @@ const getAppealById = async (id) => {
 				}
 			},
 			caseNotes: true,
+			folders: {
+				include: {
+					documents: {
+						include: {
+							latestDocumentVersion: {
+								include: {
+									redactionStatus: true
+								}
+							}
+						}
+					}
+				}
+			},
 			representations: true
 		}
 	});

@@ -14,7 +14,8 @@
 			"#tests/*": ["./src/server/tests/*"],
 			"#common/*": ["./src/server/common/*"],
 			"#config/*": ["./src/server/config/*"],
-			"#state/*": ["./src/server/state/*"]
+			"#state/*": ["./src/server/state/*"],
+			"#mappers/*": ["./src/server/mappers/*"]
 		}
 	}
 }
