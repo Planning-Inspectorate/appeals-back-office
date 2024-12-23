@@ -92,7 +92,8 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 	mapStatusDependentNotifications(appealDetails, session, accordionComponents, {
 		ipComments: ipCommentsAwaitingReview || false,
 		appellantFinalComments: false,
-		lpaFinalComments: false
+		lpaFinalComments: false,
+		lpaStatement: false
 	});
 
 	if (!userHasPermission(permissionNames.viewCaseDetails, session)) {
