@@ -1,4 +1,7 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 
 export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
@@ -143,6 +146,9 @@ export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of $
 export const ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_COMPLETE}, ${VALIDATION_OUTCOME_INCOMPLETE}`;
 export const ERROR_INVALID_SITE_VISIT_TYPE =
 	'must be one of access required, accompanied, unaccompanied';
+export const ERROR_INVALID_REPRESENTATION_TYPE = `must be one of ${Object.values(
+	APPEAL_REPRESENTATION_TYPE
+).join(', ')}`;
 export const ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS = 'must be between 2 and 8 characters';
 export const ERROR_MAX_LENGTH_CHARACTERS = 'must be {replacement0} characters or less';
 export const ERROR_MUST_BE_ARRAY_OF_NUMBERS = 'must be an array of numbers';

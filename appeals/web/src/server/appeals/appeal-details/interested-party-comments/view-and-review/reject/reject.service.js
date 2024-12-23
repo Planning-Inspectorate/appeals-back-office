@@ -5,7 +5,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
  * @returns {Promise<import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]>}
  */
 export async function getRepresentationRejectionReasonOptions(apiClient) {
-	return apiClient.get(`appeals/representation-rejection-reasons`).json();
+	return apiClient.get('appeals/representation-rejection-reasons?type=comment').json();
 }
 
 /**

@@ -34,7 +34,7 @@ import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
 import { representationRoutes } from './representations/representations.routes.js';
 import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
-import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representations-rejection-reasons.routes.js';
+import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
