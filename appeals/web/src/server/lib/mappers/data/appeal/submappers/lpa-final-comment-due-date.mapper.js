@@ -11,7 +11,7 @@ export const mapLpaFinalCommentDueDate = ({
 		id: 'lpa-final-comment-due-date',
 		text: 'LPA final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/lpa-final-comments`,
+		link: `${currentRoute}/appeal-timetables/final-comments/lpas`,
 		editable: Boolean(userHasUpdateCasePermission && appealDetails.validAt),
 		classes: 'appeal-lpa-final-comment-due-date'
 	});

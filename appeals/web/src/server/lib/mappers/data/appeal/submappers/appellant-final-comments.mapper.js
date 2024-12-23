@@ -15,6 +15,6 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) =>
 		),
 		actionHtml:
 			appealDetails?.documentationSummary?.appellantFinalComments?.status === 'received'
-				? `<a href="${currentRoute}/appellant-final-comment" data-cy="review-appellant-final-comments" class="govuk-link">Review <span class="govuk-visually-hidden">appellant final comments</span></a>`
+				? `<a href="${currentRoute}/final-comments/appellant" data-cy="review-appellant-final-comments" class="govuk-link">Review <span class="govuk-visually-hidden">appellant final comments</span></a>`
 				: ''
 	});

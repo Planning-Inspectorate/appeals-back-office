@@ -337,10 +337,10 @@ export function mapAppealStatusToActionRequiredHtml(
 			}
 
 			const lpaAction = lpaReceived
-				? `<a class="govuk-link" href="#">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: null;
 			const appellantAction = appellantReceived
-				? `<a class="govuk-link" href="#">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a`
+				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a`
 				: null;
 
 			return [lpaAction, appellantAction].filter(Boolean).join('<br>');
