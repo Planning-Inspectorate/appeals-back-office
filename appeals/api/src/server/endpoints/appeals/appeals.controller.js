@@ -137,6 +137,7 @@ const getMyAppeals = async (req, res) => {
  */
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
+	console.time('mapAppealByIdV1');
 	const appealRootFolders = await getRootFoldersForAppeal(appeal.id);
 
 	let transferAppealTypeInfo;
@@ -180,6 +181,8 @@ const getAppeal = async (req, res) => {
 		decisionInfo,
 		formattedAppealWithLinkedTypes
 	);
+
+	console.timeEnd('mapAppealByIdV1');
 	return res.send(formattedAppeal);
 };
 

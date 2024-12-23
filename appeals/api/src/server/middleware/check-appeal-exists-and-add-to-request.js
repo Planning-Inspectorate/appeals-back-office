@@ -16,7 +16,10 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 	const {
 		params: { appealId }
 	} = req;
+
+	console.time('loadAppealByIdV1');
 	const appeal = await appealRepository.getAppealById(Number(appealId));
+	console.timeEnd('loadAppealByIdV1');
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
@@ -36,6 +39,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 	const {
 		params: { caseReference }
 	} = req;
+
 	const appeal = await appealRepository.getAppealByAppealReference(caseReference);
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
