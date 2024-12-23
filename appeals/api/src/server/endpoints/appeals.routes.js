@@ -36,6 +36,8 @@ import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 
+import { default as appealDetailsRoutes } from './appeal-details/routes.js';
+
 const router = createRouter();
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
@@ -57,6 +59,7 @@ router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
 
 router.use(appealsRoutes);
+router.use(appealDetailsRoutes);
 router.use(appealsDecisionRoutes);
 router.use(invalidAppealDecisionRoutes);
 router.use(addressesRoutes);
