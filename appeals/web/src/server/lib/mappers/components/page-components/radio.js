@@ -61,7 +61,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {ConditionalParams} [params.yesConditional]
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
- * @param {string} [params.hint]
+ * @param {string|Object} [params.hint]
  * @returns {RadiosPageComponent}
  */
 export function yesNoInput({
@@ -108,8 +108,10 @@ export function yesNoInput({
 	if (legendText) {
 		addFieldsetLegendText(component, legendText, legendIsPageHeading);
 	}
-	if (hint) {
+	if (typeof hint === 'string') {
 		component.parameters.hint = { text: hint };
+	} else {
+		component.parameters.hint = hint;
 	}
 	return component;
 }
