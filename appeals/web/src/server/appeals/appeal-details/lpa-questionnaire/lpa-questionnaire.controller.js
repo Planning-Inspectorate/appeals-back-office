@@ -4,7 +4,8 @@ import {
 	checkAndConfirmPage,
 	mapWebValidationOutcomeToApiValidationOutcome,
 	getValidationOutcomeFromLpaQuestionnaire,
-	reviewCompletePage
+	reviewCompletePage,
+	environmentServiceTeamReviewCasePage
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -69,7 +70,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getLpaQuestionnaire = async (request, response) => {
-	renderLpaQuestionnaire(request, response);
+	await renderLpaQuestionnaire(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -98,7 +99,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 					mapWebValidationOutcomeToApiValidationOutcome('complete')
 				);
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
+					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
 			} else if (reviewOutcome === 'incomplete') {
 				return response.redirect(
@@ -118,6 +119,61 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 		return renderLpaQuestionnaire(request, response, errorMessage);
 	}
+};
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderEnvironmentServiceTeamReviewCase = async (request, response, errors = null) => {
+	const { currentAppeal } = request;
+
+	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
+	if (!lpaQuestionnaireDetails) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const mappedPageContent = environmentServiceTeamReviewCasePage(
+		currentAppeal,
+		lpaQuestionnaireDetails
+	);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getEnvironmentServiceTeamReviewCase = async (request, response) => {
+	return renderEnvironmentServiceTeamReviewCase(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnvironmentServiceTeamReviewCase = async (request, response) => {
+	const {
+		params: { appealId, lpaQuestionnaireId },
+		body: { eiaScreeningRequired },
+		errors
+	} = request;
+	if (errors) {
+		return renderEnvironmentServiceTeamReviewCase(request, response, errors);
+	}
+	// TODO Save flag here
+	await lpaQuestionnaireService.setEnvironmentalImpactAssessmentScreening(
+		request.apiClient,
+		appealId,
+		lpaQuestionnaireId,
+		eiaScreeningRequired === 'yes'
+	);
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
+	);
 };
 
 /**

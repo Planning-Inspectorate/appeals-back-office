@@ -782,7 +782,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation'
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/environment-service-team-review-case'
 			);
 		});
 	});
