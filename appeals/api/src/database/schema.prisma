@@ -401,6 +401,7 @@ model LPAQuestionnaire {
   eiaScreeningOpinion                 Boolean?
   eiaRequiresEnvironmentalStatement   Boolean?
   eiaCompletedEnvironmentalStatement  Boolean?
+  eiaScreeningRequired                Boolean?
   eiaConsultedBodiesDetails           String?
   hasStatutoryConsultees              Boolean?
   hasInfrastructureLevy               Boolean?

@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
+import { inputInstructionIsRadiosInputInstruction, yesNoInput } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 import {
@@ -218,6 +218,56 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		preRenderPageComponents(pageContent.pageComponents);
 	}
 
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {LPAQuestionnaire} lpaQuestionnaireData
+ * @param {boolean} [errorsOnPage]
+ * @returns {PageContent}
+ */
+export function environmentServiceTeamReviewCasePage(
+	appealData,
+	lpaQuestionnaireData,
+	errorsOnPage
+) {
+	const title = 'Does the environmental services team need to review the case?';
+	const { lpaQuestionnaireId, eiaScreeningRequired } = lpaQuestionnaireData;
+	const { appealId, appealReference } = appealData;
+	const emailAddress = 'environmentalservices@planninginspectorate.gov.uk';
+	console.log(errorsOnPage);
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		submitButtonProperties: {
+			text: 'Continue',
+			type: 'submit'
+		},
+		pageComponents: [
+			yesNoInput({
+				name: 'eiaScreeningRequired',
+				value: eiaScreeningRequired,
+				hint: {
+					html:
+						'<p>Select yes if there is an environmental statement or if the case needs an environmental screening.</p>' +
+						`<p>You also need to email <a class="govuk-link" href="mailTo:${emailAddress}">${emailAddress}</a> to request a review. Include whether the team needs to review the environmental statement or issue an environmental screening in your email.</p>`
+				},
+				legendText: title,
+				legendIsPageHeading: true
+			})
+		],
+		postPageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">Return to your appeal</a></p>`
+				}
+			}
+		]
+	};
 	return pageContent;
 }
 

@@ -202,6 +202,17 @@ router
 		validators.validateReviewOutcome,
 		asyncHandler(controller.postLpaQuestionnaire)
 	);
+
+router
+	.route('/:lpaQuestionnaireId/environment-service-team-review-case')
+	.get(validateAppeal, asyncHandler(controller.getEnvironmentServiceTeamReviewCase))
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validators.validateEiaScreeningRequired,
+		asyncHandler(controller.postEnvironmentServiceTeamReviewCase)
+	);
+
 router
 	.route('/:lpaQuestionnaireId/check-your-answers')
 	.get(
