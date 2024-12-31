@@ -3317,4 +3317,57 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 	});
+
+	describe('GET /lpa-questionnaire/1/environment-service-team-review-case', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+		});
+
+		it('should render the environment service team review required page', async () => {
+			const response = await request.get(`${baseUrl}/environment-service-team-review-case`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toContain(
+				'Does the environmental services team need to review the case?</h1>'
+			);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+	});
+
+	describe('POST /lpa-questionnaire/1/environment-service-team-review-case', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/1/lpa-questionnaires/2`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+		});
+
+		it('should render the environment service team review required page in error', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+			const response = await request.post(`${baseUrl}/environment-service-team-review-case`).send();
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toContain(
+				'Does the environmental services team need to review the case?</h1>'
+			);
+			expect(element.innerHTML).toContain('There is a problem');
+			expect(element.innerHTML).toContain(
+				'Select yes if the environmental services team need to review the case'
+			);
+			expect(element.innerHTML).toMatchSnapshot();
+		});
+
+		it('should save the eia-screening-required value and redirect successfully', async () => {
+			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+			const response = await request
+				.post(`${baseUrl}/environment-service-team-review-case`)
+				.send({ eiaScreeningRequired: 'yes' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation'
+			);
+		});
+	});
 });
