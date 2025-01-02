@@ -551,7 +551,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2024-12-25T00:00:00.000Z',
+					lpaQuestionnaireDueDate: '2090-12-25T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
