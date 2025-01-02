@@ -98,6 +98,28 @@ function updateAddButtonState(componentInstance) {
 	}
 }
 
+function updateItemAttributes(element, currentNumber) {
+	// Update label's 'for' attribute
+	const label = element.querySelector('label');
+	if (label) {
+		const forAttr = label.getAttribute('for');
+		if (forAttr) {
+			const newFor = forAttr.replace(/-\d+$/, `-${currentNumber}`);
+			label.setAttribute('for', newFor);
+		}
+	}
+
+	// Update input's 'id' attribute only
+	const input = element.querySelector('input');
+	if (input) {
+		const id = input.getAttribute('id');
+		if (id) {
+			const newId = id.replace(/-\d+$/, `-${currentNumber}`);
+			input.setAttribute('id', newId);
+		}
+	}
+}
+
 function addAnotherItem(componentInstance) {
 	let items = getItems(componentInstance);
 
@@ -106,6 +128,20 @@ function addAnotherItem(componentInstance) {
 	}
 
 	const newItem = items[0].cloneNode(true);
+
+	// Get the last item's number and increment it
+	const lastInput = items[items.length - 1].querySelector('input');
+	let nextNumber = 1;
+	if (lastInput) {
+		const lastId = lastInput.getAttribute('id');
+		const match = lastId?.match(/-(\d+)$/);
+		if (match) {
+			nextNumber = parseInt(match[1], 10) + 1;
+		}
+	}
+
+	// Update the new item's attributes
+	updateItemAttributes(newItem, nextNumber);
 
 	addRemoveButton(newItem);
 	resetItem(newItem);
