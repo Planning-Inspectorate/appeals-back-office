@@ -37,7 +37,9 @@ export class CaseDetailsPage extends Page {
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
 		startAppealWithdrawal: 'start-appeal-withdrawal',
-		viewAppealWithdrawal: 'view-appeal-withdrawal'
+		viewAppealWithdrawal: 'view-appeal-withdrawal',
+		changeAppellant: 'change-appellant',
+		changeAgent: 'change-agent'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -92,7 +94,11 @@ export class CaseDetailsPage extends Page {
 		viewAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.viewAppealWithdrawal),
 		caseNotes: () => cy.get('.govuk-details__summary-text'),
 		inputCaseNotes: () => cy.get('textArea'),
-		checkCaseNoteAdded: () => cy.get('section')
+		checkCaseNoteAdded: () => cy.get('section'),
+		changeAppellant: () => cy.getByData(this._cyDataSelectors.changeAppellant),
+		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
+		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
+		getAgentEmailAddress: () => cy.get('#email-address.govuk-input')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -236,6 +242,16 @@ export class CaseDetailsPage extends Page {
 		this.elements.startAppealWithdrawal().click();
 	}
 
+	clickChangeAppellant() {
+		this.clickAccordionByText('Contacts');
+		this.elements.changeAppellant().click();
+	}
+
+	clickChangeAgent() {
+		this.clickAccordionByText('Contacts');
+		this.elements.changeAgent().click();
+	}
+
 	uploadSampleFile(fileName) {
 		this.elements.uploadFile().selectFile(this.fixturesPath + fileName, { force: true });
 	}
@@ -244,6 +260,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.viewAppealWithdrawal().click();
 	}
 
+	inputAppellantEmailAddress(text) {
+		this.elements.getAppellantEmailAddress().click().clear().type(text);
+	}
+
+	inputAgentEmailAddress(text) {
+		this.elements.getAgentEmailAddress().click().clear().type(text);
+	}
 	// TODO Get this to use the vanilla 'clickButtonByText()' function
 	// This currently doesn't work, as there are multiple matches and some of not invisible
 	clickAddAnother() {
@@ -372,7 +395,6 @@ export class CaseDetailsPage extends Page {
 				);
 		});
 	}
-
 	verifyChangeStartDate() {
 		const dateToday = new Date();
 		const formattedDate = dateTimeSection.formatDate(dateToday);
@@ -382,6 +404,14 @@ export class CaseDetailsPage extends Page {
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
 			});
+	}
+
+	verifyAppellantEmailAddress(rowName, text) {
+		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
+	}
+
+	verifyAgentEmailAddress(rowName, text) {
+		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
 	}
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {

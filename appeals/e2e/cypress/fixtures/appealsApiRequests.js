@@ -43,6 +43,16 @@ const appealsApiRequests = {
 				serviceUserType: 'Appellant',
 				telephoneNumber: '01234 818181',
 				organisation: 'K+C'
+			},
+
+			{
+				emailAddress: 'test@test.com',
+				firstName: 'Agent',
+				lastName: 'Bond',
+				salutation: 'string',
+				serviceUserType: 'Agent',
+				telephoneNumber: '01207 818181',
+				organisation: 'K+C'
 			}
 		]
 	},
