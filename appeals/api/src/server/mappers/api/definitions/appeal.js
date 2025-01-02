@@ -130,6 +130,13 @@ const appeal = {
 					...Folder.properties
 				}
 			}
+		},
+		environmentalAssessment: {
+			type: 'object',
+			properties: {
+				...Folder.properties
+			},
+			nullable: true
 		}
 	}
 };
