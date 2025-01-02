@@ -44,8 +44,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 

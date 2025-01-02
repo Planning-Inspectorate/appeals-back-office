@@ -28,6 +28,7 @@ import {
 	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -98,9 +99,15 @@ export const postLpaQuestionnaire = async (request, response) => {
 					lpaQuestionnaireId,
 					mapWebValidationOutcomeToApiValidationOutcome('complete')
 				);
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
-				);
+				if (currentAppeal.appealType === APPEAL_TYPE.D) {
+					return response.redirect(
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
+					);
+				} else {
+					return response.redirect(
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
+					);
+				}
 			} else if (reviewOutcome === 'incomplete') {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
