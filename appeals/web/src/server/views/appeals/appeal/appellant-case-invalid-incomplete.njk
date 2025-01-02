@@ -25,6 +25,7 @@
 			{%- set addAnotherReasonHtml = addAnotherReason({
 				textItems: option.addAnother.textItems,
 				inputName: notValidStatus + 'Reason-' + option.value,
+				inputId: notValidStatus + '-reason-' + option.value,
 				labelText: 'Which part is incorrect or incomplete?'
 			}) -%}
 			{%- set _ = option | addConditionalHtml(addAnotherReasonHtml) -%}

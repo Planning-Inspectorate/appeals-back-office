@@ -1526,7 +1526,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1534,7 +1534,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="test reason 1">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="test reason 1">
                                     </div>
                                 </div>
                             </div>
@@ -1553,7 +1553,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1561,7 +1561,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -1569,7 +1569,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1577,7 +1577,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -1596,7 +1596,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1604,7 +1604,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -1612,7 +1612,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1620,7 +1620,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -1628,7 +1628,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -1636,7 +1636,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -3824,7 +3824,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3832,7 +3832,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                     </div>
                                 </div>
                             </div>
@@ -3852,7 +3852,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3860,7 +3860,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -3868,7 +3868,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3876,7 +3876,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -3896,7 +3896,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3904,7 +3904,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -3912,7 +3912,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3920,7 +3920,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -3928,7 +3928,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -3936,7 +3936,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -3997,7 +3997,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4005,7 +4005,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -4025,7 +4025,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4033,7 +4033,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -4041,7 +4041,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4049,7 +4049,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -4069,7 +4069,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4077,7 +4077,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4085,7 +4085,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4093,7 +4093,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4101,7 +4101,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4109,7 +4109,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -4170,7 +4170,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4178,7 +4178,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="test reason 1">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="test reason 1">
                                     </div>
                                 </div>
                             </div>
@@ -4198,7 +4198,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4206,7 +4206,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -4214,7 +4214,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4222,7 +4222,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -4242,7 +4242,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4250,7 +4250,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4258,7 +4258,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4266,7 +4266,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4274,7 +4274,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4282,7 +4282,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -4343,7 +4343,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4351,7 +4351,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -4370,7 +4370,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4378,7 +4378,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason text 1">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason text 1">
                                     </div>
                                 </div>
                             </div>
@@ -4386,7 +4386,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4394,7 +4394,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason text 2">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason text 2">
                                     </div>
                                 </div>
                             </div>
@@ -4414,7 +4414,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4422,7 +4422,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4430,7 +4430,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4438,7 +4438,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4446,7 +4446,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4454,7 +4454,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -4515,7 +4515,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4523,7 +4523,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="test reason text 1">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="test reason text 1">
                                     </div>
                                 </div>
                             </div>
@@ -4542,7 +4542,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4550,7 +4550,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -4558,7 +4558,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4566,7 +4566,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -4586,7 +4586,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4594,7 +4594,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4602,7 +4602,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4610,7 +4610,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4618,7 +4618,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4626,7 +4626,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -4687,7 +4687,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4695,7 +4695,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="test reason text 1">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="test reason text 1">
                                     </div>
                                 </div>
                             </div>
@@ -4714,7 +4714,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4722,7 +4722,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                     </div>
                                 </div>
                             </div>
@@ -4742,7 +4742,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4750,7 +4750,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4758,7 +4758,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4766,7 +4766,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4774,7 +4774,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4782,7 +4782,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
@@ -4843,7 +4843,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-1" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-1-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4851,7 +4851,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-1" type="text" value="test reason 1">
+                                        id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="test reason 1">
                                     </div>
                                 </div>
                             </div>
@@ -4870,7 +4870,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4878,7 +4878,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 2">
+                                        id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="test reason 2">
                                     </div>
                                 </div>
                             </div>
@@ -4886,7 +4886,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-2" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-2-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4894,7 +4894,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-2" type="text" value="test reason 3">
+                                        id="incomplete-reason-2-2" name="incompleteReason-2" type="text" value="test reason 3">
                                     </div>
                                 </div>
                             </div>
@@ -4913,7 +4913,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4921,7 +4921,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 4">
+                                        id="incomplete-reason-3-1" name="incompleteReason-3" type="text" value="test reason 4">
                                     </div>
                                 </div>
                             </div>
@@ -4929,7 +4929,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-2" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4937,7 +4937,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 5">
+                                        id="incomplete-reason-3-2" name="incompleteReason-3" type="text" value="test reason 5">
                                     </div>
                                 </div>
                             </div>
@@ -4945,7 +4945,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <div class="pins-add-another__item govuk-!-margin-top-6">
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-full flex-row space-between">
-                                    <label for="incompleteReason-3" class="govuk-body govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                    <label for="incomplete-reason-3-3" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                     <div class="pins-add-another__remove-button-container"></div>
                                 </div>
                             </div>
@@ -4953,7 +4953,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                 <div class="govuk-grid-column-full">
                                     <div class="govuk-form-group">
                                         <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                        id="" name="incompleteReason-3" type="text" value="test reason 6">
+                                        id="incomplete-reason-3-3" name="incompleteReason-3" type="text" value="test reason 6">
                                     </div>
                                 </div>
                             </div>
