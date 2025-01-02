@@ -235,13 +235,15 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Why are you rejecting the comment?</h1>
                 </div>
             </div>
             <form method="post" novalidate="novalidate">
-                <div class="govuk-fieldset">
-                    <div class="govuk-hint">Select all that apply.</div>
-                    <div class="govuk-form-group">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Why are you rejecting the comment?</h1>
+                        </legend>
+                        <div id="rejection-reason-hint" class="govuk-hint">Select all that apply.</div>
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="rejection-reason" name="rejectionReason"
@@ -302,10 +304,10 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                    data-module="govuk-button">Continue</button>
+                    </fieldset>
                 </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
