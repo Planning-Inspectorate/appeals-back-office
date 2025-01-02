@@ -21,7 +21,7 @@ import greenBeltRouter from '../green-belt/green-belt.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
-import environmentalImpactAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
+import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
@@ -106,7 +106,7 @@ router.use(
 	'/:lpaQuestionnaireId/environmental-impact-assessment',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	environmentalImpactAssessmentRouter
+	environmentalAssessmentRouter
 );
 
 router.use(

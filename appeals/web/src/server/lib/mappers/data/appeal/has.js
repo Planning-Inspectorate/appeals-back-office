@@ -43,6 +43,7 @@ import { mapSiteVisitDate } from './submappers/site-visit-date.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
+import { mapEnvironmentalAssessment } from '#lib/mappers/data/appeal/submappers/environmental-assessment.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -80,6 +81,7 @@ export const submaps = {
 	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
+	environmentalAssessment: mapEnvironmentalAssessment,
 	appealDecision: mapAppealDecision,
 	costsAppellantApplication: mapCostsAppellantApplication,
 	costsAppellantWithdrawal: mapCostsAppellantWithdrawal,
