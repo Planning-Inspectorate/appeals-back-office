@@ -284,7 +284,7 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="rejectionReason-7" class="govuk-body govuk-!-margin-bottom-4">Enter a reason</label>
+                                                <label for="rejection-reason-7-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -292,7 +292,7 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="" name="rejectionReason-7" type="text">
+                                                    id="rejection-reason-7-1" name="rejectionReason-7" type="text">
                                                 </div>
                                             </div>
                                         </div>
