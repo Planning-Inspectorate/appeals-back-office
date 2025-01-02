@@ -292,35 +292,122 @@ export const specialisms = [
 /**
  * An array of representation rejection reasons.
  *
- * @type {Pick<RepresentationRejectionReason, 'name' | 'hasText'>[]}
+ * @type {Pick<RepresentationRejectionReason, 'name' | 'hasText' | 'representationType'>[]}
  */
 export const representationRejectionReasons = [
 	{
 		name: 'Includes personal or medical information',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Includes inflammatory content',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Duplicated or repeated comment',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Not relevant to this appeal',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Contains links to web pages',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Received after deadline',
+		representationType: 'comment',
 		hasText: false
 	},
 	{
 		name: 'Other reason',
+		representationType: 'comment',
+		hasText: true
+	},
+	{
+		name: 'Supporting documents missing',
+		representationType: 'lpa_statement',
+		hasText: true
+	},
+	{
+		name: 'No list of suggested conditions',
+		representationType: 'lpa_statement',
+		hasText: false
+	},
+	{
+		name: 'Other',
+		representationType: 'lpa_statement',
+		hasText: true
+	},
+	{
+		name: 'Supporting documents missing',
+		representationType: 'appellant_statement',
+		hasText: true
+	},
+	{
+		name: 'No list of suggested conditions',
+		representationType: 'appellant_statement',
+		hasText: false
+	},
+	{
+		name: 'Other',
+		representationType: 'appellant_statement',
+		hasText: true
+	},
+	{
+		name: 'Includes personal or medical information',
+		representationType: 'lpa_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Includes inflammatory content',
+		representationType: 'lpa_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Not relevant to this appeal',
+		representationType: 'lpa_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Contains links to web pages',
+		representationType: 'lpa_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Other reason',
+		representationType: 'lpa_final_comment',
+		hasText: true
+	},
+	{
+		name: 'Includes personal or medical information',
+		representationType: 'appellant_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Includes inflammatory content',
+		representationType: 'appellant_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Not relevant to this appeal',
+		representationType: 'appellant_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Contains links to web pages',
+		representationType: 'appellant_final_comment',
+		hasText: false
+	},
+	{
+		name: 'Other reason',
+		representationType: 'appellant_final_comment',
 		hasText: true
 	}
 ];
@@ -430,7 +517,12 @@ export async function seedStaticData(databaseConnector) {
 	for (const rejectionReason of representationRejectionReasons) {
 		await databaseConnector.representationRejectionReason.upsert({
 			create: rejectionReason,
-			where: { name: rejectionReason.name },
+			where: {
+				name_representationType: {
+					name: rejectionReason.name,
+					representationType: rejectionReason.representationType
+				}
+			},
 			update: {}
 		});
 	}
