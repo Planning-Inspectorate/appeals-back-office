@@ -223,19 +223,13 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 /**
  * @param {Appeal} appealData
  * @param {LPAQuestionnaire} lpaQuestionnaireData
- * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
-export function environmentServiceTeamReviewCasePage(
-	appealData,
-	lpaQuestionnaireData,
-	errorsOnPage
-) {
+export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnaireData) {
 	const title = 'Does the environmental services team need to review the case?';
 	const { lpaQuestionnaireId } = lpaQuestionnaireData;
 	const { appealId, appealReference, eiaScreeningRequired } = appealData;
 	const emailAddress = 'environmentalservices@planninginspectorate.gov.uk';
-	console.log(errorsOnPage);
 	/** @type {PageContent} */
 	const pageContent = {
 		title,

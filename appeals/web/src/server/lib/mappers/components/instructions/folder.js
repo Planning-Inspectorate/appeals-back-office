@@ -118,7 +118,7 @@ export function documentationFolderTableItem({
  * @param {string} [cypressDataName]
  * @returns {string}
  */
-function listItemLink(link, text, hiddenText, cypressDataName) {
+export function listItemLink(link, text, hiddenText, cypressDataName) {
 	const dataCy = cypressDataName ? `data-cy="${cypressDataName}" ` : '';
 	return (
 		`<li class="govuk-summary-list__actions-list-item">` +

@@ -397,6 +397,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		withdrawalFolder?: FolderInfo | null;
 		withdrawalRequestDate: string | null;
 	};
+	environmentalAssessment?: FolderInfo | null;
 }
 
 export interface WebServiceUser {

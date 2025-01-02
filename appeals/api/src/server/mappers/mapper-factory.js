@@ -189,6 +189,13 @@ function createFoldersLayout(folders, context) {
 		}
 		default: {
 			const appealFolders = {
+				environmentalAssessment: folders.find(
+					// TODO: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT needs to be added to "pins-data-model"
+					(f) =>
+						f.path ===
+						// `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT}`
+						`${APPEAL_CASE_STAGE.APPELLANT_CASE}/environmentalAssessment`
+				),
 				costs: {
 					appellantApplicationFolder: folders.find(
 						(f) =>
