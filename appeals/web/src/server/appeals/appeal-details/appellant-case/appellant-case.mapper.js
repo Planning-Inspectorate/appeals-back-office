@@ -708,6 +708,8 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'ownership certificate and/or land declaration';
 		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
 			return 'application decision letter';
+		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
+			return 'Other new supporting documents';
 		default:
 			return;
 	}
