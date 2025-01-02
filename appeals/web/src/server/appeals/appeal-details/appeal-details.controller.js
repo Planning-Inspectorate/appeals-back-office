@@ -61,7 +61,6 @@ export const viewAppealDetails = async (request, response) => {
 			errors
 		});
 	} catch (error) {
-		console.log('🚀 ~ viewAppealDetails ~ error:', error);
 		return response.status(500).render('app/500.njk');
 	}
 };
