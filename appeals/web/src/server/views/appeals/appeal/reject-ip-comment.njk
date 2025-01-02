@@ -28,6 +28,7 @@
 			{%- set addAnotherReasonHtml = addAnotherReason({
 				textItems: option.textItems,
 				inputName: 'rejectionReason-' + option.value,
+				inputId: 'rejection-reason-' + option.value,
         labelText: 'Enter a reason',
         error: option.error
 			}) -%}
