@@ -13,9 +13,6 @@
 			{%- if pageContent.preHeading -%}
 				<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
 			{%- endif -%}
-			{%- if pageContent.heading -%}
-				<h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ pageContent.heading }}</h1>
-			{%- endif -%}
 		</div>
 	</div>
 {%- endblock -%}
@@ -36,14 +33,19 @@
 		{%- endif -%}
 	{%- endfor -%}
 	<form method="post" novalidate="novalidate">
-		<div class="govuk-fieldset">
-
-			<div class="govuk-hint">
-				{{ pageContent.hint }}
-			</div>
 		{{ govukCheckboxes({
 			name: "rejectionReason",
 			idPrefix: "rejection-reason",
+			fieldset: {
+				legend: {
+					text: pageContent.heading,
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
+			hint: {
+				text: pageContent.hint
+			},
 			items: rejectionReasons
 		}) }}
 
@@ -52,6 +54,5 @@
 			type: "submit",
 			preventDoubleClick: true
 		}) }}
-		</div>
 	</form>
 {%- endblock -%}

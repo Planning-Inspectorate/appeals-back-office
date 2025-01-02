@@ -14,7 +14,6 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-full">
 			<span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal {{ appeal.shortReference }}</span>
-			<h1 class="govuk-heading-l govuk-!-margin-bottom-3">Why is the LPA questionnaire incomplete?</h1>
 		</div>
 	</div>
 {%- endblock -%}
@@ -35,6 +34,13 @@
 		{{ govukCheckboxes({
 			name: "incompleteReason",
 			idPrefix: "incomplete-reason",
+			fieldset: {
+				legend: {
+					text: "Why is the LPA questionnaire incomplete?",
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
 			items: reasonOptions
 		}) }}
 		{{ govukButton({
