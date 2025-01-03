@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "c6a2477d-52f9-45ef-a271-8ec9bff707a8" */
+		/** @example "755b15e1-46fd-49ae-8c12-6246ee1f395e" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -2269,6 +2269,11 @@ export interface UpdateServiceUserResponse {
 export interface WithdrawalRequestRequest {
 	/** @example "2024-10-11" */
 	withdrawalRequestDate?: string;
+}
+
+export interface EiaScreeningRequiredRequest {
+	/** @example true */
+	eiaScreeningRequired?: boolean;
 }
 
 export interface Allocation {

@@ -3,7 +3,7 @@ BEGIN TRY
 BEGIN TRAN;
 
 -- AlterTable
-ALTER TABLE [dbo].[LPAQuestionnaire] ADD [eiaScreeningRequired] BIT;
+ALTER TABLE [dbo].[Appeal] ADD [eiaScreeningRequired] BIT;
 
 COMMIT TRAN;
 
