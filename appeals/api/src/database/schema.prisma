@@ -36,6 +36,7 @@ model Appeal {
   withdrawalRequestDate DateTime?
   caseResubmittedTypeId Int?
   caseTransferredId     String?
+  eiaScreeningRequired  Boolean?
   specialisms           AppealSpecialism[]
   allocation            AppealAllocation?
   allocationId          Int?

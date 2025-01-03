@@ -1118,6 +1118,15 @@ export const spec = {
 					example: '2024-10-11'
 				}
 			}
+		},
+		EiaScreeningRequiredRequest: {
+			type: 'object',
+			properties: {
+				eiaScreeningRequired: {
+					type: 'boolean',
+					example: true
+				}
+			}
 		}
 	},
 	components: {}

@@ -115,6 +115,7 @@ interface SingleAppealDetailsResponse {
 		withdrawalRequestDate: Date | null;
 	};
 	isAffectingNeighbouringSites?: boolean | null;
+	eiaScreeningRequired?: boolean | null;
 }
 
 interface UpdateAppealRequest {

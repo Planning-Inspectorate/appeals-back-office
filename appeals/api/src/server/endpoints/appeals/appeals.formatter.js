@@ -440,7 +440,8 @@ const formatAppeal = (
 		createdAt: appeal.caseCreatedDate.toISOString(),
 		startedAt: appeal.caseStartedDate && appeal.caseStartedDate?.toISOString(),
 		validAt: appeal.caseValidDate && appeal.caseValidDate?.toISOString(),
-		documentationSummary: formatDocumentationSummary(appeal)
+		documentationSummary: formatDocumentationSummary(appeal),
+		eiaScreeningRequired: appeal.eiaScreeningRequired
 	};
 
 	// @ts-ignore

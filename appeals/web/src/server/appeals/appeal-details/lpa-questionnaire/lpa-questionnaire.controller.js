@@ -4,7 +4,8 @@ import {
 	checkAndConfirmPage,
 	mapWebValidationOutcomeToApiValidationOutcome,
 	getValidationOutcomeFromLpaQuestionnaire,
-	reviewCompletePage
+	reviewCompletePage,
+	environmentServiceTeamReviewCasePage
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -27,6 +28,8 @@ import {
 	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -69,7 +72,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getLpaQuestionnaire = async (request, response) => {
-	renderLpaQuestionnaire(request, response);
+	await renderLpaQuestionnaire(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -97,9 +100,15 @@ export const postLpaQuestionnaire = async (request, response) => {
 					lpaQuestionnaireId,
 					mapWebValidationOutcomeToApiValidationOutcome('complete')
 				);
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
-				);
+				if (currentAppeal.appealType === APPEAL_TYPE.D) {
+					return response.redirect(
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
+					);
+				} else {
+					return response.redirect(
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
+					);
+				}
 			} else if (reviewOutcome === 'incomplete') {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
@@ -118,6 +127,59 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 		return renderLpaQuestionnaire(request, response, errorMessage);
 	}
+};
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderEnvironmentServiceTeamReviewCase = async (request, response, errors = null) => {
+	const { currentAppeal } = request;
+
+	const lpaQuestionnaireDetails = await getLpaQuestionnaireDetails(request);
+	if (!lpaQuestionnaireDetails) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const mappedPageContent = environmentServiceTeamReviewCasePage(
+		currentAppeal,
+		lpaQuestionnaireDetails
+	);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getEnvironmentServiceTeamReviewCase = async (request, response) => {
+	return renderEnvironmentServiceTeamReviewCase(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnvironmentServiceTeamReviewCase = async (request, response) => {
+	const {
+		params: { appealId, lpaQuestionnaireId },
+		body: { eiaScreeningRequired },
+		errors
+	} = request;
+	if (errors) {
+		return renderEnvironmentServiceTeamReviewCase(request, response, errors);
+	}
+	await appealDetailsService.setEnvironmentalImpactAssessmentScreening(
+		request.apiClient,
+		appealId,
+		eiaScreeningRequired === 'yes'
+	);
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
+	);
 };
 
 /**
