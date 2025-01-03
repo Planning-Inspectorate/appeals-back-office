@@ -42,6 +42,7 @@ export function allocationCheckPage(appealDetails) {
 export function allocationLevelPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	/** @type {PageComponent[]} */
 	const pageComponents = [
 		radiosInput({
 			name: 'allocationLevel',
@@ -55,6 +56,44 @@ export function allocationLevelPage(appealDetails, lpaStatement, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',
+		submitButtonText: 'Continue',
+		pageComponents
+	};
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {{ id: number, name: string }[]} specialisms
+ * @param {SessionWithAuth & Record<string, string>} session
+ * */
+export function allocationSpecialismsPage(appealDetails, specialisms, session) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const sessionSelections = Array.isArray(session.allocationSpecialisms)
+		? session.allocationSpecialisms
+		: [session.allocationSpecialisms];
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [
+		{
+			type: 'checkboxes',
+			parameters: {
+				name: 'allocationSpecialisms',
+				id: 'allocationSpecialisms',
+				items: specialisms.map((s) => ({
+					text: s.name,
+					value: s.name,
+					checked: sessionSelections.includes(s.name)
+				}))
+			}
+		}
+	];
+
+	return {
+		title: 'Allocation specialisms',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Allocation specialisms',
 		submitButtonText: 'Continue',
 		pageComponents
 	};

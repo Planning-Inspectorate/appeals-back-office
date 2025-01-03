@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
-import { validateAllocationLevel } from './valid.validator.js';
+import { validateAllocationLevel, validateAllocationSpecialisms } from './valid.validator.js';
 import {
 	renderAllocationCheck,
 	renderAllocationLevel,
+	renderAllocationSpecialisms,
 	postAllocationCheck,
-	postAllocationLevel
+	postAllocationLevel,
+	postAllocationSpecialisms
 } from './valid.controller.js';
 
 const router = Router({ mergeParams: true });
@@ -26,5 +28,14 @@ router
 	.route('/allocation-level')
 	.get(renderAllocationLevel)
 	.post(validateAllocationLevel, saveBodyToSession('allocationLevel'), postAllocationLevel);
+
+router
+	.route('/allocation-specialisms')
+	.get(renderAllocationSpecialisms)
+	.post(
+		validateAllocationSpecialisms,
+		saveBodyToSession('allocationSpecialisms'),
+		postAllocationSpecialisms
+	);
 
 export default router;

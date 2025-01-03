@@ -10,3 +10,9 @@ export const validateAllocationLevel = createValidator(
 		.isIn(ALLOCATION_LEVELS)
 		.withMessage('Something went wrong')
 );
+
+export const validateAllocationSpecialisms = createValidator(
+	body('allocationSpecialisms')
+		.notEmpty()
+		.withMessage('Select all allocation specialisms that apply')
+);

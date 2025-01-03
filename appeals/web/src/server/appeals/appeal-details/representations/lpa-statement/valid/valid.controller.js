@@ -1,5 +1,10 @@
 import { render } from '../../common/render.js';
-import { allocationCheckPage, allocationLevelPage } from './valid.mapper.js';
+import {
+	allocationCheckPage,
+	allocationLevelPage,
+	allocationSpecialismsPage
+} from './valid.mapper.js';
+import { getAllocationSpecialisms } from './valid.service.js';
 
 export const renderAllocationCheck = render(
 	allocationCheckPage,
@@ -55,5 +60,42 @@ export function postAllocationLevel(request, response, next) {
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-specialisms`
+	);
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderAllocationSpecialisms(request, response) {
+	const { errors, currentAppeal, session } = request;
+
+	const specialisms = await getAllocationSpecialisms(request.apiClient);
+	const pageContent = allocationSpecialismsPage(currentAppeal, specialisms, session);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postAllocationSpecialisms(request, response) {
+	const {
+		errors,
+		params: { appealId }
+	} = request;
+
+	if (errors) {
+		return renderAllocationSpecialisms(request, response);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/confirm`
 	);
 }
