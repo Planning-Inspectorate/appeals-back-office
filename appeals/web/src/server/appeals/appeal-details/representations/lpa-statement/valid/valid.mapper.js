@@ -1,8 +1,11 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/index.js';
+import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('../../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth */
+
+export const ALLOCATION_LEVELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
 /**
  * @param {Appeal} appealDetails
@@ -25,7 +28,33 @@ export function allocationCheckPage(appealDetails) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level and specialisms',
-		//headingClasses: 'govuk-heading-l',
+		submitButtonText: 'Continue',
+		pageComponents
+	};
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} lpaStatement
+ * @param {SessionWithAuth & Record<string, string>} session
+ * @returns {PageContent}
+ * */
+export function allocationLevelPage(appealDetails, lpaStatement, session) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const pageComponents = [
+		radiosInput({
+			name: 'allocationLevel',
+			items: ALLOCATION_LEVELS.map((l) => ({ text: l, value: l })),
+			value: session.allocationLevel
+		})
+	];
+
+	return {
+		title: 'Allocation level',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Allocation level',
 		submitButtonText: 'Continue',
 		pageComponents
 	};

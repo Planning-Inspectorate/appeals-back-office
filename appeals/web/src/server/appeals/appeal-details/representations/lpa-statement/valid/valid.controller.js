@@ -1,5 +1,5 @@
 import { render } from '../../common/render.js';
-import { allocationCheckPage } from './valid.mapper.js';
+import { allocationCheckPage, allocationLevelPage } from './valid.mapper.js';
 
 export const renderAllocationCheck = render(
 	allocationCheckPage,
@@ -28,5 +28,32 @@ export function postAllocationCheck(request, response, next) {
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/${
 			body.allocationLevelAndSpecialisms === 'yes' ? 'allocation-level' : 'confirm'
 		}`
+	);
+}
+
+export const renderAllocationLevel = render(
+	allocationLevelPage,
+	'patterns/change-page.pattern.njk',
+	'currentRepresentation'
+);
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {() => void} next
+ */
+export function postAllocationLevel(request, response, next) {
+	const {
+		errors,
+		params: { appealId }
+	} = request;
+
+	if (errors) {
+		return renderAllocationLevel(request, response, next);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-specialisms`
 	);
 }
