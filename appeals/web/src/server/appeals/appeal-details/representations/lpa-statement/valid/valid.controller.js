@@ -2,7 +2,8 @@ import { render } from '../../common/render.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
-	allocationSpecialismsPage
+	allocationSpecialismsPage,
+	confirmPage
 } from './valid.mapper.js';
 import { getAllocationSpecialisms } from './valid.service.js';
 
@@ -98,4 +99,25 @@ export function postAllocationSpecialisms(request, response) {
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/confirm`
 	);
+}
+
+export const renderConfirm = render(
+	confirmPage,
+	'patterns/check-and-confirm-page.pattern.njk',
+	'currentRepresentation'
+);
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postAcceptStatement(request, response) {
+	const {
+		params: { appealId }
+	} = request;
+
+	// TODO: Call API to accept statement
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement`);
 }

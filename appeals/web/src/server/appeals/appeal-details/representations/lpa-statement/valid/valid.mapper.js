@@ -1,3 +1,4 @@
+import { checkYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
 
@@ -103,3 +104,75 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 		pageComponents
 	};
 }
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} lpaStatement
+ * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} session
+ * @returns {PageContent}
+ * */
+export const confirmPage = (appealDetails, lpaStatement, session) => {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+	const sessionData = session.acceptLPAStatement;
+	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
+
+	const specialisms = (() => {
+		if (!sessionData?.allocationSpecialisms) {
+			return [];
+		}
+
+		return Array.isArray(sessionData.allocationSpecialisms)
+			? sessionData.allocationSpecialisms
+			: [sessionData.allocationSpecialisms];
+	})();
+
+	return checkYourAnswersComponent({
+		title: 'Check details and accept LPA statement',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Check details and accept LPA statement',
+		submitButtonText: 'Accept LPA statement',
+		responses: {
+			Statement: {
+				html: lpaStatement.redactedRepresentation || lpaStatement.originalRepresentation
+				// TODO: Add code for truncating long text with 'Show more' button
+			},
+			'Supporting documents': {
+				actions: {
+					Change: '#'
+				}
+				// TODO: Add document links
+			},
+			'Review decision': {
+				value: 'Accept statement',
+				actions: {
+					Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`
+				}
+			},
+			'Do you need to update the allocation level and specialisms?': {
+				value: updatingAllocation ? 'Yes' : 'No',
+				actions: {
+					Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`
+				}
+			},
+			...(updatingAllocation
+				? {
+						'Allocation level': {
+							value: sessionData.allocationLevel,
+							actions: {
+								Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`
+							}
+						},
+						'Allocation specialisms': {
+							html: `<ul class="govuk-list govuk-list--bullet">
+            ${specialisms.map((s) => `<li>${s}</li>`)}
+          </ul>`,
+							actions: {
+								Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`
+							}
+						}
+				  }
+				: {})
+		}
+	});
+};

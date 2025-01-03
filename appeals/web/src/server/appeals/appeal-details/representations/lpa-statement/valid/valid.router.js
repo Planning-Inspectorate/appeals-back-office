@@ -6,9 +6,11 @@ import {
 	renderAllocationCheck,
 	renderAllocationLevel,
 	renderAllocationSpecialisms,
+	renderConfirm,
 	postAllocationCheck,
 	postAllocationLevel,
-	postAllocationSpecialisms
+	postAllocationSpecialisms,
+	postAcceptStatement
 } from './valid.controller.js';
 
 const router = Router({ mergeParams: true });
@@ -21,6 +23,7 @@ router
 			'allocationLevelAndSpecialisms',
 			'Select whether you need to update the allocation level and specialisms'
 		),
+		saveBodyToSession('acceptLPAStatement'),
 		postAllocationCheck
 	);
 
@@ -37,5 +40,7 @@ router
 		saveBodyToSession('acceptLPAStatement'),
 		postAllocationSpecialisms
 	);
+
+router.route('/confirm').get(renderConfirm).post(postAcceptStatement);
 
 export default router;
