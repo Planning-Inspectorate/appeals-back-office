@@ -29,6 +29,7 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -170,11 +171,9 @@ export const postEnvironmentServiceTeamReviewCase = async (request, response) =>
 	if (errors) {
 		return renderEnvironmentServiceTeamReviewCase(request, response, errors);
 	}
-	// TODO Save flag here
-	await lpaQuestionnaireService.setEnvironmentalImpactAssessmentScreening(
+	await appealDetailsService.setEnvironmentalImpactAssessmentScreening(
 		request.apiClient,
 		appealId,
-		lpaQuestionnaireId,
 		eiaScreeningRequired === 'yes'
 	);
 

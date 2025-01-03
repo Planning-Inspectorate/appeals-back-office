@@ -3359,7 +3359,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should save the eia-screening-required value and redirect successfully', async () => {
-			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
+			nock('http://test/').patch(`/appeals/1/eia-screening-required`).reply(200, {});
 			const response = await request
 				.post(`${baseUrl}/environment-service-team-review-case`)
 				.send({ eiaScreeningRequired: 'yes' });

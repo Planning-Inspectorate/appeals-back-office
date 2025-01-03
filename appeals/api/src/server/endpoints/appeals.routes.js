@@ -35,6 +35,7 @@ import { representationRoutes } from './representations/representations.routes.j
 import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
+import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -71,6 +72,7 @@ router.use(linkAppealsRoutes);
 router.use(neighbouringSitesRoutes);
 router.use(serviceUserRoutes);
 router.use(withdrawalRoutes);
+router.use(environmentalImpactAssessmentRoutes);
 router.use(representationRoutes);
 router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);

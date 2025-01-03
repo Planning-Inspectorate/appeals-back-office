@@ -52,7 +52,6 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration,
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
 				eiaConsultedBodiesDetails: data.eiaConsultedBodiesDetails,
-				eiaScreeningRequired: data.eiaScreeningRequired,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits
 			}
 		})

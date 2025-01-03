@@ -115,6 +115,7 @@ interface SingleAppealDetailsResponse {
 		withdrawalRequestDate: Date | null;
 	};
 	isAffectingNeighbouringSites?: boolean | null;
+	eiaScreeningRequired?: boolean | null;
 }
 
 interface UpdateAppealRequest {
@@ -322,7 +323,6 @@ interface SingleLPAQuestionnaireResponse {
 	eiaRequiresEnvironmentalStatement?: boolean | null;
 	eiaEnvironmentalImpactSchedule?: string | null;
 	eiaDevelopmentDescription?: string | null;
-	eiaScreeningRequired?: boolean;
 	affectsScheduledMonument?: boolean;
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;
@@ -357,7 +357,6 @@ interface UpdateLPAQuestionnaireRequest {
 	eiaRequiresEnvironmentalStatement?: boolean;
 	eiaEnvironmentalImpactSchedule?: string | null;
 	eiaDevelopmentDescription?: string;
-	eiaScreeningRequired?: boolean;
 	affectsScheduledMonument?: boolean;
 	hasProtectedSpecies?: boolean;
 	isAonbNationalLandscape?: boolean;
