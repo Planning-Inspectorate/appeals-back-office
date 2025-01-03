@@ -16,7 +16,7 @@ export const render =
 		const { errors, [representationKey]: currentRepresentation, currentAppeal, session } = request;
 
 		if (!currentRepresentation || !currentAppeal) {
-			logger.warn('Not representation or appeal found in session');
+			logger.warn('No representation or appeal found in session');
 			return response.status(404).render('app/404.njk');
 		}
 
