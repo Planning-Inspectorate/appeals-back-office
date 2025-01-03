@@ -1,0 +1,257 @@
+import { apiMappers } from './api/index.js';
+import { contextEnum } from './context-enum.js';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
+/** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
+/** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
+/** @typedef {{ appeal: Appeal, appealTypes: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
+
+/**
+ *
+ * @param {MappingRequest} mappingRequest
+ * @returns {AppealDTO|undefined}
+ */
+export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appealDetails }) => {
+	if (context && appeal?.id && appeal?.caseCreatedDate) {
+		const caseMap = createDataMap({ appeal, appealTypes, context });
+		return createDataLayout(caseMap, { appeal, appealTypes, context });
+	}
+};
+
+/**
+ *
+ * @param {MappingRequest} mappingRequest
+ * @returns {Map<string, *>}
+ */
+function createDataMap(mappingRequest) {
+	const { appeal } = mappingRequest;
+
+	const casedata = createMap(apiMappers.apiSharedMappers, mappingRequest);
+	switch (appeal.appealType?.key) {
+		case APPEAL_CASE_TYPE.W: {
+			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
+			mergeMaps(casedata, s78);
+			break;
+		}
+		case APPEAL_CASE_TYPE.D:
+		default: {
+			const has = createMap(apiMappers.apiHasMappers, mappingRequest);
+			mergeMaps(casedata, has);
+			break;
+		}
+	}
+
+	return casedata;
+}
+
+/**
+ *
+ * @param {Object<string, *>} mappers
+ * @param {MappingRequest} mappingRequest
+ * @returns {Map<string, *>}
+ */
+function createMap(mappers, mappingRequest) {
+	const casedata = new Map([]);
+	Object.entries(mappers).forEach(([key, mapper]) => {
+		const mapped = mapper(mappingRequest);
+		if (mapped) {
+			casedata.set(key, mapped);
+		}
+	});
+	return casedata;
+}
+
+/**
+ *
+ * @param {Map<string, *>} existingMap
+ * @param {Map<string, *>} newMap
+ */
+function mergeMaps(existingMap, newMap) {
+	Array.from(existingMap.entries()).forEach(([key, value]) => {
+		const newValue = newMap.get(key);
+		if (newValue) {
+			existingMap.set(key, {
+				...value,
+				...newValue
+			});
+		}
+	});
+}
+
+/**
+ *
+ * @param {Map<string, *>} caseMap
+ * @param {MappingRequest} mappingRequest
+ */
+function createDataLayout(caseMap, mappingRequest) {
+	const {
+		appealSummary,
+		team,
+		appealRelationships,
+		appellantCase,
+		lpaQuestionnaire,
+		representations,
+		folders,
+		...appealDetails
+	} = Object.fromEntries(caseMap);
+
+	const { context, appeal } = mappingRequest;
+
+	switch (context) {
+		case contextEnum.appellantCase:
+			return {
+				...appealSummary,
+				...appellantCase,
+				...createFoldersLayout(folders, contextEnum.appellantCase)
+			};
+		case contextEnum.lpaQuestionnaire:
+			return {
+				...appealSummary,
+				...lpaQuestionnaire,
+				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
+			};
+		case contextEnum.representations:
+			return {
+				...appealSummary,
+				...representations,
+				...createFoldersLayout(folders, contextEnum.representations)
+			};
+		default: {
+			return {
+				...appealSummary,
+				...team,
+				...appealRelationships,
+				...appealDetails,
+				appellantCaseId: appeal.appellantCase?.id,
+				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
+				healthAndSafety: {
+					appellantCase: { ...appellantCase.healthAndSafety },
+					lpaQuestionnaire: { ...lpaQuestionnaire.healthAndSafety }
+				},
+				inspectorAccess: {
+					appellantCase: { ...appellantCase.siteAccessRequired },
+					lpaQuestionnaire: { ...lpaQuestionnaire.siteAccessRequired }
+				},
+				...createFoldersLayout(folders, contextEnum.appealDetails)
+			};
+		}
+	}
+}
+
+/***
+ *
+ * @param {Folder[]} folders
+ * @param { keyof contextEnum} context
+ *
+ */
+function createFoldersLayout(folders, context) {
+	switch (context) {
+		case contextEnum.appellantCase: {
+			const appellantCaseFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.APPELLANT_CASE)
+			);
+
+			return {
+				documents: processFolders(appellantCaseFolders)
+			};
+		}
+		case contextEnum.lpaQuestionnaire: {
+			const lpaqFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
+			);
+
+			return {
+				documents: processFolders(lpaqFolders)
+			};
+		}
+		case contextEnum.representations: {
+			const repsIpCommentsFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS)
+			);
+			const repsStatementsFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.STATEMENTS)
+			);
+			const repsFinalCommentsFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.FINAL_COMMENTS)
+			);
+
+			return {
+				...repsIpCommentsFolders,
+				...repsStatementsFolders,
+				...repsFinalCommentsFolders
+			};
+		}
+		default: {
+			const appealFolders = {
+				costs: {
+					appellantApplicationFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`
+					),
+					appellantWithdrawalFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`
+					),
+					appellantCorrespondenceFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE}`
+					),
+					lpaApplicationFolder: folders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`
+					),
+					lpaWithdrawalFolder: folders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`
+					),
+					lpaCorrespondenceFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`
+					),
+					decisionFolder: folders.find(
+						(f) =>
+							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
+					)
+				},
+				internalCorrespondence: {
+					crossTeam: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`
+					),
+					inspector: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
+					)
+				}
+			};
+			return {
+				...appealFolders
+			};
+		}
+	}
+}
+
+/***
+ *
+ * @param {Folder[]} folders
+ * @returns {Object<string, Folder>}
+ *
+ */
+function processFolders(folders) {
+	/** @type {Object<string, Folder>} */
+	const documents = {};
+	folders.map((folder) => {
+		const key = folder.path.split('/')[1];
+		documents[key] = folder;
+	});
+
+	return documents;
+}

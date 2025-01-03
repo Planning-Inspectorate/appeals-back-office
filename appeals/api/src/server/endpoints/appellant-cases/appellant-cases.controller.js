@@ -9,6 +9,8 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
+//import { contextEnum } from '#mappers/context-enum.js';
+//import { mapCase } from '#mappers/mapper-factory.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -20,6 +22,11 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
  */
 const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
+
+	// const context = contextEnum.appellantCase;
+	// const dto = mapCase({ appeal, appealTypes: undefined, context });
+	// return res.send(dto);
+
 	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.APPELLANT_CASE);
 	const formattedAppeal = formatAppellantCase(appeal, folders);
 
