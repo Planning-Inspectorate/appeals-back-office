@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
- * @typedef {import("./allocation-details.service.js").AllocationDetailsLevel} AllocationDetailsLevel
- * @typedef {import("./allocation-details.service.js").AllocationDetailsSpecialism} AllocationDetailsSpecialism
+ * @typedef {import("#lib/api/allocation-details.api.js").AllocationDetailsLevel} AllocationDetailsLevel
+ * @typedef {import("#lib/api/allocation-details.api.js").AllocationDetailsSpecialism} AllocationDetailsSpecialism
  * @typedef {import("../appeal-details.types.js").WebAppeal} Appeal
  */
 
