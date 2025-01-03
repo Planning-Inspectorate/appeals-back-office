@@ -3343,6 +3343,59 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/eia-screening-required": {
+			"patch": {
+				"tags": ["EIA Screening Required"],
+				"description": "Sets the EIA screening required boolean",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets the eiaScreeningRequired boolean or null"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "EIA Screening Required request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EiaScreeningRequiredRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/EiaScreeningRequiredRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/reps/count": {
 			"get": {
 				"tags": ["Representations"],
@@ -4556,7 +4609,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "c6a2477d-52f9-45ef-a271-8ec9bff707a8"
+								"example": "755b15e1-46fd-49ae-8c12-6246ee1f395e"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
@@ -9162,6 +9215,15 @@
 					"withdrawalRequestDate": {
 						"type": "string",
 						"example": "2024-10-11"
+					}
+				}
+			},
+			"EiaScreeningRequiredRequest": {
+				"type": "object",
+				"properties": {
+					"eiaScreeningRequired": {
+						"type": "boolean",
+						"example": true
 					}
 				}
 			},

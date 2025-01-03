@@ -233,8 +233,8 @@ export function environmentServiceTeamReviewCasePage(
 	errorsOnPage
 ) {
 	const title = 'Does the environmental services team need to review the case?';
-	const { lpaQuestionnaireId, eiaScreeningRequired } = lpaQuestionnaireData;
-	const { appealId, appealReference } = appealData;
+	const { lpaQuestionnaireId } = lpaQuestionnaireData;
+	const { appealId, appealReference, eiaScreeningRequired } = appealData;
 	const emailAddress = 'environmentalservices@planninginspectorate.gov.uk';
 	console.log(errorsOnPage);
 	/** @type {PageContent} */

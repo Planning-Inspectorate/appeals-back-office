@@ -1121,6 +1121,15 @@ export const spec = {
 				}
 			}
 		},
+		EiaScreeningRequiredRequest: {
+			type: 'object',
+			properties: {
+				eiaScreeningRequired: {
+					type: 'boolean',
+					example: true
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

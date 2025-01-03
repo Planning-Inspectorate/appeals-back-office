@@ -33,26 +33,6 @@ export function setReviewOutcomeForLpaQuestionnaire(
 }
 
 /**
- * @param {import('got').Got} apiClient
- * @param {string} appealId
- * @param {string} lpaQuestionnaireId
- * @param {boolean} eiaScreeningRequired
- * @returns {Promise<LpaQuestionnaire>}
- */
-export function setEnvironmentalImpactAssessmentScreening(
-	apiClient,
-	appealId,
-	lpaQuestionnaireId,
-	eiaScreeningRequired
-) {
-	return apiClient
-		.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
-			json: { eiaScreeningRequired }
-		})
-		.json();
-}
-
-/**
  *
  * @param {import('got').Got} apiClient
  * @returns {Promise<import('@pins/appeals.api').Appeals.NotValidReasonOption[]>}

@@ -214,6 +214,22 @@ const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 
 /**
  * @param {number} id
+ * @param {Boolean} eiaScreeningRequired
+ * @returns {PrismaPromise<import('#db-client').Appeal>}
+ */
+const setAppealEiaScreeningRequired = (id, eiaScreeningRequired) => {
+	return databaseConnector.appeal.update({
+		data: {
+			eiaScreeningRequired
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
  * @param {SetInvalidAppealDecisionRequest} data
  * @returns {PrismaPromise<[InspectorDecision, DocumentVersion]>}
  */
@@ -365,6 +381,7 @@ export default {
 	setAppealDecision,
 	setAppealWithdrawal,
 	setInvalidAppealDecision,
+	setAppealEiaScreeningRequired,
 	linkAppeal,
 	unlinkAppeal,
 	getAppealsByIds
