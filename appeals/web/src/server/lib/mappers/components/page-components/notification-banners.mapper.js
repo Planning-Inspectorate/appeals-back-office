@@ -228,6 +228,11 @@ export const notificationBannerDefinitions = {
 	lpaFinalCommentsAwaitingReview: {
 		pages: ['appealDetails'],
 		persist: true
+	},
+	finalCommentsRedactionSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Final comments redacted'
 	}
 };
 
