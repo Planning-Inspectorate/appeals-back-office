@@ -5,7 +5,7 @@ import {
 	allocationSpecialismsPage,
 	confirmPage
 } from './valid.mapper.js';
-import { getAllocationSpecialisms } from './valid.service.js';
+import { getAllocationDetailsSpecialisms } from '#appeals/appeal-details/allocation-details/allocation-details.service.js';
 
 export const renderAllocationCheck = render(
 	allocationCheckPage,
@@ -72,7 +72,7 @@ export function postAllocationLevel(request, response, next) {
 export async function renderAllocationSpecialisms(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const specialisms = await getAllocationSpecialisms(request.apiClient);
+	const specialisms = await getAllocationDetailsSpecialisms(request.apiClient);
 	const pageContent = allocationSpecialismsPage(currentAppeal, specialisms, session);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
