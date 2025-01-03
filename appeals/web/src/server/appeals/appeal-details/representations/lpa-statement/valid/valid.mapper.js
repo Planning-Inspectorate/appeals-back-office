@@ -36,7 +36,7 @@ export function allocationCheckPage(appealDetails) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {SessionWithAuth & Record<string, string>} session
+ * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
  * @returns {PageContent}
  * */
 export function allocationLevelPage(appealDetails, lpaStatement, session) {
@@ -47,7 +47,7 @@ export function allocationLevelPage(appealDetails, lpaStatement, session) {
 		radiosInput({
 			name: 'allocationLevel',
 			items: ALLOCATION_LEVELS.map((l) => ({ text: l, value: l })),
-			value: session.allocationLevel
+			value: session.acceptLPAStatement?.allocationLevel
 		})
 	];
 
@@ -64,14 +64,19 @@ export function allocationLevelPage(appealDetails, lpaStatement, session) {
 /**
  * @param {Appeal} appealDetails
  * @param {{ id: number, name: string }[]} specialisms
- * @param {SessionWithAuth & Record<string, string>} session
+ * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
  * */
 export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const sessionSelections = Array.isArray(session.allocationSpecialisms)
-		? session.allocationSpecialisms
-		: [session.allocationSpecialisms];
+	const sessionSelections = (() => {
+		const allocationSpecialisms = session.acceptLPAStatement?.allocationSpecialisms;
+		if (!allocationSpecialisms) {
+			return [];
+		}
+
+		return Array.isArray(allocationSpecialisms) ? allocationSpecialisms : [allocationSpecialisms];
+	})();
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [

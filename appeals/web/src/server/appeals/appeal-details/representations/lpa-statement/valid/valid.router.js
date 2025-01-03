@@ -27,14 +27,14 @@ router
 router
 	.route('/allocation-level')
 	.get(renderAllocationLevel)
-	.post(validateAllocationLevel, saveBodyToSession('allocationLevel'), postAllocationLevel);
+	.post(validateAllocationLevel, saveBodyToSession('acceptLPAStatement'), postAllocationLevel);
 
 router
 	.route('/allocation-specialisms')
 	.get(renderAllocationSpecialisms)
 	.post(
 		validateAllocationSpecialisms,
-		saveBodyToSession('allocationSpecialisms'),
+		saveBodyToSession('acceptLPAStatement'),
 		postAllocationSpecialisms
 	);
 
