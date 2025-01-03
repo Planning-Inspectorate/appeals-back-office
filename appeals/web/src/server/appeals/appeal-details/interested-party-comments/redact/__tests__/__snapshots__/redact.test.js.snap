@@ -50,16 +50,14 @@ exports[`redact renders the redact page 1`] = `
                 <textarea class="govuk-textarea" id="redact-textarea"
                 name="redactedRepresentation" rows="5" readonly="true">Awaiting review comment 47</textarea>
             </div>
-            <div>
-                <div class="govuk-button-group">
-                    <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
-                    id="redact-button">Redact selected text</button>
-                    <button class="govuk-button govuk-button--secondary"
-                    data-module="govuk-button" id="undo-button">Undo all changes</button>
-                </div>
-                <div class="govuk-button-group">
-                    <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                </div>
+            <div class="govuk-button-group">
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="redact-button">Redact selected text</button>
+                <button class="govuk-button govuk-button--secondary"
+                data-module="govuk-button" id="undo-button">Undo all changes</button>
+            </div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </div>
         </form>
     </div>
