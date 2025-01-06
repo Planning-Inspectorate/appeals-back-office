@@ -106,10 +106,13 @@ const bindEvents = (/** @type {ShowMoreComponentInstance} */ componentInstance) 
 // N.B. maximum total timeout will be the product of these
 const INNER_TEXT_TIMEOUT = 50;
 const INNER_TEXT_DEPTH = 100;
-const awaitInnerText = async (
-	/** @type {ShowMoreComponentInstance} */ componentInstance,
-	depth = 0
-) => {
+/**
+ *
+ * @param {ShowMoreComponentInstance} componentInstance
+ * @param {number} [depth]
+ * @returns {Promise<void>}
+ */
+const awaitInnerText = async (componentInstance, depth = 0) => {
 	if (componentInstance.elements.root.innerText || depth > INNER_TEXT_DEPTH) {
 		if (depth > 100 && !componentInstance.elements.root.innerText) {
 			console.warn('Failed to find inner text when initialising show more');
