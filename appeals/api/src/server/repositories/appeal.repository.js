@@ -94,6 +94,19 @@ const getAppealById = async (id) => {
 				}
 			},
 			caseNotes: true,
+			folders: {
+				include: {
+					documents: {
+						include: {
+							latestDocumentVersion: {
+								include: {
+									redactionStatus: true
+								}
+							}
+						}
+					}
+				}
+			},
 			representations: true
 		}
 	});
@@ -192,6 +205,22 @@ const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 	return databaseConnector.appeal.update({
 		data: {
 			withdrawalRequestDate
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
+ * @param {Boolean} eiaScreeningRequired
+ * @returns {PrismaPromise<import('#db-client').Appeal>}
+ */
+const setAppealEiaScreeningRequired = (id, eiaScreeningRequired) => {
+	return databaseConnector.appeal.update({
+		data: {
+			eiaScreeningRequired
 		},
 		where: {
 			id
@@ -352,6 +381,7 @@ export default {
 	setAppealDecision,
 	setAppealWithdrawal,
 	setInvalidAppealDecision,
+	setAppealEiaScreeningRequired,
 	linkAppeal,
 	unlinkAppeal,
 	getAppealsByIds

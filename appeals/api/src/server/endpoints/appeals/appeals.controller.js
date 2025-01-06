@@ -180,6 +180,7 @@ const getAppeal = async (req, res) => {
 		decisionInfo,
 		formattedAppealWithLinkedTypes
 	);
+
 	return res.send(formattedAppeal);
 };
 

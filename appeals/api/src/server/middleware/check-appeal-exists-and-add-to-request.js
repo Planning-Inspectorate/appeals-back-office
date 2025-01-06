@@ -16,6 +16,7 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 	const {
 		params: { appealId }
 	} = req;
+
 	const appeal = await appealRepository.getAppealById(Number(appealId));
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
@@ -36,6 +37,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 	const {
 		params: { caseReference }
 	} = req;
+
 	const appeal = await appealRepository.getAppealByAppealReference(caseReference);
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {

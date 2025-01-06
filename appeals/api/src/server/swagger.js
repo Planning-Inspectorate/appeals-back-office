@@ -29,6 +29,8 @@ import {
 	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '#endpoints/constants.js';
 
+import { ApiDefinitions } from '#mappers/api/definitions/index.js';
+
 export const spec = {
 	info: {
 		// by default: '1.0.0'
@@ -1118,7 +1120,17 @@ export const spec = {
 					example: '2024-10-11'
 				}
 			}
-		}
+		},
+		EiaScreeningRequiredRequest: {
+			type: 'object',
+			properties: {
+				eiaScreeningRequired: {
+					type: 'boolean',
+					example: true
+				}
+			}
+		},
+		...ApiDefinitions
 	},
 	components: {}
 };
