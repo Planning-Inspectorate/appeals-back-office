@@ -116,7 +116,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
 		headingClasses: 'govuk-heading-l',
-		submitButtonText: 'continue',
+		submitButtonText: 'Continue',
 		pageComponents
 	};
 
