@@ -103,7 +103,28 @@ const bindEvents = (/** @type {ShowMoreComponentInstance} */ componentInstance) 
 		});
 };
 
-const initialiseTextMode = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
+const awaitInnerText = async (
+	/** @type {ShowMoreComponentInstance} */ componentInstance,
+	depth = 0
+) => {
+	if (componentInstance.elements.root.innerText || depth > 100) {
+		if (depth > 100 && !componentInstance.elements.root.innerText) {
+			console.warn('Failed to find inner text when initialising show more');
+		}
+		return;
+	}
+	await (() =>
+		new Promise((resolve) => {
+			setTimeout(resolve, 50);
+		}))();
+	return awaitInnerText(componentInstance, depth + 1);
+};
+
+const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
+	await awaitInnerText(componentInstance);
+
+	console.log('Setting attrs');
+
 	componentInstance.elements.root.setAttribute(
 		ATTRIBUTES.fullText,
 		componentInstance.elements.root.innerText
@@ -154,7 +175,7 @@ const initialiseOptions = (/** @type {ShowMoreComponentInstance} */ componentIns
 	};
 };
 
-const initialiseComponentInstance = (
+const initialiseComponentInstance = async (
 	/** @type {ShowMoreComponentInstance} */ componentInstance
 ) => {
 	initialiseOptions(componentInstance);
@@ -162,7 +183,7 @@ const initialiseComponentInstance = (
 	if (isHtmlMode(componentInstance)) {
 		htmlModeToggleExpanded(componentInstance);
 	} else {
-		initialiseTextMode(componentInstance);
+		await initialiseTextMode(componentInstance);
 	}
 
 	const button = document.createElement('button');
@@ -191,7 +212,7 @@ const initialiseShowMore = () => {
 	/** @type {NodeListOf<HTMLElement>} */
 	const componentElementInstances = document.querySelectorAll(SELECTORS.container);
 
-	componentElementInstances.forEach((componentElementInstance) => {
+	componentElementInstances.forEach(async (componentElementInstance) => {
 		/** @type {ShowMoreComponentInstance} */
 		const componentInstance = {
 			mode: 'text',
@@ -203,7 +224,7 @@ const initialiseShowMore = () => {
 				expanded: false
 			}
 		};
-		initialiseComponentInstance(componentInstance);
+		await initialiseComponentInstance(componentInstance);
 	});
 };
 
