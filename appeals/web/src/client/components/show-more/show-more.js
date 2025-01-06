@@ -123,8 +123,6 @@ const awaitInnerText = async (
 const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
 	await awaitInnerText(componentInstance);
 
-	console.log('Setting attrs');
-
 	componentInstance.elements.root.setAttribute(
 		ATTRIBUTES.fullText,
 		componentInstance.elements.root.innerText
