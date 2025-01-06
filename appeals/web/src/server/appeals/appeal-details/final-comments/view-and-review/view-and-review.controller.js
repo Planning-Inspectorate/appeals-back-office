@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
@@ -46,7 +47,12 @@ export const renderReviewFinalComments = render(
  */
 export const postReviewFinalComments = async (request, response, next) => {
 	try {
-		const { errors, currentAppeal } = request;
+		const {
+			errors,
+			currentAppeal,
+			body: { status },
+			params: { appealId, finalCommentsType }
+		} = request;
 
 		if (!currentAppeal) {
 			logger.error('Current appeal not found.');
@@ -55,6 +61,12 @@ export const postReviewFinalComments = async (request, response, next) => {
 
 		if (errors) {
 			return renderReviewFinalComments(request, response, next);
+		}
+
+		if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/redact`
+			);
 		}
 
 		return renderReviewFinalComments(request, response, next);
