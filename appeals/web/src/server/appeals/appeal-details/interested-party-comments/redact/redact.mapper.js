@@ -1,8 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { wrapComponents, simpleHtmlComponent } from '#lib/mappers/index.js';
-import { redactInput } from './components/redact-input.js';
-import { wrappedButtons } from './components/buttons.js';
+import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
+import { redactInput } from '../../representations/common/components/redact-input.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -35,8 +34,17 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, session
 						classes: 'govuk-!-margin-top-2'
 					}
 				},
-				...redactInput(comment, session),
-				wrappedButtons
+				...redactInput({ comment, labelText: 'Redacted comment', session }),
+				buttonComponent(
+					'Continue',
+					{ type: 'submit' },
+					{
+						wrapperHtml: {
+							opening: '<div class="govuk-button-group">',
+							closing: '</div>'
+						}
+					}
+				)
 			],
 			{
 				opening:
