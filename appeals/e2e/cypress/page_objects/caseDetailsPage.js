@@ -98,7 +98,8 @@ export class CaseDetailsPage extends Page {
 		changeAppellant: () => cy.getByData(this._cyDataSelectors.changeAppellant),
 		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
 		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
-		getAgentEmailAddress: () => cy.get('#email-address.govuk-input')
+		getAgentEmailAddress: () => cy.get('#email-address.govuk-input'),
+		getWarningText: () => cy.get('.govuk-warning-text__text')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -429,5 +430,9 @@ export class CaseDetailsPage extends Page {
 
 	verifyAppealRefOnCaseDetails(caseRef) {
 		this.elements.getAppealRefCaseDetails().contains(caseRef);
+	}
+
+	verifyWarningText(text) {
+		this.elements.getWarningText().contains(text);
 	}
 }
