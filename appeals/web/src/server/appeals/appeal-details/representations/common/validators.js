@@ -5,8 +5,8 @@ import { body } from 'express-validator';
 export const validateStatus = createValidator(
 	body('status')
 		.notEmpty()
-		.withMessage('Select the outcome of your review')
+		.withMessage('Select your review decision')
 		.bail()
 		.isIn(Object.values(COMMENT_STATUS))
-		.withMessage('Select the outcome of your review')
+		.withMessage('Select your review decision')
 );
