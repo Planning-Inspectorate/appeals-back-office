@@ -6,9 +6,10 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
  * Generates the comment summary list used in both view and review pages.
  * @param {number} appealId
  * @param {Representation} comment - The comment object.
+ * @param {string} finalCommentsType
  * @returns {PageComponent} The generated comment summary list component.
  */
-export function generateCommentsSummaryList(appealId, comment) {
+export function generateCommentsSummaryList(appealId, comment, finalCommentsType) {
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
@@ -43,14 +44,14 @@ export function generateCommentsSummaryList(appealId, comment) {
 						? [
 								{
 									text: 'Manage',
-									href: `/appeals-service/appeal-details/${appealId}/final-comment/${comment.id}/manage-documents/${folderId}`,
+									href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${folderId}`,
 									visuallyHiddenText: 'supporting documents'
 								}
 						  ]
 						: []),
 					{
 						text: 'Add',
-						href: `/appeals-service/appeal-details/${appealId}/final-comment/${comment.id}/add-document`,
+						href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/add-documents`,
 						visuallyHiddenText: 'supporting documents'
 					}
 				]

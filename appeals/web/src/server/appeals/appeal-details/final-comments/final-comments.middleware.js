@@ -1,5 +1,6 @@
 import { getSingularRepresentationByType } from '../representations/representations.service.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { getAttachmentsFolder } from './final-comments.service.js';
 
 const finalCommentsTypeToAppealRepresentationTypeMap = {
 	appellant: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
@@ -34,6 +35,7 @@ export const withSingularRepresentation = async (req, res, next) => {
 		}
 
 		req.currentRepresentation = representation;
+		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}
