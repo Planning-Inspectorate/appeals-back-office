@@ -57,7 +57,7 @@ export function generateAccordion(
 				{ text: 'Documentation' },
 				{ text: 'Status' },
 				{ text: 'Received' },
-				{ text: 'Action', classes: 'pins-table__header--align-right' }
+				{ text: 'Action', classes: 'govuk-!-text-align-right' }
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
