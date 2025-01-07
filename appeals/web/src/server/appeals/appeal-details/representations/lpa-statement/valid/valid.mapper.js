@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
+import { ensureArray } from '#lib/array-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -91,7 +92,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 			return [];
 		}
 
-		return Array.isArray(allocationSpecialisms) ? allocationSpecialisms : [allocationSpecialisms];
+		return ensureArray(allocationSpecialisms);
 	})();
 
 	/** @type {PageComponent[]} */
@@ -137,9 +138,7 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 			return [];
 		}
 
-		const items = Array.isArray(sessionData.allocationSpecialisms)
-			? sessionData.allocationSpecialisms
-			: [sessionData.allocationSpecialisms];
+		const items = ensureArray(sessionData.allocationSpecialisms);
 
 		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
