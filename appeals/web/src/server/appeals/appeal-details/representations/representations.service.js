@@ -39,3 +39,13 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 
 	return apiResponse.items[0];
 };
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} repId
+ * @param {string} status
+ * @returns {Promise<Representation>}
+ * */
+export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
+	apiClient.patch(`appeals/${appealId}/reps/${repId}/status`, { json: { status } }).json();
