@@ -45,7 +45,7 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		} = request;
 
 		if (errors) {
-			return renderViewInterestedPartyComment(request, response, next);
+			return renderReviewInterestedPartyComment(request, response, next);
 		}
 
 		if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
