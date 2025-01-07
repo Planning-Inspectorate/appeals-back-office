@@ -49,3 +49,14 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
  * */
 export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
 	apiClient.patch(`appeals/${appealId}/reps/${repId}/status`, { json: { status } }).json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} representationType
+ * @returns {Promise<import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]>}
+ */
+export async function getRepresentationRejectionReasonOptions(apiClient, representationType) {
+	return apiClient
+		.get(`appeals/representation-rejection-reasons?type=${representationType}`)
+		.json();
+}

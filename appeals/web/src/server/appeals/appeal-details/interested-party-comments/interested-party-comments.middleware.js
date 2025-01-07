@@ -16,7 +16,7 @@ export const validateComment = async (req, res, next) => {
 			return res.status(404).render('app/404.njk');
 		}
 
-		req.currentComment = representation;
+		req.currentRepresentation = representation;
 
 		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
 

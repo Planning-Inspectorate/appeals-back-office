@@ -11,8 +11,7 @@ import { setRepresentationStatus } from '../../representations.service.js';
 
 export const renderAllocationCheck = render(
 	allocationCheckPage,
-	'patterns/change-page.pattern.njk',
-	'currentRepresentation'
+	'patterns/change-page.pattern.njk'
 );
 
 /**

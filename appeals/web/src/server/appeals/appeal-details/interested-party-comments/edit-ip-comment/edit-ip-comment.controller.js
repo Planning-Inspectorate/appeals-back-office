@@ -11,7 +11,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 export async function renderEditAddress(request, response) {
 	const {
 		currentAppeal,
-		currentComment,
+		currentRepresentation,
 		errors,
 		query: { review, editAddress }
 	} = request;
@@ -20,9 +20,9 @@ export async function renderEditAddress(request, response) {
 
 	const pageContent = ipAddressPage(
 		currentAppeal,
-		currentComment?.represented?.address,
+		currentRepresentation?.represented?.address,
 		errors,
-		`${currentComment.id}/${backLinkUrl}`,
+		`${currentRepresentation.id}/${backLinkUrl}`,
 		operationType
 	);
 
@@ -37,11 +37,11 @@ export async function renderEditAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function renderCheckAddress(request, response) {
-	const { currentAppeal, currentComment } = request;
+	const { currentAppeal, currentRepresentation } = request;
 
 	const pageContent = checkAddressPage(
 		currentAppeal,
-		currentComment.id,
+		currentRepresentation.id,
 		request.session.editIpComment
 	);
 
@@ -56,12 +56,12 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function postCheckPage(request, response) {
-	const { currentAppeal, currentComment, session } = request;
+	const { currentAppeal, currentRepresentation, session } = request;
 
 	await updateAddress(
 		request.apiClient,
 		currentAppeal.appealId,
-		currentComment.represented?.id,
+		currentRepresentation.represented?.id,
 		request.session.editIpComment
 	);
 
@@ -78,7 +78,7 @@ export async function postCheckPage(request, response) {
 	return response
 		.status(200)
 		.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/${redirectPath}`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/${redirectPath}`
 		);
 }
 
@@ -87,7 +87,7 @@ export async function postCheckPage(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function postEditAddress(request, response) {
-	const { currentAppeal, currentComment } = request;
+	const { currentAppeal, currentRepresentation } = request;
 
 	if (request.errors) {
 		return renderEditAddress(request, response);
@@ -95,7 +95,7 @@ export async function postEditAddress(request, response) {
 
 	return response.redirect(
 		url.format({
-			pathname: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/edit/check/address`,
+			pathname: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/edit/check/address`,
 			query: {
 				editAddress: request.query.editAddress === 'true'
 			}

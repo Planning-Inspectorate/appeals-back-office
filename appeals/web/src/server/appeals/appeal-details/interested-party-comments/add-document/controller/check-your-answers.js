@@ -19,7 +19,7 @@ export const renderCheckYourAnswers = (
 	{
 		errors,
 		currentAppeal: { appealReference, appealId },
-		currentComment: { id: commentId },
+		currentRepresentation: { id: commentId },
 		session: {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
@@ -79,7 +79,7 @@ export const renderCheckYourAnswers = (
  * @type {import('@pins/express').RequestHandler<{}>}
  */
 export const postCheckYourAnswers = async (
-	{ apiClient, session, currentAppeal: { appealId }, currentComment: { id: commentId } },
+	{ apiClient, session, currentAppeal: { appealId }, currentRepresentation: { id: commentId } },
 	response
 ) => {
 	const {

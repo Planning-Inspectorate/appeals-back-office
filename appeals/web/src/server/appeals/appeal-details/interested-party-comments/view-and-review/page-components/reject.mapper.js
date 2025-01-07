@@ -4,6 +4,7 @@ import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -102,17 +103,6 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 			  )
 			: null;
 
-	/** @type {string[]} */
-	const reasonNames = payload.rejectionReasons.map(
-		(reasonId) => rejectionReasons.find((r) => r.id === parseInt(reasonId))?.name ?? ''
-	);
-
-	const rejectionReasonHtml = buildHtmUnorderedList(
-		reasonNames,
-		0,
-		'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0 govuk-list--bullet'
-	);
-
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
@@ -166,7 +156,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						text: 'Why are you rejecting the comment?'
 					},
 					value: {
-						html: rejectionReasonHtml
+						html: rejectionReasonHtml(payload.rejectionReasons, rejectionReasons)
 					},
 					actions: {
 						items: [

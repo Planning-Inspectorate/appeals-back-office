@@ -1,73 +1,35 @@
+import { mapRejectionReasonPayload } from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
+import { renderSelectRejectionReasons } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
+import { getRepresentationRejectionReasonOptions } from '#appeals/appeal-details/representations/representations.service.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { ensureArray } from '#lib/array-utilities.js';
 import {
-	mapRejectionReasonOptionsToCheckboxItemParameters,
-	mapRejectionReasonPayload
-} from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
-import {
-	getRepresentationRejectionReasonOptions,
-	updateRejectionReasons,
-	rejectInterestedPartyComment
-} from './reject.service.js';
-import {
-	rejectInterestedPartyCommentPage,
 	rejectAllowResubmitPage,
-	rejectCheckYourAnswersPage
+	rejectCheckYourAnswersPage,
+	rejectInterestedPartyCommentPage
 } from './reject.mapper.js';
+import { rejectInterestedPartyComment, updateRejectionReasons } from './reject.service.js';
+
+export const renderSelectReason = renderSelectRejectionReasons(rejectInterestedPartyCommentPage);
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('express').NextFunction} next
  */
-export const renderSelectReason = async (request, response) => {
-	const { currentAppeal, currentComment, apiClient, session, errors } = request;
-
-	if (!currentAppeal || !currentComment) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	try {
-		const rejectionReasons = await getRepresentationRejectionReasonOptions(apiClient);
-
-		const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
-			currentComment,
-			rejectionReasons,
-			session,
-			errors?.['']
-				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-				: undefined
-		);
-
-		const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentComment);
-
-		return response.status(200).render('appeals/appeal/reject-ip-comment.njk', {
-			errors,
-			pageContent,
-			rejectionReasons: mappedRejectionReasons
-		});
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
-	}
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const postRejectReason = async (request, response) => {
+export const postRejectReason = async (request, response, next) => {
 	const {
-		currentComment,
+		currentRepresentation,
 		params: { appealId, commentId },
 		errors
 	} = request;
 
 	if (errors) {
-		return renderSelectReason(request, response);
+		return renderSelectReason(request, response, next);
 	}
 
-	if (currentComment.represented.email) {
+	if (currentRepresentation.represented.email) {
 		return response
 			.status(200)
 			.redirect(
@@ -122,9 +84,9 @@ export const postRejectInterestedPartyComment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export const renderAllowResubmit = async (request, response) => {
-	const { currentAppeal, currentComment, session, errors } = request;
+	const { currentAppeal, currentRepresentation, session, errors } = request;
 
-	if (!currentAppeal || !currentComment) {
+	if (!currentAppeal || !currentRepresentation) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -132,7 +94,7 @@ export const renderAllowResubmit = async (request, response) => {
 		const pageContent = await rejectAllowResubmitPage(
 			request.apiClient,
 			currentAppeal,
-			currentComment,
+			currentRepresentation,
 			session
 		);
 
@@ -170,15 +132,23 @@ export const postAllowResubmit = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCheckYourAnswers = async (request, response) => {
-	const { currentAppeal, currentComment, errors, session } = request;
+	const { currentAppeal, currentRepresentation, errors, session } = request;
 
-	const rejectionReasons = await getRepresentationRejectionReasonOptions(request.apiClient);
 	const selectedReasons = ensureArray(session.rejectIpComment?.rejectionReason);
+	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+		request.apiClient,
+		currentRepresentation.representationType
+	);
 
-	const pageContent = rejectCheckYourAnswersPage(currentAppeal, currentComment, rejectionReasons, {
-		rejectionReasons: selectedReasons,
-		allowResubmit: session.rejectIpComment?.allowResubmit === 'yes'
-	});
+	const pageContent = rejectCheckYourAnswersPage(
+		currentAppeal,
+		currentRepresentation,
+		rejectionReasons,
+		{
+			rejectionReasons: selectedReasons,
+			allowResubmit: session.rejectIpComment?.allowResubmit === 'yes'
+		}
+	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		errors,
