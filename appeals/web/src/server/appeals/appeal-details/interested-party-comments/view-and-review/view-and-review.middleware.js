@@ -1,8 +1,12 @@
 /** @type {import("express").Handler} */
-export const redirectIfCommentIsReviewed = ({ currentAppeal, currentComment }, response, next) => {
-	if (currentComment.status !== 'awaiting_review') {
+export const redirectIfCommentIsReviewed = (
+	{ currentAppeal, currentRepresentation },
+	response,
+	next
+) => {
+	if (currentRepresentation.status !== 'awaiting_review') {
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/view`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/view`
 		);
 	}
 	next();
@@ -10,13 +14,13 @@ export const redirectIfCommentIsReviewed = ({ currentAppeal, currentComment }, r
 
 /** @type {import("express").Handler} */
 export const redirectIfCommentIsUnreviewed = (
-	{ currentAppeal, currentComment },
+	{ currentAppeal, currentRepresentation },
 	response,
 	next
 ) => {
-	if (currentComment.status === 'awaiting_review') {
+	if (currentRepresentation.status === 'awaiting_review') {
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/review`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/review`
 		);
 	}
 	next();

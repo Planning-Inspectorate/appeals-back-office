@@ -7,7 +7,7 @@ import {
 	validateAllowResubmit,
 	validateRejectReason,
 	validateRejectionReasonTextItems
-} from './reject.validators.js';
+} from '../../../representations/common/validators/reject.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

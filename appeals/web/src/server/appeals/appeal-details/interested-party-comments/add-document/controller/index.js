@@ -5,14 +5,14 @@ import {
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
-	const { currentComment, currentAppeal, session } = request;
+	const { currentRepresentation, currentAppeal, session } = request;
 
 	return renderDocumentUploadHelper({
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/review`,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/add-document/redaction-status`,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/review`,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/add-document/redaction-status`,
 		pageHeadingTextOverride: 'Upload supporting document',
 		allowMultipleFiles: false,
 		documentType: session.costsDocumentType
@@ -23,12 +23,12 @@ export const renderDocumentUpload = async (request, response) => {
  * @type {import('@pins/express/types/express.js').RequestHandler<{}>}
  */
 export const postDocumentUpload = async (request, response) => {
-	const { currentAppeal, currentComment } = request;
+	const { currentAppeal, currentRepresentation } = request;
 
 	await postDocumentUploadHelper({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentComment.id}/add-document/redaction-status`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/add-document/redaction-status`
 	});
 };
 

@@ -10,7 +10,7 @@ const router = Router({ mergeParams: true });
 router.get('/', renderReviewLpaStatement);
 router.post('/', validateStatus, saveBodyToSession('lpaStatement'), postReviewLpaStatement);
 
-router.use('/incomplete', incompleteRouter);
+router.use('/incomplete', saveBodyToSession('lpaStatement'), incompleteRouter);
 
 router.use('/valid', validRouter);
 

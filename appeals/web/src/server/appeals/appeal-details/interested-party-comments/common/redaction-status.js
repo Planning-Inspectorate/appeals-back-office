@@ -49,7 +49,7 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 export const renderRedactionStatusFactory =
 	({ getBackLinkUrl }) =>
 	(request, response) => {
-		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentComment);
+		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
 
 		const pageContent = mapper(request.currentAppeal, request.errors, backLinkUrl);
 
@@ -72,7 +72,7 @@ export const postRedactionStatusFactory =
 			return errorHandler(request, response, next);
 		}
 
-		const { currentAppeal, currentComment } = request;
+		const { currentAppeal, currentRepresentation } = request;
 
-		return response.redirect(getRedirectUrl(currentAppeal, currentComment));
+		return response.redirect(getRedirectUrl(currentAppeal, currentRepresentation));
 	};
