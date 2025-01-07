@@ -7,6 +7,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { urlPaths } from '../../support/urlPaths';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
@@ -50,6 +51,18 @@ describe('related appeals', () => {
 					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
 				});
 			});
+		});
+	});
+	it('relate a BO appeal to a Horizon appeal', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			caseDetailsPage.clickAccordionByButton('Overview');
+			caseDetailsPage.clickAddRelatedAppeals();
+			caseDetailsPage.fillInput(horizonTestAppeals.horizonAppeal1);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
 		});
 	});
 });
