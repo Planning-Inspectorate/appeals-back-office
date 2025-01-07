@@ -1,3 +1,5 @@
+import * as api from '#lib/api/allocation-details.api.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import { render } from '../../common/render.js';
 import {
 	allocationCheckPage,
@@ -6,7 +8,6 @@ import {
 	confirmPage
 } from './valid.mapper.js';
 import { setRepresentationStatus } from '../../representations.service.js';
-import * as api from '#lib/api/allocation-details.api.js';
 
 export const renderAllocationCheck = render(
 	allocationCheckPage,
@@ -152,13 +153,7 @@ export async function postAcceptStatement(request, response) {
 	} = request;
 
 	if (session.allocationLevelAndSpecialisms === 'yes') {
-		const specialisms = (() => {
-			const items = Array.isArray(session.allocationSpecialisms)
-				? session.allocationSpecialisms
-				: [session.allocationSpecialisms];
-
-			return items.map(Number);
-		})();
+		const specialisms = ensureArray(session.allocationSpecialisms).map(Number);
 
 		await api.setAllocationDetails(request.apiClient, appealId, {
 			level: session.allocationLevel,

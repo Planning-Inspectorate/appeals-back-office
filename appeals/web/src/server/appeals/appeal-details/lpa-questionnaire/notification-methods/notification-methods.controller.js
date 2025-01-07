@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import { changeNotificationMethodsPage } from './notification-methods.mapper.js';
 import {
 	getLpaNotificationMethods,
@@ -83,7 +84,7 @@ export const postChangeNotificationMethods = async (request, response) => {
 	const bodyValue = request.body['notificationMethodsCheckboxes'];
 
 	if (bodyValue) {
-		request.session.notificationMethods = (Array.isArray(bodyValue) ? bodyValue : [bodyValue]).map(
+		request.session.notificationMethods = ensureArray(bodyValue).map(
 			(/** @type {number} */ notificationMethodId) => ({
 				id: notificationMethodId
 			})

@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import {
 	mapRejectionReasonOptionsToCheckboxItemParameters,
 	mapRejectionReasonPayload
@@ -172,9 +173,7 @@ export const renderCheckYourAnswers = async (request, response) => {
 	const { currentAppeal, currentComment, errors, session } = request;
 
 	const rejectionReasons = await getRepresentationRejectionReasonOptions(request.apiClient);
-	const selectedReasons = Array.isArray(session.rejectIpComment?.rejectionReason)
-		? session.rejectIpComment?.rejectionReason
-		: [session.rejectIpComment?.rejectionReason];
+	const selectedReasons = ensureArray(session.rejectIpComment?.rejectionReason);
 
 	const pageContent = rejectCheckYourAnswersPage(currentAppeal, currentComment, rejectionReasons, {
 		rejectionReasons: selectedReasons,
