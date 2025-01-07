@@ -9,6 +9,7 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
  * @property {boolean} ipComments
  * @property {boolean} appellantFinalComments
  * @property {boolean} lpaFinalComments
+ * @property {boolean} lpaStatement
  */
 
 /**

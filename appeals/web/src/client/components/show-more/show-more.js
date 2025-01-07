@@ -103,7 +103,32 @@ const bindEvents = (/** @type {ShowMoreComponentInstance} */ componentInstance) 
 		});
 };
 
-const initialiseTextMode = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
+// N.B. maximum total timeout will be the product of these
+const INNER_TEXT_TIMEOUT = 50;
+const INNER_TEXT_DEPTH = 100;
+/**
+ *
+ * @param {ShowMoreComponentInstance} componentInstance
+ * @param {number} [depth]
+ * @returns {Promise<void>}
+ */
+const awaitInnerText = async (componentInstance, depth = 0) => {
+	if (componentInstance.elements.root.innerText || depth > INNER_TEXT_DEPTH) {
+		if (depth > INNER_TEXT_DEPTH && !componentInstance.elements.root.innerText) {
+			console.warn('Failed to find inner text when initialising show more');
+		}
+		return;
+	}
+	await (() =>
+		new Promise((resolve) => {
+			setTimeout(resolve, INNER_TEXT_TIMEOUT);
+		}))();
+	return awaitInnerText(componentInstance, depth + 1);
+};
+
+const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
+	await awaitInnerText(componentInstance);
+
 	componentInstance.elements.root.setAttribute(
 		ATTRIBUTES.fullText,
 		componentInstance.elements.root.innerText
@@ -154,7 +179,7 @@ const initialiseOptions = (/** @type {ShowMoreComponentInstance} */ componentIns
 	};
 };
 
-const initialiseComponentInstance = (
+const initialiseComponentInstance = async (
 	/** @type {ShowMoreComponentInstance} */ componentInstance
 ) => {
 	initialiseOptions(componentInstance);
@@ -162,7 +187,7 @@ const initialiseComponentInstance = (
 	if (isHtmlMode(componentInstance)) {
 		htmlModeToggleExpanded(componentInstance);
 	} else {
-		initialiseTextMode(componentInstance);
+		await initialiseTextMode(componentInstance);
 	}
 
 	const button = document.createElement('button');
@@ -191,7 +216,7 @@ const initialiseShowMore = () => {
 	/** @type {NodeListOf<HTMLElement>} */
 	const componentElementInstances = document.querySelectorAll(SELECTORS.container);
 
-	componentElementInstances.forEach((componentElementInstance) => {
+	componentElementInstances.forEach(async (componentElementInstance) => {
 		/** @type {ShowMoreComponentInstance} */
 		const componentInstance = {
 			mode: 'text',
@@ -203,7 +228,7 @@ const initialiseShowMore = () => {
 				expanded: false
 			}
 		};
-		initialiseComponentInstance(componentInstance);
+		await initialiseComponentInstance(componentInstance);
 	});
 };
 

@@ -21,18 +21,16 @@
  * @param {import('got').Got} apiClient
  * @returns {Promise<AllocationDetailsLevel[]>}
  */
-export async function getAllocationDetailsLevels(apiClient) {
-	return apiClient.get('appeals/appeal-allocation-levels').json();
-}
+export const getAllocationDetailsLevels = (apiClient) =>
+	apiClient.get('appeals/appeal-allocation-levels').json();
 
 /**
  *
  * @param {import('got').Got} apiClient
  * @returns {Promise<AllocationDetailsSpecialism[]>}
  */
-export async function getAllocationDetailsSpecialisms(apiClient) {
-	return apiClient.get('appeals/appeal-allocation-specialisms').json();
-}
+export const getAllocationDetailsSpecialisms = (apiClient) =>
+	apiClient.get('appeals/appeal-allocation-specialisms').json();
 
 /**
  * @param {import('got').Got} apiClient
@@ -40,8 +38,5 @@ export async function getAllocationDetailsSpecialisms(apiClient) {
  * @param {AllocationDetails} allocationDetails
  * @returns {Promise<AllocationDetails>}
  */
-export function setAllocationDetails(apiClient, appealId, allocationDetails) {
-	return apiClient
-		.patch(`appeals/${appealId}/appeal-allocation`, { json: allocationDetails })
-		.json();
-}
+export const setAllocationDetails = (apiClient, appealId, allocationDetails) =>
+	apiClient.patch(`appeals/${appealId}/appeal-allocation`, { json: allocationDetails }).json();

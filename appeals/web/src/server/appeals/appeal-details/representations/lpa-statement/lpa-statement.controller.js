@@ -20,8 +20,11 @@ export const postReviewLpaStatement = (request, response, next) => {
 		return renderReviewLpaStatement(request, response, next);
 	}
 
-	// TODO: add cases for other statuses
 	switch (status) {
+		case COMMENT_STATUS.VALID:
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
+			);
 		case COMMENT_STATUS.INCOMPLETE:
 			return response.redirect(
 				// TODO: change this to whatever flow page you want to enter as you build out the flow

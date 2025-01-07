@@ -4,8 +4,8 @@ import {
 	allocationDetailsCheckAnswersPage
 } from './allocation-details.mapper.js';
 import logger from '../../../lib/logger.js';
-import * as allocationDetailsService from './allocation-details.service.js';
 import { objectContainsAllKeys } from '../../../lib/object-utilities.js';
+import * as api from '#lib/api/allocation-details.api.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
@@ -15,9 +15,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
  */
 const renderAllocationDetailsLevels = async (request, response, errors = null) => {
 	const appealDetails = request.currentAppeal;
-	const allocationDetailsLevels = await allocationDetailsService.getAllocationDetailsLevels(
-		request.apiClient
-	);
+	const allocationDetailsLevels = await api.getAllocationDetailsLevels(request.apiClient);
 
 	if (appealDetails) {
 		if (request.session.appealId && request.session.appealId !== appealDetails.appealId) {
@@ -54,8 +52,8 @@ const renderAllocationDetailsSpecialism = async (request, response, errors = nul
 	}
 
 	const [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
-		allocationDetailsService.getAllocationDetailsLevels(request.apiClient),
-		allocationDetailsService.getAllocationDetailsSpecialisms(request.apiClient)
+		api.getAllocationDetailsLevels(request.apiClient),
+		api.getAllocationDetailsSpecialisms(request.apiClient)
 	]);
 
 	const selectedAllocationLevel = allocationDetailsLevels.find(
@@ -102,8 +100,8 @@ const renderAllocationDetailsCheckAnswers = async (request, response) => {
 	}
 
 	const [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
-		allocationDetailsService.getAllocationDetailsLevels(request.apiClient),
-		allocationDetailsService.getAllocationDetailsSpecialisms(request.apiClient)
+		api.getAllocationDetailsLevels(request.apiClient),
+		api.getAllocationDetailsSpecialisms(request.apiClient)
 	]);
 	const selectedAllocationLevel = allocationDetailsLevels.find(
 		(levelItem) => levelItem.level === request.session.allocationLevel
@@ -241,11 +239,7 @@ export const postAllocationDetailsCheckAnswers = async (request, response) => {
 			specialisms: request.session.allocationSpecialisms
 		};
 
-		await allocationDetailsService.setAllocationDetails(
-			request.apiClient,
-			appealDetails.appealId,
-			allocationDetails
-		);
+		await api.setAllocationDetails(request.apiClient, appealDetails.appealId, allocationDetails);
 
 		delete request.session.allocationLevel;
 		delete request.session.allocationSpecialisms;
