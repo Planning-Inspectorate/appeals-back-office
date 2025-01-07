@@ -1,4 +1,27 @@
 /**
+ *
+ * @param {Object} options
+ * @param {string} options.id
+ * @param {boolean} [options.hasDocuments]
+ * @param {string} options.link
+ * @param {boolean} [options.editable]
+ * @param {number | undefined} options.folderId
+ * @returns {string}
+ */
+export function actionsHtml({ id, hasDocuments = false, link, editable = false, folderId }) {
+	let actionsHtmls = `<ul class="govuk-summary-list__actions-list">`;
+
+	if (hasDocuments) {
+		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage');
+	}
+	if (editable) {
+		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', 'add-' + id);
+	}
+	actionsHtmls += `</ul>`;
+	return actionsHtmls;
+}
+
+/**
  * Returns the instructions for a costs folder table item
  *
  * @param {Object} options
@@ -21,17 +44,8 @@ export function costsFolderTableItem({
 	const hasDocuments =
 		folderInfo?.documents &&
 		folderInfo.documents.filter((doc) => !doc.latestDocumentVersion?.isDeleted).length > 0;
+
 	const folderId = folderInfo?.folderId;
-
-	let actionsHtmls = `<ul class="govuk-summary-list__actions-list">`;
-
-	if (hasDocuments) {
-		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage', text);
-	}
-	if (editable) {
-		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', text, 'add-' + id);
-	}
-	actionsHtmls += `</ul>`;
 
 	return {
 		id,
@@ -46,7 +60,7 @@ export function costsFolderTableItem({
 					classes: `appeal-${id}-status`
 				},
 				{
-					html: actionsHtmls,
+					html: actionsHtml({ id, hasDocuments, link, editable, folderId }),
 					classes: `appeal-${id}-actions govuk-!-text-align-right`
 				}
 			]

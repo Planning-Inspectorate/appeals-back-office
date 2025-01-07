@@ -9,7 +9,7 @@ import { mapAppellantStatementDueDate } from './submappers/appellant-statement-d
 import { mapLpaStatement } from './submappers/lpa-statement.mapper.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
 import { mapLPAFinalComments } from './submappers/lpa-final-comments.mapper.js';
-import { mapEnvironmentalAssessment } from '#lib/mappers/data/appeal/submappers/environmental-assessment.mapper.js';
+import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
