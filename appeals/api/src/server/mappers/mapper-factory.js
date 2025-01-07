@@ -138,6 +138,7 @@ function createDataLayout(caseMap, mappingRequest) {
 					appellantCase: { ...appellantCase.siteAccessRequired },
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.siteAccessRequired ?? null) }
 				},
+				eiaScreeningRequired: appeal.eiaScreeningRequired,
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}
