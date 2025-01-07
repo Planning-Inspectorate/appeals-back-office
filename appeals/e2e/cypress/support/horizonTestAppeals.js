@@ -1,3 +1,3 @@
 export const horizonTestAppeals = {
-	horizonAppeal1: '3152068'
+	horizonAppeal1: '3222470'
 };
