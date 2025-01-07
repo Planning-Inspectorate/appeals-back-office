@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
+import { ensureArray } from '#lib/array-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -14,8 +15,23 @@ import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
 export function allocationCheckPage(appealDetails) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	/** @type {PageComponent} */
+	const currentStatus = {
+		type: 'inset-text',
+		parameters: {
+			html: `
+        <p>Current status:</p>
+        <ul>
+          <li>Level ${appealDetails.allocationDetails?.level}</li>
+          ${appealDetails.allocationDetails?.specialisms.map((s) => `<li>${s}</li>`).join('')}
+        </ul>
+      `
+		}
+	};
+
 	/** @type {PageComponent[]} */
 	const pageComponents = [
+		...(appealDetails.allocationDetails ? [currentStatus] : []),
 		yesNoInput({
 			name: 'allocationLevelAndSpecialisms',
 			id: 'allocationLevelAndSpecialisms',
@@ -76,7 +92,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 			return [];
 		}
 
-		return Array.isArray(allocationSpecialisms) ? allocationSpecialisms : [allocationSpecialisms];
+		return ensureArray(allocationSpecialisms);
 	})();
 
 	/** @type {PageComponent[]} */
@@ -88,7 +104,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 				id: 'allocationSpecialisms',
 				items: specialisms.map((s) => ({
 					text: s.name,
-					value: s.name,
+					value: s.id,
 					checked: sessionSelections.includes(s.name)
 				}))
 			}
@@ -108,10 +124,11 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
+ * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
  * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} session
  * @returns {PageContent}
  * */
-export const confirmPage = (appealDetails, lpaStatement, session) => {
+export const confirmPage = (appealDetails, lpaStatement, specialismData, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const sessionData = session.acceptLPAStatement;
 	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
@@ -121,9 +138,9 @@ export const confirmPage = (appealDetails, lpaStatement, session) => {
 			return [];
 		}
 
-		return Array.isArray(sessionData.allocationSpecialisms)
-			? sessionData.allocationSpecialisms
-			: [sessionData.allocationSpecialisms];
+		const items = ensureArray(sessionData.allocationSpecialisms);
+
+		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
 
 	const attachmentsList =
@@ -209,7 +226,7 @@ export const confirmPage = (appealDetails, lpaStatement, session) => {
 									key: { text: 'Allocation specialisms' },
 									value: {
 										html: `<ul class="govuk-list govuk-list--bullet">
-                    ${specialisms.map((s) => `<li>${s}</li>`)}
+                    ${specialisms.map((s) => `<li>${s}</li>`).join('')}
                   </ul>`
 									},
 									actions: {

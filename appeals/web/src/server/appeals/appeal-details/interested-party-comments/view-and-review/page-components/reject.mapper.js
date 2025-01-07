@@ -3,6 +3,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { ensureArray } from '#lib/array-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -251,7 +252,7 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 			return [];
 		}
 
-		return Array.isArray(value) ? value : [value];
+		return ensureArray(value);
 	})();
 
 	return rejectionReasonOptions.map((reason) => {
@@ -264,7 +265,7 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 				return null;
 			}
 
-			return Array.isArray(value) ? value : [value];
+			return ensureArray(value);
 		})();
 
 		return {
@@ -297,9 +298,7 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 		}
 	};
 
-	const reasonsArray = Array.isArray(rejectionReason)
-		? rejectionReason
-		: [rejectionReason].filter(Boolean);
+	const reasonsArray = ensureArray(rejectionReason);
 	reasonsArray.forEach((id) => {
 		if (typeof id === 'string' || typeof id === 'number') {
 			addReason(id);
@@ -311,7 +310,7 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 		if (match) {
 			const id = parseInt(match[1], 10);
 			if (!isNaN(id)) {
-				const texts = Array.isArray(value) ? value : [value];
+				const texts = ensureArray(value);
 				const trimmedTexts = texts
 					.filter((text) => typeof text === 'string' && text.trim() !== '')
 					.map((text) => (typeof text === 'string' ? text.trim() : ''));
