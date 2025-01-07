@@ -8,6 +8,7 @@ import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { createApiSubmission } from '../../support/appealsApiClient.js';
 import { appealsApiClient } from '../../support/appealsApiClient.js';
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests.js';
+import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 
@@ -42,6 +43,26 @@ describe('unrelate appeals', () => {
 						'You have removed the relationship between this appeal and appeal' + caseRefToRelate
 					);
 				});
+			});
+		});
+
+		it('unrelate a BO appeal to a Horizon appeal', () => {
+			cy.createCase().then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				caseDetailsPage.clickAccordionByButton('Overview');
+				caseDetailsPage.clickAddRelatedAppeals();
+				caseDetailsPage.fillInput(horizonTestAppeals.horizonAppeal1);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+				caseDetailsPage.clickManageRelatedAppeals();
+				caseDetailsPage.clickRemoveRelatedAppealByRef(horizonTestAppeals.horizonAppeal1);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateBannerMessage(
+					'You have removed the relationship between this appeal and appeal' +
+						horizonTestAppeals.horizonAppeal1
+				);
 			});
 		});
 	});
