@@ -700,7 +700,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeFileLinkUrl
+									href: changeFileLinkUrl,
+									visuallyHiddenText: `file ${uncommittedFile.name}`
 								}
 							]
 						}
@@ -716,7 +717,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeDateLinkUrl
+									href: changeDateLinkUrl,
+									visuallyHiddenText: `${uncommittedFile.name} date received`
 								}
 							]
 						}
@@ -734,7 +736,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeRedactionStatusLinkUrl
+									href: changeRedactionStatusLinkUrl,
+									visuallyHiddenText: `${uncommittedFile.name} redaction status`
 								}
 							]
 						}

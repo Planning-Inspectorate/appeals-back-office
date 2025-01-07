@@ -13,7 +13,7 @@ export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute })
 				items: [
 					{
 						text: 'Change',
-						visuallyHiddenText: 'Expected number of witnesses',
+						visuallyHiddenText: 'expected number of witnesses',
 						href: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
 						attributes: { 'data-cy': 'change-inquiry-number-of-witnesses' }
 					}

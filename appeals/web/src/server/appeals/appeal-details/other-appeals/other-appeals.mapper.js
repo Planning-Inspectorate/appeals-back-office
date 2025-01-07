@@ -242,7 +242,7 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 	const pageComponents = [...notificationBanners];
 
 	const otherAppealsRows = appealData.otherAppeals.map((otherAppeal) => {
-		const shortAppealReference = appealShortReference(otherAppeal.appealReference);
+		const shortAppealReference = appealShortReference(otherAppeal.appealReference) || '';
 
 		return [
 			{
@@ -263,7 +263,13 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 				text: otherAppeal.appealType || otherAppeal.externalAppealType || 'Unknown'
 			},
 			{
-				html: `<a class="govuk-link" data-cy="remove-appeal-${shortAppealReference}" href="${origin}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}">Remove</a>`
+				html: (() => {
+					const removeUrl = `${origin}/other-appeals/remove/${shortAppealReference}/${otherAppeal.relationshipId}`;
+					const hiddenText = `related appeal ${numberToAccessibleDigitLabel(shortAppealReference)}`;
+
+					return `<a class="govuk-link" data-cy="remove-appeal-${shortAppealReference}" href="${removeUrl}">Remove<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
+				})(),
+				classes: 'govuk-!-text-align-right'
 			}
 		];
 	});
@@ -276,7 +282,11 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 		},
 		type: 'table',
 		parameters: {
-			head: [{ text: 'Appeal Reference' }, { text: 'Appeal type' }, { text: 'Action' }],
+			head: [
+				{ text: 'Appeal Reference' },
+				{ text: 'Appeal type' },
+				{ text: 'Action', classes: 'govuk-!-text-align-right' }
+			],
 			firstCellIsHeader: false,
 			rows: otherAppealsRows
 		}

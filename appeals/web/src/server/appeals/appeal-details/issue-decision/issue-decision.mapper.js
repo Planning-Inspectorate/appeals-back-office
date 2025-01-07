@@ -184,7 +184,8 @@ export function checkAndConfirmPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+								visuallyHiddenText: 'decision'
 							}
 						]
 					}
@@ -200,7 +201,8 @@ export function checkAndConfirmPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
+								visuallyHiddenText: 'decision letter'
 							}
 						]
 					}
@@ -216,7 +218,8 @@ export function checkAndConfirmPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
+								visuallyHiddenText: 'decision date'
 							}
 						]
 					}
@@ -325,7 +328,8 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+								visuallyHiddenText: 'decision'
 							}
 						]
 					}
@@ -341,7 +345,8 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/invalid-reason`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/invalid-reason`,
+								visuallyHiddenText: 'invalid reasons'
 							}
 						]
 					}
