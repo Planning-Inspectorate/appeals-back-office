@@ -5,6 +5,7 @@ import {
 	allocationSpecialismsPage,
 	confirmPage
 } from './valid.mapper.js';
+import { setRepresentationStatus } from '../../representations.service.js';
 import * as api from '#lib/api/allocation-details.api.js';
 
 export const renderAllocationCheck = render(
@@ -120,23 +121,57 @@ export function postAllocationSpecialisms(request, response) {
 	);
 }
 
-export const renderConfirm = render(
-	confirmPage,
-	'patterns/check-and-confirm-page.pattern.njk',
-	'currentRepresentation'
-);
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export async function renderConfirm(request, response) {
+	const { errors, currentAppeal, currentRepresentation, session } = request;
+
+	const specialisms = await api.getAllocationDetailsSpecialisms(request.apiClient);
+
+	const pageContent = confirmPage(currentAppeal, currentRepresentation, specialisms, session);
+
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
 
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export function postAcceptStatement(request, response) {
+export async function postAcceptStatement(request, response) {
 	const {
-		params: { appealId }
+		params: { appealId },
+		session: { acceptLPAStatement: session },
+		currentRepresentation
 	} = request;
 
-	// TODO: Call API to accept statement
+	if (session.allocationLevelAndSpecialisms === 'yes') {
+		const specialisms = (() => {
+			const items = Array.isArray(session.allocationSpecialisms)
+				? session.allocationSpecialisms
+				: [session.allocationSpecialisms];
+
+			return items.map(Number);
+		})();
+
+		await api.setAllocationDetails(request.apiClient, appealId, {
+			level: session.allocationLevel,
+			specialisms
+		});
+	}
+
+	await setRepresentationStatus(
+		request.apiClient,
+		parseInt(appealId),
+		currentRepresentation.id,
+		'valid'
+	);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement`);
 }
