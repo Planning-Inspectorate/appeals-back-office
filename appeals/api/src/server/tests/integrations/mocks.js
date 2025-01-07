@@ -280,6 +280,9 @@ export const appealIngestionInput = {
 				path: 'lpa-questionnaire/eiaScreeningDirection'
 			},
 			{
+				path: 'appellant-case/environmentalAssessment'
+			},
+			{
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
 			},
 			{
