@@ -114,7 +114,7 @@ const INNER_TEXT_DEPTH = 100;
  */
 const awaitInnerText = async (componentInstance, depth = 0) => {
 	if (componentInstance.elements.root.innerText || depth > INNER_TEXT_DEPTH) {
-		if (depth > 100 && !componentInstance.elements.root.innerText) {
+		if (depth > INNER_TEXT_DEPTH && !componentInstance.elements.root.innerText) {
 			console.warn('Failed to find inner text when initialising show more');
 		}
 		return;
