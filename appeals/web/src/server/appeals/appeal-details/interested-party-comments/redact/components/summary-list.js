@@ -29,8 +29,9 @@ export const summaryList = (appealDetails, comment, session) => ({
 				actions: {
 					items: [
 						{
+							text: 'Change',
 							href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`,
-							text: 'Change'
+							visuallyHiddenText: 'redacted comment'
 						}
 					]
 				}

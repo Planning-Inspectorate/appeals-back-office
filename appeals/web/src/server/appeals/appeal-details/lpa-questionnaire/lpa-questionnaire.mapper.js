@@ -404,7 +404,8 @@ export function checkAndConfirmPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+								href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`,
+								visuallyHiddenText: 'review outcome'
 							}
 						]
 					}
@@ -424,7 +425,8 @@ export function checkAndConfirmPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+								href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`,
+								visuallyHiddenText: 'incomplete reasons'
 							}
 						]
 					}
@@ -445,7 +447,8 @@ export function checkAndConfirmPage(
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`
+						href: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`,
+						visuallyHiddenText: 'updated due date'
 					}
 				]
 			}

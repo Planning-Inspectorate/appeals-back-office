@@ -344,7 +344,8 @@ export function checkAndConfirmPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/appellant-case`
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case`,
+								visuallyHiddenText: 'review outcome'
 							}
 						]
 					}
@@ -364,7 +365,8 @@ export function checkAndConfirmPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcomeAsString.toLowerCase()}`
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcomeAsString.toLowerCase()}`,
+								visuallyHiddenText: `${capitalize(validationOutcomeAsString)} reasons`
 							}
 						]
 					}
@@ -385,7 +387,8 @@ export function checkAndConfirmPage(
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcomeAsString.toLowerCase()}/date`
+						href: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcomeAsString.toLowerCase()}/date`,
+						visuallyHiddenText: 'updated due date'
 					}
 				]
 			}
