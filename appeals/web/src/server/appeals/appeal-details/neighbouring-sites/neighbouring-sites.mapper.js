@@ -73,7 +73,7 @@ export function addNeighbouringSiteCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `${origin}/neighbouring-sites/add/${source}`,
-										visuallyHidden: 'Address'
+										visuallyHidden: 'address'
 									}
 								]
 							}
@@ -124,10 +124,7 @@ export function manageNeighbouringSitesPage(request, appealData) {
 					caption: 'Neighbouring sites (LPAQ)',
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
-					head: [
-						{ text: 'Address' },
-						{ text: 'Action', classes: 'govuk-!-width-one-quarter govuk-!-text-align-right' }
-					],
+					head: [{ text: 'Address' }, { text: 'Action', classes: 'govuk-!-text-align-right' }],
 					rows: lpaNeighbouringSitesInspectorRows
 				}
 			},
@@ -152,13 +149,45 @@ export function manageNeighbouringSitesPage(request, appealData) {
 /**
  * @param {NeighbouringSitesItem} site
  */
+function getNeighbouringSiteActions(site) {
+	return [
+		{
+			text: 'Change',
+			href: `change/site/${site.siteId}`,
+			visuallyHiddenText: 'address'
+		},
+		{
+			text: 'Remove',
+			href: `remove/site/${site.siteId}`,
+			visuallyHiddenText: 'address'
+		}
+	];
+}
+
+/**
+ * @param {NeighbouringSitesItem} site
+ */
 function neighbouringSiteTableRowFormatter(site) {
+	const actions = getNeighbouringSiteActions(site);
+
 	return [
 		{
 			html: `${appealSiteToMultilineAddressStringHtml(site.address)}`
 		},
 		{
-			html: `<a href="change/site/${site.siteId}" class="govuk-link" >Change</a> | <a href="remove/site/${site.siteId}" class="govuk-link">Remove</a>`,
+			html: `<ul class="govuk-summary-list__actions-list">
+				${actions
+					.map(
+						(action) => `
+					<li class="govuk-summary-list__actions-list-item">
+						<a href="${action.href}" class="govuk-link">
+							${action.text}<span class="govuk-visually-hidden"> ${action.visuallyHiddenText}</span>
+						</a>
+					</li>
+				`
+					)
+					.join('')}
+			</ul>`,
 			classes: 'govuk-!-text-align-right'
 		}
 	];
@@ -290,7 +319,7 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
-										visuallyHidden: 'Address'
+										visuallyHidden: 'address'
 									}
 								]
 							}

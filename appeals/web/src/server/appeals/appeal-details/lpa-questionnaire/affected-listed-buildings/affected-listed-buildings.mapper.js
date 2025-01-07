@@ -71,7 +71,7 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
-										visuallyHidden: 'Listed building number'
+										visuallyHidden: 'listed building number'
 									}
 								]
 							}
@@ -110,7 +110,7 @@ export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireDat
 					firstCellIsHeader: false,
 					head: [
 						{ text: 'Listed building' },
-						{ text: 'Action', classes: 'govuk-!-width-one-quarter' }
+						{ text: 'Action', classes: 'govuk-!-text-align-right' }
 					],
 					rows: affectedListedBuildings
 				}
@@ -123,13 +123,46 @@ export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireDat
 /**
  * @param {{id: number, listEntry: string}} building
  */
-function listedBuildingTableRowFormatter(building) {
+function getListedBuildingActions(building) {
 	return [
 		{
-			html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${building.listEntry}" target="_blank">${building.listEntry}</a>`
+			text: 'Change',
+			href: `change/${building.id}`,
+			visuallyHiddenText: `listed building ${building.listEntry}`
 		},
 		{
-			html: `<a href="change/${building.id}" class="govuk-link" >Change</a> | <a href="remove/${building.id}" class="govuk-link">Remove</a>`
+			text: 'Remove',
+			href: `remove/${building.id}`,
+			visuallyHiddenText: `listed building ${building.listEntry}`
+		}
+	];
+}
+
+/**
+ * @param {{id: number, listEntry: string}} building
+ */
+function listedBuildingTableRowFormatter(building) {
+	const actions = getListedBuildingActions(building);
+
+	return [
+		{
+			html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${building.listEntry}" class="govuk-link" target="_blank">${building.listEntry}</a>`
+		},
+		{
+			html: `<ul class="govuk-summary-list__actions-list">
+				${actions
+					.map(
+						(action) => `
+					<li class="govuk-summary-list__actions-list-item">
+						<a href="${action.href}" class="govuk-link">
+							${action.text}<span class="govuk-visually-hidden"> ${action.visuallyHiddenText}</span>
+						</a>
+					</li>
+				`
+					)
+					.join('')}
+			</ul>`,
+			classes: 'govuk-!-text-align-right'
 		}
 	];
 }
@@ -269,7 +302,7 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
-										visuallyHidden: 'Affected listed building'
+										visuallyHidden: 'affected listed building'
 									}
 								]
 							}
