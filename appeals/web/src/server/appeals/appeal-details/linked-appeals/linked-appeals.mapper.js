@@ -78,7 +78,7 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 							html: (() => {
 								const unlinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${appealId}/${leadLinkedAppeal?.relationshipId}/${appealId}`;
 								const leadAppealRef = appealShortReference(leadLinkedAppeal?.appealReference) || '';
-								const hiddenText = `from appeal ${numberToAccessibleDigitLabel(leadAppealRef)}`;
+								const hiddenText = `appeal ${numberToAccessibleDigitLabel(leadAppealRef)}`;
 
 								return `<a class="govuk-link" href="${unlinkUrl}">Unlink<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
 							})(),
@@ -122,7 +122,13 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 									: linkedAppeal.appealType) || 'Unknown'
 						},
 						{
-							html: `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
+							html: (() => {
+								const unlinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}`;
+								const childAppealRef = appealShortReference(linkedAppeal?.appealReference) || '';
+								const hiddenText = `appeal ${numberToAccessibleDigitLabel(childAppealRef)}`;
+
+								return `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="${unlinkUrl}">Unlink<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
+							})()
 						}
 					];
 				})
