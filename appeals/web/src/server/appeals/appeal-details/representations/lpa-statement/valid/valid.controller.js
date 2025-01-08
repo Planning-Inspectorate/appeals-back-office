@@ -167,5 +167,5 @@ export async function postAcceptStatement(request, response) {
 		'valid'
 	);
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement`);
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }
