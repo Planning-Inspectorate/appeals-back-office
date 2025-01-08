@@ -81,7 +81,6 @@ export const postLpaQuestionnaire = async (request, response) => {
 		params: { appealId, lpaQuestionnaireId },
 		body,
 		errors,
-		apiClient,
 		currentAppeal
 	} = request;
 
@@ -92,14 +91,10 @@ export const postLpaQuestionnaire = async (request, response) => {
 	try {
 		const reviewOutcome = body['review-outcome'];
 
+		request.session.reviewOutcome = reviewOutcome;
+
 		if (currentAppeal) {
 			if (reviewOutcome === 'complete') {
-				await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
-					apiClient,
-					appealId,
-					lpaQuestionnaireId,
-					mapWebValidationOutcomeToApiValidationOutcome('complete')
-				);
 				if (currentAppeal.appealType === APPEAL_TYPE.D) {
 					return response.redirect(
 						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
@@ -171,11 +166,21 @@ export const postEnvironmentServiceTeamReviewCase = async (request, response) =>
 	if (errors) {
 		return renderEnvironmentServiceTeamReviewCase(request, response, errors);
 	}
+
 	await appealDetailsService.setEnvironmentalImpactAssessmentScreening(
 		request.apiClient,
 		appealId,
 		eiaScreeningRequired === 'yes'
 	);
+
+	await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
+		request.apiClient,
+		appealId,
+		lpaQuestionnaireId,
+		mapWebValidationOutcomeToApiValidationOutcome('complete')
+	);
+
+	delete request.session.reviewOutcome;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
@@ -278,6 +283,8 @@ export const postCheckAndConfirm = async (request, response) => {
 				webLPAQuestionnaireReviewOutcome.updatedDueDate
 			)
 		);
+
+		delete request.session.reviewOutcome;
 
 		if (webLPAQuestionnaireReviewOutcome.updatedDueDate) {
 			request.session.lpaQuestionnaireUpdatedDueDate =
