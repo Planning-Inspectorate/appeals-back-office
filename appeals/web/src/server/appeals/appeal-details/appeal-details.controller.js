@@ -19,6 +19,8 @@ export const viewAppealDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	delete session.reviewOutcome;
+
 	try {
 		/** @type {import('./accordions/index.js').RepresentationTypesAwaitingReview} */
 		const representationTypesAwaitingReview = await (async () => {
