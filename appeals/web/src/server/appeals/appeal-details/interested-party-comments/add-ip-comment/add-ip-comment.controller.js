@@ -327,7 +327,10 @@ export async function renderCheckYourAnswers(
 							postCode
 						}),
 						actions: {
-							Change: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`
+							Change: {
+								href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`,
+								visuallyHiddenText: 'Address provided'
+							}
 						}
 					}
 				}),
