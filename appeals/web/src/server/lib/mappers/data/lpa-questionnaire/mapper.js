@@ -5,7 +5,7 @@ import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
- * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth
+ * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth & Express.Request["session"]} SessionWithAuth
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} SingleLPAQuestionnaireResponse
  */
 

@@ -32,7 +32,6 @@ export const mapReviewOutcome = ({ lpaQuestionnaireData, session }) => ({
 				properties: {
 					name: 'review-outcome',
 					idPrefix: 'review-outcome',
-					// @ts-ignore
 					value: lpaQuestionnaireData.validation?.outcome ?? session.reviewOutcome,
 					fieldset: {
 						legend: {
