@@ -75,7 +75,10 @@ export const renderCheckYourAnswers = async (
 				'Why is the statement incomplete?': {
 					html: rejectionReasonHtml(selectedReasons, rejectionReasons),
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`,
+							visuallyHiddenText: 'Incomplete reasons'
+						}
 					}
 				}
 			}
