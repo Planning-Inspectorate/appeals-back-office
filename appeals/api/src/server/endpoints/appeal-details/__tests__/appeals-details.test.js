@@ -195,7 +195,8 @@ describe('/appeals/:appealId', () => {
 						status: 'received'
 					},
 					lpaStatement: {
-						status: 'not_received'
+						status: 'not_received',
+						receivedAt: null
 					}
 				},
 				healthAndSafety: {
