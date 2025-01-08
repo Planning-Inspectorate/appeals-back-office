@@ -5,6 +5,7 @@ import { renderSelectRejectionReasons } from '../../common/render-select-rejecti
 import { rejectLpaStatementPage } from './incomplete.mapper.js';
 import { rejectionReasonHtml } from '../../common/components/reject-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
+import { ensureArray } from '#lib/array-utilities.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -45,15 +46,11 @@ export const renderCheckYourAnswers = async (
 	},
 	response
 ) => {
-	console.log('🚀 ~ lpaStatement:', lpaStatement);
-
 	const rejectionReasons = await getRepresentationRejectionReasonOptions(
 		apiClient,
 		currentRepresentation.representationType
 	);
-	const selectedReasons = Array.isArray(lpaStatement?.rejectionReason)
-		? lpaStatement?.rejectionReason
-		: [lpaStatement?.rejectionReason];
+	const selectedReasons = ensureArray(lpaStatement?.rejectionReason);
 
 	return renderCheckYourAnswersComponent(
 		{
