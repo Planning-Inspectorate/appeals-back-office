@@ -49,7 +49,8 @@ export const summaryList = (appealDetails, comment, finalCommentsType, session) 
 					items: [
 						{
 							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact`,
-							text: 'Change'
+							text: 'Change',
+							visuallyHiddenText: 'redacted final comments'
 						}
 					]
 				}
@@ -65,7 +66,8 @@ export const summaryList = (appealDetails, comment, finalCommentsType, session) 
 					items: [
 						{
 							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
-							text: 'Change'
+							text: 'Change',
+							visuallyHiddenText: 'review decision'
 						}
 					]
 				}

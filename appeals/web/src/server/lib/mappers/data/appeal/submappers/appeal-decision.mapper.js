@@ -16,7 +16,7 @@ function generateAppealDecisionActionListItems(appealDetails) {
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
 				appealDetails.appealId
-			)}">Issue</a></li>`;
+			)}">Issue</a><span class="govuk-visually-hidden"> decision</span></li>`;
 		}
 		case APPEAL_CASE_STATUS.COMPLETE: {
 			return `<li class="govuk-summary-list__actions-list-item">${generateDecisionDocumentDownloadHtml(

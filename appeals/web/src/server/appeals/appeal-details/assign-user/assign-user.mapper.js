@@ -85,7 +85,8 @@ export async function assignUserPage(
 						{
 							text: 'Choose',
 							href: `/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/${userTypeRoute}/${result.id}/confirm`,
-							attributes: { 'data-cy': result.email.toLocaleLowerCase() }
+							attributes: { 'data-cy': result.email.toLocaleLowerCase() },
+							visuallyHiddenText: result.name
 						}
 					]
 				}
@@ -172,7 +173,8 @@ async function buildCurrentAssigneeComponent(
 							items: [
 								{
 									text: 'Remove',
-									href: `/appeals-service/appeal-details/${appealId}/unassign-user/inspector/${assignedUserId}/confirm`
+									href: `/appeals-service/appeal-details/${appealId}/unassign-user/inspector/${assignedUserId}/confirm`,
+									visuallyHiddenText: user.name
 								}
 							]
 						})
