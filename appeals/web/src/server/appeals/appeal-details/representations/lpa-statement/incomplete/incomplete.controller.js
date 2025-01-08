@@ -24,7 +24,10 @@ export const renderCheckYourAnswers = (
 				'Review decision': {
 					value: statusFormatMap[lpaStatement.status],
 					actions: {
-						Change: `/appeals-service/appeal-details/${appealId}/lpa-statement`
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/lpa-statement`,
+							visuallyHiddenText: 'Review decision'
+						}
 					}
 				}
 			}
