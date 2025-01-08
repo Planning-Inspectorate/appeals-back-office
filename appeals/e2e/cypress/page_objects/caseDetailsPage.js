@@ -26,6 +26,8 @@ export class CaseDetailsPage extends Page {
 		addRelatedAppeals: 'add-related-appeals',
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
+		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
+		manageInspectorCorrespondence: 'manage-inspector-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -99,7 +101,11 @@ export class CaseDetailsPage extends Page {
 		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
 		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
 		getAgentEmailAddress: () => cy.get('#email-address.govuk-input'),
-		getWarningText: () => cy.get('.govuk-warning-text__text')
+		getWarningText: () => cy.get('.govuk-warning-text__text'),
+		manageCrossTeamCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
+		manageInspectorCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -216,6 +222,14 @@ export class CaseDetailsPage extends Page {
 
 	clickAddInspectorCorrespondence() {
 		this.elements.addInspectorCorrespondence().click();
+	}
+
+	clickManageInspectorCorrespondence() {
+		this.elements.manageInspectorCorrespondence().click();
+	}
+
+	clickManageCrossTeamCorrespondence() {
+		this.elements.manageCrossTeamCorrespondence().click();
 	}
 
 	clickChangeAppealType() {
