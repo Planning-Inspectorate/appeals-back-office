@@ -1,7 +1,4 @@
-import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
-} from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
 import isFPA from '#utils/is-fpa.js';
 import { formatLinkedAppeals, formatRelatedAppeals } from '#utils/format-linked-appeals.js';
@@ -31,6 +28,7 @@ const approxStageCompletion = {
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 
 /**
  * @param {Appeal} appeal
@@ -108,19 +106,13 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
  * */
 const formatDocumentationSummary = (appeal) => {
 	const lpaStatement = appeal.representations?.find(
-		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT &&
-			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
 	const lpaFinalComments = appeal.representations?.find(
-		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
-			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 	);
 	const appellantFinalComments = appeal.representations?.find(
-		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
-			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 	);
 
 	return {

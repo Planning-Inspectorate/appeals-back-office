@@ -1,11 +1,9 @@
 import {
 	formatAppellantCaseDocumentationStatus,
-	formatLpaQuestionnaireDocumentationStatus
+	formatLpaQuestionnaireDocumentationStatus,
+	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import {
-	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_REPRESENTATION_TYPE
-} from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 import isFPA from '#utils/is-fpa.js';
 
@@ -20,6 +18,11 @@ import isFPA from '#utils/is-fpa.js';
  */
 export const mapDocumentationSummary = (data) => {
 	const { appeal } = data;
+
+	const lpaStatement =
+		appeal.representations?.find(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		) ?? null;
 
 	return {
 		appellantCase: {
@@ -44,13 +47,8 @@ export const mapDocumentationSummary = (data) => {
 						: DOCUMENT_STATUS_NOT_RECEIVED
 			},
 			lpaStatement: {
-				status: appeal.representations?.find(
-					(rep) =>
-						rep.representationType === APPEAL_REPRESENTATION_TYPE.STATEMENT &&
-						rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-				)
-					? DOCUMENT_STATUS_RECEIVED
-					: DOCUMENT_STATUS_NOT_RECEIVED
+				status: formatLpaStatementStatus(lpaStatement),
+				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null
 			}
 		})
 	};
