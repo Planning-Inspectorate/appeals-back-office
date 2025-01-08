@@ -613,7 +613,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 			},
 			type: 'input',
 			parameters: {
-				id: 'fileName',
+				id: 'file-name',
 				name: 'fileName',
 				label: {
 					text: 'File name',
@@ -686,7 +686,7 @@ export function addDocumentsCheckAndConfirmPage({
 				rows: [
 					{
 						key: {
-							text: summaryListNameLabelOverride || 'Name'
+							text: summaryListNameLabelOverride || 'File'
 						},
 						value: {
 							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(

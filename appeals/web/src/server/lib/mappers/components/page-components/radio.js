@@ -1,3 +1,5 @@
+import { kebabCase } from 'lodash-es';
+
 /**
  * @typedef {'textarea'} ConditionalTypes
  */
@@ -66,6 +68,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  */
 export function yesNoInput({
 	name,
+	id,
 	value,
 	legendText,
 	legendIsPageHeading = false,
@@ -95,6 +98,7 @@ export function yesNoInput({
 		type: 'radios',
 		parameters: {
 			name,
+			idPrefix: id || kebabCase(name),
 			items: [
 				yes,
 				{
