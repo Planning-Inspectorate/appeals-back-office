@@ -1,14 +1,27 @@
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
-import { render } from '../common/render.js';
-import { reviewLpaStatementPage } from './lpa-statement.mapper.js';
-
-export const renderReviewLpaStatement = render(
-	reviewLpaStatementPage,
-	'patterns/change-page.pattern.njk'
-);
+import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
-export const postReviewLpaStatement = (request, response, next) => {
+export function renderReviewLpaStatement(request, response) {
+	const { errors, currentAppeal, currentRepresentation } = request;
+
+	const isReview = currentRepresentation.status === 'awaiting_review';
+
+	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
+		currentAppeal,
+		currentRepresentation
+	);
+
+	return response
+		.status(200)
+		.render(isReview ? 'patterns/change-page.pattern.njk' : 'patterns/display-page.pattern.njk', {
+			errors,
+			pageContent
+		});
+}
+
+/** @type {import('@pins/express').RequestHandler<{}>} */
+export const postReviewLpaStatement = (request, response) => {
 	const {
 		errors,
 		params: { appealId },
@@ -16,7 +29,7 @@ export const postReviewLpaStatement = (request, response, next) => {
 	} = request;
 
 	if (errors) {
-		return renderReviewLpaStatement(request, response, next);
+		return renderReviewLpaStatement(request, response);
 	}
 
 	switch (status) {

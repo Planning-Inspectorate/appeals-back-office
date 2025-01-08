@@ -7,13 +7,10 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**
- * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @returns {PageContent}
- */
-export function reviewLpaStatementPage(appealDetails, lpaStatement) {
-	const shortReference = appealShortReference(appealDetails.appealReference);
-
+ * @returns {PageComponent}
+ * */
+export function baseSummaryList(lpaStatement) {
 	const attachmentsList =
 		lpaStatement.attachments.length > 0
 			? buildHtmUnorderedList(
@@ -56,14 +53,14 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 								? [
 										{
 											text: 'Manage',
-											href: `#`,
+											href: '#',
 											visuallyHiddenText: 'supporting documents'
 										}
 								  ]
 								: []),
 							{
 								text: 'Add',
-								href: `#`,
+								href: '#',
 								visuallyHiddenText: 'supporting documents'
 							}
 						]
@@ -72,6 +69,44 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 			]
 		}
 	};
+
+	return lpaStatementSummaryList;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} lpaStatement
+ * @returns {PageContent}
+ * */
+export function viewLpaStatementPage(appealDetails, lpaStatement) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const lpaStatementSummaryList = baseSummaryList(lpaStatement);
+
+	const pageComponents = [lpaStatementSummaryList];
+	preRenderPageComponents(pageComponents);
+
+	const pageContent = {
+		title: 'LPA statement',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'LPA statement',
+		headingClasses: 'govuk-heading-l',
+		pageComponents
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} lpaStatement
+ * @returns {PageContent}
+ */
+export function reviewLpaStatementPage(appealDetails, lpaStatement) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const lpaStatementSummaryList = baseSummaryList(lpaStatement);
 
 	/** @type {PageComponent} */
 	const lpaStatementValidityRadioButtons = {

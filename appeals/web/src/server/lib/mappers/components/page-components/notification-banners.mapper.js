@@ -237,6 +237,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Final comments redacted'
+	},
+	lpaStatementAccepted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA statement accepted'
 	}
 };
 

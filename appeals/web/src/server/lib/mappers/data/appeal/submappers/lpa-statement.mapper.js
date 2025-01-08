@@ -3,8 +3,8 @@ import { mapDocumentStatus } from '#lib/display-page-formatter.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
-	return documentationFolderTableItem({
+export const mapLpaStatement = ({ appealDetails, currentRoute }) =>
+	documentationFolderTableItem({
 		id: 'lpa-statement',
 		text: 'LPA statement',
 		statusText: mapDocumentStatus(appealDetails?.documentationSummary?.lpaStatement?.status),
@@ -16,6 +16,5 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
 		actionHtml:
 			appealDetails?.documentationSummary?.lpaStatement?.status === 'received'
 				? `<a href="${currentRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden">LPA statement</span></a>`
-				: ''
+				: `<a href="${currentRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden">LPA statement</span></a>`
 	});
-};

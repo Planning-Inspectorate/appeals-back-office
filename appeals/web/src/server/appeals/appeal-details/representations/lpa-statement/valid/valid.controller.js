@@ -1,4 +1,5 @@
 import * as api from '#lib/api/allocation-details.api.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { render } from '../../common/render.js';
 import {
@@ -147,15 +148,15 @@ export async function renderConfirm(request, response) {
 export async function postAcceptStatement(request, response) {
 	const {
 		params: { appealId },
-		session: { acceptLPAStatement: session },
+		session,
 		currentRepresentation
 	} = request;
 
-	if (session.allocationLevelAndSpecialisms === 'yes') {
-		const specialisms = ensureArray(session.allocationSpecialisms).map(Number);
+	if (session.acceptLPAStatement.allocationLevelAndSpecialisms === 'yes') {
+		const specialisms = ensureArray(session.acceptLPAStatement.allocationSpecialisms).map(Number);
 
 		await api.setAllocationDetails(request.apiClient, appealId, {
-			level: session.allocationLevel,
+			level: session.acceptLPAStatement.allocationLevel,
 			specialisms
 		});
 	}
@@ -166,6 +167,8 @@ export async function postAcceptStatement(request, response) {
 		currentRepresentation.id,
 		'valid'
 	);
+
+	addNotificationBannerToSession(session, 'lpaStatementAccepted', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }

@@ -7,8 +7,10 @@ import validRouter from './valid/valid.router.js';
 
 const router = Router({ mergeParams: true });
 
-router.get('/', renderReviewLpaStatement);
-router.post('/', validateStatus, saveBodyToSession('lpaStatement'), postReviewLpaStatement);
+router
+	.route('/')
+	.get(renderReviewLpaStatement)
+	.post(validateStatus, saveBodyToSession('lpaStatement'), postReviewLpaStatement);
 
 router.use('/incomplete', saveBodyToSession('lpaStatement'), incompleteRouter);
 
