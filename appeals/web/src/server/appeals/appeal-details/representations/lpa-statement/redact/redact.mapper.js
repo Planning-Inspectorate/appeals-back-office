@@ -65,3 +65,57 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 		pageComponents
 	};
 }
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} lpaStatement
+ * @param {import('express-session').Session & Record<string, string>} [session]
+ * @returns {PageContent}
+ */
+export function redactConfirmPage(appealDetails, lpaStatement, session) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [
+		{
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				rows: [
+					{
+						key: { text: 'Original statement' },
+						value: { text: lpaStatement.originalRepresentation }
+					},
+					{
+						key: { text: 'Redacted statement' },
+						value: { text: session?.redactedRepresentation },
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+									text: 'Change'
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	];
+
+	preRenderPageComponents(pageComponents);
+
+	return {
+		title: 'Check details and accept statement',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${lpaStatement.id}/redact`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Check details and accept statement',
+		headingClasses: 'govuk-heading-l',
+		forceRenderSubmitButton: true,
+		submitButtonText: 'Redact and accept statement',
+		pageComponents
+	};
+}
