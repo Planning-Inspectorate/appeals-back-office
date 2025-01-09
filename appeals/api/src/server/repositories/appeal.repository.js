@@ -1,6 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#endpoints/appeals/appeals.service.js';
-import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -19,8 +18,24 @@ import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/
 const appealDetailsInclude = {
 	address: true,
 	procedureType: true,
-	parentAppeals: true,
-	childAppeals: true,
+	parentAppeals: {
+		include: {
+			parent: {
+				include: {
+					appealType: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		include: {
+			child: {
+				include: {
+					appealType: true
+				}
+			}
+		}
+	},
 	neighbouringSites: {
 		include: { address: true }
 	},
@@ -119,21 +134,8 @@ const getAppealById = async (id) => {
 	});
 
 	if (appeal) {
-		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
-
-		const linkedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
-		);
-		const relatedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
-		);
-
 		// @ts-ignore
-		return {
-			...appeal,
-			linkedAppeals,
-			relatedAppeals
-		};
+		return appeal;
 	}
 };
 
@@ -151,21 +153,8 @@ const getAppealByAppealReference = async (appealReference) => {
 	});
 
 	if (appeal) {
-		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
-
-		const linkedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
-		);
-		const relatedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
-		);
-
 		// @ts-ignore
-		return {
-			...appeal,
-			linkedAppeals,
-			relatedAppeals
-		};
+		return appeal;
 	}
 };
 

@@ -33,7 +33,10 @@ export interface Appeal extends schema.Appeal {
 export interface CaseNote extends schema.CaseNote {
 	user: User;
 }
-export interface AppealRelationship extends schema.AppealRelationship {}
+export interface AppealRelationship extends schema.AppealRelationship {
+	parent?: Appeal | null;
+	child?: Appeal | null;
+}
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
 export interface AppealStatus extends schema.AppealStatus {}
