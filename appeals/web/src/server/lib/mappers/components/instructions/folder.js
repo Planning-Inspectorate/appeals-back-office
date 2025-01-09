@@ -2,20 +2,28 @@
  *
  * @param {Object} options
  * @param {string} options.id
+ * @param {string} options.text
  * @param {boolean} [options.hasDocuments]
  * @param {string} options.link
  * @param {boolean} [options.editable]
  * @param {number | undefined} options.folderId
  * @returns {string}
  */
-export function actionsHtml({ id, hasDocuments = false, link, editable = false, folderId }) {
+export function actionsHtml({
+	id,
+	text = '',
+	hasDocuments = false,
+	link,
+	editable = false,
+	folderId
+}) {
 	let actionsHtmls = `<ul class="govuk-summary-list__actions-list">`;
 
 	if (hasDocuments) {
-		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage');
+		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage', text);
 	}
 	if (editable) {
-		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', 'add-' + id);
+		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', text, 'add-' + id);
 	}
 	actionsHtmls += `</ul>`;
 	return actionsHtmls;
@@ -60,7 +68,7 @@ export function costsFolderTableItem({
 					classes: `appeal-${id}-status`
 				},
 				{
-					html: actionsHtml({ id, hasDocuments, link, editable, folderId }),
+					html: actionsHtml({ id, text, hasDocuments, link, editable, folderId }),
 					classes: `appeal-${id}-actions govuk-!-text-align-right`
 				}
 			]

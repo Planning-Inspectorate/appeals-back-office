@@ -12,16 +12,18 @@ export const mapEnvironmentalAssessment = (data) => {
 	const documents = environmentalAssessment.documents.filter(
 		(doc) => !doc.latestDocumentVersion?.isDeleted
 	);
+	const text = 'Environmental assessment';
 
 	return documentationFolderTableItem({
 		id,
-		text: 'Environmental assessment',
+		text,
 		statusText: documents.length
 			? `${documents.length} document${documents.length === 1 ? '' : 's'}`
 			: 'No documents',
 		receivedText: '',
 		actionHtml: actionsHtml({
 			id,
+			text,
 			hasDocuments: !!documents.length,
 			link,
 			editable: true,
