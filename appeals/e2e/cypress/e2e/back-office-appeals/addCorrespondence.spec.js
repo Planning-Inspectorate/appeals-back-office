@@ -28,7 +28,7 @@ describe('Add correspondence', () => {
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
+			caseDetailsPage.checkAnswerCorrespondenceDoc('File', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -45,7 +45,7 @@ describe('Add correspondence', () => {
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAnswerCorrespondenceDoc('Name', sampleFiles.document);
+			caseDetailsPage.checkAnswerCorrespondenceDoc('File', sampleFiles.document);
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
