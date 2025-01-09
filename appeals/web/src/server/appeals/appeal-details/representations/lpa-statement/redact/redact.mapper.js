@@ -96,7 +96,8 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 							items: [
 								{
 									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
-									text: 'Change'
+									text: 'Change',
+									visuallyHiddenText: 'redacted statement'
 								}
 							]
 						}
