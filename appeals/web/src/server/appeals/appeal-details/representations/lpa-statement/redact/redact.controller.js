@@ -1,7 +1,9 @@
 import { render } from '../../common/render.js';
-import { redactLpaStatementPage } from './redact.mapper.js';
+import { redactLpaStatementPage, redactConfirmPage } from './redact.mapper.js';
 
 export const renderRedact = render(redactLpaStatementPage, 'patterns/display-page.pattern.njk');
+
+export const renderConfirm = render(redactConfirmPage, 'patterns/display-page.pattern.njk');
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
