@@ -18,12 +18,12 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-inspectorAccessRadio">
+                                    id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
                                             <textarea class="govuk-textarea"
@@ -31,9 +31,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -66,12 +66,12 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-inspectorAccessRadio">
+                                    id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
                                             <textarea class="govuk-textarea"
@@ -79,9 +79,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -114,12 +114,12 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-inspectorAccessRadio">
+                                    id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -127,9 +127,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -162,12 +162,12 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-inspectorAccessRadio">
+                                    id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -175,9 +175,9 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -221,11 +221,11 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -233,9 +233,9 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -279,11 +279,11 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio" name="inspectorAccessRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-inspectorAccessRadio">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-inspectorAccessRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="inspector-access-details">Inspector access (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -291,9 +291,9 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inspectorAccessRadio-2" name="inspectorAccessRadio"
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="inspectorAccessRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>

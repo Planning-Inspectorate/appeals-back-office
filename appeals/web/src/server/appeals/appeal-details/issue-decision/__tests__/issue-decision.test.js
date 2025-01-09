@@ -615,13 +615,13 @@ describe('issue-decision', () => {
 				'<dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/issue-decision/decision"> Change</a>'
+				'href="/appeals-service/appeal-details/1/issue-decision/decision"> Change<span class="govuk-visually-hidden"> decision</span></a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<dt class="govuk-summary-list__key"> Reasons</dt><dd class="govuk-summary-list__value"> Reasons!</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/issue-decision/invalid-reason"> Change</a>'
+				'href="/appeals-service/appeal-details/1/issue-decision/invalid-reason"> Change<span class="govuk-visually-hidden"> invalid reasons</span></a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Warning</span> You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'

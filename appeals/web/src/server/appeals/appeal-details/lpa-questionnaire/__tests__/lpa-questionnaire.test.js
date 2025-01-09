@@ -2758,9 +2758,12 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('File</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -2769,10 +2772,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}"> Change</a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change</a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -2904,9 +2907,12 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Name</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('File</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -2915,10 +2921,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1"> Change</a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change</a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});

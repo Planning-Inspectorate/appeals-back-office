@@ -39,13 +39,13 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio"> Formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2"> Not formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> Not formally adopted</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -72,13 +72,13 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio"> Formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="isInfrastructureLevyFormallyAdoptedRadio-2"> Not formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> Not formally adopted</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

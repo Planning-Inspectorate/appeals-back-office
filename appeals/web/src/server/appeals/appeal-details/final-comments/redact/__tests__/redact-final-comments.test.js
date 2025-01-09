@@ -153,13 +153,13 @@ describe('final-comments', () => {
 					`class="pins-show-more" data-label="Read more" data-mode="text">${redactedRepresentation}</div>`
 				);
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact"> Change</a></dd>`
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact"> Change<span class="govuk-visually-hidden"> redacted final comments</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
 				expect(unprettifiedHTML).toContain('Review decision</dt>');
 				expect(unprettifiedHTML).toContain('Redact and accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}"> Change</a></dd>`
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}"> Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`Accept ${finalCommentsType.label} final comments</button></form>`

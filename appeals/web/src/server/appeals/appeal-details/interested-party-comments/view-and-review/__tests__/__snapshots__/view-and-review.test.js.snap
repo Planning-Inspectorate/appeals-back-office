@@ -197,7 +197,7 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                     <dd class="govuk-summary-list__value">Comment rejected</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/review"> Change<span class="govuk-visually-hidden"> Review decision</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/review"> Change<span class="govuk-visually-hidden"> review decision</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you rejecting the comment?</dt>
@@ -206,12 +206,12 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                             <li></li>
                         </ul>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/select-reason"> Change<span class="govuk-visually-hidden"> Why are you rejecting the comment?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/select-reason"> Change<span class="govuk-visually-hidden"> why you are rejecting the comment</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to allow the interested party to resubmit a comment?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/allow-resubmit"> Change<span class="govuk-visually-hidden"> Do you want to allow the interested party to resubmit a comment?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/allow-resubmit"> Change<span class="govuk-visually-hidden"> if you want to allow the interested party to resubmit a comment</span></a>
                         </dd>
                 </div>
             </dl>
@@ -532,8 +532,8 @@ exports[`interested-party-comments GET change-document-name/:folderId/:documentI
                         <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">File name</label>
-                        <input class="govuk-input" id="fileName" name="fileName"
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
+                        <input class="govuk-input" id="file-name" name="fileName"
                         type="text" value="ph0-documentFileInfo.jpeg">
                     </div>
                 </div>

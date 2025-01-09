@@ -18,14 +18,14 @@ exports[`affects-scheduled-monument GET /change should render the affectsSchedul
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="affectsScheduledMonumentRadio"
+                                        <input class="govuk-radios__input" id="affects-scheduled-monument-radio"
                                         name="affectsScheduledMonumentRadio" type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="affectsScheduledMonumentRadio">Affected</label>
+                                        <label class="govuk-label govuk-radios__label" for="affects-scheduled-monument-radio">Affected</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="affectsScheduledMonumentRadio-2"
+                                        <input class="govuk-radios__input" id="affects-scheduled-monument-radio-2"
                                         name="affectsScheduledMonumentRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="affectsScheduledMonumentRadio-2">Not affected</label>
+                                        <label class="govuk-label govuk-radios__label" for="affects-scheduled-monument-radio-2">Not affected</label>
                                     </div>
                                 </div>
                             </fieldset>

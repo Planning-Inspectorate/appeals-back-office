@@ -15,12 +15,12 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                         <div class="govuk-form-group">
                             <div class="govuk-radios" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio" name="neighbouringSiteAccessRadio"
-                                    type="radio" value="yes" data-aria-controls="conditional-neighbouringSiteAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio">Yes</label>
+                                    <input class="govuk-radios__input" id="neighbouring-site-access-radio"
+                                    name="neighbouringSiteAccessRadio" type="radio" value="yes" data-aria-controls="conditional-neighbouring-site-access-radio">
+                                    <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio">Yes</label>
                                 </div>
                                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-neighbouringSiteAccessRadio">
+                                id="conditional-neighbouring-site-access-radio">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label" for="neighbouring-site-access-details">Inspector needs neighbouring site access details</label>
                                         <textarea class="govuk-textarea"
@@ -28,9 +28,9 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                                     </div>
                                 </div>
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio-2"
+                                    <input class="govuk-radios__input" id="neighbouring-site-access-radio-2"
                                     name="neighbouringSiteAccessRadio" type="radio" value="no" checked>
-                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio-2">No</label>
+                                    <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio-2">No</label>
                                 </div>
                             </div>
                         </div>
@@ -59,11 +59,11 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                         <div class="govuk-form-group">
                             <div class="govuk-radios" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio" name="neighbouringSiteAccessRadio"
-                                    type="radio" value="yes" checked data-aria-controls="conditional-neighbouringSiteAccessRadio">
-                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio">Yes</label>
+                                    <input class="govuk-radios__input" id="neighbouring-site-access-radio"
+                                    name="neighbouringSiteAccessRadio" type="radio" value="yes" checked data-aria-controls="conditional-neighbouring-site-access-radio">
+                                    <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio">Yes</label>
                                 </div>
-                                <div class="govuk-radios__conditional" id="conditional-neighbouringSiteAccessRadio">
+                                <div class="govuk-radios__conditional" id="conditional-neighbouring-site-access-radio">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label" for="neighbouring-site-access-details">Inspector needs neighbouring site access details</label>
                                         <textarea class="govuk-textarea"
@@ -71,9 +71,9 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                                     </div>
                                 </div>
                                 <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="neighbouringSiteAccessRadio-2"
+                                    <input class="govuk-radios__input" id="neighbouring-site-access-radio-2"
                                     name="neighbouringSiteAccessRadio" type="radio" value="no">
-                                    <label class="govuk-label govuk-radios__label" for="neighbouringSiteAccessRadio-2">No</label>
+                                    <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio-2">No</label>
                                 </div>
                             </div>
                         </div>

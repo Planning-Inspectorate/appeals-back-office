@@ -18,14 +18,14 @@ exports[`green-belt GET /change should render the greenBelt change page when acc
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="greenBeltRadio" name="greenBeltRadio"
+                                        <input class="govuk-radios__input" id="green-belt-radio" name="greenBeltRadio"
                                         type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="greenBeltRadio">Yes</label>
+                                        <label class="govuk-label govuk-radios__label" for="green-belt-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="greenBeltRadio-2" name="greenBeltRadio"
+                                        <input class="govuk-radios__input" id="green-belt-radio-2" name="greenBeltRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="greenBeltRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="green-belt-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -58,14 +58,14 @@ exports[`green-belt GET /change should render the greenBelt change page when acc
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="greenBeltRadio" name="greenBeltRadio"
+                                        <input class="govuk-radios__input" id="green-belt-radio" name="greenBeltRadio"
                                         type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="greenBeltRadio">Yes</label>
+                                        <label class="govuk-label govuk-radios__label" for="green-belt-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="greenBeltRadio-2" name="greenBeltRadio"
+                                        <input class="govuk-radios__input" id="green-belt-radio-2" name="greenBeltRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="greenBeltRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="green-belt-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
