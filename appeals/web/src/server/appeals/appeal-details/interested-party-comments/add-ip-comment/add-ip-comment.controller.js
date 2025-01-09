@@ -312,7 +312,7 @@ export async function renderCheckYourAnswers(
 					html: addressProvided === 'no' ? 'No' : 'Yes',
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`,
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/check-address`,
 							visuallyHiddenText: 'Address'
 						}
 					}
