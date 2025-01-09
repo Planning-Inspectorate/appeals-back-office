@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { renderRedact } from './redact.controller.js';
+import { renderRedact, postRedact } from './redact.controller.js';
 
 const router = Router({ mergeParams: true });
 
-router.route('/').get(renderRedact);
+router.route('/').get(renderRedact).post(postRedact);
 
 export default router;
