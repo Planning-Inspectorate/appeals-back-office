@@ -267,34 +267,31 @@ export function buildNotificationBanners(session, servicePage, appealId) {
 	/**
 	 * @type {PageComponent[]}
 	 */
-	const notificationBanners = [];
+	const notificationBanners = Object.keys(session.notificationBanners).flatMap((key) => {
+		if (!Object.keys(notificationBannerDefinitions).includes(key)) {
+			return [];
+		}
 
-	Object.keys(session.notificationBanners).forEach((key) => {
-		if (Object.keys(notificationBannerDefinitions).indexOf(key) !== -1) {
-			const bannerDefinition = notificationBannerDefinitions[key];
-			const bannerData = session.notificationBanners[key];
+		const bannerDefinition = notificationBannerDefinitions[key];
+		const bannerData = session.notificationBanners[key];
 
-			if (!bannerDefinition.pages.includes(servicePage) || bannerData.appealId !== appealId) {
-				return;
-			}
+		if (!bannerDefinition.persist) {
+			delete session.notificationBanners[key];
+		}
 
-			let titleText = '';
+		if (!bannerDefinition.pages.includes(servicePage) || bannerData.appealId !== appealId) {
+			return [];
+		}
 
-			switch (bannerDefinition.type) {
-				case 'success':
-					titleText = 'Success';
-					break;
-				default:
-					titleText = 'Important';
-					break;
-			}
+		const titleText = bannerDefinition.type === 'success' ? 'Success' : 'Important';
 
-			const bannerType = bannerData?.type || bannerDefinition.type;
-			const bannerText = bannerData?.text || bannerDefinition.text;
-			const bannerHtml = bannerData?.html || bannerDefinition.html;
-			const bannerPageComponents = bannerData?.pageComponents || bannerDefinition.pageComponents;
+		const bannerType = bannerData?.type || bannerDefinition.type;
+		const bannerText = bannerData?.text || bannerDefinition.text;
+		const bannerHtml = bannerData?.html || bannerDefinition.html;
+		const bannerPageComponents = bannerData?.pageComponents || bannerDefinition.pageComponents;
 
-			notificationBanners.push({
+		return [
+			{
 				type: 'notification-banner',
 				parameters: {
 					titleText: bannerData?.titleText || titleText,
@@ -313,12 +310,8 @@ export function buildNotificationBanners(session, servicePage, appealId) {
 						pageComponents: bannerPageComponents
 					})
 				}
-			});
-
-			if (!bannerDefinition.persist) {
-				delete session.notificationBanners[key];
 			}
-		}
+		];
 	});
 
 	return notificationBanners;
