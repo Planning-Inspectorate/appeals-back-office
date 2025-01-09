@@ -19,6 +19,7 @@ import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
 import costsRouter from './costs/costs.router.js';
+import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
 import serviceUserRouter from './service-user/service-user.router.js';
 import { validateAppeal } from './appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
@@ -122,6 +123,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
+);
+
+router.use(
+	'/:appealId/environmental-assessment',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
+	environmentalAssessmentRouter
 );
 
 router.use(

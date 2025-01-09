@@ -8,7 +8,7 @@ export const mapEnvironmentalAssessment = (data) => {
 	if (!eiaScreeningRequired || !environmentalAssessment) {
 		return { id, display: {} };
 	}
-	const link = `${currentRoute}/documentation/${id}`;
+	const link = `${currentRoute}/${id}`;
 	const documents = environmentalAssessment.documents.filter(
 		(doc) => !doc.latestDocumentVersion?.isDeleted
 	);
