@@ -146,7 +146,7 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address Provided</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/ip-address"> Change <span class="govuk-visually-hidden">Address</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/check-address"> Change <span class="govuk-visually-hidden">Address</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
