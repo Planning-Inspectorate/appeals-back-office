@@ -43,7 +43,7 @@ describe('Assign user to case', () => {
 				cy.visit(urlPaths.appealsList);
 				listCasesPage.clickAppealByRef(caseRef);
 				caseDetailsPage.clickAssignInspector();
-				caseDetailsPage.searchForCaseOfficer('test');
+				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
 				caseDetailsPage.clickLinkByText('Choose');
 				caseDetailsPage.selectRadioButtonByValue('Yes');
