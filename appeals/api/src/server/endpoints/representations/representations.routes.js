@@ -219,4 +219,39 @@ router.patch(
 	asyncHandler(controller.updateRejectionReasons)
 );
 
+router.patch(
+	'/:appealId/reps/:repId/attachments',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/{repId}/attachments'
+	#swagger.description = Update attachments for a representation
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.requestBody = {
+		in: 'body',
+		required: true,
+		schema: { type: 'object', properties: { attachments: { type: 'array', items: { type: 'string' } } } },
+		example: {
+			"attachments": [
+				"39ad6cd8-60ab-43f0-a995-4854db8f12c6",
+				"b6f15730-2d7f-4fa0-8752-2d26a62474de",
+				"7919b64d-acca-4b6d-9793-97a0dd786139"
+			]
+		}
+	}
+	#swagger.responses[200] = {
+		description: 'Attachments updated successfully',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {
+		description: 'Invalid payload',
+		schema: { errors: { attachments: 'must be an array of strings' } }
+	}
+	*/
+	asyncHandler(controller.updateRepresentationAttachments)
+);
+
 export { router as representationRoutes };

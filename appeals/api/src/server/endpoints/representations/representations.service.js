@@ -221,3 +221,23 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
 };
+
+/**
+ * @param {number} repId
+ * @param {string[]} attachments
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ */
+export const updateAttachments = async (repId, attachments) => {
+	const documents = await documentRepository.getDocumentsByIds(attachments);
+
+	const mappedDocuments = documents.map((d) => ({
+		documentGuid: d.guid,
+		version: d.latestDocumentVersion?.version ?? 1
+	}));
+
+	const updatedRepresentation = await representationRepository.addAttachments(
+		repId,
+		mappedDocuments
+	);
+	return updatedRepresentation;
+};

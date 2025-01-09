@@ -3870,6 +3870,138 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/reps/{repId}/attachments": {
+			"patch": {
+				"tags": ["Representations"],
+				"description": "Update attachments for a representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "repId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Attachments updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid payload",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"errors": {
+											"type": "object",
+											"properties": {
+												"attachments": {
+													"type": "string",
+													"example": "must be an array of strings"
+												}
+											}
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"errors": {
+											"type": "object",
+											"properties": {
+												"attachments": {
+													"type": "string",
+													"example": "must be an array of strings"
+												}
+											}
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"example": {
+						"attachments": [
+							"39ad6cd8-60ab-43f0-a995-4854db8f12c6",
+							"b6f15730-2d7f-4fa0-8752-2d26a62474de",
+							"7919b64d-acca-4b6d-9793-97a0dd786139"
+						]
+					},
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"attachments": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"attachments": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/listed-buildings": {
 			"post": {
 				"tags": ["Listed buildings"],
@@ -4609,7 +4741,7 @@
 						"properties": {
 							"submissionId": {
 								"type": "string",
-								"example": "755b15e1-46fd-49ae-8c12-6246ee1f395e"
+								"example": "4bee96fa-7ad2-44ec-a6e6-4a63ac469f8d"
 							},
 							"advertisedAppeal": {
 								"type": "boolean",
