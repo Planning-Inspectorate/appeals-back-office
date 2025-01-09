@@ -37,7 +37,7 @@ export function baseSummaryList(lpaStatement) {
 							{
 								type: 'show-more',
 								parameters: {
-									text: lpaStatement.originalRepresentation,
+									text: lpaStatement.redactedRepresentation || lpaStatement.originalRepresentation,
 									labelText: 'Statement'
 								}
 							}
