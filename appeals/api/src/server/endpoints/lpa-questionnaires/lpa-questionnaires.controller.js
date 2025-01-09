@@ -1,14 +1,13 @@
 import * as CONSTANTS from '#endpoints/constants.js';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-import { formatLpaQuestionnaire } from './lpa-questionnaires.formatter.js';
 import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { contextEnum } from '#mappers/context-enum.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -21,9 +20,11 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
  */
 const getLpaQuestionnaireById = async (req, res) => {
 	const { appeal } = req;
-	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE);
-	const formattedAppeal = formatLpaQuestionnaire(appeal, folders);
-	return res.send(formattedAppeal);
+	const dto = await appealDetailService.loadAndFormatAppeal({
+		appeal,
+		context: contextEnum.lpaQuestionnaire
+	});
+	return res.send(dto);
 };
 
 /**
@@ -63,7 +64,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			lpaProcedurePreferenceDuration,
 			eiaSensitiveAreaDetails,
 			eiaConsultedBodiesDetails,
-			reasonForNeighbourVisits
+			reasonForNeighbourVisits,
+			designatedSiteNames
 		},
 		params,
 		validationOutcome
@@ -116,7 +118,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					lpaProcedurePreferenceDuration,
 					eiaSensitiveAreaDetails,
 					eiaConsultedBodiesDetails,
-					reasonForNeighbourVisits
+					reasonForNeighbourVisits,
+					designatedSiteNames
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

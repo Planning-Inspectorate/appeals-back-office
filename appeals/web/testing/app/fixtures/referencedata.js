@@ -930,12 +930,12 @@ export const lpaQuestionnaireDataNotValidated = {
 	communityInfrastructureLevyAdoptionDate: '2023-05-09T01:00:00.000Z',
 	designatedSites: [
 		{
-			name: 'pSPA',
-			description: 'potential special protection area'
+			key: 'pSPA',
+			name: 'potential special protection area'
 		},
 		{
-			name: 'SAC',
-			description: 'special area of conservation'
+			key: 'SAC',
+			name: 'special area of conservation'
 		}
 	],
 	developmentDescription: '',

@@ -563,8 +563,10 @@ describe('LPA Questionnaire review', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
-							doesSiteRequireInspectorAccess: true,
-							inspectorAccessDetails: text300Characters
+							siteAccessRequired: {
+								isRequired: true,
+								details: text300Characters
+							}
 						});
 
 					const response = await request.get(baseUrl);
@@ -584,8 +586,10 @@ describe('LPA Questionnaire review', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
-							doesSiteRequireInspectorAccess: true,
-							inspectorAccessDetails: text301Characters
+							siteAccessRequired: {
+								isRequired: true,
+								details: text301Characters
+							}
 						});
 
 					const response = await request.get(baseUrl);
@@ -606,8 +610,10 @@ describe('LPA Questionnaire review', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
-							doesSiteHaveHealthAndSafetyIssues: true,
-							healthAndSafetyDetails: text300Characters
+							healthAndSafety: {
+								hasIssues: true,
+								details: text300Characters
+							}
 						});
 
 					const response = await request.get(baseUrl);
@@ -627,8 +633,10 @@ describe('LPA Questionnaire review', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
-							doesSiteHaveHealthAndSafetyIssues: true,
-							healthAndSafetyDetails: text301Characters
+							healthAndSafety: {
+								hasIssues: true,
+								details: text301Characters
+							}
 						});
 
 					const response = await request.get(baseUrl);

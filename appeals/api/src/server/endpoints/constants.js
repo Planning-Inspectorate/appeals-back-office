@@ -23,6 +23,7 @@ export const AUDIT_TRAIL_ASSIGNED_CASE_OFFICER =
 	'The case officer {replacement0} was added to the team';
 export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 	'The inspector {replacement0} was assigned to the case';
+export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_DOCUMENT_UPLOADED =

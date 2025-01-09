@@ -307,6 +307,10 @@ describe('appellant cases routes', () => {
 					data: {
 						caseExtensionDate: body.appealDueDate,
 						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
 					}
 				});
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();

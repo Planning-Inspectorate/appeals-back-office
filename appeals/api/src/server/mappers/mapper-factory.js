@@ -5,13 +5,15 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
+/** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
+/** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
-/** @typedef {{ appeal: Appeal, appealTypes: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
+/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
  * @param {MappingRequest} mappingRequest
- * @returns {AppealDTO|undefined}
+ * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|undefined}
  */
 export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appealDetails }) => {
 	if (context && appeal?.id && appeal?.caseCreatedDate) {
@@ -102,12 +104,14 @@ function createDataLayout(caseMap, mappingRequest) {
 	switch (context) {
 		case contextEnum.appellantCase:
 			return {
+				appellantCaseId: appeal.appellantCase?.id,
 				...appealSummary,
 				...appellantCase,
 				...createFoldersLayout(folders, contextEnum.appellantCase)
 			};
 		case contextEnum.lpaQuestionnaire:
 			return {
+				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...appealSummary,
 				...lpaQuestionnaire,
 				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
@@ -128,11 +132,11 @@ function createDataLayout(caseMap, mappingRequest) {
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				healthAndSafety: {
 					appellantCase: { ...appellantCase.healthAndSafety },
-					lpaQuestionnaire: { ...lpaQuestionnaire.healthAndSafety }
+					lpaQuestionnaire: { ...(lpaQuestionnaire?.healthAndSafety ?? null) }
 				},
 				inspectorAccess: {
 					appellantCase: { ...appellantCase.siteAccessRequired },
-					lpaQuestionnaire: { ...lpaQuestionnaire.siteAccessRequired }
+					lpaQuestionnaire: { ...(lpaQuestionnaire?.siteAccessRequired ?? null) }
 				},
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};

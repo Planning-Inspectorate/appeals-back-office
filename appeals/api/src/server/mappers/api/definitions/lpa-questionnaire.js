@@ -1,35 +1,211 @@
+import { AppealSummary } from './appeal-summary.js';
 import { SiteSafety } from './site-safety.js';
 import { SiteAccess } from './site-access.js';
+import { DesignatedSiteName } from './designated-site-name.js';
+import { ListedBuilding } from './listed-building.js';
+import { InvalidIncompleteReason } from './invalid-incomplete.js';
+import { Folder } from './folders-documents.js';
+
+const updateableFields = {
+	isCorrectAppealType: {
+		type: 'boolean',
+		nullable: true
+	},
+	isGreenBelt: {
+		type: 'boolean',
+		nullable: true
+	},
+	isConservationArea: {
+		type: 'boolean',
+		nullable: true
+	},
+	isAffectingNeighbouringSites: {
+		type: 'boolean',
+		nullable: true
+	},
+	lpaProcedurePreference: {
+		type: 'string',
+		nullable: true
+	},
+	lpaProcedurePreferenceDetails: {
+		type: 'string',
+		nullable: true
+	},
+	lpaProcedurePreferenceDuration: {
+		type: 'number',
+		nullable: true
+	},
+	lpaStatement: {
+		type: 'string',
+		nullable: true
+	},
+	extraConditions: {
+		type: 'string',
+		nullable: true
+	},
+	hasExtraConditions: {
+		type: 'boolean',
+		nullable: true
+	},
+	affectsScheduledMonument: {
+		type: 'boolean',
+		nullable: true
+	},
+	hasProtectedSpecies: {
+		type: 'boolean',
+		nullable: true
+	},
+	isAonbNationalLandscape: {
+		type: 'boolean',
+		nullable: true
+	},
+	isGypsyOrTravellerSite: {
+		type: 'boolean',
+		nullable: true
+	},
+	hasInfrastructureLevy: {
+		type: 'boolean',
+		nullable: true
+	},
+	isInfrastructureLevyFormallyAdopted: {
+		type: 'boolean',
+		nullable: true
+	},
+	infrastructureLevyAdoptedDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
+	infrastructureLevyExpectedDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
+	eiaColumnTwoThreshold: {
+		type: 'boolean',
+		nullable: true
+	},
+	eiaRequiresEnvironmentalStatement: {
+		type: 'boolean',
+		nullable: true
+	},
+	eiaEnvironmentalImpactSchedule: {
+		type: 'string',
+		nullable: true
+	},
+	eiaDevelopmentDescription: {
+		type: 'string',
+		nullable: true
+	},
+	eiaSensitiveAreaDetails: {
+		type: 'string',
+		nullable: true
+	},
+	eiaConsultedBodiesDetails: {
+		type: 'string',
+		nullable: true
+	},
+	reasonForNeighbourVisits: {
+		type: 'string',
+		nullable: true
+	},
+	designatedSiteNames: {
+		type: 'array',
+		items: {
+			...DesignatedSiteName
+		},
+		nullable: true
+	}
+};
 
 const lpaQuestionnaire = {
 	type: 'object',
 	required: [],
 	nullable: true,
 	properties: {
+		lpaQuestionnaireId: {
+			type: 'number'
+		},
+		...AppealSummary.properties,
+		validation: {
+			type: 'object',
+			properties: {
+				outcome: {
+					type: 'string',
+					nullable: true
+				},
+				incompleteReasons: {
+					type: 'array',
+					items: {
+						...InvalidIncompleteReason
+					},
+					nullable: true
+				}
+			},
+			nullable: true
+		},
+		submittedAt: {
+			type: 'string',
+			format: 'date-time'
+		},
+		receivedAt: {
+			type: 'string',
+			format: 'date-time'
+		},
+		...updateableFields,
+		costsAppliedFor: {
+			type: 'boolean',
+			nullable: true
+		},
+		lpaNotificationMethods: {
+			type: 'array',
+			items: {
+				type: 'object',
+				properties: {
+					name: {
+						type: 'string'
+					}
+				}
+			},
+			nullable: true
+		},
 		siteAccessRequired: {
 			...SiteAccess
 		},
 		healthAndSafety: {
 			...SiteSafety
 		},
-		isGreenBelt: {
-			type: 'boolean',
+		listedBuildingDetails: {
+			type: 'array',
+			items: {
+				...ListedBuilding
+			},
 			nullable: true
 		},
-		isAffectingNeighbouringSites: {
-			type: 'boolean',
-			nullable: true
-		},
-		lpaProcedurePreference: {
-			type: 'string',
-			nullable: true
-		},
-		lpaProcedurePreferenceDetails: {
-			type: 'string',
-			nullable: true
-		},
-		lpaProcedurePreferenceDuration: {
-			type: 'number',
+		documents: {
+			type: 'object',
+			properties: {
+				whoNotified: { ...Folder },
+				whoNotifiedSiteNotice: { ...Folder },
+				whoNotifiedLetterToNeighbours: { ...Folder },
+				whoNotifiedPressAdvert: { ...Folder },
+				conservationMap: { ...Folder },
+				otherPartyRepresentations: { ...Folder },
+				planningOfficerReport: { ...Folder },
+				plansDrawings: { ...Folder },
+				developmentPlanPolicies: { ...Folder },
+				treePreservationPlan: { ...Folder },
+				definitiveMapStatement: { ...Folder },
+				communityInfrastructureLevy: { ...Folder },
+				supplementaryPlanning: { ...Folder },
+				emergingPlan: { ...Folder },
+				consultationResponses: { ...Folder },
+				eiaEnvironmentalStatement: { ...Folder },
+				eiaScreeningOpinion: { ...Folder },
+				eiaScreeningDirection: { ...Folder },
+				lpaCaseCorrespondence: { ...Folder },
+				otherRelevantPolicies: { ...Folder }
+			},
 			nullable: true
 		}
 	}
@@ -37,60 +213,72 @@ const lpaQuestionnaire = {
 
 export const LpaQuestionnaire = lpaQuestionnaire;
 
-/* Common */
-// id                                        Int                                         @id @default(autoincrement())
-// appeal                                    Appeal                                      @relation(fields: [appealId], references: [id])
-// appealId                                  Int                                         @unique
-// lpaQuestionnaireIncompleteReasonsSelected LPAQuestionnaireIncompleteReasonsSelected[]
-// lpaQuestionnaireValidationOutcome         LPAQuestionnaireValidationOutcome?          @relation(fields: [lpaQuestionnaireValidationOutcomeId], references: [id])
-// lpaQuestionnaireValidationOutcomeId       Int?
-// lpaNotificationMethods                    LPANotificationMethodsSelected[]
-// lpaqCreatedDate                           DateTime                                    @default(now())
-// lpaQuestionnaireSubmittedDate             DateTime?
-// lpaStatement                              String?
-// newConditionDetails                       String?
-// siteAccessDetails                         String?
-// siteSafetyDetails                         String?
-// listedBuildingDetails                     ListedBuildingSelected[]
-// isCorrectAppealType                       Boolean?
-// inConservationArea                        Boolean?
-// lpaCostsAppliedFor                        Boolean?
-// isGreenBelt                               Boolean?
-// isAffectingNeighbouringSites              Boolean?
-
-/* S78 */
-
-// affectsScheduledMonument            Boolean?
-// hasProtectedSpecies                 Boolean?
-// isAonbNationalLandscape             Boolean?
-// designatedSitesNames                String?
-// isGypsyOrTravellerSite              Boolean?
-// isPublicRightOfWay                  Boolean?
-// eiaEnvironmentalImpactSchedule      String?
-// eiaDevelopmentDescription           String?
-// eiaSensitiveAreaDetails             String?
-// eiaColumnTwoThreshold               Boolean?
-// eiaScreeningOpinion                 Boolean?
-// eiaRequiresEnvironmentalStatement   Boolean?
-// eiaCompletedEnvironmentalStatement  Boolean?
-// eiaConsultedBodiesDetails           String?
-// hasStatutoryConsultees              Boolean?
-// hasInfrastructureLevy               Boolean?
-// isInfrastructureLevyFormallyAdopted Boolean?
-// infrastructureLevyAdoptedDate       DateTime?
-// infrastructureLevyExpectedDate      DateTime?
-// lpaProcedurePreference              String?
-// lpaProcedurePreferenceDetails       String?
-// lpaProcedurePreferenceDuration      Int?
-// lpaFinalCommentDetails              String?
-// lpaAddedWitnesses                   Boolean?
-// siteWithinSSSI                      Boolean?
-// reasonForNeighbourVisits            String?
-// importantInformation                String?
-// redeterminedIndicator               String?
-// dateCostsReportDespatched           DateTime?
-// dateNotRecoveredOrDerecovered       DateTime?
-// dateRecovered                       DateTime?
-// originalCaseDecisionDate            DateTime?
-// targetDate                          DateTime?
-// siteNoticesSentDate                 DateTime?
+export const LpaQuestionnaireUpdateRequest = {
+	type: 'object',
+	properties: {
+		...updateableFields,
+		lpaCostsAppliedFor: {
+			type: 'boolean',
+			nullable: true
+		},
+		validationOutcomeId: { type: 'number', nullable: true },
+		validationOutcome: {
+			type: 'object',
+			properties: {
+				id: { type: 'number' },
+				name: { type: 'string' }
+			},
+			nullable: true
+		},
+		siteAccessDetails: { type: 'string', nullable: true },
+		siteSafetyDetails: { type: 'string', nullable: true },
+		lpaNotificationMethods: {
+			type: 'array',
+			items: {
+				type: 'object',
+				properties: {
+					id: {
+						type: 'number'
+					}
+				}
+			},
+			nullable: true
+		},
+		appealId: {
+			type: 'number'
+		},
+		incompleteReasons: {
+			type: 'array',
+			items: {
+				type: 'object',
+				required: ['id'],
+				properties: {
+					id: {
+						type: 'number'
+					},
+					text: {
+						type: 'array',
+						items: {
+							type: 'string'
+						}
+					}
+				}
+			},
+			nullable: true
+		},
+		timetable: {
+			type: 'object',
+			properties: {
+				lpaQuestionnaireDueDate: {
+					type: 'string',
+					format: 'date-time'
+				}
+			},
+			nullable: true
+		},
+		designatedSiteNameCustom: {
+			type: 'string',
+			nullable: 'true'
+		}
+	}
+};

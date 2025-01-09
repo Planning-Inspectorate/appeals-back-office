@@ -76,11 +76,15 @@ export interface AppellantCaseIncompleteReasonText
 	extends schema.AppellantCaseIncompleteReasonText {}
 export interface AppellantCaseInvalidReasonText extends schema.AppellantCaseInvalidReasonText {}
 export interface KnowledgeOfOtherLandowners extends schema.KnowledgeOfOtherLandowners {}
+export interface DesignatedSiteSelected extends schema.DesignatedSiteSelected {
+	designatedSite: schema.DesignatedSite;
+}
 export interface LPAQuestionnaire extends schema.LPAQuestionnaire {
 	lpaQuestionnaireValidationOutcome?: LPAQuestionnaireValidationOutcome | null;
 	lpaQuestionnaireIncompleteReasonsSelected?: LPAQuestionnaireIncompleteReasonsSelected[] | null;
 	listedBuildingDetails: ListedBuildingSelected[];
 	lpaNotificationMethods: LPANotificationMethodsSelected[];
+	designatedSiteNames: DesignatedSiteSelected[];
 }
 export interface LPAQuestionnaireValidationOutcome
 	extends schema.LPAQuestionnaireValidationOutcome {}

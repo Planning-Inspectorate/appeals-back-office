@@ -24,7 +24,7 @@ const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
 
 	// const context = contextEnum.appellantCase;
-	// const dto = mapCase({ appeal, appealTypes: undefined, context });
+	// const dto = mapCase({ appeal, context });
 	// return res.send(dto);
 
 	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.APPELLANT_CASE);

@@ -3,12 +3,11 @@ import { isOutcomeIncomplete, isOutcomeInvalid } from './check-validation-outcom
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReasonsSelected} AppellantCaseIncompleteReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReasonsSelected} AppellantCaseInvalidReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReasonsSelected} LPAQuestionnaireIncompleteReasonsSelected */
-/** @typedef {import('@pins/appeals.api').Appeals.ValidationOutcomeResponse} ValidationOutcomeResponse */
-/** @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonsResponse */
+/** @typedef {import('@pins/appeals.api').Api.InvalidIncompleteReason} InvalidIncompleteReason */
 
 /**
  * @param {AppellantCaseIncompleteReasonsSelected | AppellantCaseInvalidReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected} reason
- * @returns {IncompleteInvalidReasonsResponse}
+ * @returns {InvalidIncompleteReason}}
  */
 const mapIncompleteInvalidReasons = (reason) => {
 	if ('appellantCaseIncompleteReason' in reason) {
@@ -33,18 +32,18 @@ const mapIncompleteInvalidReasons = (reason) => {
  * @param {string | null} outcome
  * @param {Array<AppellantCaseIncompleteReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected> | null} [incompleteReasons]
  * @param {AppellantCaseInvalidReasonsSelected[]} [invalidReasons]
- * @returns {ValidationOutcomeResponse | null}
+ * @returns {{outcome: string|null, invalidReasons: InvalidIncompleteReason[]|undefined, incompleteReasons: InvalidIncompleteReason[]|undefined } | null}
  */
 const formatValidationOutcomeResponse = (outcome, incompleteReasons, invalidReasons) => {
 	if (outcome) {
 		return {
 			outcome: outcome || null,
-			...(isOutcomeIncomplete(outcome) && {
-				incompleteReasons: incompleteReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
-			}),
-			...(isOutcomeInvalid(outcome) && {
-				invalidReasons: invalidReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
-			})
+			invalidReasons: isOutcomeInvalid(outcome)
+				? invalidReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
+				: undefined,
+			incompleteReasons: isOutcomeIncomplete(outcome)
+				? incompleteReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
+				: undefined
 		};
 	}
 	return null;

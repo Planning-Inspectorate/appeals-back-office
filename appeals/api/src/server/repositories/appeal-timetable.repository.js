@@ -1,6 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.TimetableDeadlineDate} TimetableDeadlineDate */
+/** @typedef {import('@pins/appeals.api').Api.Timetable} Timetable */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateTimetableRequest} UpdateTimetableRequest */
 /** @typedef {import('@pins/appeals.api').Schema.AppealTimetable} AppealTimetable */
 /**
@@ -10,7 +10,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /**
  * @param {number} id
- * @param {TimetableDeadlineDate} data
+ * @param {Timetable} data
  * @returns {PrismaPromise<AppealTimetable>}
  */
 const upsertAppealTimetableById = (id, data) =>
@@ -28,7 +28,7 @@ const upsertAppealTimetableById = (id, data) =>
 
 /**
  * @param {number} id
- * @param {UpdateTimetableRequest} data
+ * @param {Timetable} data
  * @returns {PrismaPromise<AppealTimetable>}
  */
 const updateAppealTimetableById = (id, data) =>

@@ -232,8 +232,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-access-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>The entrance is at the back of the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/inspector-access/change/lpa"
                                 data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
@@ -256,8 +255,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>There is no mobile signal at the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/safety-risks/change/lpa"
                                 data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
@@ -592,8 +590,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-access-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>The entrance is at the back of the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
                                 data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
@@ -616,8 +613,7 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>There is no mobile signal at the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
                                 data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
@@ -979,8 +975,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-access-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>The entrance is at the back of the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
                                 data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
@@ -1003,8 +998,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>There is no mobile signal at the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
                                 data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
@@ -1325,8 +1319,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-access-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>The entrance is at the back of the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
                                 data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
@@ -1349,8 +1342,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>There is no mobile signal at the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
                                 data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
@@ -3740,8 +3732,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-access-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site access required</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>The entrance is at the back of the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/inspector-access/change/lpa"
                                 data-cy="change-does-site-require-inspector-access"> Change<span class="govuk-visually-hidden"> Site access required</span></a>
@@ -3764,8 +3755,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Potential safety risks</dt>
-                            <dd class="govuk-summary-list__value"><span>Yes</span>
-                                <br><span>There is no mobile signal at the property</span>
+                            <dd class="govuk-summary-list__value"><span>No answer provided</span>
                             </dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/safety-risks/change/lpa"
                                 data-cy="change-health-and-safety"> Change<span class="govuk-visually-hidden"> Potential safety risks</span></a>
