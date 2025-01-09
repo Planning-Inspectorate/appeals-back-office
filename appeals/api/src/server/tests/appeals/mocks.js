@@ -326,6 +326,12 @@ export const linkedAppeals = [
 		parentId: householdAppeal.id,
 		parentRef: householdAppeal.reference,
 		childRef: '76215416',
+		child: {
+			appealType: {
+				key: 'Z',
+				type: 'Another appeal type'
+			}
+		},
 		linkingDate: new Date(2024, 1, 1),
 		appealType: householdAppeal.appealType,
 		relationshipId: 1,
