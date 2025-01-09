@@ -38,14 +38,16 @@ export function costsFolderTableItem({
 		display: {
 			tableItem: [
 				{
-					text
+					text,
+					classes: `appeal-${id}-documentation`
 				},
 				{
-					text: hasDocuments ? statusText : 'No documents available'
+					text: hasDocuments ? statusText : 'No documents available',
+					classes: `appeal-${id}-status`
 				},
 				{
 					html: actionsHtmls,
-					classes: 'govuk-!-text-align-right'
+					classes: `appeal-${id}-actions govuk-!-text-align-right`
 				}
 			]
 		}
@@ -122,7 +124,7 @@ function listItemLink(link, text, hiddenText, cypressDataName) {
 		`<li class="govuk-summary-list__actions-list-item">` +
 		`<a class="govuk-link" ${dataCy}href="${link}">` +
 		text +
-		`<span class="govuk-visually-hidden">${hiddenText}</span>` +
+		`<span class="govuk-visually-hidden"> ${hiddenText}</span>` +
 		`</a></li>`
 	);
 }

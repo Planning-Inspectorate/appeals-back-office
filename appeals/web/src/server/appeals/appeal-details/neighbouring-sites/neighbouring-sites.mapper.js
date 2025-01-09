@@ -1,4 +1,7 @@
-import { appealSiteToMultilineAddressStringHtml } from '#lib/address-formatter.js';
+import {
+	appealSiteToAddressString,
+	appealSiteToMultilineAddressStringHtml
+} from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
@@ -73,7 +76,7 @@ export function addNeighbouringSiteCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `${origin}/neighbouring-sites/add/${source}`,
-										visuallyHidden: 'address'
+										visuallyHiddenText: `${appealSiteToAddressString(neighbouringSiteData)}`
 									}
 								]
 							}
@@ -154,12 +157,12 @@ function getNeighbouringSiteActions(site) {
 		{
 			text: 'Change',
 			href: `change/site/${site.siteId}`,
-			visuallyHiddenText: 'address'
+			visuallyHiddenText: `${appealSiteToAddressString(site.address)}`
 		},
 		{
 			text: 'Remove',
 			href: `remove/site/${site.siteId}`,
-			visuallyHiddenText: 'address'
+			visuallyHiddenText: `${appealSiteToAddressString(site.address)}`
 		}
 	];
 }
@@ -319,7 +322,7 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
-										visuallyHidden: 'address'
+										visuallyHiddenText: `${appealSiteToAddressString(neighbouringSiteData)}`
 									}
 								]
 							}

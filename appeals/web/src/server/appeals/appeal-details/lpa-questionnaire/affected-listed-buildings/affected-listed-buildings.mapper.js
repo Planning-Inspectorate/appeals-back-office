@@ -71,7 +71,7 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
-										visuallyHidden: 'listed building number'
+										visuallyHiddenText: 'listed building number'
 									}
 								]
 							}
@@ -302,7 +302,7 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 									{
 										text: 'Change',
 										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
-										visuallyHidden: 'affected listed building'
+										visuallyHiddenText: 'affected listed building'
 									}
 								]
 							}
