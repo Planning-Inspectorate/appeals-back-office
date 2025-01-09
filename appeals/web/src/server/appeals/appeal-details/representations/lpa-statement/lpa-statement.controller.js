@@ -42,6 +42,8 @@ export const postReviewLpaStatement = (request, response) => {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`
 			);
+		case COMMENT_STATUS.VALID_REQUIRES_REDACTION:
+			return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement/redact`);
 		default:
 			return response.status(404).render('app/404.njk');
 	}
