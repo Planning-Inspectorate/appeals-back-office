@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -76,14 +77,18 @@ export function baseSummaryList(lpaStatement) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @returns {PageContent}
  * */
-export function viewLpaStatementPage(appealDetails, lpaStatement) {
+export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const lpaStatementSummaryList = baseSummaryList(lpaStatement);
 
-	const pageComponents = [lpaStatementSummaryList];
+	const pageComponents = [
+		...buildNotificationBanners(session, 'lpaStatement', appealDetails.appealId),
+		lpaStatementSummaryList
+	];
 	preRenderPageComponents(pageComponents);
 
 	const pageContent = {
@@ -101,7 +106,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {import('@pins/express').Session} session
+ * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @returns {PageContent}
  */
 export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
@@ -142,7 +147,11 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 		}
 	};
 
-	const pageComponents = [lpaStatementSummaryList, lpaStatementValidityRadioButtons];
+	const pageComponents = [
+		...buildNotificationBanners(session, 'lpaStatement', appealDetails.appealId),
+		lpaStatementSummaryList,
+		lpaStatementValidityRadioButtons
+	];
 	preRenderPageComponents(pageComponents);
 
 	const pageContent = {

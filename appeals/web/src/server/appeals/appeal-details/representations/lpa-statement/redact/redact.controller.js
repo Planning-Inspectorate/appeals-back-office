@@ -1,4 +1,5 @@
 import { patchRepresentationRedaction } from '#lib/api/representation.api.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { render } from '../../common/render.js';
 import { redactLpaStatementPage, redactConfirmPage } from './redact.mapper.js';
 import { setRepresentationStatus } from '../../representations.service.js';
@@ -48,6 +49,8 @@ export async function postConfirm(request, response) {
 	]);
 
 	delete session.redactedRepresentation;
+
+	addNotificationBannerToSession(session, 'lpaStatementRedactedAndAccepted', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement`);
 }
