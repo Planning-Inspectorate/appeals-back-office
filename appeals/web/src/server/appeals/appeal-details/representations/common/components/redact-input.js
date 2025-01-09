@@ -5,12 +5,12 @@ import { wrapComponents, buttonComponent } from '#lib/mappers/index.js';
 
 /**
  * @param {Object} params
- * @param {Representation} params.comment
+ * @param {Representation} params.representation
  * @param {string} [params.labelText]
  * @param {import('express-session').Session & Record<string, string>} [params.session]
  * @returns {PageComponent[]}
  */
-export const redactInput = ({ comment, labelText, session }) => [
+export const redactInput = ({ representation, labelText, session }) => [
 	textareaInput({
 		name: 'redactedRepresentation',
 		id: 'redact-textarea',
@@ -19,8 +19,8 @@ export const redactInput = ({ comment, labelText, session }) => [
 		labelClasses: 'govuk-label--s',
 		value:
 			session?.redactedRepresentation ||
-			comment.redactedRepresentation ||
-			comment.originalRepresentation
+			representation.redactedRepresentation ||
+			representation.originalRepresentation
 	}),
 	wrapComponents(
 		[
