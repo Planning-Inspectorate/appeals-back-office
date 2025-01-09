@@ -84,17 +84,17 @@ export const mapAppellantCaseOut = (casedata) => {
 		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres
 			? Number(casedata.floorSpaceSquareMetres)
 			: null,
-		ownsAllLand: casedata.ownsAllLand || null,
-		ownsSomeLand: casedata.ownsSomeLand || null,
-		advertisedAppeal: casedata.hasAdvertisedAppeal || null,
-		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor || null,
-		originalDevelopmentDescription: casedata.originalDevelopmentDescription || null,
-		changedDevelopmentDescription: casedata.changedDevelopmentDescription || null,
-		knowsAllOwners: casedata.knowsAllOwners?.name || null,
-		knowsOtherOwners: casedata.knowsOtherOwners?.name || null,
-		ownersInformed: casedata.ownersInformed || null,
-		enforcementNotice: casedata.enforcementNotice || null,
-		isGreenBelt: casedata.isGreenBelt || null
+		ownsAllLand: casedata.ownsAllLand ?? null,
+		ownsSomeLand: casedata.ownsSomeLand ?? null,
+		advertisedAppeal: casedata.hasAdvertisedAppeal ?? null,
+		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor ?? null,
+		originalDevelopmentDescription: casedata.originalDevelopmentDescription ?? null,
+		changedDevelopmentDescription: casedata.changedDevelopmentDescription ?? null,
+		knowsAllOwners: casedata.knowsAllOwners?.name ?? null,
+		knowsOtherOwners: casedata.knowsOtherOwners?.name ?? null,
+		ownersInformed: casedata.ownersInformed ?? null,
+		enforcementNotice: casedata.enforcementNotice ?? null,
+		isGreenBelt: casedata.isGreenBelt ?? null
 	};
 
 	return data;
