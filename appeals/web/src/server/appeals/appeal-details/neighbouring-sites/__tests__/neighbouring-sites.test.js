@@ -393,6 +393,7 @@ describe('neighbouring-sites', () => {
 	describe('GET /manage', () => {
 		it('should render the manage neighbouring sites page', async () => {
 			const appealId = appealData.appealId.toString();
+			const address = '1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND';
 			const response = await request.get(`${baseUrl}/${appealId}/neighbouring-sites/manage`);
 			const element = parseHtml(response.text);
 
@@ -404,15 +405,23 @@ describe('neighbouring-sites', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Neighbouring sites (LPAQ)</caption>');
 			expect(unprettifiedElement.innerHTML).toContain('Address</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Action</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Change</a>');
-			expect(unprettifiedElement.innerHTML).toContain('Remove</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Change<span class="govuk-visually-hidden"> ${address}</span></a>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Remove<span class="govuk-visually-hidden"> ${address}</span></a>`
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Neighbouring sites (inspector and/or third party request)</caption>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Address</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Action</th>');
-			expect(unprettifiedElement.innerHTML).toContain('Change</a>');
-			expect(unprettifiedElement.innerHTML).toContain('Remove</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Change<span class="govuk-visually-hidden"> ${address}</span></a>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Remove<span class="govuk-visually-hidden"> ${address}</span></a>`
+			);
 		});
 	});
 

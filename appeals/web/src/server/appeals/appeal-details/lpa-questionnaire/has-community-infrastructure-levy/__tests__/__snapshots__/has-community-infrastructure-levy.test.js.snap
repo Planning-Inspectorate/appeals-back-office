@@ -18,14 +18,14 @@ exports[`has-community-infrastructure-levy GET /has-community-infrastructure-lev
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio"
                                         name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio">Has infrastructure levy</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio-2"
                                         name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2">Does not have infrastructure levy</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -58,14 +58,14 @@ exports[`has-community-infrastructure-levy GET /has-community-infrastructure-lev
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio"
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio"
                                         name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio">Has infrastructure levy</label>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio">Has infrastructure levy</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="hasCommunityInfrastructureLevyRadio-2"
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio-2"
                                         name="hasCommunityInfrastructureLevyRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="hasCommunityInfrastructureLevyRadio-2">Does not have infrastructure levy</label>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2">Does not have infrastructure levy</label>
                                     </div>
                                 </div>
                             </fieldset>

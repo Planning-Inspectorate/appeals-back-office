@@ -224,8 +224,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">File name</label>
-                        <input class="govuk-input" id="fileName" name="fileName"
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
+                        <input class="govuk-input" id="file-name" name="fileName"
                         type="text" value="ph0-documentFileInfo.jpeg">
                     </div>
                 </div>
@@ -252,8 +252,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
                     </div>
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="fileName">File name</label>
-                        <input class="govuk-input" id="fileName" name="fileName"
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
+                        <input class="govuk-input" id="file-name" name="fileName"
                         type="text" value="ph0-documentFileInfo.jpeg">
                     </div>
                 </div>

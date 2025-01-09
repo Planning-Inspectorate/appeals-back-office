@@ -41,7 +41,7 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
                     <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         target="_blank">12345</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add"> Change<span class="govuk-visually-hidden"> listed building number</span></a>
                     </dd>
                 </div>
             </dl>
@@ -72,7 +72,7 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confi
                     <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         target="_blank">12345</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1"> Change<span class="govuk-visually-hidden"> affected listed building</span></a>
                     </dd>
                 </div>
             </dl>

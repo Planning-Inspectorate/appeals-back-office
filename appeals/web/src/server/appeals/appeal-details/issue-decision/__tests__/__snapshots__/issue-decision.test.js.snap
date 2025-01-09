@@ -13,12 +13,12 @@ exports[`issue-decision GET /check-invalid-decision should render the check your
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                         <dd class="govuk-summary-list__value">Invalid</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision"> Change</a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision"> Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reasons</dt>
                         <dd class="govuk-summary-list__value">Reasons!</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/invalid-reason"> Change</a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/invalid-reason"> Change<span class="govuk-visually-hidden"> invalid reasons</span></a>
                         </dd>
                     </div>
                 </dl>
@@ -260,17 +260,17 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                         <dd class="govuk-summary-list__value">Allowed</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision"> Change</a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision"> Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value">test-document.txt</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload"> Change</a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload"> Change<span class="govuk-visually-hidden"> decision letter</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
                         <dd class="govuk-summary-list__value">1 January 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-date"> Change</a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-date"> Change<span class="govuk-visually-hidden"> decision date</span></a>
                         </dd>
                     </div>
                 </dl>

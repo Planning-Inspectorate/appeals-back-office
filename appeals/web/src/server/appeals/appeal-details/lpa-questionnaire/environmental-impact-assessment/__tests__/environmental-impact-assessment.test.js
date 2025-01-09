@@ -232,13 +232,13 @@ describe('environmental-impact-assessment', () => {
 					'name="eiaColumnTwoThreshold" type="radio" value="yes" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold"> Meets or exceeds</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="no">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2"> Does not meet or exceed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> Does not meet or exceed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
@@ -267,13 +267,13 @@ describe('environmental-impact-assessment', () => {
 					'name="eiaColumnTwoThreshold" type="radio" value="yes">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold"> Meets or exceeds</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="no" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaColumnTwoThreshold-2"> Does not meet or exceed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> Does not meet or exceed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
@@ -330,13 +330,13 @@ describe('environmental-impact-assessment', () => {
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement"> Needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2"> Not needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> Not needed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
@@ -365,13 +365,13 @@ describe('environmental-impact-assessment', () => {
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement"> Needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eiaRequiresEnvironmentalStatement-2"> Not needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> Not needed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});

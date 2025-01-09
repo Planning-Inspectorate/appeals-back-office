@@ -103,7 +103,9 @@ describe('assign-user', () => {
 			expect(element.innerHTML).toContain('Find a case officer</h1>');
 			expect(element.innerHTML).toContain('Results</h2>');
 			expect(element.innerHTML).toContain('Matches for <strong>');
-			expect(element.innerHTML).toContain('Choose</a>');
+			expect(element.innerHTML).toContain(
+				'Choose<span class="govuk-visually-hidden"> Smith, John</span></a>'
+			);
 		});
 
 		it('should re-render the assign case officer page with "No matches for" if no search results are found', async () => {
@@ -205,7 +207,9 @@ describe('assign-user', () => {
 			expect(element.innerHTML).toContain('Find an inspector</h1>');
 			expect(element.innerHTML).toContain('Results</h2>');
 			expect(element.innerHTML).toContain('Matches for <strong>');
-			expect(element.innerHTML).toContain('Choose</a>');
+			expect(element.innerHTML).toContain(
+				'Choose<span class="govuk-visually-hidden"> Smith, John</span></a>'
+			);
 		});
 
 		it('should re-render the assign inspector page with "No matches for" if no search results are found', async () => {

@@ -1943,7 +1943,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Not received</td><td class="govuk-table__cell"></td><td class="govuk-table__cell pins-table__cell--align-right"></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Not received</td><td class="govuk-table__cell"></td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
 						);
 					});
 
@@ -1970,7 +1970,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell pins-table__cell--align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 				}
@@ -2034,6 +2034,9 @@ describe('appeal-details', () => {
 
 					it(`should render a ${costsCategory} ${costsDocumentType} row in the costs accordion with empty status and "Add" action link, if the ${costsCategory} ${costsDocumentType} folder is empty`, async () => {
 						const response = await request.get(`${baseUrl}/${appealIdWithoutCostsDocuments}`);
+						const hiddenText = `${
+							costsCategory === 'appellant' ? 'Appellant' : 'LPA'
+						} ${costsDocumentType}`;
 
 						expect(response.statusCode).toBe(200);
 
@@ -2056,10 +2059,10 @@ describe('appeal-details', () => {
 							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status">No documents available</td>`
 						);
 						expect(costsActionsElement.innerHTML).not.toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage</a>`
+							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`
 						);
 						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add</a>`
+							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`
 						);
 					});
 
@@ -2078,19 +2081,21 @@ describe('appeal-details', () => {
 							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-actions`
 						});
 
+						const displayText = `${
+							costsCategory === 'appellant' ? 'Appellant' : 'LPA'
+						} ${costsDocumentType}`;
+
 						expect(costsDocumentationElement.innerHTML).toEqual(
-							`<th scope="row" class="govuk-table__header appeal-costs-${costsCategory}-${costsDocumentType}-documentation">${
-								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
-							} ${costsDocumentType}</th>`
+							`<th scope="row" class="govuk-table__header appeal-costs-${costsCategory}-${costsDocumentType}-documentation">${displayText}</th>`
 						);
 						expect(costsStatusElement.innerHTML).toEqual(
 							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status">Received</td>`
 						);
 						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage</a>`
+							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage<span class="govuk-visually-hidden"> ${displayText}</span></a>`
 						);
 						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add</a>`
+							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add<span class="govuk-visually-hidden"> ${displayText}</span></a>`
 						);
 					});
 				}
@@ -2118,10 +2123,10 @@ describe('appeal-details', () => {
 					'<td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>'
 				);
 				expect(costsActionsElement.innerHTML).not.toContain(
-					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage</a>`
+					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage<span class="govuk-visually-hidden"> Costs decision</span></a>`
 				);
 				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add</a>`
+					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add<span class="govuk-visually-hidden"> Costs decision</span></a>`
 				);
 			});
 
@@ -2147,10 +2152,10 @@ describe('appeal-details', () => {
 					'<td class="govuk-table__cell appeal-costs-decision-status">Uploaded</td>'
 				);
 				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage</a>`
+					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage<span class="govuk-visually-hidden"> Costs decision</span></a>`
 				);
 				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add</a>`
+					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add<span class="govuk-visually-hidden"> Costs decision</span></a>`
 				);
 			});
 		});
@@ -2360,8 +2365,8 @@ describe('appeal-details', () => {
 					expect(columnHtml).toMatchSnapshot();
 					expect(columnHtml).toContain(
 						status === 'awaiting_transfer'
-							? '<td class="govuk-table__cell pins-table__cell--align-right appeal-decision-actions"></td>'
-							: '<td class="govuk-table__cell pins-table__cell--align-right appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
+							? '<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>'
+							: '<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
 					);
 				}
 			});

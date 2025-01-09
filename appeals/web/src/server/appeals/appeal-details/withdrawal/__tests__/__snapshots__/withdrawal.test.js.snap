@@ -163,17 +163,17 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
                                 <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
                                     target="_blank">test-document.txt</a>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
                                 <dd class="govuk-summary-list__value">1 January 2024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change<span class="govuk-visually-hidden"> request date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
                                 <dd class="govuk-summary-list__value">Unredacted</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change<span class="govuk-visually-hidden"> redaction status</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -374,17 +374,17 @@ exports[`withdrawal POST /withdrawal/check-your-answers should render the check 
                                 <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
                                     target="_blank">test-document.txt</a>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"> Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
                                 <dd class="govuk-summary-list__value">1 January 2024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"> Change<span class="govuk-visually-hidden"> request date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
                                 <dd class="govuk-summary-list__value">Unredacted</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status"> Change<span class="govuk-visually-hidden"> redaction status</span></a>
                                 </dd>
                             </div>
                         </dl>

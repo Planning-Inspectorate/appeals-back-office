@@ -18,12 +18,12 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-safetyRisksRadio">
+                                    id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -31,9 +31,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -66,12 +66,12 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-safetyRisksRadio">
+                                    id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -79,9 +79,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -114,11 +114,11 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (appellant details)</label>
                                             <textarea class="govuk-textarea"
@@ -126,9 +126,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -161,11 +161,11 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (appellant details)</label>
                                             <textarea class="govuk-textarea"
@@ -173,9 +173,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -219,11 +219,11 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -231,9 +231,9 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -277,11 +277,11 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio" name="safetyRisksRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-safetyRisksRadio">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio">Yes</label>
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-safetyRisksRadio">
+                                    <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="safety-risks-details">Health and safety risks (LPA details)</label>
                                             <textarea class="govuk-textarea"
@@ -289,9 +289,9 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="safetyRisksRadio-2" name="safetyRisksRadio"
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="safetyRisksRadio-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>

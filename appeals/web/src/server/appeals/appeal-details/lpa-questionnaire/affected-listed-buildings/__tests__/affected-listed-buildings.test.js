@@ -144,8 +144,12 @@ describe('affected-listed-buildings', () => {
 			expect(unprettifiedElement).toContain('Listed buildings</caption>');
 			expect(unprettifiedElement).toContain('Listed building</th>');
 			expect(unprettifiedElement).toContain('Action</th>');
-			expect(unprettifiedElement).toContain('Change</a>');
-			expect(unprettifiedElement).toContain('Remove</a>');
+			expect(unprettifiedElement).toContain(
+				'Change<span class="govuk-visually-hidden"> listed building 123456</span></a>'
+			);
+			expect(unprettifiedElement).toContain(
+				'Remove<span class="govuk-visually-hidden"> listed building 123456</span></a>'
+			);
 		});
 	});
 
