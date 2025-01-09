@@ -313,6 +313,12 @@ export const appealData = {
 			dueDate: '2024-10-11T10:27:06.626Z',
 			receivedAt: '2024-08-02T10:27:06.626Z'
 		}
+	},
+	environmentalAssessment: {
+		caseId: '1',
+		folderId: 17935,
+		path: 'appellant-case/environmentalAssessment',
+		documents: []
 	}
 };
 
