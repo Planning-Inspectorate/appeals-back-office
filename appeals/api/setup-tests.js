@@ -76,6 +76,7 @@ const mockAppealSpecialismDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealSpecialismCreateMany = jest.fn().mockResolvedValue({});
 const mockKnowledgeOfOtherLandownersFindMany = jest.fn().mockResolvedValue({});
 const mockLPANotificationMethodsFindMany = jest.fn().mockResolvedValue({});
+const mockLPADesignatedSitesFindMany = jest.fn().mockResolvedValue({});
 const mockProcedureTypeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantUpdate = jest.fn().mockResolvedValue({});
 const mockUserUpsert = jest.fn().mockResolvedValue({});
@@ -322,6 +323,12 @@ class MockPrismaClient {
 	get lPANotificationMethods() {
 		return {
 			findMany: mockLPANotificationMethodsFindMany
+		};
+	}
+
+	get designatedSite() {
+		return {
+			findMany: mockLPADesignatedSitesFindMany
 		};
 	}
 

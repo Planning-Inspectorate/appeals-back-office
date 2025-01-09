@@ -1,5 +1,5 @@
 import { composeMiddleware } from '@pins/express';
-import { body, query } from 'express-validator';
+import { query } from 'express-validator';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
@@ -7,11 +7,6 @@ import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '../constants.js';
-import validateDateParameter from '#common/validators/date-parameter.js';
-import validateIdParameter from '#common/validators/id-parameter.js';
-import validateUuidParameter from '#common/validators/uuid-parameter.js';
-import { validateStringParameter } from '#common/validators/string-parameter.js';
-import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 /** @typedef {import('express').Request} Request */
@@ -62,30 +57,4 @@ const getAppealsValidator = composeMiddleware(
 	validationErrorHandler
 );
 
-const getAppealValidator = composeMiddleware(
-	validateIdParameter('appealId'),
-	validationErrorHandler
-);
-
-const patchAppealValidator = composeMiddleware(
-	validateIdParameter('appealId'),
-	validateDateParameter({ parameterName: 'startedAt' }),
-	validateDateParameter({ parameterName: 'validAt', mustBeNotBeFutureDate: true }),
-	validateStringParameter('planningApplicationReference'),
-	validateUuidParameter({
-		parameterName: 'caseOfficer',
-		parameterType: body,
-		isRequired: false,
-		allowNull: true
-	}),
-	validateBooleanParameter('isGreenBelt'),
-	validateUuidParameter({
-		parameterName: 'inspector',
-		parameterType: body,
-		isRequired: false,
-		allowNull: true
-	}),
-	validationErrorHandler
-);
-
-export { getAppealsValidator, getAppealValidator, patchAppealValidator };
+export { getAppealsValidator };

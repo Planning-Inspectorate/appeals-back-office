@@ -423,6 +423,8 @@ model LPAQuestionnaire {
   originalCaseDecisionDate            DateTime?
   targetDate                          DateTime?
   siteNoticesSentDate                 DateTime?
+  designatedSiteNameCustom            String?
+  designatedSiteNames                 DesignatedSiteSelected[]
 }
 
 /// LPAQuestionnaireValidationOutcome model
@@ -493,6 +495,26 @@ model LPANotificationMethodsSelected {
   lpaQuestionnaireId    Int
 
   @@id([notificationMethodId, lpaQuestionnaireId])
+}
+
+/// DesignatedSite model
+/// Contains information on all possible designated sites affecting the appeal.
+model DesignatedSite {
+  id                Int                      @id @default(autoincrement())
+  key               String                   @unique
+  name              String                   @unique
+  lpaQuestionnaires DesignatedSiteSelected[]
+}
+
+/// DesignatedSiteSelected model
+/// Contains information on the selected designated sites affecting the appeal.
+model DesignatedSiteSelected {
+  designatedSite     DesignatedSite   @relation(fields: [designatedSiteId], references: [id])
+  designatedSiteId   Int
+  lpaQuestionnaire   LPAQuestionnaire @relation(fields: [lpaQuestionnaireId], references: [id])
+  lpaQuestionnaireId Int
+
+  @@id([designatedSiteId, lpaQuestionnaireId])
 }
 
 /// SiteVisit model

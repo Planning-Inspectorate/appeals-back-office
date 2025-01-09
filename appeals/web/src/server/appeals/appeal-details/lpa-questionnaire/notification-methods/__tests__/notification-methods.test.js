@@ -96,7 +96,7 @@ describe('notification-methods', () => {
 				.send({ notificationMethodsCheckboxes: '9029' });
 
 			expect(endpointRequestBody).toEqual({
-				lpaNotificationMethods: [{ id: '9029' }]
+				lpaNotificationMethods: [{ id: 9029 }]
 			});
 			expect(mockEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
@@ -121,7 +121,7 @@ describe('notification-methods', () => {
 				.send({ notificationMethodsCheckboxes: ['9030', '9031'] });
 
 			expect(endpointRequestBody).toEqual({
-				lpaNotificationMethods: [{ id: '9030' }, { id: '9031' }]
+				lpaNotificationMethods: [{ id: 9030 }, { id: 9031 }]
 			});
 			expect(mockEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);

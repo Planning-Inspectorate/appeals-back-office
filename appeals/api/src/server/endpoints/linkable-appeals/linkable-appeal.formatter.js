@@ -17,7 +17,7 @@ export const formatLinkableAppealSummary = (appeal) => {
 			county: appeal.address?.addressCounty || '',
 			postCode: appeal.address?.postcode || ''
 		},
-		localPlanningDepartment: appeal.lpa.name,
+		localPlanningDepartment: appeal.lpa?.name || '',
 		appellantName: `${appeal.appellant?.firstName} ${appeal.appellant?.lastName}`,
 		agentName: appeal.agent
 			? `${appeal.agent?.firstName} ${appeal.agent?.lastName} ${

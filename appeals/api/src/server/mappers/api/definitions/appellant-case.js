@@ -1,10 +1,13 @@
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
+import { Folder } from './folders-documents.js';
+import { AppealSummary } from './appeal-summary.js';
 
 const appellantCase = {
 	type: 'object',
 	required: [],
 	nullable: true,
 	properties: {
+		...AppealSummary.properties,
 		validation: {
 			type: 'object',
 			properties: {
@@ -13,11 +16,17 @@ const appellantCase = {
 					nullable: true
 				},
 				incompleteReasons: {
-					...InvalidIncompleteReason,
+					type: 'array',
+					items: {
+						...InvalidIncompleteReason
+					},
 					nullable: true
 				},
 				invalidReasons: {
-					...InvalidIncompleteReason,
+					type: 'array',
+					items: {
+						...InvalidIncompleteReason
+					},
 					nullable: true
 				}
 			},
@@ -126,6 +135,23 @@ const appellantCase = {
 		appellantProcedurePreferenceWitnessCount: {
 			type: 'number',
 			nullable: true
+		},
+		documents: {
+			type: 'object',
+			properties: {
+				appellantStatement: { ...Folder },
+				originalApplicationForm: { ...Folder },
+				applicationDecisionLetter: { ...Folder },
+				changedDescription: { ...Folder },
+				appellantCaseWithdrawalLetter: { ...Folder },
+				appellantCaseCorrespondence: { ...Folder },
+				designAccessStatement: { ...Folder },
+				plansDrawings: { ...Folder },
+				newPlansDrawings: { ...Folder },
+				planningObligation: { ...Folder },
+				ownershipCertificate: { ...Folder },
+				otherNewDocuments: { ...Folder }
+			}
 		}
 	}
 };

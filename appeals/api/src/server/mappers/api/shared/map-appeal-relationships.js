@@ -43,7 +43,7 @@ export const mapAppealRelationships = (data) => {
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
-						isParentAppeal: true
+						isParentAppeal: false
 					};
 				})
 		: [];

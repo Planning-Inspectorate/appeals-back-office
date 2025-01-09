@@ -61,6 +61,8 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteSpecialisms = databaseConnector.specialism.deleteMany();
 	const deleteLPAQUestionnaireIncompleteReason =
 		databaseConnector.lPAQuestionnaireIncompleteReason.deleteMany();
+	const deleteLPAQSelectedDesignatedNames = databaseConnector.designatedSiteSelected.deleteMany();
+	const deleteAllDesignatedNames = databaseConnector.designatedSite.deleteMany();
 
 	await databaseConnector.$queryRawUnsafe(`
 		UPDATE Document SET latestVersionId = NULL;
@@ -84,6 +86,8 @@ export async function deleteAllRecords(databaseConnector) {
 	);
 
 	await databaseConnector.$transaction([
+		deleteLPAQSelectedDesignatedNames,
+		deleteAllDesignatedNames,
 		deleteDocuments,
 		deleteRepsText,
 		deleteRepsSelected,
