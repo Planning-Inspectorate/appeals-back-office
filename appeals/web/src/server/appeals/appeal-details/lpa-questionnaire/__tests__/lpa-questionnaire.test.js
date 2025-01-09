@@ -770,6 +770,12 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the complete page if no errors are present and posted outcome is "complete"', async () => {
+			nock('http://test/')
+				.get('/appeals/1/lpa-questionnaires/2')
+				.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+				.patch('/appeals/1/lpa-questionnaires/2')
+				.reply(200, { validationOutcome: 'complete' });
+
 			const response = await request.post(baseUrl).send({
 				'review-outcome': 'complete'
 			});

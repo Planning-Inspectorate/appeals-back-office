@@ -96,6 +96,12 @@ export const postLpaQuestionnaire = async (request, response) => {
 		if (currentAppeal) {
 			if (reviewOutcome === 'complete') {
 				if (currentAppeal.appealType === APPEAL_TYPE.D) {
+					await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
+						request.apiClient,
+						appealId,
+						lpaQuestionnaireId,
+						mapWebValidationOutcomeToApiValidationOutcome('complete')
+					);
 					return response.redirect(
 						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
 					);
