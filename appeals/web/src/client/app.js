@@ -14,6 +14,7 @@ import { initRedactButtons } from './components/redact-button/index.js';
 const initAll = () => {
 	initGovUKScripts();
 	initExcerpt();
+	// TODO: Remove and cleanup initFilesListModule and initSelectAllCheckbox (this is not needed anymore)
 	initFilesListModule();
 	initSelectAllCheckbox();
 	initFileUploaderModule();
