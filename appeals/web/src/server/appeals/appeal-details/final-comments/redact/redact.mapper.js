@@ -46,7 +46,7 @@ export const redactFinalCommentPage = (appealDetails, comment, finalCommentsType
 						]
 					}
 				},
-				...redactInput({ comment, labelText: 'Redacted final comments:', session }),
+				...redactInput({ representation: comment, labelText: 'Redacted final comments:', session }),
 				buttonComponent(
 					'Continue',
 					{ type: 'submit' },
