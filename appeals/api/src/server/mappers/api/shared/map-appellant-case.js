@@ -45,12 +45,12 @@ export const mapAppellantCase = (data) => {
 				ownsSomeLand: appellantCase.ownsSomeLand || null
 			},
 			siteAccessRequired: {
-				details: appellantCase?.siteAccessDetails,
-				isRequired: appellantCase?.siteAccessDetails !== null
+				details: appellantCase.siteAccessDetails,
+				isRequired: appellantCase.siteAccessDetails !== null
 			},
 			healthAndSafety: {
-				details: appellantCase?.siteSafetyDetails,
-				hasIssues: appellantCase?.siteSafetyDetails !== null
+				details: appellantCase.siteSafetyDetails,
+				hasIssues: appellantCase.siteSafetyDetails !== null
 			}
 		};
 	}

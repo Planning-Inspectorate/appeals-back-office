@@ -19,6 +19,8 @@ import config from '#config/config.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaire */
 
 /**
  * @type {RequestHandler}
@@ -65,7 +67,11 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		...(isOutcomeIncomplete(validationOutcome.name) && {
 			appealId,
 			incompleteReasons,
-			timetable
+			timetable: timetable
+				? {
+						lpaQuestionnaireDueDate: timetable.lpaQuestionnaireDueDate.toISOString()
+				  }
+				: undefined
 		})
 	});
 

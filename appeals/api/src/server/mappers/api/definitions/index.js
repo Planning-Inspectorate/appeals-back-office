@@ -10,12 +10,15 @@ import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
 import { AppealWithdrawal } from './appeal-withdrawal.js';
 import { AppellantCase } from './appellant-case.js';
-import { LpaQuestionnaire } from './lpa-questionnaire.js';
+import { LpaQuestionnaire, LpaQuestionnaireUpdateRequest } from './lpa-questionnaire.js';
 import { SiteSafety } from './site-safety.js';
 import { SiteAccess } from './site-access.js';
 import { SiteVisit } from './site-visit.js';
 import { ServiceUser } from './service-user.js';
 import { Folder, Document, DocumentVersion, DocumentLog } from './folders-documents.js';
+import { InvalidIncompleteReason } from './invalid-incomplete.js';
+import { ListedBuilding } from './listed-building.js';
+import { DesignatedSiteName } from './designated-site-name.js';
 
 const partials = {
 	Allocation,
@@ -37,10 +40,14 @@ const partials = {
 	SiteAccess,
 	AppellantCase,
 	LpaQuestionnaire,
-	ServiceUser
+	ServiceUser,
+	InvalidIncompleteReason,
+	ListedBuilding,
+	DesignatedSiteName
 };
 
 export const ApiDefinitions = {
 	...partials,
-	Appeal
+	Appeal,
+	LpaQuestionnaireUpdateRequest
 };

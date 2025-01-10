@@ -3,7 +3,8 @@ const timetable = {
 	required: ['appealTimetableId'],
 	properties: {
 		appealTimetableId: {
-			type: 'number'
+			type: 'number',
+			nullable: true
 		},
 		lpaQuestionnaireDueDate: {
 			type: 'string',

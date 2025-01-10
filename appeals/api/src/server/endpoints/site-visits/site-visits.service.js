@@ -11,12 +11,12 @@ import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate, { formatTime } from '#utils/date-formatter.js';
 import { format } from 'date-fns';
-import { broadcastEvent } from '#endpoints/integrations/integrations.broadcasters/event.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
@@ -49,7 +49,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 		});
 
 		if (visitDate) {
-			await broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
+			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
 			await createAuditTrail({
 				appealId,
 				azureAdUserId,
@@ -156,7 +156,7 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 				details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED
 			});
 
-			await broadcastEvent(
+			await broadcasters.broadcastEvent(
 				updateSiteVisitData.siteVisitId,
 				EVENT_TYPE.SITE_VISIT,
 				EventType.Update

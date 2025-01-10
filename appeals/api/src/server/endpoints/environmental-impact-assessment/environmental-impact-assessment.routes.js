@@ -3,7 +3,7 @@ import { patchEiaScreeningRequired } from '#endpoints/environmental-impact-asses
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { getEiaScreeningRequirementValidator } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.validator.js';
-import { getAppealValidator } from '#endpoints/appeals/appeals.validators.js';
+import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
 
 const router = createRouter();
 

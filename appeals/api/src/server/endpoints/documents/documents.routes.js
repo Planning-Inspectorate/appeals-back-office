@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { getAppealValidator } from '#endpoints/appeals/appeals.validators.js';
+import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { validateDocumentAndAddToRequest } from './documents.middleware.js';
 import {

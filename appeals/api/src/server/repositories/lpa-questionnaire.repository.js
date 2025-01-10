@@ -2,7 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import appealTimetablesRepository from '#repositories/appeal-timetable.repository.js';
 import commonRepository from './common.repository.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireRequest} UpdateLPAQuestionnaireRequest */
+/** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaireUpdateRequest} LpaQuestionnaireUpdateRequest */
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
@@ -10,14 +10,13 @@ import commonRepository from './common.repository.js';
 
 /**
  * @param {number} id
- * @param {UpdateLPAQuestionnaireRequest} data
+ * @param {LpaQuestionnaireUpdateRequest} data
  * @returns {Promise<object>}
  */
 const updateLPAQuestionnaireById = (id, data) => {
 	const { appealId, incompleteReasons, timetable } = data;
-	/**
-	 * @type {any[]}
-	 */
+
+	/** @type {any[]} */
 	const transaction = [];
 
 	transaction.push(
@@ -52,7 +51,10 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration,
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
 				eiaConsultedBodiesDetails: data.eiaConsultedBodiesDetails,
-				reasonForNeighbourVisits: data.reasonForNeighbourVisits
+				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
+				designatedSiteNames: processDesignatedSites(id, data, transaction),
+				designatedSiteNameCustom:
+					data.designatedSiteNames?.find((s) => s.id === 0)?.name || undefined
 			}
 		})
 	);
@@ -71,6 +73,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 	}
 
 	if (appealId && timetable) {
+		// @ts-ignore
 		transaction.push(appealTimetablesRepository.upsertAppealTimetableById(appealId, timetable));
 	}
 
@@ -79,7 +82,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 
 /**
  * @param {number} id
- * @param {UpdateLPAQuestionnaireRequest} data
+ * @param {LpaQuestionnaireUpdateRequest} data
  * @param {any[]} transaction
  * @returns {Object|undefined}
  */
@@ -93,14 +96,45 @@ function processNotificationMethods(id, data, transaction) {
 
 		if (data.lpaNotificationMethods.length) {
 			return {
-				create: data.lpaNotificationMethods.map((/** @type {{ id: string }} */ method) => {
+				create: data.lpaNotificationMethods.map((method) => {
 					return {
 						lpaNotificationMethod: {
-							connect: { id: parseInt(method.id, 10) }
+							connect: { id: method.id }
 						}
 					};
 				})
 			};
+		}
+	}
+}
+
+/**
+ * @param {number} id
+ * @param {LpaQuestionnaireUpdateRequest} data
+ * @param {any[]} transaction
+ * @returns {Object|undefined}
+ */
+function processDesignatedSites(id, data, transaction) {
+	if (Array.isArray(data.designatedSiteNames)) {
+		transaction.push(
+			databaseConnector.designatedSiteSelected.deleteMany({
+				where: { lpaQuestionnaireId: id }
+			})
+		);
+
+		if (data.designatedSiteNames.length) {
+			const designatedSites = data.designatedSiteNames?.filter((s) => s.id > 0);
+			if (designatedSites.length) {
+				return {
+					create: designatedSites.map((site) => {
+						return {
+							designatedSite: {
+								connect: { id: site.id }
+							}
+						};
+					})
+				};
+			}
 		}
 	}
 }

@@ -37,10 +37,6 @@ import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 describe('lpa questionnaires routes', () => {
-	beforeEach(() => {
-		// @ts-ignore
-		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});

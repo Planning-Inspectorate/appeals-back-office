@@ -1,22 +1,27 @@
 const invalidIncompleteReason = {
-	type: 'array',
-	items: {
-		type: 'object',
-		properties: {
-			name: {
-				type: 'object',
-				properties: {
-					id: {
-						type: 'number'
-					},
-					name: {
-						type: 'string'
-					},
-					hasText: {
-						type: 'boolean'
-					}
+	type: 'object',
+	properties: {
+		name: {
+			type: 'object',
+			properties: {
+				id: {
+					type: 'number',
+					nullable: true
+				},
+				name: {
+					type: 'string'
+				},
+				hasText: {
+					type: 'boolean'
 				}
 			}
+		},
+		text: {
+			type: 'array',
+			items: {
+				type: 'string'
+			},
+			nullable: true
 		}
 	}
 };

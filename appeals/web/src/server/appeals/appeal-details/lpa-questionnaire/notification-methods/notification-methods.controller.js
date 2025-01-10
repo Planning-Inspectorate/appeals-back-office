@@ -85,8 +85,8 @@ export const postChangeNotificationMethods = async (request, response) => {
 
 	if (bodyValue) {
 		request.session.notificationMethods = ensureArray(bodyValue).map(
-			(/** @type {number} */ notificationMethodId) => ({
-				id: notificationMethodId
+			(/** @type {string} */ notificationMethodId) => ({
+				id: Number(notificationMethodId)
 			})
 		);
 	}

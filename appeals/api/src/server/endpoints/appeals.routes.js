@@ -12,6 +12,7 @@ import { integrationsRoutes } from './integrations/integrations.routes.js';
 import initNotifyClientAndAddToRequest from '../middleware/init-notify-client-and-add-to-request.js';
 import { knowledgeOfOtherLandownersRoutes } from './knowledge-of-other-landowners/knowledge-of-other-landowners.routes.js';
 import { lpaNotificationMethodsRoutes } from './lpa-notification-methods/lpa-notification-methods.routes.js';
+import { lpaDesignatedSitesRoutes } from './lpa-designated-sites/lpa-designated-sites.routes.js';
 import { lpaQuestionnaireValidationOutcomesRoutes } from './lpa-questionnaire-validation-outcomes/lpa-questionnaire-validation-outcomes.routes.js';
 import { procedureTypesRoutes } from './procedure-types/procedure-types.routes.js';
 import { siteVisitTypesRoutes } from './site-visit-types/site-visit-types.routes.js';
@@ -37,7 +38,7 @@ import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
 
-import { default as appealDetailsRoutes } from './appeal-details/routes.js';
+import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -53,6 +54,7 @@ router.use(appellantCaseValidationOutcomesRoutes);
 router.use(documentRedactionStatusesRoutes);
 router.use(knowledgeOfOtherLandownersRoutes);
 router.use(lpaNotificationMethodsRoutes);
+router.use(lpaDesignatedSitesRoutes);
 router.use(lpaQuestionnaireIncompleteReasonsRoutes);
 router.use(lpaQuestionnaireValidationOutcomesRoutes);
 router.use(procedureTypesRoutes);

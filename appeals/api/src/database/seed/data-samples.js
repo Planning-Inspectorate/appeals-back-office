@@ -237,7 +237,8 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 				eiaSensitiveAreaDetails: randomArrayValue(['test sensitive area details text', null]),
 				eiaConsultedBodiesDetails: randomArrayValue(['test consulted bodies details text', null]),
-				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null])
+				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null]),
+				designatedSiteNameCustom: 'A custom value'
 			};
 		default:
 			return;
