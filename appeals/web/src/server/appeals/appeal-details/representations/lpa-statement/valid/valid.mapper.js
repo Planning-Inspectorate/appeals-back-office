@@ -10,9 +10,10 @@ import { ensureArray } from '#lib/array-utilities.js';
 
 /**
  * @param {Appeal} appealDetails
+ * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
  * @returns {PageContent}
  */
-export function allocationCheckPage(appealDetails) {
+export function allocationCheckPage(appealDetails, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent} */
@@ -35,7 +36,8 @@ export function allocationCheckPage(appealDetails) {
 		yesNoInput({
 			name: 'allocationLevelAndSpecialisms',
 			id: 'allocationLevelAndSpecialisms',
-			legendText: 'Do you need to update the allocation level and specialisms?'
+			legendText: 'Do you need to update the allocation level and specialisms?',
+			value: session.acceptLPAStatement?.allocationLevelAndSpecialisms
 		})
 	];
 
@@ -105,7 +107,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, session) {
 				items: specialisms.map((s) => ({
 					text: s.name,
 					value: s.id,
-					checked: sessionSelections.includes(s.name)
+					checked: sessionSelections.includes(String(s.id))
 				}))
 			}
 		}

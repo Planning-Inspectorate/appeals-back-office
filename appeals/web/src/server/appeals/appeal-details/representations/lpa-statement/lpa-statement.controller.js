@@ -3,14 +3,13 @@ import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.ma
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderReviewLpaStatement(request, response) {
-	const { errors, currentAppeal, currentRepresentation } = request;
+	const { errors, currentAppeal, currentRepresentation, session } = request;
 
 	const isReview = currentRepresentation.status === 'awaiting_review';
 
-	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
-		currentAppeal,
-		currentRepresentation
-	);
+	const pageContent = isReview
+		? reviewLpaStatementPage(currentAppeal, currentRepresentation, session)
+		: viewLpaStatementPage(currentAppeal, currentRepresentation);
 
 	return response
 		.status(200)

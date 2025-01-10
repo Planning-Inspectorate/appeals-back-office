@@ -101,9 +101,10 @@ export function viewLpaStatementPage(appealDetails, lpaStatement) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
+ * @param {Record<string, any>} session
  * @returns {PageContent}
  */
-export function reviewLpaStatementPage(appealDetails, lpaStatement) {
+export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const lpaStatementSummaryList = baseSummaryList(lpaStatement);
@@ -125,12 +126,11 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement) {
 				{
 					value: COMMENT_STATUS.VALID,
 					text: 'Accept statement',
-					checked: lpaStatement?.status === COMMENT_STATUS.VALID
+					checked: 'acceptLPAStatement' in session
 				},
 				{
 					value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
-					text: 'Redact and accept statement',
-					checked: false // This status isn't persisted so will always be unchecked
+					text: 'Redact and accept statement'
 				},
 
 				{
