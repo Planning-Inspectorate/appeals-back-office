@@ -23,7 +23,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 	const siteVisitRequestCheckbox = {
 		type: 'checkboxes',
 		parameters: {
-			name: 'site-visit-request',
+			name: 'siteVisitRequest',
 			idPrefix: 'site-visit-request',
 			items: [
 				{
