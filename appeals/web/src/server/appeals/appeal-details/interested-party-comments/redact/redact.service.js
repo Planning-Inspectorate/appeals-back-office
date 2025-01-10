@@ -11,7 +11,7 @@ export const patchInterestedPartyCommentRedaction = (
 	redactedRepresentation
 ) =>
 	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/redaction`, {
+		.patch(`appeals/${appealId}/reps/${commentId}`, {
 			json: {
 				redactedRepresentation,
 				test: 'test'
