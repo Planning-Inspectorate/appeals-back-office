@@ -47,7 +47,7 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		return renderReviewInterestedPartyComment(request, response, next);
 	}
 
-	session.siteVisitRequest = body.siteVisitRequest;
+	session.siteVisitRequested = body.siteVisitRequested;
 
 	if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
 		return response.redirect(
@@ -66,7 +66,7 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		appealId,
 		commentId,
 		status,
-		body.siteVisitRequest === 'site-visit'
+		body.siteVisitRequested === 'site-visit'
 	);
 
 	addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);

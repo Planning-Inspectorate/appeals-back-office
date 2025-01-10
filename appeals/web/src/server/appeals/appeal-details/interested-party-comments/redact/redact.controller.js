@@ -1,10 +1,7 @@
 import { redactInterestedPartyCommentPage } from './redact.mapper.js';
 import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import logger from '#lib/logger.js';
-import { patchInterestedPartyCommentRedaction } from './redact.service.js';
-import { patchInterestedPartyCommentStatus } from '../view-and-review/view-and-review.service.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { redactAndRejectComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
@@ -43,32 +40,26 @@ export const postRedactInterestedPartyComment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postConfirmRedactInterestedPartyComment = async (request, response) => {
-	try {
-		const {
-			params: { appealId, commentId },
-			session,
-			apiClient
-		} = request;
+	const {
+		params: { appealId, commentId },
+		session,
+		apiClient
+	} = request;
 
-		await Promise.all([
-			patchInterestedPartyCommentRedaction(
-				apiClient,
-				appealId,
-				commentId,
-				session.redactedRepresentation
-			),
-			patchInterestedPartyCommentStatus(apiClient, appealId, commentId, COMMENT_STATUS.VALID)
-		]);
+	await redactAndRejectComment(
+		apiClient,
+		appealId,
+		commentId,
+		session.redactedRepresentation,
+		session.siteVisitRequested === 'site-visit'
+	);
 
-		delete session.redactedRepresentation;
+	delete session.redactedRepresentation;
+	delete session.siteVisitRequested;
 
-		addNotificationBannerToSession(session, 'interestedPartyCommentsRedactionSuccess', appealId);
+	addNotificationBannerToSession(session, 'interestedPartyCommentsRedactionSuccess', appealId);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`
-		);
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
-	}
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`
+	);
 };
