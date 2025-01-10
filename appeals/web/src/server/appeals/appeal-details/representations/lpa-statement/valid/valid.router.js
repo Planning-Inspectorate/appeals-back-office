@@ -21,7 +21,7 @@ router
 	.post(
 		createYesNoRadioValidator(
 			'allocationLevelAndSpecialisms',
-			'Select whether you need to update the allocation level and specialisms'
+			'Select whether the allocation level and specialisms need updating'
 		),
 		saveBodyToSession('acceptLPAStatement'),
 		postAllocationCheck
