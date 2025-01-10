@@ -39,12 +39,15 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		params: { appealId, commentId },
 		body: { status },
 		apiClient,
-		session
+		session,
+		body
 	} = request;
 
 	if (errors) {
 		return renderReviewInterestedPartyComment(request, response, next);
 	}
+
+	session.siteVisitRequest = body.siteVisitRequest;
 
 	if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
 		return response.redirect(
