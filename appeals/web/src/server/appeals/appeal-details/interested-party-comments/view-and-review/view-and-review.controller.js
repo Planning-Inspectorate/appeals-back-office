@@ -61,7 +61,13 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		);
 	}
 
-	await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
+	await patchInterestedPartyCommentStatus(
+		apiClient,
+		appealId,
+		commentId,
+		status,
+		body.siteVisitRequest === 'site-visit'
+	);
 
 	addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
 
