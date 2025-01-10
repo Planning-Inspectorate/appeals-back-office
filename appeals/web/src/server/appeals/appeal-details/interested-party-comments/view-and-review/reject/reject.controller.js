@@ -58,26 +58,21 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 
 	const rejectionReasons = mapRejectionReasonPayload(session.rejectIpComment);
 
-	try {
-		await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
-		await rejectInterestedPartyComment(
-			apiClient,
-			appealId,
-			commentId,
-			session.rejectIpComment.allowResubmit === 'yes'
-		);
+	await updateRejectionReasons(apiClient, appealId, commentId, rejectionReasons);
+	await rejectInterestedPartyComment(
+		apiClient,
+		appealId,
+		commentId,
+		session.rejectIpComment.allowResubmit === 'yes',
+		session.siteVisitRequested === 'site-visit'
+	);
 
-		addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
+	addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
 
-		delete session.rejectIpComment;
+	delete session.rejectIpComment;
+	delete session.siteVisitRequested;
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
-		);
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
-	}
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
 };
 
 /**
