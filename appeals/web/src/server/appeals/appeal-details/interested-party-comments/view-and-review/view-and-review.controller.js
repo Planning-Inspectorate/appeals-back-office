@@ -1,4 +1,3 @@
-import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -35,42 +34,35 @@ export const renderReviewInterestedPartyComment = render(
  * @type {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const postReviewInterestedPartyComment = async (request, response, next) => {
-	try {
-		const {
-			errors,
-			params: { appealId, commentId },
-			body: { status },
-			apiClient,
-			session
-		} = request;
+	const {
+		errors,
+		params: { appealId, commentId },
+		body: { status },
+		apiClient,
+		session
+	} = request;
 
-		if (errors) {
-			return renderReviewInterestedPartyComment(request, response, next);
-		}
-
-		if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
-			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact`
-			);
-		}
-
-		if (status === COMMENT_STATUS.INVALID) {
-			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject/select-reason`
-			);
-		}
-
-		await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
-
-		addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/interested-party-comments`
-		);
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
+	if (errors) {
+		return renderReviewInterestedPartyComment(request, response, next);
 	}
+
+	if (status === COMMENT_STATUS.VALID_REQUIRES_REDACTION) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/redact`
+		);
+	}
+
+	if (status === COMMENT_STATUS.INVALID) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject/select-reason`
+		);
+	}
+
+	await patchInterestedPartyCommentStatus(apiClient, appealId, commentId, status);
+
+	addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
