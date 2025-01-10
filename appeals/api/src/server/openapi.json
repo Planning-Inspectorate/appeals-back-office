@@ -3674,12 +3674,10 @@
 						"description": "Not Found"
 					}
 				}
-			}
-		},
-		"/appeals/{appealId}/reps/{repId}/status": {
+			},
 			"patch": {
 				"tags": ["Representations"],
-				"description": "Get a single representation",
+				"description": "Update a representation",
 				"parameters": [
 					{
 						"name": "appealId",
@@ -3736,84 +3734,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/RepStatusUpdateRequest"
+								"$ref": "#/components/schemas/RepUpdateRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/RepStatusUpdateRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/appeals/{appealId}/reps/{repId}/redaction": {
-			"patch": {
-				"tags": ["Representations"],
-				"description": "Get a single representation",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "repId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Get a single representation for an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RepRedactionRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/RepRedactionRequest"
+								"$ref": "#/components/schemas/RepUpdateRequest"
 							}
 						}
 					}
@@ -4566,19 +4492,7 @@
 					"name": "UnlinkAppealRequest"
 				}
 			},
-			"RepRedactionRequest": {
-				"type": "object",
-				"properties": {
-					"redactedRepresentation": {
-						"type": "string",
-						"example": "Some redacted text"
-					}
-				},
-				"xml": {
-					"name": "RepRedactionRequest"
-				}
-			},
-			"RepStatusUpdateRequest": {
+			"RepUpdateRequest": {
 				"type": "object",
 				"properties": {
 					"status": {
@@ -4592,10 +4506,18 @@
 					"allowResubmit": {
 						"type": "boolean",
 						"example": true
+					},
+					"redactedRepresentation": {
+						"type": "string",
+						"example": "Some redacted text"
+					},
+					"siteVisitedRequest": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
-					"name": "RepStatusUpdateRequest"
+					"name": "RepUpdateRequest"
 				}
 			},
 			"CreateRepRequest": {

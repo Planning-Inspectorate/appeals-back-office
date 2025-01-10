@@ -27,18 +27,17 @@ export interface UnlinkAppealRequest {
 	relationshipId?: number;
 }
 
-export interface RepRedactionRequest {
-	/** @example "Some redacted text" */
-	redactedRepresentation?: string;
-}
-
-export interface RepStatusUpdateRequest {
+export interface RepUpdateRequest {
 	/** @example "valid" */
 	status?: string;
 	/** @example "Some notes" */
 	notes?: string;
 	/** @example true */
 	allowResubmit?: boolean;
+	/** @example "Some redacted text" */
+	redactedRepresentation?: string;
+	/** @example true */
+	siteVisitedRequest?: boolean;
 }
 
 export interface CreateRepRequest {

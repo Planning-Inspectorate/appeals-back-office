@@ -1,10 +1,5 @@
 import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
-import {
-	createRepRequest,
-	repRedactionRequest,
-	repStatusUpdateRequest,
-	repResponse
-} from '#tests/representations/mocks.js';
+import { createRepRequest, repUpdateRequest, repResponse } from '#tests/representations/mocks.js';
 import {
 	folder,
 	addDocumentsRequest,
@@ -78,11 +73,8 @@ export const spec = {
 		UnlinkAppealRequest: {
 			...unlinkAppealRequest
 		},
-		RepRedactionRequest: {
-			...repRedactionRequest
-		},
-		RepStatusUpdateRequest: {
-			...repStatusUpdateRequest
+		RepUpdateRequest: {
+			...repUpdateRequest
 		},
 		CreateRepRequest: {
 			...createRepRequest

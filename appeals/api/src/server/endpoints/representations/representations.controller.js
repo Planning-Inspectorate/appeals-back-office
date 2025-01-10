@@ -2,6 +2,7 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
+import representationRepository from '#repositories/representation.repository.js';
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import {
@@ -112,11 +113,9 @@ export const addRedactedRepresentation = async (req, res) => {
 	const { repId } = req.params;
 	const { redactedRepresentation } = req.body;
 
-	const rep = await representationService.redactRepresentation(
-		Number(repId),
-		redactedRepresentation,
-		String(req.get('azureAdUserId'))
-	);
+	const rep = await representationRepository.updateRepresentationById(Number(repId), {
+		redactedRepresentation
+	});
 
 	if (!rep) {
 		return res.status(404).send({
@@ -130,45 +129,44 @@ export const addRedactedRepresentation = async (req, res) => {
 };
 
 /**
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} request
+ * @param {Response} response
  * @returns {Promise<Response>}
  */
-export const changeRepresentationStatus = async (req, res) => {
-	const { repId } = req.params;
-	const { status, notes, allowResubmit } = req.body;
+export async function updateRepresentation(request, response) {
+	const {
+		params: { repId },
+		body: { status, allowResubmit }
+	} = request;
 
 	const rep = await representationService.getRepresentation(parseInt(repId));
 	if (!rep) {
-		return res.status(404).send({
-			errors: {
-				repId: ERROR_NOT_FOUND
-			}
-		});
+		return response.status(404).send({ errors: { repId: ERROR_NOT_FOUND } });
 	}
 
 	if (
 		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
 		rep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	) {
-		return res.status(400).send({
-			errors: {
-				status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE
-			}
-		});
+		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
-	const updatedRep = await representationService.updateRepresentationStatus(
-		Number(repId),
-		status,
-		notes,
-		String(req.get('azureAdUserId'))
+	const updatedRep = await representationRepository.updateRepresentationById(
+		parseInt(repId),
+		request.body
 	);
 
-	await representationService.notifyRejection(req.notifyClient, req.appeal, rep, allowResubmit);
+	if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
+		await representationService.notifyRejection(
+			request.notifyClient,
+			request.appeal,
+			rep,
+			allowResubmit
+		);
+	}
 
-	return res.send(formatRepresentation(updatedRep));
-};
+	return response.send(formatRepresentation(updatedRep));
+}
 
 /**
  * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
