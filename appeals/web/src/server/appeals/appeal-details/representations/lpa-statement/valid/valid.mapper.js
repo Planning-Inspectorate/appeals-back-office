@@ -203,14 +203,26 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 						key: { text: 'Review decision' },
 						value: { text: 'Accept statement' },
 						actions: {
-							Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
+									visuallyHiddenText: 'review decision'
+								}
+							]
 						}
 					},
 					{
 						key: { text: 'Do you need to update the allocation level and specialisms?' },
 						value: { text: updatingAllocation ? 'Yes' : 'No' },
 						actions: {
-							Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+									visuallyHiddenText: 'allocation level and specialisms'
+								}
+							]
 						}
 					},
 					...(updatingAllocation
@@ -219,7 +231,13 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 									key: { text: 'Allocation level' },
 									value: { text: sessionData.allocationLevel },
 									actions: {
-										Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+												visuallyHiddenText: 'allocation level'
+											}
+										]
 									}
 								},
 								{
@@ -230,7 +248,13 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
                   </ul>`
 									},
 									actions: {
-										Change: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
+												visuallyHiddenText: 'allocation specialisms'
+											}
+										]
 									}
 								}
 						  ]
