@@ -212,3 +212,30 @@ export const updateRejectionReasons = async (req, res) => {
 		});
 	}
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const updateRepresentationAttachments = async (req, res) => {
+	const { repId } = req.params;
+	const { attachments } = req.body;
+
+	if (!Array.isArray(attachments) || !attachments.every((id) => typeof id === 'string')) {
+		return res.status(400).send({ errors: { attachments: 'must be an array of strings' } });
+	}
+
+	const rep = await representationService.getRepresentation(parseInt(repId));
+
+	if (!rep) {
+		return res.status(404).send({ errors: { repId: 'Representation not found' } });
+	}
+
+	const updatedRepresentation = await representationService.updateAttachments(
+		Number(repId),
+		attachments
+	);
+
+	return res.status(200).send(updatedRepresentation);
+};
