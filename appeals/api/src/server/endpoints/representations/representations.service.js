@@ -76,31 +76,6 @@ export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30,
 };
 
 /**
- *
- * @param {number} id
- * @param {string} status //APPEAL_REPRESENTATION_STATUS
- * @param {string} notes
- * @param {string} reviewer
- */
-export const updateRepresentationStatus = async (id, status, notes, reviewer) => {
-	const rep = await representationRepository.updateRepresentationById(id, {
-		status,
-		notes,
-		reviewer
-	});
-	return rep;
-};
-
-/**
- *
- * @param {number} id
- * @param {string} redactedRepresentation
- * @param {string} reviewer
- */
-export const redactRepresentation = (id, redactedRepresentation, reviewer) =>
-	representationRepository.updateRepresentationById(id, { redactedRepresentation, reviewer });
-
-/**
  * @typedef {Object} CreateRepresentationInput
  * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails

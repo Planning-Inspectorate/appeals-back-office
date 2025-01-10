@@ -13,14 +13,12 @@ export const createRepRequest = {
 	redactionStatus: 'unredacted'
 };
 
-export const repRedactionRequest = {
-	redactedRepresentation: 'Some redacted text'
-};
-
-export const repStatusUpdateRequest = {
+export const repUpdateRequest = {
 	status: 'valid',
 	notes: 'Some notes',
-  allowResubmit: true
+	allowResubmit: true,
+	redactedRepresentation: 'Some redacted text',
+	siteVisitedRequest: true
 };
 
 export const repResponse = {

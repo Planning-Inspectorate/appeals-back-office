@@ -118,7 +118,7 @@ const getRepresentationCounts = async (appealId, options) => {
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
 const updateRepresentationById = (id, data) => {
-	const { status, redactedRepresentation, notes, reviewer } = data;
+	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested } = data;
 
 	return databaseConnector.representation.update({
 		where: {
@@ -129,7 +129,8 @@ const updateRepresentationById = (id, data) => {
 			...(redactedRepresentation && { redactedRepresentation }),
 			...(notes && { notes }),
 			reviewer,
-			dateLastUpdated: new Date()
+			dateLastUpdated: new Date(),
+			siteVisitRequested
 		},
 		include: {
 			representative: true,

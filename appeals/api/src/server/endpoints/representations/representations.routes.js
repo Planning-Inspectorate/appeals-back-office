@@ -107,11 +107,11 @@ router.get(
 );
 
 router.patch(
-	'/:appealId/reps/:repId/status',
+	'/:appealId/reps/:repId',
 	/*
 	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/{repId}/status'
-	#swagger.description = Get a single representation
+	#swagger.path = '/appeals/{appealId}/reps/{repId}'
+	#swagger.description = "Update a representation"
 	#swagger.parameters['azureAdUserId'] = {
 		in: 'header',
 		required: true,
@@ -120,7 +120,7 @@ router.patch(
 	#swagger.requestBody = {
 		in: 'body',
 		required: true,
-		schema: { $ref: '#/components/schemas/RepStatusUpdateRequest' },
+		schema: { $ref: '#/components/schemas/RepUpdateRequest' },
 	}
 	#swagger.responses[200] = {
 		description: 'Get a single representation for an appeal',
@@ -132,35 +132,7 @@ router.patch(
 	getRepresentationUpdateValidator,
 	checkAppealExistsByIdAndAddToRequest,
 	checkRepresentationExistsById,
-	asyncHandler(controller.changeRepresentationStatus)
-);
-
-router.patch(
-	'/:appealId/reps/:repId/redaction',
-	/*
-	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/{repId}/redaction'
-	#swagger.description = Get a single representation
-	#swagger.parameters['azureAdUserId'] = {
-		in: 'header',
-		required: true,
-		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-	}
-	#swagger.requestBody = {
-		in: 'body',
-		required: true,
-		schema: { $ref: '#/components/schemas/RepRedactionRequest' },
-	}
-	#swagger.responses[200] = {
-		description: 'Get a single representation for an appeal',
-		schema: { $ref: '#/components/schemas/RepResponse' }
-	}
-	#swagger.responses[400] = {}
-	#swagger.responses[404] = {}
- */
-	getRepresentationUpdateValidator,
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(controller.addRedactedRepresentation)
+	asyncHandler(controller.updateRepresentation)
 );
 
 router.post(
