@@ -3,12 +3,17 @@
  * @param {string} appealId
  * @param {string} commentId
  * @param {string} status
+ * @param {boolean} [siteVisitRequest]
  * */
-export const patchInterestedPartyCommentStatus = (apiClient, appealId, commentId, status) =>
+export const patchInterestedPartyCommentStatus = (
+	apiClient,
+	appealId,
+	commentId,
+	status,
+	siteVisitRequest
+) =>
 	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/status`, {
-			json: {
-				status
-			}
+		.patch(`appeals/${appealId}/reps/${commentId}`, {
+			json: { status, siteVisitRequest }
 		})
 		.json();
