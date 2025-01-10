@@ -23,7 +23,7 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
  * */
 export const rejectInterestedPartyComment = (apiClient, appealId, commentId, allowResubmit) =>
 	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/status`, {
+		.patch(`appeals/${appealId}/reps/${commentId}`, {
 			json: {
 				status: COMMENT_STATUS.INVALID,
 				allowResubmit
