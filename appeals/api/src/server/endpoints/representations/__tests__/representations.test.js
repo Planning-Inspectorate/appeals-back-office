@@ -78,7 +78,7 @@ describe('/appeals/:id/representations', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
-				.patch('/appeals/1/reps/1/status')
+				.patch('/appeals/1/reps/1')
 				.send({ status: 'an_invalid_val' })
 				.set('azureAdUserId', '732652365');
 
@@ -95,7 +95,7 @@ describe('/appeals/:id/representations', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
-				.patch('/appeals/1/reps/1/status')
+				.patch('/appeals/1/reps/1')
 				.send({ status: 0 })
 				.set('azureAdUserId', '732652365');
 
@@ -112,7 +112,7 @@ describe('/appeals/:id/representations', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
-				.patch('/appeals/1/reps/1/redaction')
+				.patch('/appeals/1/reps/1')
 				.send({ redactedRepresentation: false })
 				.set('azureAdUserId', '732652365');
 
@@ -157,7 +157,7 @@ describe('/appeals/:id/representations', () => {
 			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
 
 			const response = await request
-				.patch('/appeals/1/reps/1/status')
+				.patch('/appeals/1/reps/1')
 				.send({
 					status: 'valid',
 					notes: 'Some notes',
@@ -166,27 +166,6 @@ describe('/appeals/:id/representations', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(200);
-
-			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(1);
-
-			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.commentRejected.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						deadline_date: '',
-						reasons: ['Invalid submission'],
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
-					},
-					reference: null
-				}
-			);
 		});
 
 		test('200 when representation status is successfully updated with extended deadline template selected', async () => {
@@ -197,7 +176,7 @@ describe('/appeals/:id/representations', () => {
 			const mockRepresentation = {
 				id: 1,
 				lpa: false,
-				status: 'valid',
+				status: 'invalid',
 				originalRepresentation: 'Original text of the representation',
 				redactedRepresentation: 'Redacted text of the representation',
 				dateCreated: new Date('2024-12-11T12:00:00Z'),
@@ -234,9 +213,9 @@ describe('/appeals/:id/representations', () => {
 			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
 
 			const response = await request
-				.patch('/appeals/1/reps/1/status')
+				.patch('/appeals/1/reps/1')
 				.send({
-					status: 'valid',
+					status: 'invalid',
 					notes: 'Some notes',
 					allowResubmit: true,
 					extendedDeadline: true
