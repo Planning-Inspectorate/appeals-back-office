@@ -106,16 +106,6 @@ const formatDocumentationSummary = (appeal) => {
 	const lpaStatement = appeal.representations?.find(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
-	const lpaFinalComments = appeal.representations?.find(
-		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
-			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-	);
-	const appellantFinalComments = appeal.representations?.find(
-		(rep) =>
-			rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
-			rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-	);
 
 	return {
 		appellantCase: {

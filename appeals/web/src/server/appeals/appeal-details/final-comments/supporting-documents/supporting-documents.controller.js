@@ -100,6 +100,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}`,
 			successCallback: () => {
+				// TODO: add API call to PATCH final comment (rep) attachments with GUIDs of uploaded docs
 				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
 			}
 		});
