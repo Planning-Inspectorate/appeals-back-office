@@ -27,7 +27,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 			idPrefix: 'site-visit-request',
 			items: [
 				{
-					text: 'The comment includes a site visit request',
+					text: 'Comment includes a site visit request',
 					value: 'site-visit',
 					checked: comment?.siteVisitRequested
 				}
