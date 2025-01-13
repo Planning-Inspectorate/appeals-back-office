@@ -20,7 +20,7 @@ export const mapEnvironmentalAssessment = (data) => {
 		statusText: documents.length
 			? `${documents.length} document${documents.length === 1 ? '' : 's'}`
 			: 'No documents',
-		receivedText: '',
+		receivedText: documents.length ? 'Received' : 'Not applicable',
 		actionHtml: actionsHtml({
 			id,
 			text,
