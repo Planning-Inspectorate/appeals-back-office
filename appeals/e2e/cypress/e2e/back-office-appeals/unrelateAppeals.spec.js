@@ -47,21 +47,25 @@ describe('unrelate appeals', () => {
 		});
 
 		it('unrelate a BO appeal to a Horizon appeal', () => {
+			const horizonAppealId =
+				Cypress.config('apiBaseUrl').indexOf('test') > -1
+					? horizonTestAppeals.horizonAppealTest
+					: horizonTestAppeals.horizonAppealMock;
+
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(horizonTestAppeals.horizonAppeal1);
+				caseDetailsPage.fillInput(horizonAppealId);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
 				caseDetailsPage.clickManageRelatedAppeals();
-				caseDetailsPage.clickRemoveRelatedAppealByRef(horizonTestAppeals.horizonAppeal1);
+				caseDetailsPage.clickRemoveRelatedAppealByRef(horizonAppealId);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
-					'You have removed the relationship between this appeal and appeal' +
-						horizonTestAppeals.horizonAppeal1
+					'You have removed the relationship between this appeal and appeal' + horizonAppealId
 				);
 			});
 		});
