@@ -8,17 +8,17 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
-/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
+/** @typedef {{ appeal: Appeal, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
  * @param {MappingRequest} mappingRequest
  * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|undefined}
  */
-export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appealDetails }) => {
+export const mapCase = ({ appeal, context = contextEnum.appealDetails }) => {
 	if (context && appeal?.id && appeal?.caseCreatedDate) {
-		const caseMap = createDataMap({ appeal, appealTypes, context });
-		return createDataLayout(caseMap, { appeal, appealTypes, context });
+		const caseMap = createDataMap({ appeal, context });
+		return createDataLayout(caseMap, { appeal, context });
 	}
 };
 

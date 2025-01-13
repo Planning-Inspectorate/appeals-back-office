@@ -2,12 +2,107 @@ import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { Folder } from './folders-documents.js';
 import { AppealSummary } from './appeal-summary.js';
 
+const updateableFields = {
+	applicationDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
+	applicationDecisionDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
+	applicationDecision: {
+		type: 'string',
+		nullable: true
+	},
+	appellantCostsAppliedFor: {
+		type: 'boolean',
+		nullable: true
+	},
+	hasAdvertisedAppeal: {
+		type: 'boolean',
+		nullable: true
+	},
+	ownsAllLand: {
+		type: 'boolean',
+		nullable: true
+	},
+	ownsSomeLand: {
+		type: 'boolean',
+		nullable: true
+	},
+	siteAreaSquareMetres: {
+		type: 'number',
+		nullable: true
+	},
+	floorSpaceSquareMetres: {
+		type: 'number',
+		nullable: true
+	},
+	enforcementNotice: {
+		type: 'boolean',
+		nullable: true
+	},
+	isGreenBelt: {
+		type: 'boolean',
+		nullable: true
+	},
+	planningObligation: {
+		type: 'boolean',
+		nullable: true
+	},
+	statusPlanningObligation: {
+		type: 'string',
+		nullable: true
+	},
+	agriculturalHolding: {
+		type: 'boolean',
+		nullable: true
+	},
+	tenantAgriculturalHolding: {
+		type: 'boolean',
+		nullable: true
+	},
+	otherTenantsAgriculturalHolding: {
+		type: 'boolean',
+		nullable: true
+	},
+	appellantProcedurePreference: {
+		type: 'string',
+		nullable: true
+	},
+	appellantProcedurePreferenceDetails: {
+		type: 'string',
+		nullable: true
+	},
+	appellantProcedurePreferenceDuration: {
+		type: 'number',
+		nullable: true
+	},
+	appellantProcedurePreferenceWitnessCount: {
+		type: 'number',
+		nullable: true
+	},
+	developmentDescription: {
+		type: 'object',
+		properties: {
+			details: { type: 'string', nullable: true },
+			isChanged: { type: 'boolean' }
+		}
+	}
+};
+
 const appellantCase = {
 	type: 'object',
-	required: [],
 	nullable: true,
 	properties: {
+		appellantCaseId: {
+			type: 'number'
+		},
 		...AppealSummary.properties,
+		...updateableFields,
 		validation: {
 			type: 'object',
 			properties: {
@@ -45,31 +140,6 @@ const appellantCase = {
 		},
 		isAppellantNamedOnApplication: {
 			type: 'boolean'
-		},
-		applicationDate: {
-			type: 'string',
-			format: 'date-time'
-		},
-		applicationDecisionDate: {
-			type: 'string',
-			format: 'date-time',
-			nullable: true
-		},
-		applicationDecision: {
-			type: 'string',
-			nullable: true
-		},
-		hasAdvertisedAppeal: {
-			type: 'boolean',
-			nullable: true
-		},
-		appellantCostsAppliedFor: {
-			type: 'boolean',
-			nullable: true
-		},
-		enforcementNotice: {
-			type: 'boolean',
-			nullable: true
 		},
 		siteOwnership: {
 			type: 'object',
@@ -120,21 +190,19 @@ const appellantCase = {
 				}
 			}
 		},
-		appellantProcedurePreference: {
-			type: 'string',
-			nullable: true
+		planningObligation: {
+			hasObligation: {
+				type: 'boolean'
+			},
+			status: {
+				type: 'string',
+				nullable: true
+			}
 		},
-		appellantProcedurePreferenceDetails: {
-			type: 'string',
-			nullable: true
-		},
-		appellantProcedurePreferenceDuration: {
-			type: 'number',
-			nullable: true
-		},
-		appellantProcedurePreferenceWitnessCount: {
-			type: 'number',
-			nullable: true
+		agriculturalHolding: {
+			isPartOfAgriculturalHolding: { type: 'boolean' },
+			isTenant: { type: 'boolean' },
+			hasOtherTenants: { type: 'boolean' }
 		},
 		documents: {
 			type: 'object',
@@ -158,88 +226,95 @@ const appellantCase = {
 
 export const AppellantCase = appellantCase;
 
-/**
- * return {
-			applicant: {
-				firstName: appeal.appellant?.firstName || '',
-				surname: appeal.appellant?.lastName || ''
+export const AppellantCaseUpdateRequest = {
+	type: 'object',
+	properties: {
+		appealId: {
+			type: 'number'
+		},
+		...updateableFields,
+		appellantCaseValidationOutcomeId: { type: 'number', nullable: true },
+		validationOutcome: {
+			type: 'object',
+			properties: {
+				id: { type: 'number' },
+				name: { type: 'string' }
 			},
-			isAppellantNamedOnApplication: appeal.agent == null,
-			applicationDate: appellantCase.applicationDate && appellantCase.applicationDate.toISOString(),
-			applicationDecision: appellantCase.applicationDecision || null,
-			applicationDecisionDate:
-				appellantCase.applicationDecisionDate &&
-				appellantCase.applicationDecisionDate?.toISOString(),
-			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
-			enforcementNotice: appellantCase?.enforcementNotice || null,
-			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
-			siteOwnership: {
-				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
-				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
-				ownersInformed: appellantCase.ownersInformed || null,
-				ownsAllLand: appellantCase.ownsAllLand || null,
-				ownsSomeLand: appellantCase.ownsSomeLand || null
+			nullable: true
+		},
+		incompleteReasons: {
+			type: 'array',
+			items: {
+				type: 'object',
+				required: ['id'],
+				properties: {
+					id: {
+						type: 'number'
+					},
+					text: {
+						type: 'array',
+						items: {
+							type: 'string'
+						}
+					}
+				}
 			},
-			siteAccessRequired: {
-				details: appellantCase?.siteAccessDetails,
-				isRequired: appellantCase?.siteAccessDetails !== null
+			nullable: true
+		},
+		invalidReasons: {
+			type: 'array',
+			items: {
+				type: 'object',
+				required: ['id'],
+				properties: {
+					id: {
+						type: 'number'
+					},
+					text: {
+						type: 'array',
+						items: {
+							type: 'string'
+						}
+					}
+				}
 			},
-			healthAndSafety: {
-				details: appellantCase?.siteSafetyDetails,
-				hasIssues: appellantCase?.siteSafetyDetails !== null
+			nullable: true
+		},
+		timetable: {
+			type: 'object',
+			properties: {
+				appealDueDate: {
+					type: 'string',
+					format: 'date-time'
+				}
 			},
-			validation: formatValidationOutcomeResponse(
-				appellantCase.appellantCaseValidationOutcome?.name || '',
-				appellantCase.appellantCaseIncompleteReasonsSelected,
-				appellantCase.appellantCaseInvalidReasonsSelected
-			)
- */
-/* Common */
-// id                                     Int                                      @id @default(autoincrement())
-// appeal                                 Appeal                                   @relation(fields: [appealId], references: [id])
-// appealId                               Int                                      @unique
-// appellantCaseIncompleteReasonsSelected AppellantCaseIncompleteReasonsSelected[]
-// appellantCaseInvalidReasonsSelected    AppellantCaseInvalidReasonsSelected[]
-// appellantCaseValidationOutcome         AppellantCaseValidationOutcome?          @relation(fields: [appellantCaseValidationOutcomeId], references: [id])
-// appellantCaseValidationOutcomeId       Int?
-// applicationDate                        DateTime                                 @default(now())
-// applicationDecision                    String                                   @default("refused")
-// applicationDecisionDate                DateTime?
-// caseSubmittedDate                      DateTime                                 @default(now())
-// caseSubmissionDueDate                  DateTime?
-// siteAccessDetails                      String?
-// siteSafetyDetails                      String?
-// siteAreaSquareMetres                   Decimal?
-// floorSpaceSquareMetres                 Decimal?
-// ownsAllLand                            Boolean?
-// ownsSomeLand                           Boolean?
-// knowsOtherOwners                       KnowledgeOfOtherLandowners?              @relation("knowsOtherOwners", fields: [knowsOtherOwnersId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-// knowsOtherOwnersId                     Int?
-// knowsAllOwners                         KnowledgeOfOtherLandowners?              @relation("knowsAllOwners", fields: [knowsAllOwnersId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-// knowsAllOwnersId                       Int?
-// hasAdvertisedAppeal                    Boolean?
-// appellantCostsAppliedFor               Boolean?
-// originalDevelopmentDescription         String?
-// changedDevelopmentDescription          Boolean?
-// ownersInformed                         Boolean?
-// enforcementNotice                      Boolean?
-// isGreenBelt                            Boolean?
-
-/* S78 */
-// agriculturalHolding                      Boolean?
-// tenantAgriculturalHolding                Boolean?
-// otherTenantsAgriculturalHolding          Boolean?
-// informedTenantsAgriculturalHolding       Boolean?
-// appellantProcedurePreference             String?
-// appellantProcedurePreferenceDetails      String?
-// appellantProcedurePreferenceDuration     Int?
-// appellantProcedurePreferenceWitnessCount Int?
-// planningObligation                       Boolean?
-// statusPlanningObligation                 String?
-// siteViewableFromRoad                     Boolean?
-// caseworkReason                           String?
-// developmentType                          String?
-// jurisdiction                             String?
-// numberOfResidencesNetChange              Int?
-// siteGridReferenceEasting                 String?
-// siteGridReferenceNorthing                String?
+			nullable: true
+		},
+		siteAccessDetails: { type: 'string', nullable: true },
+		siteSafetyDetails: { type: 'string', nullable: true },
+		applicantFirstName: {
+			type: 'string',
+			nullable: true
+		},
+		applicantSurname: {
+			type: 'string',
+			nullable: true
+		},
+		areAllOwnersKnown: {
+			type: 'string',
+			nullable: true
+		},
+		knowsOtherOwners: {
+			type: 'string',
+			nullable: true
+		},
+		originalDevelopmentDescription: {
+			type: 'string',
+			nullable: true
+		},
+		changedDevelopmentDescription: {
+			type: 'string',
+			nullable: true
+		}
+	}
+};

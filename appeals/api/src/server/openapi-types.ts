@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "ab35047f-753f-48d7-a738-05388a316586" */
+		/** @example "14960baa-3d0f-4db9-9e84-0c75be891560" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -2276,6 +2276,15 @@ export interface EiaScreeningRequiredRequest {
 	eiaScreeningRequired?: boolean;
 }
 
+export interface Address {
+	addressId?: number;
+	addressLine1: string;
+	addressLine2?: string | null;
+	addressTown?: string | null;
+	addressCounty?: string | null;
+	postCode: string;
+}
+
 export interface Allocation {
 	level: string;
 	band: number;
@@ -3074,6 +3083,7 @@ export interface SiteAccess {
 }
 
 export type AppellantCase = {
+	appellantCaseId?: number;
 	appealId?: number;
 	appealReference?: string;
 	appealSite?: {
@@ -3110,6 +3120,32 @@ export type AppellantCase = {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
+	/** @format date-time */
+	applicationDate?: string | null;
+	/** @format date-time */
+	applicationDecisionDate?: string | null;
+	applicationDecision?: string | null;
+	appellantCostsAppliedFor?: boolean | null;
+	hasAdvertisedAppeal?: boolean | null;
+	ownsAllLand?: boolean | null;
+	ownsSomeLand?: boolean | null;
+	siteAreaSquareMetres?: number | null;
+	floorSpaceSquareMetres?: number | null;
+	enforcementNotice?: boolean | null;
+	isGreenBelt?: boolean | null;
+	planningObligation?: any;
+	statusPlanningObligation?: string | null;
+	agriculturalHolding?: any;
+	tenantAgriculturalHolding?: boolean | null;
+	otherTenantsAgriculturalHolding?: boolean | null;
+	appellantProcedurePreference?: string | null;
+	appellantProcedurePreferenceDetails?: string | null;
+	appellantProcedurePreferenceDuration?: number | null;
+	appellantProcedurePreferenceWitnessCount?: number | null;
+	developmentDescription?: {
+		details?: string | null;
+		isChanged?: boolean;
+	};
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -3134,14 +3170,6 @@ export type AppellantCase = {
 		surname?: string;
 	};
 	isAppellantNamedOnApplication?: boolean;
-	/** @format date-time */
-	applicationDate?: string;
-	/** @format date-time */
-	applicationDecisionDate?: string | null;
-	applicationDecision?: string | null;
-	hasAdvertisedAppeal?: boolean | null;
-	appellantCostsAppliedFor?: boolean | null;
-	enforcementNotice?: boolean | null;
 	siteOwnership?: {
 		areAllOwnersKnown?: string | null;
 		knowsOtherLandowners?: string | null;
@@ -3157,10 +3185,6 @@ export type AppellantCase = {
 		details?: string | null;
 		hasIssues?: boolean;
 	};
-	appellantProcedurePreference?: string | null;
-	appellantProcedurePreferenceDetails?: string | null;
-	appellantProcedurePreferenceDuration?: number | null;
-	appellantProcedurePreferenceWitnessCount?: number | null;
 	documents?: {
 		appellantStatement?: {
 			caseId: number;
@@ -5363,21 +5387,6 @@ export type LpaQuestionnaire = {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
-	validation?: {
-		outcome?: string | null;
-		incompleteReasons?: {
-			name?: {
-				id?: number | null;
-				name?: string;
-				hasText?: boolean;
-			};
-			text?: string[] | null;
-		}[];
-	};
-	/** @format date-time */
-	submittedAt?: string;
-	/** @format date-time */
-	receivedAt?: string;
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;
@@ -5412,6 +5421,21 @@ export type LpaQuestionnaire = {
 				name: string;
 		  }[]
 		| null;
+	validation?: {
+		outcome?: string | null;
+		incompleteReasons?: {
+			name?: {
+				id?: number | null;
+				name?: string;
+				hasText?: boolean;
+			};
+			text?: string[] | null;
+		}[];
+	};
+	/** @format date-time */
+	submittedAt?: string;
+	/** @format date-time */
+	receivedAt?: string;
 	costsAppliedFor?: boolean | null;
 	lpaNotificationMethods?:
 		| {
@@ -9369,7 +9393,67 @@ export interface Appeal {
 	internalCorrespondence?: any;
 }
 
+export interface AppellantCaseUpdateRequest {
+	appealId?: number;
+	/** @format date-time */
+	applicationDate?: string | null;
+	/** @format date-time */
+	applicationDecisionDate?: string | null;
+	applicationDecision?: string | null;
+	appellantCostsAppliedFor?: boolean | null;
+	hasAdvertisedAppeal?: boolean | null;
+	ownsAllLand?: boolean | null;
+	ownsSomeLand?: boolean | null;
+	siteAreaSquareMetres?: number | null;
+	floorSpaceSquareMetres?: number | null;
+	enforcementNotice?: boolean | null;
+	isGreenBelt?: boolean | null;
+	planningObligation?: boolean | null;
+	statusPlanningObligation?: string | null;
+	agriculturalHolding?: boolean | null;
+	tenantAgriculturalHolding?: boolean | null;
+	otherTenantsAgriculturalHolding?: boolean | null;
+	appellantProcedurePreference?: string | null;
+	appellantProcedurePreferenceDetails?: string | null;
+	appellantProcedurePreferenceDuration?: number | null;
+	appellantProcedurePreferenceWitnessCount?: number | null;
+	developmentDescription?: {
+		details?: string | null;
+		isChanged?: boolean;
+	};
+	appellantCaseValidationOutcomeId?: number | null;
+	validationOutcome?: {
+		id?: number;
+		name?: string;
+	} | null;
+	incompleteReasons?:
+		| {
+				id: number;
+				text?: string[];
+		  }[]
+		| null;
+	invalidReasons?:
+		| {
+				id: number;
+				text?: string[];
+		  }[]
+		| null;
+	timetable?: {
+		/** @format date-time */
+		appealDueDate?: string;
+	} | null;
+	siteAccessDetails?: string | null;
+	siteSafetyDetails?: string | null;
+	applicantFirstName?: string | null;
+	applicantSurname?: string | null;
+	areAllOwnersKnown?: string | null;
+	knowsOtherOwners?: string | null;
+	originalDevelopmentDescription?: string | null;
+	changedDevelopmentDescription?: string | null;
+}
+
 export interface LpaQuestionnaireUpdateRequest {
+	appealId?: number;
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;
@@ -9404,20 +9488,11 @@ export interface LpaQuestionnaireUpdateRequest {
 				name: string;
 		  }[]
 		| null;
-	lpaCostsAppliedFor?: boolean | null;
 	validationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;
 		name?: string;
 	} | null;
-	siteAccessDetails?: string | null;
-	siteSafetyDetails?: string | null;
-	lpaNotificationMethods?:
-		| {
-				id?: number;
-		  }[]
-		| null;
-	appealId?: number;
 	incompleteReasons?:
 		| {
 				id: number;
@@ -9428,5 +9503,13 @@ export interface LpaQuestionnaireUpdateRequest {
 		/** @format date-time */
 		lpaQuestionnaireDueDate?: string;
 	} | null;
+	siteAccessDetails?: string | null;
+	siteSafetyDetails?: string | null;
+	lpaNotificationMethods?:
+		| {
+				id?: number;
+		  }[]
+		| null;
+	lpaCostsAppliedFor?: boolean | null;
 	designatedSiteNameCustom?: string | null;
 }
