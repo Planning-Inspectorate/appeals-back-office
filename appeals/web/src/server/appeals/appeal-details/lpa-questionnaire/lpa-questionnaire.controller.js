@@ -473,7 +473,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			request,
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`,
-			successCallback: () => {
+			successCallback: async () => {
 				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
 			}
 		});

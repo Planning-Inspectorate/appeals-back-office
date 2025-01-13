@@ -8,6 +8,7 @@ import {
 	postUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/representations.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
@@ -91,6 +92,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	const {
 		currentAppeal,
+		currentRepresentation,
 		params: { finalCommentsType }
 	} = request;
 
@@ -99,8 +101,17 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			request,
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}`,
-			successCallback: () => {
-				// TODO: add API call to PATCH final comment (rep) attachments with GUIDs of uploaded docs
+			successCallback: async (
+				/** @type {import('@pins/express/types/express.js').Request} */ request,
+				/** @type {string[]} */ documentGUIDs
+			) => {
+				await patchRepresentationAttachments(
+					request.apiClient,
+					currentAppeal.appealId,
+					currentRepresentation.id,
+					documentGUIDs
+				);
+
 				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
 			}
 		});

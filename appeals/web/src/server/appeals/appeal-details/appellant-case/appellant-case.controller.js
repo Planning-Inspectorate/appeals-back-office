@@ -349,7 +349,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			request,
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`,
-			successCallback: () => {
+			successCallback: async () => {
 				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
 			}
 		});
