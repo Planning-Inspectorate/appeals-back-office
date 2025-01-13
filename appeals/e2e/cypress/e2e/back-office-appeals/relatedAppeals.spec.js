@@ -54,11 +54,16 @@ describe('related appeals', () => {
 		});
 	});
 	it('relate a BO appeal to a Horizon appeal', () => {
+		const horizonAppealId =
+			Cypress.config('apiBaseUrl').indexOf('test') > -1
+				? horizonTestAppeals.horizonAppealTest
+				: horizonTestAppeals.horizonAppealMock;
+
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickAddRelatedAppeals();
-			caseDetailsPage.fillInput(horizonTestAppeals.horizonAppeal1);
+			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 			caseDetailsPage.clickButtonByText('Continue');

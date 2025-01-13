@@ -9,7 +9,7 @@ export const mapOtherTenantsOfAgriculturalHolding = ({
 	booleanSummaryListItem({
 		id: 'other-tenants-of-agricultural-holding',
 		text: 'Other tenants',
-		value: appellantCaseData.agriculturalHolding.hasOtherTenants,
+		value: appellantCaseData.agriculturalHolding?.hasOtherTenants,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/other-tenants/change`,
 		editable: userHasUpdateCase

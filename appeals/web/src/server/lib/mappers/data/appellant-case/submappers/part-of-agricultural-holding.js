@@ -9,7 +9,7 @@ export const mapPartOfAgriculturalHolding = ({
 	booleanSummaryListItem({
 		id: 'part-of-agricultural-holding',
 		text: 'Part of agricultural holding',
-		value: appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding,
+		value: appellantCaseData.agriculturalHolding?.isPartOfAgriculturalHolding,
 		defaultText: '',
 		link: `${currentRoute}/agricultural-holding/change`,
 		editable: userHasUpdateCase

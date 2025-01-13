@@ -8,10 +8,8 @@ import {
 	USER_TYPE_CASE_OFFICER,
 	USER_TYPE_INSPECTOR
 } from '#endpoints/constants.js';
-import { getCache, setCache } from '#utils/cache-data.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
-import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
@@ -31,22 +29,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
  * @returns
  */
 const loadAndFormatAppeal = async ({ appeal, context = contextEnum.appealDetails }) => {
-	const appealTypes = await loadAppealTypes();
-	return mapCase({ appeal, appealTypes, context });
-};
-
-/**
- * @returns { Promise<AppealType[]> }
- */
-const loadAppealTypes = async () => {
-	const cacheKey = 'appealTypesCache';
-
-	if (getCache(cacheKey) == null) {
-		const data = await getAllAppealTypes();
-		setCache(cacheKey, data);
-	}
-
-	return getCache(cacheKey);
+	return mapCase({ appeal, context });
 };
 
 /**

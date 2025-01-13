@@ -132,9 +132,16 @@ describe('appeals api mappers', () => {
 			...mocks.householdAppeal,
 			folders: []
 		};
+		const appealS78 = {
+			...mocks.s78Appeal,
+			folders: []
+		};
 
 		// @ts-ignore
 		const hasAppCaseOutput = mapCase({ appeal: appealHAS, context: contextEnum.appellantCase });
+		// @ts-ignore
+		const s78AppCaseOutput = mapCase({ appeal: appealS78, context: contextEnum.appellantCase });
+
 		expect(hasAppCaseOutput).toHaveProperty('siteAccessRequired');
 		expect(hasAppCaseOutput).toHaveProperty('applicant');
 		expect(hasAppCaseOutput).toHaveProperty('isAppellantNamedOnApplication');
@@ -144,6 +151,12 @@ describe('appeals api mappers', () => {
 		expect(hasAppCaseOutput).toHaveProperty('appealId');
 		expect(hasAppCaseOutput).toHaveProperty('planningApplicationReference');
 
-		expect(hasAppCaseOutput).not.toHaveProperty('made-up');
+		expect(hasAppCaseOutput).not.toHaveProperty('appellantProcedurePreference');
+		expect(hasAppCaseOutput).not.toHaveProperty('agriculturalHolding');
+
+		expect(s78AppCaseOutput).toHaveProperty('appellantProcedurePreference');
+		expect(s78AppCaseOutput).toHaveProperty('agriculturalHolding');
+		expect(s78AppCaseOutput).toHaveProperty('developmentDescription');
+		expect(s78AppCaseOutput).toHaveProperty('planningObligation');
 	});
 });

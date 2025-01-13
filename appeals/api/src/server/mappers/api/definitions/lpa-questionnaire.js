@@ -120,13 +120,13 @@ const updateableFields = {
 
 const lpaQuestionnaire = {
 	type: 'object',
-	required: [],
 	nullable: true,
 	properties: {
 		lpaQuestionnaireId: {
 			type: 'number'
 		},
 		...AppealSummary.properties,
+		...updateableFields,
 		validation: {
 			type: 'object',
 			properties: {
@@ -152,7 +152,6 @@ const lpaQuestionnaire = {
 			type: 'string',
 			format: 'date-time'
 		},
-		...updateableFields,
 		costsAppliedFor: {
 			type: 'boolean',
 			nullable: true
@@ -216,11 +215,10 @@ export const LpaQuestionnaire = lpaQuestionnaire;
 export const LpaQuestionnaireUpdateRequest = {
 	type: 'object',
 	properties: {
-		...updateableFields,
-		lpaCostsAppliedFor: {
-			type: 'boolean',
-			nullable: true
+		appealId: {
+			type: 'number'
 		},
+		...updateableFields,
 		validationOutcomeId: { type: 'number', nullable: true },
 		validationOutcome: {
 			type: 'object',
@@ -229,23 +227,6 @@ export const LpaQuestionnaireUpdateRequest = {
 				name: { type: 'string' }
 			},
 			nullable: true
-		},
-		siteAccessDetails: { type: 'string', nullable: true },
-		siteSafetyDetails: { type: 'string', nullable: true },
-		lpaNotificationMethods: {
-			type: 'array',
-			items: {
-				type: 'object',
-				properties: {
-					id: {
-						type: 'number'
-					}
-				}
-			},
-			nullable: true
-		},
-		appealId: {
-			type: 'number'
 		},
 		incompleteReasons: {
 			type: 'array',
@@ -276,9 +257,27 @@ export const LpaQuestionnaireUpdateRequest = {
 			},
 			nullable: true
 		},
+		siteAccessDetails: { type: 'string', nullable: true },
+		siteSafetyDetails: { type: 'string', nullable: true },
+		lpaNotificationMethods: {
+			type: 'array',
+			items: {
+				type: 'object',
+				properties: {
+					id: {
+						type: 'number'
+					}
+				}
+			},
+			nullable: true
+		},
+		lpaCostsAppliedFor: {
+			type: 'boolean',
+			nullable: true
+		},
 		designatedSiteNameCustom: {
 			type: 'string',
-			nullable: 'true'
+			nullable: true
 		}
 	}
 };

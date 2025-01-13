@@ -5,7 +5,7 @@ export const mapInspectorAccess = ({ appellantCaseData, currentRoute, userHasUpd
 	booleanWithDetailsSummaryListItem({
 		id: 'inspector-access',
 		text: 'Inspector access required',
-		value: appellantCaseData.siteAccessRequired?.hasIssues,
+		value: appellantCaseData.siteAccessRequired?.isRequired,
 		valueDetails: appellantCaseData.siteAccessRequired?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/appellant`,

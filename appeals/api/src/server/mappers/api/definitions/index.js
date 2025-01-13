@@ -1,4 +1,5 @@
 import { Allocation } from './allocation.js';
+import { Address } from './address.js';
 import { NeighbouringSite } from './neighbouring-site.js';
 import { Timetable } from './timetable.js';
 import { TransferStatus } from './transfer-status.js';
@@ -9,7 +10,7 @@ import { DocumentationSummary } from './documentation-summary.js';
 import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
 import { AppealWithdrawal } from './appeal-withdrawal.js';
-import { AppellantCase } from './appellant-case.js';
+import { AppellantCase, AppellantCaseUpdateRequest } from './appellant-case.js';
 import { LpaQuestionnaire, LpaQuestionnaireUpdateRequest } from './lpa-questionnaire.js';
 import { SiteSafety } from './site-safety.js';
 import { SiteAccess } from './site-access.js';
@@ -21,6 +22,7 @@ import { ListedBuilding } from './listed-building.js';
 import { DesignatedSiteName } from './designated-site-name.js';
 
 const partials = {
+	Address,
 	Allocation,
 	NeighbouringSite,
 	Timetable,
@@ -49,5 +51,6 @@ const partials = {
 export const ApiDefinitions = {
 	...partials,
 	Appeal,
+	AppellantCaseUpdateRequest,
 	LpaQuestionnaireUpdateRequest
 };
