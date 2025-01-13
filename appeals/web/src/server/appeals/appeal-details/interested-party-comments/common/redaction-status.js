@@ -16,17 +16,18 @@ export const name = 'redactionStatus';
 
 /**
  * @param {any} maybeRedactionStatus
- *	@returns {maybeRedactionStatus is keyof APPEAL_REDACTED_STATUS}
+ * @returns {maybeRedactionStatus is keyof APPEAL_REDACTED_STATUS}
  */
 export const isValidRedactionStatus = (maybeRedactionStatus) =>
 	Object.keys(statusFormatMap).includes(maybeRedactionStatus);
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {string} value
  * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-const mapper = (appealDetails, errors, backLinkUrl) => ({
+const mapper = (appealDetails, errors, value, backLinkUrl) => ({
 	title: 'Redaction status',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -36,22 +37,24 @@ const mapper = (appealDetails, errors, backLinkUrl) => ({
 			legendText: 'Redaction status',
 			legendIsPageHeading: true,
 			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
-			value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+			value
 		})
 	]
 });
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl
+ * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl,
+ * @param {(request: import('@pins/express').Request) => string} options.getValue
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const renderRedactionStatusFactory =
-	({ getBackLinkUrl }) =>
+	({ getBackLinkUrl, getValue }) =>
 	(request, response) => {
 		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
+		const value = getValue(request);
 
-		const pageContent = mapper(request.currentAppeal, request.errors, backLinkUrl);
+		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
 
 		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			errors: request.errors,
