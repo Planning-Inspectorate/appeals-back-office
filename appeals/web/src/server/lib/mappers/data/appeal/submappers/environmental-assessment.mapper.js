@@ -1,4 +1,5 @@
 import { actionsHtml, documentationFolderTableItem } from '#lib/mappers/index.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapEnvironmentalAssessment = (data) => {
@@ -14,13 +15,22 @@ export const mapEnvironmentalAssessment = (data) => {
 	);
 	const text = 'Environmental assessment';
 
+	const latestReceivedDocument = documents.reduce((latestReceivedDocument, currentDocument) => {
+		return latestReceivedDocument.latestDocumentVersion.dateReceived >
+			currentDocument.latestDocumentVersion.dateReceived
+			? latestReceivedDocument
+			: currentDocument;
+	});
+
 	return documentationFolderTableItem({
 		id,
 		text,
 		statusText: documents.length
 			? `${documents.length} document${documents.length === 1 ? '' : 's'}`
 			: 'No documents',
-		receivedText: documents.length ? 'Received' : 'Not applicable',
+		receivedText: documents.length
+			? dateISOStringToDisplayDate(latestReceivedDocument.latestDocumentVersion.dateReceived)
+			: 'Not applicable',
 		actionHtml: actionsHtml({
 			id,
 			text,
