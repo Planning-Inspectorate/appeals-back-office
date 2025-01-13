@@ -15,9 +15,11 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @param {number|string} appealId
@@ -46,13 +48,13 @@ export const getDocumentUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: appealUrl(currentAppeal.appealId),
-		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/add-document-details/${
+		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}`,
 		pageHeadingTextOverride: uploadPageHeadingText,
 		// TODO: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT needs to be added to "pins-data-model"
-		// documentType: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT}`
-		documentType: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/environmentalAssessment`
+		// documentType: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT
+		documentType: 'environmentalAssessment'
 	});
 };
 
@@ -60,10 +62,14 @@ export const getDocumentUpload = async (request, response) => {
 export const postDocumentUploadPage = async (request, response) => {
 	const { currentAppeal, currentFolder } = request;
 
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/add-document-details/${
+		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}`
 	});
@@ -88,7 +94,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		backButtonUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/manage-documents/${
 			currentFolder.folderId
 		}/${documentId}`,
-		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/add-document-details/${
+		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}/${documentId}`,
 		allowMultipleFiles: false
@@ -110,7 +116,7 @@ export const postDocumentVersionUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/add-document-details/${
+		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}/${documentId}`
 	});
@@ -188,19 +194,41 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	const addDocumentDetailsPageUrl = `${environmentalAssessmentUrl(
+	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+	if (!redactionStatuses) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const noRedactionStatus = redactionStatuses.find(
+		(redactionStatus) => redactionStatus.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+	);
+
+	request.session.fileUploadInfo?.files.forEach(
+		(
+			/** @type {import('#appeals/appeal-documents/appeal-documents.types').UncommittedFile} */ file
+		) => {
+			file.redactionStatus = noRedactionStatus?.id;
+		}
+	);
+
+	const uploadDocumentsPageUrl = `${environmentalAssessmentUrl(
 		currentAppeal.appealId
-	)}/add-document-details/${currentFolder.folderId}${documentId ? `/${documentId}` : ''}`;
+	)}/upload-documents/${currentFolder.folderId}${documentId ? `/${documentId}` : ''}`;
 
 	await renderUploadDocumentsCheckAndConfirm({
 		request,
 		response,
-		backLinkUrl: addDocumentDetailsPageUrl,
+		backLinkUrl: uploadDocumentsPageUrl,
 		changeFileLinkUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/upload-documents/${
 			currentFolder.folderId
 		}${documentId ? `/${documentId}` : ''}`,
-		changeDateLinkUrl: addDocumentDetailsPageUrl,
-		changeRedactionStatusLinkUrl: addDocumentDetailsPageUrl
+		changeDateLinkUrl: undefined,
+		changeRedactionStatusLinkUrl: undefined
 	});
 };
 
@@ -310,7 +338,8 @@ export const getManageDocument = async (request, response) => {
 		removeDocumentUrl: `${environmentalAssessmentUrl(request.params.appealId)}/manage-documents/${
 			currentFolder.folderId
 		}/{{documentId}}/{{versionId}}/delete`,
-		pageTitleTextOverride: 'Manage environmental assessment document'
+		pageTitleTextOverride: 'Manage environmental assessment document',
+		skipChangeDocumentDetails: true
 	});
 };
 

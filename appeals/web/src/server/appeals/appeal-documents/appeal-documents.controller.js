@@ -276,6 +276,7 @@ export const renderManageFolder = async ({
  * @param {string} params.removeDocumentUrl
  * @param {string} [params.pageTitleTextOverride]
  * @param {string} [params.dateRowLabelTextOverride]
+ * @param {boolean} [params.skipChangeDocumentDetails]
  */
 export const renderManageDocument = async ({
 	request,
@@ -284,7 +285,8 @@ export const renderManageDocument = async ({
 	uploadUpdatedDocumentUrl,
 	removeDocumentUrl,
 	pageTitleTextOverride,
-	dateRowLabelTextOverride
+	dateRowLabelTextOverride,
+	skipChangeDocumentDetails = false
 }) => {
 	const {
 		currentFolder,
@@ -319,7 +321,8 @@ export const renderManageDocument = async ({
 		request,
 		pageTitleTextOverride,
 		dateRowLabelTextOverride,
-		editable: userHasPermission(permissionNames.updateCase, request.session)
+		editable: userHasPermission(permissionNames.updateCase, request.session),
+		skipChangeDocumentDetails
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {
@@ -401,8 +404,8 @@ export const postDocumentDetails = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.backLinkUrl
  * @param {string} params.changeFileLinkUrl
- * @param {string} params.changeDateLinkUrl
- * @param {string} params.changeRedactionStatusLinkUrl
+ * @param {string|undefined} params.changeDateLinkUrl
+ * @param {string|undefined} params.changeRedactionStatusLinkUrl
  * @param {string} [params.summaryListNameLabelOverride]
  * @param {string} [params.summaryListDateLabelOverride]
  */

@@ -631,8 +631,8 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {string} params.changeFileLinkUrl
- * @param {string} params.changeDateLinkUrl
- * @param {string} params.changeRedactionStatusLinkUrl
+ * @param {string|undefined} params.changeDateLinkUrl
+ * @param {string|undefined} params.changeRedactionStatusLinkUrl
  * @param {string} params.appealReference
  * @param {FileUploadInfoItem[]} params.uncommittedFiles
  * @param {RedactionStatus[]} params.redactionStatuses
@@ -705,46 +705,52 @@ export function addDocumentsCheckAndConfirmPage({
 								}
 							]
 						}
-					},
-					{
-						key: {
-							text: summaryListDateLabelOverride || 'Date received'
-						},
-						value: {
-							text: dateISOStringToDisplayDate(uncommittedFile.receivedDate)
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: changeDateLinkUrl,
-									visuallyHiddenText: `${uncommittedFile.name} date received`
-								}
-							]
-						}
-					},
-					{
-						key: {
-							text: 'Redaction status'
-						},
-						value: {
-							text: capitalize(
-								redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)
-							)
-						},
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: changeRedactionStatusLinkUrl,
-									visuallyHiddenText: `${uncommittedFile.name} redaction status`
-								}
-							]
-						}
 					}
 				]
 			}
 		};
+
+		if (changeDateLinkUrl) {
+			summaryListComponent.parameters.rows.push({
+				key: {
+					text: summaryListDateLabelOverride || 'Date received'
+				},
+				value: {
+					text: dateISOStringToDisplayDate(uncommittedFile.receivedDate)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							href: changeDateLinkUrl,
+							visuallyHiddenText: `${uncommittedFile.name} date received`
+						}
+					]
+				}
+			});
+		}
+
+		if (changeRedactionStatusLinkUrl) {
+			summaryListComponent.parameters.rows.push({
+				key: {
+					text: 'Redaction status'
+				},
+				value: {
+					text: capitalize(
+						redactionStatusIdToName(redactionStatuses, uncommittedFile.redactionStatus)
+					)
+				},
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							href: changeRedactionStatusLinkUrl,
+							visuallyHiddenText: `${uncommittedFile.name} redaction status`
+						}
+					]
+				}
+			});
+		}
 
 		pageContent.pageComponents?.push(htmlComponent);
 		pageContent.pageComponents?.push(summaryListComponent);
@@ -1150,6 +1156,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {string} [params.pageTitleTextOverride]
  * @param {string} [params.dateRowLabelTextOverride]
  * @param {boolean} [params.editable]
+ * @param {boolean} [params.skipChangeDocumentDetails]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1162,12 +1169,12 @@ export async function manageDocumentPage({
 	request,
 	pageTitleTextOverride,
 	dateRowLabelTextOverride,
-	editable
+	editable,
+	skipChangeDocumentDetails
 }) {
-	const changeDetailsUrl = request.originalUrl.replace(
-		'manage-documents',
-		'change-document-details'
-	);
+	const changeDetailsUrl =
+		!skipChangeDocumentDetails &&
+		request.originalUrl.replace('manage-documents', 'change-document-details');
 	const changeNameUrl = request.originalUrl.replace('manage-documents', 'change-document-name');
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1245,83 +1252,86 @@ export async function manageDocumentPage({
 					value: {
 						text: versionId
 					}
-				},
-				{
-					key: { text: dateRowLabelTextOverride || 'Date received' },
-					value:
-						folderIsAdditionalDocuments(folder.path) && latestVersion?.isLateEntry
-							? {
-									html: '',
-									pageComponents: [
-										{
-											type: 'html',
-											parameters: {
-												html: '',
-												pageComponents: [
-													{
-														wrapperHtml: {
-															opening: '<div class="govuk-!-margin-bottom-2">',
-															closing: '</div>'
-														},
-														type: 'html',
-														parameters: {
-															html: dateISOStringToDisplayDate(latestVersion?.dateReceived)
-														}
-													},
-													{
-														wrapperHtml: {
-															opening: '<div class="govuk-!-margin-bottom-1">',
-															closing: '</div>'
-														},
-														type: 'status-tag',
-														parameters: {
-															status: 'late_entry'
-														}
-													}
-												]
-											}
-										}
-									]
-							  }
-							: {
-									text: dateISOStringToDisplayDate(latestVersion?.dateReceived)
-							  },
-					actions: {
-						items: [
-							...(editable
-								? [
-										{
-											text: 'Change',
-											href: changeDetailsUrl,
-											visuallyHiddenText: `${document.name} date received`
-										}
-								  ]
-								: [])
-						]
-					}
-				},
-				{
-					key: { text: 'Redaction status' },
-					value: {
-						text: getDocumentLatestVersion(document)?.redactionStatus
-					},
-					actions: {
-						items: [
-							...(editable
-								? [
-										{
-											text: 'Change',
-											href: changeDetailsUrl,
-											visuallyHiddenText: `${document.name} redaction status`
-										}
-								  ]
-								: [])
-						]
-					}
 				}
 			]
 		}
 	};
+
+	if (changeDetailsUrl) {
+		documentSummary.parameters.rows.push({
+			key: { text: dateRowLabelTextOverride || 'Date received' },
+			value:
+				folderIsAdditionalDocuments(folder.path) && latestVersion?.isLateEntry
+					? {
+							html: '',
+							pageComponents: [
+								{
+									type: 'html',
+									parameters: {
+										html: '',
+										pageComponents: [
+											{
+												wrapperHtml: {
+													opening: '<div class="govuk-!-margin-bottom-2">',
+													closing: '</div>'
+												},
+												type: 'html',
+												parameters: {
+													html: dateISOStringToDisplayDate(latestVersion?.dateReceived)
+												}
+											},
+											{
+												wrapperHtml: {
+													opening: '<div class="govuk-!-margin-bottom-1">',
+													closing: '</div>'
+												},
+												type: 'status-tag',
+												parameters: {
+													status: 'late_entry'
+												}
+											}
+										]
+									}
+								}
+							]
+					  }
+					: {
+							text: dateISOStringToDisplayDate(latestVersion?.dateReceived)
+					  },
+			actions: {
+				items: [
+					...(editable
+						? [
+								{
+									text: 'Change',
+									href: changeDetailsUrl,
+									visuallyHiddenText: `${document.name} date received`
+								}
+						  ]
+						: [])
+				]
+			}
+		});
+		documentSummary.parameters.rows.push({
+			key: { text: 'Redaction status' },
+			value: {
+				text: getDocumentLatestVersion(document)?.redactionStatus
+			},
+			actions: {
+				items: [
+					...(editable
+						? [
+								{
+									text: 'Change',
+									href: changeDetailsUrl,
+									visuallyHiddenText: `${document.name} redaction status`
+								}
+						  ]
+						: [])
+				]
+			}
+		});
+	}
 
 	pageComponents.push(documentSummary);
 
