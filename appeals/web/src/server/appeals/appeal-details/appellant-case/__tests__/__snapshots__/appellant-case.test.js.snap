@@ -2227,7 +2227,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of witnesses</dt>
                             <dd                             class="govuk-summary-list__value">Not applicable</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/inquiry/witnesses/change"
-                                    data-cy="change-inquiry-number-of-witnesses"> Change<span class="govuk-visually-hidden"> Expected number of witnesses</span></a>
+                                    data-cy="change-inquiry-number-of-witnesses"> Change<span class="govuk-visually-hidden"> expected number of witnesses</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
@@ -3180,7 +3180,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
                     <dd class="govuk-summary-list__value">Incomplete</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case"> Change<span class="govuk-visually-hidden"> review outcome</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
@@ -3202,12 +3202,12 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                             </li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete"> Change<span class="govuk-visually-hidden"> Incomplete reasons</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Updated due date</dt>
                     <dd class="govuk-summary-list__value">1 December 3000</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete/date"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete/date"> Change<span class="govuk-visually-hidden"> updated due date</span></a>
                     </dd>
                 </div>
             </dl>
@@ -3237,7 +3237,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
                     <dd class="govuk-summary-list__value">Invalid</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case"> Change<span class="govuk-visually-hidden"> review outcome</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid reasons</dt>
@@ -3258,7 +3258,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                             </li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid"> Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
                     </dd>
                 </div>
             </dl>

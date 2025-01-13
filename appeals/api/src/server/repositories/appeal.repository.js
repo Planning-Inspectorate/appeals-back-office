@@ -1,6 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#endpoints/appeals/appeals.service.js';
-import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -16,6 +15,112 @@ import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/
  * @template T
  */
 
+const appealDetailsInclude = {
+	address: true,
+	procedureType: true,
+	parentAppeals: {
+		include: {
+			parent: {
+				include: {
+					appealType: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		include: {
+			child: {
+				include: {
+					appealType: true
+				}
+			}
+		}
+	},
+	neighbouringSites: {
+		include: { address: true }
+	},
+	allocation: true,
+	specialisms: {
+		include: {
+			specialism: true
+		}
+	},
+	appellantCase: {
+		include: {
+			appellantCaseIncompleteReasonsSelected: {
+				include: {
+					appellantCaseIncompleteReason: true,
+					appellantCaseIncompleteReasonText: true
+				}
+			},
+			appellantCaseInvalidReasonsSelected: {
+				include: {
+					appellantCaseInvalidReason: true,
+					appellantCaseInvalidReasonText: true
+				}
+			},
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true
+		}
+	},
+	appellant: true,
+	agent: true,
+	lpa: true,
+	appealStatus: {
+		where: {
+			valid: true
+		}
+	},
+	appealTimetable: true,
+	appealType: true,
+	caseOfficer: true,
+	inspector: true,
+	inspectorDecision: true,
+	lpaQuestionnaire: {
+		include: {
+			listedBuildingDetails: true,
+			designatedSiteNames: {
+				include: {
+					designatedSite: true
+				}
+			},
+			lpaNotificationMethods: {
+				include: {
+					lpaNotificationMethod: true
+				}
+			},
+			lpaQuestionnaireIncompleteReasonsSelected: {
+				include: {
+					lpaQuestionnaireIncompleteReason: true,
+					lpaQuestionnaireIncompleteReasonText: true
+				}
+			},
+			lpaQuestionnaireValidationOutcome: true
+		}
+	},
+	siteVisit: {
+		include: {
+			siteVisitType: true
+		}
+	},
+	caseNotes: true,
+	folders: {
+		include: {
+			documents: {
+				include: {
+					latestDocumentVersion: {
+						include: {
+							redactionStatus: true
+						}
+					}
+				}
+			}
+		}
+	},
+	representations: true
+};
+
 /**
  * @param {number} id
  * @returns {Promise<Appeal|undefined>}
@@ -25,108 +130,31 @@ const getAppealById = async (id) => {
 		where: {
 			id
 		},
-		include: {
-			address: true,
-			procedureType: true,
-			parentAppeals: true,
-			childAppeals: true,
-			neighbouringSites: {
-				include: { address: true }
-			},
-			allocation: true,
-			specialisms: {
-				include: {
-					specialism: true
-				}
-			},
-			appellantCase: {
-				include: {
-					appellantCaseIncompleteReasonsSelected: {
-						include: {
-							appellantCaseIncompleteReason: true,
-							appellantCaseIncompleteReasonText: true
-						}
-					},
-					appellantCaseInvalidReasonsSelected: {
-						include: {
-							appellantCaseInvalidReason: true,
-							appellantCaseInvalidReasonText: true
-						}
-					},
-					appellantCaseValidationOutcome: true,
-					knowsOtherOwners: true,
-					knowsAllOwners: true
-				}
-			},
-			appellant: true,
-			agent: true,
-			lpa: true,
-			appealStatus: {
-				where: {
-					valid: true
-				}
-			},
-			appealTimetable: true,
-			appealType: true,
-			caseOfficer: true,
-			inspector: true,
-			inspectorDecision: true,
-			lpaQuestionnaire: {
-				include: {
-					listedBuildingDetails: true,
-					lpaNotificationMethods: {
-						include: {
-							lpaNotificationMethod: true
-						}
-					},
-					lpaQuestionnaireIncompleteReasonsSelected: {
-						include: {
-							lpaQuestionnaireIncompleteReason: true,
-							lpaQuestionnaireIncompleteReasonText: true
-						}
-					},
-					lpaQuestionnaireValidationOutcome: true
-				}
-			},
-			siteVisit: {
-				include: {
-					siteVisitType: true
-				}
-			},
-			caseNotes: true,
-			folders: {
-				include: {
-					documents: {
-						include: {
-							latestDocumentVersion: {
-								include: {
-									redactionStatus: true
-								}
-							}
-						}
-					}
-				}
-			},
-			representations: true
-		}
+		include: appealDetailsInclude
 	});
 
 	if (appeal) {
-		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
-
-		const linkedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
-		);
-		const relatedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
-		);
-
 		// @ts-ignore
-		return {
-			...appeal,
-			linkedAppeals,
-			relatedAppeals
-		};
+		return appeal;
+	}
+};
+
+/**
+ *
+ * @param {string} appealReference
+ * @returns {Promise<Appeal|undefined|null>}
+ */
+const getAppealByAppealReference = async (appealReference) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			reference: appealReference
+		},
+		include: appealDetailsInclude
+	});
+
+	if (appeal) {
+		// @ts-ignore
+		return appeal;
 	}
 };
 
@@ -156,6 +184,10 @@ const updateAppealById = (
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			caseUpdatedDate: new Date()
+		},
+		include: {
+			appealType: true,
+			appealStatus: true
 		}
 	});
 
@@ -273,50 +305,6 @@ const getLinkedAppeals = async (appealReference) => {
 			]
 		}
 	});
-};
-/**
- *
- * @param {string} appealReference
- * @returns {Promise<Appeal|undefined|null>}
- */
-const getAppealByAppealReference = async (appealReference) => {
-	const appeal = await databaseConnector.appeal.findUnique({
-		where: {
-			reference: appealReference
-		},
-		include: {
-			parentAppeals: true,
-			childAppeals: true,
-			address: true,
-			appellant: true,
-			agent: true,
-			lpa: true,
-			appealStatus: {
-				where: {
-					valid: true
-				}
-			},
-			appealType: true
-		}
-	});
-
-	if (appeal) {
-		const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
-
-		const linkedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_LINKED
-		);
-		const relatedAppeals = appealRelationships.filter(
-			(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
-		);
-
-		// @ts-ignore
-		return {
-			...appeal,
-			linkedAppeals,
-			relatedAppeals
-		};
-	}
 };
 
 /**

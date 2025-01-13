@@ -12,16 +12,20 @@ import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/
 export const mapAppealRelationships = (data) => {
 	const { appeal } = data;
 
+	const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
+
 	const parentAppeals = appeal.parentAppeals?.length
 		? appeal.parentAppeals
 				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 				.map((relationship) => {
+					const appealType = `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
+
 					return {
 						appealId: relationship.parentId,
 						appealReference: relationship.parentRef,
 						externalSource: relationship.externalSource === true,
 						linkingDate: relationship.linkingDate.toISOString(),
-						appealType: '', //TODO:
+						appealType,
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
@@ -34,30 +38,36 @@ export const mapAppealRelationships = (data) => {
 		? appeal.childAppeals
 				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 				.map((relationship) => {
+					const appealType = `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`;
+
 					return {
 						appealId: relationship.childId,
 						appealReference: relationship.childRef,
 						externalSource: relationship.externalSource === true,
 						linkingDate: relationship.linkingDate.toISOString(),
-						appealType: '', //TODO:
+						appealType,
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
-						isParentAppeal: true
+						isParentAppeal: false
 					};
 				})
 		: [];
 
-	const otherAppeals = appeal.relatedAppeals?.length
-		? appeal.relatedAppeals
+	const otherAppeals = appealRelationships.length
+		? appealRelationships
 				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_RELATED)
 				.map((relationship) => {
+					const appealType = relationship.child
+						? `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`
+						: `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
+
 					return {
 						appealId: relationship.childId,
 						appealReference: relationship.childRef,
 						externalSource: relationship.externalSource === true,
 						linkingDate: relationship.linkingDate.toISOString(),
-						appealType: '', //TODO:
+						appealType,
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,

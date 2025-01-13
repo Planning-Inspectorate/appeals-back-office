@@ -20,8 +20,6 @@ describe('appeal linked appeals routes', () => {
 			test('returns 400 when the ID in the request is null', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/link-appeal`)

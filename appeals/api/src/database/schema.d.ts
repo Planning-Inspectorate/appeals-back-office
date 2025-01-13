@@ -33,7 +33,10 @@ export interface Appeal extends schema.Appeal {
 export interface CaseNote extends schema.CaseNote {
 	user: User;
 }
-export interface AppealRelationship extends schema.AppealRelationship {}
+export interface AppealRelationship extends schema.AppealRelationship {
+	parent?: Appeal | null;
+	child?: Appeal | null;
+}
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
 export interface AppealStatus extends schema.AppealStatus {}
@@ -76,11 +79,15 @@ export interface AppellantCaseIncompleteReasonText
 	extends schema.AppellantCaseIncompleteReasonText {}
 export interface AppellantCaseInvalidReasonText extends schema.AppellantCaseInvalidReasonText {}
 export interface KnowledgeOfOtherLandowners extends schema.KnowledgeOfOtherLandowners {}
+export interface DesignatedSiteSelected extends schema.DesignatedSiteSelected {
+	designatedSite: schema.DesignatedSite;
+}
 export interface LPAQuestionnaire extends schema.LPAQuestionnaire {
 	lpaQuestionnaireValidationOutcome?: LPAQuestionnaireValidationOutcome | null;
 	lpaQuestionnaireIncompleteReasonsSelected?: LPAQuestionnaireIncompleteReasonsSelected[] | null;
 	listedBuildingDetails: ListedBuildingSelected[];
 	lpaNotificationMethods: LPANotificationMethodsSelected[];
+	designatedSiteNames: DesignatedSiteSelected[];
 }
 export interface LPAQuestionnaireValidationOutcome
 	extends schema.LPAQuestionnaireValidationOutcome {}

@@ -613,7 +613,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 			},
 			type: 'input',
 			parameters: {
-				id: 'fileName',
+				id: 'file-name',
 				name: 'fileName',
 				label: {
 					text: 'File name',
@@ -686,7 +686,7 @@ export function addDocumentsCheckAndConfirmPage({
 				rows: [
 					{
 						key: {
-							text: summaryListNameLabelOverride || 'Name'
+							text: summaryListNameLabelOverride || 'File'
 						},
 						value: {
 							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
@@ -700,7 +700,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeFileLinkUrl
+									href: changeFileLinkUrl,
+									visuallyHiddenText: `file ${uncommittedFile.name}`
 								}
 							]
 						}
@@ -716,7 +717,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeDateLinkUrl
+									href: changeDateLinkUrl,
+									visuallyHiddenText: `${uncommittedFile.name} date received`
 								}
 							]
 						}
@@ -734,7 +736,8 @@ export function addDocumentsCheckAndConfirmPage({
 							items: [
 								{
 									text: 'Change',
-									href: changeRedactionStatusLinkUrl
+									href: changeRedactionStatusLinkUrl,
+									visuallyHiddenText: `${uncommittedFile.name} redaction status`
 								}
 							]
 						}

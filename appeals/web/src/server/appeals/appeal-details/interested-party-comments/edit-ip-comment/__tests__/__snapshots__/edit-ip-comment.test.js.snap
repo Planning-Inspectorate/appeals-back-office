@@ -43,7 +43,7 @@ exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] =
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party&#39;s address</dt>
                                 <dd                                 class="govuk-summary-list__value"></dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address"> Change</a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address"> Change<span class="govuk-visually-hidden"> interested party address</span></a>
                                     </dd>
                             </div>
                         </dl>

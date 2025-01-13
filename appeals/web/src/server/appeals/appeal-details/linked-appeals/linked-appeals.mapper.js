@@ -49,7 +49,11 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 			},
 			type: 'table',
 			parameters: {
-				head: [{ text: 'Appeal Ref' }, { text: 'Appeal type' }, { text: 'Action' }],
+				head: [
+					{ text: 'Appeal Ref' },
+					{ text: 'Appeal type' },
+					{ text: 'Action', classes: 'govuk-!-text-align-right' }
+				],
 				firstCellIsHeader: false,
 				rows: [
 					[
@@ -71,7 +75,14 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 									: leadLinkedAppeal?.appealType) || 'Unknown'
 						},
 						{
-							html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${appealId}/${leadLinkedAppeal?.relationshipId}/${appealId}">Unlink</a>`
+							html: (() => {
+								const unlinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${appealId}/${leadLinkedAppeal?.relationshipId}/${appealId}`;
+								const leadAppealRef = appealShortReference(leadLinkedAppeal?.appealReference) || '';
+								const hiddenText = `appeal ${numberToAccessibleDigitLabel(leadAppealRef)}`;
+
+								return `<a class="govuk-link" href="${unlinkUrl}">Unlink<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
+							})(),
+							classes: 'govuk-!-text-align-right'
 						}
 					]
 				]
@@ -111,7 +122,13 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 									: linkedAppeal.appealType) || 'Unknown'
 						},
 						{
-							html: `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}">Unlink</a>`
+							html: (() => {
+								const unlinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/unlink-appeal/${linkedAppeal.appealId}/${linkedAppeal.relationshipId}/${appealId}`;
+								const childAppealRef = appealShortReference(linkedAppeal?.appealReference) || '';
+								const hiddenText = `appeal ${numberToAccessibleDigitLabel(childAppealRef)}`;
+
+								return `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="${unlinkUrl}">Unlink<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
+							})()
 						}
 					];
 				})

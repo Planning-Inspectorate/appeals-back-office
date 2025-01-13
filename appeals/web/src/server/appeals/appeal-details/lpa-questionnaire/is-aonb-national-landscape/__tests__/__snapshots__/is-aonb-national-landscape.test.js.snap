@@ -18,14 +18,14 @@ exports[`is-aonb-national-landscape GET /change should render the isAonbNational
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio" name="isAonbNationalLandscapeRadio"
-                                        type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio">In area</label>
+                                        <input class="govuk-radios__input" id="is-aonb-national-landscape-radio"
+                                        name="isAonbNationalLandscapeRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="is-aonb-national-landscape-radio">In area</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="isAonbNationalLandscapeRadio-2"
+                                        <input class="govuk-radios__input" id="is-aonb-national-landscape-radio-2"
                                         name="isAonbNationalLandscapeRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="isAonbNationalLandscapeRadio-2">Not in area</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-aonb-national-landscape-radio-2">Not in area</label>
                                     </div>
                                 </div>
                             </fieldset>

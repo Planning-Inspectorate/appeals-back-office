@@ -10,7 +10,7 @@ export const getCaseCosts = (mappedData) => ({
 		head: [
 			{ text: 'Documentation' },
 			{ text: 'Status' },
-			{ text: 'Action', classes: 'pins-table__header--align-right' }
+			{ text: 'Action', classes: 'govuk-!-text-align-right' }
 		],
 		rows: [
 			mappedData.appeal.costsAppellantApplication.display.tableItem,

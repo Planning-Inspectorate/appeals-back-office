@@ -112,7 +112,7 @@ exports[`neighbouring-sites GET /add/check-and-confirm should render the check y
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                     <dd class="govuk-summary-list__value">123 Long Road, London, E1 8RU</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"> Change<span class="govuk-visually-hidden"> 123 Long Road, London, E1 8RU</span></a>
                     </dd>
                 </div>
             </dl>
@@ -147,14 +147,14 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
+                                        <input class="govuk-radios__input" id="neighbouring-site-affected" name="neighbouringSiteAffected"
                                         type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
+                                        <label class="govuk-label govuk-radios__label" for="neighbouring-site-affected">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
+                                        <input class="govuk-radios__input" id="neighbouring-site-affected-2" name="neighbouringSiteAffected"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="neighbouring-site-affected-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -187,14 +187,14 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="neighbouringSiteAffected" name="neighbouringSiteAffected"
+                                        <input class="govuk-radios__input" id="neighbouring-site-affected" name="neighbouringSiteAffected"
                                         type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected">Yes</label>
+                                        <label class="govuk-label govuk-radios__label" for="neighbouring-site-affected">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="neighbouringSiteAffected-2" name="neighbouringSiteAffected"
+                                        <input class="govuk-radios__input" id="neighbouring-site-affected-2" name="neighbouringSiteAffected"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="neighbouringSiteAffected-2">No</label>
+                                        <label class="govuk-label govuk-radios__label" for="neighbouring-site-affected-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -271,7 +271,7 @@ exports[`neighbouring-sites GET /change/site/:siteId/check-and-confirm should re
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                     <dd class="govuk-summary-list__value">123 Long Road, London, E1 8RU</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/site/1"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/change/site/1"> Change<span class="govuk-visually-hidden"> 123 Long Road, London, E1 8RU</span></a>
                     </dd>
                 </div>
             </dl>
@@ -300,14 +300,19 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter govuk-!-text-align-right">Action</th>
+                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="change/site/1" class="govuk-link">Change</a> | <a href="remove/site/1"
-                    class="govuk-link">Remove</a>
+                <td class="govuk-table__cell govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a href="change/site/1" class="govuk-link"> Change<span class="govuk-visually-hidden"> 1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</span></a>
+                        </li>
+                        <li class="govuk-summary-list__actions-list-item"><a href="remove/site/1" class="govuk-link"> Remove<span class="govuk-visually-hidden"> 1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</span></a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         </tbody>
@@ -323,8 +328,13 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</td>
-                    <td class="govuk-table__cell govuk-!-text-align-right"><a href="change/site/2" class="govuk-link">Change</a> | <a href="remove/site/2"
-                        class="govuk-link">Remove</a>
+                    <td class="govuk-table__cell govuk-!-text-align-right">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a href="change/site/2" class="govuk-link"> Change<span class="govuk-visually-hidden"> 2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a href="remove/site/2" class="govuk-link"> Remove<span class="govuk-visually-hidden"> 2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</span></a>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             </tbody>

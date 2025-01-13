@@ -1,8 +1,6 @@
-import { randomUUID } from 'node:crypto';
-
 export const validAppellantCase = {
 	casedata: {
-		submissionId: randomUUID(),
+		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
 		advertisedAppeal: true,
 		appellantCostsAppliedFor: false,
 		applicationDate: '2024-01-01T00:00:00.000Z',

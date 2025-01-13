@@ -26,10 +26,10 @@ export function costsFolderTableItem({
 	let actionsHtmls = `<ul class="govuk-summary-list__actions-list">`;
 
 	if (hasDocuments) {
-		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage');
+		actionsHtmls += listItemLink(link + '/manage-documents/' + folderId, 'Manage', text);
 	}
 	if (editable) {
-		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', 'add-' + id);
+		actionsHtmls += listItemLink(link + '/upload-documents/' + folderId, 'Add', text, 'add-' + id);
 	}
 	actionsHtmls += `</ul>`;
 
@@ -47,7 +47,7 @@ export function costsFolderTableItem({
 				},
 				{
 					html: actionsHtmls,
-					classes: `appeal-${id}-actions pins-table__cell--align-right`
+					classes: `appeal-${id}-actions govuk-!-text-align-right`
 				}
 			]
 		}
@@ -104,9 +104,7 @@ export function documentationFolderTableItem({
 				},
 				{
 					html: actionHtml,
-					classes: `pins-table__cell--align-right${
-						actionHtmlClasses ? ` ${actionHtmlClasses}` : ''
-					}`
+					classes: `govuk-!-text-align-right${actionHtmlClasses ? ` ${actionHtmlClasses}` : ''}`
 				}
 			]
 		}
@@ -116,15 +114,17 @@ export function documentationFolderTableItem({
 /**
  * @param {string} link
  * @param {string} text
+ * @param {string} hiddenText
  * @param {string} [cypressDataName]
  * @returns {string}
  */
-function listItemLink(link, text, cypressDataName) {
+function listItemLink(link, text, hiddenText, cypressDataName) {
 	const dataCy = cypressDataName ? `data-cy="${cypressDataName}" ` : '';
 	return (
 		`<li class="govuk-summary-list__actions-list-item">` +
 		`<a class="govuk-link" ${dataCy}href="${link}">` +
 		text +
+		`<span class="govuk-visually-hidden"> ${hiddenText}</span>` +
 		`</a></li>`
 	);
 }

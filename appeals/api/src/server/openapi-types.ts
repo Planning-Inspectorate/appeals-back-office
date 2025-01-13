@@ -139,7 +139,7 @@ export interface AddBusinessDays {
 
 export interface AppellantCaseData {
 	casedata?: {
-		/** @example "755b15e1-46fd-49ae-8c12-6246ee1f395e" */
+		/** @example "ab35047f-753f-48d7-a738-05388a316586" */
 		submissionId?: string;
 		/** @example true */
 		advertisedAppeal?: boolean;
@@ -2296,7 +2296,7 @@ export interface NeighbouringSite {
 }
 
 export interface Timetable {
-	appealTimetableId: number;
+	appealTimetableId: number | null;
 	/** @format date-time */
 	lpaQuestionnaireDueDate?: string | null;
 	/** @format date-time */
@@ -3074,26 +3074,60 @@ export interface SiteAccess {
 }
 
 export type AppellantCase = {
+	appealId?: number;
+	appealReference?: string;
+	appealSite?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
+	appealType?: string;
+	/** @format date-time */
+	createdAt?: string;
+	/** @format date-time */
+	validAt?: string | null;
+	/** @format date-time */
+	startedAt?: string | null;
+	planningApplicationReference?: string | null;
+	localPlanningDepartment?: string;
+	procedureType?: string | null;
+	appellant?: {
+		serviceUserId: number;
+		firstName: string;
+		lastName: string;
+		organisationName?: string | null;
+		email: string | null;
+		phoneNumber?: string | null;
+	};
+	agent?: {
+		serviceUserId: number;
+		firstName: string;
+		lastName: string;
+		organisationName?: string | null;
+		email: string | null;
+		phoneNumber?: string | null;
+	};
 	validation?: {
 		outcome?: string | null;
-		incompleteReasons?:
-			| {
-					name?: {
-						id?: number;
-						name?: string;
-						hasText?: boolean;
-					};
-			  }[]
-			| null;
-		invalidReasons?:
-			| {
-					name?: {
-						id?: number;
-						name?: string;
-						hasText?: boolean;
-					};
-			  }[]
-			| null;
+		incompleteReasons?: {
+			name?: {
+				id?: number | null;
+				name?: string;
+				hasText?: boolean;
+			};
+			text?: string[] | null;
+		}[];
+		invalidReasons?: {
+			name?: {
+				id?: number | null;
+				name?: string;
+				hasText?: boolean;
+			};
+			text?: string[] | null;
+		}[];
 	};
 	applicant?: {
 		firstName?: string;
@@ -3127,9 +3161,2263 @@ export type AppellantCase = {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	documents?: {
+		appellantStatement?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		originalApplicationForm?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		applicationDecisionLetter?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		changedDescription?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		appellantCaseWithdrawalLetter?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		appellantCaseCorrespondence?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		designAccessStatement?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		plansDrawings?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		newPlansDrawings?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		planningObligation?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		ownershipCertificate?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		otherNewDocuments?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+	};
 };
 
 export type LpaQuestionnaire = {
+	lpaQuestionnaireId?: number;
+	appealId?: number;
+	appealReference?: string;
+	appealSite?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
+	appealType?: string;
+	/** @format date-time */
+	createdAt?: string;
+	/** @format date-time */
+	validAt?: string | null;
+	/** @format date-time */
+	startedAt?: string | null;
+	planningApplicationReference?: string | null;
+	localPlanningDepartment?: string;
+	procedureType?: string | null;
+	appellant?: {
+		serviceUserId: number;
+		firstName: string;
+		lastName: string;
+		organisationName?: string | null;
+		email: string | null;
+		phoneNumber?: string | null;
+	};
+	agent?: {
+		serviceUserId: number;
+		firstName: string;
+		lastName: string;
+		organisationName?: string | null;
+		email: string | null;
+		phoneNumber?: string | null;
+	};
+	validation?: {
+		outcome?: string | null;
+		incompleteReasons?: {
+			name?: {
+				id?: number | null;
+				name?: string;
+				hasText?: boolean;
+			};
+			text?: string[] | null;
+		}[];
+	};
+	/** @format date-time */
+	submittedAt?: string;
+	/** @format date-time */
+	receivedAt?: string;
+	isCorrectAppealType?: boolean | null;
+	isGreenBelt?: boolean | null;
+	isConservationArea?: boolean | null;
+	isAffectingNeighbouringSites?: boolean | null;
+	lpaProcedurePreference?: string | null;
+	lpaProcedurePreferenceDetails?: string | null;
+	lpaProcedurePreferenceDuration?: number | null;
+	lpaStatement?: string | null;
+	extraConditions?: string | null;
+	hasExtraConditions?: boolean | null;
+	affectsScheduledMonument?: boolean | null;
+	hasProtectedSpecies?: boolean | null;
+	isAonbNationalLandscape?: boolean | null;
+	isGypsyOrTravellerSite?: boolean | null;
+	hasInfrastructureLevy?: boolean | null;
+	isInfrastructureLevyFormallyAdopted?: boolean | null;
+	/** @format date-time */
+	infrastructureLevyAdoptedDate?: string | null;
+	/** @format date-time */
+	infrastructureLevyExpectedDate?: string | null;
+	eiaColumnTwoThreshold?: boolean | null;
+	eiaRequiresEnvironmentalStatement?: boolean | null;
+	eiaEnvironmentalImpactSchedule?: string | null;
+	eiaDevelopmentDescription?: string | null;
+	eiaSensitiveAreaDetails?: string | null;
+	eiaConsultedBodiesDetails?: string | null;
+	reasonForNeighbourVisits?: string | null;
+	designatedSiteNames?:
+		| {
+				id: number;
+				key?: string;
+				name: string;
+		  }[]
+		| null;
+	costsAppliedFor?: boolean | null;
+	lpaNotificationMethods?:
+		| {
+				name?: string;
+		  }[]
+		| null;
 	siteAccessRequired?: {
 		details?: string | null;
 		isRequired?: boolean;
@@ -3138,11 +5426,3614 @@ export type LpaQuestionnaire = {
 		details?: string | null;
 		hasIssues?: boolean;
 	};
-	isGreenBelt?: boolean | null;
-	isAffectingNeighbouringSites?: boolean | null;
-	lpaProcedurePreference?: string | null;
-	lpaProcedurePreferenceDetails?: string | null;
-	lpaProcedurePreferenceDuration?: number | null;
+	listedBuildingDetails?: {
+		id?: number;
+		listEntry?: string;
+		name?: string | null;
+		grade?: string | null;
+	}[];
+	documents?: {
+		whoNotified?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		whoNotifiedSiteNotice?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		whoNotifiedLetterToNeighbours?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		whoNotifiedPressAdvert?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		conservationMap?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		otherPartyRepresentations?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		planningOfficerReport?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		plansDrawings?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		developmentPlanPolicies?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		treePreservationPlan?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		definitiveMapStatement?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		communityInfrastructureLevy?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		supplementaryPlanning?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		emergingPlan?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		consultationResponses?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		eiaEnvironmentalStatement?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		eiaScreeningOpinion?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		eiaScreeningDirection?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		lpaCaseCorrespondence?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		otherRelevantPolicies?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantStatement'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'inspectorCorrespondence'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+	};
 };
 
 export interface ServiceUser {
@@ -3152,6 +9043,28 @@ export interface ServiceUser {
 	organisationName?: string | null;
 	email: string | null;
 	phoneNumber?: string | null;
+}
+
+export interface InvalidIncompleteReason {
+	name?: {
+		id?: number | null;
+		name?: string;
+		hasText?: boolean;
+	};
+	text?: string[] | null;
+}
+
+export interface ListedBuilding {
+	id?: number;
+	listEntry?: string;
+	name?: string | null;
+	grade?: string | null;
+}
+
+export interface DesignatedSiteName {
+	id: number;
+	key?: string;
+	name: string;
 }
 
 export interface Appeal {
@@ -3201,7 +9114,7 @@ export interface Appeal {
 		specialisms: string[];
 	} | null;
 	timetable?: {
-		appealTimetableId: number;
+		appealTimetableId: number | null;
 		/** @format date-time */
 		lpaQuestionnaireDueDate?: string | null;
 		/** @format date-time */
@@ -3454,4 +9367,66 @@ export interface Appeal {
 	};
 	costs?: any;
 	internalCorrespondence?: any;
+}
+
+export interface LpaQuestionnaireUpdateRequest {
+	isCorrectAppealType?: boolean | null;
+	isGreenBelt?: boolean | null;
+	isConservationArea?: boolean | null;
+	isAffectingNeighbouringSites?: boolean | null;
+	lpaProcedurePreference?: string | null;
+	lpaProcedurePreferenceDetails?: string | null;
+	lpaProcedurePreferenceDuration?: number | null;
+	lpaStatement?: string | null;
+	extraConditions?: string | null;
+	hasExtraConditions?: boolean | null;
+	affectsScheduledMonument?: boolean | null;
+	hasProtectedSpecies?: boolean | null;
+	isAonbNationalLandscape?: boolean | null;
+	isGypsyOrTravellerSite?: boolean | null;
+	hasInfrastructureLevy?: boolean | null;
+	isInfrastructureLevyFormallyAdopted?: boolean | null;
+	/** @format date-time */
+	infrastructureLevyAdoptedDate?: string | null;
+	/** @format date-time */
+	infrastructureLevyExpectedDate?: string | null;
+	eiaColumnTwoThreshold?: boolean | null;
+	eiaRequiresEnvironmentalStatement?: boolean | null;
+	eiaEnvironmentalImpactSchedule?: string | null;
+	eiaDevelopmentDescription?: string | null;
+	eiaSensitiveAreaDetails?: string | null;
+	eiaConsultedBodiesDetails?: string | null;
+	reasonForNeighbourVisits?: string | null;
+	designatedSiteNames?:
+		| {
+				id: number;
+				key?: string;
+				name: string;
+		  }[]
+		| null;
+	lpaCostsAppliedFor?: boolean | null;
+	validationOutcomeId?: number | null;
+	validationOutcome?: {
+		id?: number;
+		name?: string;
+	} | null;
+	siteAccessDetails?: string | null;
+	siteSafetyDetails?: string | null;
+	lpaNotificationMethods?:
+		| {
+				id?: number;
+		  }[]
+		| null;
+	appealId?: number;
+	incompleteReasons?:
+		| {
+				id: number;
+				text?: string[];
+		  }[]
+		| null;
+	timetable?: {
+		/** @format date-time */
+		lpaQuestionnaireDueDate?: string;
+	} | null;
+	designatedSiteNameCustom?: string | null;
 }

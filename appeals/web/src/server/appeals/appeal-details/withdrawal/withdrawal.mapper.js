@@ -301,7 +301,8 @@ export function checkAndConfirmPage(appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/start`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/start`,
+								visuallyHiddenText: 'withdrawal request'
 							}
 						]
 					}
@@ -317,7 +318,8 @@ export function checkAndConfirmPage(appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/withdrawal-request-date`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/withdrawal-request-date`,
+								visuallyHiddenText: 'request date'
 							}
 						]
 					}
@@ -333,7 +335,8 @@ export function checkAndConfirmPage(appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/redaction-status`
+								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/redaction-status`,
+								visuallyHiddenText: 'redaction status'
 							}
 						]
 					}

@@ -305,7 +305,14 @@ interface SingleLPAQuestionnaireResponse {
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	listedBuildingDetails?: ListedBuildingDetailsResponse[] | null;
-	healthAndSafetyDetails?: string | null;
+	healthAndSafety?: {
+		hasIssues: boolean;
+		details: string;
+	} | null;
+	siteAccessRequired?: {
+		isRequired: boolean;
+		details: string;
+	} | null;
 	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
 	inspectorAccessDetails?: string | null;
 	doesSiteRequireInspectorAccess?: boolean | null;

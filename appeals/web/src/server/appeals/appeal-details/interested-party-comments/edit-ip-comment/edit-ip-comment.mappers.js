@@ -32,7 +32,8 @@ export const checkAddressPage = (appealDetails, commentId, address) => {
 								items: [
 									{
 										text: 'Change',
-										href: editPageUrl
+										href: editPageUrl,
+										visuallyHiddenText: 'interested party address'
 									}
 								]
 							}

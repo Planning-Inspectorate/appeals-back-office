@@ -429,4 +429,120 @@ describe('/appeals/:id/representations', () => {
 			expect(response.body.errors).toHaveProperty('appealId', ERROR_NOT_FOUND);
 		});
 	});
+
+	describe('PATCH /appeals/:appealId/reps/:repId/attachments', () => {
+		test('400 when attachments are not provided', async () => {
+			const response = await request
+				.patch('/appeals/1/reps/1/attachments')
+				.send({})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'must be an array of strings'
+				}
+			});
+		});
+
+		test('400 when attachments are invalid', async () => {
+			const response = await request
+				.patch('/appeals/1/reps/1/attachments')
+				.send({ attachments: [123, null, ''] })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'must be an array of strings'
+				}
+			});
+		});
+
+		test('404 when representation is not found', async () => {
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.patch('/appeals/1/reps/999/attachments')
+				.send({
+					attachments: [
+						'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+						'b6f15730-2d7f-4fa0-8752-2d26a62474de'
+					]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(404);
+			expect(response.body.errors).toHaveProperty('repId', 'Representation not found');
+		});
+
+		test('200 when attachments are successfully updated', async () => {
+			const mockRepresentation = {
+				id: 1,
+				appealId: 1,
+				attachments: [{ documentGuid: 'b6f15730-2d7f-4fa0-8752-2d26a62474de', version: 1 }]
+			};
+			const mockUpdatedRepresentation = {
+				id: 1,
+				appealId: 1,
+				attachments: [
+					{ documentGuid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6', version: 1 },
+					{ documentGuid: 'b6f15730-2d7f-4fa0-8752-2d26a62474de', version: 1 }
+				]
+			};
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				latestDocumentVersion: { version: 1 }
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue(mockUpdatedRepresentation);
+
+			const response = await request
+				.patch('/appeals/1/reps/1/attachments')
+				.send({ attachments: ['39ad6cd8-60ab-43f0-a995-4854db8f12c6'] })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(mockUpdatedRepresentation);
+
+			expect(databaseConnector.representation.update).toHaveBeenCalledWith({
+				where: { id: 1 },
+				data: {
+					attachments: {
+						connect: [
+							{
+								documentGuid_version: {
+									documentGuid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+									version: 1
+								}
+							}
+						]
+					}
+				}
+			});
+		});
+
+		test('500 when database operation fails', async () => {
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockRejectedValue(
+				new Error('Internal Server Error')
+			);
+
+			const response = await request
+				.patch('/appeals/1/reps/1/attachments')
+				.send({
+					attachments: [
+						'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+						'b6f15730-2d7f-4fa0-8752-2d26a62474de'
+					]
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({ errors: 'Internal Server Error' });
+		});
+	});
 });

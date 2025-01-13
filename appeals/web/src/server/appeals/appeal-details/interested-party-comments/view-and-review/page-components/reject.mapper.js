@@ -146,7 +146,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 							{
 								text: 'Change',
 								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
-								visuallyHiddenText: 'Review decision'
+								visuallyHiddenText: 'review decision'
 							}
 						]
 					}
@@ -163,7 +163,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 							{
 								text: 'Change',
 								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
-								visuallyHiddenText: 'Why are you rejecting the comment?'
+								visuallyHiddenText: 'why you are rejecting the comment'
 							}
 						]
 					}
@@ -183,7 +183,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 											text: 'Change',
 											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`,
 											visuallyHiddenText:
-												'Do you want to allow the interested party to resubmit a comment?'
+												'if you want to allow the interested party to resubmit a comment'
 										}
 									]
 								}

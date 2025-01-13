@@ -123,6 +123,33 @@ export const knowledgeOfOtherLandownersValues = [
 ];
 
 /**
+ * An array of designated site names.
+ *
+ */
+export const designatedSiteNames = [
+	{
+		name: 'SSSI (site of special scientific interest)',
+		key: 'SSSI'
+	},
+	{
+		name: 'cSAC (candidate special area of conservation)',
+		key: 'cSAC'
+	},
+	{
+		name: 'SAC (special area of conservation)',
+		key: 'SAC'
+	},
+	{
+		name: 'pSPA (potential special protection area)',
+		key: 'pSPA'
+	},
+	{
+		name: 'SPA Ramsar (Ramsar special protection area)',
+		key: 'SPA'
+	}
+];
+
+/**
  * An array of site visit types.
  *
  */
@@ -512,6 +539,13 @@ export async function seedStaticData(databaseConnector) {
 			create: { name: specialism.name },
 			where: { name: specialism.name },
 			update: {}
+		});
+	}
+	for (const designatedSiteName of designatedSiteNames) {
+		await databaseConnector.designatedSite.upsert({
+			create: designatedSiteName,
+			where: { key: designatedSiteName.key },
+			update: designatedSiteName
 		});
 	}
 	for (const rejectionReason of representationRejectionReasons) {

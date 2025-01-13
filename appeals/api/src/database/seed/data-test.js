@@ -581,6 +581,7 @@ export async function seedTestData(databaseConnector) {
 
 	const lpaQuestionnaires = await databaseConnector.lPAQuestionnaire.findMany();
 	const lpaNotificationMethods = await databaseConnector.lPANotificationMethods.findMany();
+	const designatedSites = await databaseConnector.designatedSite.findMany();
 
 	for (const lpaQuestionnaire of lpaQuestionnaires) {
 		await databaseConnector.listedBuildingSelected.createMany({
@@ -595,6 +596,13 @@ export async function seedTestData(databaseConnector) {
 			data: [1, 2].map((item) => ({
 				lpaQuestionnaireId: lpaQuestionnaire.id,
 				notificationMethodId: lpaNotificationMethods[item].id
+			}))
+		});
+
+		await databaseConnector.designatedSiteSelected.createMany({
+			data: [1, 2].map((item) => ({
+				lpaQuestionnaireId: lpaQuestionnaire.id,
+				designatedSiteId: designatedSites[item].id
 			}))
 		});
 	}

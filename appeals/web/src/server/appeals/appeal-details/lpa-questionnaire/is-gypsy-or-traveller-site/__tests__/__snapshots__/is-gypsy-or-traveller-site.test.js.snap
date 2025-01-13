@@ -18,14 +18,14 @@ exports[`is-gypsy-or-traveller-site GET /change should render the greenBelt chan
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio" name="isGypsyOrTravellerSiteRadio"
-                                        type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio">Affected</label>
+                                        <input class="govuk-radios__input" id="is-gypsy-or-traveller-site-radio"
+                                        name="isGypsyOrTravellerSiteRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio">Affected</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="isGypsyOrTravellerSiteRadio-2"
+                                        <input class="govuk-radios__input" id="is-gypsy-or-traveller-site-radio-2"
                                         name="isGypsyOrTravellerSiteRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="isGypsyOrTravellerSiteRadio-2">Not affected</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio-2">Not affected</label>
                                     </div>
                                 </div>
                             </fieldset>

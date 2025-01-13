@@ -834,7 +834,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Appeal Ref</th>
                 <th scope="col" class="govuk-table__header">Appeal type</th>
-                <th scope="col" class="govuk-table__header">Action</th>
+                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -842,7 +842,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 7 2 5 2 8 4">725284</a>
                 </td>
                 <td class="govuk-table__cell">Householder</td>
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/3048/2">Unlink</a>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/3048/2">Unlink<span class="govuk-visually-hidden"> appeal 7 2 5 2 8 4</span></a>
                 </td>
             </tr>
         </tbody>
@@ -862,7 +862,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/2">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/2">Unlink<span class="govuk-visually-hidden"> appeal 7 6 2 1 5 4 1 6</span></a>
                 </td>
             </tr>
         </tbody>
@@ -894,7 +894,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="APP/Q9999/D/21/725284">725284</a>
                 </td>
                 <td class="govuk-table__cell">Householder</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/1/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/2/1/1">Unlink<span class="govuk-visually-hidden"> appeal 7 2 5 2 8 4</span></a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
@@ -902,7 +902,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                     data-cy="76215416">76215416</a>
                 </td>
                 <td class="govuk-table__cell">Commercial</td>
-                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/1">Unlink</a>
+                <td class="govuk-table__cell"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/1">Unlink<span class="govuk-visually-hidden"> appeal 7 6 2 1 5 4 1 6</span></a>
                 </td>
             </tr>
         </tbody>

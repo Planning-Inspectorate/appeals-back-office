@@ -35,7 +35,7 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getLPAQuestionnaireValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(checkAppealExistsByIdAndAddToRequest),
 	checkLPAQuestionnaireExists,
 	asyncHandler(getLpaQuestionnaireById)
 );
@@ -65,7 +65,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchLPAQuestionnaireValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(checkAppealExistsByIdAndAddToRequest),
 	checkLPAQuestionnaireExists,
 	checkLookupValueIsValidAndAddToRequest(
 		'validationOutcome',

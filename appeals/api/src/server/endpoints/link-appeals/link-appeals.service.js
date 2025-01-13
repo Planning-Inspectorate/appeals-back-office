@@ -5,22 +5,14 @@
  * @param {Appeal} appeal The appeal to check for linked appeals.
  * @returns {boolean}
  */
-const isAppealLead = (appeal) => {
-	const linkedAppeals = appeal.linkedAppeals || [];
-	const linkedAppealsAsLead = linkedAppeals.filter((link) => link.parentRef === appeal.reference);
-	return linkedAppealsAsLead.length > 0;
-};
+const isAppealLead = (appeal) => (appeal.childAppeals || []).length > 0;
 
 /**
  * Checks if an appeal is linked to other appeals as a child.
  * @param {Appeal} appeal The appeal to check for linked appeals.
  * @returns {boolean}
  */
-const isAppealChild = (appeal) => {
-	const linkedAppeals = appeal.linkedAppeals || [];
-	const linkedAppealsAsChild = linkedAppeals.filter((link) => link.childRef === appeal.reference);
-	return linkedAppealsAsChild.length > 0;
-};
+const isAppealChild = (appeal) => (appeal.parentAppeals || []).length > 0;
 
 /**
  * Checks if an appeal can be linked, with a specific relationship type (parent/child).

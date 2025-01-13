@@ -5,8 +5,8 @@ export const mapSiteAccess = ({ lpaQuestionnaireData, currentRoute, userHasUpdat
 	booleanWithDetailsSummaryListItem({
 		id: 'does-site-require-inspector-access',
 		text: 'Site access required',
-		value: lpaQuestionnaireData.doesSiteRequireInspectorAccess,
-		valueDetails: lpaQuestionnaireData.inspectorAccessDetails,
+		value: lpaQuestionnaireData.siteAccessRequired?.isRequired,
+		valueDetails: lpaQuestionnaireData.siteAccessRequired?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/inspector-access/change/lpa`,
 		editable: userHasUpdateCase,
