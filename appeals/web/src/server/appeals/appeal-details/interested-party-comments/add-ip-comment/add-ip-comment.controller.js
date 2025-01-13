@@ -114,7 +114,11 @@ export async function postUpload(request, response) {
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
 	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
+	getValue: (request) =>
+		request.session.addIpComment?.redactionStatus ||
+		request.body.redactionStatus ||
+		APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
@@ -125,7 +129,8 @@ export const postRedactionStatus = postRedactionStatusFactory({
 
 export const renderDateSubmitted = renderDateSubmittedFactory({
 	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
+	getValue: (request) => request.session.addIpComment || request.body
 });
 
 export const postDateSubmitted = postDateSubmittedFactory({
