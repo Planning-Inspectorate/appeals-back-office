@@ -128,7 +128,8 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 								const hiddenText = `appeal ${numberToAccessibleDigitLabel(childAppealRef)}`;
 
 								return `<a class="govuk-link" data-cy="unlink-appeal-${appealData.appealReference}" href="${unlinkUrl}">Unlink<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`;
-							})()
+							})(),
+							classes: 'govuk-!-text-align-right'
 						}
 					];
 				})
@@ -146,7 +147,11 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 		},
 		type: 'table',
 		parameters: {
-			head: [{ text: 'Appeal Ref' }, { text: 'Appeal type' }, { text: 'Action' }],
+			head: [
+				{ text: 'Appeal Ref' },
+				{ text: 'Appeal type' },
+				{ text: 'Action', classes: 'govuk-!-text-align-right' }
+			],
 			firstCellIsHeader: false,
 			rows: childAppealsRows
 		}
