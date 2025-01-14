@@ -15,12 +15,18 @@ export const mapEnvironmentalAssessment = (data) => {
 	);
 	const text = 'Environmental assessment';
 
-	const latestReceivedDocument = documents.reduce((latestReceivedDocument, currentDocument) => {
-		return latestReceivedDocument.latestDocumentVersion.dateReceived >
-			currentDocument.latestDocumentVersion.dateReceived
-			? latestReceivedDocument
-			: currentDocument;
-	});
+	const latestReceivedDocument = documents.reduce(
+		(latestReceivedDocument, currentDocument) => {
+			if (!latestReceivedDocument) {
+				return currentDocument;
+			}
+			return latestReceivedDocument?.latestDocumentVersion?.dateReceived >
+				currentDocument.latestDocumentVersion?.dateReceived
+				? latestReceivedDocument
+				: currentDocument;
+		},
+		{ latestDocumentVersion: { dateReceived: '' } }
+	);
 
 	return documentationFolderTableItem({
 		id,
