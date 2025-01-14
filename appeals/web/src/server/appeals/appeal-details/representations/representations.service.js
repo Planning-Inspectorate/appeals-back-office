@@ -1,4 +1,4 @@
-/** @typedef {import('pins-data-model/src/schemas.js').Representation} Representation */
+/** @typedef {import('./types.js').Representation} Representation */
 
 import logger from '#lib/logger.js';
 

@@ -8,7 +8,7 @@ import { addressInputs } from '#lib/mappers/index.js';
 /**
  * @param {Appeal} appealData
  * @param {string} backLinkUrl
- * @param {import('@pins/appeals.api').Appeals.AppealSite} sessionData
+ * @param {import('@pins/appeals').Address} sessionData
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */

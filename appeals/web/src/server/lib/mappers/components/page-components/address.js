@@ -8,7 +8,7 @@ import {
  * Return page components for address inputs
  *
  * @param {Object} options
- * @param {import('@pins/appeals.api').Appeals.AppealSite} [options.address]
+ * @param {import('@pins/appeals').Address} [options.address]
  * @param {string} [options.operationType]
  * @param {import('@pins/express').ValidationErrors} [options.errors]
  * @returns {PageComponent[]}

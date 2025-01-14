@@ -51,7 +51,7 @@ export async function interestedPartyCommentsPage(
 
 /**
  * @param {Appeal} appealDetails
- * @param {{ addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} address
+ * @param {import('../representations/types').Representation['represented']['address']} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {string} backPath
  * @param {string} operationType

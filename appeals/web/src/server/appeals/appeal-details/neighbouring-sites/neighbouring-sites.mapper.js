@@ -15,7 +15,7 @@ import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.AppealSite} currentAddress
+ * @param {import('@pins/appeals').Address} currentAddress
  * @param {Source} source
  * @param {string} origin
  * @param {import("@pins/express").ValidationErrors | undefined} errors
@@ -278,6 +278,7 @@ export function changeNeighbouringSitePage(appealData, neighbouringSiteData, sit
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change neighbouring site address',
 		headingClasses: 'govuk-heading-l',
+		// @ts-ignore this is fine, AppealSite is an Address with more mandatory fields
 		pageComponents: addressInputs({ address, errors })
 	};
 

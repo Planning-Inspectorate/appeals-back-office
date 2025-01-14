@@ -6,12 +6,13 @@ import { rejectLpaStatementPage } from './incomplete.mapper.js';
 import { rejectionReasonHtml } from '../../common/components/reject-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
 };
 
-export const renderReasons = renderSelectRejectionReasons(rejectLpaStatementPage);
+export const renderReasons = renderSelectRejectionReasons(rejectLpaStatementPage, 'lpaStatement');
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -52,6 +53,15 @@ export const renderCheckYourAnswers = async (
 	);
 	const selectedReasons = ensureArray(lpaStatement?.rejectionReason);
 
+	const attachmentsList =
+		currentRepresentation.attachments.length > 0
+			? buildHtmUnorderedList(
+					currentRepresentation.attachments.map(
+						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+					)
+			  )
+			: null;
+
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and confirm statement is incomplete',
@@ -60,6 +70,33 @@ export const renderCheckYourAnswers = async (
 			backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-statement`,
 			submitButtonText: 'Confirm statement is incomplete',
 			responses: {
+				Statement: {
+					html: '',
+					pageComponents: [
+						{
+							type: 'show-more',
+							parameters: {
+								text: currentRepresentation.originalRepresentation,
+								labelText: 'Statement'
+							}
+						}
+					]
+				},
+				'Supporting documents': {
+					value: !attachmentsList?.length ? 'Not provided' : undefined,
+					html: attachmentsList?.length ? attachmentsList : undefined,
+					actions: {
+						Manage: {
+							href: `#`,
+							visuallyHiddenText: 'supporting documents'
+						},
+
+						Add: {
+							href: `#`,
+							visuallyHiddenText: 'supporting documents'
+						}
+					}
+				},
 				'Review decision': {
 					value: statusFormatMap[lpaStatement.status],
 					actions: {

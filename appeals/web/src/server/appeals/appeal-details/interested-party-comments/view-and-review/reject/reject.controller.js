@@ -12,7 +12,10 @@ import {
 import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
 import { rejectInterestedPartyComment } from './reject.service.js';
 
-export const renderSelectReason = renderSelectRejectionReasons(rejectInterestedPartyCommentPage);
+export const renderSelectReason = renderSelectRejectionReasons(
+	rejectInterestedPartyCommentPage,
+	'rejectIpComment'
+);
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
