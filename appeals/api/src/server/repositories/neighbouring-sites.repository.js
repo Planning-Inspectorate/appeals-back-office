@@ -34,6 +34,50 @@ const addSite = async (appealId, source, address) => {
 };
 
 /**
+ * @param {number} appealId
+ * @param {number} addressId
+ * @returns {Promise<NeighbouringSite>}
+ */
+const connectSite = (appealId, addressId) =>
+	databaseConnector.neighbouringSite.upsert({
+		where: {
+			appealId_addressId: {
+				appealId,
+				addressId
+			}
+		},
+		create: {
+			appeal: {
+				connect: {
+					id: appealId
+				}
+			},
+			address: {
+				connect: {
+					id: addressId
+				}
+			},
+			source: 'back-office'
+		},
+		update: {
+			appeal: {
+				connect: {
+					id: appealId
+				}
+			},
+			address: {
+				connect: {
+					id: addressId
+				}
+			},
+			source: 'back-office'
+		},
+		include: {
+			address: true
+		}
+	});
+
+/**
  * Updates the address of a neighbouring site
  * @param {number} siteId
  * @param {{addressLine1: string, addressLine2?: string | null, postcode: string, addressCounty?: string | null, addressTown: string}} address
@@ -92,5 +136,6 @@ const removeSite = async (siteId) => {
 export default {
 	addSite,
 	updateSite,
-	removeSite
+	removeSite,
+	connectSite
 };
