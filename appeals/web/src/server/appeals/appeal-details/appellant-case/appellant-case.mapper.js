@@ -7,10 +7,9 @@ import {
 	dayMonthYearHourMinuteToDisplayDate
 } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
-import {
-	mapReasonOptionsToCheckboxItemParameters,
-	mapReasonsToReasonsListHtml
-} from '#lib/validation-outcome-reasons-formatter.js';
+import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
@@ -33,7 +32,7 @@ import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonsResponse
  * @typedef {import('../appeal-details.types.js').BodyValidationOutcome} BodyValidationOutcome
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -301,7 +300,7 @@ export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateY
  *
  * @param {number} appealId
  * @param {string} appealReference
- * @param {NotValidReasonOption[]} reasonOptions
+ * @param {ReasonOption[]} reasonOptions
  * @param {AppellantCaseValidationOutcome} validationOutcome
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|string[]} [invalidOrIncompleteReasons]
@@ -526,7 +525,7 @@ export function mapNotificationBannerComponentParameters(
 /**
  *
  * @param {AppellantCaseValidationOutcome} validationOutcome
- * @param {NotValidReasonOption[]} reasonOptions
+ * @param {ReasonOption[]} reasonOptions
  * @param {BodyValidationOutcome} [bodyValidationOutcome]
  * @param {AppellantCaseSessionValidationOutcome} [sessionValidationOutcome]
  * @param {import('./appellant-case.types.js').AppellantCaseValidationOutcomeResponse} [existingValidationOutcome]

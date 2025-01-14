@@ -6,7 +6,7 @@ import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('../../appeals.types.js').SelectItemParameter} SelectItemParameter
  */
 

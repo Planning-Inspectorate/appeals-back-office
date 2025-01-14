@@ -718,14 +718,14 @@ interface UsersToAssign {
 	inspector?: string | null;
 }
 
-interface NotValidReasonOption {
+interface ReasonOption {
 	id: number;
 	name: string;
 	hasText: boolean;
 }
 
 interface IncompleteInvalidReasonsResponse {
-	name: NotValidReasonOption;
+	name: ReasonOption;
 	text?: string[];
 }
 
@@ -880,7 +880,7 @@ export {
 	DocumentInfo,
 	DocumentVersionInfo,
 	FolderInfo,
-	NotValidReasonOption,
+	ReasonOption,
 	IncompleteInvalidReasons,
 	IncompleteInvalidReasonsResponse,
 	LinkedAppeal,

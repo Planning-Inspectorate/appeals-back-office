@@ -69,6 +69,12 @@ export const postReviewFinalComments = async (request, response, next) => {
 			);
 		}
 
+		if (status === COMMENT_STATUS.INVALID) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/reject`
+			);
+		}
+
 		return renderReviewFinalComments(request, response, next);
 	} catch (error) {
 		logger.error(error);

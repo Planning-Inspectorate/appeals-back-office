@@ -1,8 +1,6 @@
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-
 /**
  * @typedef {import('../appeals/appeal-details/appeal-details.types.js').BodyValidationOutcome} BodyValidationOutcome
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonResponse
  * @typedef {import('../appeals/appeal-details/lpa-questionnaire/lpa-questionnaire.types.js').LPAQuestionnaireSessionValidationOutcome} LPAQuestionnaireSessionValidationOutcome
  * @typedef {import('../appeals/appeal-details/appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} AppellantCaseSessionValidationOutcome
@@ -10,7 +8,7 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
 
 /**
  *
- * @param {NotValidReasonOption[]} reasonOptions
+ * @param {ReasonOption[]} reasonOptions
  * @param {number[]|undefined} checkedOptions
  * @param {IncompleteInvalidReasonResponse[]} existingReasons
  * @param {BodyValidationOutcome} bodyValidationOutcome
@@ -64,7 +62,7 @@ export function mapReasonOptionsToCheckboxItemParameters(
 
 /**
  *
- * @param {NotValidReasonOption} reasonOption
+ * @param {ReasonOption} reasonOption
  * @param {IncompleteInvalidReasonResponse[]} existingReasons
  * @returns {string[]|undefined}
  */
@@ -75,7 +73,7 @@ function getAddAnotherTextItemsFromExistingOutcome(reasonOption, existingReasons
 
 /**
  *
- * @param {NotValidReasonOption} reasonOption
+ * @param {ReasonOption} reasonOption
  * @param {AppellantCaseSessionValidationOutcome|LPAQuestionnaireSessionValidationOutcome|undefined} sessionValidationOutcome
  * @returns {string[]|undefined}
  */
@@ -85,7 +83,7 @@ function getAddAnotherTextItemsFromSession(reasonOption, sessionValidationOutcom
 
 /**
  *
- * @param {NotValidReasonOption} reasonOption
+ * @param {ReasonOption} reasonOption
  * @param {BodyValidationOutcome|undefined} bodyValidationOutcome
  * @param {string} bodyValidationBaseKey
  * @returns {string[]|undefined}
@@ -107,50 +105,6 @@ function getAddAnotherTextItemsFromBody(
 
 		return addAnotherTextItemsFromBody.filter((textItem) => textItem.length);
 	}
-}
-
-/**
- *
- * @param {NotValidReasonOption[]} reasonOptions
- * @param {string|string[]|undefined} reasons
- * @param {Object<string, string[]>|undefined} reasonsText
- * @returns {string} string containing unordered list html
- */
-export function mapReasonsToReasonsListHtml(reasonOptions, reasons, reasonsText) {
-	if (!reasons || reasons.length === 0) {
-		return '';
-	}
-
-	if (!Array.isArray(reasons)) {
-		reasons = [reasons];
-	}
-
-	const items = reasons
-		?.map((reason) => reasonOptions.find((option) => option.id === parseInt(reason || '', 10)))
-		.map((option) => {
-			if (!option) {
-				throw new Error('invalid or incomplete reason ID was not recognised');
-			}
-
-			/** @type {string[]} */
-			let textItems = [];
-
-			if (option.hasText && reasonsText && reasonsText[option.id]) {
-				textItems = reasonsText[option.id];
-			}
-
-			/** @type {Array<string|string[]>} */
-			const list = [`${option.name}${textItems.length ? ':' : ''}`];
-
-			if (textItems.length) {
-				list.push(textItems);
-			}
-
-			return list;
-		})
-		.flat() || [''];
-
-	return buildHtmUnorderedList(items);
 }
 
 /**

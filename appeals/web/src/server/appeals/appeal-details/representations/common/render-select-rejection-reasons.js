@@ -1,4 +1,4 @@
-import { mapRejectionReasonOptionsToCheckboxItemParameters } from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
+import { mapRejectionReasonOptionsToCheckboxItemParameters } from '#appeals/appeal-details/representations/representations.mapper.js';
 import logger from '#lib/logger.js';
 import { getRepresentationRejectionReasonOptions } from '../representations.service.js';
 
@@ -22,6 +22,7 @@ export const renderSelectRejectionReasons = (contentMapper) => async (request, r
 			currentRepresentation,
 			rejectionReasons,
 			session,
+			'rejectIpComment',
 			errors?.['']
 				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
 				: undefined

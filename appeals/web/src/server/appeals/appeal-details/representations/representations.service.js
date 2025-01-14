@@ -60,3 +60,18 @@ export async function getRepresentationRejectionReasonOptions(apiClient, represe
 		.get(`appeals/representation-rejection-reasons?type=${representationType}`)
 		.json();
 }
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} commentId
+ * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
+ * */
+export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) =>
+	apiClient
+		.patch(`appeals/${appealId}/reps/${commentId}/rejection-reasons`, {
+			json: {
+				rejectionReasons: rejectionReasons
+			}
+		})
+		.json();
