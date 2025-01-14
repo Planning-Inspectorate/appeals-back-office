@@ -99,7 +99,7 @@ const getMyAppeals = async (req, res) => {
 
 		// Flatten to an array of strings
 		// @ts-ignore
-		const formattedStatuses = statuses?.statuses
+		const formattedStatuses = statuses
 			// @ts-ignore
 			?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
 			.flat();
