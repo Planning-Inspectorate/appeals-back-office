@@ -359,9 +359,9 @@ exports[`interested-party-comments GET /review-comment with data should render r
                         <div class="govuk-form-group">
                             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
+                                    <input class="govuk-checkboxes__input" id="site-visit-request" name="siteVisitRequested"
                                     type="checkbox" value="site-visit">
-                                    <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">The comment includes a site visit request</label>
+                                    <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
                                 </div>
                             </div>
                         </div>
@@ -414,7 +414,7 @@ exports[`interested-party-comments GET /view-comment with data should render vie
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=false&amp;editAddress=false"> Add<span class="govuk-visually-hidden"> address</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site visit requested</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site visit requested</dt>
                     <dd class="govuk-summary-list__value">No</dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
