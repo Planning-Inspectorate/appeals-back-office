@@ -228,6 +228,8 @@ model NeighbouringSite {
   address   Address @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   addressId Int
   source    String  @default("back-office")
+
+  @@unique([appealId, addressId])
 }
 
 /// AppellantCase model
