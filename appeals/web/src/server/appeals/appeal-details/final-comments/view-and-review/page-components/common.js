@@ -22,6 +22,11 @@ export function generateCommentsSummaryList(appealId, comment, finalCommentsType
 			  )
 			: null;
 
+	console.log('comment:');
+	console.log(comment);
+	console.log('attachmentsList:');
+	console.log(attachmentsList);
+
 	const rows = [
 		{
 			key: { text: comment.redactedRepresentation ? 'Original final comments' : 'Final comments' },
