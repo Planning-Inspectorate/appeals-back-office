@@ -1,4 +1,5 @@
 import { CurrentPermissionSet } from '#environment/permissions';
+import { Representation } from './appeal-details/representations/types';
 
 export interface CheckboxRadioConditionalHtmlParameter {
 	html?: string;

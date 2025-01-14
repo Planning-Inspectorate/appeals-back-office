@@ -7,9 +7,11 @@ export function renderReviewLpaStatement(request, response) {
 
 	const isReview = currentRepresentation.status === 'awaiting_review';
 
-	const pageContent = isReview
-		? reviewLpaStatementPage(currentAppeal, currentRepresentation, session)
-		: viewLpaStatementPage(currentAppeal, currentRepresentation);
+	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
+		currentAppeal,
+		currentRepresentation,
+		session
+	);
 
 	return response
 		.status(200)

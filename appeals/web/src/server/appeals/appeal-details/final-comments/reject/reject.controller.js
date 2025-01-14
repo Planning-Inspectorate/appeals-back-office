@@ -139,11 +139,16 @@ export const postConfirmRejectFinalComment = async (request, response) => {
 		const rejectionReasons = mapRejectionReasonPayload(session.rejectFinalComments);
 
 		await Promise.all([
-			updateRejectionReasons(apiClient, appealId, currentRepresentation.id, rejectionReasons),
+			updateRejectionReasons(
+				apiClient,
+				appealId,
+				String(currentRepresentation.id),
+				rejectionReasons
+			),
 			patchFinalCommentsStatus(
 				apiClient,
 				appealId,
-				currentRepresentation.id,
+				String(currentRepresentation.id),
 				COMMENT_STATUS.INVALID
 			)
 		]);

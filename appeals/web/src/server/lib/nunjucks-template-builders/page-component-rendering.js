@@ -36,7 +36,7 @@ export const preRenderPageComponents = (pageComponents, recursions = 0, maximumR
 					for (const itemKey of itemKeys) {
 						const itemProperty = item[itemKey];
 
-						if (!isObjectLiteral(itemProperty)) {
+						if (!isObjectLiteral(itemProperty) || item?.value?.html?.length) {
 							continue;
 						}
 

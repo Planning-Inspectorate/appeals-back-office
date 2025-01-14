@@ -1,3 +1,5 @@
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+
 /**
  * @typedef {object} CheckYourAnswersParams
  * @property {string} title
@@ -5,7 +7,7 @@
  * @property {string} preHeading
  * @property {string} heading
  * @property {string} submitButtonText
-	@property {{ [key: string]: {value?: string, html?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
+	@property {{ [key: string]: {value?: string, html?: string, pageComponents?: PageComponent[], actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
  */
 
 /**
@@ -24,27 +26,34 @@ export const checkYourAnswersComponent = ({
 		{
 			type: 'summary-list',
 			parameters: {
-				rows: Object.entries(responses).map(([key, { value, html, actions = {} }]) => ({
-					key: { text: key },
-					value: value
-						? {
-								text: value
-						  }
-						: {
-								html
-						  },
-					actions: {
-						items: Object.entries(actions).map(([text, item]) => {
-							return {
-								html: `${text} <span class="govuk-visually-hidden">${item.visuallyHiddenText}</span>`,
-								href: item.href
-							};
-						})
+				rows: Object.entries(responses).map(
+					([key, { value, html, pageComponents: rowComponents, actions = {} }]) => {
+						return {
+							key: { text: key },
+							value: value
+								? {
+										text: value
+								  }
+								: {
+										html,
+										pageComponents: rowComponents || []
+								  },
+							actions: {
+								items: Object.entries(actions).map(([text, item]) => {
+									return {
+										html: `${text} <span class="govuk-visually-hidden">${item.visuallyHiddenText}</span>`,
+										href: item.href
+									};
+								})
+							}
+						};
 					}
-				}))
+				)
 			}
 		}
 	];
+
+	preRenderPageComponents(pageComponents);
 
 	return {
 		title,

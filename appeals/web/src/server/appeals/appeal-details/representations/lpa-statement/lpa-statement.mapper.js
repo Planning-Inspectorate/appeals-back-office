@@ -101,7 +101,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {Record<string, any>} session
+ * @param {import('@pins/express').Session} session
  * @returns {PageContent}
  */
 export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
@@ -126,7 +126,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 				{
 					value: COMMENT_STATUS.VALID,
 					text: 'Accept statement',
-					checked: 'acceptLPAStatement' in session
+					checked: session.lpaStatement?.status === COMMENT_STATUS.VALID
 				},
 				{
 					value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
@@ -136,7 +136,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 				{
 					value: COMMENT_STATUS.INCOMPLETE,
 					text: 'Statement incomplete',
-					checked: lpaStatement?.status === COMMENT_STATUS.INCOMPLETE
+					checked: session.lpaStatement?.status === COMMENT_STATUS.INCOMPLETE
 				}
 			]
 		}
