@@ -151,7 +151,7 @@ export async function updateRepresentation(request, response) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
-	const updatedRep = await representationRepository.updateRepresentationById(
+	const updatedRep = await representationService.updateRepresentation(
 		parseInt(repId),
 		request.body
 	);

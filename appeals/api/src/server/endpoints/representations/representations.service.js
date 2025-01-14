@@ -1,6 +1,10 @@
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 import addressRepository from '#repositories/address.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
+import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import config from '#config/config.js';
@@ -12,6 +16,7 @@ import formatDate from '#utils/date-formatter.js';
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
+/** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
 
 export class RepresentationTypeError extends Error {
 	/**
@@ -216,3 +221,27 @@ export const updateAttachments = async (repId, attachments) => {
 	);
 	return updatedRepresentation;
 };
+
+/**
+ * @param {number} repId
+ * @param {RepresentationUpdateInput} payload
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export async function updateRepresentation(repId, payload) {
+	const updatedRep = await representationRepository.updateRepresentationById(repId, payload);
+
+	if (
+		updatedRep.siteVisitRequested &&
+		updatedRep.represented?.addressId &&
+		[APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INVALID].includes(
+			updatedRep.status
+		)
+	) {
+		await neighbouringSitesRepository.connectSite(
+			updatedRep.appealId,
+			updatedRep.represented.addressId
+		);
+	}
+
+	return updatedRep;
+}
