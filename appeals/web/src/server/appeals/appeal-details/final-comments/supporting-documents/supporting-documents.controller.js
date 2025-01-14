@@ -105,12 +105,18 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				/** @type {import('@pins/express/types/express.js').Request} */ request,
 				/** @type {string[]} */ documentGUIDs
 			) => {
+				console.log(
+					`await patchRepresentationAttachments(request.apiClient, ${currentAppeal.appealId}, ${currentRepresentation.id}, ${documentGUIDs})`
+				);
+
 				await patchRepresentationAttachments(
 					request.apiClient,
 					currentAppeal.appealId,
 					currentRepresentation.id,
 					documentGUIDs
 				);
+
+				console.log('patchRepresentationAttachments OK');
 
 				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
 			}
