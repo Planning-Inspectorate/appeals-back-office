@@ -74,7 +74,16 @@ export const mapAppealStatuses = (rawStatuses) => {
 				)
 		)
 	];
-	return statusOrder.filter((status) => extractedStatuses.includes(status));
+	const orderedStatuses = statusOrder.filter((status) => extractedStatuses.includes(status));
+
+	// Now add all those statuses not listed above in the statusOrder
+	extractedStatuses.forEach((status) => {
+		if (!orderedStatuses.includes(status)) {
+			orderedStatuses.push(status);
+		}
+	});
+
+	return orderedStatuses;
 };
 
 /**
