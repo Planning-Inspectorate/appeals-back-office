@@ -128,10 +128,10 @@ describe('interested-party-comments', () => {
 	describe('POST /review', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
-			nock('http://test/').patch('/appeals/2/reps/5/status').reply(200, {});
+			nock('http://test/').patch('/appeals/2/reps/5').reply(200, {});
 		});
 
-		it('should set represnetation status to valid', async () => {
+		it('should set representation status to valid', async () => {
 			const response = await request
 				.post(`${baseUrl}/2/interested-party-comments/5/review`)
 				.send({ status: 'valid' });
