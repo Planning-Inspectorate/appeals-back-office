@@ -1,4 +1,5 @@
-import { isValidOutcome } from '#utils/mapping/map-enums.js';
+import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
+import { isValidOutcome, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -23,17 +24,21 @@ export const mapAppealDecision = (data) => {
 			const decisionLetter = decisionFolder?.documents?.find(
 				(d) => d.guid === appeal.inspectorDecision?.decisionLetterGuid
 			);
-			if (outcome && decisionLetter) {
-				return {
-					folderId: decisionFolder.id,
-					path: decisionFolder.path,
-					documentId: decisionLetter.guid,
-					documentName: decisionLetter.name,
-					letterDate:
-						decisionLetter.latestDocumentVersion?.dateReceived?.toISOString() ??
-						appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
-					outcome
-				};
+			if (outcome && decisionLetter?.latestDocumentVersion) {
+				const avCheckStatus = getAvScanStatus(decisionLetter.latestDocumentVersion);
+				if (isValidVirusCheckStatus(avCheckStatus)) {
+					return {
+						folderId: decisionFolder.id,
+						path: decisionFolder.path,
+						documentId: decisionLetter.guid,
+						documentName: decisionLetter.name,
+						letterDate:
+							decisionLetter.latestDocumentVersion?.dateReceived?.toISOString() ??
+							appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
+						virusCheckStatus: avCheckStatus,
+						outcome
+					};
+				}
 			}
 		}
 
