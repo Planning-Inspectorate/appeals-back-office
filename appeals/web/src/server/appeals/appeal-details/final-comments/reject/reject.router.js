@@ -1,0 +1,26 @@
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { Router as createRouter } from 'express';
+import { asyncHandler } from '@pins/express';
+
+import * as controller from './reject.controller.js';
+
+import { validateRejectReason, validateRejectionReasonTextItems } from './reject.validators.js';
+
+const router = createRouter({ mergeParams: true });
+
+router
+	.route('/')
+	.get(asyncHandler(controller.renderSelectReason))
+	.post(
+		validateRejectReason,
+		validateRejectionReasonTextItems,
+		saveBodyToSession('rejectFinalComments'),
+		asyncHandler(controller.postRejectReason)
+	);
+
+router
+	.route('/confirm')
+	.get(asyncHandler(controller.getConfirmRejectFinalComment))
+	.post(asyncHandler(controller.postConfirmRejectFinalComment));
+
+export default router;

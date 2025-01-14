@@ -1,4 +1,4 @@
-import { mapRejectionReasonPayload } from '#appeals/appeal-details/interested-party-comments/view-and-review/page-components/reject.mapper.js';
+import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
 import { renderSelectRejectionReasons } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '#appeals/appeal-details/representations/representations.service.js';
 import { ensureArray } from '#lib/array-utilities.js';
@@ -9,7 +9,8 @@ import {
 	rejectCheckYourAnswersPage,
 	rejectInterestedPartyCommentPage
 } from './reject.mapper.js';
-import { rejectInterestedPartyComment, updateRejectionReasons } from './reject.service.js';
+import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
+import { rejectInterestedPartyComment } from './reject.service.js';
 
 export const renderSelectReason = renderSelectRejectionReasons(rejectInterestedPartyCommentPage);
 

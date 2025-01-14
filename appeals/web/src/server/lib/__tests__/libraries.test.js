@@ -21,9 +21,9 @@ import { addConditionalHtml } from '#lib/nunjucks-filters/add-conditional-html.j
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import {
 	mapReasonOptionsToCheckboxItemParameters,
-	mapReasonsToReasonsListHtml,
 	getNotValidReasonsTextFromRequestBody
 } from '../validation-outcome-reasons-formatter.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { timeIsBeforeTime, is24HourTimeValid } from '#lib/times.js';
 import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
 import { stringContainsDigitsOnly } from '#lib/string-utilities.js';

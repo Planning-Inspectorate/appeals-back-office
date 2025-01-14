@@ -3,6 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { redactInput } from '../../representations/common/components/redact-input.js';
 import { summaryList } from './components/summary-list.js';
+import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -116,11 +117,3 @@ export const confirmRedactFinalCommentPage = (
 
 	return pageContent;
 };
-
-/**
- * @param {string} finalCommentsType
- * @returns {string}
- */
-function formatFinalCommentsTypeText(finalCommentsType) {
-	return finalCommentsType === 'lpa' ? 'LPA' : 'appellant';
-}

@@ -8,10 +8,9 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate
 } from '#lib/dates.js';
-import {
-	mapReasonOptionsToCheckboxItemParameters,
-	mapReasonsToReasonsListHtml
-} from '#lib/validation-outcome-reasons-formatter.js';
+import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
@@ -32,7 +31,7 @@ import { permissionNames } from '#environment/permissions.js';
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
  * @typedef {import('./lpa-questionnaire.types.js').LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse} IncompleteInvalidReasonResponse
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('../appeal-details.types.js').BodyValidationOutcome} BodyValidationOutcome
  * @typedef {import('./lpa-questionnaire.types.js').LPAQuestionnaireSessionValidationOutcome} SessionValidationOutcome
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
@@ -365,7 +364,7 @@ export function updateDueDatePage(
  * @param {number} appealId
  * @param {string} appealReference
  * @param {string|number} lpaQuestionnaireId
- * @param {NotValidReasonOption[]} incompleteReasonOptions
+ * @param {ReasonOption[]} incompleteReasonOptions
  * @param {LPAQuestionnaireValidationOutcome} validationOutcome
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|string[]} [incompleteReasons]
@@ -575,7 +574,7 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId, l
 
 /**
  *
- * @param {NotValidReasonOption[]} reasonOptions
+ * @param {ReasonOption[]} reasonOptions
  * @param {BodyValidationOutcome} [bodyValidationOutcome]
  * @param {SessionValidationOutcome} [sessionValidationOutcome]
  * @param {import('@pins/appeals.api').Appeals.ValidationOutcomeResponse | null} [existingValidationOutcome]

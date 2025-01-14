@@ -1,5 +1,5 @@
 /**
- * @typedef {import('@pins/appeals.api').Appeals.NotValidReasonOption} NotValidReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
  * @typedef {import('./appellant-case.types.js').AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
  */
@@ -35,7 +35,7 @@ export async function setReviewOutcomeForAppellantCase(
 
 /**
  * @param {import('got').Got} apiClient
- * @returns {Promise<NotValidReasonOption[]>}
+ * @returns {Promise<ReasonOption[]>}
  */
 async function getAppellantCaseInvalidReasonOptions(apiClient) {
 	return apiClient.get(`appeals/appellant-case-invalid-reasons`).json();
@@ -43,7 +43,7 @@ async function getAppellantCaseInvalidReasonOptions(apiClient) {
 
 /**
  * @param {import('got').Got} apiClient
- * @returns {Promise<NotValidReasonOption[]>}
+ * @returns {Promise<ReasonOption[]>}
  */
 async function getAppellantCaseIncompleteReasonOptions(apiClient) {
 	return apiClient.get(`appeals/appellant-case-incomplete-reasons`).json();
@@ -52,7 +52,7 @@ async function getAppellantCaseIncompleteReasonOptions(apiClient) {
 /**
  * @param {import('got').Got} apiClient
  * @param {AppellantCaseValidationOutcome} validationOutcome
- * @returns {Promise<NotValidReasonOption[]>}
+ * @returns {Promise<ReasonOption[]>}
  */
 export async function getAppellantCaseNotValidReasonOptionsForOutcome(
 	apiClient,

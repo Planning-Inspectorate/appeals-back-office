@@ -1,4 +1,4 @@
-import { mapRejectionReasonPayload } from '../reject.mapper.js';
+import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
 
 describe('mapRejectionReasonPayload', () => {
 	it('maps rejection reasons with empty texts correctly', () => {

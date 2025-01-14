@@ -238,6 +238,16 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Final comments redacted'
 	},
+	finalCommentsLPARejectionSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA final comments rejected'
+	},
+	finalCommentsAppellantRejectionSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant final comments rejected'
+	},
 	lpaStatementAccepted: {
 		type: 'success',
 		pages: ['appealDetails'],
