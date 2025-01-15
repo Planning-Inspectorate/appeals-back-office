@@ -54,6 +54,10 @@ export const mapAppellantCase = (data) => {
 			healthAndSafety: {
 				details: appellantCase.siteSafetyDetails,
 				hasIssues: appellantCase.siteSafetyDetails !== null
+			},
+			developmentDescription: {
+				details: appellantCase?.originalDevelopmentDescription || null,
+				isChanged: appellantCase?.changedDevelopmentDescription === true
 			}
 		};
 	}

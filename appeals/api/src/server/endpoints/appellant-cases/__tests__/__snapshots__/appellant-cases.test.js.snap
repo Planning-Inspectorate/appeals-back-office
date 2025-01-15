@@ -39,6 +39,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "createdAt": "2024-03-25T23:59:59.999Z",
+  "developmentDescription": {
+    "details": "A test description",
+    "isChanged": false,
+  },
   "documents": {},
   "enforcementNotice": null,
   "floorSpaceSquareMetres": null,
@@ -181,6 +185,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "createdAt": "2024-03-25T23:59:59.999Z",
+  "developmentDescription": {
+    "details": "A test description",
+    "isChanged": false,
+  },
   "documents": {},
   "enforcementNotice": null,
   "floorSpaceSquareMetres": null,
@@ -345,6 +353,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "createdAt": "2024-03-25T23:59:59.999Z",
+  "developmentDescription": {
+    "details": "A test description",
+    "isChanged": false,
+  },
   "documents": {},
   "enforcementNotice": null,
   "floorSpaceSquareMetres": null,
@@ -525,6 +537,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "createdAt": "2024-03-25T23:59:59.999Z",
+  "developmentDescription": {
+    "details": "A test description",
+    "isChanged": false,
+  },
   "documents": {},
   "enforcementNotice": null,
   "floorSpaceSquareMetres": null,
