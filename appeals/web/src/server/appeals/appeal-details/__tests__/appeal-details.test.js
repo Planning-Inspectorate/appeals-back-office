@@ -47,7 +47,7 @@ describe('appeal-details', () => {
 	describe('GET /:appealId', () => {
 		describe('Notification banners', () => {
 			const notificationBannerElement = '.govuk-notification-banner';
-			it('should render a "This appeal is awaiting transfer" success notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer', async () => {
+			it('should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -62,7 +62,7 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Important</h3>');
 				expect(notificationBannerElementHTML).toContain('This appeal is awaiting transfer</p>');
 				expect(notificationBannerElementHTML).toContain(
 					'href="/appeals-service/appeal-details/2/change-appeal-type/add-horizon-reference'
