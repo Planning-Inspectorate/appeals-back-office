@@ -1,7 +1,7 @@
 import { redactInterestedPartyCommentPage } from './redact.mapper.js';
 import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { redactAndRejectComment } from './redact.service.js';
+import { redactAndAcceptComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
@@ -46,7 +46,7 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 		apiClient
 	} = request;
 
-	await redactAndRejectComment(
+	await redactAndAcceptComment(
 		apiClient,
 		appealId,
 		commentId,
