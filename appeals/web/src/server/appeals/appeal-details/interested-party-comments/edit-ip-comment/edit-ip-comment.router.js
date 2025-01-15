@@ -26,6 +26,9 @@ router
 	.get(asyncHandler(controller.renderCheckAddress))
 	.post(asyncHandler(controller.postCheckPage));
 
-router.route('/site-visit-requested').get(asyncHandler(controller.renderSiteVisitRequested));
+router
+	.route('/site-visit-requested')
+	.get(asyncHandler(controller.renderSiteVisitRequested))
+	.post(asyncHandler(controller.postSiteVisitRequested));
 
 export default router;

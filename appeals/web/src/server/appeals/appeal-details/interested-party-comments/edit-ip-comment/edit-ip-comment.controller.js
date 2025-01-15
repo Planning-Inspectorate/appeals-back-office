@@ -1,6 +1,6 @@
 import url from 'url';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { updateAddress } from './edit-ip-comment.service.js';
+import { updateAddress, unsetSiteVisitRequested } from './edit-ip-comment.service.js';
 import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -115,5 +115,25 @@ export async function postEditAddress(request, response) {
 				editAddress: request.query.editAddress === 'true'
 			}
 		})
+	);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export async function postSiteVisitRequested(request, response) {
+	const { apiClient, errors, currentAppeal, currentRepresentation, body } = request;
+
+	if (errors) {
+		return renderSiteVisitRequested(request, response);
+	}
+
+	if (body.siteVisitRequested === 'yes') {
+		await unsetSiteVisitRequested(apiClient, currentAppeal.appealId, currentRepresentation.id);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/view`
 	);
 }

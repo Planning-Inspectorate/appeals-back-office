@@ -19,3 +19,15 @@ export const updateAddress = (apiClient, appealId, representedId, address) =>
 			}
 		})
 		.json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} commentId
+ * */
+export const unsetSiteVisitRequested = (apiClient, appealId, commentId) =>
+	apiClient
+		.patch(`appeals/${appealId}/reps/${commentId}`, {
+			json: { siteVisitRequested: false }
+		})
+		.json();
