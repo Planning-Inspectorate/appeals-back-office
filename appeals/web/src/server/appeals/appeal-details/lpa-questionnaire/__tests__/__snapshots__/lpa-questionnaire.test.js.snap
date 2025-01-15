@@ -346,10 +346,14 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                     </fieldset>
                 </div>
                 <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome.</div>
-                <div                 class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Do not select
-                        an outcome until you have reviewed all of the supporting documents and
-                        redacted any sensitive information.</strong>
+                <div                 class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                            <strong                             class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Do not select
+                                an outcome until you have reviewed all of the supporting documents and
+                                redacted any sensitive information.</strong>
+                        </div>
+                    </div>
         </div>
         <button class="govuk-button" data-module="govuk-button">Confirm</button>
         </form>

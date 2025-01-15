@@ -111,6 +111,10 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageComponent} */
 	const documentsWarningComponent = {
 		type: 'warning-text',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+			closing: '</div></div>'
+		},
 		parameters: {
 			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
