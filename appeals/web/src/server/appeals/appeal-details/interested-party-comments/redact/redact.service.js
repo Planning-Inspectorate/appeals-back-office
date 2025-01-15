@@ -7,7 +7,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
  * @param {string} redactedRepresentation
  * @param {boolean} [siteVisitRequested]
  * */
-export const redactAndRejectComment = (
+export const redactAndAcceptComment = (
 	apiClient,
 	appealId,
 	commentId,
