@@ -102,7 +102,18 @@ export function generateCommentSummaryList(
 			: [
 					{
 						key: { text: 'Site visit requested' },
-						value: { text: comment.siteVisitRequested ? 'Yes' : 'No' }
+						value: { text: comment.siteVisitRequested ? 'Yes' : 'No' },
+						actions: {
+							items: comment.siteVisitRequested
+								? [
+										{
+											text: 'Change',
+											href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/edit/site-visit-requested`,
+											visuallyHiddenText: 'site visited requested'
+										}
+								  ]
+								: []
+						}
 					}
 			  ]),
 		{
