@@ -130,9 +130,8 @@ describe('buildNotificationBanners', () => {
 			{
 				type: 'notification-banner',
 				parameters: {
-					titleText: 'Success',
+					titleText: 'Important',
 					titleHeadingLevel: 3,
-					type: 'success',
 					html: '<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, update the appeal with the new horizon reference.</p>'
 				}
 			}

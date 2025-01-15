@@ -171,11 +171,11 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "This appeal is awaiting transfer" success notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+exports[`appeal-details GET /:appealId Notification banners should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
+"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p>
