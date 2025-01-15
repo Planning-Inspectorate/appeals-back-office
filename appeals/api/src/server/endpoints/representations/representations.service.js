@@ -230,9 +230,16 @@ export const updateAttachments = async (repId, attachments) => {
 export async function updateRepresentation(repId, payload) {
 	const updatedRep = await representationRepository.updateRepresentationById(repId, payload);
 
-	if (
-		updatedRep.siteVisitRequested &&
-		updatedRep.represented?.addressId &&
+	if (!updatedRep.represented?.addressId) {
+		return updatedRep;
+	}
+
+	if (!updatedRep.siteVisitRequested) {
+		await neighbouringSitesRepository.disconnectSite(
+			updatedRep.appealId,
+			updatedRep.represented.addressId
+		);
+	} else if (
 		[APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INVALID].includes(
 			updatedRep.status
 		)

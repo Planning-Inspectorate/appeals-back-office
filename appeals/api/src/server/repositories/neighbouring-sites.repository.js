@@ -78,6 +78,20 @@ const connectSite = (appealId, addressId) =>
 	});
 
 /**
+ * @param {number} appealId
+ * @param {number} addressId
+ */
+const disconnectSite = (appealId, addressId) =>
+	databaseConnector.neighbouringSite.delete({
+		where: {
+			appealId_addressId: {
+				appealId,
+				addressId
+			}
+		}
+	});
+
+/**
  * Updates the address of a neighbouring site
  * @param {number} siteId
  * @param {{addressLine1: string, addressLine2?: string | null, postcode: string, addressCounty?: string | null, addressTown: string}} address
@@ -137,5 +151,6 @@ export default {
 	addSite,
 	updateSite,
 	removeSite,
-	connectSite
+	connectSite,
+	disconnectSite
 };
