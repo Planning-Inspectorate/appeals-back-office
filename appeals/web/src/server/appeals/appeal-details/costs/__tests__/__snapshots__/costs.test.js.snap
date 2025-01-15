@@ -1707,9 +1707,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -1800,9 +1800,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -1893,9 +1893,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -1986,9 +1986,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2079,9 +2079,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2172,9 +2172,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2799,9 +2799,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2892,9 +2892,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2985,9 +2985,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3078,9 +3078,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3171,9 +3171,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3264,9 +3264,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -5517,9 +5517,9 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -5699,9 +5699,9 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>

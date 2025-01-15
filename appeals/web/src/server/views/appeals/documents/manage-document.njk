@@ -30,7 +30,7 @@
 	{%- endif -%}
 	{%- if notificationBannerPageComponents | length -%}
 		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-two-thirds">
+			<div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
 			{%- for component in notificationBannerPageComponents -%}
 				{%- include "../components/page-component.njk" -%}
 			{%- endfor -%}

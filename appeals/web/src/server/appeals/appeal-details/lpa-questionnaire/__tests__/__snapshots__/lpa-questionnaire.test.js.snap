@@ -692,9 +692,9 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
 exports[`LPA Questionnaire review GET / with unchecked documents should render a notification banner when a file is unscanned 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -702,8 +702,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2">Refresh page to see if scan has finished</a>
                 </div>
             </div>
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
                 </div>
@@ -2296,8 +2296,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2413,8 +2413,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2550,9 +2550,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render the manage individual document page with late entry tag in the date received row if the latest version of the document is marked as late entry, and a document history item for each version, with late entry tag in the history item document name column for versions marked as late entry 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2763,9 +2763,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -2945,9 +2945,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3038,9 +3038,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render the manage individual document page without late entry tag in the date received row if the latest version of the document is not marked as late entry 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3241,7 +3241,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3253,7 +3253,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Description of development updated" success notification banner when eia development description is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3265,7 +3265,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Development category updated" success notification banner when eia environmental impact schedule is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3277,7 +3277,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3289,7 +3289,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site added" success notification banner when a neighbouring site was added 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3301,7 +3301,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3313,7 +3313,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3325,7 +3325,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Notification methods updated" success notification banner when notification methods are changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3337,7 +3337,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a "Safety risks updated" success notification banner when the safety risks (lpa) is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3349,7 +3349,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a success notification banner when "green belt" is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3361,7 +3361,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a success notification banner when "is correct appeal type" is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3373,7 +3373,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3385,7 +3385,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -3397,8 +3397,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`LPA Questionnaire review Notification banners should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
     </div>
@@ -3460,9 +3460,9 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>
                 </div>

@@ -7,7 +7,7 @@
 {%- block pageHeading -%}
 	{%- for component in pageContent.pageComponents -%}
 		{%- if component.type === 'notification-banner' -%}
-			{{ govukNotificationBanner(component.parameters) }}
+			{{ govukNotificationBanner(component.parameters | assign({ classes: "govuk-!-margin-bottom-5" })) }}
 		{%- endif -%}
 	{%- endfor -%}
 	<div class="govuk-grid-row">

@@ -71,8 +71,8 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details" data-module="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="300"><div class="govuk-form-group"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea></div><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 300 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -85,8 +85,8 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready to be assigned to case officer" important notification banner with a link to assign case officer when status is "Assign case officer" 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -100,7 +100,7 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -121,8 +121,8 @@ exports[`appeal-details GET /:appealId Notification banners should render a "Hor
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "LPA questionnaire ready for review" important notification banner with a link to review the questionnaire when the appeal status is "lpa_questionnaire" and the appeal has an LPA questionnaire ID 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -136,7 +136,7 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -148,7 +148,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -160,7 +160,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -172,8 +172,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -186,7 +186,7 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -198,7 +198,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a costs decision document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -210,7 +210,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a cross-team correspondence document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -222,7 +222,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a new version of a costs decision document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -234,7 +234,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a new version of an LPA costs document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -246,7 +246,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a new version of an appellant costs document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -258,7 +258,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a service user was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -270,7 +270,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a user was successfully assigned as case officer 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -282,7 +282,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a user was successfully assigned as inspector 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -294,7 +294,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a user was successfully unassigned as inspector 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -306,7 +306,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when an LPA costs document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -318,7 +318,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when an appellant costs document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -330,7 +330,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when an inspector correspondence document was uploaded 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -342,7 +342,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the inspector access was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -354,7 +354,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the lpa application reference was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -366,7 +366,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -378,7 +378,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the safety risks was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -390,7 +390,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the site visit type was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -402,7 +402,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -414,7 +414,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -426,7 +426,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -438,8 +438,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appeal-details GET /:appealId Notification banners should render an important notification banner when the appeal has unreviewed IP comments 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -920,8 +920,8 @@ exports[`appeal-details GET /:appealId should not render action links to the man
 `;
 
 exports[`appeal-details GET /:appealId should render a "Appeal valid" notification banner with a link to start case when status is "READY_TO_START" 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -2840,9 +2840,9 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
 exports[`appeal-details GET /:appealId should render an Issue a decision notification banner with action link to issue decision flow when the appealStatus is ready for final review 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3780,9 +3780,9 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
 exports[`appeal-details GET /:appealId should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is in the future 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -4260,9 +4260,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 exports[`appeal-details GET /:appealId should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is today 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -4740,9 +4740,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 exports[`appeal-details GET /:appealId should render the appellant case status as "Overdue" if the appellant case validation status is incomplete, and the due date is in the past 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
