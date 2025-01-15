@@ -1,7 +1,7 @@
 import url from 'url';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { updateAddress } from './edit-ip-comment.service.js';
-import { checkAddressPage } from './edit-ip-comment.mappers.js';
+import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
@@ -25,6 +25,21 @@ export async function renderEditAddress(request, response) {
 		`${currentRepresentation.id}/${backLinkUrl}`,
 		operationType
 	);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export async function renderSiteVisitRequested(request, response) {
+	const { errors, currentAppeal, currentRepresentation } = request;
+
+	const pageContent = siteVisitRequestedPage(currentAppeal, currentRepresentation.id);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -87,9 +102,9 @@ export async function postCheckPage(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function postEditAddress(request, response) {
-	const { currentAppeal, currentRepresentation } = request;
+	const { errors, currentAppeal, currentRepresentation } = request;
 
-	if (request.errors) {
+	if (errors) {
 		return renderEditAddress(request, response);
 	}
 
