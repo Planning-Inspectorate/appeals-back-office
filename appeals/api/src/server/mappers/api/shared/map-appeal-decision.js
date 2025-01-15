@@ -1,6 +1,10 @@
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import { isValidOutcome, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE
+} from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppealDecision} AppealDecision */
@@ -24,18 +28,29 @@ export const mapAppealDecision = (data) => {
 			const decisionLetter = decisionFolder?.documents?.find(
 				(d) => d.guid === appeal.inspectorDecision?.decisionLetterGuid
 			);
-			if (outcome && decisionLetter?.latestDocumentVersion) {
-				const avCheckStatus = getAvScanStatus(decisionLetter.latestDocumentVersion);
-				if (isValidVirusCheckStatus(avCheckStatus)) {
+			if (outcome) {
+				if (
+					outcome !== APPEAL_CASE_DECISION_OUTCOME.INVALID &&
+					decisionLetter?.latestDocumentVersion
+				) {
+					const avCheckStatus = getAvScanStatus(decisionLetter.latestDocumentVersion);
+					if (isValidVirusCheckStatus(avCheckStatus)) {
+						return {
+							folderId: decisionFolder.id,
+							path: decisionFolder.path,
+							documentId: decisionLetter.guid,
+							documentName: decisionLetter.name,
+							letterDate:
+								decisionLetter.latestDocumentVersion?.dateReceived?.toISOString() ??
+								appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
+							virusCheckStatus: avCheckStatus,
+							outcome
+						};
+					}
+				} else {
 					return {
 						folderId: decisionFolder.id,
 						path: decisionFolder.path,
-						documentId: decisionLetter.guid,
-						documentName: decisionLetter.name,
-						letterDate:
-							decisionLetter.latestDocumentVersion?.dateReceived?.toISOString() ??
-							appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
-						virusCheckStatus: avCheckStatus,
 						outcome
 					};
 				}

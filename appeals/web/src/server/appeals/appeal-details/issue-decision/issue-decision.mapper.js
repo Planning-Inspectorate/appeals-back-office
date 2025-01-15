@@ -456,7 +456,10 @@ export function mapDecisionOutcome(outcome) {
 		case 'dismissed':
 			return 'Dismissed';
 		case 'split':
+		case 'split_decision':
 			return 'Split decision';
+		case 'invalid':
+			return 'Invalid';
 		default:
 			return '';
 	}
