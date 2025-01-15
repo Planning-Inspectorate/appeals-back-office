@@ -32,9 +32,9 @@
   {%- endif -%}
   {%- if notificationBanners | length -%}
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
         {%- for component in notificationBanners -%}
-          {{ govukNotificationBanner(component.parameters) }}
+          {{ govukNotificationBanner(component.parameters | assign({ classes: "govuk-!-margin-bottom-5" })) }}
         {%- endfor -%}
       </div>
     </div>

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`appellant-case GET /appellant-case should render a "Application decision date updated" notification banner when the application decision date is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -13,7 +13,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Green belt status updated" notification banner when the green belt response is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -27,8 +27,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -276,7 +276,7 @@ exports[`appellant-case GET /appellant-case should render a "Inspector access (a
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated 2`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -290,8 +290,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a "LPA application reference" success notification banner when the planning application reference is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -539,7 +539,7 @@ exports[`appellant-case GET /appellant-case should render a "LPA application ref
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -551,7 +551,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Planning obligation status updated" notification banner when the planning obligation status is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -565,8 +565,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a "Site area updated" success notification banner when the site area is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -814,7 +814,7 @@ exports[`appellant-case GET /appellant-case should render a "Site area updated" 
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Site area updated" success notification banner when the site area is updated 2`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -828,8 +828,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1077,7 +1077,7 @@ exports[`appellant-case GET /appellant-case should render a "Site health and saf
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated 2`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1091,8 +1091,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a "Site updated" notification when the site address has been updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1340,7 +1340,7 @@ exports[`appellant-case GET /appellant-case should render a "Site updated" notif
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Site updated" notification when the site address has been updated 2`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1352,7 +1352,7 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render a "Tenant of agricultural holding updated" notification banner when the tenant of agricultural holding response is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1366,8 +1366,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner govuk-notification-banner--success"
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
             role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1615,7 +1615,7 @@ exports[`appellant-case GET /appellant-case should render a success notification
 `;
 
 exports[`appellant-case GET /appellant-case should render a success notification banner when a service user was updated 2`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -1627,8 +1627,8 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 `;
 
 exports[`appellant-case GET /appellant-case should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete" 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
     </div>
@@ -1671,8 +1671,8 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appellant-case GET /appellant-case should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid" 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is invalid</h3>
     </div>
@@ -1710,7 +1710,7 @@ data-module="govuk-notification-banner">
 `;
 
 exports[`appellant-case GET /appellant-case should render an "Other tenants of agricultural holding updated" notification banner when the other tenants of agricultural holding response is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success"
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
@@ -2550,8 +2550,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 `;
 
 exports[`appellant-case GET /appellant-case with unchecked documents should render a notification banner when a file is unscanned 1`] = `
-"<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-data-module="govuk-notification-banner">
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
@@ -3679,8 +3679,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3796,8 +3796,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -3933,9 +3933,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render the manage individual document page with late entry tag in the date received row if the latest version of the document is marked as late entry, and a document history item for each version, with late entry tag in the history item document name column for versions marked as late entry 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -4146,9 +4146,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -4328,9 +4328,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
@@ -4421,9 +4421,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render the manage individual document page without late entry tag in the date received row if the latest version of the document is not marked as late entry 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-            data-module="govuk-notification-banner">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
                 <div class="govuk-notification-banner__header">
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
