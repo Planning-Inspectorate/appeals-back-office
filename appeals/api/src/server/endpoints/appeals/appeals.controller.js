@@ -97,12 +97,13 @@ const getMyAppeals = async (req, res) => {
 		);
 		const sortedAppeals = sortAppeals(formattedAppeals);
 
-		// Flatten to an array of strings
+		// Flatten to a unique array of strings
 		// @ts-ignore
 		const formattedStatuses = statuses
 			// @ts-ignore
 			?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
-			.flat();
+			.flat()
+			.filter((status, index, statuses) => statuses.indexOf(status) === index);
 
 		return res.send({
 			itemCount,
