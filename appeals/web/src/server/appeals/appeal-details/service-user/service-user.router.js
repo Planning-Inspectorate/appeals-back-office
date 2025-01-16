@@ -6,7 +6,7 @@ import * as validators from './service-user.validators.js';
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/change/:userType')
+	.route('/:action/:userType')
 	.get(asyncHandler(controller.getChangeServiceUser))
 	.post(validators.validateChangeServiceUser, asyncHandler(controller.postChangeServiceUser));
 

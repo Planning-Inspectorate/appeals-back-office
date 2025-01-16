@@ -16,6 +16,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import serviceUserRepository from '#repositories/service-user.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -110,17 +111,23 @@ const assignUser = async (id, { caseOfficer, inspector }, azureAdUserId) => {
 
 /**
  *
- * @param {Pick<AppealDto, 'appealId' | 'startedAt' | 'validAt' | 'planningApplicationReference'>} param0
+ * @param {Pick<AppealDto, 'appealId' | 'startedAt' | 'validAt' | 'planningApplicationReference' | 'agent'>} param0
  * @param {string|undefined} azureAdUserId
  */
 const updateAppealDetails = async (
-	{ appealId, startedAt, validAt, planningApplicationReference },
+	{ appealId, startedAt, validAt, planningApplicationReference, agent },
 	azureAdUserId
 ) => {
+	let agentId = null;
+	if (agent) {
+		const { id } = await serviceUserRepository.createServiceUser(agent);
+		agentId = id;
+	}
 	const body = {
 		...(startedAt && { caseStartedDate: startedAt }),
 		...(validAt && { caseValidDate: validAt }),
-		...(planningApplicationReference && { applicationReference: planningApplicationReference })
+		...(planningApplicationReference && { applicationReference: planningApplicationReference }),
+		...(agent && { agent: agentId })
 	};
 	await appealRepository.updateAppealById(appealId, body);
 

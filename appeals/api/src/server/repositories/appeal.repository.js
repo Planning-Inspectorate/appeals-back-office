@@ -171,6 +171,7 @@ const updateAppealById = (
 		caseValidDate,
 		caseOfficer,
 		inspector,
+		agent,
 		applicationReference
 	}
 ) =>
@@ -183,6 +184,7 @@ const updateAppealById = (
 			...(applicationReference && { applicationReference }),
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
+			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			caseUpdatedDate: new Date()
 		},
 		include: {
