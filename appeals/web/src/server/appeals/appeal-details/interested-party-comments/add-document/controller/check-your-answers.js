@@ -54,7 +54,7 @@ export const renderCheckYourAnswers = (
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/redaction-status`,
 							visuallyHiddenText: 'redaction status'
 						}
 					}
@@ -63,7 +63,7 @@ export const renderCheckYourAnswers = (
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
 							visuallyHiddenText: 'date submitted'
 						}
 					}
