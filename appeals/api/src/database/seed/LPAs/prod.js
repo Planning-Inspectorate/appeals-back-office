@@ -10,6 +10,11 @@ export const localPlanningDepartmentList = [
 		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 	},
 	{
+		lpaCode: 'Q1111',
+		name: 'System Test Borough Council 2',
+		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+	},
+	{
 		lpaCode: 'N5090',
 		name: 'Barnet',
 		email: 'planning.appeals@barnet.gov.uk'
