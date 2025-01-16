@@ -47,7 +47,7 @@ export const postRedactFinalComment = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getConfirmRedactFinalComment = async (request, response) => {
+export const getAcceptFinalComment = async (request, response) => {
 	const {
 		errors,
 		currentRepresentation,

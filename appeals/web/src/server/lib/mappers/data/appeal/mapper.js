@@ -16,7 +16,8 @@ import { submaps as hasSubmaps } from './has.js';
  *   appealDetails: WebAppeal,
  *   currentRoute: string,
  *   session: SessionWithAuth,
- *   skipAssignedUsersData?: boolean
+ *   skipAssignedUsersData?: boolean,
+ * 	 appellantFinalComment?: import('#appeals/appeal-details/representations/representations.service.js').Representation
  * ) => Promise<{appeal: MappedInstructions}>} Mapper
  */
 
@@ -33,6 +34,8 @@ import { submaps as hasSubmaps } from './has.js';
  * @property {{
  *     [x: string]: any;
  *   } | null} [inspectorUser]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
  */
 
 /**
@@ -50,7 +53,9 @@ export async function initialiseAndMapAppealData(
 	appealDetails,
 	currentRoute,
 	session,
-	skipAssignedUsersData = false
+	skipAssignedUsersData = false,
+	appellantFinalComments,
+	lpaFinalComments
 ) {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
@@ -94,9 +99,10 @@ export async function initialiseAndMapAppealData(
 			skipAssignedUsersData,
 			userHasUpdateCasePermission,
 			caseOfficerUser,
-			inspectorUser
+			inspectorUser,
+			appellantFinalComments,
+			lpaFinalComments
 		});
 	});
-
 	return mappedData;
 }

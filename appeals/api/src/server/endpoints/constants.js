@@ -13,6 +13,12 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED = 'LPA statement status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_UPDATED = 'Appellant statement status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_COMMENT_STATUS_UPDATED = 'Comment status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_UPDATED = 'LPA final comment status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_UPDATED = 'Appellant final comment status updated to {replacement0}';
+
 export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
 
