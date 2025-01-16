@@ -31,7 +31,7 @@ const getAppeal = async (req, res) => {
 const updateAppealById = async (req, res) => {
 	const {
 		appeal,
-		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference },
+		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference, agent },
 		params
 	} = req;
 	const appealId = Number(params.appealId);
@@ -46,7 +46,8 @@ const updateAppealById = async (req, res) => {
 					appealId,
 					startedAt,
 					validAt,
-					planningApplicationReference
+					planningApplicationReference,
+					agent
 				},
 				azureAdUserId
 			);
