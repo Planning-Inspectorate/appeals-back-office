@@ -105,7 +105,8 @@ export class CaseDetailsPage extends Page {
 		manageCrossTeamCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
 		manageInspectorCorrespondence: () =>
-			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence)
+			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence),
+		decisionOutcomeText: () => cy.get('.govuk-inset-text')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -389,6 +390,10 @@ export class CaseDetailsPage extends Page {
 			.next()
 			.invoke('prop', 'textContent');
 		answer.should('include', rowAnswer);
+	}
+
+	checkDecisionOutcome(text) {
+		this.elements.decisionOutcomeText().contains(text, { matchCase: false });
 	}
 
 	verifyAnswerSummaryValue(answer) {
