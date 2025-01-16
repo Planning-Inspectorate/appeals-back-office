@@ -257,6 +257,11 @@ export const notificationBannerDefinitions = {
 	},
 	shareCommentsAndLpaStatement: {
 		pages: ['appealDetails']
+	},
+	finalCommentsAcceptSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Final comments accepted'
 	}
 };
 

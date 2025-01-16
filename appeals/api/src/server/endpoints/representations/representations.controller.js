@@ -3,6 +3,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import representationRepository from '#repositories/representation.repository.js';
+// import * as CONSTANTS from '#endpoints/constants.js';
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import {
@@ -13,6 +14,9 @@ import {
 } from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
+// import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+// import { camelToScreamingSnake } from '#utils/string-utils.js';
+// import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -48,6 +52,7 @@ export const getRepresentations = async (req, res) => {
 
 		return res.send({
 			itemCount: itemCount,
+			// @ts-ignore
 			items: comments.map(formatRepresentation),
 			page: pageNumber,
 			pageCount: getPageCount(itemCount, pageSize),
