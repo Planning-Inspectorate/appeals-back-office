@@ -5,7 +5,7 @@ import { formatListOfNotificationMethodsToHtml } from '#lib/display-page-formatt
 export const mapNotificationMethods = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'notification-methods',
-		text: 'Notification methods',
+		text: 'How did you notify relevant parties about the application?',
 		value: {
 			html: formatListOfNotificationMethodsToHtml(lpaQuestionnaireData.lpaNotificationMethods)
 		},

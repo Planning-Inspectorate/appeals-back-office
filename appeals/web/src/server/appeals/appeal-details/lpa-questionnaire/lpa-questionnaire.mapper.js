@@ -812,7 +812,7 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '2. Notifying relevant parties of the application'
+					text: '2. Notifying relevant parties'
 				}
 			},
 			attributes: {
@@ -820,10 +820,10 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			},
 			rows: [
 				mappedLPAQData.lpaq?.notifyingParties?.display.summaryListItem,
+				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lettersToNeighbours?.display.summaryListItem,
-				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem,
-				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem
+				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -1001,15 +1001,15 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 		parameters: {
 			card: {
 				title: {
-					text: '3. Notifying relevant parties of the application'
+					text: '3. Notifying relevant parties'
 				}
 			},
 			rows: [
 				mappedLPAQData.lpaq?.notifyingParties?.display.summaryListItem,
+				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lettersToNeighbours?.display.summaryListItem,
-				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem,
-				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem
+				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

@@ -4,7 +4,7 @@ import { documentInstruction } from '../common.js';
 export const mapNotifyingParties = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'notifying-parties',
-		text: 'Who was notified',
+		text: 'Who was notified about the application',
 		folderInfo: lpaQuestionnaireData.documents.whoNotified,
 		lpaQuestionnaireData,
 		session

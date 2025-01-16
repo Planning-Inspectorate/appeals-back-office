@@ -88,27 +88,38 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified about the application</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                        data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                        data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about the application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="pins-summary-list-sublist">
+                                    <li>A site notice</li>
+                                    <li>Letter/email to interested parties</li>
                                 </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/notification-methods/change"
+                                    data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> How did you notify relevant parties about the application?</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
@@ -124,17 +135,6 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul>
-                                    <li>A site notice</li>
-                                    <li>Letter/email to interested parties</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/notification-methods/change"
-                                data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -450,27 +450,38 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified about the application</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                        data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                        data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about the application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="pins-summary-list-sublist">
+                                    <li>A site notice</li>
+                                    <li>Letter/email to interested parties</li>
                                 </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
+                                    data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> How did you notify relevant parties about the application?</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
@@ -486,17 +497,6 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul>
-                                    <li>A site notice</li>
-                                    <li>Letter/email to interested parties</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                                data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -835,27 +835,38 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified about the application</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                        data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                        data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about the application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="pins-summary-list-sublist">
+                                    <li>A site notice</li>
+                                    <li>Letter/email to interested parties</li>
                                 </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
+                                    data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> How did you notify relevant parties about the application?</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
@@ -871,17 +882,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul>
-                                    <li>A site notice</li>
-                                    <li>Letter/email to interested parties</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                                data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1179,27 +1179,38 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified about the application</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                        data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                        data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about the application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="pins-summary-list-sublist">
+                                    <li>A site notice</li>
+                                    <li>Letter/email to interested parties</li>
                                 </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
+                                    data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> How did you notify relevant parties about the application?</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
@@ -1215,17 +1226,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul>
-                                    <li>A site notice</li>
-                                    <li>Letter/email to interested parties</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                                data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -3592,27 +3592,38 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties of the application</h2>
+                    <h2 class="govuk-summary-card__title">2. Notifying relevant parties</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who was notified about the application</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                        data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                        data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified</span></a>
-                                    </li>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties"> Manage<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties"> Add<span class="govuk-visually-hidden"> Who was notified about the application</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about the application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="pins-summary-list-sublist">
+                                    <li>A site notice</li>
+                                    <li>Letter/email to interested parties</li>
                                 </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
+                                    data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> How did you notify relevant parties about the application?</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site notice</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
@@ -3628,17 +3639,6 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Notification methods</dt>
-                            <dd class="govuk-summary-list__value">
-                                <ul>
-                                    <li>A site notice</li>
-                                    <li>Letter/email to interested parties</li>
-                                </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/notification-methods/change"
-                                data-cy="change-notification-methods"> Change<span class="govuk-visually-hidden"> Notification methods</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
