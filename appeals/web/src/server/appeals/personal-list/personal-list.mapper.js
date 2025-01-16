@@ -316,7 +316,7 @@ export function mapAppealStatusToActionRequiredHtml(
 		case APPEAL_CASE_STATUS.STATEMENTS: {
 			const lpaStatementAction =
 				lpaStatementStatus === 'received'
-					? `<a class="govuk-link" href="#">Review LPA Statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Review LPA Statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 					: `<span>Awaiting LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></span>`;
 
 			const ipCommentsAction =
