@@ -15,7 +15,7 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -52,9 +52,7 @@ export const getDocumentUpload = async (request, response) => {
 			currentFolder.folderId
 		}`,
 		pageHeadingTextOverride: uploadPageHeadingText,
-		// TODO: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT needs to be added to "pins-data-model"
-		// documentType: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT
-		documentType: 'environmentalAssessment'
+		documentType: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT
 	});
 };
 
