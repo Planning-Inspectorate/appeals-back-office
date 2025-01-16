@@ -3,7 +3,8 @@ import formatAddress from '#utils/format-address.js';
 import isFPA from '#utils/is-fpa.js';
 import {
 	formatAppellantCaseDocumentationStatus,
-	formatLpaQuestionnaireDocumentationStatus
+	formatLpaQuestionnaireDocumentationStatus,
+	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
 import { add } from 'date-fns';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
@@ -133,7 +134,7 @@ const formatDocumentationSummary = (appeal) => {
 				appeal.representations?.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED
 		},
 		lpaStatement: {
-			status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			status: formatLpaStatementStatus(lpaStatement ?? null),
 			receivedAt: lpaStatement?.dateCreated
 		},
 		lpaFinalComments: {
