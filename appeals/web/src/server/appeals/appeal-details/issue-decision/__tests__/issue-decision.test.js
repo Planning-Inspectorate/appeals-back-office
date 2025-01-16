@@ -681,8 +681,8 @@ describe('mapDecisionOutcome', () => {
 		expect(result).toBe('');
 	});
 
-	it('should return an empty string for invalid outcome', () => {
+	it('should return invalid for invalid outcome', () => {
 		const result = mapDecisionOutcome('invalid');
-		expect(result).toBe('');
+		expect(result).toBe('Invalid');
 	});
 });

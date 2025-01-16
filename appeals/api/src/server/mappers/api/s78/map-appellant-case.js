@@ -17,10 +17,6 @@ export const mapAppellantCase = (data) => {
 		appellantProcedurePreferenceDuration: appellantCase?.appellantProcedurePreferenceDuration,
 		appellantProcedurePreferenceWitnessCount:
 			appellantCase?.appellantProcedurePreferenceWitnessCount,
-		developmentDescription: {
-			details: appellantCase?.originalDevelopmentDescription || null,
-			isChanged: appellantCase?.changedDevelopmentDescription === true
-		},
 		planningObligation: {
 			hasObligation: appellantCase?.planningObligation,
 			status: appellantCase?.statusPlanningObligation
