@@ -37,7 +37,7 @@
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
-		"pins-data-model": "github:Planning-Inspectorate/data-model#1.9.4"
+		"pins-data-model": "github:Planning-Inspectorate/data-model#1.9.6"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "17.0.1",
