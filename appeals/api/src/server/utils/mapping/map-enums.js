@@ -40,14 +40,8 @@ export const isValidStage = (stage) => Object.values(APPEAL_CASE_STAGE).includes
  *		'planningOfficerReport'|'plansDrawings'|'statementCommonGround'|'supplementaryPlanning'|'treePreservationPlan'| 'uncategorised'|
  *		'whoNotified'|'whoNotifiedLetterToNeighbours'|'whoNotifiedPressAdvert'|'whoNotifiedSiteNotice'}
  */
-// TODO: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT needs to be added to "pins-data-model"
 export const isValidDocumentType = (documentType) =>
-	Object.values({
-		...APPEAL_DOCUMENT_TYPE,
-		ENVIRONMENTAL_ASSESSMENT: 'environmentalAssessment'
-	}).includes(documentType);
-// export const isValidDocumentType = (documentType) =>
-// 	Object.values(APPEAL_DOCUMENT_TYPE).includes(documentType);
+	Object.values(APPEAL_DOCUMENT_TYPE).includes(documentType);
 
 /**
  *
