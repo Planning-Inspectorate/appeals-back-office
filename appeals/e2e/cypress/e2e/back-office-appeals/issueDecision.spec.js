@@ -43,6 +43,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickButtonByText('Send Decision');
 				caseDetailsPage.clickLinkByText('Go back to case details');
 				caseDetailsPage.checkStatusOfCase('Complete', 0);
+				caseDetailsPage.checkDecisionOutcome(issueDecision);
 			});
 		});
 	});
