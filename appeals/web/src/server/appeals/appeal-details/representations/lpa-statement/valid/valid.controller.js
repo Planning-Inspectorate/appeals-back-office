@@ -1,7 +1,6 @@
 import * as api from '#lib/api/allocation-details.api.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { ensureArray } from '#lib/array-utilities.js';
-import { render } from '../../common/render.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
@@ -10,18 +9,28 @@ import {
 } from './valid.mapper.js';
 import { setRepresentationStatus } from '../../representations.service.js';
 
-export const renderAllocationCheck = render(
-	allocationCheckPage,
-	'patterns/change-page.pattern.njk'
-);
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function renderAllocationCheck(request, response) {
+	const { errors, currentAppeal, session } = request;
+
+	const pageContent = allocationCheckPage(currentAppeal, session);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
 
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {() => void} next
  */
-export function postAllocationCheck(request, response, next) {
+export function postAllocationCheck(request, response) {
 	const {
 		errors,
 		params: { appealId },
@@ -29,7 +38,7 @@ export function postAllocationCheck(request, response, next) {
 	} = request;
 
 	if (errors) {
-		return renderAllocationCheck(request, response, next);
+		return renderAllocationCheck(request, response);
 	}
 
 	return response.redirect(
@@ -45,7 +54,7 @@ export function postAllocationCheck(request, response, next) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderAllocationLevel(request, response) {
-	const { errors, currentAppeal, currentRepresentation } = request;
+	const { errors, currentAppeal, currentRepresentation, session } = request;
 
 	const allocationLevels = await (async () => {
 		const levels = await api.getAllocationDetailsLevels(request.apiClient);
@@ -56,7 +65,7 @@ export async function renderAllocationLevel(request, response) {
 		currentAppeal,
 		currentRepresentation,
 		allocationLevels,
-		request.session
+		session
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
