@@ -50,6 +50,7 @@ export const getRepresentations = async (req, res) => {
 
 		return res.send({
 			itemCount: itemCount,
+			// @ts-ignore
 			items: comments.map(formatRepresentation),
 			page: pageNumber,
 			pageCount: getPageCount(itemCount, pageSize),

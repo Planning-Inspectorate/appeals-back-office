@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { confirmAcceptFinalCommentPage } from './accept.mapper.js';
-import { patchFinalComment } from './accept.service.js';
+import { patchFinalCommentsStatus } from '../view-and-review/view-and-review.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -37,13 +37,12 @@ export const postConfirmAcceptFinalComment = async (request, response) => {
 			currentRepresentation
 		} = request;
 
-		const resultOne = await patchFinalComment(
-			apiClient,
-			appealId,
-			currentRepresentation.id,
-			'valid'
-		);
-		console.log('🚀 ~ postConfirmAcceptFinalComment ~ resultOne:', resultOne);
+		await patchFinalCommentsStatus(
+				apiClient,
+				appealId,
+				currentRepresentation.id,
+				'valid'
+			)
 
 		addNotificationBannerToSession(session, 'finalCommentsAcceptSuccess', appealId);
 

@@ -9,6 +9,7 @@ import {
 } from './final-comments.middleware.js';
 import addDocumentRouter from './add-document/add-document.router.js';
 import manageDocumentsRouter from './manage-documents/manage-documents.router.js';
+import acceptFinalCommentsRouter from './accept/accept.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -45,6 +46,13 @@ router.use(
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter
+);
+
+router.use(
+	'/:finalCommentsType/accept',
+	validateAppeal,
+	withSingularRepresentation,
+	acceptFinalCommentsRouter
 );
 
 export default router;

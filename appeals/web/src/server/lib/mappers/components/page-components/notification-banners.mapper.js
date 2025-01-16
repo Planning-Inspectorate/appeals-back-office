@@ -262,6 +262,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['viewFinalComments'],
 		text: 'Supporting document added'
+	},
+	finalCommentsAcceptSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Final comments accepted'
 	}
 };
 

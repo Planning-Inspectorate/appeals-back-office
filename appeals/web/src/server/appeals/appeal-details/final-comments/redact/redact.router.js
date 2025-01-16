@@ -5,7 +5,7 @@ import { validateAppeal } from '../../appeal-details.middleware.js';
 import {
 	getRedactFinalComment,
 	postRedactFinalComment,
-	getConfirmRedactFinalComment,
+	getAcceptFinalComment,
 	postConfirmRedactFinalComment
 } from './redact.controller.js';
 
@@ -18,7 +18,7 @@ router
 
 router
 	.route('/confirm')
-	.get(validateAppeal, asyncHandler(getConfirmRedactFinalComment))
+	.get(validateAppeal, asyncHandler(getAcceptFinalComment))
 	.post(validateAppeal, asyncHandler(postConfirmRedactFinalComment));
 
 export default router;
