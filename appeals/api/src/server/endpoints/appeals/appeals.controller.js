@@ -72,50 +72,50 @@ const getMyAppeals = async (req, res) => {
 	const status = String(query.status);
 	const azureUserId = req.get('azureAdUserId');
 
-	if (azureUserId) {
-		const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
-			azureUserId,
-			pageNumber,
-			pageSize,
-			status
-		);
+  if (!azureUserId) {
+    return res.status(401).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
+  }
 
-		const formattedAppeals = await Promise.all(
-			appeals.map(async (appeal) => {
-				const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-				const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
-					appeal.id,
-					'comment'
-				);
+  const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
+    azureUserId,
+    pageNumber,
+    pageSize,
+    status
+  );
 
-				return formatMyAppeals(
-					appeal,
-					linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
-					commentCounts
-				);
-			})
-		);
-		const sortedAppeals = sortAppeals(formattedAppeals);
+  const formattedAppeals = await Promise.all(
+    appeals.map(async (appeal) => {
+      const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
+      const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
+        appeal.id,
+        'comment'
+      );
 
-		// Flatten to a unique array of strings
-		// @ts-ignore
-		const formattedStatuses = statuses
-			// @ts-ignore
-			?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
-			.flat()
-			.filter((status, index, statuses) => statuses.indexOf(status) === index);
+      return formatMyAppeals(
+        appeal,
+        linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
+        commentCounts
+      );
+    })
+  );
+  const sortedAppeals = sortAppeals(formattedAppeals);
 
-		return res.send({
-			itemCount,
-			items: sortedAppeals,
-			statuses: formattedStatuses,
-			page: pageNumber,
-			pageCount: getPageCount(itemCount, pageSize),
-			pageSize
-		});
-	}
+  // Flatten to a unique array of strings
+  // @ts-ignore
+  const formattedStatuses = statuses
+    // @ts-ignore
+    ?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
+    .flat()
+    .filter((status, index, statuses) => statuses.indexOf(status) === index);
 
-	return res.status(404).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
+  return res.send({
+    itemCount,
+    items: sortedAppeals,
+    statuses: formattedStatuses,
+    page: pageNumber,
+    pageCount: getPageCount(itemCount, pageSize),
+    pageSize
+  });
 };
 
 export { getAppeals, getMyAppeals };
