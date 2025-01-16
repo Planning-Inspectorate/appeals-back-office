@@ -153,15 +153,17 @@ variable "sb_topic_names" {
     submissions = object({
       appellant         = string
       lpa_questionnaire = string
+      representation    = string
     })
     events = object({
-      appeal_has       = string
-      appeal_s78       = string
-      document         = string
-      document_to_move = string
-      event            = string
-      listed_building  = string
-      service_user     = string
+      appeal_has            = string
+      appeal_s78            = string
+      document              = string
+      document_to_move      = string
+      event                 = string
+      listed_building       = string
+      service_user          = string
+      appeal_representation = string
     })
   })
 }

@@ -56,6 +56,14 @@ resource "azurerm_servicebus_subscription" "fo_lpa_questionnaire" {
   dead_lettering_on_message_expiration = true
 }
 
+resource "azurerm_servicebus_subscription" "fo_representation_submission" {
+  name                                 = "${azurerm_servicebus_topic.appeal_fo_representation_submission.name}-bo-sub"
+  topic_id                             = azurerm_servicebus_topic.appeal_fo_representation_submission.id
+  max_delivery_count                   = 1
+  default_message_ttl                  = var.sb_ttl.bo_sub
+  dead_lettering_on_message_expiration = true
+}
+
 # RBAC for subscriptions
 
 resource "azurerm_role_assignment" "fo_appellant_submission_sub_reciever" {
@@ -66,6 +74,12 @@ resource "azurerm_role_assignment" "fo_appellant_submission_sub_reciever" {
 
 resource "azurerm_role_assignment" "fo_lpa_questionnaire_sub_reciever" {
   scope                = azurerm_servicebus_subscription.fo_lpa_questionnaire.id
+  role_definition_name = "Azure Service Bus Data Receiver"
+  principal_id         = module.function_casedata_import.principal_id
+}
+
+resource "azurerm_role_assignment" "fo_representation_submission_sub_reciever" {
+  scope                = azurerm_servicebus_subscription.fo_representation_submission.id
   role_definition_name = "Azure Service Bus Data Receiver"
   principal_id         = module.function_casedata_import.principal_id
 }

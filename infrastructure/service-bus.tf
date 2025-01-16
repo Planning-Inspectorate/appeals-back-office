@@ -58,6 +58,12 @@ resource "azurerm_servicebus_topic" "appeal_fo_lpa_questionnaire_submission" {
   default_message_ttl = var.sb_ttl.default
 }
 
+resource "azurerm_servicebus_topic" "appeal_fo_representation_submission" {
+  name                = var.sb_topic_names.submissions.representation
+  namespace_id        = azurerm_servicebus_namespace.main.id
+  default_message_ttl = var.sb_ttl.default
+}
+
 ## Back office broadcast topics
 
 resource "azurerm_servicebus_topic" "appeal_has" {
@@ -86,6 +92,12 @@ resource "azurerm_servicebus_topic" "appeal_event" {
 
 resource "azurerm_servicebus_topic" "service_user" {
   name                = var.sb_topic_names.events.service_user
+  namespace_id        = azurerm_servicebus_namespace.main.id
+  default_message_ttl = var.sb_ttl.default
+}
+
+resource "azurerm_servicebus_topic" "appeal_representation" {
+  name                = var.sb_topic_names.events.appeal_representation
   namespace_id        = azurerm_servicebus_namespace.main.id
   default_message_ttl = var.sb_ttl.default
 }
