@@ -66,8 +66,27 @@ const getRepresentations = async (appealId, pageNumber, pageSize, options) => {
 			where: whereClause,
 			include: {
 				representative: true,
-				represented: true,
-				lpa: true
+				represented: {
+					include: {
+						address: true
+					}
+				},
+				lpa: true,
+				attachments: {
+					include: {
+						documentVersion: {
+							include: {
+								document: true
+							}
+						}
+					}
+				},
+				representationRejectionReasonsSelected: {
+					include: {
+						representationRejectionReason: true,
+						representationRejectionReasonText: true
+					}
+				}
 			},
 			orderBy: { dateCreated: 'desc' },
 			skip: pageNumber * pageSize,

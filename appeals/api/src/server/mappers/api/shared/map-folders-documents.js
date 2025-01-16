@@ -26,7 +26,6 @@ const mapDocumentVersion = (version) => {
 
 	const virusCheckStatus = getAvScanStatus(version);
 	const redactionStatus = version.redactionStatus?.key || '';
-	//const redactionStatus = version.redactionStatus?.name || '';
 	const documentType = version.documentType || '';
 	const stage = version.stage || '';
 

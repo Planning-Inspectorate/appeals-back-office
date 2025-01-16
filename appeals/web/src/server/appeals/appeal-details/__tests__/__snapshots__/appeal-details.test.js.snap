@@ -578,7 +578,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -946,7 +946,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     </div>
     <div class="govuk-inset-text">
         <p>Appeal completed: 25 December 2023</p>
-        <p>Decision: dismissed</p>
+        <p>Decision: Dismissed</p>
         <p><span class="govuk-body">View decision letter</span><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
         </p>
     </div>
@@ -1058,7 +1058,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -1532,7 +1532,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -2006,7 +2006,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -2496,7 +2496,7 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -2972,7 +2972,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -3436,7 +3436,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -3911,7 +3911,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -4391,7 +4391,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -4871,7 +4871,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -5352,7 +5352,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -5856,7 +5856,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -6344,7 +6344,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -6804,7 +6804,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -7287,7 +7287,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                    <dd class="govuk-summary-list__value">dismissed</dd>
+                                    <dd class="govuk-summary-list__value">Dismissed</dd>
                                 </div>
                             </dl>
                         </div>
@@ -7747,7 +7747,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">dismissed</dd>
+                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -8222,7 +8222,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                             <dd                                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                         </div>
                                         <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                            <dd class="govuk-summary-list__value">dismissed</dd>
+                                            <dd class="govuk-summary-list__value">Dismissed</dd>
                                         </div>
                                     </dl>
                                 </div>

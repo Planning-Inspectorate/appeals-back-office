@@ -4,6 +4,7 @@ import logger from '#lib/logger.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
+import { mapDecisionOutcome } from '../issue-decision/issue-decision.mapper.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -61,7 +62,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			type: 'inset-text',
 			parameters: {
 				html: `<p>Appeal completed: ${letterDate}</p>
-						<p>Decision: ${appealDetails.decision?.outcome}</p>
+						<p>Decision: ${mapDecisionOutcome(appealDetails.decision?.outcome || '')}</p>
 						<p>${
 							!(virusCheckStatus.checked && virusCheckStatus.safe)
 								? '<span class="govuk-body">View decision letter</span> '

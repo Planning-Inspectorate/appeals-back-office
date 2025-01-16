@@ -21,8 +21,7 @@ const appealDecision = {
 		},
 		virusCheckStatus: {
 			type: 'string',
-			enum: [...Object.values(APPEAL_VIRUS_CHECK_STATUS)],
-			nullable: true
+			enum: [...Object.values(APPEAL_VIRUS_CHECK_STATUS)]
 		},
 		outcome: {
 			type: 'string',

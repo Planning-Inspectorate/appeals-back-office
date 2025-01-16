@@ -32,6 +32,8 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "costsAppliedFor": false,
   "createdAt": "2024-03-25T23:59:59.999Z",
   "documents": {},
+  "extraConditions": null,
+  "hasExtraConditions": false,
   "healthAndSafety": {
     "details": "There may be no mobile reception at the site",
     "hasIssues": true,
@@ -97,6 +99,8 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "costsAppliedFor": false,
   "createdAt": "2024-03-25T23:59:59.999Z",
   "documents": {},
+  "extraConditions": null,
+  "hasExtraConditions": false,
   "healthAndSafety": {
     "details": "There may be no mobile reception at the site",
     "hasIssues": true,
@@ -180,6 +184,8 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "costsAppliedFor": false,
   "createdAt": "2024-03-25T23:59:59.999Z",
   "documents": {},
+  "extraConditions": null,
+  "hasExtraConditions": false,
   "healthAndSafety": {
     "details": "There may be no mobile reception at the site",
     "hasIssues": true,

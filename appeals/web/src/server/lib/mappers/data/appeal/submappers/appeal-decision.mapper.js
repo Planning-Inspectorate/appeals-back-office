@@ -36,7 +36,10 @@ export const mapAppealDecision = ({ appealDetails }) =>
 		text: 'Appeal decision',
 		textClasses: 'appeal-decision-documentation',
 		statusText:
-			appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ? 'Sent' : 'Awaiting decision',
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ||
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
+				? 'Sent'
+				: 'Awaiting decision',
 		statusTextClasses: 'appeal-decision-status',
 		receivedText: 'Not applicable',
 		receivedTextClasses: 'appeal-decision-due-date',
