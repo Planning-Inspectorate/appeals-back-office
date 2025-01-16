@@ -314,19 +314,25 @@ export function mapAppealStatusToActionRequiredHtml(
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			const lpaStatementAction =
-				lpaStatementStatus === 'received'
-					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Review LPA Statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
-					: `<span>Awaiting LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></span>`;
+			const lpaStatementAction = (() => {
+				switch (lpaStatementStatus) {
+					case 'not_received':
+						return `<span>Awaiting LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></span>`;
+					case 'received':
+						return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Review LPA Statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+					default:
+						return null;
+				}
+			})();
 
 			const ipCommentsAction =
 				!dueDatePassed && hasAwaitingComments
 					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">${
 							hasAwaitingComments ? 'Review IP comments' : 'Awaiting IP comments'
 					  }<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
-					: '';
+					: null;
 
-			return [lpaStatementAction, ipCommentsAction].join('<br>');
+			return [lpaStatementAction, ipCommentsAction].filter(Boolean).join('<br>');
 		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
 			const lpaReceived = lpaFinalCommentsStatus === 'received';
