@@ -5,6 +5,7 @@ import {
 	isValidDocumentType,
 	isValidStage
 } from '#utils/mapping/map-enums.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -25,7 +26,7 @@ const mapDocumentVersion = (version) => {
 	}
 
 	const virusCheckStatus = getAvScanStatus(version);
-	const redactionStatus = version.redactionStatus?.key || '';
+	const redactionStatus = version.redactionStatus?.key || APPEAL_REDACTED_STATUS.NOT_REDACTED;
 	const documentType = version.documentType || '';
 	const stage = version.stage || '';
 
