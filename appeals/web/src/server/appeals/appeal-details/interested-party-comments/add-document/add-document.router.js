@@ -35,8 +35,8 @@ router.post(
 	'/date-submitted',
 	createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
 	createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
+	saveBodyToSession('addDocument'),
 	createDateInputDateInPastOrTodayValidator('', '', 'day', 'month', 'year'),
-	saveBodyToSession('/'),
 	asyncHandler(postDateSubmitted)
 );
 
