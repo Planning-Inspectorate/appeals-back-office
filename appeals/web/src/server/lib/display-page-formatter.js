@@ -45,8 +45,10 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
 		return '';
 	}
 	// TODO: check LPANotificationMethodDetails in SingleAppellantCaseResponse
-	// @ts-ignore
-	return `<ul>${notificationMethods.map((method) => `<li>${method.name}</li>`).join('')}</ul>`;
+	return `<ul class="pins-summary-list-sublist">${notificationMethods
+		// @ts-ignore
+		.map((method) => `<li>${method.name}</li>`)
+		.join('')}</ul>`;
 };
 
 /**
