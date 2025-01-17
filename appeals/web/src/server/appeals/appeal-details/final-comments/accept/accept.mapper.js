@@ -97,7 +97,7 @@ export const confirmAcceptFinalCommentPage = (appealDetails, comment, finalComme
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Confirm comment accept',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Check details and accept ${formatFinalCommentsTypeText(
 			finalCommentsType
