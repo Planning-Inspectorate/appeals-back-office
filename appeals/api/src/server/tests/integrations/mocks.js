@@ -226,6 +226,9 @@ export const appealIngestionInput = {
 				path: 'appellant-case/otherNewDocuments'
 			},
 			{
+				path: 'appellant-case/environmentalAssessment'
+			},
+			{
 				path: 'lpa-questionnaire/whoNotified'
 			},
 			{
@@ -278,9 +281,6 @@ export const appealIngestionInput = {
 			},
 			{
 				path: 'lpa-questionnaire/eiaScreeningDirection'
-			},
-			{
-				path: 'appellant-case/environmentalAssessment'
 			},
 			{
 				path: 'lpa-questionnaire/lpaCaseCorrespondence'
