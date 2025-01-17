@@ -3,6 +3,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './common.js';
 import { formatFinalCommentsTypeText } from '../../final-comments.mapper.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -73,6 +74,8 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		submitButtonText: 'Continue',
 		pageComponents: [...notificationBanners, commentSummaryList, commentValidityRadioButtons]
 	};
+
+	preRenderPageComponents(pageContent.pageComponents);
 
 	return pageContent;
 }

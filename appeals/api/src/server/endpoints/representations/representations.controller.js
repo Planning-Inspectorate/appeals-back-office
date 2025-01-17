@@ -222,9 +222,6 @@ export const updateRepresentationAttachments = async (req, res) => {
 	const { repId } = req.params;
 	const { attachments } = req.body;
 
-	console.log('updateRepresentationAttachments - body:');
-	console.log(req.body);
-
 	if (!Array.isArray(attachments) || !attachments.every((id) => typeof id === 'string')) {
 		return res.status(400).send({ errors: { attachments: 'must be an array of strings' } });
 	}
@@ -239,8 +236,6 @@ export const updateRepresentationAttachments = async (req, res) => {
 		Number(repId),
 		attachments
 	);
-
-	console.log('updateRepresentationAttachments OK');
 
 	return res.status(200).send(updatedRepresentation);
 };

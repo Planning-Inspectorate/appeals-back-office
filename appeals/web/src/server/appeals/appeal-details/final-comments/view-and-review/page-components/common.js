@@ -1,4 +1,5 @@
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { documentSummaryListItem } from '#lib/mappers/components/instructions/document.js';
+import { mapRepresentationAttachmentsToDocumentInfoArray } from '#lib/mappers/data/representations/attachments.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -13,19 +14,21 @@ export function generateCommentsSummaryList(appealId, comment, finalCommentsType
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
-	const attachmentsList =
-		comment.attachments.length > 0
-			? buildHtmUnorderedList(
-					comment.attachments.map(
-						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
-
-	console.log('comment:');
-	console.log(comment);
-	console.log('attachmentsList:');
-	console.log(attachmentsList);
+	const supportingDocumentsRowInstruction = documentSummaryListItem({
+		id: 'supporting-documents',
+		text: 'Supporting documents',
+		appealId,
+		folderInfo: {
+			folderId,
+			caseId: appealId.toString(),
+			path: 'representation/representationAttachments',
+			documents: mapRepresentationAttachmentsToDocumentInfoArray(comment.attachments)
+		},
+		editable: comment.attachments?.length > 0,
+		manageUrl: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${folderId}`,
+		uploadUrlTemplate: `/appeals-service/appeal-details/{{appealId}}/final-comments/${finalCommentsType}/supporting-documents/add-documents`,
+		noBottomMargin: true
+	});
 
 	const rows = [
 		{
@@ -40,28 +43,7 @@ export function generateCommentsSummaryList(appealId, comment, finalCommentsType
 		...(comment.redactedRepresentation
 			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
 			: []),
-		{
-			key: { text: 'Supporting documents' },
-			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
-			actions: {
-				items: [
-					...(comment.attachments?.length > 0
-						? [
-								{
-									text: 'Manage',
-									href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${folderId}`,
-									visuallyHiddenText: 'supporting documents'
-								}
-						  ]
-						: []),
-					{
-						text: 'Add',
-						href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/add-documents`,
-						visuallyHiddenText: 'supporting documents'
-					}
-				]
-			}
-		}
+		supportingDocumentsRowInstruction.display.summaryListItem
 	];
 
 	return {

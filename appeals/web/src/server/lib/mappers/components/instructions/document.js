@@ -14,6 +14,7 @@ import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-pag
  * @param {string} options.uploadUrlTemplate
  * @param {string} [options.cypressDataName]
  * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
+ * @param {boolean} [options.noBottomMargin]
  * @returns {Instructions}
  */
 export function documentSummaryListItem({
@@ -25,9 +26,11 @@ export function documentSummaryListItem({
 	manageUrl,
 	uploadUrlTemplate,
 	cypressDataName = id,
-	displayMode = 'list'
+	displayMode = 'list',
+	noBottomMargin
 }) {
 	const documents = (isFolderInfo(folderInfo) && folderInfo.documents) || [];
+
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
 	if (editable) {
@@ -51,7 +54,7 @@ export function documentSummaryListItem({
 		display: {
 			summaryListItem: {
 				key: { text },
-				value: formatDocumentValues({ appealId, documents, displayMode }),
+				value: formatDocumentValues({ appealId, documents, displayMode, noBottomMargin }),
 				actions: { items: actions }
 			}
 		}
