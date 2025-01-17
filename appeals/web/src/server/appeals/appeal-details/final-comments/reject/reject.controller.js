@@ -123,48 +123,38 @@ export const getConfirmRejectFinalComment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postConfirmRejectFinalComment = async (request, response) => {
-	try {
-		const {
-			currentRepresentation,
-			params: { appealId, finalCommentsType },
-			session,
-			apiClient
-		} = request;
+	const {
+		currentRepresentation,
+		params: { appealId, finalCommentsType },
+		session,
+		apiClient
+	} = request;
 
-		if (!currentRepresentation || !session.rejectFinalComments) {
-			logger.warn('No currentRepresentation or rejectFinalComments in request or session');
-			return response.status(500).render('app/500.njk');
-		}
-
-		const rejectionReasons = mapRejectionReasonPayload(session.rejectFinalComments);
-
-		await Promise.all([
-			updateRejectionReasons(
-				apiClient,
-				appealId,
-				String(currentRepresentation.id),
-				rejectionReasons
-			),
-			patchFinalCommentsStatus(
-				apiClient,
-				appealId,
-				String(currentRepresentation.id),
-				COMMENT_STATUS.INVALID
-			)
-		]);
-
-		delete session.rejectFinalComments;
-
-		const notificationBannerKey =
-			finalCommentsType === 'appellant'
-				? 'finalCommentsAppellantRejectionSuccess'
-				: 'finalCommentsLPARejectionSuccess';
-
-		addNotificationBannerToSession(session, notificationBannerKey, appealId);
-
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
-	} catch (error) {
-		logger.error(error);
+	if (!currentRepresentation || !session.rejectFinalComments) {
+		logger.warn('No currentRepresentation or rejectFinalComments in request or session');
 		return response.status(500).render('app/500.njk');
 	}
+
+	const rejectionReasons = mapRejectionReasonPayload(session.rejectFinalComments);
+
+	await Promise.all([
+		updateRejectionReasons(apiClient, appealId, String(currentRepresentation.id), rejectionReasons),
+		patchFinalCommentsStatus(
+			apiClient,
+			appealId,
+			String(currentRepresentation.id),
+			COMMENT_STATUS.INVALID
+		)
+	]);
+
+	delete session.rejectFinalComments;
+
+	const notificationBannerKey =
+		finalCommentsType === 'appellant'
+			? 'finalCommentsAppellantRejectionSuccess'
+			: 'finalCommentsLPARejectionSuccess';
+
+	addNotificationBannerToSession(session, notificationBannerKey, appealId);
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };
