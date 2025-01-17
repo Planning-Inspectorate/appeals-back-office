@@ -1,13 +1,10 @@
 import logger from '#lib/logger.js';
-import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
-import { patchFinalCommentsStatus } from '../view-and-review/view-and-review.service.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	mapRejectionReasonOptionsToCheckboxItemParameters,
 	mapRejectionReasonPayload
 } from '#appeals/appeal-details/representations/representations.mapper.js';
-import { getRepresentationRejectionReasonOptions } from './reject.service.js';
+import { getRepresentationRejectionReasonOptions, rejectFinalComment } from './reject.service.js';
 import { rejectFinalCommentsPage, confirmRejectFinalCommentPage } from './reject.mapper.js';
 
 /**
@@ -137,15 +134,12 @@ export const postConfirmRejectFinalComment = async (request, response) => {
 
 	const rejectionReasons = mapRejectionReasonPayload(session.rejectFinalComments);
 
-	await Promise.all([
-		updateRejectionReasons(apiClient, appealId, String(currentRepresentation.id), rejectionReasons),
-		patchFinalCommentsStatus(
-			apiClient,
-			appealId,
-			String(currentRepresentation.id),
-			COMMENT_STATUS.INVALID
-		)
-	]);
+	await rejectFinalComment(
+		apiClient,
+		parseInt(appealId),
+		currentRepresentation.id,
+		rejectionReasons
+	);
 
 	delete session.rejectFinalComments;
 

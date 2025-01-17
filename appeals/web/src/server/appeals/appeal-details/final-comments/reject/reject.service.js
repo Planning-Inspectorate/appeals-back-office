@@ -28,16 +28,14 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} appealId
- * @param {string} commentId
- * @param {boolean} allowResubmit
+ * @param {number} appealId
+ * @param {number} commentId
+ * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
  * */
-export const rejectInterestedPartyComment = (apiClient, appealId, commentId, allowResubmit) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/status`, {
-			json: {
-				status: COMMENT_STATUS.INVALID,
-				allowResubmit
-			}
-		})
-		.json();
+export const rejectFinalComment = (apiClient, appealId, commentId, rejectionReasons) =>
+	apiClient.patch(`appeals/${appealId}/reps/${commentId}`, {
+		json: {
+			rejectionReasons,
+			status: COMMENT_STATUS.INVALID
+		}
+	});
