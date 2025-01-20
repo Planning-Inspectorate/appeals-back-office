@@ -1,7 +1,7 @@
 import logger from '#lib/logger.js';
 import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.mapper.js';
 import { patchFinalCommentRedaction } from './redact.service.js';
-import { patchFinalCommentsStatus } from '../view-and-review/view-and-review.service.js';
+import { setRepresentationStatus } from '../../representations/representations.service.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -88,7 +88,7 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 
 		await Promise.all([
 			patchFinalCommentRedaction(apiClient, appealId, commentId, session.redactedRepresentation),
-			patchFinalCommentsStatus(apiClient, appealId, commentId, COMMENT_STATUS.VALID)
+			setRepresentationStatus(apiClient, parseInt(appealId, 10), parseInt(commentId, 10), COMMENT_STATUS.VALID)
 		]);
 
 		delete session.redactedRepresentation;
