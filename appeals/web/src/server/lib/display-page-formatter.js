@@ -138,9 +138,16 @@ export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) =
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
  * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
  * @param {boolean} [options.isAdditionalDocuments]
+ * @param {boolean} [options.noBottomMargin]
  * @returns {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty}
  */
-export function formatDocumentValues({ appealId, documents, displayMode, isAdditionalDocuments }) {
+export function formatDocumentValues({
+	appealId,
+	documents,
+	displayMode,
+	isAdditionalDocuments,
+	noBottomMargin
+}) {
 	switch (displayMode) {
 		case 'none':
 			return { text: '' };
@@ -148,7 +155,12 @@ export function formatDocumentValues({ appealId, documents, displayMode, isAddit
 			return formatDocumentValuesAsNumber({ documents });
 		case 'list':
 		default:
-			return formatDocumentValuesAsList({ appealId, documents, isAdditionalDocuments });
+			return formatDocumentValuesAsList({
+				appealId,
+				documents,
+				isAdditionalDocuments,
+				noBottomMargin
+			});
 	}
 }
 
@@ -157,9 +169,15 @@ export function formatDocumentValues({ appealId, documents, displayMode, isAddit
  * @param {number} options.appealId
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
  * @param {boolean} [options.isAdditionalDocuments]
+ * @param {boolean} [options.noBottomMargin]
  * @returns {HtmlProperty & ClassesProperty}
  */
-const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments }) => {
+const formatDocumentValuesAsList = ({
+	appealId,
+	documents,
+	isAdditionalDocuments,
+	noBottomMargin = false
+}) => {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -190,7 +208,9 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 							{
 								type: 'html',
 								parameters: {
-									html: `<div class="govuk-body govuk-!-margin-bottom-2">${document.name}</div>`
+									html: `<div class="govuk-body ${
+										noBottomMargin ? 'govuk-!-margin-bottom-0' : 'govuk-!-margin-bottom-2'
+									}">${document.name}</div>`
 								}
 							}
 						]
