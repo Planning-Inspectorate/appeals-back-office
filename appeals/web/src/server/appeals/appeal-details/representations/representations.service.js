@@ -75,3 +75,20 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
 			}
 		})
 		.json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number | string} appealId
+ * @param {number} repId
+ * @param {string[]} documentGUIDs
+ * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
+ * */
+export const patchRepresentationAttachments = async (apiClient, appealId, repId, documentGUIDs) => {
+	return apiClient
+		.patch(`appeals/${appealId}/reps/${repId}/attachments`, {
+			json: {
+				attachments: documentGUIDs
+			}
+		})
+		.json();
+};

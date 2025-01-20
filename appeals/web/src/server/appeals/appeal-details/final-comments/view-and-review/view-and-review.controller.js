@@ -12,13 +12,13 @@ import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
  * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
-	const { errors, currentRepresentation, currentAppeal, session } = request;
-
-	let { finalCommentsType } = request.params;
-
-	if (finalCommentsType === 'lpa') {
-		finalCommentsType = 'LPA';
-	}
+	const {
+		errors,
+		currentRepresentation,
+		currentAppeal,
+		session,
+		params: { finalCommentsType }
+	} = request;
 
 	if (!currentRepresentation) {
 		return response.status(404).render('app/404.njk');

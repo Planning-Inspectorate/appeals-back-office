@@ -4,6 +4,7 @@ import viewAndReviewFinalCommentsRouter from './view-and-review/view-and-review.
 import redactFinalCommentsRouter from './redact/redact.router.js';
 import rejectFinalCommentsRouter from './reject/reject.router.js';
 import { withSingularRepresentation } from './final-comments.middleware.js';
+import supportingDocumentsRouter from './supporting-documents/supporting-documents.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -26,6 +27,13 @@ router.use(
 	validateAppeal,
 	withSingularRepresentation,
 	rejectFinalCommentsRouter
+);
+
+router.use(
+	'/:finalCommentsType/supporting-documents',
+	validateAppeal,
+	withSingularRepresentation,
+	supportingDocumentsRouter
 );
 
 export default router;
