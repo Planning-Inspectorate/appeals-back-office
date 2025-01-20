@@ -659,7 +659,7 @@ describe('appellant-case', () => {
 						.reply(200, {
 							...appellantCaseDataNotValidated,
 							siteAccessRequired: {
-								hasIssues: true,
+								isRequired: true,
 								details: text300Characters
 							}
 						});
@@ -688,7 +688,7 @@ describe('appellant-case', () => {
 						.reply(200, {
 							...appellantCaseDataNotValidated,
 							siteAccessRequired: {
-								hasIssues: true,
+								isRequired: true,
 								details: text301Characters
 							}
 						});

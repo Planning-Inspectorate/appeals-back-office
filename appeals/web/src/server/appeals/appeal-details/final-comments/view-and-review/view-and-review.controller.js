@@ -16,10 +16,6 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 
 	let { finalCommentsType } = request.params;
 
-	if (finalCommentsType === 'lpa') {
-		finalCommentsType = 'LPA';
-	}
-
 	if (!currentRepresentation) {
 		return response.status(404).render('app/404.njk');
 	}

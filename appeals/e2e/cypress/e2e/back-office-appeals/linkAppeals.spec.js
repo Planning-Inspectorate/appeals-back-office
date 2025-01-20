@@ -255,16 +255,21 @@ describe('link appeals', () => {
 	});
 
 	it('link a back office appeal to a horizon appeal', () => {
+		const horizonAppealId =
+			Cypress.config('apiBaseUrl').indexOf('test') > -1
+				? horizonTestAppeals.horizonAppealTest
+				: horizonTestAppeals.horizonAppealMock;
+
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickAddLinkedAppeal();
-			caseDetailsPage.fillInput(horizonTestAppeals.horizonAppeal1);
+			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes, this is a child appeal of ' + caseRef);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage(
-				'This appeal is now a lead appeal of' + horizonTestAppeals.horizonAppeal1
+				'This appeal is now a lead appeal of' + horizonAppealId
 			);
 			caseDetailsPage.checkStatusOfCase('Lead', 1);
 		});

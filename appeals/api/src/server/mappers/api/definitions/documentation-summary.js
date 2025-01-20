@@ -41,6 +41,18 @@ const documentationSummary = {
 			properties: {
 				...commonDocumentationSummaryProperties
 			}
+		},
+		appellantFinalComments: {
+			type: 'object',
+			properties: {
+				...commonDocumentationSummaryProperties
+			}
+		},
+		lpaFinalComments: {
+			type: 'object',
+			properties: {
+				...commonDocumentationSummaryProperties
+			}
 		}
 	}
 };

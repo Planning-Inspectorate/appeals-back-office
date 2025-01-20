@@ -267,7 +267,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			request,
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
-			successCallback: (
+			successCallback: async (
 				/** @type {import('@pins/express/types/express.js').Request} */ request
 			) => {
 				if (request.session.costsDocumentType) {

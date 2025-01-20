@@ -20,13 +20,12 @@ import {
  * @returns {DocumentVersionDto|undefined}
  */
 const mapDocumentVersion = (version) => {
-	if (!version) {
+	if (!version || version.isDeleted === true) {
 		return;
 	}
 
 	const virusCheckStatus = getAvScanStatus(version);
 	const redactionStatus = version.redactionStatus?.key || '';
-	//const redactionStatus = version.redactionStatus?.name || '';
 	const documentType = version.documentType || '';
 	const stage = version.stage || '';
 
@@ -60,25 +59,27 @@ const mapDocumentVersion = (version) => {
  * @returns {DocumentDto[]}
  */
 export const mapDocuments = (documents) => {
-	const documentDtos = documents.map((document) => {
-		return {
-			caseId: document.caseId,
-			folderId: document.folderId,
-			id: document.guid,
-			name: document.name,
-			isDeleted: document.isDeleted,
-			createdAt: document.createdAt?.toISOString() || '',
-			versionAudit: document.versionAudit || [],
-			...(document.latestDocumentVersion && {
-				latestDocumentVersion: mapDocumentVersion(document.latestDocumentVersion)
-			}),
-			...(document.versions && {
-				allVersions: document.versions
-					?.map((version) => mapDocumentVersion(version))
-					.filter((v) => v != undefined)
-			})
-		};
-	});
+	const documentDtos = documents
+		.filter((d) => d.isDeleted === false)
+		.map((document) => {
+			return {
+				caseId: document.caseId,
+				folderId: document.folderId,
+				id: document.guid,
+				name: document.name,
+				isDeleted: document.isDeleted,
+				createdAt: document.createdAt?.toISOString() || '',
+				versionAudit: document.versionAudit || [],
+				...(document.latestDocumentVersion && {
+					latestDocumentVersion: mapDocumentVersion(document.latestDocumentVersion)
+				}),
+				...(document.versions && {
+					allVersions: document.versions
+						?.map((version) => mapDocumentVersion(version))
+						.filter((v) => v != undefined)
+				})
+			};
+		});
 
 	return documentDtos;
 };

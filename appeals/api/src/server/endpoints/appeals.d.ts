@@ -152,7 +152,7 @@ interface SingleAppellantCaseResponse {
 	enforcementNotice?: boolean | null;
 	siteAccessRequired?: {
 		details: string | null;
-		hasIssues: boolean | null;
+		isRequired: boolean | null;
 	};
 	siteOwnership: {
 		areAllOwnersKnown: string | null;

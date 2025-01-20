@@ -12,6 +12,19 @@ export const mapAppellantCase = (data) => {
 	} = data;
 
 	return {
-		appellantProcedurePreference: appellantCase?.appellantProcedurePreference
+		appellantProcedurePreference: appellantCase?.appellantProcedurePreference,
+		appellantProcedurePreferenceDetails: appellantCase?.appellantProcedurePreferenceDetails,
+		appellantProcedurePreferenceDuration: appellantCase?.appellantProcedurePreferenceDuration,
+		appellantProcedurePreferenceWitnessCount:
+			appellantCase?.appellantProcedurePreferenceWitnessCount,
+		planningObligation: {
+			hasObligation: appellantCase?.planningObligation,
+			status: appellantCase?.statusPlanningObligation
+		},
+		agriculturalHolding: {
+			isPartOfAgriculturalHolding: appellantCase?.agriculturalHolding,
+			isTenant: appellantCase?.tenantAgriculturalHolding,
+			hasOtherTenants: appellantCase?.otherTenantsAgriculturalHolding
+		}
 	};
 };

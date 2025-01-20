@@ -24,6 +24,7 @@ describe('manage docs on appellant case', () => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.img);
@@ -58,6 +59,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAdditonalDocsAppellantCase(sampleFiles.document);
 			caseDetailsPage.clickManageAdditionalDocs();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkCorrectAnswerDisplays('Version', '1');
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
@@ -79,6 +81,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAdditonalDocsAppellantCase(sampleFiles.document);
 			caseDetailsPage.clickManageAdditionalDocs();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.img);
@@ -87,6 +90,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageAdditionalDocs();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkCorrectAnswerDisplays('Version', '2');
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'Redacted');
@@ -95,6 +99,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkAdditonalDocsAppellantCase(sampleFiles.document);
 			caseDetailsPage.clickManageAdditionalDocs();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkCorrectAnswerDisplays('Version', '1');
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');

@@ -1,4 +1,7 @@
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import {
+	addNotificationBannerToSession,
+	clearNotificationBannerFromSession
+} from '#lib/session-utilities.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { removeAccordionComponentsActions } from './remove-accordion-components-actions.js';
 import {
@@ -101,6 +104,12 @@ export function mapStatusDependentNotifications(
 					appealDetails.appealId,
 					`<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
 				);
+			} else {
+				clearNotificationBannerFromSession(
+					session,
+					appealDetails.appealId,
+					'appellantFinalCommentsAwaitingReview'
+				);
 			}
 			if (representationTypesAwaitingReview?.lpaFinalComments) {
 				addNotificationBannerToSession(
@@ -108,6 +117,12 @@ export function mapStatusDependentNotifications(
 					'lpaFinalCommentsAwaitingReview',
 					appealDetails.appealId,
 					`<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
+				);
+			} else {
+				clearNotificationBannerFromSession(
+					session,
+					appealDetails.appealId,
+					'lpaFinalCommentsAwaitingReview'
 				);
 			}
 			break;

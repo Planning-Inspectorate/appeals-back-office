@@ -37,6 +37,9 @@ export const mapAppellantCase = (data) => {
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
 			enforcementNotice: appellantCase?.enforcementNotice || null,
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
+			floorSpaceSquareMetres: Number(appellantCase?.floorSpaceSquareMetres) || null,
+			siteAreaSquareMetres: Number(appellantCase?.siteAreaSquareMetres) || null,
+			isGreenBelt: appellantCase?.isGreenBelt,
 			siteOwnership: {
 				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
 				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
@@ -51,6 +54,10 @@ export const mapAppellantCase = (data) => {
 			healthAndSafety: {
 				details: appellantCase.siteSafetyDetails,
 				hasIssues: appellantCase.siteSafetyDetails !== null
+			},
+			developmentDescription: {
+				details: appellantCase?.originalDevelopmentDescription || null,
+				isChanged: appellantCase?.changedDevelopmentDescription === true
 			}
 		};
 	}

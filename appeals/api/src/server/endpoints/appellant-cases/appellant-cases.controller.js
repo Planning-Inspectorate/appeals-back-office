@@ -1,16 +1,13 @@
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import * as CONSTANTS from '#endpoints/constants.js';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
-import { formatAppellantCase } from './appellant-cases.formatter.js';
 import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
-//import { contextEnum } from '#mappers/context-enum.js';
-//import { mapCase } from '#mappers/mapper-factory.js';
+import { contextEnum } from '#mappers/context-enum.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -22,15 +19,11 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
  */
 const getAppellantCaseById = async (req, res) => {
 	const { appeal } = req;
-
-	// const context = contextEnum.appellantCase;
-	// const dto = mapCase({ appeal, context });
-	// return res.send(dto);
-
-	const folders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.APPELLANT_CASE);
-	const formattedAppeal = formatAppellantCase(appeal, folders);
-
-	return res.send(formattedAppeal);
+	const dto = await appealDetailService.loadAndFormatAppeal({
+		appeal,
+		context: contextEnum.appellantCase
+	});
+	return res.send(dto);
 };
 
 /**
@@ -110,7 +103,6 @@ const updateAppellantCaseById = async (req, res) => {
 					areAllOwnersKnown,
 					knowsOtherOwners,
 					hasAdvertisedAppeal,
-					hasAttemptedToIdentifyOwners,
 					siteSafetyDetails,
 					siteAccessDetails,
 					ownsAllLand,

@@ -106,12 +106,6 @@ const formatDocumentationSummary = (appeal) => {
 	const lpaStatement = appeal.representations?.find(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
-	const lpaFinalComments = appeal.representations?.find(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-	);
-	const appellantFinalComments = appeal.representations?.find(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-	);
 
 	return {
 		appellantCase: {
@@ -135,18 +129,6 @@ const formatDocumentationSummary = (appeal) => {
 		lpaStatement: {
 			status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			receivedAt: lpaStatement?.dateCreated
-		},
-		lpaFinalComments: {
-			status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: lpaFinalComments
-				? lpaFinalComments?.dateCreated && lpaFinalComments?.dateCreated.toISOString()
-				: null
-		},
-		appellantFinalComments: {
-			status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: appellantFinalComments
-				? appellantFinalComments?.dateCreated && appellantFinalComments?.dateCreated.toISOString()
-				: null
 		}
 	};
 };

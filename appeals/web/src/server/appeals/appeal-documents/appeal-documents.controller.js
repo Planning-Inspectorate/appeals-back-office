@@ -547,7 +547,10 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 		delete request.session.fileUploadInfo;
 
 		if (successCallback) {
-			successCallback(request);
+			await successCallback(
+				request,
+				addDocumentsRequestPayload.documents.map((document) => document.GUID)
+			);
 		}
 
 		if (nextPageUrl) {
@@ -560,6 +563,8 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 				? error.message
 				: 'Something went wrong when submitting the upload documents check and confirm page'
 		);
+
+		return response.status(500).render('app/500.njk');
 	}
 };
 

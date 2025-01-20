@@ -1,6 +1,9 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './common.js';
+import { formatFinalCommentsTypeText } from '../../final-comments.mapper.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -14,7 +17,16 @@ import { generateCommentsSummaryList } from './common.js';
  */
 export function reviewFinalCommentsPage(appealDetails, finalCommentsType, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const commentSummaryList = generateCommentsSummaryList(appealDetails.appealId, comment);
+	const commentSummaryList = generateCommentsSummaryList(
+		appealDetails.appealId,
+		comment,
+		finalCommentsType
+	);
+	const notificationBanners = buildNotificationBanners(
+		session,
+		'viewFinalComments',
+		appealDetails.appealId
+	);
 
 	/** @type {PageComponent} */
 	const commentValidityRadioButtons = {
@@ -52,15 +64,18 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		}
 	};
 
+	const formattedFinalCommentsType = formatFinalCommentsTypeText(finalCommentsType);
 	const pageContent = {
-		title: `Review ${finalCommentsType} final comments`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+		title: `Review ${formattedFinalCommentsType} final comments`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: `Review ${finalCommentsType} final comments`,
+		heading: `Review ${formattedFinalCommentsType} final comments`,
 		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Continue',
-		pageComponents: [commentSummaryList, commentValidityRadioButtons]
+		pageComponents: [...notificationBanners, commentSummaryList, commentValidityRadioButtons]
 	};
+
+	preRenderPageComponents(pageContent.pageComponents);
 
 	return pageContent;
 }
