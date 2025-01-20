@@ -363,6 +363,24 @@ const getAppealsByIds = async (linkedAppealIds) => {
 	return appeals;
 };
 
+/**
+ *
+ * @param {number} appealId
+ * @param {Object<string, number>} data
+ * @returns {Promise<AppealRelationship>}
+ */
+const removeAppealServiceUser = async (appealId, data) => {
+	const { userType, serviceUserId } = data;
+	return databaseConnector.$transaction(async (tx) => {
+		await tx.appeal.update({
+			where: { id: appealId },
+			data: { [userType]: { disconnect: true } }
+		});
+		const dbResult = await tx.serviceUser.delete({ where: { id: serviceUserId } });
+		return { serviceUserId: dbResult.id };
+	});
+};
+
 export default {
 	getLinkedAppeals,
 	getAppealById,
@@ -372,6 +390,7 @@ export default {
 	setAppealWithdrawal,
 	setInvalidAppealDecision,
 	setAppealEiaScreeningRequired,
+	removeAppealServiceUser,
 	linkAppeal,
 	unlinkAppeal,
 	getAppealsByIds

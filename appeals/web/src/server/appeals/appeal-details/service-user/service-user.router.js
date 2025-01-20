@@ -7,6 +7,11 @@ import { validateAction } from '#appeals/appeal-details/service-user/service-use
 const router = createRouter({ mergeParams: true });
 
 router
+	.route('/remove/:userType')
+	.get(asyncHandler(controller.getRemoveServiceUser))
+	.post(asyncHandler(controller.postRemoveServiceUser));
+
+router
 	.route('/:action/:userType')
 	.all(validateAction)
 	.get(asyncHandler(controller.getChangeServiceUser))

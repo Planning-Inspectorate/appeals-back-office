@@ -1104,6 +1104,24 @@ export const spec = {
 				}
 			}
 		},
+		DeleteServiceUserRequest: {
+			type: 'object',
+			properties: {
+				userType: {
+					type: 'string',
+					example: 'agent'
+				}
+			}
+		},
+		DeleteServiceUserResponse: {
+			type: 'object',
+			properties: {
+				serviceUserId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
 		WithdrawalRequestRequest: {
 			type: 'object',
 			properties: {

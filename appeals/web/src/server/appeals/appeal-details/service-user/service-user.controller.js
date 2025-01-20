@@ -2,8 +2,8 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import { HTTPError } from 'got';
-import { changeServiceUserPage } from './service-user.mapper.js';
-import { assignServiceUser, updateServiceUser } from './service-user.service.js';
+import { changeServiceUserPage, removeServiceUserPage } from './service-user.mapper.js';
+import { assignServiceUser, removeServiceUser, updateServiceUser } from './service-user.service.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
@@ -25,6 +25,10 @@ const renderChangeServiceUser = async (request, response) => {
 	} = request;
 
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+	const removeLinkUrl =
+		userType === 'agent' && action === 'change'
+			? request.originalUrl.replace('/change/', '/remove/')
+			: '';
 
 	const appealDetails = request.currentAppeal;
 	if (
@@ -37,6 +41,7 @@ const renderChangeServiceUser = async (request, response) => {
 			request.session.updatedServiceUser,
 			userType,
 			backLinkUrl,
+			removeLinkUrl,
 			errors
 		);
 		return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -129,4 +134,77 @@ export const postChangeServiceUser = async (request, response) => {
 	}
 
 	return response.status(500).render('app/500.njk');
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getRemoveServiceUser = async (request, response) => {
+	const {
+		params: { userType }
+	} = request;
+
+	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+	const removeLinkUrl = request.originalUrl.replace('/remove/', '/change/');
+
+	const appealDetails = request.currentAppeal;
+
+	if (appealDetails && userType in appealDetails) {
+		const mappedPageContents = removeServiceUserPage(
+			appealDetails,
+			userType,
+			backLinkUrl,
+			removeLinkUrl
+		);
+		return response.status(200).render('patterns/change-page.pattern.njk', {
+			pageContent: mappedPageContents
+		});
+	}
+	return response.status(500).render('app/500.njk');
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postRemoveServiceUser = async (request, response) => {
+	const {
+		params: { appealId, userType }
+	} = request;
+
+	const origin = getOriginPathname(request);
+	const backToMenuUrl = origin.split('/').slice(0, -3).join('/');
+
+	if (!isInternalUrl(backToMenuUrl, request)) {
+		return response.status(400).render('errorPageTemplate', {
+			message: 'Invalid redirection attempt detected.'
+		});
+	}
+
+	const appealDetails = request.currentAppeal;
+
+	// @ts-ignore
+	const serviceUserId = appealDetails[userType]?.serviceUserId;
+
+	if (!serviceUserId) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	try {
+		await removeServiceUser(request.apiClient, appealId, serviceUserId, userType);
+
+		addNotificationBannerToSession(
+			request.session,
+			'changePage',
+			appealId,
+			`<p class="govuk-notification-banner__heading">${capitalize(userType)} removed</p>`
+		);
+
+		delete request.session.updatedServiceUser;
+
+		return response.redirect(backToMenuUrl);
+	} catch (error) {
+		return response.status(500).render('app/500.njk');
+	}
 };

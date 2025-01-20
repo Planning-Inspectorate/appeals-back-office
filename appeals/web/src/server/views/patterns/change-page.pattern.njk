@@ -26,6 +26,11 @@
 					type: "submit",
 					preventDoubleClick: true
 				}) }}
+				{%- if pageContent.postPageComponents -%}
+					{%- for component in pageContent.postPageComponents -%}
+						{%- include "../appeals/components/page-component.njk" -%}
+					{%- endfor -%}
+				{%- endif -%}
 			</form>
 		</div>
 	</div>

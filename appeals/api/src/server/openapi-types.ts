@@ -2287,6 +2287,16 @@ export interface UpdateServiceUserResponse {
 	serviceUserId?: number;
 }
 
+export interface DeleteServiceUserRequest {
+	/** @example "agent" */
+	userType?: string;
+}
+
+export interface DeleteServiceUserResponse {
+	/** @example 1 */
+	serviceUserId?: number;
+}
+
 export interface WithdrawalRequestRequest {
 	/** @example "2024-10-11" */
 	withdrawalRequestDate?: string;

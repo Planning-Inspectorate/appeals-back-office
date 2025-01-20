@@ -1,10 +1,15 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { AUDIT_TRAIL_SERVICE_USER_UPDATED, ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import {
+	AUDIT_TRAIL_SERVICE_USER_REMOVED,
+	AUDIT_TRAIL_SERVICE_USER_UPDATED,
+	ERROR_NOT_FOUND
+} from '#endpoints/constants.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { upsertServiceUserAddress } from './service-user.service.js';
+import appealRepository from '#repositories/appeal.repository.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -88,4 +93,39 @@ export async function updateServiceUserAddress(request, response) {
 	}
 
 	return response.send(result);
+}
+
+/**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+export async function removeServiceUserById(request, response) {
+	const {
+		body: { userType },
+		params
+	} = request;
+	const appealId = Number(params.appealId);
+	const azureAdUserId = request.get('azureAdUserId');
+
+	try {
+		const dbResult = await appealRepository.removeAppealServiceUser(appealId, {
+			userType,
+			serviceUserId: parseInt(request.appeal?.agent?.id)
+		});
+
+		if (!dbResult) {
+			return response.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
+		}
+
+		await createAuditTrail({
+			appealId,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_REMOVED, [userType])
+		});
+		return response.send(dbResult);
+	} catch (errors) {
+		console.log(errors);
+		return response.status(500).send({ errors });
+	}
 }

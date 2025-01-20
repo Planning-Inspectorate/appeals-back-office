@@ -15,10 +15,11 @@ import { capitalize } from 'lodash-es';
 /**
  *
  * @param {Appeal} appealData
- * @param {string} userType
  * @param {import('../appeal-details.types.js').WebServiceUser} userDetailsInSession
- * @param {import('@pins/express').ValidationErrors | undefined } errors
+ * @param {string} userType
  * @param {string} backLinkUrl
+ * @param {string} removeLinkUrl
+ * @param {import('@pins/express').ValidationErrors | undefined } errors
  * @returns {PageContent}
  */
 export const changeServiceUserPage = (
@@ -26,6 +27,7 @@ export const changeServiceUserPage = (
 	userDetailsInSession,
 	userType,
 	backLinkUrl,
+	removeLinkUrl,
 	errors
 ) => {
 	// @ts-ignore
@@ -107,6 +109,49 @@ export const changeServiceUserPage = (
 					},
 					value: serviceUserDetails?.phoneNumber ?? '',
 					errorMessage: errorPhoneNumberAllowEmpty(errors)
+				}
+			}
+		]
+	};
+
+	if (removeLinkUrl) {
+		pageContent.postPageComponents = [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body"><a class="govuk-link" href="${removeLinkUrl}">Remove ${userType}</a></p>`
+				}
+			}
+		];
+	}
+
+	return pageContent;
+};
+
+/**
+ *
+ * @param {Appeal} appealData
+ * @param {string} userType
+ * @param {string} backLinkUrl
+ * @param {string} cancelLinkUrl
+ * @returns {PageContent}
+ */
+export const removeServiceUserPage = (appealData, userType, backLinkUrl, cancelLinkUrl) => {
+	// @ts-ignore
+	const { firstName, lastName } = appealData[userType];
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Remove ${userType}`,
+		backLinkUrl: backLinkUrl,
+		preHeading: `${firstName} ${lastName}`,
+		heading: `Confirm that you want to remove the ${userType}`,
+		submitButtonText: `Remove ${userType}`,
+		postPageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body"><a class="govuk-link" href="${cancelLinkUrl}">Cancel</a></p>`
 				}
 			}
 		]
