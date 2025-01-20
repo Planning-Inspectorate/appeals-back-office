@@ -29,7 +29,6 @@ export const assignServiceUser = (apiClient, appealId, userType, data) =>
  * @param {WebServiceUser} data
  * @returns {Promise<{}>}
  */
-
 export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) =>
 	apiClient.patch(`appeals/${appealId}/service-user`, {
 		json: {
@@ -42,5 +41,21 @@ export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, 
 				email: data.email ?? null,
 				phoneNumber: data.phoneNumber ?? null
 			}
+		}
+	});
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} serviceUserId
+ * @param {string} userType
+ * @returns {Promise<{}>}
+ */
+export const removeServiceUser = (apiClient, appealId, serviceUserId, userType) =>
+	apiClient.delete(`appeals/${appealId}/service-user`, {
+		json: {
+			serviceUserId,
+			userType
 		}
 	});

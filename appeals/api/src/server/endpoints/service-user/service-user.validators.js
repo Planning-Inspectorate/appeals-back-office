@@ -37,3 +37,8 @@ export const patchAddressValidator = composeMiddleware(
 	validateStringParameter('postcode', LENGTH_8),
 	validationErrorHandler
 );
+
+export const removeServiceUserValidator = composeMiddleware(
+	validateIdParameter('serviceUserId'),
+	validateUserType('serviceUser.userType')
+);

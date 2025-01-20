@@ -112,6 +112,8 @@ exports[`service-user GET /change/:userType should render the change service use
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -693,6 +695,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -752,6 +756,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -811,6 +817,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -870,6 +878,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -929,6 +939,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -989,6 +1001,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -1048,6 +1062,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -1107,6 +1123,8 @@ exports[`service-user POST /change/:userType should re-render changeServiceUser 
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
+                        </p>
                     </form>
                 </div>
             </div>

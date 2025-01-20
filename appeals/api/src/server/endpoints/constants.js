@@ -59,6 +59,7 @@ export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address 
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
 export const AUDIT_TRAIL_SERVICE_USER_UPDATED = 'The {replacement0}’s details were updated';
+export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
 export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated';
 export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated';

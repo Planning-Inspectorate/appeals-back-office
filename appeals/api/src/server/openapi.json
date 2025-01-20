@@ -3286,6 +3286,69 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"tags": ["Service Users"],
+				"description": "Deletes a single service user by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes a single service user by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteServiceUserResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteServiceUserResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Service user to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteServiceUserRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteServiceUserRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/appeals/{appealId}/service-user/{serviceUserId}/address": {
@@ -9360,6 +9423,24 @@
 				}
 			},
 			"UpdateServiceUserResponse": {
+				"type": "object",
+				"properties": {
+					"serviceUserId": {
+						"type": "number",
+						"example": 1
+					}
+				}
+			},
+			"DeleteServiceUserRequest": {
+				"type": "object",
+				"properties": {
+					"userType": {
+						"type": "string",
+						"example": "agent"
+					}
+				}
+			},
+			"DeleteServiceUserResponse": {
 				"type": "object",
 				"properties": {
 					"serviceUserId": {
