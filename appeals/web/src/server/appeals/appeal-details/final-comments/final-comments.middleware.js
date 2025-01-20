@@ -35,7 +35,16 @@ export const withSingularRepresentation = async (req, res, next) => {
 		}
 
 		req.currentRepresentation = representation;
-		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
+
+		const attachmentGuids = representation.attachments.map((attachment) => attachment.documentGuid);
+		const attachmentsFolder = await getAttachmentsFolder(req.apiClient, appealId);
+
+		req.currentFolder = {
+			...attachmentsFolder,
+			documents: attachmentsFolder.documents.filter((document) =>
+				attachmentGuids.includes(document.id)
+			)
+		};
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}

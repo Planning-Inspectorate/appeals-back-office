@@ -5,10 +5,13 @@ import {
 	renderDocumentDetails,
 	postDocumentDetails,
 	renderUploadDocumentsCheckAndConfirm,
-	postUploadDocumentsCheckAndConfirm
+	postUploadDocumentsCheckAndConfirm,
+	renderManageFolder,
+	renderManageDocument
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/representations.service.js';
+import { formatFinalCommentsTypeText } from '../final-comments.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocuments = async (request, response) => {
@@ -125,4 +128,59 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 
 		return response.render('app/500.njk');
 	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getManageFolder = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { finalCommentsType }
+	} = request;
+
+	await renderManageFolder({
+		request,
+		response,
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}`,
+		viewAndEditUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		pageHeadingTextOverride: `${formatFinalCommentsTypeText(
+			finalCommentsType,
+			true
+		)} final comments supporting documents`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getManageDocument = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { finalCommentsType }
+	} = request;
+
+	await renderManageDocument({
+		request,
+		response,
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${currentFolder.folderId}`,
+		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/add-documents/${currentFolder.folderId}/{{documentId}}`,
+		removeDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/add-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentVersion = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { finalCommentsType, documentId }
+	} = request;
+
+	await renderDocumentUpload({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${currentFolder.folderId}/${documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/supporting-documents/add-document-details/${currentFolder.folderId}/${documentId}`,
+		allowMultipleFiles: false
+	});
 };

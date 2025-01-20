@@ -40,16 +40,14 @@ router
 	.get(validateAppeal, asyncHandler(controller.getAddDocumentsCheckAndConfirm))
 	.post(validateAppeal, asyncHandler(controller.postAddDocumentsCheckAndConfirm));
 
-// router
-// 	.route('/add-documents/:folderId/:documentId')
-// 	.get(
-// 		validateAppeal,
-// 		assertUserHasPermission(permissionNames.updateCase),
-// 		validateCaseFolderId,
-// 		validateCaseDocumentId,
-// 		asyncHandler(controller.getAddDocumentVersion)
-// 	)
-// 	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocumentVersion));
+router
+	.route('/add-documents/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getAddDocumentVersion)
+	);
+//.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocumentVersion));
 
 // router
 // 	.route('/add-documents/:folderId/:documentId/check-your-answers')
@@ -84,23 +82,20 @@ router
 // 		asyncHandler(controller.postDocumentVersionDetails)
 // 	);
 
-// router
-// 	.route('/manage-documents/:folderId/')
-// 	.get(
-// 		assertUserHasPermission(permissionNames.updateCase),
-// 		validateCaseFolderId,
-// 		asyncHandler(controller.getManageFolder)
-// 	);
+router
+	.route('/manage-documents/:folderId/')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getManageFolder)
+	);
 
-// router
-// 	.route('/manage-documents/:folderId/:documentId')
-// 	.get(
-// 		validateAppeal,
-// 		assertUserHasPermission(permissionNames.updateCase),
-// 		validateCaseFolderId,
-// 		validateCaseDocumentId,
-// 		asyncHandler(controller.getManageDocument)
-// 	);
+router
+	.route('/manage-documents/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getManageDocument)
+	);
 
 // router
 // 	.route('/change-document-name/:folderId/:documentId')

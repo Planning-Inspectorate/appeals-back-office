@@ -24,7 +24,7 @@ export function generateCommentsSummaryList(appealId, comment, finalCommentsType
 			path: 'representation/representationAttachments',
 			documents: mapRepresentationAttachmentsToDocumentInfoArray(comment.attachments)
 		},
-		editable: comment.attachments?.length > 0,
+		editable: true,
 		manageUrl: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/supporting-documents/manage-documents/${folderId}`,
 		uploadUrlTemplate: `/appeals-service/appeal-details/{{appealId}}/final-comments/${finalCommentsType}/supporting-documents/add-documents`,
 		noBottomMargin: true
