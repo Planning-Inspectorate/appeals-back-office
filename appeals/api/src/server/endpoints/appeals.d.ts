@@ -125,6 +125,7 @@ interface UpdateAppealRequest {
 	applicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
+	agent?: number | null;
 }
 
 interface SingleAppellantCaseResponse {

@@ -3,7 +3,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import { HTTPError } from 'got';
 import { changeServiceUserPage } from './service-user.mapper.js';
-import { updateServiceUser } from './service-user.service.js';
+import { assignServiceUser, updateServiceUser } from './service-user.service.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
@@ -21,8 +21,12 @@ export const getChangeServiceUser = async (request, response) => {
 const renderChangeServiceUser = async (request, response) => {
 	const {
 		errors,
-		params: { userType }
+		params: { userType, action }
 	} = request;
+
+	if (!['add', 'change'].includes(action)) {
+		return response.status(404).render('app/404.njk');
+	}
 
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
 
@@ -57,8 +61,14 @@ export const postChangeServiceUser = async (request, response) => {
 	};
 
 	const {
-		params: { appealId, userType }
+		params: { appealId, userType, action }
 	} = request;
+
+	if (!['add', 'change'].includes(action)) {
+		return response.status(404).render('app/404');
+	}
+
+	const isUpdate = action === 'change';
 
 	const appealDetails = request.currentAppeal;
 
@@ -79,23 +89,33 @@ export const postChangeServiceUser = async (request, response) => {
 		// @ts-ignore
 		const serviceUserId = appealDetails[userType]?.serviceUserId;
 
-		if (!serviceUserId) {
-			return response.status(404).render('app/404.njk');
+		if (isUpdate) {
+			if (!serviceUserId) {
+				return response.status(404).render('app/404.njk');
+			}
+			await updateServiceUser(
+				request.apiClient,
+				appealId,
+				serviceUserId,
+				userType,
+				request.session.updatedServiceUser
+			);
+		} else {
+			await assignServiceUser(
+				request.apiClient,
+				appealId,
+				userType,
+				request.session.updatedServiceUser
+			);
 		}
-
-		await updateServiceUser(
-			request.apiClient,
-			appealId,
-			serviceUserId,
-			userType,
-			request.session.updatedServiceUser
-		);
 
 		addNotificationBannerToSession(
 			request.session,
 			'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">${capitalize(userType)} details updated</p>`
+			`<p class="govuk-notification-banner__heading">${capitalize(userType)} details ${
+				isUpdate ? 'updated' : 'added'
+			}</p>`
 		);
 
 		delete request.session.updatedServiceUser;
