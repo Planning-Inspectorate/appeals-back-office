@@ -314,6 +314,10 @@ export function mapAppealStatusToActionRequiredHtml(
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
+			if (dueDatePassed && !hasAwaitingComments) {
+				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Share IP comments and LPA statement</a>`;
+			}
+
 			const lpaStatementAction = (() => {
 				switch (lpaStatementStatus) {
 					case 'not_received':
