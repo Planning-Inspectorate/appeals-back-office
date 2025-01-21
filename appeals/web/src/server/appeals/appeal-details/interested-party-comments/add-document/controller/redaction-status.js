@@ -1,9 +1,12 @@
-import { postRedactionStatusFactory, renderRedactionStatusFactory } from '../../common/index.js';
+import {
+	renderRedactionStatusFactory,
+	postRedactionStatusFactory
+} from '#appeals/appeal-details/representations/common/controllers/redaction-status.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
-	getBackLinkUrl: (appealDetails, comment) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document`,
+	getBackLinkUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/${request.currentRepresentation.id}/add-document`,
 	getValue: (request) =>
 		request.session.addDocument?.redactionStatus ||
 		request.body.redactionStatus ||
@@ -11,7 +14,7 @@ export const renderRedactionStatus = renderRedactionStatusFactory({
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
-	getRedirectUrl: (appealDetails, comment) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document/date-submitted`,
+	getRedirectUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/${request.currentRepresentation.id}/add-document/date-submitted`,
 	errorHandler: renderRedactionStatus
 });

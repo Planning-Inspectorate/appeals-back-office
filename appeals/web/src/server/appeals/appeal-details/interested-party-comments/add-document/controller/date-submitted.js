@@ -1,13 +1,20 @@
-import { postDateSubmittedFactory, renderDateSubmittedFactory } from '../../common/index.js';
+import {
+	renderDateSubmittedFactory,
+	postDateSubmittedFactory
+} from '#appeals/appeal-details/representations/common/controllers/date-submitted.js';
 
 export const renderDateSubmitted = renderDateSubmittedFactory({
-	getBackLinkUrl: (appealDetails, comment) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document/redaction-status`,
-	getValue: (request) => request.session.addDocument || request.body
+	getBackLinkUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/${request.currentRepresentation.id}/add-document/redaction-status`,
+	getValue: (request) => request.session.addDocument || request.body,
+	mapperParams: {
+		title: 'When did the interested party submit the comment?',
+		legendText: 'When did the interested party submit the comment?'
+	}
 });
 
 export const postDateSubmitted = postDateSubmittedFactory({
-	getRedirectUrl: (appealDetails, comment) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document/check-your-answers`,
+	getRedirectUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/${request.currentRepresentation.id}/add-document/check-your-answers`,
 	errorHandler: renderDateSubmitted
 });

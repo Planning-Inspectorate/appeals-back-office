@@ -8,16 +8,12 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import {
-	postDateSubmittedFactory,
-	postRedactionStatusFactory,
-	renderDateSubmittedFactory,
-	renderRedactionStatusFactory
-} from '../common/index.js';
-import {
 	isValidRedactionStatus,
+	postRedactionStatusFactory,
 	name as redactionStatusFieldName,
+	renderRedactionStatusFactory,
 	statusFormatMap
-} from '../common/redaction-status.js';
+} from '../../representations/common/controllers/redaction-status.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 import {
@@ -29,6 +25,10 @@ import {
 } from './add-ip-comment.mapper.js';
 import { postRepresentationComment } from './add-ip-comment.service.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import {
+	renderDateSubmittedFactory,
+	postDateSubmittedFactory
+} from '#appeals/appeal-details/representations/common/controllers/date-submitted.js';
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -113,8 +113,8 @@ export async function postUpload(request, response) {
 }
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
-	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
+	getBackLinkUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/add/upload`,
 	getValue: (request) =>
 		request.session.addIpComment?.redactionStatus ||
 		request.body.redactionStatus ||
@@ -122,20 +122,24 @@ export const renderRedactionStatus = renderRedactionStatusFactory({
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
-	getRedirectUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
+	getRedirectUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/add/date-submitted`,
 	errorHandler: renderRedactionStatus
 });
 
 export const renderDateSubmitted = renderDateSubmittedFactory({
-	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
-	getValue: (request) => request.session.addIpComment || request.body
+	getBackLinkUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/add/redaction-status`,
+	getValue: (request) => request.session.addIpComment || request.body,
+	mapperParams: {
+		title: 'When did the interested party submit the comment?',
+		legendText: 'When did the interested party submit the comment?'
+	}
 });
 
 export const postDateSubmitted = postDateSubmittedFactory({
-	getRedirectUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-your-answers`,
+	getRedirectUrl: (request) =>
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/interested-party-comments/add/check-your-answers`,
 	errorHandler: renderDateSubmitted
 });
 

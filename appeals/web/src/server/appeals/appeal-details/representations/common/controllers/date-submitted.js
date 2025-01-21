@@ -1,20 +1,22 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/index.js';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
 /**
- * @param {Appeal} appealDetails
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {ReqBody} date
- * @param {string} backLinkUrl
+ * @param {object} options
+ * @param {Appeal} options.appealDetails
+ * @param {ReqBody} options.date
+ * @param {string} options.backLinkUrl
+ * @param {string} options.title
+ * @param {string} options.legendText
  * @returns {PageContent}
  * */
-export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
-	title: 'When did the interested party submit the comment?',
+export const mapper = ({ appealDetails, date, backLinkUrl, title, legendText }) => ({
+	title,
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	pageComponents: [
@@ -22,7 +24,7 @@ export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
 			id: 'date',
 			name: 'date',
 			value: date,
-			legendText: 'When did the interested party submit the comment?',
+			legendText,
 			legendIsPageHeading: true,
 			hint: 'For example, 27 3 2024'
 		})
@@ -31,17 +33,24 @@ export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl
+ * @param {(request: import('@pins/express').Request) => string} options.getBackLinkUrl
  * @param {(request: import('@pins/express').Request) => RequestDate} options.getValue
+ * @param {{ title: string, legendText: string }} options.mapperParams
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const renderDateSubmittedFactory =
-	({ getBackLinkUrl, getValue }) =>
+	({ getBackLinkUrl, getValue, mapperParams: { title, legendText } }) =>
 	(request, response) => {
-		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
+		const backLinkUrl = getBackLinkUrl(request);
 		const value = getValue(request);
 
-		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
+		const pageContent = mapper({
+			appealDetails: request.currentAppeal,
+			date: value,
+			backLinkUrl,
+			title,
+			legendText
+		});
 
 		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			errors: request.errors,
@@ -51,7 +60,7 @@ export const renderDateSubmittedFactory =
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getRedirectUrl
+ * @param {(request: import('@pins/express').Request) => string} options.getRedirectUrl
  * @param {import('@pins/express').RenderHandler<{}, {}, ReqBody>} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
@@ -62,7 +71,5 @@ export const postDateSubmittedFactory =
 			return errorHandler(request, response, next);
 		}
 
-		const { currentAppeal, currentRepresentation } = request;
-
-		return response.redirect(getRedirectUrl(currentAppeal, currentRepresentation));
+		return response.redirect(getRedirectUrl(request));
 	};
