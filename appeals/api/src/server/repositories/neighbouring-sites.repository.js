@@ -82,13 +82,28 @@ const connectSite = (appealId, addressId) =>
  * @param {number} addressId
  */
 const disconnectSite = (appealId, addressId) =>
-	databaseConnector.neighbouringSite.delete({
-		where: {
-			appealId_addressId: {
-				appealId,
-				addressId
+	databaseConnector.$transaction(async (tx) => {
+		const neighbouringSite = await tx.neighbouringSite.findUnique({
+			where: {
+				appealId_addressId: {
+					appealId,
+					addressId
+				}
 			}
+		});
+
+		if (!neighbouringSite) {
+			return;
 		}
+
+		await tx.neighbouringSite.delete({
+			where: {
+				appealId_addressId: {
+					appealId,
+					addressId
+				}
+			}
+		});
 	});
 
 /**
