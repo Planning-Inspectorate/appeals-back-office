@@ -2437,7 +2437,7 @@ export const finalCommentsForReview = {
 			created: '2024-10-09T17:23:24.406Z',
 			notes: '',
 			attachments: [],
-			representationType: 'comment',
+			representationType: 'lpa_final_comment',
 			siteVisitRequested: false,
 			represented: {
 				id: 3838,

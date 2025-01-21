@@ -3,6 +3,22 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**
+ * Maps representation types to their respective identifiers.
+ * @param {string} representationType
+ * @returns {string}
+ */
+function mapRepresentationTypeToPath(representationType) {
+	switch (representationType) {
+		case 'appellant_final_comment':
+			return 'appellant';
+		case 'lpa_final_comment':
+			return 'lpa';
+		default:
+			throw new Error(`Unsupported representation type: ${representationType}`);
+	}
+}
+
+/**
  * Generates the comment summary list used in both view and review pages.
  * @param {number} appealId
  * @param {Representation} comment - The comment object.
@@ -20,6 +36,8 @@ export function generateCommentsSummaryList(appealId, comment) {
 					)
 			  )
 			: null;
+
+	const commentTypePath = mapRepresentationTypeToPath(comment.representationType);
 
 	const rows = [
 		{
@@ -43,14 +61,14 @@ export function generateCommentsSummaryList(appealId, comment) {
 						? [
 								{
 									text: 'Manage',
-									href: `/appeals-service/appeal-details/${appealId}/final-comment/${comment.id}/manage-documents/${folderId}`,
+									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/manage-documents/${folderId}`,
 									visuallyHiddenText: 'supporting documents'
 								}
 						  ]
 						: []),
 					{
 						text: 'Add',
-						href: `/appeals-service/appeal-details/${appealId}/final-comment/${comment.id}/add-document`,
+						href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/add-document`,
 						visuallyHiddenText: 'supporting documents'
 					}
 				]

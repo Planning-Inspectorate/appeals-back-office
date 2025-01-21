@@ -30,7 +30,6 @@ export const getRepresentationCounts = (apiClient, appealId, statusFilter = 'all
  */
 export const getSingularRepresentationByType = async (apiClient, appealId, type) => {
 	const url = `appeals/${appealId}/reps?type=${type}`;
-
 	const apiResponse = await apiClient.get(url).json();
 
 	if (apiResponse.items.length > 1) {
