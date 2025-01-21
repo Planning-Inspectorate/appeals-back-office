@@ -24,14 +24,14 @@ const renderChangeServiceUser = async (request, response) => {
 		params: { userType, action }
 	} = request;
 
-	if (!['add', 'change'].includes(action)) {
-		return response.status(404).render('app/404.njk');
-	}
-
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
 
 	const appealDetails = request.currentAppeal;
-	if (appealDetails && userType in appealDetails) {
+	if (
+		appealDetails &&
+		((action === 'change' && userType in appealDetails) ||
+			(action === 'add' && userType === 'agent'))
+	) {
 		const mappedPageContents = changeServiceUserPage(
 			appealDetails,
 			request.session.updatedServiceUser,
@@ -63,10 +63,6 @@ export const postChangeServiceUser = async (request, response) => {
 	const {
 		params: { appealId, userType, action }
 	} = request;
-
-	if (!['add', 'change'].includes(action)) {
-		return response.status(404).render('app/404');
-	}
 
 	const isUpdate = action === 'change';
 
