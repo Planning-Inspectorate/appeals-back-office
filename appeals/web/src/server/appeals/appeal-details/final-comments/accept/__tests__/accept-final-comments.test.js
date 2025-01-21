@@ -86,7 +86,7 @@ describe('final-comments', () => {
 					.persist();
 
 				const mockedPatchFinalCommentStatusEndpoint = nock('http://test/')
-					.patch(`/appeals/2/reps/3670/status`)
+					.patch('/appeals/2/reps/3670')
 					.reply(200, finalCommentsForReview.items[0])
 					.persist();
 

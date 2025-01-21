@@ -22,7 +22,9 @@ import {
 	caseNotes,
 	activeDirectoryUsersData,
 	text300Characters,
-	text301Characters
+	text301Characters,
+	appellantFinalCommentsAwaitingReview,
+	lpaFinalCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { capitalize } from 'lodash-es';
@@ -41,6 +43,15 @@ describe('appeal-details', () => {
 		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+
+		nock('http://test/').get('/appeals/1/reps?type=appellant_final_comment').reply(200, appellantFinalCommentsAwaitingReview).persist();
+		nock('http://test/').get('/appeals/1/reps?type=lpa_final_comment').reply(200, lpaFinalCommentsAwaitingReview).persist();
+
+		nock('http://test/').get('/appeals/2/reps?type=appellant_final_comment').reply(200, appellantFinalCommentsAwaitingReview);
+		nock('http://test/').get('/appeals/2/reps?type=lpa_final_comment').reply(200, lpaFinalCommentsAwaitingReview);
+
+		nock('http://test/').get('/appeals/3/reps?type=appellant_final_comment').reply(200, appellantFinalCommentsAwaitingReview);
+		nock('http://test/').get('/appeals/3/reps?type=lpa_final_comment').reply(200, lpaFinalCommentsAwaitingReview);
 	});
 	afterEach(teardown);
 
@@ -178,6 +189,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 
 				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
 					addressLine1: '1 Grove Cottage',
@@ -190,6 +203,7 @@ describe('appeal-details', () => {
 				await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office/check-and-confirm`);
 
 				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
@@ -212,6 +226,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealReference}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealReference}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 				await request.post(`${baseUrl}/1/neighbouring-sites/change/site/1`).send({
 					addressLine1: '2 Grove Cottage',
 					addressLine2: null,
@@ -245,6 +261,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealReference}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealReference}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 				await request.post(`${baseUrl}/1/neighbouring-sites/remove/site/1`).send({
 					'remove-neighbouring-site': 'yes'
 				});
@@ -284,6 +302,9 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
 					'appeal-reference': appealReference
 				});
@@ -323,6 +344,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
 					'appeal-reference': appealReference
 				});
@@ -365,6 +388,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
 					'appeal-reference': appealReference
 				});
@@ -407,6 +432,8 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 
 				const addLinkedAppealReferencePostResponse = await request
 					.post(`${baseUrl}/1/linked-appeals/add`)
@@ -460,6 +487,7 @@ describe('appeal-details', () => {
 				});
 
 				const response = await request.get(`${baseUrl}/1`);
+
 				const notificationBannerElementHTML = parseHtml(response.text, {
 					rootElement: notificationBannerElement
 				}).innerHTML;
@@ -1258,6 +1286,8 @@ describe('appeal-details', () => {
 				const comment = 'This is a new comment';
 				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotesResponse);
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview).persist();
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview).persist();
 				const submitRequest = nock('http://test/')
 					.post(`/appeals/${appealId}/case-notes`)
 					.reply(200, {});
@@ -1292,7 +1322,8 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}/case-notes`)
 					.reply(200, caseNotesResponse)
 					.persist();
-
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview).persist();
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview).persist();
 				const submitRequest = nock('http://test/')
 					.post(`/appeals/${appealId}/case-notes`)
 					.reply(200, {});
@@ -1321,6 +1352,8 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}/case-notes`)
 					.reply(200, caseNotesResponse)
 					.persist();
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview).persist();
+				nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview).persist();
 
 				const submitRequest = nock('http://test/')
 					.post(`/appeals/${appealId}/case-notes`)
@@ -1349,6 +1382,8 @@ describe('appeal-details', () => {
 			const comment = 'This is a new comment';
 			nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 
 			const submitRequest = nock('http://test/').post(`/appeals/${appealId}/case-notes`).reply(500);
 			await request.get(`${baseUrl}/${appealId}`);
@@ -1671,6 +1706,9 @@ describe('appeal-details', () => {
 			nock.cleanAll();
 			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1694,6 +1732,9 @@ describe('appeal-details', () => {
 					linkedAppeals
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1721,6 +1762,9 @@ describe('appeal-details', () => {
 					linkedAppeals: linkedAppealsWithExternalLead
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1749,6 +1793,9 @@ describe('appeal-details', () => {
 					linkedAppeals
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1791,6 +1838,9 @@ describe('appeal-details', () => {
 					linkedAppeals
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1818,6 +1868,8 @@ describe('appeal-details', () => {
 					)
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
@@ -1840,6 +1892,8 @@ describe('appeal-details', () => {
 				})
 				.persist();
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/').get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
 
 			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
 			const element = parseHtml(response.text);
@@ -2355,6 +2409,9 @@ describe('appeal-details', () => {
 							appealStatus: status
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/').get(`/appeals/${appealId}/reps?type=appellant_final_comment`).reply(200, appellantFinalCommentsAwaitingReview);
+					nock('http://test/').get(`/appeals/${appealId}/reps?type=lpa_final_comment`).reply(200, lpaFinalCommentsAwaitingReview);
+
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
 					const columnHtml = parseHtml(response.text, {
