@@ -9,8 +9,9 @@ import {
 	isValidRedactionStatus,
 	name as redactionStatusFieldName,
 	statusFormatMap
-} from '../../common/redaction-status.js';
+} from '../../interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { patchRepresentationAttachments } from '../final-comments.service.js';
 
 /**
  * @type {import('@pins/express').RenderHandler<{}>}
@@ -19,13 +20,13 @@ export const renderCheckYourAnswers = (
 	{
 		errors,
 		currentAppeal: { appealReference, appealId },
-		currentRepresentation: { id: commentId },
 		session: {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
 			},
 			addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
-		}
+		},
+		params: { finalCommentsType }
 	},
 	response
 ) => {
@@ -38,14 +39,14 @@ export const renderCheckYourAnswers = (
 			title: 'Check details and add document',
 			heading: 'Check details and add document',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/date-submitted`,
 			submitButtonText: 'Add document',
 			responses: {
 				'Supporting document': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document`,
+							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document`,
 							visuallyHiddenText: 'supporting document'
 						}
 					}
@@ -54,7 +55,7 @@ export const renderCheckYourAnswers = (
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/redaction-status`,
+							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/redaction-status`,
 							visuallyHiddenText: 'redaction status'
 						}
 					}
@@ -63,7 +64,7 @@ export const renderCheckYourAnswers = (
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/add-document/date-submitted`,
+							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/date-submitted`,
 							visuallyHiddenText: 'date submitted'
 						}
 					}
@@ -79,7 +80,13 @@ export const renderCheckYourAnswers = (
  * @type {import('@pins/express').RequestHandler<{}>}
  */
 export const postCheckYourAnswers = async (
-	{ apiClient, session, currentAppeal: { appealId }, currentRepresentation: { id: commentId } },
+	{
+		apiClient,
+		session,
+		currentAppeal: { appealId },
+		currentRepresentation: { id },
+		params: { finalCommentsType }
+	},
 	response
 ) => {
 	const {
@@ -89,6 +96,7 @@ export const postCheckYourAnswers = async (
 		},
 		addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
 	} = session;
+
 	try {
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
@@ -96,10 +104,11 @@ export const postCheckYourAnswers = async (
 
 		const redactionStatusId = redactionStatuses.find(({ key }) => redactionStatus === key)?.id;
 
-		if (!redactionStatusId)
+		if (!redactionStatusId) {
 			throw new Error(
 				'Submitted redaction status did not correspond with a known redaction status key'
 			);
+		}
 
 		await createNewDocument(apiClient, appealId, {
 			blobStorageHost:
@@ -121,6 +130,8 @@ export const postCheckYourAnswers = async (
 				}
 			]
 		});
+
+		await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -128,9 +139,9 @@ export const postCheckYourAnswers = async (
 
 	delete session.fileUploadInfo;
 
-	addNotificationBannerToSession(session, 'interestedPartyCommentsDocumentAddedSuccess', appealId);
+	addNotificationBannerToSession(session, 'finalCommentsDocumentAddedSuccess', appealId);
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/review`
+		`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}`
 	);
 };

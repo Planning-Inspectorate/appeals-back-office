@@ -277,6 +277,7 @@ export const renderManageFolder = async ({
  * @param {string} [params.pageTitleTextOverride]
  * @param {string} [params.dateRowLabelTextOverride]
  * @param {boolean} [params.skipChangeDocumentDetails]
+ * @param {string} [params.manageDocumentPageBaseUrl]
  */
 export const renderManageDocument = async ({
 	request,
@@ -286,7 +287,8 @@ export const renderManageDocument = async ({
 	removeDocumentUrl,
 	pageTitleTextOverride,
 	dateRowLabelTextOverride,
-	skipChangeDocumentDetails = false
+	skipChangeDocumentDetails = false,
+	manageDocumentPageBaseUrl
 }) => {
 	const {
 		currentFolder,
@@ -322,7 +324,8 @@ export const renderManageDocument = async ({
 		pageTitleTextOverride,
 		dateRowLabelTextOverride,
 		editable: userHasPermission(permissionNames.updateCase, request.session),
-		skipChangeDocumentDetails
+		skipChangeDocumentDetails,
+		baseUrl: manageDocumentPageBaseUrl
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {

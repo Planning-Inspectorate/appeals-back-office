@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './page-components/common.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -51,6 +52,11 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 			]
 		}
 	};
+	const notificationBanners = buildNotificationBanners(
+		session,
+		'viewFinalComments',
+		appealDetails.appealId
+	);
 
 	const pageContent = {
 		title: `Review ${finalCommentsType} final comments`,
@@ -59,7 +65,7 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		heading: `Review ${finalCommentsType} final comments`,
 		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Continue',
-		pageComponents: [commentSummaryList, commentValidityRadioButtons]
+		pageComponents: [...notificationBanners, commentSummaryList, commentValidityRadioButtons]
 	};
 
 	return pageContent;
