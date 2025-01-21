@@ -1,4 +1,5 @@
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { removeAccordionComponentsActions } from './remove-accordion-components-actions.js';
 import {
@@ -75,7 +76,31 @@ export function mapStatusDependentNotifications(
 			);
 			removeAccordionComponentsActions(accordionComponents);
 			break;
-		case APPEAL_CASE_STATUS.STATEMENTS:
+		case APPEAL_CASE_STATUS.STATEMENTS: {
+			const isDueDatePassed = (() => {
+				if (!appealDetails.appealTimetable?.lpaStatementDueDate) {
+					return false;
+				}
+
+				return dateIsInThePast(
+					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
+				);
+			})();
+
+			if (
+				isDueDatePassed &&
+				!representationTypesAwaitingReview?.ipComments &&
+				!representationTypesAwaitingReview?.lpaStatement
+			) {
+				addNotificationBannerToSession(
+					session,
+					'shareCommentsAndLpaStatement',
+					appealDetails.appealId,
+					`<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+				);
+				break;
+			}
+
 			if (representationTypesAwaitingReview?.ipComments) {
 				addNotificationBannerToSession(
 					session,
@@ -93,6 +118,7 @@ export function mapStatusDependentNotifications(
 				);
 			}
 			break;
+		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 			if (representationTypesAwaitingReview?.appellantFinalComments) {
 				addNotificationBannerToSession(

@@ -259,6 +259,9 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['viewFinalComments'],
 		text: 'Supporting document added'
+	},
+	shareCommentsAndLpaStatement: {
+		pages: ['appealDetails']
 	}
 };
 
