@@ -324,6 +324,10 @@ export class CaseDetailsPage extends Page {
 			.click();
 	}
 
+	viewDecisionLetter(text) {
+		this.basePageElements.linkByText(text);
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
@@ -394,6 +398,10 @@ export class CaseDetailsPage extends Page {
 
 	checkDecisionOutcome(text) {
 		this.elements.decisionOutcomeText().contains(text, { matchCase: false });
+	}
+
+	checkViewDecisionLetterIsLink(text) {
+		this.elements.decisionOutcomeText().contains(this.basePageElements.link, text);
 	}
 
 	verifyAnswerSummaryValue(answer) {
