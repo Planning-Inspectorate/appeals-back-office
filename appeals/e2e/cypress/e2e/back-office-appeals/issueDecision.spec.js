@@ -44,6 +44,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickLinkByText('Go back to case details');
 				caseDetailsPage.checkStatusOfCase('Complete', 0);
 				caseDetailsPage.checkDecisionOutcome(issueDecision);
+				caseDetailsPage.checkDecisionOutcome('View decision letter');
 			});
 		});
 	});
