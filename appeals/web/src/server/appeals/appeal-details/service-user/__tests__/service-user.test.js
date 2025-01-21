@@ -32,25 +32,27 @@ describe('service-user', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 
-			it(`should render the ${action} service user page for an appellant`, async () => {
-				const appealId = appealData.appealId;
-				const response = await request.get(
-					`${baseUrl}/${appealId}/service-user/${action}/appellant`
-				);
-				const element = parseHtml(response.text);
+			if (action === 'change') {
+				it(`should render the ${action} service user page for an appellant`, async () => {
+					const appealId = appealData.appealId;
+					const response = await request.get(
+						`${baseUrl}/${appealId}/service-user/${action}/appellant`
+					);
+					const element = parseHtml(response.text);
 
-				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update appellant details</h1>');
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain('Update appellant details</h1>');
 
-				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
-				expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
-				expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
-				expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
-				expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
-				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-			});
+					expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
+					expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
+					expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
+					expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
+					expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
+					expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+				});
+			}
 
 			it('should render the 500 error page when the service user type is not a valid string', async () => {
 				const appealId = appealData.appealId;

@@ -2,11 +2,13 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './service-user.controller.js';
 import * as validators from './service-user.validators.js';
+import { validateAction } from '#appeals/appeal-details/service-user/service-user.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/:action/:userType')
+	.all(validateAction)
 	.get(asyncHandler(controller.getChangeServiceUser))
 	.post(validators.validateChangeServiceUser, asyncHandler(controller.postChangeServiceUser));
 
