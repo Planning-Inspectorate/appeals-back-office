@@ -1,8 +1,6 @@
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
-import { mapDate } from './date.mapper.js';
-
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
@@ -59,43 +57,5 @@ export const mapAppellantCaseIn = (command) => {
 	};
 
 	// @ts-ignore
-	return data;
-};
-
-/**
- *
- * @param {AppellantCase | null | undefined} casedata
- * @returns
- */
-export const mapAppellantCaseOut = (casedata) => {
-	if (!casedata) {
-		return {};
-	}
-
-	const data = {
-		applicationDate: mapDate(casedata.applicationDate),
-		applicationDecision: casedata.applicationDecision,
-		applicationDecisionDate: mapDate(casedata.applicationDecisionDate),
-		caseSubmittedDate: mapDate(casedata.caseSubmittedDate),
-		caseSubmissionDueDate: mapDate(casedata.caseSubmissionDueDate),
-		siteAreaSquareMetres: casedata.siteAreaSquareMetres
-			? Number(casedata.siteAreaSquareMetres)
-			: null,
-		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres
-			? Number(casedata.floorSpaceSquareMetres)
-			: null,
-		ownsAllLand: casedata.ownsAllLand ?? null,
-		ownsSomeLand: casedata.ownsSomeLand ?? null,
-		advertisedAppeal: casedata.hasAdvertisedAppeal ?? null,
-		appellantCostsAppliedFor: casedata.appellantCostsAppliedFor ?? null,
-		originalDevelopmentDescription: casedata.originalDevelopmentDescription ?? null,
-		changedDevelopmentDescription: casedata.changedDevelopmentDescription ?? null,
-		knowsAllOwners: casedata.knowsAllOwners?.name ?? null,
-		knowsOtherOwners: casedata.knowsOtherOwners?.name ?? null,
-		ownersInformed: casedata.ownersInformed ?? null,
-		enforcementNotice: casedata.enforcementNotice ?? null,
-		isGreenBelt: casedata.isGreenBelt ?? null
-	};
-
 	return data;
 };

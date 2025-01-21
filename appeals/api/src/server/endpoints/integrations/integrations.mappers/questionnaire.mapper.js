@@ -1,8 +1,6 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire */
 
-import { mapDate } from './date.mapper.js';
-
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
@@ -58,26 +56,5 @@ export const mapQuestionnaireIn = (command) => {
 		siteSafetyDetails,
 		lpaNotificationMethods,
 		listedBuildingDetails
-	};
-};
-
-/**
- *
- * @param {LPAQuestionnaire | null | undefined} casedata
- * @returns
- */
-export const mapQuestionnaireOut = (casedata) => {
-	return {
-		lpaQuestionnaireSubmittedDate: mapDate(casedata?.lpaQuestionnaireSubmittedDate),
-		lpaQuestionnaireCreatedDate: mapDate(casedata?.lpaqCreatedDate),
-		lpaStatement: casedata?.lpaStatement ?? null,
-		isCorrectAppealType: casedata?.isCorrectAppealType ?? null,
-		isGreenBelt: casedata?.isGreenBelt ?? null,
-		inConservationArea: casedata?.inConservationArea ?? null,
-		newConditionDetails: casedata?.newConditionDetails ?? null,
-		notificationMethod: casedata?.lpaNotificationMethods
-			? casedata?.lpaNotificationMethods.map((method) => method.lpaNotificationMethod.key)
-			: null,
-		lpaCostsAppliedFor: casedata?.lpaCostsAppliedFor ?? null
 	};
 };

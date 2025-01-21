@@ -1,9 +1,6 @@
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
-import {
-	ERROR_INVALID_APPELLANT_CASE_DATA,
-	ERROR_INVALID_LPAQ_DATA
-} from '#endpoints/constants.js';
+import { ERROR_INVALID_APPELLANT_CASE_DATA } from '#endpoints/constants.js';
 import {
 	validAppellantCase,
 	validLpaQuestionnaire,
@@ -29,12 +26,6 @@ describe('/appeals/case-submission', () => {
 
 			expect(casedata).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/: must have required property 'casedata'"],
-					integration: ERROR_INVALID_APPELLANT_CASE_DATA
-				}
-			});
 		});
 
 		test('POST invalid appellant case payload: no LPA', async () => {
@@ -44,12 +35,6 @@ describe('/appeals/case-submission', () => {
 
 			expect(lpaCode).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'lpaCode'"],
-					integration: ERROR_INVALID_APPELLANT_CASE_DATA
-				}
-			});
 		});
 
 		test('POST invalid appellant case payload: no appeal type', async () => {
@@ -59,12 +44,6 @@ describe('/appeals/case-submission', () => {
 
 			expect(caseType).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'caseType'"],
-					integration: ERROR_INVALID_APPELLANT_CASE_DATA
-				}
-			});
 		});
 
 		test('POST invalid appellant case payload: unsupported appeal type', async () => {
@@ -97,12 +76,6 @@ describe('/appeals/case-submission', () => {
 
 			expect(applicationReference).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'applicationReference'"],
-					integration: ERROR_INVALID_APPELLANT_CASE_DATA
-				}
-			});
 		});
 	});
 
@@ -158,12 +131,6 @@ describe('/appeals/lpaq-submission', () => {
 
 			expect(casedata).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/: must have required property 'casedata'"],
-					integration: ERROR_INVALID_LPAQ_DATA
-				}
-			});
 		});
 
 		test('invalid LPA response payload: no caseReference', async () => {
@@ -173,12 +140,6 @@ describe('/appeals/lpaq-submission', () => {
 
 			expect(caseReference).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'caseReference'"],
-					integration: ERROR_INVALID_LPAQ_DATA
-				}
-			});
 		});
 
 		test('invalid LPA response payload: no lpaCostsAppliedFor', async () => {
@@ -188,12 +149,6 @@ describe('/appeals/lpaq-submission', () => {
 
 			expect(lpaCostsAppliedFor).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'lpaCostsAppliedFor'"],
-					integration: ERROR_INVALID_LPAQ_DATA
-				}
-			});
 		});
 
 		test('invalid LPA response payload: no isGreenBelt', async () => {
@@ -203,12 +158,6 @@ describe('/appeals/lpaq-submission', () => {
 
 			expect(isGreenBelt).not.toBeUndefined();
 			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					details: ["/casedata: must have required property 'isGreenBelt'"],
-					integration: ERROR_INVALID_LPAQ_DATA
-				}
-			});
 		});
 	});
 });

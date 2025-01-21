@@ -17,7 +17,7 @@ export const validateAppellantCase = async (req, res, next) => {
 	const { body } = req;
 
 	pino.info('Received appellant case from topic', body);
-	const validationResult = await validateFromSchema(schemas.commands.appealSubmission, body);
+	const validationResult = await validateFromSchema(schemas.commands.appealSubmission, body, true);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors.map(
 			(e) => `${e.instancePath || '/'}: ${e.message}`
@@ -66,7 +66,7 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 	const { body } = req;
 
 	pino.info('Received LPA submission from topic', body);
-	const validationResult = await validateFromSchema(schemas.commands.lpaSubmission, body);
+	const validationResult = await validateFromSchema(schemas.commands.lpaSubmission, body, true);
 	if (validationResult !== true && validationResult.errors) {
 		const errorDetails = validationResult.errors.map(
 			(e) => `${e.instancePath || '/'}: ${e.message}`

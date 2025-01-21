@@ -2,12 +2,14 @@ import config from '#config/config.js';
 import pino from '#utils/logger.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { EventType } from '@pins/event-client';
-import { messageMappers } from '../integrations.mappers.js';
+import { mapCase } from '#mappers/mapper-factory.js';
+import { contextEnum } from '#mappers/context-enum.js';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
 
 /**
  *
@@ -20,6 +22,7 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 	}
 
 	pino.info({ appealId, updateType });
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { id: appealId },
 		include: {
@@ -99,14 +102,16 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 		(relationship) => relationship.type === CASE_RELATIONSHIP_RELATED
 	);
 
-	// @ts-ignore
-	const msg = messageMappers.mapAppeal({
-		...appeal,
-		linkedAppeals,
-		relatedAppeals
+	const msg = mapCase({
+		// @ts-ignore
+		appeal: { ...appeal, linkedAppeals, relatedAppeals },
+		context: contextEnum.broadcast
 	});
+
 	if (msg) {
-		const validationResult = await validateFromSchema(schemas.events.appeal, msg);
+		const schema = getSchemaForCaseType(appeal.appealType?.key || APPEAL_CASE_TYPE.D);
+
+		const validationResult = await validateFromSchema(schema, msg);
 		if (validationResult !== true && validationResult.errors) {
 			const errorDetails = validationResult.errors?.map(
 				(e) => `${e.instancePath || '/'}: ${e.message}`
@@ -126,3 +131,12 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 		}
 	}
 };
+
+/**
+ *
+ * @param {string} caseType
+ * @returns {string}
+ */
+function getSchemaForCaseType(caseType) {
+	return caseType === APPEAL_CASE_TYPE.W ? schemas.events.appealS78 : schemas.events.appealHas;
+}
