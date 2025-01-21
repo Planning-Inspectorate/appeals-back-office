@@ -28,8 +28,8 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	validateAppellantCase,
 	validateCaseType,
+	validateAppellantCase,
 	asyncHandler(controller.postAppealSubmission)
 );
 

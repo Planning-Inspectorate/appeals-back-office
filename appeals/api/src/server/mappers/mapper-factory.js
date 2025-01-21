@@ -1,4 +1,5 @@
 import { apiMappers } from './api/index.js';
+import { integrationMappers } from './integration/index.js';
 import { contextEnum } from './context-enum.js';
 import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
@@ -7,17 +8,23 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
+/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {{ appeal: Appeal, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
  * @param {MappingRequest} mappingRequest
- * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|undefined}
+ * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case|undefined}
  */
 export const mapCase = ({ appeal, context = contextEnum.appealDetails }) => {
 	if (context && appeal?.id && appeal?.caseCreatedDate) {
-		const caseMap = createDataMap({ appeal, context });
+		const caseMap =
+			context === contextEnum.broadcast
+				? createIntegrationMap({ appeal, context })
+				: createDataMap({ appeal, context });
+
 		return createDataLayout(caseMap, { appeal, context });
 	}
 };
@@ -39,8 +46,30 @@ function createDataMap(mappingRequest) {
 		}
 		case APPEAL_CASE_TYPE.D:
 		default: {
-			const has = createMap(apiMappers.apiHasMappers, mappingRequest);
-			mergeMaps(casedata, has);
+			break;
+		}
+	}
+
+	return casedata;
+}
+
+/**
+ *
+ * @param {MappingRequest} mappingRequest
+ * @returns {Map<string, *>}
+ */
+function createIntegrationMap(mappingRequest) {
+	const { appeal } = mappingRequest;
+
+	const casedata = createMap(integrationMappers.integrationSharedMappers, mappingRequest);
+	switch (appeal.appealType?.key) {
+		case APPEAL_CASE_TYPE.W: {
+			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
+			mergeMaps(casedata, s78);
+			break;
+		}
+		case APPEAL_CASE_TYPE.D:
+		default: {
 			break;
 		}
 	}
@@ -88,6 +117,12 @@ function mergeMaps(existingMap, newMap) {
  * @param {MappingRequest} mappingRequest
  */
 function createDataLayout(caseMap, mappingRequest) {
+	const { context, appeal } = mappingRequest;
+
+	if (context === contextEnum.broadcast) {
+		return Array.from(caseMap.values()).reduce((acc, val) => ({ ...acc, ...val }), {});
+	}
+
 	const {
 		appealSummary,
 		team,
@@ -98,8 +133,6 @@ function createDataLayout(caseMap, mappingRequest) {
 		folders,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
-
-	const { context, appeal } = mappingRequest;
 
 	switch (context) {
 		case contextEnum.appellantCase:

@@ -33,21 +33,6 @@ export const mapNeighbouringAddressIn = (casedata) => {
 
 /**
  *
- * @param {Appeal} appeal
- * @returns
- */
-export const mapAddressOut = (appeal) => {
-	return {
-		siteAddressLine1: appeal.address?.addressLine1,
-		siteAddressLine2: appeal.address?.addressLine2 || '',
-		siteAddressCounty: appeal.address?.addressCounty || '',
-		siteAddressPostcode: appeal.address?.postcode,
-		siteAddressTown: appeal.address?.addressTown || ''
-	};
-};
-
-/**
- *
  * @param {Appeal | undefined} appeal
  * @returns
  */
@@ -62,56 +47,5 @@ export const mapEventAddressOut = (appeal) => {
 		addressCounty: appeal.address?.addressCounty || '',
 		addressPostcode: appeal.address?.postcode,
 		addressTown: appeal.address?.addressTown || ''
-	};
-};
-
-/**
- *
- * @param {NeighbouringSite[]} sites
- * @returns
- */
-export const mapNeighbouringAddressOut = (sites) => {
-	if (!sites || sites.length === 0) {
-		return null;
-	}
-
-	return sites.map((site) => {
-		return {
-			neighbouringSiteAddressLine1: site.address?.addressLine1,
-			neighbouringSiteAddressLine2: site.address?.addressLine2 || '',
-			neighbouringSiteAddressCounty: site.address?.addressCounty || '',
-			neighbouringSiteAddressPostcode: site.address?.postcode,
-			neighbouringSiteAddressTown: site.address?.addressTown || '',
-			neighbouringSiteAccessDetails: null,
-			neighbouringSiteSafetyDetails: null
-		};
-	});
-};
-
-/**
- *
- * @param {Appeal} appeal
- * @returns
- */
-export const mapSiteAccessDetailsOut = (appeal) => {
-	return {
-		siteAccessDetails: [
-			appeal?.appellantCase?.siteAccessDetails || '',
-			appeal?.lpaQuestionnaire?.siteAccessDetails || ''
-		]
-	};
-};
-
-/**
- *
- * @param {Appeal} appeal
- * @returns
- */
-export const mapSiteSafetyDetailsOut = (appeal) => {
-	return {
-		siteSafetyDetails: [
-			appeal?.appellantCase?.siteSafetyDetails || '',
-			appeal?.lpaQuestionnaire?.siteSafetyDetails || ''
-		]
 	};
 };

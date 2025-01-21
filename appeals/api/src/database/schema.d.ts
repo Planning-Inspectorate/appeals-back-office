@@ -28,7 +28,7 @@ export interface Appeal extends schema.Appeal {
 	appellantProcedurePreference?: string | null;
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
-	representations: Representation[];
+	representations?: Representation[] | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;

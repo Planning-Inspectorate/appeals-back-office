@@ -1,6 +1,6 @@
 import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
-import { mapDate } from './date.mapper.js';
+import { mapDate } from '#utils/mapping/map-dates.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_ORIGIN,

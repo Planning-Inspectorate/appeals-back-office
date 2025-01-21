@@ -14,27 +14,28 @@ export const schemas = {
 	events: {
 		serviceUser: 'service-user',
 		document: 'appeal-document',
-		appeal: 'appeal-has',
+		appealHas: 'appeal-has',
+		appealS78: 'appeal-s78',
 		appealEvent: 'appeal-event'
 	}
 };
 
-export const validateFromSchema = async (
-	/** @type {string} */ schema,
-	/** @type {any} */ payload
-) => {
+/**
+ *
+ * @param {string} schema
+ * @param {Object} payload
+ * @param {boolean|undefined} isCommand
+ * @returns
+ */
+export const validateFromSchema = async (schema, payload, isCommand = false) => {
 	const cacheKey = 'integration-schemas';
-	let schemas = getCache(cacheKey);
-	if (!schemas) {
-		const commandsAndEvents = await loadAllSchemas();
-		schemas = {
-			...commandsAndEvents.schemas,
-			...commandsAndEvents.commands
-		};
-
-		setCache(cacheKey, schemas);
+	let commandsAndEvents = getCache(cacheKey);
+	if (!commandsAndEvents) {
+		commandsAndEvents = await loadAllSchemas();
+		setCache(cacheKey, commandsAndEvents);
 	}
 
+	const schemas = isCommand ? commandsAndEvents.commands : commandsAndEvents.schemas;
 	const ajv = new Ajv({ schemas });
 	addFormats(ajv);
 

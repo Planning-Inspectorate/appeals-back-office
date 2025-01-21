@@ -10,14 +10,3 @@ export const mapLpaIn = (casedata) => {
 		lpaCode: casedata.lpaCode
 	};
 };
-
-/**
- *
- * @param {Appeal} appeal
- * @returns
- */
-export const mapLpaOut = (appeal) => {
-	return {
-		lpaCode: appeal.lpa?.lpaCode
-	};
-};
