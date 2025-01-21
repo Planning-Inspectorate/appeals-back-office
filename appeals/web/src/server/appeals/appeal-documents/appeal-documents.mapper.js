@@ -1157,6 +1157,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {string} [params.dateRowLabelTextOverride]
  * @param {boolean} [params.editable]
  * @param {boolean} [params.skipChangeDocumentDetails]
+ * @param {string} [params.baseUrl]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1170,12 +1171,16 @@ export async function manageDocumentPage({
 	pageTitleTextOverride,
 	dateRowLabelTextOverride,
 	editable,
-	skipChangeDocumentDetails
+	skipChangeDocumentDetails,
+	baseUrl = ''
 }) {
 	const changeDetailsUrl =
 		!skipChangeDocumentDetails &&
-		request.originalUrl.replace('manage-documents', 'change-document-details');
-	const changeNameUrl = request.originalUrl.replace('manage-documents', 'change-document-name');
+		request.originalUrl.replace('manage-documents', `${baseUrl}change-document-details`);
+	const changeNameUrl = request.originalUrl.replace(
+		'manage-documents',
+		`${baseUrl}change-document-name`
+	);
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
 	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);

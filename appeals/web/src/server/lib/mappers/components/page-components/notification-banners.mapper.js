@@ -47,7 +47,7 @@ export const notificationBannerDefinitions = {
 		text: 'Inspector has been removed'
 	},
 	documentAdded: {
-		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
+		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments', 'viewFinalComments'],
 		type: 'success',
 		text: 'Document added'
 	},
@@ -254,6 +254,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['lpaStatement'],
 		text: 'LPA statement redacted and accepted'
+	},
+	finalCommentsDocumentAddedSuccess: {
+		type: 'success',
+		pages: ['viewFinalComments'],
+		text: 'Supporting document added'
 	}
 };
 
