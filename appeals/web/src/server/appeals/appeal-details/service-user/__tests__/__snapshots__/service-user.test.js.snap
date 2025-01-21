@@ -60,53 +60,6 @@ exports[`service-user GET /add/:userType should render the add service user page
 </main>"
 `;
 
-exports[`service-user GET /add/:userType should render the add service user page for an appellant 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Update appellant details</h1>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="first-name">Appellant&#39;s first name</label>
-                            <input class="govuk-input" id="first-name"
-                            name="firstName" type="text" value="Roger">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="last-name">Appellant&#39;s last name</label>
-                            <input class="govuk-input" id="last-name"
-                            name="lastName" type="text" value="Simmons">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Appellant&#39;s company or organisation name</label>
-                            <input class="govuk-input"
-                            id="organisation-name" name="organisationName" type="text">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Appellant&#39;s email address</label>
-                            <input class="govuk-input" id="email-address"
-                            name="emailAddress" type="text" value="test3@example.com">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="phone-number">Appellant&#39;s phone number</label>
-                            <input class="govuk-input" id="phone-number"
-                            name="phoneNumber" type="text">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`service-user GET /change/:userType should render the 500 error page when the service user type is not a valid string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
