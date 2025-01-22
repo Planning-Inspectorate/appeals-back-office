@@ -101,21 +101,8 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			);
 		}
 
-		const recipientEmail = appeal.lpa?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.lpaqComplete, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
-		}
+		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpa');
+		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'appellant');
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -151,5 +138,33 @@ const updateLPAQuestionnaireValidationOutcome = async (
 
 	return timetable?.lpaQuestionnaireDueDate;
 };
+
+/**
+ *
+ * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param { Appeal } appeal
+ * @param { string } siteAddress
+ * @param { string } userType
+ * @returns {Promise<void>}
+ */
+async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, userType) {
+	// @ts-ignore
+	const recipientEmail = appeal[userType]?.email;
+	const template = config.govNotify.template.lpaqComplete[userType];
+	if (!recipientEmail) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	}
+	try {
+		await notifyClient.sendEmail(template, recipientEmail, {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress
+		});
+	} catch (error) {
+		if (error) {
+			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		}
+	}
+}
 
 export { checkLPAQuestionnaireExists, updateLPAQuestionnaireValidationOutcome };
