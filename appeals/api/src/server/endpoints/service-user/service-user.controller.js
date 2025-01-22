@@ -108,24 +108,29 @@ export async function removeServiceUserById(request, response) {
 	const appealId = Number(params.appealId);
 	const azureAdUserId = request.get('azureAdUserId');
 
-	try {
-		const dbResult = await appealRepository.removeAppealServiceUser(appealId, {
-			userType,
-			serviceUserId: parseInt(request.appeal?.agent?.id)
-		});
+	const serviceUserId = parseInt(request.appeal?.agent?.id);
 
-		if (!dbResult) {
-			return response.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
-		}
+	const result = await appealRepository.removeAppealServiceUser(appealId, {
+		userType,
+		serviceUserId
+	});
 
-		await createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_REMOVED, [userType])
-		});
-		return response.send(dbResult);
-	} catch (errors) {
-		console.log(errors);
-		return response.status(500).send({ errors });
+	if (!result) {
+		return response.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
 	}
+
+	await createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_REMOVED, [userType])
+	});
+
+	await broadcasters.broadcastServiceUser(
+		serviceUserId,
+		EventType.Delete,
+		userType,
+		request.appeal.reference
+	);
+
+	return response.send(result);
 }
