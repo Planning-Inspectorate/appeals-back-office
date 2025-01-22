@@ -93,7 +93,44 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 			const lpaEmail = appeal.lpa?.email || '';
 
-			const emailVariables = {
+			const lpaAppealStartDateChangeEmailVariables = {
+				appeal_type: appeal.appealType?.type || '',
+				appeal_reference_number: appeal.reference,
+				LPA_reference: appeal.applicationReference || '',
+				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
+				site_Address: siteAddress,
+				start_date: formatDate(new Date(startDate || ''), false),
+				questionnaire_due_date: formatDate(
+					new Date(timetable.lpaQuestionnaireDueDate || ''),
+					false
+				),
+				appellant_email_address: recipientEmail || ''
+			};
+			const appellantAppealStartDateChangeEmailVariables = {
+				appeal_reference_number: appeal.reference,
+				start_date: formatDate(new Date(startDate || ''), false),
+				site_Address: siteAddress,
+				lpa_reference: appeal.applicationReference || '',
+				due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
+				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
+				finalCommentsDueDate: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
+			};
+			const lpaAppealValidCaseStartEmailVariables = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				url: FRONT_OFFICE_URL,
+				start_date: formatDate(new Date(startDate || ''), false),
+				questionnaire_due_date: formatDate(
+					new Date(timetable.lpaQuestionnaireDueDate || ''),
+					false
+				),
+				local_planning_authority: appeal.lpa?.name || '',
+				appeal_type: appeal.appealType?.type || '',
+				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
+				appellant_email_address: recipientEmail || ''
+			};
+			const appellantAppealValidCaseStartEmailVariables = {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference || '',
 				site_address: siteAddress,
@@ -111,7 +148,13 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			if (recipientEmail) {
 				try {
-					await notifyClient.sendEmail(appellantTemplate, recipientEmail, emailVariables);
+					await notifyClient.sendEmail(
+						appellantTemplate,
+						recipientEmail,
+						appeal.caseStartedDate
+							? appellantAppealStartDateChangeEmailVariables
+							: appellantAppealValidCaseStartEmailVariables
+					);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
@@ -119,7 +162,13 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			if (lpaEmail) {
 				try {
-					await notifyClient.sendEmail(lpaTemplate, lpaEmail, emailVariables);
+					await notifyClient.sendEmail(
+						lpaTemplate,
+						lpaEmail,
+						appeal.caseStartedDate
+							? lpaAppealStartDateChangeEmailVariables
+							: lpaAppealValidCaseStartEmailVariables
+					);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
