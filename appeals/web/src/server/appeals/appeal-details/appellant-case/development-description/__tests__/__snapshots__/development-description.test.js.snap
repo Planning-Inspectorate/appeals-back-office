@@ -30,3 +30,34 @@ exports[`development-description GET /change should render the development descr
     </div>
 </main>"
 `;
+
+exports[`development-description POST /change should re-direct to appellant case when the data is valid 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Change development description</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-character-count" data-module="govuk-character-count"
+                        data-maxlength="1000">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="development-description">Enter the original description of the development</label>
+                                <textarea class="govuk-textarea govuk-js-character-count"
+                                id="development-description" name="developmentDescription" rows="5" aria-describedby="development-description-info"></textarea>
+                            </div>
+                            <div id="development-description-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

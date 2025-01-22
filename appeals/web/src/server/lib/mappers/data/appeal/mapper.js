@@ -12,16 +12,6 @@ import { submaps as hasSubmaps } from './has.js';
  */
 
 /**
- * @typedef {(
- *   appealDetails: WebAppeal,
- *   currentRoute: string,
- *   session: SessionWithAuth,
- *   skipAssignedUsersData?: boolean,
- * 	 appellantFinalComment?: import('#appeals/appeal-details/representations/representations.service.js').Representation
- * ) => Promise<{appeal: MappedInstructions}>} Mapper
- */
-
-/**
  * @typedef {Object} SubMapperParams
  * @property {WebAppeal} appealDetails
  * @property {string} currentRoute
@@ -48,7 +38,15 @@ const submaps = {
 	[APPEAL_TYPE.W]: s78Submaps
 };
 
-/** @type {Mapper} */
+/**
+ * @param {WebAppeal} appealDetails
+ * @param {string} currentRoute
+ * @param {SessionWithAuth} session
+ * @param {boolean} [skipAssignedUsersData]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @returns {Promise<{appeal: MappedInstructions}>}
+ */
 export async function initialiseAndMapAppealData(
 	appealDetails,
 	currentRoute,

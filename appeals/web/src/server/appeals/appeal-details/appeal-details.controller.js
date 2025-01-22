@@ -6,7 +6,7 @@ import { appealDetailsPage } from './appeal-details.mapper.js';
 import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getRepresentationCounts } from './representations/representations.service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { getSingularRepresentationByType } from './representations/representations.service.js'
+import { getSingularRepresentationByType } from './representations/representations.service.js';
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -54,29 +54,16 @@ export const viewAppealDetails = async (request, response) => {
 
 		const currentUrl = request.originalUrl;
 
-		//  await Promise.all([
-		// 	appellantFinalComments = getSingularRepresentationByType(
-		// 		request.apiClient,
-		// 		currentAppeal.appealId.toString(),
-		// 		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		// 	),
-		// 	getSingularRepresentationByType(
-		// 		request.apiClient,
-		// 		currentAppeal.appealId.toString(),
-		// 		APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		// 	)
-		// ])
-
 		const appellantFinalComments = await getSingularRepresentationByType(
 			request.apiClient,
 			currentAppeal.appealId.toString(),
 			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		)
+		);
 		const lpaFinalComments = await getSingularRepresentationByType(
 			request.apiClient,
 			currentAppeal.appealId.toString(),
 			APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		)
+		);
 
 		const mappedPageContent = await appealDetailsPage(
 			currentAppeal,

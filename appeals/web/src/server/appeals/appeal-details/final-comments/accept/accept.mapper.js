@@ -9,12 +9,17 @@ import { summaryList } from './components/summary-list.js';
 
 /**
  * @param {Appeal} appealDetails
- * @param {Representation} comment
+ * @param {Representation} representation
  * @param {string} finalCommentsType
  * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageContent}
  */
-export const acceptFinalCommentPage = (appealDetails, comment, finalCommentsType, session) => {
+export const acceptFinalCommentPage = (
+	appealDetails,
+	representation,
+	finalCommentsType,
+	session
+) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
@@ -38,14 +43,14 @@ export const acceptFinalCommentPage = (appealDetails, comment, finalCommentsType
 							{
 								type: 'show-more',
 								parameters: {
-									text: comment.originalRepresentation,
+									text: representation.originalRepresentation,
 									labelText: 'Read more'
 								}
 							}
 						]
 					}
 				},
-				...redactInput({ comment, labelText: 'Redacted final comments:', session }),
+				...redactInput({ representation, labelText: 'Redacted final comments:', session }),
 				buttonComponent(
 					'Continue',
 					{ type: 'submit' },
@@ -82,15 +87,15 @@ export const acceptFinalCommentPage = (appealDetails, comment, finalCommentsType
 
 /**
  * @param {Appeal} appealDetails
- * @param {Representation} comment
+ * @param {Representation} representation
  * @param {string} finalCommentsType
  * @returns {PageContent}
  */
-export const confirmAcceptFinalCommentPage = (appealDetails, comment, finalCommentsType) => {
+export const confirmAcceptFinalCommentPage = (appealDetails, representation, finalCommentsType) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryList(appealDetails, comment, finalCommentsType)];
+	const pageComponents = [summaryList(appealDetails, representation, finalCommentsType)];
 
 	preRenderPageComponents(pageComponents);
 
