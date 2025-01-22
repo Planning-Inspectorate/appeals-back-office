@@ -64,16 +64,21 @@ describe('final-comments', () => {
 					`<a href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}" class="govuk-back-link">Back</a>`
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
-				expect(unprettifiedHTML).toContain(`Check details and accept ${finalCommentsType.label} final comments</h1>`);
+				expect(unprettifiedHTML).toContain(
+					`Check details and accept ${finalCommentsType.label} final comments</h1>`
+				);
 				expect(unprettifiedHTML).toContain('Original final comments</dt>');
 				expect(unprettifiedHTML).toContain('Awaiting final comments review</div>');
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
 				expect(unprettifiedHTML).toContain('Review decisions</dt>');
 				expect(unprettifiedHTML).toContain('Accept final comments</dd>');
-				expect(unprettifiedHTML).toContain(`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}"> Change</a>`);
-				expect(unprettifiedHTML).toContain(`Accept ${finalCommentsType.label} final comments</button>`);
+				expect(unprettifiedHTML).toContain(
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}"> Change</a>`
+				);
+				expect(unprettifiedHTML).toContain(
+					`Accept ${finalCommentsType.label} final comments</button>`
+				);
 			});
-
 		}
 	});
 
@@ -86,7 +91,7 @@ describe('final-comments', () => {
 					.persist();
 
 				const mockedPatchFinalCommentStatusEndpoint = nock('http://test/')
-					.patch(`/appeals/2/reps/3670/status`)
+					.patch(`/appeals/2/reps/3670`)
 					.reply(200, finalCommentsForReview.items[0])
 					.persist();
 
@@ -97,9 +102,7 @@ describe('final-comments', () => {
 					});
 				expect(mockedPatchFinalCommentStatusEndpoint.isDone()).toBe(true);
 				expect(response.statusCode).toBe(302);
-				expect(response.text).toBe(
-					`Found. Redirecting to /appeals-service/appeal-details/2`
-				);
+				expect(response.text).toBe(`Found. Redirecting to /appeals-service/appeal-details/2`);
 			});
 		}
 	});

@@ -143,6 +143,53 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 </main>"
 `;
 
+exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details 2`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the site health and safety risks (appellant answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="safety-risks-radio" name="safetyRisksRadio"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-safety-risks-radio">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="safety-risks-details">Health and safety risks (appellant details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="safety-risks-details" name="safetyRisksDetails" rows="3">Dogs on site</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="safety-risks-radio-2" name="safetyRisksRadio"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="safety-risks-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
