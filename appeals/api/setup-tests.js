@@ -94,6 +94,7 @@ const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
 const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
 const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
+const mockServiceUserDelete = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindMany = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindUnique = jest.fn().mockResolvedValue({});
@@ -415,7 +416,8 @@ class MockPrismaClient {
 	get serviceUser() {
 		return {
 			update: mockServiceUserUpdate,
-			findUnique: mockServiceUserFindUnique
+			findUnique: mockServiceUserFindUnique,
+			delete: mockServiceUserDelete
 		};
 	}
 
