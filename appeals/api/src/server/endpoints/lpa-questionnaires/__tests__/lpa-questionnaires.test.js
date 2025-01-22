@@ -227,7 +227,7 @@ describe('lpa questionnaires routes', () => {
 				).not.toHaveBeenCalled();
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
 			});
@@ -267,18 +267,45 @@ describe('lpa questionnaires routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => householdAppeal.address[key])
+					.join(', ');
+
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.lpaqComplete.id,
-					'maid@lpa-email.gov.uk',
+				expect(mockSendEmail).toHaveBeenNthCalledWith(
+					1,
+					config.govNotify.template.lpaqComplete.lpa.id,
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
-							lpa_reference: '48269/APP/2021/1482',
-							appeal_reference_number: '1345264',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+							lpa_reference: householdAppeal.applicationReference,
+							appeal_reference_number: householdAppeal.reference,
+							site_address: expectedSiteAddress
+						},
+						reference: null
+					}
+				);
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenNthCalledWith(
+					2,
+					config.govNotify.template.lpaqComplete.appellant.id,
+					householdAppeal.appellant.email,
+					{
+						emailReplyToId: null,
+						personalisation: {
+							lpa_reference: householdAppeal.applicationReference,
+							appeal_reference_number: householdAppeal.reference,
+							site_address: expectedSiteAddress
 						},
 						reference: null
 					}
