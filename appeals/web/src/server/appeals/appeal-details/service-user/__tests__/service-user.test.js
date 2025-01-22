@@ -30,6 +30,9 @@ describe('service-user', () => {
 				expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
 				expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					action === 'change' ? 'Remove agent</a>' : ''
+				);
 			});
 
 			if (action === 'change') {
@@ -51,6 +54,7 @@ describe('service-user', () => {
 					expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
 					expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
 					expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+					expect(unprettifiedElement.innerHTML).not.toContain('Remove appellant</a>');
 				});
 			}
 
@@ -356,6 +360,44 @@ describe('service-user', () => {
 					'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 				);
 			});
+		});
+	});
+
+	describe(`GET /remove/:userType`, () => {
+		it(`should render the remove service user page for an agent`, async () => {
+			const appealId = appealData.appealId;
+			const response = await request.get(`${baseUrl}/${appealId}/service-user/remove/agent`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Confirm that you want to remove the agent</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Remove agent</button>');
+		});
+
+		it('should render the 500 error page when the service user type is not a valid string', async () => {
+			const appealId = appealData.appealId;
+			const response = await request.get(`${baseUrl}/${appealId}/service-user/remove/fail`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).not.toContain('Confirm that you want to remove the agent</h1>');
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
+		});
+	});
+
+	describe(`POST /remove/:userType`, () => {
+		it('should re-direct to appeals details if the user confirms they want to remove the service user', async () => {
+			const appealId = appealData.appealId;
+			nock('http://test/').delete(`/appeals/${appealId}/service-user`).reply(200, {
+				serviceUserId: 1
+			});
+			const response = await request.post(`${baseUrl}/${appealId}/service-user/remove/agent`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });
