@@ -110,12 +110,12 @@ export async function removeServiceUserById(request, response) {
 
 	const serviceUserId = parseInt(request.appeal?.agent?.id);
 
-	const result = await appealRepository.removeAppealServiceUser(appealId, {
+	const deletedServiceUser = await appealRepository.removeAppealServiceUser(appealId, {
 		userType,
 		serviceUserId
 	});
 
-	if (!result) {
+	if (!deletedServiceUser) {
 		return response.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
 	}
 
@@ -125,12 +125,13 @@ export async function removeServiceUserById(request, response) {
 		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_REMOVED, [userType])
 	});
 
-	await broadcasters.broadcastServiceUser(
-		serviceUserId,
-		EventType.Delete,
-		userType,
-		request.appeal.reference
-	);
+	// TODO: Implement an overload for broadcastEntity to pass the full data, besides loading it from its ID in the case of Deletes
+	// await broadcasters.broadcastServiceUser(
+	// 	deletedServiceUser,
+	// 	EventType.Delete,
+	// 	userType,
+	// 	request.appeal.reference
+	// );
 
-	return response.send(result);
+	return response.send({ serviceUserId: deletedServiceUser.id });
 }

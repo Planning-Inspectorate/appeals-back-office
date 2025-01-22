@@ -153,4 +153,68 @@ describe('appeal service user routes', () => {
 			expect(response.status).toEqual(200);
 		});
 	});
+
+	describe('DELETE /service-user', () => {
+		test('returns 404 when the appeal is not found', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(undefined);
+
+			const response = await request
+				.delete(`/appeals/0/service-user`)
+				.send({ userType: 'agent' })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+		});
+
+		test('returns 404 when the service user is not found', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.serviceUser.delete.mockResolvedValue(undefined);
+
+			const response = await request
+				.delete(`/appeals/0/service-user`)
+				.send({ userType: 'agent' })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+		});
+
+		test('returns 200 when the service user is deleted', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.serviceUser.delete.mockResolvedValue(serviceUser);
+
+			const appealId = householdAppeal.id;
+			const agentId = householdAppeal.agent.id;
+
+			const response = await request
+				.delete(`/appeals/${appealId}/service-user`)
+				.send({ userType: 'agent' })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					agent: {
+						disconnect: true
+					}
+				},
+				where: {
+					id: appealId
+				}
+			});
+
+			expect(databaseConnector.serviceUser.delete).toHaveBeenCalledWith({
+				where: {
+					id: agentId
+				}
+			});
+
+			expect(response.status).toEqual(200);
+
+			expect(response.body).toEqual({ serviceUserId: agentId });
+		});
+	});
 });

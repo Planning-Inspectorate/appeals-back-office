@@ -376,8 +376,7 @@ const removeAppealServiceUser = async (appealId, data) => {
 			where: { id: appealId },
 			data: { [userType]: { disconnect: true } }
 		});
-		const dbResult = await tx.serviceUser.delete({ where: { id: serviceUserId } });
-		return { serviceUserId: dbResult.id };
+		return tx.serviceUser.delete({ where: { id: serviceUserId } });
 	});
 };
 
