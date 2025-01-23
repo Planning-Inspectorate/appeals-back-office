@@ -22,9 +22,12 @@ const hasValueOrIsNull = (value) => Boolean(value) || value === null;
 const assignedUserType = ({ caseOfficer, inspector }) => {
 	if (hasValueOrIsNull(caseOfficer)) {
 		return USER_TYPE_CASE_OFFICER;
-	} else if (hasValueOrIsNull(inspector)) {
+	}
+
+	if (hasValueOrIsNull(inspector)) {
 		return USER_TYPE_INSPECTOR;
 	}
+
 	return null;
 };
 
@@ -60,6 +63,8 @@ export const mapAppealStatuses = (rawStatuses) => {
 		APPEAL_CASE_STATUS.VALIDATION,
 		APPEAL_CASE_STATUS.READY_TO_START,
 		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		APPEAL_CASE_STATUS.EVENT,
+		APPEAL_CASE_STATUS.AWAITING_EVENT,
 		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 		APPEAL_CASE_STATUS.COMPLETE,
@@ -76,16 +81,14 @@ export const mapAppealStatuses = (rawStatuses) => {
 				)
 		)
 	];
-	const orderedStatuses = statusOrder.filter((status) => extractedStatuses.includes(status));
 
-	// Now add all those statuses not listed above in the statusOrder
-	extractedStatuses.forEach((status) => {
-		if (!orderedStatuses.includes(status)) {
-			orderedStatuses.push(status);
-		}
-	});
-
-	return orderedStatuses;
+	// return the two arrays above with duplicates removed
+	return Array.from(
+		new Set([
+			...statusOrder.filter((status) => extractedStatuses.includes(status)),
+			...extractedStatuses
+		])
+	);
 };
 
 /**

@@ -1,8 +1,11 @@
-import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { ERROR_FAILED_TO_SAVE_DATA, VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { formatSiteVisit } from './site-visits.formatter.js';
 import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import transitionState from '#state/transition-state.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -34,6 +37,7 @@ const postSiteVisit = async (req, res) => {
 		visitType,
 		appeal
 	} = req;
+
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const notifyClient = req.notifyClient;
@@ -63,17 +67,27 @@ const postSiteVisit = async (req, res) => {
 
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
-
-		return res.send({
-			visitDate,
-			visitEndTime,
-			visitStartTime,
-			visitType: visitTypeName
-		});
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
+
+	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+		await transitionState(
+			appealId,
+			appeal.appealType,
+			azureAdUserId,
+			appeal.appealStatus,
+			VALIDATION_OUTCOME_COMPLETE
+		);
+	}
+
+	return res.send({
+		visitDate,
+		visitEndTime,
+		visitStartTime,
+		visitType: visitTypeName
+	});
 };
 
 /**

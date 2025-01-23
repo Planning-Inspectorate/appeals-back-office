@@ -208,7 +208,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						createdAt: expect.any(Date),
-						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.EVENT,
 						valid: true
 					}
 				});
@@ -216,7 +216,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
-							APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+							APPEAL_CASE_STATUS.EVENT
 						]),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
