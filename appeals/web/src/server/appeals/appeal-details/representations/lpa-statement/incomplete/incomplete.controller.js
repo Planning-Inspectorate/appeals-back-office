@@ -7,6 +7,7 @@ import { rejectionReasonHtml } from '../../common/components/reject-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -115,7 +116,14 @@ export const renderCheckYourAnswers = async (
 						}
 					}
 				}
-			}
+			},
+			after: [
+				simpleHtmlComponent(
+					'p',
+					{ class: 'govuk-body' },
+					'We’ll send an email to the LPA to explain why their statement is incomplete.'
+				)
+			]
 		},
 		response,
 		errors
