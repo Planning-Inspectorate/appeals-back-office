@@ -42,7 +42,7 @@ export const mapDocumentationSummary = (data) => {
 		...(isFPA(appeal.appealType?.key || '') && {
 			ipComments: {
 				status:
-					appeal.representations?.length > 0
+					(appeal.representations || []).length > 0
 						? DOCUMENT_STATUS_RECEIVED
 						: DOCUMENT_STATUS_NOT_RECEIVED
 			},

@@ -21,6 +21,9 @@ import BackOfficeAppError from '#utils/app-error.js';
 import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import serviceUserRepository from '#repositories/service-user.repository.js';
+import { getCache } from '#utils/cache-data.js';
+import { setCache } from '#utils/cache-data.js';
+import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -34,7 +37,8 @@ import serviceUserRepository from '#repositories/service-user.repository.js';
  * @returns
  */
 const loadAndFormatAppeal = async ({ appeal, context = contextEnum.appealDetails }) => {
-	return mapCase({ appeal, context });
+	const appealTypes = await loadAppealTypes();
+	return mapCase({ appeal, appealTypes, context });
 };
 
 /**
@@ -147,6 +151,20 @@ const updateAppealDetails = async (
 			})
 		)
 	);
+};
+
+/**
+ * @returns { Promise<AppealType[]> }
+ */
+const loadAppealTypes = async () => {
+	const cacheKey = 'appealTypesCache';
+
+	if (getCache(cacheKey) == null) {
+		const data = await getAllAppealTypes();
+		setCache(cacheKey, data);
+	}
+
+	return getCache(cacheKey);
 };
 
 export const appealDetailService = {

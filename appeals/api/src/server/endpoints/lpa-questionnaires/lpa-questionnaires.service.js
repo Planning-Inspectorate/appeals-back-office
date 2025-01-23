@@ -13,7 +13,7 @@ import {
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '#utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
@@ -119,7 +119,9 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			);
 		}
 
+		// @ts-ignore
 		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpa');
+		// @ts-ignore
 		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'appellant');
 	}
 
@@ -134,8 +136,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			}
 
 			const incompleteReasonsList = getFormattedReasons(
-				// @ts-ignore
-				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected
+				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected ?? []
 			);
 
 			try {
