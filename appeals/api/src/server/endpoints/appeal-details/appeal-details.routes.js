@@ -88,4 +88,22 @@ router.patch(
 	asyncHandler(controller.updateAppealById)
 );
 
+router.post(
+	'/:appealId/event-complete',
+	/*
+		#swagger.tags = ['Appeal Details']
+		#swagger.path = '/appeals/{appealId}/event-complete'
+		#swagger.description = 'Prompts the appeal state to update if the event has occurred'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	asyncHandler(controller.eventComplete)
+);
+
 export default router;

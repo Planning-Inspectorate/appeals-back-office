@@ -7,15 +7,18 @@ import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	VALIDATION_OUTCOME_COMPLETE
 } from '../constants.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -83,6 +86,21 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			appealStatus,
 			validationOutcome.name
 		);
+
+		const updatedAppeal = await appealRepository.getAppealById(appealId);
+		if (
+			updatedAppeal &&
+			arrayOfStatusesContainsString(updatedAppeal?.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
+			updatedAppeal?.siteVisit
+		) {
+			await transitionState(
+				appealId,
+				appealType,
+				azureAdUserId,
+				appealStatus,
+				VALIDATION_OUTCOME_COMPLETE
+			);
+		}
 	} else {
 		createAuditTrail({
 			appealId,
