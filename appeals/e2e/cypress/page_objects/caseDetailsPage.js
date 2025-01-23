@@ -106,11 +106,62 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
 		manageInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence),
-		decisionOutcomeText: () => cy.get('.govuk-inset-text')
+		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
+		manageCostDecision: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('Costs decision')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+		changeRedactionStatus: () =>
+			cy.get('.govuk-summary-list__key').contains('Redaction status').siblings().eq(1).children(),
+		changeDocFileName: () =>
+			cy.get('.govuk-summary-list__key').contains('Name').siblings().eq(1).children(),
+		redactionStatus: () =>
+			cy.get('.govuk-summary-list__key').contains('Redaction status').siblings().eq(0),
+		docVersionNumber: () => cy.get('.govuk-summary-list__key').contains('Version').siblings().eq(0),
+		documentName: () => cy.get('.govuk-summary-list__key').contains('Name').siblings().eq(0),
+		fileNameTextInput: () => cy.get('#file-name')
 	};
 	/********************************************************
 	 ************************ Actions ************************
 	 *********************************************************/
+
+	clickManageDocsCostDecision() {
+		this.elements.manageCostDecision().click();
+	}
+
+	checkDocVersionNumber(versionNumber) {
+		let version = this.elements.docVersionNumber().invoke('prop', 'innerText');
+		version.should('eq', versionNumber);
+	}
+
+	checkFileName(fileName) {
+		let nameOfFile = this.elements.documentName().invoke('prop', 'innerText');
+		nameOfFile.should('eq', fileName);
+	}
+
+	clickChangeRedactionStatus() {
+		this.elements.changeRedactionStatus().click();
+	}
+
+	clickChangeFileName() {
+		this.elements.changeDocFileName().click();
+	}
+
+	updateFileName(newFileName) {
+		this.elements.fileNameTextInput().clear();
+		this.elements.fileNameTextInput().type(newFileName);
+	}
+
+	checkRedactionStatus(status) {
+		let redactionStatus = this.elements.redactionStatus().invoke('prop', 'innerText');
+		redactionStatus.should('eq', status);
+	}
 
 	searchForCaseOfficer(text) {
 		this.fillInput(text);
