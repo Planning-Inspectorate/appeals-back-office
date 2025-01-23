@@ -2,15 +2,14 @@ import { randomUUID } from 'node:crypto';
 
 import { mapAddressIn, mapNeighbouringAddressIn } from './integrations.mappers/address.mapper.js';
 import { mapLpaIn } from './integrations.mappers/lpa.mapper.js';
-import { mapDocumentIn, mapDocumentOut } from './integrations.mappers/document.mapper.js';
-import { mapServiceUserIn, mapServiceUserOut } from './integrations.mappers/service-user.mapper.js';
+import { mapDocumentIn } from './integrations.mappers/document.mapper.js';
+import { mapServiceUserIn } from './integrations.mappers/service-user.mapper.js';
 import { mapAppellantCaseIn } from './integrations.mappers/appellant-case.mapper.js';
 import { mapQuestionnaireIn } from './integrations.mappers/questionnaire.mapper.js';
 import { mapAppealTypeIn } from './integrations.mappers/appeal-type.mapper.js';
 
 import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { mapSiteVisitOut } from './integrations.mappers/site-visit.mapper.js';
 import { renameDuplicateDocuments } from './integrations.utils.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -29,13 +28,10 @@ const mappers = {
 	mapNeighbouringAddressIn,
 	mapLpaIn,
 	mapDocumentIn,
-	mapDocumentOut,
 	mapAppealTypeIn,
 	mapAppellantCaseIn,
 	mapQuestionnaireIn,
-	mapServiceUserIn,
-	mapServiceUserOut,
-	mapSiteVisitOut
+	mapServiceUserIn
 };
 
 /**
@@ -46,7 +42,8 @@ const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
 	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
 	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
-	const caseType = mappers.mapAppealTypeIn(casedata.caseType);
+
+	const caseType = mappers.mapAppealTypeIn(casedata.caseType || '');
 
 	const neighbouringSitesInput = {
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
@@ -93,7 +90,7 @@ const mapAppealSubmission = (data) => {
 /**
  *
  * @param {LPAQuestionnaireCommand} data
- * @returns {{ questionnaire: import('#db-client').Prisma.LPAQuestionnaireCreateInput, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
+ * @returns {{ questionnaire: Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput,'appeal'>, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
  */
 const mapQuestionnaireSubmission = (data) => {
 	const { casedata, documents } = data;
@@ -123,39 +120,7 @@ const mapQuestionnaireSubmission = (data) => {
 	};
 };
 
-/**
- *
- * @param {Document} doc
- * @returns {AppealDocument | null}
- */
-const mapDocument = (doc) => {
-	return mappers.mapDocumentOut(doc);
-};
-
-/**
- *
- * @param {SiteVisit} siteVisit
- * @returns
- */
-const mapSiteVisit = (siteVisit) => mapSiteVisitOut(siteVisit);
-
-/**
- *
- * @param {string} caseReference
- * @param {ServiceUser} user
- * @param {string} userType
- * @returns
- */
-const mapServiceUser = (caseReference, user, userType) => {
-	if (caseReference && user && userType) {
-		return mappers.mapServiceUserOut(user, userType, caseReference);
-	}
-};
-
 export const messageMappers = {
 	mapAppealSubmission,
-	mapQuestionnaireSubmission,
-	mapServiceUser,
-	mapDocument,
-	mapSiteVisit
+	mapQuestionnaireSubmission
 };

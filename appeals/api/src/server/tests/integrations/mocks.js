@@ -1,3 +1,5 @@
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
+
 export const validAppellantCase = {
 	casedata: {
 		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
@@ -188,143 +190,9 @@ export const appealIngestionInput = {
 		create: []
 	},
 	folders: {
-		create: [
-			{
-				path: 'appellant-case/appellantStatement'
-			},
-			{
-				path: 'appellant-case/originalApplicationForm'
-			},
-			{
-				path: 'appellant-case/applicationDecisionLetter'
-			},
-			{
-				path: 'appellant-case/changedDescription'
-			},
-			{
-				path: 'appellant-case/appellantCaseWithdrawalLetter'
-			},
-			{
-				path: 'appellant-case/appellantCaseCorrespondence'
-			},
-			{
-				path: 'appellant-case/designAccessStatement'
-			},
-			{
-				path: 'appellant-case/plansDrawings'
-			},
-			{
-				path: 'appellant-case/newPlansDrawings'
-			},
-			{
-				path: 'appellant-case/planningObligation'
-			},
-			{
-				path: 'appellant-case/ownershipCertificate'
-			},
-			{
-				path: 'appellant-case/otherNewDocuments'
-			},
-			{
-				path: 'appellant-case/environmentalAssessment'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotified'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedSiteNotice'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedLetterToNeighbours'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedPressAdvert'
-			},
-			{
-				path: 'lpa-questionnaire/conservationMap'
-			},
-			{
-				path: 'lpa-questionnaire/otherPartyRepresentations'
-			},
-			{
-				path: 'lpa-questionnaire/planningOfficerReport'
-			},
-			{
-				path: 'lpa-questionnaire/plansDrawings'
-			},
-			{
-				path: 'lpa-questionnaire/developmentPlanPolicies'
-			},
-			{
-				path: 'lpa-questionnaire/treePreservationPlan'
-			},
-			{
-				path: 'lpa-questionnaire/definitiveMapStatement'
-			},
-			{
-				path: 'lpa-questionnaire/communityInfrastructureLevy'
-			},
-			{
-				path: 'lpa-questionnaire/supplementaryPlanning'
-			},
-			{
-				path: 'lpa-questionnaire/emergingPlan'
-			},
-			{
-				path: 'lpa-questionnaire/consultationResponses'
-			},
-			{
-				path: 'lpa-questionnaire/eiaEnvironmentalStatement'
-			},
-			{
-				path: 'lpa-questionnaire/eiaScreeningOpinion'
-			},
-			{
-				path: 'lpa-questionnaire/eiaScreeningDirection'
-			},
-			{
-				path: 'lpa-questionnaire/lpaCaseCorrespondence'
-			},
-			{
-				path: 'lpa-questionnaire/otherRelevantPolicies'
-			},
-			{
-				path: 'costs/appellantCostsApplication'
-			},
-			{
-				path: 'costs/appellantCostsWithdrawal'
-			},
-			{
-				path: 'costs/appellantCostsCorrespondence'
-			},
-			{
-				path: 'costs/lpaCostsApplication'
-			},
-			{
-				path: 'costs/lpaCostsWithdrawal'
-			},
-			{
-				path: 'costs/lpaCostsCorrespondence'
-			},
-			{
-				path: 'costs/costsDecisionLetter'
-			},
-			{
-				path: 'internal/crossTeamCorrespondence'
-			},
-			{
-				path: 'internal/inspectorCorrespondence'
-			},
-			{
-				path: 'internal/uncategorised'
-			},
-			{
-				path: 'appeal-decision/caseDecisionLetter'
-			},
-			{
-				path: 'representation/representationAttachments'
-			}
-		]
+		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+			return { path: f };
+		})
 	}
 };
 

@@ -2,8 +2,8 @@
 
 /**
  *
- * @param {*} casedata
- * @returns
+ * @param {{lpaCode: string}} casedata
+ * @returns {{lpaCode: string}}
  */
 export const mapLpaIn = (casedata) => {
 	return {

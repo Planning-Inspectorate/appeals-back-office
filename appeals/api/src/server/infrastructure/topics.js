@@ -3,7 +3,8 @@ export const producers = {
 	boDocument: 'appeal-document',
 	boServiceUser: 'appeal-service-user',
 	boEventData: 'appeal-event',
-	boBlobMove: 'appeal-document-to-move'
+	boBlobMove: 'appeal-document-to-move',
+	boRepresentation: 'appeal-representation'
 };
 
 export const consumers = {

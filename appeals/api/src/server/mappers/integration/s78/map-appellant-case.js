@@ -35,6 +35,7 @@ export const mapAppellantCase = (data) => {
 		//TODO:
 
 		designAccessStatementProvided: null,
-		inquiryHowManyWitnesses: null
+		//inquiryHowManyWitnesses: null,
+		typeOfPlanningApplication: null
 	};
 };

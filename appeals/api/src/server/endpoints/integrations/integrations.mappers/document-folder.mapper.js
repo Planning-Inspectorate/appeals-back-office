@@ -26,9 +26,10 @@ export const getFolderIdFromDocumentType = (caseFolders, documentType, stage) =>
 		return caseFolder.id;
 	}
 
-	// @ts-ignore
-	return caseFolders.find(
-		(caseFolder) =>
-			caseFolder.path === `${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`
-	)?.id;
+	return (
+		caseFolders.find(
+			(caseFolder) =>
+				caseFolder.path === `${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`
+		)?.id ?? 0
+	);
 };
