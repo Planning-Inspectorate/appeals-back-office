@@ -2,12 +2,11 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { renderSelectRejectionReasons } from '../../common/render-select-rejection-reasons.js';
-import { rejectLpaStatementPage } from './incomplete.mapper.js';
+import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
 import { rejectionReasonHtml } from '../../common/components/reject-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
 };
@@ -31,8 +30,47 @@ export const postReasons = async (request, response, next) => {
 
 	return response
 		.status(200)
+		.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/date`);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('express').NextFunction} next
+ */
+export async function renderSetNewDate(request, response, next) {
+
+	const pageContent = await setNewDatePage(request.apiClient, request.currentAppeal);
+	
+	return response
+		.status(request.errors ? 400 : 200)
+		.render('patterns/check-and-confirm-page.pattern.njk', {
+			errors: request.errors,
+			pageContent
+		});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('express').NextFunction} next
+ */
+export const postSetNewDate = async (request, response, next) => {
+	const {
+		params: { appealId },
+		errors
+	} = request;
+	
+	if (errors) {
+		return renderSetNewDate(request, response, next);
+	}
+	
+	return response
+		.status(200)
 		.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/confirm`);
 };
+
 
 /**
  * @type {import('@pins/express').RenderHandler<{}>}
@@ -51,8 +89,9 @@ export const renderCheckYourAnswers = async (
 		apiClient,
 		currentRepresentation.representationType
 	);
-	const selectedReasons = ensureArray(lpaStatement?.rejectionReason);
 
+	const selectedReasons = ensureArray(lpaStatement?.rejectionReason);
+	
 	const attachmentsList =
 		currentRepresentation.attachments.length > 0
 			? buildHtmUnorderedList(
@@ -67,7 +106,7 @@ export const renderCheckYourAnswers = async (
 			title: 'Check details and confirm statement is incomplete',
 			heading: 'Check details and confirm statement is incomplete',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-statement`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/date`,
 			submitButtonText: 'Confirm statement is incomplete',
 			responses: {
 				Statement: {
@@ -111,6 +150,15 @@ export const renderCheckYourAnswers = async (
 					actions: {
 						Change: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`,
+							visuallyHiddenText: 'Incomplete reasons'
+						}
+					}
+				},
+				'Do you want to allow the LPA to resubmit their statement?': {
+					html: `${lpaStatement?.setNewDate}`,
+					actions: {
+						Change: {
+							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/date`,
 							visuallyHiddenText: 'Incomplete reasons'
 						}
 					}
