@@ -7,7 +7,9 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
  * @property {string} preHeading
  * @property {string} heading
  * @property {string} submitButtonText
-	@property {{ [key: string]: {value?: string, html?: string, pageComponents?: PageComponent[], actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
+ * @property {{ [key: string]: {value?: string, html?: string, pageComponents?: PageComponent[], actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
+ * @property {PageComponent[]} [before]
+ * @property {PageComponent[]} [after]
  */
 
 /**
@@ -19,10 +21,13 @@ export const checkYourAnswersComponent = ({
 	preHeading,
 	heading,
 	submitButtonText,
-	responses
+	responses,
+	before = [],
+	after = []
 }) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [
+		...before,
 		{
 			type: 'summary-list',
 			parameters: {
@@ -50,7 +55,8 @@ export const checkYourAnswersComponent = ({
 					}
 				)
 			}
-		}
+		},
+		...after
 	];
 
 	preRenderPageComponents(pageComponents);
