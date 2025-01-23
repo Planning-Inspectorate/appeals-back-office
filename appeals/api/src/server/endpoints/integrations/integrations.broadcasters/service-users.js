@@ -28,8 +28,7 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 		return false;
 	}
 
-	// @ts-ignore
-	const msg = mapServiceUserEntity(caseReference, user, roleName);
+	const msg = mapServiceUserEntity(user, roleName, caseReference);
 
 	if (msg) {
 		const validationResult = await validateFromSchema(schemas.events.serviceUser, msg);
