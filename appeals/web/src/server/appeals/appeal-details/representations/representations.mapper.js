@@ -39,7 +39,10 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 
 		const selectedTextItems = (() => {
 			const value = session[sessionKey]?.[`rejectionReason-${reason.id}`];
-			if (!value || session[sessionKey]?.commentId !== comment.id) {
+			if (
+				!value ||
+				(session[sessionKey]?.commentId && session[sessionKey]?.commentId !== comment.id)
+			) {
 				return null;
 			}
 
