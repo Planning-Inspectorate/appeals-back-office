@@ -1,11 +1,11 @@
 import pino from '#utils/logger.js';
 import config from '#config/config.js';
-import { messageMappers } from '../integrations.mappers.js';
 import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID, EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import { mapSiteVisitEntity } from '#mappers/integration/map-event-entity.js';
 
 /**
  *
@@ -40,7 +40,7 @@ export const broadcastEvent = async (eventId, eventType, updateType) => {
 		}
 
 		// @ts-ignore
-		const msg = messageMappers.mapSiteVisit(siteVisit);
+		const msg = mapSiteVisitEntity(siteVisit);
 
 		if (msg) {
 			const validationResult = await validateFromSchema(schemas.events.appealEvent, msg);

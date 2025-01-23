@@ -4,8 +4,7 @@ import { schemas, validateFromSchema } from './integrations.validators.js';
 import {
 	ERROR_NOT_FOUND,
 	ERROR_INVALID_APPELLANT_CASE_DATA,
-	ERROR_INVALID_LPAQ_DATA,
-	ERROR_INVALID_DOCUMENT_DATA
+	ERROR_INVALID_LPAQ_DATA
 } from '#endpoints/constants.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
@@ -85,44 +84,6 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 	if (!appealExists) {
 		pino.error(
 			`Error associating LPA submission to an existing appeal with reference '${body?.questionnaire?.caseReference}'`
-		);
-		return res.status(404).send({
-			errors: {
-				appeal: ERROR_NOT_FOUND
-			}
-		});
-	}
-
-	next();
-};
-
-/**
- * @type {import("express").RequestHandler}
- * @returns {Promise<object|void>}
- */
-export const validateDocument = async (req, res, next) => {
-	const { body } = req;
-
-	pino.info('Received document from topic');
-	const validationResult = await validateFromSchema(schemas.commands.documentSubmission, body);
-	if (validationResult !== true && validationResult.errors) {
-		const errorDetails = validationResult.errors.map(
-			(e) => `${e.instancePath || '/'}: ${e.message}`
-		);
-
-		pino.error('Error validating document', errorDetails);
-		return res.status(400).send({
-			errors: {
-				integration: ERROR_INVALID_DOCUMENT_DATA,
-				details: errorDetails
-			}
-		});
-	}
-
-	const appealExists = await findAppealByReference(body?.caseRef);
-	if (!appealExists) {
-		pino.error(
-			`Error associating document to an existing appeal with reference '${body?.caseRef}'`
 		);
 		return res.status(404).send({
 			errors: {

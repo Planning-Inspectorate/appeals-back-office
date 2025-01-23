@@ -61,9 +61,6 @@ export const mapLpaQuestionnaire = (data) => {
 		originalCaseDecisionDate: mapDate(casedata?.originalCaseDecisionDate),
 		targetDate: mapDate(casedata?.targetDate),
 		siteNoticesSentDate: mapDate(casedata?.siteNoticesSentDate),
-		siteWithinSSSI: casedata?.siteWithinSSSI ?? null,
-
-		//TODO:
-		typeOfPlanningApplication: null
+		siteWithinSSSI: casedata?.siteWithinSSSI ?? null
 	};
 };

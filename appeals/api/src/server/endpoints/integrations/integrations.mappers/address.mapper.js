@@ -30,22 +30,3 @@ export const mapNeighbouringAddressIn = (casedata) => {
 		addressTown: casedata.neighbouringSiteAddressTown
 	};
 };
-
-/**
- *
- * @param {Appeal | undefined} appeal
- * @returns
- */
-export const mapEventAddressOut = (appeal) => {
-	if (!appeal) {
-		return null;
-	}
-
-	return {
-		addressLine1: appeal.address?.addressLine1,
-		addressLine2: appeal.address?.addressLine2 || '',
-		addressCounty: appeal.address?.addressCounty || '',
-		addressPostcode: appeal.address?.postcode,
-		addressTown: appeal.address?.addressTown || ''
-	};
-};

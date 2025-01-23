@@ -2,6 +2,6 @@
 /**
  *
  * @param {string} appealType
- * @returns
+ * @returns {string}
  */
 export const mapAppealTypeIn = (appealType) => appealType;

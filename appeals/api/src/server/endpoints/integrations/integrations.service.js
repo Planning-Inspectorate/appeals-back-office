@@ -29,7 +29,7 @@ const importAppellantCase = async (data, documents, relatedReferences) => {
 /**
  *
  * @param {string} caseReference
- * @param {import('#db-client').Prisma.LPAQuestionnaireCreateInput} data
+ * @param {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @returns

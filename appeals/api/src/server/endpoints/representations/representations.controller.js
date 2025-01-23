@@ -13,6 +13,8 @@ import {
 } from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -125,6 +127,7 @@ export const addRedactedRepresentation = async (req, res) => {
 		});
 	}
 
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Update);
 	return res.send(formatRepresentation(rep));
 };
 
@@ -165,6 +168,7 @@ export async function updateRepresentation(request, response) {
 		);
 	}
 
+	await broadcasters.broadcastRepresentation(updatedRep.id, EventType.Update);
 	return response.send(formatRepresentation(updatedRep));
 }
 
@@ -180,6 +184,7 @@ export const createRepresentation = (representationType) => async (req, res) => 
 		...req.body
 	});
 
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	return res.send(rep);
 };
 
