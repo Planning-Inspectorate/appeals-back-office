@@ -6,6 +6,9 @@ import {
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
+
+export const serviceUserIdStartRange = 200000000;
+
 /**
  *
  * @param {ServiceUser} data
@@ -15,9 +18,8 @@ import {
  */
 export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
 	if (data) {
-		const startRange = 200000000;
-		const userId = startRange + data.id;
-		const userSuid = startRange + data.id;
+		const userId = serviceUserIdStartRange + data.id;
+		const userSuid = serviceUserIdStartRange + data.id;
 		const user = {
 			id: userId.toString(),
 			organisation: data.organisationName ?? null,
