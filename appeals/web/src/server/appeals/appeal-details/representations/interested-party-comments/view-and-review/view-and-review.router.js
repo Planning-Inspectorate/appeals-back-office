@@ -2,7 +2,7 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './view-and-review.controller.js';
 import rejectRouter from './reject/reject.router.js';
-import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
+import * as documentsValidators from '../../../../appeal-documents/appeal-documents.validators.js';
 import {
 	redirectIfCommentIsReviewed,
 	redirectIfCommentIsUnreviewed

@@ -1,41 +1,54 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateInput } from '#lib/mappers/index.js';
+import { radiosInput } from '#lib/mappers/index.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
-/** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
-/** @typedef {RequestDate} ReqBody */
+/** @typedef {{ 'redactionStatus': string }} ReqBody */
 
+export const statusFormatMap = {
+	[APPEAL_REDACTED_STATUS.REDACTED]: 'Redacted',
+	[APPEAL_REDACTED_STATUS.NOT_REDACTED]: 'Unredacted',
+	[APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED]: 'No redaction required'
+};
+
+export const name = 'redactionStatus';
+
+/**
+ * @param {any} maybeRedactionStatus
+ * @returns {maybeRedactionStatus is keyof APPEAL_REDACTED_STATUS}
+ */
+export const isValidRedactionStatus = (maybeRedactionStatus) =>
+	Object.keys(statusFormatMap).includes(maybeRedactionStatus);
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {ReqBody} date
+ * @param {string} value
  * @param {string} backLinkUrl
  * @returns {PageContent}
- * */
-export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
-	title: 'When did the interested party submit the comment?',
+ */
+const mapper = (appealDetails, errors, value, backLinkUrl) => ({
+	title: 'Redaction status',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	pageComponents: [
-		dateInput({
-			id: 'date',
-			name: 'date',
-			value: date,
-			legendText: 'When did the interested party submit the comment?',
+		radiosInput({
+			name,
+			legendText: 'Redaction status',
 			legendIsPageHeading: true,
-			hint: 'For example, 27 3 2024'
+			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
+			value
 		})
 	]
 });
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl
- * @param {(request: import('@pins/express').Request) => RequestDate} options.getValue
+ * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl,
+ * @param {(request: import('@pins/express').Request) => string} options.getValue
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
-export const renderDateSubmittedFactory =
+export const renderRedactionStatusFactory =
 	({ getBackLinkUrl, getValue }) =>
 	(request, response) => {
 		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
@@ -55,7 +68,7 @@ export const renderDateSubmittedFactory =
  * @param {import('@pins/express').RenderHandler<{}, {}, ReqBody>} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
-export const postDateSubmittedFactory =
+export const postRedactionStatusFactory =
 	({ getRedirectUrl, errorHandler }) =>
 	(request, response, next) => {
 		if (request.errors) {

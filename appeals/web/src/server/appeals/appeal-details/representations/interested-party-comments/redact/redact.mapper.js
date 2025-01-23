@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
-import { redactInput } from '../../representations/common/components/redact-input.js';
+import { redactInput } from '../../common/components/redact-input.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

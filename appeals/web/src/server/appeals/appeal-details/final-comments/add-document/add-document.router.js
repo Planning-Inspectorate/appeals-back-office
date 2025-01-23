@@ -14,7 +14,7 @@ import {
 	createDateInputDateValidityValidator,
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
-import { validateRedactionStatus } from '../../interested-party-comments/add-ip-comment/add-ip-comment.validators.js';
+import { validateRedactionStatus } from '../../representations/interested-party-comments/add-ip-comment/add-ip-comment.validators.js';
 import { postCheckYourAnswers, renderCheckYourAnswers } from '../controller/check-your-answers.js';
 
 const router = createRouter({ mergeParams: true });
