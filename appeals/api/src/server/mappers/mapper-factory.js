@@ -11,19 +11,19 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
-/** @typedef {{ appeal: Appeal, context: keyof contextEnum|undefined }} MappingRequest */
+/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
  * @param {MappingRequest} mappingRequest
  * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case|undefined}
  */
-export const mapCase = ({ appeal, context = contextEnum.appealDetails }) => {
+export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appealDetails }) => {
 	if (context && appeal?.id && appeal?.caseCreatedDate) {
 		const caseMap =
 			context === contextEnum.broadcast
 				? createIntegrationMap({ appeal, context })
-				: createDataMap({ appeal, context });
+				: createDataMap({ appeal, appealTypes, context });
 
 		return createDataLayout(caseMap, { appeal, context });
 	}

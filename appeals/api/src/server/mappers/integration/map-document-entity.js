@@ -8,8 +8,10 @@ import {
 } from 'pins-data-model';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
 
-/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
@@ -18,7 +20,7 @@ import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 
 /**
  *
- * @param {Document} data
+ * @param {DocumentWithAppeal} data
  * @returns {AppealDocument | null}
  */
 export const mapDocumentEntity = (data) => {
@@ -42,24 +44,26 @@ export const mapDocumentEntity = (data) => {
 	const doc = {
 		documentId: documentInput.guid,
 		caseId: documentInput.caseId,
-		caseReference: documentInput.case?.reference,
+		caseReference: documentInput.case?.reference || '',
 		version: documentInput.latestDocumentVersion.version,
-		filename: documentInput.latestDocumentVersion.fileName,
-		originalFilename: documentInput.latestDocumentVersion.originalFilename,
-		size: documentInput.latestDocumentVersion.size,
-		mime: documentInput.latestDocumentVersion.mime,
-		documentURI: documentInput.latestDocumentVersion.documentURI,
+		filename: documentInput.latestDocumentVersion.fileName || '',
+		originalFilename: documentInput.latestDocumentVersion.originalFilename || '',
+		size: documentInput.latestDocumentVersion.size ?? 0,
+		mime: documentInput.latestDocumentVersion.mime || '',
+		documentURI: documentInput.latestDocumentVersion.documentURI || '',
 		publishedDocumentURI: isPublished ? documentInput.latestDocumentVersion.documentURI : null,
 		virusCheckStatus,
 		fileMD5: documentInput.latestDocumentVersion.fileMD5,
-		dateCreated: mapDate(documentInput.latestDocumentVersion.dateCreated),
-		dateReceived: mapDate(documentInput.latestDocumentVersion.dateReceived),
+		dateCreated: mapDate(documentInput.latestDocumentVersion.dateCreated) ?? '',
+		dateReceived: mapDate(documentInput.latestDocumentVersion.dateReceived) ?? '',
 		datePublished: isPublished ? mapDate(documentInput.latestDocumentVersion.dateCreated) : null,
 		lastModified: mapDate(
 			documentInput.latestDocumentVersion.lastModified ||
 				documentInput.latestDocumentVersion.dateCreated
 		),
-		caseType: documentInput.case?.appealType?.key || null,
+		caseType: isValidAppealType(documentInput.case?.appealType?.key ?? '')
+			? documentInput.case?.appealType?.key
+			: null,
 		redactedStatus,
 		documentType: documentInput.latestDocumentVersion.documentType,
 		sourceSystem: ODW_SYSTEM_ID,
@@ -78,10 +82,15 @@ export const mapDocumentEntity = (data) => {
 /**
  *
  * @param {DocumentVersion} documentVersion
- * @returns {string}
+ * @returns {'affected'|'not_scanned'|'scanned'}
  */
 const mapVirusCheckStatus = (documentVersion) => {
-	return getAvScanStatus(documentVersion);
+	const status = getAvScanStatus(documentVersion);
+	if (isValidVirusCheckStatus(status)) {
+		return status;
+	}
+
+	return 'not_scanned';
 };
 
 /**

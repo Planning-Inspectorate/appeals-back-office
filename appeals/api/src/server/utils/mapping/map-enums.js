@@ -1,5 +1,6 @@
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_TYPE,
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -93,3 +94,11 @@ export const isValidSource = (source) => Object.values(APPEAL_SOURCE).includes(s
  */
 export const isValidRejectionReason = (reason) =>
 	Object.values(APPEAL_INVALID_OR_INCOMPLETE_DETAILS).includes(reason);
+
+/**
+ *
+ * @param {string} appealType
+ * @returns {appealType is 'C'|'D'|'F'|'G'|'H'|'L'|'Q'|'S'|'V'|'W'|'X'|'Y'|'Z'}
+ */
+export const isValidAppealType = (appealType) =>
+	Object.values(APPEAL_CASE_TYPE).includes(appealType);
