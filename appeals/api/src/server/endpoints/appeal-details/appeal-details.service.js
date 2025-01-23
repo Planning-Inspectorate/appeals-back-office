@@ -158,13 +158,16 @@ const updateAppealDetails = async (
  */
 const loadAppealTypes = async () => {
 	const cacheKey = 'appealTypesCache';
+	const value = getCache(cacheKey);
 
-	if (getCache(cacheKey) == null) {
-		const data = await getAllAppealTypes();
-		setCache(cacheKey, data);
+	if (value !== null) {
+		return value;
 	}
 
-	return getCache(cacheKey);
+	const appealTypes = await getAllAppealTypes();
+	setCache(cacheKey, appealTypes);
+
+	return appealTypes;
 };
 
 export const appealDetailService = {

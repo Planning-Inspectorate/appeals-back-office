@@ -16,6 +16,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE as REPRESENTATION_TYPE,
 	APPEAL_REPRESENTATION_STATUS as REPRESENTATION_STATUS
 } from 'pins-data-model';
+import { serviceUserIdStartRange } from './map-service-user-entity.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation & { appeal?: Appeal }} RepresentationWithAppeal */
@@ -43,13 +44,20 @@ export const mapRepresentationEntity = (data) => {
 			originalRepresentation: data.originalRepresentation,
 			source: mapSource(data),
 			redactedBy: null,
-			serviceUserId: data.representativeId?.toString() ?? null,
+			serviceUserId: mapRepresentationUserId(data.representedId),
 			...mapReasons(data),
 			dateReceived: mapDate(data.dateCreated) ?? '',
 			documentIds: data.attachments?.map((attachment) => attachment.documentGuid) ?? []
 		};
 	}
 };
+
+/**
+ *
+ * @param {number|null} id
+ * @returns {string|null}
+ */
+const mapRepresentationUserId = (id) => (id ? (serviceUserIdStartRange + id).toString() : null);
 
 /**
  *

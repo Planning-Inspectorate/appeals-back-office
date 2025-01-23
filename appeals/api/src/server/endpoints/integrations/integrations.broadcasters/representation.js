@@ -7,6 +7,8 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { mapRepresentationEntity } from '#mappers/integration/map-representation-entity.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+
 /**
  *
  * @param {number} representationId
@@ -17,6 +19,7 @@ export const broadcastRepresentation = async (representationId, updateType) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
+
 	const rep = await databaseConnector.representation.findUnique({
 		where: { id: representationId },
 		include: {
@@ -31,7 +34,7 @@ export const broadcastRepresentation = async (representationId, updateType) => {
 		}
 	});
 
-	if (!rep) {
+	if (!rep || rep === null) {
 		pino.error(
 			`Trying to broadcast info for appeal-representation ${representationId}, but it was not found.`
 		);
