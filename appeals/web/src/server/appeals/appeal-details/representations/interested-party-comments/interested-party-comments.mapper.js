@@ -5,7 +5,7 @@ import { addressInputs } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
-/** @typedef {import("../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationList} RepresentationList */
 
@@ -51,7 +51,7 @@ export async function interestedPartyCommentsPage(
 
 /**
  * @param {Appeal} appealDetails
- * @param {import('../representations/types').Representation['represented']['address']} address
+ * @param {import('../types.js').Representation['represented']['address']} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {string} backPath
  * @param {string} operationType

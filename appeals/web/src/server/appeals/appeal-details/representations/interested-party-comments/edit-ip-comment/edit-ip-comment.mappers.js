@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/index.js';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**

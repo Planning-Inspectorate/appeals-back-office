@@ -4,7 +4,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactAndAcceptComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 export const renderRedactInterestedPartyComment = render(
