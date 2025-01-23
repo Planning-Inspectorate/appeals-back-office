@@ -1,8 +1,7 @@
-import { patchRepresentationRedaction } from '#lib/api/representation.api.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { render } from '../../common/render.js';
 import { redactLpaStatementPage, redactConfirmPage } from './redact.mapper.js';
-import { setRepresentationStatus } from '../../representations.service.js';
+import { redactAndAccept } from '../../representations.service.js';
 
 export const renderRedact = render(redactLpaStatementPage, 'patterns/display-page.pattern.njk');
 
@@ -38,15 +37,12 @@ export async function postConfirm(request, response) {
 		currentRepresentation
 	} = request;
 
-	await Promise.all([
-		patchRepresentationRedaction(
-			apiClient,
-			parseInt(appealId),
-			currentRepresentation.id,
-			session.redactedRepresentation
-		),
-		setRepresentationStatus(apiClient, parseInt(appealId), currentRepresentation.id, 'valid')
-	]);
+	await redactAndAccept(
+		apiClient,
+		parseInt(appealId),
+		currentRepresentation.id,
+		session.redactedRepresentation
+	);
 
 	delete session.redactedRepresentation;
 

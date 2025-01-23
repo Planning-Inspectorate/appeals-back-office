@@ -7,7 +7,7 @@ import {
 	allocationSpecialismsPage,
 	confirmPage
 } from './valid.mapper.js';
-import { setRepresentationStatus } from '../../representations.service.js';
+import { acceptRepresentation } from '../../representations.service.js';
 
 /**
  *
@@ -156,6 +156,7 @@ export async function renderConfirm(request, response) {
  */
 export async function postAcceptStatement(request, response) {
 	const {
+		apiClient,
 		params: { appealId },
 		session,
 		currentRepresentation
@@ -170,12 +171,7 @@ export async function postAcceptStatement(request, response) {
 		});
 	}
 
-	await setRepresentationStatus(
-		request.apiClient,
-		parseInt(appealId),
-		currentRepresentation.id,
-		'valid'
-	);
+	await acceptRepresentation(apiClient, parseInt(appealId), currentRepresentation.id);
 
 	addNotificationBannerToSession(session, 'lpaStatementAccepted', appealId);
 

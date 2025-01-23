@@ -43,11 +43,31 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
  * @param {import('got').Got} apiClient
  * @param {number} appealId
  * @param {number} repId
- * @param {string} status
+ * @param {string} redactedRepresentation
  * @returns {Promise<Representation>}
  * */
-export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
-	apiClient.patch(`appeals/${appealId}/reps/${repId}`, { json: { status } }).json();
+export const redactAndAccept = (apiClient, appealId, repId, redactedRepresentation) =>
+	apiClient
+		.patch(`appeals/${appealId}/reps/${repId}`, {
+			json: {
+				status: 'valid',
+				redactedRepresentation
+			}
+		})
+		.json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} repId
+ * @returns {Promise<Representation>}
+ * */
+export const acceptRepresentation = (apiClient, appealId, repId) =>
+	apiClient
+		.patch(`appeals/${appealId}/reps/${repId}`, {
+			json: { status: 'valid' }
+		})
+		.json();
 
 /**
  * @param {import('got').Got} apiClient
