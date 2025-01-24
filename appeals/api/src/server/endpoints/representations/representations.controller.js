@@ -19,6 +19,7 @@ import { EventType } from '@pins/event-client';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { notifyOnStatusChange } from './notify/index.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -162,6 +163,9 @@ export async function updateRepresentation(request, response) {
 	await representationService.updateRepresentation(parseInt(repId), request.body);
 
 	const updatedRep = await representationService.getRepresentation(parseInt(repId));
+	if (!updatedRep) {
+		throw new Error(`failed to get representation with ID: ${repId}`);
+	}
 
 	if (!updatedRep) {
 		return response.status(500).send({});
@@ -193,14 +197,12 @@ export async function updateRepresentation(request, response) {
 		});
 	}
 
-	if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
-		await representationService.notifyRejection(
-			request.notifyClient,
-			request.appeal,
-			updatedRep,
-			allowResubmit
-		);
-	}
+	await notifyOnStatusChange(request, {
+		notifyClient: request.notifyClient,
+		appeal: request.appeal,
+		representation: { ...updatedRep, status: rep.status },
+		allowResubmit
+	});
 
 	await broadcasters.broadcastRepresentation(updatedRep.id, EventType.Update);
 	return response.send(formatRepresentation(updatedRep));
