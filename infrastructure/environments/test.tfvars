@@ -39,6 +39,7 @@ apps_config = {
       decision_is_invalid_appellant_id                                = "bd117483-e7fe-4655-8f57-cf597ad57710"
       decision_is_invalid_lpa_id                                      = "a0cb542f-24d3-4b22-826b-1e012892f922"
       lpaq_complete_id                                                = "c571ee53-69c8-400e-a4c0-44ded262a081"
+      lpaq_complete_appellant_id                                      = "13f29a07-019c-4237-b483-d930f8393aa1"
       lpaq_incomplete_id                                              = "4701bc3c-2f24-4ed8-8841-14d93c3b9964"
       site_visit_change_accompanied_date_change_appellant_id          = "3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc"
       site_visit_change_accompanied_date_change_lpa_id                = "5d23f669-a1d2-4232-9171-10f956dfb400"
