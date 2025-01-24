@@ -97,7 +97,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				appealId,
 				appealType,
 				azureAdUserId,
-				appealStatus,
+				updatedAppeal.appealStatus,
 				VALIDATION_OUTCOME_COMPLETE
 			);
 		}

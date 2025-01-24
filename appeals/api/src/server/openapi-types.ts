@@ -817,6 +817,41 @@ export interface AllAppeals {
 	pageSize?: number;
 }
 
+export interface ManyAppeals {
+	/** @example 57 */
+	itemCount?: number;
+	items?: {
+		/** @example 1 */
+		appealId?: number;
+		/** @example "APP/Q9999/D/21/235348" */
+		appealReference?: string;
+		appealSite?: {
+			/** @example "19 Beauchamp Road" */
+			addressLine1?: string;
+			/** @example "Bristol" */
+			town?: string;
+			/** @example "Bristol" */
+			county?: string;
+			/** @example "BS7 8LQ" */
+			postCode?: string;
+		};
+		/** @example "awaiting_lpa_questionnaire" */
+		appealStatus?: string;
+		/** @example "household" */
+		appealType?: string;
+		/** @example "2024-02-16T11:43:27.096Z" */
+		createdAt?: string;
+		/** @example "Wiltshire Council" */
+		localPlanningDepartment?: string;
+		/** @example "Incomplete" */
+		appellantCaseStatus?: string;
+		/** @example "Incomplete" */
+		lpaQuestionnaireStatus?: string;
+		/** @example "2024-06-18T00:00:00.000Z" */
+		dueDate?: string;
+	}[];
+}
+
 export interface SingleAppealResponse {
 	agent?: {
 		/** @example 199 */

@@ -1,13 +1,19 @@
 import userRepository from '#repositories/user.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { USER_TYPE_CASE_OFFICER, USER_TYPE_INSPECTOR } from '#endpoints/constants.js';
+import {
+	USER_TYPE_CASE_OFFICER,
+	USER_TYPE_INSPECTOR,
+	VALIDATION_OUTCOME_COMPLETE
+} from '#endpoints/constants.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import { formatAppeals } from '#endpoints/appeals/appeals.formatter.js';
+import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
  * @param {string | number | null} [value]
@@ -205,4 +211,27 @@ const retrieveAppealListData = async (
 	};
 };
 
-export { assignUser, hasValueOrIsNull, assignedUserType, retrieveAppealListData };
+/** @param {string} azureAdUserId */
+async function updateCompletedEvents(azureAdUserId) {
+	const appealsToUpdate = await appealRepository.getAppealsWithCompletedEvents();
+
+	await Promise.all(
+		appealsToUpdate.map((appeal) =>
+			transitionState(
+				appeal.id,
+				appeal.appealType,
+				azureAdUserId,
+				appeal.appealStatus,
+				VALIDATION_OUTCOME_COMPLETE
+			)
+		)
+	);
+}
+
+export {
+	assignUser,
+	hasValueOrIsNull,
+	assignedUserType,
+	retrieveAppealListData,
+	updateCompletedEvents
+};

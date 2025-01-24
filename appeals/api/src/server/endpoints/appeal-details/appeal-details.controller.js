@@ -1,6 +1,6 @@
 import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
 import logger from '#utils/logger.js';
-import { appealDetailService, completeAppealEvent } from './appeal-details.service.js';
+import { appealDetailService } from './appeal-details.service.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
@@ -72,21 +72,7 @@ const updateAppealById = async (req, res) => {
 	return res.status(200).send(response);
 };
 
-/**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-async function eventComplete(req, res) {
-	const { appealId, azureAdUserId } = req.params;
-
-	await completeAppealEvent(parseInt(appealId), azureAdUserId);
-
-	return res.status(200).end();
-}
-
 export const controller = {
 	getAppeal,
-	updateAppealById,
-	eventComplete
+	updateAppealById
 };

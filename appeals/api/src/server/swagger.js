@@ -191,6 +191,28 @@ export const spec = {
 			pageCount: 27,
 			pageSize: 30
 		},
+		ManyAppeals: {
+			itemCount: 57,
+			items: [
+				{
+					appealId: 1,
+					appealReference: 'APP/Q9999/D/21/235348',
+					appealSite: {
+						addressLine1: '19 Beauchamp Road',
+						town: 'Bristol',
+						county: 'Bristol',
+						postCode: 'BS7 8LQ'
+					},
+					appealStatus: 'awaiting_lpa_questionnaire',
+					appealType: 'household',
+					createdAt: '2024-02-16T11:43:27.096Z',
+					localPlanningDepartment: 'Wiltshire Council',
+					appellantCaseStatus: 'Incomplete',
+					lpaQuestionnaireStatus: 'Incomplete',
+					dueDate: '2024-06-18T00:00:00.000Z'
+				}
+			]
+		},
 		SingleAppealResponse: {
 			agent: {
 				serviceUserId: 199,

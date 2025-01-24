@@ -1468,6 +1468,31 @@
 				}
 			}
 		},
+		"/appeals/update-complete-events": {
+			"post": {
+				"tags": ["Appeal Lists"],
+				"description": "Updates the status of any appeals in the EVENT status where the event has now taken place",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/inspector-decision-invalid": {
 			"post": {
 				"tags": ["Inspector Decision"],
@@ -6238,6 +6263,83 @@
 				},
 				"xml": {
 					"name": "AllAppeals"
+				}
+			},
+			"ManyAppeals": {
+				"type": "object",
+				"properties": {
+					"itemCount": {
+						"type": "number",
+						"example": 57
+					},
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"appealId": {
+									"type": "number",
+									"example": 1
+								},
+								"appealReference": {
+									"type": "string",
+									"example": "APP/Q9999/D/21/235348"
+								},
+								"appealSite": {
+									"type": "object",
+									"properties": {
+										"addressLine1": {
+											"type": "string",
+											"example": "19 Beauchamp Road"
+										},
+										"town": {
+											"type": "string",
+											"example": "Bristol"
+										},
+										"county": {
+											"type": "string",
+											"example": "Bristol"
+										},
+										"postCode": {
+											"type": "string",
+											"example": "BS7 8LQ"
+										}
+									}
+								},
+								"appealStatus": {
+									"type": "string",
+									"example": "awaiting_lpa_questionnaire"
+								},
+								"appealType": {
+									"type": "string",
+									"example": "household"
+								},
+								"createdAt": {
+									"type": "string",
+									"example": "2024-02-16T11:43:27.096Z"
+								},
+								"localPlanningDepartment": {
+									"type": "string",
+									"example": "Wiltshire Council"
+								},
+								"appellantCaseStatus": {
+									"type": "string",
+									"example": "Incomplete"
+								},
+								"lpaQuestionnaireStatus": {
+									"type": "string",
+									"example": "Incomplete"
+								},
+								"dueDate": {
+									"type": "string",
+									"example": "2024-06-18T00:00:00.000Z"
+								}
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "ManyAppeals"
 				}
 			},
 			"SingleAppealResponse": {
