@@ -1,19 +1,14 @@
+import addressRepository from '#repositories/address.repository.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
+import representationRepository from '#repositories/representation.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
+import BackOfficeAppError from '#utils/app-error.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import addressRepository from '#repositories/address.repository.js';
-import representationRepository from '#repositories/representation.repository.js';
-import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
-import * as documentRepository from '#repositories/document.repository.js';
-import serviceUserRepository from '#repositories/service-user.repository.js';
-import config from '#config/config.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '#endpoints/constants.js';
-import { addDays } from '#utils/business-days.js';
-import formatDate from '#utils/date-formatter.js';
-import BackOfficeAppError from '#utils/app-error.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -137,74 +132,6 @@ export const createRepresentation = async (appealId, input) => {
  */
 export const updateRejectionReasons = async (representationId, rejectionReasons) =>
 	representationRepository.updateRejectionReasons(representationId, rejectionReasons);
-
-/**
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {Appeal} appeal
- * @param {Representation} comment
- * @param {boolean} allowResubmit
- * */
-export const notifyRejection = async (notifyClient, appeal, comment, allowResubmit) => {
-	const siteAddress = appeal.address
-		? formatAddressSingleLine(appeal.address)
-		: 'Address not available';
-
-	const reasons =
-		comment.representationRejectionReasonsSelected?.map((selectedReason) => {
-			if (selectedReason.representationRejectionReason.hasText) {
-				const reasonText =
-					selectedReason.representationRejectionReasonText
-						?.map((reason) => reason.text)
-						.filter((text) => typeof text === 'string' && text.trim() !== '')
-						.join(', ') || 'No details provided';
-				return `Other: ${reasonText}`;
-			}
-			return selectedReason.representationRejectionReason.name;
-		}) ?? [];
-
-	const extendedDeadline = await (async () => {
-		if (!allowResubmit) {
-			return null;
-		}
-
-		const date = await addDays(new Date().toISOString(), 7);
-		return formatDate(date, false);
-	})();
-
-	const emailVariables = {
-		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || '',
-		site_address: siteAddress,
-		url: FRONT_OFFICE_URL,
-		reasons,
-		deadline_date: extendedDeadline ?? ''
-	};
-
-	const isAppellantFinalComment =
-		comment.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT;
-
-	const recipientEmail = isAppellantFinalComment
-		? appeal.agent?.email || appeal.appellant?.email
-		: appeal.lpa?.email;
-
-	if (!recipientEmail) {
-		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
-	}
-
-	let templateId = isAppellantFinalComment
-		? config.govNotify.template.commentRejected.appellant
-		: config.govNotify.template.commentRejected.lpa;
-
-	if (extendedDeadline) {
-		templateId = config.govNotify.template.commentRejectedDeadlineExtended;
-	}
-
-	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, emailVariables);
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-	}
-};
 
 /**
  * @param {number} repId

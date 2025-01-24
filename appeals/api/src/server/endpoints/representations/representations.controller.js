@@ -21,6 +21,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import BackOfficeAppError from '#utils/app-error.js';
+import { notifyOnStatusChange } from './notify/index.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -194,14 +195,12 @@ export async function updateRepresentation(request, response) {
 		});
 	}
 
-	if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
-		await representationService.notifyRejection(
-			request.notifyClient,
-			request.appeal,
-			updatedRep,
-			allowResubmit
-		);
-	}
+	await notifyOnStatusChange(request, {
+		notifyClient: request.notifyClient,
+		appeal: request.appeal,
+		representation: { ...updatedRep, status: rep.status },
+		allowResubmit
+	});
 
 	await broadcasters.broadcastRepresentation(updatedRep.id, EventType.Update);
 	return response.send(formatRepresentation(updatedRep));
