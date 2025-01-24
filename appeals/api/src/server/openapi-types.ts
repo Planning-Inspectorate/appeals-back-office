@@ -402,6 +402,7 @@ export interface Folder {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
@@ -496,6 +497,7 @@ export interface Folder {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
@@ -2464,6 +2466,7 @@ export interface AppealDecision {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
@@ -2558,6 +2561,7 @@ export interface AppealDecision {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
@@ -2675,6 +2679,7 @@ export interface AppealWithdrawal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
@@ -2769,6 +2774,7 @@ export interface AppealWithdrawal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
@@ -2890,6 +2896,7 @@ export interface Document {
 		redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 		virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 		documentType?:
+			| 'appealNotification'
 			| 'appellantCaseCorrespondence'
 			| 'appellantCaseWithdrawalLetter'
 			| 'appellantCostsApplication'
@@ -2984,6 +2991,7 @@ export interface Document {
 		redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 		virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 		documentType?:
+			| 'appealNotification'
 			| 'appellantCaseCorrespondence'
 			| 'appellantCaseWithdrawalLetter'
 			| 'appellantCostsApplication'
@@ -3080,6 +3088,7 @@ export interface DocumentVersion {
 	redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 	virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 	documentType?:
+		| 'appealNotification'
 		| 'appellantCaseCorrespondence'
 		| 'appellantCaseWithdrawalLetter'
 		| 'appellantCostsApplication'
@@ -3321,6 +3330,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3415,6 +3425,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3523,6 +3534,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3617,6 +3629,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3725,6 +3738,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3819,6 +3833,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -3927,6 +3942,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4021,6 +4037,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4129,6 +4146,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4223,6 +4241,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4331,6 +4350,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4425,6 +4445,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4533,6 +4554,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4627,6 +4649,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4735,6 +4758,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4829,6 +4853,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -4937,6 +4962,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5031,6 +5057,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5139,6 +5166,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5233,6 +5261,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5341,6 +5370,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5435,6 +5465,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5543,6 +5574,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5637,6 +5669,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5856,6 +5889,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -5950,6 +5984,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6058,6 +6093,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6152,6 +6188,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6260,6 +6297,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6354,6 +6392,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6462,6 +6501,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6556,6 +6596,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6664,6 +6705,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6758,6 +6800,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6866,6 +6909,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -6960,6 +7004,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7068,6 +7113,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7162,6 +7208,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7270,6 +7317,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7364,6 +7412,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7472,6 +7521,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7566,6 +7616,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7674,6 +7725,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7768,6 +7820,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7876,6 +7929,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -7970,6 +8024,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8078,6 +8133,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8172,6 +8228,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8280,6 +8337,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8374,6 +8432,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8482,6 +8541,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8576,6 +8636,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8684,6 +8745,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8778,6 +8840,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8886,6 +8949,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -8980,6 +9044,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9088,6 +9153,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9182,6 +9248,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9290,6 +9357,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9384,6 +9452,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9492,6 +9561,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9586,6 +9656,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9694,6 +9765,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -9788,6 +9860,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
@@ -10041,6 +10114,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
@@ -10135,6 +10209,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
@@ -10252,6 +10327,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
@@ -10346,6 +10422,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'

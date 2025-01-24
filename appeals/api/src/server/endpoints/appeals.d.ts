@@ -302,6 +302,7 @@ interface SingleLPAQuestionnaireResponse {
 		eiaScreeningOpinion?: FolderInfo | null;
 		eiaScreeningDirection?: FolderInfo | null;
 		otherRelevantPolicies?: FolderInfo | null;
+		appealNotification?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;

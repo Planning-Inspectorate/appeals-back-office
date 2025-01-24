@@ -5464,6 +5464,7 @@
 										"documentType": {
 											"type": "string",
 											"enum": [
+												"appealNotification",
 												"appellantCaseCorrespondence",
 												"appellantCaseWithdrawalLetter",
 												"appellantCostsApplication",
@@ -5621,6 +5622,7 @@
 											"documentType": {
 												"type": "string",
 												"enum": [
+													"appealNotification",
 													"appellantCaseCorrespondence",
 													"appellantCaseWithdrawalLetter",
 													"appellantCostsApplication",
@@ -9949,6 +9951,7 @@
 										"documentType": {
 											"type": "string",
 											"enum": [
+												"appealNotification",
 												"appellantCaseCorrespondence",
 												"appellantCaseWithdrawalLetter",
 												"appellantCostsApplication",
@@ -10106,6 +10109,7 @@
 											"documentType": {
 												"type": "string",
 												"enum": [
+													"appealNotification",
 													"appellantCaseCorrespondence",
 													"appellantCaseWithdrawalLetter",
 													"appellantCostsApplication",
@@ -10329,6 +10333,7 @@
 												"documentType": {
 													"type": "string",
 													"enum": [
+														"appealNotification",
 														"appellantCaseCorrespondence",
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
@@ -10486,6 +10491,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -10715,6 +10721,7 @@
 							"documentType": {
 								"type": "string",
 								"enum": [
+									"appealNotification",
 									"appellantCaseCorrespondence",
 									"appellantCaseWithdrawalLetter",
 									"appellantCostsApplication",
@@ -10866,6 +10873,7 @@
 								"documentType": {
 									"type": "string",
 									"enum": [
+										"appealNotification",
 										"appellantCaseCorrespondence",
 										"appellantCaseWithdrawalLetter",
 										"appellantCostsApplication",
@@ -11018,6 +11026,7 @@
 					"documentType": {
 						"type": "string",
 						"enum": [
+							"appealNotification",
 							"appellantCaseCorrespondence",
 							"appellantCaseWithdrawalLetter",
 							"appellantCostsApplication",
@@ -11649,6 +11658,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -11806,6 +11816,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -12004,6 +12015,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -12161,6 +12173,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -12359,6 +12372,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -12516,6 +12530,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -12714,6 +12729,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -12871,6 +12887,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -13069,6 +13086,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -13226,6 +13244,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -13424,6 +13443,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -13581,6 +13601,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -13779,6 +13800,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -13936,6 +13958,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -14134,6 +14157,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -14291,6 +14315,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -14489,6 +14514,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -14646,6 +14672,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -14844,6 +14871,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -15001,6 +15029,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -15199,6 +15228,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -15356,6 +15386,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -15554,6 +15585,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -15711,6 +15743,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -16272,6 +16305,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -16429,6 +16463,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -16627,6 +16662,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -16784,6 +16820,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -16982,6 +17019,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -17139,6 +17177,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -17337,6 +17376,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -17494,6 +17534,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -17692,6 +17733,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -17849,6 +17891,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -18047,6 +18090,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -18204,6 +18248,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -18402,6 +18447,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -18559,6 +18605,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -18757,6 +18804,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -18914,6 +18962,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -19112,6 +19161,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -19269,6 +19319,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -19467,6 +19518,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -19624,6 +19676,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -19822,6 +19875,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -19979,6 +20033,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -20177,6 +20232,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -20334,6 +20390,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -20532,6 +20589,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -20689,6 +20747,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -20887,6 +20946,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -21044,6 +21104,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -21242,6 +21303,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -21399,6 +21461,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -21597,6 +21660,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -21754,6 +21818,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -21952,6 +22017,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -22109,6 +22175,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -22307,6 +22374,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -22464,6 +22532,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -22662,6 +22731,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -22819,6 +22889,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -23017,6 +23088,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -23174,6 +23246,7 @@
 															"documentType": {
 																"type": "string",
 																"enum": [
+																	"appealNotification",
 																	"appellantCaseCorrespondence",
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
@@ -23882,6 +23955,7 @@
 												"documentType": {
 													"type": "string",
 													"enum": [
+														"appealNotification",
 														"appellantCaseCorrespondence",
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
@@ -24039,6 +24113,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -24259,6 +24334,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -24416,6 +24492,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -24613,6 +24690,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -24770,6 +24848,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -24967,6 +25046,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -25124,6 +25204,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -25321,6 +25402,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -25478,6 +25560,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -25675,6 +25758,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -25832,6 +25916,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -26029,6 +26114,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -26186,6 +26272,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -26383,6 +26470,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -26540,6 +26628,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -26739,6 +26828,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -26896,6 +26986,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -27093,6 +27184,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
@@ -27250,6 +27342,7 @@
 														"documentType": {
 															"type": "string",
 															"enum": [
+																"appealNotification",
 																"appellantCaseCorrespondence",
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
@@ -27448,6 +27541,7 @@
 												"documentType": {
 													"type": "string",
 													"enum": [
+														"appealNotification",
 														"appellantCaseCorrespondence",
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
@@ -27605,6 +27699,7 @@
 													"documentType": {
 														"type": "string",
 														"enum": [
+															"appealNotification",
 															"appellantCaseCorrespondence",
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
