@@ -72,6 +72,7 @@ module "app_api" {
     GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID                                = var.apps_config.integrations.notify_template_ids.decision_is_invalid_appellant_id
     GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID                                      = var.apps_config.integrations.notify_template_ids.decision_is_invalid_lpa_id
     GOV_NOTIFY_LPAQ_COMPLETE_ID                                                = var.apps_config.integrations.notify_template_ids.lpaq_complete_id
+    GOV_NOTIFY_LPAQ_COMPLETE_APPELLANT_ID                                      = var.apps_config.integrations.notify_template_ids.lpaq_complete_appellant_id
     GOV_NOTIFY_LPAQ_INCOMPLETE_ID                                              = var.apps_config.integrations.notify_template_ids.lpaq_incomplete_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID          = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_appellant_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID                = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_lpa_id
