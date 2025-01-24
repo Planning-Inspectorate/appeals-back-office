@@ -34,7 +34,6 @@ export async function setNewDatePage(apiClient, appealDetails) {
 	/** @type {PageContent} */
 	const pageContent = {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/incomplete/reasons`,
-		hint: `The LPA can resubmit their comments by ${deadlineString}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		submitButtonProperties: {
 			text: 'Continue'
@@ -42,7 +41,8 @@ export async function setNewDatePage(apiClient, appealDetails) {
 		pageComponents: [
 			yesNoInput({
 				name: 'setNewDate',
-				legendText: 'Do you want to allow the LPA to resubmit their statement?'
+				legendText: 'Do you want to allow the LPA to resubmit their statement?',
+				hint: `The LPA can resubmit their comments by ${deadlineString}`
 			})
 		]
 	};
