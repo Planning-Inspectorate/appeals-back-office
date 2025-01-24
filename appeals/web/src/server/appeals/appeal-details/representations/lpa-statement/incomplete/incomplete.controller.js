@@ -8,6 +8,7 @@ import { getRepresentationRejectionReasonOptions } from '../../representations.s
 import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -41,7 +42,9 @@ export const postReasons = async (request, response, next) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderSetNewDate(request, response) {
-	const pageContent = await setNewDatePage(request.apiClient, request.currentAppeal);
+	const extendedDeadline = await addBusinessDays(request.apiClient, new Date(), 7);
+	const deadlineString = dateISOStringToDisplayDate(extendedDeadline.toISOString());
+	const pageContent = setNewDatePage(request.currentAppeal, deadlineString);
 
 	return response
 		.status(request.errors ? 400 : 200)
