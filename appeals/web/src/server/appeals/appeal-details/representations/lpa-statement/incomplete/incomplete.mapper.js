@@ -1,5 +1,4 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -23,14 +22,11 @@ export function rejectLpaStatementPage(appealDetails) {
 }
 
 /**
- * @param {import('got').Got} apiClient
  * @param {Appeal} appealDetails
- * @returns {Promise<PageContent>}
+ * @param {string} deadlineString
+ * @returns {PageContent}
  * */
-export async function setNewDatePage(apiClient, appealDetails) {
-	const extendedDeadline = await addBusinessDays(apiClient, new Date(), 7);
-	const deadlineString = dateISOStringToDisplayDate(extendedDeadline.toISOString());
-
+export function setNewDatePage(appealDetails, deadlineString) {
 	/** @type {PageContent} */
 	const pageContent = {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/incomplete/reasons`,
