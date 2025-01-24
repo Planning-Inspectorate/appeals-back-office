@@ -35,7 +35,7 @@ export const isValidStage = (stage) => Object.values(APPEAL_CASE_STAGE).includes
  *
  * @param {string} documentType
  * @returns {documentType is
- * 	'appellantCaseCorrespondence'|'appellantCaseWithdrawalLetter'|'appellantCostsApplication'|
+ * 	    'appealNotification'|'appellantCaseCorrespondence'|'appellantCaseWithdrawalLetter'|'appellantCostsApplication'|
  *		'appellantStatement'|'applicationDecisionLetter'|'caseDecisionLetter'|
  *		'changedDescription'|'communityInfrastructureLevy'|'conservationMap'|'consultationResponses'|'costsDecisionLetter'|
  *		'crossTeamCorrespondence'|'definitiveMapStatement'|'designAccessStatement'|'developmentPlanPolicies'|'eiaEnvironmentalStatement'|

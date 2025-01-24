@@ -136,6 +136,11 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -496,6 +501,11 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -883,6 +893,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1225,6 +1240,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -3638,6 +3658,11 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
