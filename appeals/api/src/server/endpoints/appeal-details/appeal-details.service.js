@@ -2,8 +2,6 @@ import { isPast } from 'date-fns';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
-	AUDIT_TRAIL_REMOVED_CASE_OFFICER,
-	AUDIT_TRAIL_REMOVED_INSPECTOR,
 	AUDIT_TRAIL_MODIFIED_APPEAL,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	USER_TYPE_CASE_OFFICER,
@@ -61,12 +59,12 @@ const assignedUserType = ({ caseOfficer, inspector }) => {
 };
 
 /**
- * @param {number} id
+ * @param {Appeal} caseData
  * @param {UsersToAssign} param0
  * @param {string|undefined} azureAdUserId
  * @returns {Promise<object | null>}
  */
-const assignUser = async (id, { caseOfficer, inspector }, azureAdUserId) => {
+const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) => {
 	const assignedUserId = caseOfficer || inspector;
 	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector });
 
@@ -77,38 +75,30 @@ const assignUser = async (id, { caseOfficer, inspector }, azureAdUserId) => {
 			({ id: userId } = await userRepository.findOrCreateUser(assignedUserId));
 		}
 
-		const appeal = await appealRepository.updateAppealById(id, { [typeOfAssignedUser]: userId });
+		const shouldTransitionState =
+			caseData.caseOfficerUserId === null && typeOfAssignedUser === 'caseOfficer';
+		await appealRepository.updateAppealById(caseData.id, { [typeOfAssignedUser]: userId });
 
 		let details = '';
-		let isCaseOfficerAssignment = false;
 
 		if (caseOfficer) {
-			isCaseOfficerAssignment = true;
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [caseOfficer]);
 		} else if (inspector) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]);
-		} else if (caseOfficer === null && appeal.caseOfficer) {
-			details = stringTokenReplacement(AUDIT_TRAIL_REMOVED_CASE_OFFICER, [
-				appeal.caseOfficer.azureAdUserId || ''
-			]);
-		} else if (inspector === null && appeal.inspector) {
-			details = stringTokenReplacement(AUDIT_TRAIL_REMOVED_INSPECTOR, [
-				appeal.inspector.azureAdUserId || ''
-			]);
 		}
 
 		await createAuditTrail({
-			appealId: appeal.id,
+			appealId: caseData.id,
 			details,
 			azureAdUserId: azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID
 		});
 
-		if (isCaseOfficerAssignment && appeal.appealType) {
+		if (shouldTransitionState && caseData.appealType) {
 			await transitionState(
-				appeal.id,
-				appeal.appealType,
+				caseData.id,
+				caseData.appealType,
 				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				appeal.appealStatus,
+				caseData.appealStatus,
 				APPEAL_CASE_STATUS.VALIDATION
 			);
 		}

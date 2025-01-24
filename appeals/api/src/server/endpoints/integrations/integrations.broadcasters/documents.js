@@ -35,7 +35,8 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 					version
 				},
 				include: {
-					redactionStatus: true
+					redactionStatus: true,
+					representation: true
 				}
 			}
 		}
