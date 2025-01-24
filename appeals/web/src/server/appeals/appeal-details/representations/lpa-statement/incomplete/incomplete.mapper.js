@@ -1,5 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
+import { yesNoInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 
@@ -33,31 +34,16 @@ export async function setNewDatePage(apiClient, appealDetails) {
 	/** @type {PageContent} */
 	const pageContent = {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/incomplete/reasons`,
-		heading: 'Do you want to allow the LPA to resubmit their statement?',
-		headingClasses: 'govuk-heading-l',
 		hint: `The LPA can resubmit their comments by ${deadlineString}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		submitButtonProperties: {
 			text: 'Continue'
 		},
 		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'setNewDate',
-					idPrefix: 'set-new-date',
-					items: [
-						{
-							value: 'yes',
-							text: 'Yes'
-						},
-						{
-							value: 'no',
-							text: 'No'
-						}
-					]
-				}
-			}
+			yesNoInput({
+				name: 'setNewDate',
+				legendText: 'Do you want to allow the LPA to resubmit their statement?'
+			})
 		]
 	};
 
