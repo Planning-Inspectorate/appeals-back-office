@@ -1,3 +1,4 @@
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#endpoints/appeals/appeals.service.js';
 
@@ -380,6 +381,23 @@ const removeAppealServiceUser = async (appealId, data) => {
 	});
 };
 
+const getAppealsWithCompletedEvents = () =>
+	databaseConnector.appeal.findMany({
+		where: {
+			appealStatus: {
+				some: {
+					status: APPEAL_CASE_STATUS.EVENT
+				}
+			},
+			siteVisit: {
+				visitEndTime: {
+					lte: new Date()
+				}
+			}
+		},
+		include: appealDetailsInclude
+	});
+
 export default {
 	getLinkedAppeals,
 	getAppealById,
@@ -392,5 +410,6 @@ export default {
 	removeAppealServiceUser,
 	linkAppeal,
 	unlinkAppeal,
-	getAppealsByIds
+	getAppealsByIds,
+	getAppealsWithCompletedEvents
 };

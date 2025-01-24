@@ -1,12 +1,10 @@
-import { isPast } from 'date-fns';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
 	AUDIT_TRAIL_MODIFIED_APPEAL,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	USER_TYPE_CASE_OFFICER,
-	USER_TYPE_INSPECTOR,
-	VALIDATION_OUTCOME_COMPLETE
+	USER_TYPE_INSPECTOR
 } from '#endpoints/constants.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
@@ -14,8 +12,6 @@ import appealRepository from '#repositories/appeal.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import BackOfficeAppError from '#utils/app-error.js';
 import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import serviceUserRepository from '#repositories/service-user.repository.js';
@@ -166,35 +162,3 @@ export const appealDetailService = {
 	assignedUserType,
 	updateAppealDetails
 };
-
-/**
- * @param {number} appealId
- * @param {string} azureAdUserId
- * @returns {Promise<void>}
- * */
-export async function completeAppealEvent(appealId, azureAdUserId) {
-	const appeal = await appealRepository.getAppealById(appealId);
-	if (!appeal) {
-		throw new BackOfficeAppError(`No appeal found with ID ${appealId}`, 404);
-	}
-
-	if (!arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
-		throw new BackOfficeAppError(`Appeal ${appealId} is not in the EVENT state`, 409);
-	}
-
-	if (!appeal?.siteVisit?.visitEndTime) {
-		throw new BackOfficeAppError(`No site visit arranged for appeal ${appealId}`, 409);
-	}
-
-	if (!isPast(appeal.siteVisit.visitEndTime)) {
-		throw new BackOfficeAppError(`Site visit has not occurred yet for appeal ${appealId}`, 409);
-	}
-
-	await transitionState(
-		appealId,
-		appeal.appealType,
-		azureAdUserId,
-		appeal.appealStatus,
-		VALIDATION_OUTCOME_COMPLETE
-	);
-}
