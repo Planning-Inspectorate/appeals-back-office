@@ -9,6 +9,7 @@ import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
+import { capitalize } from 'lodash-es';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -155,7 +156,7 @@ export const renderCheckYourAnswers = async (
 					}
 				},
 				'Do you want to allow the LPA to resubmit their statement?': {
-					html: `${lpaStatement?.setNewDate}`,
+					html: capitalize(lpaStatement?.setNewDate),
 					actions: {
 						Change: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/date`,
