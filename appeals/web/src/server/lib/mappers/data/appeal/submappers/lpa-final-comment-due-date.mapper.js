@@ -9,13 +9,13 @@ export const mapLpaFinalCommentDueDate = ({
 	userHasUpdateCasePermission,
 	lpaFinalComments
 }) => {
-	const commentNotAccepted = lpaFinalComments?.status !== APPEAL_REPRESENTATION_STATUS.VALID
+	const commentNotAccepted = lpaFinalComments?.status !== APPEAL_REPRESENTATION_STATUS.VALID;
 	return textSummaryListItem({
 		id: 'lpa-final-comment-due-date',
 		text: 'LPA final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaFinalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/final-comments/lpas`,
+		link: `${currentRoute}/appeal-timetables/lpa-final-comments`,
 		editable: Boolean(commentNotAccepted && userHasUpdateCasePermission && appealDetails.startedAt),
 		classes: 'appeal-lpa-final-comment-due-date'
 	});
-}
+};

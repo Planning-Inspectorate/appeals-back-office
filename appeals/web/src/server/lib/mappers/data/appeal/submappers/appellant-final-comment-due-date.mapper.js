@@ -9,14 +9,13 @@ export const mapAppellantFinalCommentDueDate = ({
 	userHasUpdateCasePermission,
 	appellantFinalComments
 }) => {
-	const commentNotAccepted = appellantFinalComments?.status !== APPEAL_REPRESENTATION_STATUS.VALID
+	const commentNotAccepted = appellantFinalComments?.status !== APPEAL_REPRESENTATION_STATUS.VALID;
 	return textSummaryListItem({
 		id: 'appellant-final-comment-due-date',
 		text: 'Appellant final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantFinalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/final-comments/appellants`,
+		link: `${currentRoute}/appeal-timetables/appellant-final-comments`,
 		editable: Boolean(commentNotAccepted && userHasUpdateCasePermission && appealDetails.startedAt),
 		classes: 'appeal-final-comments-due-date'
 	});
-
-}
+};
