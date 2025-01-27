@@ -50,15 +50,6 @@ router
 		asyncHandler(controller.getSiteVisitScheduled)
 	);
 
-router
-	.route('/set-visit-type')
-	.get(asyncHandler(controller.getSetVisitType))
-	.post(
-		assertUserHasPermission(permissionNames.setEvents),
-		validators.validateSiteVisitType,
-		asyncHandler(controller.postSetVisitType)
-	);
-
 router.route('/visit-booked').get(asyncHandler(controller.getSiteVisitBooked));
 
 export default router;

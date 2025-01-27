@@ -421,58 +421,6 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, appealDetail
 }
 
 /**
- * @param {Appeal} appealDetails
- * @param {string|undefined} visitType
- * @returns {PageContent}
- */
-export function setVisitTypePage(appealDetails, visitType) {
-	/** @type {PageComponent} */
-	const selectVisitTypeComponent = {
-		type: 'radios',
-		parameters: {
-			name: 'visit-type',
-			idPrefix: 'visit-type',
-			fieldset: {
-				legend: {
-					text: 'Select visit type',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-				{
-					value: 'unaccompanied',
-					text: 'Unaccompanied',
-					checked: visitType === 'unaccompanied'
-				},
-				{
-					value: 'accessRequired',
-					text: 'Access required',
-					checked: visitType === 'accessRequired'
-				},
-				{
-					value: 'accompanied',
-					text: 'Accompanied',
-					checked: visitType === 'accompanied'
-				}
-			]
-		}
-	};
-
-	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `Select site visit type - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Select site visit type',
-		pageComponents: [selectVisitTypeComponent]
-	};
-
-	return pageContent;
-}
-
-/**
  * @param {string} appealId
  * @param {string} appealReference
  * @returns {PageContent}

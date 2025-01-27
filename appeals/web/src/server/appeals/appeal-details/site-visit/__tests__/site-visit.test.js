@@ -22,7 +22,6 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const siteVisitPath = '/site-visit';
 const visitScheduledPath = '/visit-scheduled';
-const setVisitTypePath = '/set-visit-type';
 
 describe('site-visit', () => {
 	beforeEach(() => {
@@ -1128,37 +1127,6 @@ describe('site-visit', () => {
 		});
 	});
 
-	describe('GET /site-visit/set-visit-type', () => {
-		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-		});
-
-		afterEach(() => {
-			nock.cleanAll();
-		});
-
-		it('should render the select site visit type page', async () => {
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}${setVisitTypePath}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Select site visit type</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="unaccompanied"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accessRequired"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accompanied"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-	});
-
 	describe('POST /site-visit/set-visit-type', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
@@ -1169,34 +1137,6 @@ describe('site-visit', () => {
 
 		afterEach(() => {
 			nock.cleanAll();
-		});
-
-		it('should re-render the select site visit type page with the expected error message if the site visit type was not selected', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}${setVisitTypePath}`).send({
-				'visit-type': ''
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Select site visit type</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-		});
-
-		it('should redirect to the case details page if the site visit type was selected', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}${setVisitTypePath}`).send({
-				'visit-type': 'unaccompanied'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should allow rearranging a site visit to remove previously set times', async () => {
