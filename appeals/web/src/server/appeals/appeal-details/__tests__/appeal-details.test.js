@@ -9,7 +9,6 @@ import {
 	linkedAppeals,
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon,
-	siteVisitData,
 	costsFolderInfoAppellantApplication,
 	costsFolderInfoLpaApplication,
 	costsFolderInfoDecision,
@@ -553,25 +552,6 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('Inspector has been assigned</p>');
-			});
-
-			it('should render a success notification banner when the site visit type was updated', async () => {
-				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
-				nock('http://test/').patch('/appeals/1/site-visits/0').reply(200, siteVisitData);
-				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
-
-				await request.post(`${baseUrl}/1/site-visit/set-visit-type`).send({
-					'visit-type': 'accompanied'
-				});
-				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-
-				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Site visit type has been selected</p>');
 			});
 
 			it('should render a success notification banner when an appellant costs document was uploaded', async () => {

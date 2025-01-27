@@ -85,10 +85,6 @@ export class Page {
 		enterDate: () => cy.get(this.selectors.dateInput),
 		errorMessage: () => cy.get(this.selectors.errorMessage),
 		summaryErrorMessages: () => cy.get(this.selectors.summaryErrorMessages),
-		goToDashboardLink: () =>
-			cy.contains(`${this.selectors.rightCol} ${this.selectors.link}`, 'Go to Dashboard', {
-				matchCase: true
-			}),
 		input: () => cy.get(this.selectors.input),
 		linkByText: (text) => cy.contains(this.selectors.link, text, { matchCase: true }),
 		loggedInUser: () => cy.get(`${this.selectors.rightCol} > span`),
@@ -96,7 +92,6 @@ export class Page {
 		panelTitle: () => cy.get(`${this.selectors.panelTitle}`),
 		radioButton: () => cy.get(this.selectors.radio),
 		sectionHeader: () => cy.get(this.selectors.headingLeft),
-		selectAllCheckboxes: () => cy.get('#selectAll'),
 		selectElem: () => cy.get(this.selectors.select),
 		saveAndContinue: () => this.clickButtonByText('Save and Continue'),
 		successBanner: () => cy.get(this.selectors.successBanner),
@@ -306,14 +301,6 @@ export class Page {
 		this.basePageElements.radioButton().should('have.length', radioCount);
 	}
 
-	verifyFolderDocuments(fileCount) {
-		cy.wait(6000);
-		cy.get('.pins-files-list > .govuk-table .govuk-table__row').should(
-			'have.length',
-			2 + fileCount
-		);
-	}
-
 	verifyDocumentUploaded(fileName) {
 		this.basePageElements.tableCell().contains(fileName).should('exist');
 	}
@@ -325,10 +312,6 @@ export class Page {
 				this.clickAccordionByText('Show all sections');
 			}
 		});
-	}
-
-	selectAllDocuments() {
-		this.basePageElements.selectAllCheckboxes().scrollIntoView().check({ force: true });
 	}
 
 	validateSuccessPanelTitle(successMessage, exactMatch = false) {
@@ -343,9 +326,6 @@ export class Page {
 		cy.visit(urlPaths.appealsList);
 	}
 
-	goToDashboard() {
-		this.basePageElements.goToDashboardLink().click();
-	}
 	goToFolderDocumentPage() {
 		this.basePageElements.projectManagement().click();
 	}
