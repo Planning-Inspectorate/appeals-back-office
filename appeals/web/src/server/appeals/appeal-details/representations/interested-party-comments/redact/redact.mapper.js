@@ -62,7 +62,6 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, session
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and redact comment',
-		headingClasses: 'govuk-heading-l',
 		pageComponents
 	};
 

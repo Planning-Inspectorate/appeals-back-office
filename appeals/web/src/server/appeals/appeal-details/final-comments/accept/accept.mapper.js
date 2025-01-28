@@ -78,7 +78,6 @@ export const acceptFinalCommentPage = (
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Accept ${formatFinalCommentsTypeText(finalCommentsType)} final comments`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents
 	};
 
@@ -107,7 +106,6 @@ export const confirmAcceptFinalCommentPage = (appealDetails, representation, fin
 		heading: `Check details and accept ${formatFinalCommentsTypeText(
 			finalCommentsType
 		)} final comments`,
-		headingClasses: 'govuk-heading-l',
 		forceRenderSubmitButton: true,
 		submitButtonText: `Accept ${formatFinalCommentsTypeText(finalCommentsType)} final comments`,
 		pageComponents

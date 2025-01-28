@@ -52,7 +52,6 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answer',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -100,7 +99,6 @@ export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireDat
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Manage affected listed buildings',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'table',
@@ -189,7 +187,6 @@ export function removeAffectedListedBuildingPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove affected listed building',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -244,7 +241,6 @@ export function changeAffectedListedBuildingPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Change affected listed building`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'input',
@@ -283,7 +279,6 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Check your answer`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',

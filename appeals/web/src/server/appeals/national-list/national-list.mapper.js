@@ -397,7 +397,6 @@ export function nationalListPage(
 	const pageContent = {
 		title: 'All cases',
 		heading: 'Search all cases',
-		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
 		pageComponents: [...searchPageContent, ...appealsDataPageContent]
 	};
 

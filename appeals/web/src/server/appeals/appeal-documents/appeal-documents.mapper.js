@@ -671,7 +671,7 @@ export function addDocumentsCheckAndConfirmPage({
 		const htmlComponent = {
 			type: 'html',
 			parameters: {
-				html: `<h2 class="govuk-heading-l govuk-!-margin-top-${
+				html: `<h2 class="govuk-heading-m govuk-!-margin-top-${
 					index === 0 ? '5' : '8'
 				} govuk-!-margin-bottom-4">Uploaded file${
 					uncommittedFiles.length > 1 ? ` ${index + 1}` : ''

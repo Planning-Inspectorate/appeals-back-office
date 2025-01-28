@@ -14,8 +14,7 @@ export function rejectLpaStatementPage(appealDetails) {
 		heading: 'Why is the statement incomplete?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
 		preHeading: `Appeal ${shortReference}`,
-		hint: 'Select all that apply.',
-		headingClasses: 'govuk-heading-l'
+		hint: 'Select all that apply.'
 	};
 
 	return pageContent;

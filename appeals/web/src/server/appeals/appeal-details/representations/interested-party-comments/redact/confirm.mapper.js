@@ -25,7 +25,6 @@ export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, 
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and redact comment',
-		headingClasses: 'govuk-heading-l',
 		forceRenderSubmitButton: true,
 		submitButtonText: 'Redact and accept comment',
 		pageComponents

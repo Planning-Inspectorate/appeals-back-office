@@ -27,7 +27,6 @@ export function viewInterestedPartyCommentPage(appealDetails, comment, session) 
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'View comment',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [...notificationBanners, commentSummaryList, withdrawLink]
 	};
 

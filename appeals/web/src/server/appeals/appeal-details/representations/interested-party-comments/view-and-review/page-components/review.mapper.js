@@ -80,7 +80,6 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review comment',
-		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Confirm',
 		pageComponents: [
 			...buildNotificationBanners(session, 'reviewIpComment', appealDetails.appealId),

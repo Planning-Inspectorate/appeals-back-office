@@ -20,7 +20,6 @@ export const changeSiteAreaPage = (appealData, appellantCaseData, storedSessionD
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change the site area',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'input',
