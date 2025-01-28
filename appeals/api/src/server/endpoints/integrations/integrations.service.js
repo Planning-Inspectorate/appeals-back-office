@@ -2,19 +2,21 @@ import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import {
 	createAppeal,
-	createOrUpdateLpaQuestionnaire
+	createOrUpdateLpaQuestionnaire,
+	createRepresentation
 } from '#repositories/integrations.repository.js';
 import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 /**
  * @param {import('#db-client').Prisma.AppealCreateInput} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
- * @returns {Promise<{appeal: Appeal, documentVersions: DocumentVersion[]}>}
+ * @returns
  */
 const importAppellantCase = async (data, documents, relatedReferences) => {
 	const result = await createAppeal(data, documents, relatedReferences || []);
@@ -45,6 +47,25 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(
 			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`
+		);
+	} else {
+		return result;
+	}
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} attachments
+ * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
+ */
+const importRepresentation = async (appeal, data, attachments) => {
+	const result = await createRepresentation(appeal, data, attachments);
+
+	if (!result?.rep) {
+		throw new BackOfficeAppError(
+			`Failure importing Representation associated with case reference '${appeal.reference}'.`
 		);
 	} else {
 		return result;
@@ -86,5 +107,6 @@ const importDocuments = async (documents, documentVersions) => {
 export const integrationService = {
 	importAppellantCase,
 	importLPAQuestionnaire,
+	importRepresentation,
 	importDocuments
 };

@@ -4,11 +4,11 @@ import { loadAllSchemas } from 'pins-data-model';
 import BackOfficeAppError from '#utils/app-error.js';
 import { setCache, getCache } from '#utils/cache-data.js';
 
-//1.5.1
 export const schemas = {
 	commands: {
 		appealSubmission: 'appellant-submission',
-		lpaSubmission: 'lpa-questionnaire'
+		lpaSubmission: 'lpa-questionnaire',
+		repSubmission: 'appeal-representation-submission'
 	},
 	events: {
 		serviceUser: 'service-user',

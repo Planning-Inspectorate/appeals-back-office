@@ -1,4 +1,8 @@
-import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
+import {
+	validAppellantCase,
+	validLpaQuestionnaire,
+	validRepresentationIp
+} from '#tests/integrations/mocks.js';
 import { createRepRequest, repUpdateRequest, repResponse } from '#tests/representations/mocks.js';
 import {
 	folder,
@@ -94,6 +98,9 @@ export const spec = {
 		},
 		QuestionnaireData: {
 			...validLpaQuestionnaire
+		},
+		RepresentationData: {
+			...validRepresentationIp
 		},
 		DecisionInfo: {
 			outcome: 'allowed',

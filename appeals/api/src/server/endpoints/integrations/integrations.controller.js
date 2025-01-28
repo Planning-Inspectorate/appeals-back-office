@@ -8,23 +8,26 @@ import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
-	AUDIT_TRAIL_SYSTEM_UUID
+	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRAIL_REP_IMPORT_MSG
 } from '#endpoints/constants.js';
-import { ODW_APPELLANT_SVCUSR, ODW_AGENT_SVCUSR } from '@pins/appeals/constants/common.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
 
 /**
  * @param {{body: AppellantSubmissionCommand}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-export const postAppealSubmission = async (req, res) => {
+export const importAppeal = async (req, res) => {
 	const { appeal, documents, relatedReferences } = messageMappers.mapAppealSubmission(req.body);
 
 	const casedata = await integrationService.importAppellantCase(
@@ -48,13 +51,18 @@ export const postAppealSubmission = async (req, res) => {
 		await broadcasters.broadcastServiceUser(
 			appellantId,
 			EventType.Create,
-			ODW_APPELLANT_SVCUSR,
+			SERVICE_USER_TYPE.APPELLANT,
 			reference
 		);
 	}
 
 	if (agentId) {
-		await broadcasters.broadcastServiceUser(agentId, EventType.Create, ODW_AGENT_SVCUSR, reference);
+		await broadcasters.broadcastServiceUser(
+			agentId,
+			EventType.Create,
+			SERVICE_USER_TYPE.AGENT,
+			reference
+		);
 	}
 
 	await integrationService.importDocuments(documents, documentVersions);
@@ -81,7 +89,7 @@ export const postAppealSubmission = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-export const postLpaqSubmission = async (req, res) => {
+export const importLpaqSubmission = async (req, res) => {
 	const { caseReference, questionnaire, documents, relatedReferences } =
 		messageMappers.mapQuestionnaireSubmission(req.body);
 	const casedata = await integrationService.importLPAQuestionnaire(
@@ -123,4 +131,64 @@ export const postLpaqSubmission = async (req, res) => {
 	}
 
 	return res.send({ id, reference });
+};
+
+/**
+ * @param {{body: AppealRepresentationSubmission, appeal: Appeal}} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const importRepresentation = async (req, res) => {
+	const { representation, attachments } = messageMappers.mapRepresentation(req.body);
+
+	const hasNewUser = representation.represented?.create != null;
+	const isIpComment = representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT;
+
+	const casedata = await integrationService.importRepresentation(
+		req.appeal,
+		representation,
+		attachments
+	);
+
+	if (!casedata.rep) {
+		return res.status(404);
+	}
+
+	const { documentVersions, rep } = casedata;
+	const appealId = req.appeal.id;
+	const repId = rep.id;
+
+	await createAuditTrail({
+		appealId,
+		details: AUDIT_TRAIL_REP_IMPORT_MSG,
+		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
+	});
+
+	if (hasNewUser && rep.representedId && isIpComment) {
+		await broadcasters.broadcastServiceUser(
+			rep.representedId,
+			EventType.Create,
+			SERVICE_USER_TYPE.INTERESTED_PARTY,
+			req.appeal.reference
+		);
+	}
+
+	await broadcasters.broadcastRepresentation(repId, EventType.Create);
+	await integrationService.importDocuments(attachments, documentVersions);
+
+	for (const document of documentVersions) {
+		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
+
+		const auditTrail = await createAuditTrail({
+			appealId: appealId,
+			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
+			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
+		});
+
+		if (auditTrail) {
+			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
+		}
+	}
+
+	return res.send(rep);
 };

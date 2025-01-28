@@ -9,6 +9,7 @@ import {
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
+import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */
@@ -65,13 +66,13 @@ export const mapDocumentEntity = (data) => {
 			? documentInput.case?.appealType?.key
 			: null,
 		redactedStatus,
-		documentType: documentInput.latestDocumentVersion.documentType,
+		documentType: mapDocumentType(documentInput.latestDocumentVersion),
 		sourceSystem: ODW_SYSTEM_ID,
 		origin: mapOrigin(documentInput.latestDocumentVersion.stage),
 		owner: null,
 		author: null,
 		description: null,
-		caseStage: documentInput.latestDocumentVersion.stage,
+		caseStage: mapStage(documentInput.latestDocumentVersion),
 		horizonFolderId: null
 	};
 
@@ -132,4 +133,52 @@ const mapOrigin = (stage) => {
 		return APPEAL_ORIGIN.PINS;
 	}
 	return null;
+};
+
+/**
+ *
+ * @param {DocumentVersion} doc
+ * @returns {string}
+ */
+const mapDocumentType = (doc) => {
+	if (doc.documentType === 'representationAttachments') {
+		const rep = doc.representation?.representation;
+		switch (rep?.representationType) {
+			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
+				return APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT;
+			case INTERNAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
+				return APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT;
+			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT:
+				return APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT;
+			case INTERNAL_REPRESENTATION_TYPE.LPA_STATEMENT:
+				return APPEAL_DOCUMENT_TYPE.LPA_STATEMENT;
+			default:
+				return APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT;
+		}
+	}
+
+	return doc.documentType ?? APPEAL_DOCUMENT_TYPE.UNCATEGORISED;
+};
+
+/**
+ *
+ * @param {DocumentVersion} doc
+ * @returns {string}
+ */
+const mapStage = (doc) => {
+	if (doc.documentType === 'representationAttachments') {
+		const rep = doc.representation?.representation;
+		switch (rep?.representationType) {
+			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
+			case INTERNAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
+				return APPEAL_CASE_STAGE.FINAL_COMMENTS;
+			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT:
+			case INTERNAL_REPRESENTATION_TYPE.LPA_STATEMENT:
+				return APPEAL_CASE_STAGE.STATEMENTS;
+			default:
+				return APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS;
+		}
+	}
+
+	return doc.stage ?? APPEAL_CASE_STAGE.INTERNAL;
 };

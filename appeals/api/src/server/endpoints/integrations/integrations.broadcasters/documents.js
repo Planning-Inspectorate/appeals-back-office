@@ -36,7 +36,11 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 				},
 				include: {
 					redactionStatus: true,
-					representation: true
+					representation: {
+						include: {
+							representation: true
+						}
+					}
 				}
 			}
 		}
@@ -52,12 +56,6 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 	// @ts-ignore
 	const msg = mapDocumentEntity(document);
 	if (!msg) {
-		return false;
-	}
-
-	// TODO: remove this later
-	// @ts-ignore
-	if (msg.documentType === 'representationAttachments') {
 		return false;
 	}
 
