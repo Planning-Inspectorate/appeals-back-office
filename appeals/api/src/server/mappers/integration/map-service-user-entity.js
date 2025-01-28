@@ -1,8 +1,5 @@
-import {
-	ODW_AGENT_SVCUSR,
-	ODW_APPELLANT_SVCUSR,
-	ODW_SYSTEM_ID
-} from '@pins/appeals/constants/common.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { SERVICE_USER_TYPE } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
@@ -55,12 +52,15 @@ export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
  * @returns {'Applicant' | 'Appellant' | 'Agent' | 'RepresentationContact' | 'Subscriber'}
  */
 const mapServiceUserType = (type) => {
-	if (type.toLowerCase() === ODW_APPELLANT_SVCUSR.toLowerCase()) {
-		return ODW_APPELLANT_SVCUSR;
+	if (type.toLowerCase() === 'appellant') {
+		// @ts-ignore
+		return SERVICE_USER_TYPE.APPELLANT;
 	}
-	if (type.toLowerCase() === ODW_AGENT_SVCUSR.toLowerCase()) {
-		return ODW_AGENT_SVCUSR;
+	if (type.toLowerCase() === 'agent') {
+		// @ts-ignore
+		return SERVICE_USER_TYPE.AGENT;
 	}
 
-	return ODW_APPELLANT_SVCUSR;
+	// @ts-ignore
+	return SERVICE_USER_TYPE.INTERESTED_PARTY;
 };

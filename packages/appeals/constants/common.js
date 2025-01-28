@@ -1,6 +1,4 @@
 export const ODW_SYSTEM_ID = 'back-office-appeals';
-export const ODW_APPELLANT_SVCUSR = 'Appellant';
-export const ODW_AGENT_SVCUSR = 'Agent';
 export const APPEAL_START_RANGE = 6000000;
 
 export const EVENT_TYPE = Object.freeze({

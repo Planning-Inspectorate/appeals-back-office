@@ -302,6 +302,51 @@ export interface QuestionnaireData {
 	}[];
 }
 
+export interface RepresentationData {
+	/** @example "6004741" */
+	caseReference?: string;
+	/** @example "Hello, not about cheese but still a rep of some kind (IP comment)" */
+	representation?: string;
+	/** @example "comment" */
+	representationType?: string;
+	/** @example "2025-01-22T13:48:35.847Z" */
+	representationSubmittedDate?: string;
+	newUser?: {
+		/** @example "test@test.com" */
+		emailAddress?: string;
+		/** @example "Testy" */
+		firstName?: string;
+		/** @example "McTest" */
+		lastName?: string;
+		/** @example "Mr" */
+		salutation?: string;
+		/** @example "InterestedParty" */
+		serviceUserType?: string;
+		/** @example "A company" */
+		organisation?: string;
+		/** @example "0123456789" */
+		telephoneNumber?: string;
+	};
+	documents?: {
+		/** @example "2024-03-01T13:48:35.847Z" */
+		dateCreated?: string;
+		/** @example "001" */
+		documentId?: string;
+		/** @example "interestedPartyComment" */
+		documentType?: string;
+		/** @example "https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg" */
+		documentURI?: string;
+		/** @example "img3.jpg" */
+		filename?: string;
+		/** @example "image/jpeg" */
+		mime?: string;
+		/** @example "oimg.jpg" */
+		originalFilename?: string;
+		/** @example 10293 */
+		size?: number;
+	}[];
+}
+
 export interface DecisionInfo {
 	/** @example "allowed" */
 	outcome?: string;

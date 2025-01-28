@@ -11,6 +11,7 @@ import { mapAppealTypeIn } from './integrations.mappers/appeal-type.mapper.js';
 import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { renameDuplicateDocuments } from './integrations.utils.js';
+import { mapRepresentationIn } from './integrations.mappers/representation.mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
@@ -18,10 +19,14 @@ import { renameDuplicateDocuments } from './integrations.utils.js';
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
-/** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
 /** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
 /** @typedef {import('pins-data-model').Schemas.AppealEvent} AppealEvent */
+/** @typedef {import('#db-client').Prisma.ServiceUserCreateInput} ServiceUserCreateInput */
+/** @typedef {import('#db-client').Prisma.ServiceUserCreateNestedOneWithoutRepresentationsInput} ServiceUserConnectInput */
+/** @typedef {import('#db-client').Prisma.RepresentationCreateInput & {represented: ServiceUserCreateInput|ServiceUserConnectInput}} RepresentationCreateInput */
+/** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
 
 const mappers = {
 	mapAddressIn,
@@ -120,7 +125,17 @@ const mapQuestionnaireSubmission = (data) => {
 	};
 };
 
+/**
+ *
+ * @param {AppealRepresentationSubmission} data
+ * @returns {{representation: Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>, attachments: DocumentVersionCreateInput[]}}
+ */
+const mapRepresentation = (data) => {
+	return mapRepresentationIn(data);
+};
+
 export const messageMappers = {
 	mapAppealSubmission,
-	mapQuestionnaireSubmission
+	mapQuestionnaireSubmission,
+	mapRepresentation
 };
