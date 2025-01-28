@@ -1,5 +1,6 @@
 {%- extends "app/layouts/app-two-column.layout.njk" -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
@@ -8,18 +9,7 @@
 {%- set gridColumnClasses = gridColumnClasses if gridColumnClasses else 'govuk-grid-column-full' -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			{%- if pageContent.preHeading -%}<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>{%- endif -%}
-			{%- if pageContent.heading -%}<h1 class="{{ pageContent.headingClasses if pageContent.headingClasses else "govuk-heading-xl govuk-!-margin-bottom-3" }}">{{ pageContent.heading }}</h1>{%- endif -%}
-
-      {%- if pageContent.hint -%}
-        <div class="govuk-hint">
-          {{ pageContent.hint }}
-        </div>
-      {%- endif -%}
-		</div>
-	</div>
+	{{ pageHeading(pageContent) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

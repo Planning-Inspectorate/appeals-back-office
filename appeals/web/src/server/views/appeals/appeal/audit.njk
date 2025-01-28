@@ -1,5 +1,7 @@
 {%- extends "app/layouts/app.layout.njk" -%}
 {%- from "govuk/components/table/macro.njk" import govukTable -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
+
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 {%- set pageTitle = pageContent.title if pageContent.title else '' -%}
@@ -14,12 +16,11 @@
 {%- endfor -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal {{ pageContent.caseReference }}</span>
-			<h1 class="govuk-heading-l govuk-!-margin-bottom-8">Case history</h1>
-		</div>
-	</div>
+	{{ pageHeading({
+    preHeading: "Appeal " + pageContent.caseReference,
+    heading: "Case history",
+		headingClasses: "govuk-heading-l govuk-!-margin-bottom-8"
+  }) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

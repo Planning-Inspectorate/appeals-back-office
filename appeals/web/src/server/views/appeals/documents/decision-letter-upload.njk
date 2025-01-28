@@ -3,6 +3,7 @@
 {% from 'app/components/file-uploader.component.njk' import fileUploader %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {% block pageTitle %}
 	{{ pageHeadingText }}
@@ -10,12 +11,12 @@
 
 {%- block pageHeading -%}
 	<div class="govuk-grid-row">
-		<div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ caseInfoText }}</span>
-			<h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ pageHeadingText }}</h1>
-		</div>
+		<div class="govuk-grid-column-two-thirds top-errors-hook"></div>
 	</div>
+  {{ pageHeading({
+    preHeading: caseInfoText,
+    heading: pageHeadingText
+  }) }}
 {%- endblock -%}
 
 {%- set backLinkUrl -%}

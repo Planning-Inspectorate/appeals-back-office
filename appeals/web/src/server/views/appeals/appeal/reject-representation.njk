@@ -2,19 +2,16 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {%- from "../components/add-another-reason.njk" import addAnotherReason -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 {%- set pageTitle = pageContent.title if pageContent.title else 'Change' -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			{%- if pageContent.preHeading -%}
-				<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
-			{%- endif -%}
-		</div>
-	</div>
+	{{ pageHeading({
+		preHeading: pageContent.preHeading
+	}) }}
 {%- endblock -%}
 
 {%- block pageContent -%}
