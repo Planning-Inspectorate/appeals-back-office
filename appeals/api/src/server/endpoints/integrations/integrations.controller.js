@@ -45,7 +45,10 @@ export const importAppeal = async (req, res) => {
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
 
-	await broadcasters.broadcastAppeal(id, EventType.Create);
+	await Promise.all([
+		broadcasters.broadcastAppeal(id, EventType.Create),
+		integrationService.importDocuments(documents, documentVersions)
+	]);
 
 	if (appellantId) {
 		await broadcasters.broadcastServiceUser(
@@ -65,21 +68,14 @@ export const importAppeal = async (req, res) => {
 		);
 	}
 
-	await integrationService.importDocuments(documents, documentVersions);
-
-	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
-
-		const auditTrail = await createAuditTrail({
-			appealId: id,
-			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
-		});
-
-		if (auditTrail) {
-			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
-		}
-	}
+	await Promise.all(
+		documentVersions.map(async (document) => {
+			await Promise.all([
+				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
+				writeDocumentAuditTrail(id, document)
+			]);
+		})
+	);
 
 	return res.send({ id, reference });
 };
@@ -112,23 +108,19 @@ export const importLpaqSubmission = async (req, res) => {
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
 
-	await broadcasters.broadcastAppeal(id, EventType.Update);
+	await Promise.all([
+		broadcasters.broadcastAppeal(id, EventType.Update),
+		integrationService.importDocuments(documents, documentVersions)
+	]);
 
-	await integrationService.importDocuments(documents, documentVersions);
-
-	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
-
-		const auditTrail = await createAuditTrail({
-			appealId: id,
-			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
-		});
-
-		if (auditTrail) {
-			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
-		}
-	}
+	await Promise.all(
+		documentVersions.map(async (document) => {
+			await Promise.all([
+				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
+				writeDocumentAuditTrail(id, document)
+			]);
+		})
+	);
 
 	return res.send({ id, reference });
 };
@@ -173,22 +165,36 @@ export const importRepresentation = async (req, res) => {
 		);
 	}
 
-	await broadcasters.broadcastRepresentation(repId, EventType.Create);
-	await integrationService.importDocuments(attachments, documentVersions);
+	await Promise.all([
+		broadcasters.broadcastRepresentation(repId, EventType.Create),
+		integrationService.importDocuments(attachments, documentVersions)
+	]);
 
-	for (const document of documentVersions) {
-		await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
-
-		const auditTrail = await createAuditTrail({
-			appealId: appealId,
-			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
-		});
-
-		if (auditTrail) {
-			await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
-		}
-	}
+	await Promise.all(
+		documentVersions.map(async (document) => {
+			await Promise.all([
+				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
+				writeDocumentAuditTrail(appealId, document)
+			]);
+		})
+	);
 
 	return res.send(rep);
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @param {{ fileName: string|null, documentGuid: string}} document
+ */
+const writeDocumentAuditTrail = async (appealId, document) => {
+	const auditTrail = await createAuditTrail({
+		appealId: appealId,
+		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
+		details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
+	});
+
+	if (auditTrail) {
+		await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
+	}
 };
