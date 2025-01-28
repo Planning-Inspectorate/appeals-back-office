@@ -2590,7 +2590,6 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -2611,7 +2610,6 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/:docu
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -3184,7 +3182,6 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -3205,7 +3202,6 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/check-your-a
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -3226,7 +3222,6 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5011,7 +5006,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5032,7 +5026,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5053,7 +5046,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5074,7 +5066,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5095,7 +5086,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5116,7 +5106,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/check-your-
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -6992,7 +6981,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should render a 500
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
