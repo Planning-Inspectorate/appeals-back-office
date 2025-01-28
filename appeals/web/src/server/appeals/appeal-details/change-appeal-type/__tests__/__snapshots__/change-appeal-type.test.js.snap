@@ -3,9 +3,6 @@
 exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should render the add horizon reference page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -31,9 +28,6 @@ exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should
 
 exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the appeal type page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -74,9 +68,6 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 
 exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date should render the final date page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -135,9 +126,6 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
 exports[`change-appeal-type GET /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -154,9 +142,6 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 
 exports[`change-appeal-type GET /change-appeal-type/check-transfer should render the check transfer page, with the appeal reference of the transferred appeal displayed in the summary, if the required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the transferred appeal</h1>
@@ -212,9 +197,6 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 
 exports[`change-appeal-type GET /change-appeal-type/resubmit should render the resubmit page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -337,9 +319,6 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should render a custom error page stating that there is a problem with Horizon, if the transferred-appeal endpoint returns a 500 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with Horizon</h1>
@@ -482,9 +461,6 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-re
 
 exports[`change-appeal-type POST /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>

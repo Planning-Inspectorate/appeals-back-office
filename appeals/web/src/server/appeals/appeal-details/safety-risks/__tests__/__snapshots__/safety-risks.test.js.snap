@@ -3,9 +3,6 @@
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from LPA questionnaire 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -53,9 +50,6 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from appeals details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -105,9 +99,6 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -154,9 +145,6 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

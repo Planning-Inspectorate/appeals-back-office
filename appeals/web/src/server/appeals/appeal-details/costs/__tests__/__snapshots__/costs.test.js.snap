@@ -3,9 +3,6 @@
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -22,9 +19,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -43,9 +37,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -62,9 +53,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -83,9 +71,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -102,9 +87,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -123,9 +105,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -142,9 +121,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -163,9 +139,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -182,9 +155,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -203,9 +173,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -223,9 +190,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -242,9 +206,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
@@ -274,9 +235,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
@@ -304,9 +262,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
@@ -336,9 +291,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 4`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
@@ -366,9 +318,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 5`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
@@ -398,9 +347,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 6`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
@@ -429,9 +375,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -448,9 +391,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -469,9 +409,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -488,9 +425,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -509,9 +443,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -528,9 +459,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -549,9 +477,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -568,9 +493,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -589,9 +511,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -608,9 +527,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -629,9 +545,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -649,9 +562,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -668,9 +578,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -690,9 +597,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -710,9 +614,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -732,9 +633,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -753,9 +651,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -773,9 +668,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1131,9 +1023,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1151,9 +1040,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1173,9 +1059,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1193,9 +1076,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1215,9 +1095,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1235,9 +1112,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1257,9 +1131,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1277,9 +1148,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1299,9 +1167,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1319,9 +1184,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -1341,9 +1203,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -1361,9 +1220,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -4759,9 +4615,6 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4778,9 +4631,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -4799,9 +4649,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4818,9 +4665,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -4839,9 +4683,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4858,9 +4699,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -4879,9 +4717,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4898,9 +4733,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -4919,9 +4751,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4938,9 +4767,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -4959,9 +4785,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -4978,9 +4801,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5353,9 +5173,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5372,9 +5189,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5393,9 +5207,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5412,9 +5223,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5433,9 +5241,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5452,9 +5257,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5473,9 +5275,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5492,9 +5291,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5513,9 +5309,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5532,9 +5325,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5553,9 +5343,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5572,9 +5359,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5593,9 +5377,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5612,9 +5393,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5633,9 +5411,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5652,9 +5427,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5673,9 +5445,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5692,9 +5461,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5713,9 +5479,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5732,9 +5495,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5753,9 +5513,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5772,9 +5529,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5793,9 +5547,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5812,9 +5563,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5833,9 +5581,6 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs decision GET /costs/decision/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5853,9 +5598,6 @@ exports[`costs decision GET /costs/decision/add-document-details/:folderId shoul
 exports[`costs decision GET /costs/decision/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5872,9 +5614,6 @@ exports[`costs decision GET /costs/decision/add-document-details/:folderId/:docu
 
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -5894,9 +5633,6 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should r
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -5915,9 +5651,6 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documen
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -5935,9 +5668,6 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documen
 
 exports[`costs decision GET /costs/decision/manage-documents/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -6013,9 +5743,6 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -6033,9 +5760,6 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -6617,9 +6341,6 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
 exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -6637,9 +6358,6 @@ exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should 
 
 exports[`costs decision POST /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -6718,9 +6436,6 @@ exports[`costs decision POST /costs/decision/manage-documents/:folderId/:documen
 exports[`costs decision POST /costs/decision/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -6737,9 +6452,6 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId should r
 
 exports[`costs decision POST /costs/decision/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -6758,9 +6470,6 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId should r
 exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -6777,9 +6486,6 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documen
 
 exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>

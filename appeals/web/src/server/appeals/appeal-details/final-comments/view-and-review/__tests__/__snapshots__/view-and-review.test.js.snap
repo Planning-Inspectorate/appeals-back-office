@@ -3,9 +3,6 @@
 exports[`final-comments GET /manage-documents/:folderId/ should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -79,9 +76,6 @@ exports[`final-comments GET /manage-documents/:folderId/ should render manage fo
 
 exports[`final-comments GET /manage-documents/:folderId/:documentId should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -368,9 +362,6 @@ exports[`final-comments GET /review-comments with data should render review appe
 exports[`final-comments GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
@@ -448,9 +439,6 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
 
 exports[`final-comments GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
