@@ -6,6 +6,8 @@ import {
 	appellantCaseDataNotValidated,
 	documentFileVersionsInfo
 } from '#testing/app/fixtures/referencedata.js';
+import { mapRedactionStatusKeyToName } from '../appeal-documents.mapper.js';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -307,6 +309,29 @@ describe('appeal-documents', () => {
 
 			expect(element).toContain('File name already exists within New supporting documents');
 		});
+	});
+
+	describe('mapRedactionStatusKeyToName', () => {
+		it('Should return `Redacted` when the redaction status key is APPEAL_REDACTED_STATUS.REDACTED', async () => {
+			const result = mapRedactionStatusKeyToName(APPEAL_REDACTED_STATUS.REDACTED);
+			expect(result).toBe('Redacted');
+		});
+
+		it('Should return `Unredacted` when the redaction status key is APPEAL_REDACTED_STATUS.NOT_REDACTED', async () => {
+			const result = mapRedactionStatusKeyToName(APPEAL_REDACTED_STATUS.NOT_REDACTED);
+			expect(result).toBe('Unredacted');
+		});
+
+		it('Should return `No redaction required` when the redaction status key is APPEAL_REDACTED_STATUS.NO_REDACTED_REQUIRED', async () => {
+			const result = mapRedactionStatusKeyToName(APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED);
+			expect(result).toBe('No redaction required');
+		});
+
+		it('Should return empty string when the redaction status key is not valid redaction status key', async () => {
+			const result = mapRedactionStatusKeyToName('123');
+			expect(result).toBe('');
+		});
+
 	});
 });
 
