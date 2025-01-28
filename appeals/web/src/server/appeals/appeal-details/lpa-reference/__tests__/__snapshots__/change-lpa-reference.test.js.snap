@@ -3,9 +3,6 @@
 exports[`change-lpa-reference GET /change should render changeLpaReference page when loaded from appeal details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change the LPA application reference</h1>
         </div>
@@ -32,9 +29,6 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
 
 exports[`change-lpa-reference GET /change should render changeLpaReference page when loaded from appellant case 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change the LPA application reference</h1>

@@ -3,9 +3,6 @@
 exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -44,9 +41,6 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
 
 exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
@@ -99,9 +93,6 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
 exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Interested party&#39;s details</h1>
         </div>
@@ -138,9 +129,6 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
 
 exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check details and add interested party comment</h1>
@@ -197,9 +185,6 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
 
 exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

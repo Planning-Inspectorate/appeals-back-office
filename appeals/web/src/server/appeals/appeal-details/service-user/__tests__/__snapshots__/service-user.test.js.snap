@@ -3,9 +3,6 @@
 exports[`service-user GET /add/:userType should render the 500 error page when the service user type is not a valid string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -22,9 +19,6 @@ exports[`service-user GET /add/:userType should render the 500 error page when t
 
 exports[`service-user GET /add/:userType should render the add service user page for an agent 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Update agent details</h1>
@@ -73,9 +67,6 @@ exports[`service-user GET /add/:userType should render the add service user page
 exports[`service-user GET /change/:userType should render the 500 error page when the service user type is not a valid string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -92,9 +83,6 @@ exports[`service-user GET /change/:userType should render the 500 error page whe
 
 exports[`service-user GET /change/:userType should render the change service user page for an agent 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Update agent details</h1>
@@ -145,9 +133,6 @@ exports[`service-user GET /change/:userType should render the change service use
 exports[`service-user GET /change/:userType should render the change service user page for an appellant 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Update appellant details</h1>
         </div>
@@ -195,9 +180,6 @@ exports[`service-user GET /change/:userType should render the change service use
 exports[`service-user GET /remove/:userType should render the 500 error page when the service user type is not a valid string 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -214,9 +196,6 @@ exports[`service-user GET /remove/:userType should render the 500 error page whe
 
 exports[`service-user GET /remove/:userType should render the remove service user page for an agent 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Fiona Shell</span>
             <h1 class="govuk-heading-l">Confirm that you want to remove the agent</h1>

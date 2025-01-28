@@ -67,9 +67,6 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
         <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/1" class="govuk-back-link">Back</a>
             <main             class="govuk-main-wrapper " id="main-content" role="main">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"></div>
-                </div>
-                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
                     </div>
                 </div>
@@ -133,9 +130,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
         </header>
         <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/1/linked-appeals/add" class="govuk-back-link">Back</a>
             <main             class="govuk-main-wrapper " id="main-content" role="main">
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"></div>
-                </div>
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
                         <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
@@ -217,9 +211,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are already linked 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -270,9 +261,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are not already linked and the linking target is a child appeal and the linking candidate is a lead appeal 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
@@ -325,9 +313,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target and candidate are both lead appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -378,9 +363,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target has no linked appeals and the linking candidate is a child appeal 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
@@ -433,9 +415,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child and the linking candidate has no existing linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -486,9 +465,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child appeal and the linking candidate is a child appeal 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
@@ -541,9 +517,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a lead and the linking candidate is a child of another appeal 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -595,9 +568,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the target and candidate are the same appeal (trying to link appeal to itself) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -648,9 +618,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with child and cancel radio options, and a submit button with label text of "Continue", if the linking target is a lead and the candidate has no existing linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
@@ -718,9 +685,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with lead and cancel radio options, and a submit button with label text of "Continue", if the linking candidate is a lead and the target has no existing linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
         </div>
@@ -786,9 +750,6 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with lead, child and cancel radio options, and a submit button with label text of "Continue", if neither the linking target nor the candidate have existing linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>

@@ -3,9 +3,6 @@
 exports[`affected-listed-buildings GET /add should render the add affected listed building page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Add affected listed building</h1>
         </div>
@@ -32,9 +29,6 @@ exports[`affected-listed-buildings GET /add should render the add affected liste
 
 exports[`affected-listed-buildings GET /add/check-and-confirm should render the add affected listed building check and confirm page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answer</h1>
@@ -66,9 +60,6 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
 
 exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answer</h1>

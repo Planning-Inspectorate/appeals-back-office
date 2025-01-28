@@ -2578,9 +2578,6 @@ exports[`appellant-case GET /appellant-case with unchecked documents should rend
 exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -2597,9 +2594,6 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
 
 exports[`appellant-case GET /appellant-case/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -3170,9 +3164,6 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
 exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -3189,9 +3180,6 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/
 
 exports[`appellant-case GET /appellant-case/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -3210,9 +3198,6 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/check-your-a
 exports[`appellant-case GET /appellant-case/check-your-answers should render the 500 error page if required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -3229,9 +3214,6 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
 
 exports[`appellant-case GET /appellant-case/check-your-answers should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
@@ -3289,9 +3271,6 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
 
 exports[`appellant-case GET /appellant-case/check-your-answers should render the check your answers page with the expected content if outcome is "invalid" and required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
@@ -3716,9 +3695,6 @@ exports[`appellant-case GET /appellant-case/invalid/confirmation should render t
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -3979,9 +3955,6 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -3999,9 +3972,6 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 
 exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -4686,9 +4656,6 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
 exports[`appellant-case GET /appellant-case/valid/date should render the valid due date page prefilled with the case created date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Enter valid date for case</h1>
         </div>
@@ -4994,9 +4961,6 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5013,9 +4977,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
 
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5034,9 +4995,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5053,9 +5011,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
 
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -5074,9 +5029,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5093,9 +5045,6 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
 
 exports[`appellant-case POST /appellant-case/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -6968,9 +6917,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
 
 exports[`appellant-case POST /appellant-case/incomplete/date should render a 500 error page if required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>

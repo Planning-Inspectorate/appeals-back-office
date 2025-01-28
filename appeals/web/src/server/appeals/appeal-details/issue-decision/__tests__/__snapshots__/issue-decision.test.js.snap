@@ -3,9 +3,6 @@
 exports[`issue-decision GET /check-invalid-decision should render the check your answer page for invalid decision 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
         </div>
@@ -48,9 +45,6 @@ exports[`issue-decision GET /check-invalid-decision should render the check your
 
 exports[`issue-decision GET /decision should render the 'what is the decision' page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -102,9 +96,6 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
 exports[`issue-decision GET /decision-letter-date should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -121,9 +112,6 @@ exports[`issue-decision GET /decision-letter-date should render a 500 error page
 
 exports[`issue-decision GET /decision-letter-date should render the decision letter date page with the expected content if fileUploadInfo is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Enter date of decision letter</h1>
@@ -237,9 +225,6 @@ exports[`issue-decision GET /decision-letter-upload should render the decision l
 exports[`issue-decision GET /invalid-reason should render the invalid reason page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
         </div>
@@ -270,9 +255,6 @@ exports[`issue-decision GET /invalid-reason should render the invalid reason pag
 
 exports[`issue-decision GET /issue-decision/check-your-decision should render the check your decision page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
@@ -623,9 +605,6 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
 exports[`issue-decision POST /decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -642,9 +621,6 @@ exports[`issue-decision POST /decision-letter-upload should render a 500 error p
 
 exports[`issue-decision POST /decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>

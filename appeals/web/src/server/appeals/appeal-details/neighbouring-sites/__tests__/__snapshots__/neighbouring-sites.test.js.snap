@@ -3,9 +3,6 @@
 exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page for inspector 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
         </div>
@@ -55,9 +52,6 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
 
 exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page for lpa 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Add neighbouring site (LPA)</h1>
@@ -109,9 +103,6 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
 exports[`neighbouring-sites GET /add/check-and-confirm should render the check your answers page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
         </div>
@@ -140,9 +131,6 @@ exports[`neighbouring-sites GET /add/check-and-confirm should render the check y
 
 exports[`neighbouring-sites GET /change/affected should render the change neighbouringSiteAffected page from appeals details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -184,9 +172,6 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
 exports[`neighbouring-sites GET /change/affected should render the change neighbouringSiteAffected page from lpa questionnaire 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -226,9 +211,6 @@ exports[`neighbouring-sites GET /change/affected should render the change neighb
 
 exports[`neighbouring-sites GET /change/site/:siteId should render the change neighbouring site page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change neighbouring site address</h1>
@@ -279,9 +261,6 @@ exports[`neighbouring-sites GET /change/site/:siteId should render the change ne
 
 exports[`neighbouring-sites GET /change/site/:siteId/check-and-confirm should render the check your answers page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
@@ -365,9 +344,6 @@ exports[`neighbouring-sites GET /manage should render the manage neighbouring si
 
 exports[`neighbouring-sites GET /remove/site/:siteId should render the remove neighbouring site page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Remove neighbouring site</h1>

@@ -1441,9 +1441,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/check-your-answers should render the 500 error page if required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -1460,9 +1457,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/check-your-answers should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
@@ -1695,9 +1689,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation should render the 500 error page if required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -1781,9 +1772,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -1800,9 +1788,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
 
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -2267,9 +2252,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -2286,9 +2268,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -2350,9 +2329,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-t
 
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -2614,9 +2590,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -2634,9 +2607,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -3320,9 +3290,6 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 
 exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/:folderId/:documentId should render the change document name page for the document being changed 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Changed description documents</h1>
@@ -5853,9 +5820,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
 exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the 500 error page if required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5873,9 +5837,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
 exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
@@ -5892,9 +5853,6 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-documents/:folde
 
 exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>

@@ -3,9 +3,6 @@
 exports[`agricultural-holding GET /change should render the change part of agricultural holding page with "no" radio option checked if agriculturalHolding.isPartOfAgriculturalHolding is false 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -45,9 +42,6 @@ exports[`agricultural-holding GET /change should render the change part of agric
 
 exports[`agricultural-holding GET /change should render the change part of agricultural holding page with "yes" radio option checked if agriculturalHolding.isPartOfAgriculturalHolding is true 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -89,9 +83,6 @@ exports[`agricultural-holding GET /change should render the change part of agric
 exports[`agricultural-holding GET /other-tenants/change should render the change other tenants of agricultural holding page with "no" radio option checked if agriculturalHolding.hasOtherTenants is false 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -131,9 +122,6 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
 
 exports[`agricultural-holding GET /other-tenants/change should render the change other tenants of agricultural holding page with "yes" radio option checked if agriculturalHolding.hasOtherTenants is true 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -176,9 +164,6 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
 exports[`agricultural-holding GET /tenant/change should render the change tenant of agricultural holding page with "no" radio option checked if agriculturalHolding.isTenant is false 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
@@ -218,9 +203,6 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
 
 exports[`agricultural-holding GET /tenant/change should render the change tenant of agricultural holding page with "yes" radio option checked if agriculturalHolding.isTenant is true 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

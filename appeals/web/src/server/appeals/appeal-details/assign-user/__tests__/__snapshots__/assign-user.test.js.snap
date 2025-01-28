@@ -3,9 +3,6 @@
 exports[`assign-user GET /assign-new-user/case-officer should render the assign new case officer page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Assign a new case officer?</h1>
         </div>
@@ -38,9 +35,6 @@ exports[`assign-user GET /assign-new-user/case-officer should render the assign 
 
 exports[`assign-user GET /assign-new-user/inspector should render the assign new inspector page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Assign a new inspector?</h1>
@@ -75,9 +69,6 @@ exports[`assign-user GET /assign-new-user/inspector should render the assign new
 exports[`assign-user GET /assign-user/case-officer should render the assign case officer page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find a case officer</h1>
         </div>
@@ -100,9 +91,6 @@ exports[`assign-user GET /assign-user/case-officer should render the assign case
 
 exports[`assign-user GET /assign-user/case-officer/1/confirm should render the confirm assign case officer page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Assign this case officer</h1>
@@ -139,9 +127,6 @@ exports[`assign-user GET /assign-user/case-officer/1/confirm should render the c
 exports[`assign-user GET /assign-user/inspector should render the assign inspector page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find an inspector</h1>
         </div>
@@ -164,9 +149,6 @@ exports[`assign-user GET /assign-user/inspector should render the assign inspect
 
 exports[`assign-user GET /assign-user/inspector/1/confirm should render the confirm assign inspector page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Assign this inspector</h1>
@@ -203,9 +185,6 @@ exports[`assign-user GET /assign-user/inspector/1/confirm should render the conf
 exports[`assign-user GET /unassign-user/case-officer/1/confirm should render a 404 error page, as it should not be possible to unassign a case officer (only assign or change the case officer) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -223,9 +202,6 @@ exports[`assign-user GET /unassign-user/case-officer/1/confirm should render a 4
 
 exports[`assign-user GET /unassign-user/inspector/1/confirm should render the confirm unassign inspector page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Remove this inspector</h1>
@@ -454,9 +430,6 @@ exports[`assign-user POST /assign-new-user/inspector should re-render the assign
 exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with "No matches for" if no search results are found 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find a case officer</h1>
         </div>
@@ -487,9 +460,6 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
 
 exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with a list of search results if a valid search term is provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find a case officer</h1>
@@ -743,9 +713,6 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
 exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with "No matches for" if no search results are found 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find an inspector</h1>
         </div>
@@ -776,9 +743,6 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
 
 exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with a list of search results if a valid search term is provided 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Find an inspector</h1>

@@ -3,9 +3,6 @@
 exports[`interested-party-comments GET /manage-documents/:folderId/ should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
         </div>
@@ -79,9 +76,6 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
 
 exports[`interested-party-comments GET /manage-documents/:folderId/:documentId should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -194,9 +188,6 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
 exports[`interested-party-comments GET /reject/check-your-answers should render check your answers page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check details and reject comment</h1>
         </div>
@@ -248,9 +239,6 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
 
 exports[`interested-party-comments GET /reject/select-reason should render reject comment page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -336,9 +324,6 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
 
 exports[`interested-party-comments GET /review-comment with data should render review comment page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review comment</h1>
@@ -464,9 +449,6 @@ exports[`interested-party-comments GET /view-comment with data should render vie
 exports[`interested-party-comments GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
-    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
@@ -544,9 +526,6 @@ exports[`interested-party-comments GET change-document-details/:folderId/:docume
 
 exports[`interested-party-comments GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"></div>
-    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
