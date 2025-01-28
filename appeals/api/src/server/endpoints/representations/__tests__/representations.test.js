@@ -168,6 +168,82 @@ describe('/appeals/:id/representations', () => {
 			expect(response.status).toEqual(200);
 		});
 
+		test('200 when representation status is successfully updated with rejection', async () => {
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-12-11'));
+
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: 'invalid',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: 'Redacted text of the representation',
+				dateCreated: new Date('2024-12-11T12:00:00Z'),
+				notes: 'Some notes',
+				attachments: ['attachment1.pdf', 'attachment2.pdf'],
+				representationType: 'lpa_final_comment',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: [
+					{
+						representationRejectionReason: {
+							id: 1,
+							name: 'Invalid submission',
+							hasText: false
+						},
+						representationRejectionReasonText: []
+					},
+					{
+						representationRejectionReason: {
+							id: 7,
+							name: 'Other',
+							hasText: true
+						},
+						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			// @ts-ignore
+			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
+
+			const response = await request
+				.patch('/appeals/1/reps/1')
+				.send({
+					status: 'invalid',
+					notes: 'Some notes'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledWith(
+				config.govNotify.template.commentRejected.lpa.id,
+				householdAppeal.lpa.email,
+				{
+					emailReplyToId: null,
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						deadline_date: '',
+						reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+					},
+					reference: null
+				}
+			);
+		});
+
 		test('200 when representation status is successfully updated with extended deadline template selected', async () => {
 			jest
 				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
@@ -182,7 +258,7 @@ describe('/appeals/:id/representations', () => {
 				dateCreated: new Date('2024-12-11T12:00:00Z'),
 				notes: 'Some notes',
 				attachments: ['attachment1.pdf', 'attachment2.pdf'],
-				representationType: 'typeA',
+				representationType: 'appellant_final_comment',
 				siteVisitRequested: true,
 				source: 'citizen',
 				representationRejectionReasonsSelected: [
@@ -230,7 +306,7 @@ describe('/appeals/:id/representations', () => {
 			// eslint-disable-next-line no-undef
 			expect(mockSendEmail).toHaveBeenCalledWith(
 				config.govNotify.template.commentRejectedDeadlineExtended.id,
-				'test@136s7.com',
+				householdAppeal.agent.email,
 				{
 					emailReplyToId: null,
 					personalisation: {

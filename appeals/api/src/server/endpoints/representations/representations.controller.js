@@ -159,26 +159,30 @@ export async function updateRepresentation(request, response) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
-	const updatedRep = await representationService.updateRepresentation(
-		parseInt(repId),
-		request.body
-	);
+	await representationService.updateRepresentation(parseInt(repId), request.body);
 
-	if(status !== rep.status){
+	const updatedRep = await representationService.getRepresentation(parseInt(repId));
+
+	if (status !== rep.status) {
 		await createAuditTrail({
 			appealId: parseInt(appealId),
 			azureAdUserId: String(request.get('azureAdUserId')),
 			details:
 				// @ts-ignore
-				stringTokenReplacement(CONSTANTS[`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`], [status])
-		})
+				stringTokenReplacement(
+					CONSTANTS[
+						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
+					],
+					[status]
+				)
+		});
 	}
 
 	if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
 		await representationService.notifyRejection(
 			request.notifyClient,
 			request.appeal,
-			rep,
+			updatedRep,
 			allowResubmit
 		);
 	}
