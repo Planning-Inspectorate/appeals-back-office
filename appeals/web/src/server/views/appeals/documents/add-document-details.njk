@@ -1,18 +1,18 @@
 {%- extends "app/layouts/app-two-column.layout.njk" -%}
 
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 {%- set pageTitle = pageContent.title if pageContent.title else '' -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			{%- if pageContent.preHeading -%}<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>{%- endif -%}
-			{%- if pageContent.heading -%}<h1 class="govuk-heading-l {{ "govuk-!-margin-bottom-3" if displayLateEntryContent else "govuk-!-margin-bottom-6" }}">{{ pageContent.heading }}</h1>{%- endif -%}
-		</div>
-	</div>
+	{{ pageHeading({
+		preHeading: pageContent.preHeading,
+		heading: pageContent.heading,
+		headingClasses: "govuk-heading-l govuk-!-margin-bottom-6" if displayLateEntryContent
+	}) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

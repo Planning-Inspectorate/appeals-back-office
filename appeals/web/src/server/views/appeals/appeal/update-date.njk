@@ -3,16 +3,20 @@
 {%- from "govuk/components/date-input/macro.njk" import govukDateInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {%- from "govuk/components/inset-text/macro.njk" import govukInsetText -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set pageTitle = pageContent.title if pageContent.title else "Update due date" -%}
 {%- set backLinkText = pageContent.backLinkText -%}
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 
 {%- block pageHeading -%}
+	{{ pageHeading({
+		preHeading: pageContent.preHeading,
+		heading: pageContent.heading,
+		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-0'
+	}) }}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-xl govuk-!-margin-bottom-1">{{ pageContent.preHeading }}</span>
-			<h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">{{ pageContent.heading }}</h1>
 			{%- for component in pageContent.pageComponents -%}
 				{%- if component.type !== 'date-input' -%}
 					{%- include "../components/page-component.njk" -%}

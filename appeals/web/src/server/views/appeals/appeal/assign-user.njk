@@ -1,4 +1,5 @@
 {%- extends "app/layouts/app-two-column.layout.njk" -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
@@ -10,12 +11,7 @@
 			{{ govukNotificationBanner(component.parameters | assign({ classes: "govuk-!-margin-bottom-5" })) }}
 		{%- endif -%}
 	{%- endfor -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			{%- if pageContent.preHeading -%}<span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>{%- endif -%}
-			{%- if pageContent.heading -%}<h1 class="govuk-heading-xl govuk-!-margin-bottom-10">{{ pageContent.heading }}</h1>{%- endif -%}
-		</div>
-	</div>
+	{{ pageHeading(pageContent) }}
 {%- endblock -%}
 
 {%- block pageContent -%}
