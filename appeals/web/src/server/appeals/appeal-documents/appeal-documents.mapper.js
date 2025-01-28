@@ -1759,6 +1759,23 @@ const mapRedactionStatusNameToId = (redactionStatuses = [], redactionStatusName)
 };
 
 /**
+ * @param {string} redactionStatusKey
+ * @returns {string}
+ */
+export const mapRedactionStatusKeyToName = (redactionStatusKey) => {
+	switch (redactionStatusKey) {
+		case APPEAL_REDACTED_STATUS.REDACTED:
+			return 'Redacted';
+		case APPEAL_REDACTED_STATUS.NOT_REDACTED:
+			return 'Unredacted';
+		case APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED:
+			return 'No redaction required';
+		default:
+			return '';
+	};
+}
+
+/**
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {number | null | undefined} redactionStatusId
  * @returns {string}

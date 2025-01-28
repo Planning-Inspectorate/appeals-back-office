@@ -10,6 +10,7 @@ import {
 	getDocumentsForVirusStatus,
 	mapDocumentDownloadUrl,
 	mapFolderDocumentInformationHtmlProperty,
+	mapRedactionStatusKeyToName,
 	mapUncommittedDocumentDownloadUrl
 } from '../../appeal-documents/appeal-documents.mapper.js';
 
@@ -117,7 +118,7 @@ export function manageWithdrawalRequestFolderPage(
 							text: dateISOStringToDisplayDate(withdrawalRequestDate)
 						},
 						{
-							text: document?.latestDocumentVersion?.redactionStatus
+							text: mapRedactionStatusKeyToName(document?.latestDocumentVersion?.redactionStatus)
 						},
 						{
 							html:

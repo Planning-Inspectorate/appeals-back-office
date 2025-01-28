@@ -2234,7 +2234,7 @@ export const withdrawalRequestData = {
 						fileName: 'withdrawal-request-document.pdf',
 						originalFilename: 'withdrawal-request-document.pdf',
 						dateReceived: '2024-07-03T00:00:00.000Z',
-						redactionStatus: 'No redaction required',
+						redactionStatus: 'no_redaction_required',
 						virusCheckStatus: 'scanned',
 						size: '3028',
 						mime: 'application/pdf',
