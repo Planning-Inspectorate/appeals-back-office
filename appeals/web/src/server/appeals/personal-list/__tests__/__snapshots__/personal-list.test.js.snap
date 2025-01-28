@@ -3,8 +3,8 @@
 exports[`personal-list GET / should render a child status tag in the lead or child column, for appeals linked as a child 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -124,8 +124,8 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
 exports[`personal-list GET / should render a lead status tag in the lead or child column, for appeals linked as a parent 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -245,8 +245,8 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
 exports[`personal-list GET / should render a message when there are no cases assigned to the user 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">There are currently no cases assigned to you.</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">There are currently no cases assigned to you.</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -260,8 +260,8 @@ exports[`personal-list GET / should render a message when there are no cases ass
 exports[`personal-list GET / should render an empty cell in the lead or child column, for appeals with no linked appeals (neither parent nor child) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -381,8 +381,8 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
 exports[`personal-list GET / should render the first page of the personal list with the expected content and pagination 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -530,8 +530,8 @@ data-module="govuk-header">
 exports[`personal-list GET / should render the second page of the personal list with applied filter, the expected content and pagination 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -610,8 +610,8 @@ exports[`personal-list GET / should render the second page of the personal list 
 exports[`personal-list GET / should render the second page of the personal list with the expected content and pagination 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Cases assigned to you</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Cases assigned to you</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

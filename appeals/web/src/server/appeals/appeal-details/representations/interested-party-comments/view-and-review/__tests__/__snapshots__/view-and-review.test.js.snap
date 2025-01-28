@@ -3,8 +3,15 @@
 exports[`interested-party-comments GET /manage-documents/:folderId/ should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -17,8 +24,8 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
 exports[`interested-party-comments GET /manage-documents/:folderId/ should render manage folder page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Supporting documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Supporting documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -73,8 +80,15 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
 exports[`interested-party-comments GET /manage-documents/:folderId/:documentId should render a 404 error page if the folderId is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -100,8 +114,8 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -180,12 +194,15 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
 exports[`interested-party-comments GET /reject/check-your-answers should render check your answers page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and reject comment</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l">Check details and reject comment</h1>
-                </div>
-            </div>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
                     <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -232,11 +249,14 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
 exports[`interested-party-comments GET /reject/select-reason should render reject comment page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
@@ -317,12 +337,15 @@ exports[`interested-party-comments GET /reject/select-reason should render rejec
 exports[`interested-party-comments GET /review-comment with data should render review comment page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review comment</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-3">Review comment</h1>
-                </div>
-            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
@@ -396,8 +419,8 @@ exports[`interested-party-comments GET /review-comment with data should render r
 exports[`interested-party-comments GET /view-comment with data should render view comment page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">View comment</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">View comment</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -441,12 +464,15 @@ exports[`interested-party-comments GET /view-comment with data should render vie
 exports[`interested-party-comments GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -519,12 +545,15 @@ exports[`interested-party-comments GET change-document-details/:folderId/:docume
 exports[`interested-party-comments GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>

@@ -3,8 +3,8 @@
 exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with awaiting review comments 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested party comments</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -127,8 +127,8 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
 exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with invalid comments 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested party comments</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -251,8 +251,8 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
 exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with valid comments 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-l">Interested party comments</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

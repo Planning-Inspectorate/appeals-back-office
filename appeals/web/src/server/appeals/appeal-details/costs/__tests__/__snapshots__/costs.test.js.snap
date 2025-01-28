@@ -3,11 +3,19 @@
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -16,11 +24,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -29,11 +45,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -42,11 +66,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -55,11 +87,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -68,11 +108,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -81,11 +129,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -94,11 +150,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -107,11 +171,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -120,11 +192,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -133,11 +213,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -146,11 +234,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -159,12 +255,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -187,12 +286,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -215,12 +317,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -243,12 +348,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 4`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -271,12 +379,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 5`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -299,12 +410,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/change-document-name/:folderId/:documentId should render the change document name page with the expected content 6`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -327,11 +441,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -340,11 +462,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -353,11 +483,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -366,11 +504,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -379,11 +525,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -392,11 +546,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -405,11 +567,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -418,11 +588,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -431,11 +609,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -444,11 +630,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -457,11 +651,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -470,11 +672,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -483,8 +693,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -497,8 +714,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -511,8 +735,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -525,8 +756,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -539,8 +777,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -553,8 +798,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render a 404 error page if the folderId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -567,8 +819,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Appellant costs application documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -623,8 +875,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Appellant costs correspondence documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Appellant costs correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -679,8 +931,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Appellant costs withdrawal documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Appellant costs withdrawal documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -735,8 +987,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">LPA costs application documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">LPA costs application documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -791,8 +1043,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">LPA costs correspondence documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">LPA costs correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -847,8 +1099,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">LPA costs withdrawal documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">LPA costs withdrawal documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -903,8 +1155,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -917,8 +1176,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -931,8 +1197,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -945,8 +1218,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -959,8 +1239,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -973,8 +1260,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -987,8 +1281,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1001,8 +1302,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1015,8 +1323,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1029,8 +1344,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1043,8 +1365,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1057,8 +1386,15 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -1086,8 +1422,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1192,8 +1528,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1298,8 +1634,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1404,8 +1740,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1510,8 +1846,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1616,8 +1952,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1720,8 +2056,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1813,8 +2149,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1906,8 +2242,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1999,8 +2335,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2092,8 +2428,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2185,8 +2521,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2265,8 +2601,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2354,8 +2690,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2443,8 +2779,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2532,8 +2868,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2621,8 +2957,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2710,8 +3046,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2812,8 +3148,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2905,8 +3241,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2998,8 +3334,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3091,8 +3427,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3184,8 +3520,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3277,8 +3613,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3357,8 +3693,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3397,8 +3733,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3437,8 +3773,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3477,8 +3813,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3517,8 +3853,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3557,8 +3893,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3597,8 +3933,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3641,8 +3977,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3685,8 +4021,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3729,8 +4065,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3773,8 +4109,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3817,8 +4153,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3861,9 +4197,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant costs application document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload appellant costs application document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3908,9 +4246,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant costs correspondence document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload appellant costs correspondence document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3955,9 +4295,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload appellant costs withdrawal document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload appellant costs withdrawal document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4002,9 +4344,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload LPA costs application document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload LPA costs application document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4048,9 +4392,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload LPA costs correspondence document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload LPA costs correspondence document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4095,9 +4441,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render the upload documents page (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload LPA costs withdrawal document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload LPA costs withdrawal document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4141,9 +4489,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4188,9 +4538,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4235,9 +4587,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4282,9 +4636,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4329,9 +4685,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4376,9 +4734,11 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render the upload document version page (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4423,11 +4783,19 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4436,11 +4804,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4449,11 +4825,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4462,11 +4846,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4475,11 +4867,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4488,11 +4888,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4501,11 +4909,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4514,11 +4930,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4527,11 +4951,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4540,11 +4972,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4553,11 +4993,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4566,11 +5014,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4594,8 +5050,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4653,8 +5109,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4712,8 +5168,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4771,8 +5227,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4830,8 +5286,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4889,8 +5345,8 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4933,11 +5389,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4946,11 +5410,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4959,11 +5431,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4972,11 +5452,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4985,11 +5473,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -4998,11 +5494,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5011,11 +5515,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5024,11 +5536,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5037,11 +5557,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5050,11 +5578,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5063,11 +5599,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5076,11 +5620,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5089,11 +5641,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5102,11 +5662,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5115,11 +5683,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (appellant) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5128,11 +5704,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5141,11 +5725,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 2`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5154,11 +5746,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format (lpa) 3`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5167,11 +5767,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5180,11 +5788,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5193,11 +5809,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (appellant withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5206,11 +5830,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa application) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5219,11 +5851,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa correspondence) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5232,11 +5872,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs application, withdrawal and correspondence POST /costs/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body (lpa withdrawal) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5245,11 +5893,19 @@ exports[`costs application, withdrawal and correspondence POST /costs/:costsCate
 exports[`costs decision GET /costs/decision/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5258,11 +5914,19 @@ exports[`costs decision GET /costs/decision/add-document-details/:folderId shoul
 exports[`costs decision GET /costs/decision/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -5271,8 +5935,15 @@ exports[`costs decision GET /costs/decision/add-document-details/:folderId/:docu
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5285,8 +5956,15 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId should r
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5299,8 +5977,15 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documen
 exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5313,8 +5998,15 @@ exports[`costs decision GET /costs/decision/check-and-confirm/:folderId/:documen
 exports[`costs decision GET /costs/decision/manage-documents/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5327,8 +6019,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
 exports[`costs decision GET /costs/decision/manage-documents/:folderId should render the manage folder page with one document item for each document present in the folder if the folderId is valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Costs decision documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Costs decision documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5383,8 +6075,15 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5397,8 +6096,15 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5426,8 +6132,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage decision document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5530,8 +6236,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage decision document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5610,8 +6316,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage decision document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5712,8 +6418,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage decision document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage decision document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5792,8 +6498,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5832,8 +6538,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5876,9 +6582,11 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
 exports[`costs decision GET /costs/decision/upload-documents/:folderId should render the upload documents page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload costs decision</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload costs decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5922,9 +6630,11 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId should re
 exports[`costs decision GET /costs/decision/upload-documents/:folderId/:documentId should render the upload document version page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5969,8 +6679,15 @@ exports[`costs decision GET /costs/decision/upload-documents/:folderId/:document
 exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -5983,8 +6700,15 @@ exports[`costs decision POST /costs/decision/check-and-confirm/:folderId should 
 exports[`costs decision POST /costs/decision/check-and-confirm/:folderId/:documentId should render a 404 error page if the folderId is not valid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -6012,8 +6736,8 @@ exports[`costs decision POST /costs/decision/manage-documents/:folderId/:documen
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6056,11 +6780,19 @@ exports[`costs decision POST /costs/decision/manage-documents/:folderId/:documen
 exports[`costs decision POST /costs/decision/upload-documents/:folderId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -6069,11 +6801,19 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId should r
 exports[`costs decision POST /costs/decision/upload-documents/:folderId should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -6082,11 +6822,19 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId should r
 exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
@@ -6095,11 +6843,19 @@ exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documen
 exports[`costs decision POST /costs/decision/upload-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"></div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
+            <p>false</p>
         </div>
     </div>
 </main>"
