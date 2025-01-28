@@ -19,6 +19,7 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -169,10 +170,12 @@ const updateLPAQuestionnaireValidationOutcome = async (
 async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, userType) {
 	// @ts-ignore
 	const recipientEmail = appeal[userType]?.email;
+
 	const template = config.govNotify.template.lpaqComplete[userType];
 	if (!recipientEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
+
 	try {
 		await notifyClient.sendEmail(template, recipientEmail, {
 			appeal_reference_number: appeal.reference,
@@ -180,9 +183,8 @@ async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, userType
 			site_address: siteAddress
 		});
 	} catch (error) {
-		if (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-		}
+		logger.error(error);
+		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
 }
 
