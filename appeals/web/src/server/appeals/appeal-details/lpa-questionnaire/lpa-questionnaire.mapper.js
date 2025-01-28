@@ -191,6 +191,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
+		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,

@@ -69,6 +69,7 @@ export async function appealDetailsPage(
 		title: `Case details - ${shortAppealReference}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Case details',
+		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents
 	};
 }
