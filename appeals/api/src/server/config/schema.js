@@ -176,7 +176,12 @@ export default joi
 							id: joi.string().required()
 						}),
 						commentRejected: joi.object({
-							id: joi.string().required()
+							appellant: joi.object({
+								id: joi.string().required()
+							}),
+							lpa: joi.object({
+								id: joi.string().required()
+							})
 						}),
 						commentRejectedDeadlineExtended: joi.object({
 							id: joi.string().required()

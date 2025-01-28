@@ -186,14 +186,24 @@ export const notifyRejection = async (notifyClient, appeal, comment, allowResubm
 		deadline_date: extendedDeadline ?? ''
 	};
 
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const isAppellantFinalComment =
+		comment.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT;
+
+	const recipientEmail = isAppellantFinalComment
+		? appeal.agent?.email || appeal.appellant?.email
+		: appeal.lpa?.email;
+
 	if (!recipientEmail) {
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
-	const templateId = extendedDeadline
-		? config.govNotify.template.commentRejectedDeadlineExtended
-		: config.govNotify.template.commentRejected;
+	let templateId = isAppellantFinalComment
+		? config.govNotify.template.commentRejected.appellant
+		: config.govNotify.template.commentRejected.lpa;
+
+	if (extendedDeadline) {
+		templateId = config.govNotify.template.commentRejectedDeadlineExtended;
+	}
 
 	try {
 		await notifyClient.sendEmail(templateId, recipientEmail, emailVariables);
@@ -228,6 +238,9 @@ export const updateAttachments = async (repId, attachments) => {
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export async function updateRepresentation(repId, payload) {
+	if (payload.rejectionReasons) {
+		await representationRepository.updateRejectionReasons(repId, payload.rejectionReasons);
+	}
 	const updatedRep = await representationRepository.updateRepresentationById(repId, payload);
 
 	if (!updatedRep.represented?.addressId) {
