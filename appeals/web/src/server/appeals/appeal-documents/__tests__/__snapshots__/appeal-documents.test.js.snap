@@ -3,9 +3,11 @@
 exports[`appeal-documents upload should render upload form if appeal ID and folder ID are found 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload documents</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -50,9 +52,11 @@ exports[`appeal-documents upload should render upload form if appeal ID and fold
 exports[`appeal-documents upload should render upload form if appeal ID, folder ID and document ID are found 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

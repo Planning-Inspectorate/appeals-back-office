@@ -34,12 +34,15 @@ exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] =
             <main class="govuk-main-wrapper " id="main-content"
             role="main">
                 <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"></div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Check your answers</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-xl govuk-!-margin-bottom-3">Check your answers</h1>
-                            </div>
-                        </div>
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party&#39;s address</dt>
                                 <dd                                 class="govuk-summary-list__value"></dd>
@@ -103,12 +106,15 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 1`
             <main class="govuk-main-wrapper " id="main-content"
             role="main">
                 <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"></div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
-                            </div>
-                        </div>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">
@@ -194,12 +200,15 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 2`
             <main class="govuk-main-wrapper " id="main-content"
             role="main">
                 <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"></div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
-                            </div>
-                        </div>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">
@@ -285,12 +294,15 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 1`]
             <main class="govuk-main-wrapper " id="main-content"
             role="main">
                 <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"></div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
-                            </div>
-                        </div>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">
@@ -376,12 +388,15 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 2`]
             <main class="govuk-main-wrapper " id="main-content"
             role="main">
                 <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"></div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                                <h1                                 class="govuk-heading-l govuk-!-margin-bottom-3">Interested party&#39;s address</h1>
-                            </div>
-                        </div>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">

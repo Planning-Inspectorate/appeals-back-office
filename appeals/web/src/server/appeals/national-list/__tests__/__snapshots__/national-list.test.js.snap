@@ -3,8 +3,8 @@
 exports[`national-list GET / should render national list - 10 pages - all page indexes in one row 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -181,8 +181,8 @@ exports[`national-list GET / should render national list - 10 pages - all page i
 exports[`national-list GET / should render national list - 15 pages - pagination with ellipsis logic 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -339,8 +339,8 @@ exports[`national-list GET / should render national list - 15 pages - pagination
 exports[`national-list GET / should render national list - no pagination 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -476,8 +476,8 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
 exports[`national-list GET / should render national list - no search term - filter applied 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -611,8 +611,8 @@ exports[`national-list GET / should render national list - no search term - filt
 exports[`national-list GET / should render national list - search term - filter applied 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -748,8 +748,8 @@ exports[`national-list GET / should render national list - search term - filter 
 exports[`national-list GET / should render national list - search term - no result 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -858,8 +858,8 @@ exports[`national-list GET / should render national list - search term - no resu
 exports[`national-list GET / should render national list - search term 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1000,8 +1000,8 @@ exports[`national-list GET / should render national list - search term 1`] = `
 exports[`national-list GET / should render the header with navigation containing links to the personal list, national list (with active modifier class), and sign out route 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Search all cases</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
