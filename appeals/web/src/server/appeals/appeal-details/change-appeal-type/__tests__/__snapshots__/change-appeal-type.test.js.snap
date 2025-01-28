@@ -147,7 +147,6 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -496,7 +495,6 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should rende
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"

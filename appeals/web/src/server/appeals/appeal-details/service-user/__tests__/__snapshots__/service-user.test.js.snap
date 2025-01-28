@@ -15,7 +15,6 @@ exports[`service-user GET /add/:userType should render the 500 error page when t
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -86,7 +85,6 @@ exports[`service-user GET /change/:userType should render the 500 error page whe
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
@@ -209,7 +207,6 @@ exports[`service-user GET /remove/:userType should render the 500 error page whe
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-            <p>false</p>
         </div>
     </div>
 </main>"
