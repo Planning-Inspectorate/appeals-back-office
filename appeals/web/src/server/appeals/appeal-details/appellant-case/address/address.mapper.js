@@ -21,7 +21,6 @@ export function changeSiteAddressPage(appealData, backLinkUrl, sessionData, erro
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change site address',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: addressInputs({ address, errors })
 	};
 }

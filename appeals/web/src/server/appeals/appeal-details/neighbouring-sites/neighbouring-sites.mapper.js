@@ -57,7 +57,6 @@ export function addNeighbouringSiteCheckAndConfirmPage(
 		backLinkUrl: `${origin}/neighbouring-sites/add/${source}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answers',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -118,7 +117,6 @@ export function manageNeighbouringSitesPage(request, appealData) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Manage neighbouring sites',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			...notificationBanners,
 			{
@@ -222,7 +220,6 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 		backLinkUrl: `${origin}/neighbouring-sites/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove neighbouring site',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -277,7 +274,6 @@ export function changeNeighbouringSitePage(appealData, neighbouringSiteData, sit
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change neighbouring site address',
-		headingClasses: 'govuk-heading-l',
 		// @ts-ignore this is fine, AppealSite is an Address with more mandatory fields
 		pageComponents: addressInputs({ address, errors })
 	};
@@ -304,7 +300,6 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answers',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',

@@ -39,7 +39,6 @@ export async function interestedPartyCommentsPage(
 		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [...notificationBanners],
 		awaitingReviewTable: createTable(awaitingReview, true),
 		validTable: createTable(valid, false),

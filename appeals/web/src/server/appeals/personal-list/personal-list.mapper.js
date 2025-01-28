@@ -206,7 +206,6 @@ export function personalListPage(
 	const pageContent = {
 		title: 'Personal list',
 		heading: 'Cases assigned to you',
-		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-6',
 		pageComponents: []
 	};
 

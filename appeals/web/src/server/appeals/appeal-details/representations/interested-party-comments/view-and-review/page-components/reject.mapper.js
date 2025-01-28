@@ -23,8 +23,7 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
 		heading: 'Why are you rejecting the comment?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
 		preHeading: `Appeal ${shortReference}`,
-		hint: 'Select all that apply.',
-		headingClasses: 'govuk-heading-l'
+		hint: 'Select all that apply.'
 	};
 
 	return pageContent;
@@ -54,7 +53,6 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment,
 	const pageContent = {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
 		preHeading: `Appeal ${shortReference}`,
-		headingClasses: 'govuk-heading-l',
 		submitButtonProperties: {
 			text: 'Continue'
 		},
@@ -209,7 +207,6 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 		heading: 'Check details and reject comment',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/${backLinkPath}`,
 		preHeading: `Appeal ${shortReference}`,
-		headingClasses: 'govuk-heading-l',
 		submitButtonProperties: {
 			text: 'Reject comment'
 		},

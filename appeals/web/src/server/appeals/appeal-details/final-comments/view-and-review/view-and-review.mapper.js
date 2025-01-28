@@ -63,7 +63,6 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Review ${finalCommentsType} final comments`,
-		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Continue',
 		pageComponents: [...notificationBanners, commentSummaryList, commentValidityRadioButtons]
 	};
