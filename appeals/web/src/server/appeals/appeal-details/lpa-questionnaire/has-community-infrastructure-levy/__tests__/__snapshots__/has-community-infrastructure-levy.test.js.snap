@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`has-community-infrastructure-levy GET /has-community-infrastructure-levy/change should render the change community infrastructure levy status page with "Does not have infrastructure levy" radio option checked if hasInfrastructureLevy is false 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change community infrastructure levy status</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio">Has infrastructure levy</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio-2"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2">Does not have infrastructure levy</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`has-community-infrastructure-levy GET /has-community-infrastructure-levy/change should render the change community infrastructure levy status page with "Has infrastructure levy" radio option checked if hasInfrastructureLevy is true 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change community infrastructure levy status</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio">Has infrastructure levy</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="has-community-infrastructure-levy-radio-2"
+                                        name="hasCommunityInfrastructureLevyRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2">Does not have infrastructure levy</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`has-community-infrastructure-levy POST /has-community-infrastructure-levy/change should re-render the change community infrastructure levy status page with a validation error if a radio option was not selected 1`] = `"<div class="govuk-error-summary" data-module="govuk-error-summary"><div role="alert"><h2 class="govuk-error-summary__title"> There is a problem</h2><div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list"><li><a href="#has-community-infrastructure-levy-radio">Select community infrastructure levy status</a></li></ul></div></div></div>"`;
