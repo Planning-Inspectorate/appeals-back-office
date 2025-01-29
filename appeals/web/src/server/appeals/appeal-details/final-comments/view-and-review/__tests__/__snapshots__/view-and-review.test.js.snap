@@ -5,10 +5,13 @@ exports[`final-comments GET /manage-documents/:folderId/ should render a 404 err
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+<<<<<<< HEAD
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+=======
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -21,8 +24,13 @@ exports[`final-comments GET /manage-documents/:folderId/ should render a 404 err
 exports[`final-comments GET /manage-documents/:folderId/ should render manage folder page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Supporting documents</h1>
+=======
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
+            <h1             class="govuk-heading-l">Supporting documents</h1>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -79,10 +87,13 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+<<<<<<< HEAD
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+=======
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -108,8 +119,13 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
         </div>
     </div>
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
             <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+=======
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -203,8 +219,13 @@ exports[`final-comments GET /review-comments with data should render review LPA 
         </div>
     </div>
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review LPA final comments</h1>
+=======
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">Review LPA final comments</h1>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -256,8 +277,13 @@ exports[`final-comments GET /review-comments with data should render review LPA 
 exports[`final-comments GET /review-comments with data should render review LPA final comments page with the provided comments details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review LPA final comments</h1>
+=======
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">Review LPA final comments</h1>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -309,8 +335,13 @@ exports[`final-comments GET /review-comments with data should render review LPA 
 exports[`final-comments GET /review-comments with data should render review appellant final comments page with the provided comments details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review appellant final comments</h1>
+=======
+        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+            <h1             class="govuk-heading-l">Review appellant final comments</h1>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -362,12 +393,21 @@ exports[`final-comments GET /review-comments with data should render review appe
 exports[`final-comments GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+=======
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -440,12 +480,21 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
 exports[`final-comments GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+<<<<<<< HEAD
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+=======
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
+                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Appellant costs application documents</h1>
+                </div>
+            </div>
+>>>>>>> f4f35468d (feat(appeals): refreshed snapshots)
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>

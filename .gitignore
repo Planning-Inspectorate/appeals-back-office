@@ -57,6 +57,7 @@ pids
 
 # Certificates
 *.pem
+*.cer
 
 # Other, system file
 .DS_Store
