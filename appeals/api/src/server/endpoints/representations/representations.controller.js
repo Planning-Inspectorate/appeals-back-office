@@ -10,7 +10,8 @@ import {
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_NOT_FOUND,
-	ERROR_REP_ONLY_STATEMENT_INCOMPLETE
+	ERROR_REP_ONLY_STATEMENT_INCOMPLETE,
+	ERROR_REP_PUBLISH_USING_ENDPOINT
 } from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
@@ -19,6 +20,7 @@ import { EventType } from '@pins/event-client';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import BackOfficeAppError from '#utils/app-error.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -151,6 +153,10 @@ export async function updateRepresentation(request, response) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
+	if (status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
+		return response.status(400).send({ errors: { status: ERROR_REP_PUBLISH_USING_ENDPOINT } });
+	}
+
 	await representationService.updateRepresentation(parseInt(repId), request.body);
 
 	const updatedRep = await representationService.getRepresentation(parseInt(repId));
@@ -163,11 +169,23 @@ export async function updateRepresentation(request, response) {
 	}
 
 	if (status !== rep.status) {
-    const details = status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation
-      // @ts-ignore
-      ? CONSTANTS[`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_REDACTED_AND_ACCEPTED`]
-      // @ts-ignore
-      : stringTokenReplacement(CONSTANTS[`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_REDACTED_AND_ACCEPTED`]);
+		const details =
+			status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation
+				? // @ts-ignore
+				  CONSTANTS[
+						`AUDIT_TRAIL_REP_${camelToScreamingSnake(
+							updatedRep.representationType
+						)}_REDACTED_AND_ACCEPTED`
+				  ]
+				: stringTokenReplacement(
+						// @ts-ignore
+						CONSTANTS[
+							`AUDIT_TRAIL_REP_${camelToScreamingSnake(
+								updatedRep.representationType
+							)}_REDACTED_AND_ACCEPTED`
+						],
+						[status]
+				  );
 
 		await createAuditTrail({
 			appealId: parseInt(appealId),
@@ -259,3 +277,31 @@ export const updateRepresentationAttachments = async (req, res) => {
 
 	return res.status(200).send(updatedRepresentation);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export async function publish(req, res) {
+	const { appeal, query } = req;
+
+	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
+	const handlers = {
+		lpa_statement: representationService.publishLpaStatements,
+		final_comment: representationService.publishFinalComments
+	};
+
+	const publish = handlers[String(query.type)];
+	if (!publish) {
+		throw new BackOfficeAppError(`${query.type} is not a valid type`, 400);
+	}
+
+	const updatedReps = await publish(appeal);
+
+	await Promise.all(
+		updatedReps.map((rep) => broadcasters.broadcastRepresentation(rep.id, EventType.Update))
+	);
+
+	return res.status(200).send(updatedReps);
+}

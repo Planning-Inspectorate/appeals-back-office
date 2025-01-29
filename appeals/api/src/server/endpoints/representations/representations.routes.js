@@ -226,4 +226,28 @@ router.patch(
 	asyncHandler(controller.updateRepresentationAttachments)
 );
 
+router.post(
+	'/:appealId/reps/publish',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/publish'
+	#swagger.description = "Publish LPA statement and final comments for appeal"
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+  #swagger.parameters['type'] = {
+    in: 'query',
+    required: false,
+    example: 'lpa_statement'
+  }
+	#swagger.responses[200] = {
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	*/
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(controller.publish)
+);
+
 export { router as representationRoutes };

@@ -3,6 +3,7 @@ import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
 /** @typedef {import('#db-client').Prisma.RepresentationUncheckedCreateInput} RepresentationCreateInput */
+/** @typedef {import('#db-client').Prisma.RepresentationWhereInput} RepresentationWhereInput */
 
 /**
  *
@@ -41,11 +42,11 @@ const getById = (id) => {
 
 /**
  * @param {number} appealId
- * @param {number} pageNumber
- * @param {number} pageSize
  * @param {{ representationType?: string[], status?: string }} options
+ * @param {number} [pageNumber]
+ * @param {number} [pageSize]
  * */
-const getRepresentations = async (appealId, pageNumber, pageSize, options) => {
+const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 	const whereClause = {
 		appealId,
 		status: options.status,
@@ -89,8 +90,8 @@ const getRepresentations = async (appealId, pageNumber, pageSize, options) => {
 				}
 			},
 			orderBy: { dateCreated: 'desc' },
-			skip: pageNumber * pageSize,
-			take: pageSize
+			...(pageNumber && pageSize ? { skip: pageNumber * pageSize } : {}),
+			...(pageSize ? { take: pageSize } : {})
 		})
 	]);
 
@@ -156,6 +157,47 @@ const updateRepresentationById = (id, data) => {
 			represented: true,
 			lpa: true
 		}
+	});
+};
+
+/**
+ * @param {number} appealId
+ * @param {RepresentationWhereInput} options
+ * @param {RepresentationUpdateInput} data
+ */
+const updateRepresentations = (appealId, options, data) => {
+	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested } = data;
+
+	return databaseConnector.$transaction(async (tx) => {
+		const reps = await tx.representation.findMany({
+			where: { appealId, ...options }
+		});
+
+		const repIds = reps.map((r) => r.id);
+
+		await tx.representation.updateMany({
+			where: {
+				id: {
+					in: repIds
+				}
+			},
+			data: {
+				...(status && { status }),
+				...(redactedRepresentation && { redactedRepresentation }),
+				...(notes && { notes }),
+				reviewer,
+				dateLastUpdated: new Date(),
+				siteVisitRequested
+			}
+		});
+
+		return await tx.representation.findMany({
+			where: {
+				id: {
+					in: repIds
+				}
+			}
+		});
 	});
 };
 
@@ -260,6 +302,7 @@ export default {
 	getRepresentations,
 	getRepresentationCounts,
 	updateRepresentationById,
+	updateRepresentations,
 	countAppealRepresentationsByStatus,
 	createRepresentation,
 	addAttachments,
