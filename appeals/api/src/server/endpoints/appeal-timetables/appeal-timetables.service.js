@@ -78,6 +78,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 		if (timetable) {
 			await Promise.all([
+				// @ts-ignore
 				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
 				appealRepository.updateAppealById(appeal.id, {
 					caseStartedDate: startDateWithTimeCorrection.toISOString()
@@ -158,6 +159,7 @@ const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdU
 		])
 	);
 
+	// @ts-ignore
 	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, processedBody);
 
 	await createAuditTrail({
@@ -166,7 +168,7 @@ const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdU
 		details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED
 	});
 
-	await broadcasters.broadcastAppeal(appealTimetableId);
+	await broadcasters.broadcastAppeal(appealId);
 };
 
 export { checkAppealTimetableExists, startCase, updateAppealTimetable };
