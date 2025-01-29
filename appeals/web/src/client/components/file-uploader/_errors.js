@@ -17,7 +17,7 @@ const SELECTORS = {
 	middleErrorsContainer: '.middle-errors-list',
 	filesRows: '.pins-file-upload__files-rows',
 	errorRow: '.error-row',
-	pageHeading: '.govuk-heading-xl'
+	pageHeading: '.govuk-heading-l'
 };
 
 /**

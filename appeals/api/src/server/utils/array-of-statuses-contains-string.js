@@ -3,7 +3,7 @@
 import { some } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.AppealStatus} AppealStatus */
-/** @typedef {import('@pins/appeals.api').Schema.AppealStatusType} AppealStatusType */
+/** @typedef {string} AppealStatusType */
 
 /**
  * @param {Array<AppealStatus>} appealStatuses

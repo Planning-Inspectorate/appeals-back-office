@@ -9,7 +9,7 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING
 } from '../constants.js';
 import { formatMyAppeals } from './appeals.formatter.js';
-import { retrieveAppealListData } from './appeals.service.js';
+import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -72,50 +72,63 @@ const getMyAppeals = async (req, res) => {
 	const status = String(query.status);
 	const azureUserId = req.get('azureAdUserId');
 
-  if (!azureUserId) {
-    return res.status(401).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
-  }
+	if (!azureUserId) {
+		return res.status(401).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
+	}
 
-  const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
-    azureUserId,
-    pageNumber,
-    pageSize,
-    status
-  );
+	const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
+		azureUserId,
+		pageNumber,
+		pageSize,
+		status
+	);
 
-  const formattedAppeals = await Promise.all(
-    appeals.map(async (appeal) => {
-      const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-      const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
-        appeal.id,
-        'comment'
-      );
+	const formattedAppeals = await Promise.all(
+		appeals.map(async (appeal) => {
+			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
+			const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
+				appeal.id,
+				'comment'
+			);
 
-      return formatMyAppeals(
-        appeal,
-        linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
-        commentCounts
-      );
-    })
-  );
-  const sortedAppeals = sortAppeals(formattedAppeals);
+			return formatMyAppeals(
+				appeal,
+				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
+				commentCounts
+			);
+		})
+	);
+	const sortedAppeals = sortAppeals(formattedAppeals);
 
-  // Flatten to a unique array of strings
-  // @ts-ignore
-  const formattedStatuses = statuses
-    // @ts-ignore
-    ?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
-    .flat()
-    .filter((status, index, statuses) => statuses.indexOf(status) === index);
+	// Flatten to a unique array of strings
+	// @ts-ignore
+	const formattedStatuses = statuses
+		// @ts-ignore
+		?.map(({ appealStatus }) => appealStatus.map(({ status }) => status))
+		.flat()
+		.filter((status, index, statuses) => statuses.indexOf(status) === index);
 
-  return res.send({
-    itemCount,
-    items: sortedAppeals,
-    statuses: formattedStatuses,
-    page: pageNumber,
-    pageCount: getPageCount(itemCount, pageSize),
-    pageSize
-  });
+	return res.send({
+		itemCount,
+		items: sortedAppeals,
+		statuses: formattedStatuses,
+		page: pageNumber,
+		pageCount: getPageCount(itemCount, pageSize),
+		pageSize
+	});
 };
 
-export { getAppeals, getMyAppeals };
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+async function updateCompletedEventsController(req, res) {
+	const { azureAdUserId } = req.params;
+
+	await updateCompletedEvents(azureAdUserId);
+
+	return res.status(200).end();
+}
+
+export { getAppeals, getMyAppeals, updateCompletedEventsController };

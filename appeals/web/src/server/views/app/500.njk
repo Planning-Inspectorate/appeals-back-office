@@ -1,6 +1,7 @@
 {% extends "app/layouts/app-two-column.layout.njk" %}
 
 {% set pageTitle = titleCopy if titleCopy else 'Sorry, there is a problem with the service' %}
+{% set heading = pageTitle %}
 
 {% block pageContent %}
 	<p class="govuk-body">{{ bodyCopy if bodyCopy else 'Try again later.' }}</p>

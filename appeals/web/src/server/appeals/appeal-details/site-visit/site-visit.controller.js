@@ -1,16 +1,13 @@
 import logger from '#lib/logger.js';
 import * as siteVisitService from './site-visit.service.js';
 import {
-	mapWebVisitTypeToApiVisitType,
 	scheduleOrManageSiteVisitPage,
 	scheduleOrManageSiteVisitConfirmationPage,
-	setVisitTypePage,
 	stringIsSiteVisitConfirmationPageType,
 	siteVisitBookedPage,
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
 	getSiteVisitChangeType
 } from './site-visit.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  *
@@ -120,32 +117,6 @@ export const renderSiteVisitBooked = async (request, response) => {
 				pageContent
 			});
 		}
-	}
-
-	return response.status(404).render('app/404.njk');
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderSetVisitType = async (request, response) => {
-	const { errors } = request;
-
-	const appealDetails = request.currentAppeal;
-
-	if (appealDetails) {
-		const {
-			body: { 'visit-type': visitType }
-		} = request;
-
-		const mappedPageContent = setVisitTypePage(appealDetails, visitType);
-
-		return response.status(200).render('appeals/appeal/set-site-visit-type.njk', {
-			pageContent: mappedPageContent,
-			errors
-		});
 	}
 
 	return response.status(404).render('app/404.njk');
@@ -274,64 +245,4 @@ export const getSiteVisitScheduled = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSiteVisitBooked = async (request, response) => {
 	renderSiteVisitBooked(request, response);
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getSetVisitType = async (request, response) => {
-	renderSetVisitType(request, response);
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const postSetVisitType = async (request, response) => {
-	const { errors } = request;
-
-	if (errors) {
-		return renderSetVisitType(request, response);
-	}
-
-	const {
-		params: { appealId }
-	} = request;
-
-	try {
-		const appealDetails = request.currentAppeal;
-
-		if (appealDetails) {
-			const {
-				body: { 'visit-type': visitType }
-			} = request;
-
-			const appealIdNumber = parseInt(appealId, 10);
-			const apiVisitType = mapWebVisitTypeToApiVisitType(visitType);
-
-			if (
-				appealDetails.siteVisit?.siteVisitId !== null &&
-				appealDetails.siteVisit?.siteVisitId !== undefined &&
-				Number.isInteger(appealDetails.siteVisit?.siteVisitId) &&
-				appealDetails.siteVisit?.siteVisitId > -1
-			) {
-				await siteVisitService.updateSiteVisit(
-					request.apiClient,
-					appealIdNumber,
-					appealDetails.siteVisit?.siteVisitId,
-					apiVisitType
-				);
-
-				addNotificationBannerToSession(request.session, 'siteVisitTypeSelected', appealIdNumber);
-
-				return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
-			}
-		}
-
-		return response.status(404).render('app/404.njk');
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when setting the site visit type'
-		);
-
-		return response.status(500).render('app/500.njk');
-	}
 };

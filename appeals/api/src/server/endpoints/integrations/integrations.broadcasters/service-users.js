@@ -1,11 +1,11 @@
 import pino from '#utils/logger.js';
 import config from '#config/config.js';
-import { messageMappers } from '../integrations.mappers.js';
 import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { mapServiceUserEntity } from '#mappers/integration/map-service-user-entity.js';
 
 /**
  *
@@ -28,8 +28,7 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 		return false;
 	}
 
-	// @ts-ignore
-	const msg = messageMappers.mapServiceUser(caseReference, user, roleName);
+	const msg = mapServiceUserEntity(user, roleName, caseReference);
 
 	if (msg) {
 		const validationResult = await validateFromSchema(schemas.events.serviceUser, msg);

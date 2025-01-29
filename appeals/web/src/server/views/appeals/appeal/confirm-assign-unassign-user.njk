@@ -3,6 +3,7 @@
 {%- from "govuk/components/radios/macro.njk" import govukRadios -%}
 {%- from "govuk/components/inset-text/macro.njk" import govukInsetText -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set pageTitle = "Are you sure?" -%}
 
@@ -11,13 +12,10 @@
 {%- endset -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-l govuk-!-margin-bottom-1">Appeal {{ appeal.shortReference }}</span>
-			<h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ 'Remove' if isUnassign else 'Assign' }} this {{ 'inspector' if isInspector else 'case officer' }}</h1>
-			<h2> {{ user.email }}</h2>
-		</div>
-	</div>
+	{{ pageHeading({
+    preHeading: "Appeal " + appeal.shortReference,
+    heading: ("Remove" if isUnassign else "Assign") + " this " + ("inspector" if isInspector else "case officer")
+  }) }}
 {%- endblock -%}
 
 {%- block pageContent -%}
@@ -25,6 +23,13 @@
 		{{ govukRadios({
 			name: "confirm",
 			idPrefix: "confirm",
+			fieldset: {
+				legend: {
+					text: user.email,
+					isPageHeading: false,
+					classes: "govuk-fieldset__legend--m"
+				}
+			},
 			items: [
 				{
 					value: "yes",

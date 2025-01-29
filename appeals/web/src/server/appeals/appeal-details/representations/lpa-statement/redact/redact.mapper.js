@@ -61,7 +61,6 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Redact LPA statement',
-		headingClasses: 'govuk-heading-l',
 		pageComponents
 	};
 }
@@ -114,7 +113,6 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${lpaStatement.id}/redact`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and accept statement',
-		headingClasses: 'govuk-heading-l',
 		forceRenderSubmitButton: true,
 		submitButtonText: 'Redact and accept statement',
 		pageComponents

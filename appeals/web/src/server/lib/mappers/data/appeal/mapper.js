@@ -12,15 +12,6 @@ import { submaps as hasSubmaps } from './has.js';
  */
 
 /**
- * @typedef {(
- *   appealDetails: WebAppeal,
- *   currentRoute: string,
- *   session: SessionWithAuth,
- *   skipAssignedUsersData?: boolean
- * ) => Promise<{appeal: MappedInstructions}>} Mapper
- */
-
-/**
  * @typedef {Object} SubMapperParams
  * @property {WebAppeal} appealDetails
  * @property {string} currentRoute
@@ -33,6 +24,8 @@ import { submaps as hasSubmaps } from './has.js';
  * @property {{
  *     [x: string]: any;
  *   } | null} [inspectorUser]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
  */
 
 /**
@@ -45,12 +38,22 @@ const submaps = {
 	[APPEAL_TYPE.W]: s78Submaps
 };
 
-/** @type {Mapper} */
+/**
+ * @param {WebAppeal} appealDetails
+ * @param {string} currentRoute
+ * @param {SessionWithAuth} session
+ * @param {boolean} [skipAssignedUsersData]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @returns {Promise<{appeal: MappedInstructions}>}
+ */
 export async function initialiseAndMapAppealData(
 	appealDetails,
 	currentRoute,
 	session,
-	skipAssignedUsersData = false
+	skipAssignedUsersData = false,
+	appellantFinalComments,
+	lpaFinalComments
 ) {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
@@ -94,9 +97,10 @@ export async function initialiseAndMapAppealData(
 			skipAssignedUsersData,
 			userHasUpdateCasePermission,
 			caseOfficerUser,
-			inspectorUser
+			inspectorUser,
+			appellantFinalComments,
+			lpaFinalComments
 		});
 	});
-
 	return mappedData;
 }

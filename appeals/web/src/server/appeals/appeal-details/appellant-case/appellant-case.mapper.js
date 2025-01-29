@@ -182,6 +182,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Appellant case',
+		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,

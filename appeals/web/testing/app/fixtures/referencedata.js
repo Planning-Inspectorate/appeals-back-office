@@ -2455,6 +2455,65 @@ export const finalCommentsForReview = {
 	pageSize: 30
 };
 
+export const appellantFinalCommentsAwaitingReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 46419,
+			origin: 'citizen',
+			author: 'Eva Sharma',
+			status: 'awaiting_review',
+			originalRepresentation:
+				'Final comment from appellant. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
+			redactedRepresentation: '',
+			created: '2025-01-21T14:35:04.205Z',
+			notes: 'test notes',
+			attachments: [],
+			representationType: 'appellant_final_comment',
+			siteVisitRequested: false,
+			source: 'citizen',
+			represented: {
+				id: 50577,
+				name: 'Eva Sharma',
+				email: 'test9@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			},
+			rejectionReasons: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
+export const lpaFinalCommentsAwaitingReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 46420,
+			origin: 'lpa',
+			author: 'Worthing Borough Council',
+			status: 'awaiting_review',
+			originalRepresentation:
+				'Final comment from LPA. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
+			redactedRepresentation: '',
+			created: '2025-01-21T14:35:04.213Z',
+			notes: 'test notes',
+			attachments: [],
+			representationType: 'lpa_final_comment',
+			siteVisitRequested: false,
+			source: 'citizen',
+			rejectionReasons: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const interestedPartyCommentForView = {
 	id: 3670,
 	origin: 'citizen',

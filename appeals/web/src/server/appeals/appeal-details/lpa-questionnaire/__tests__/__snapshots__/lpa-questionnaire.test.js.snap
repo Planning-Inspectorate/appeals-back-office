@@ -3,8 +3,8 @@
 exports[`LPA Questionnaire review GET / should render review outcome form fields and controls when the appeal is in "LPA Questionnaire" status 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -134,6 +134,11 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -365,8 +370,8 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
 exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -496,6 +501,11 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -748,8 +758,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -881,6 +891,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1092,8 +1107,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1225,6 +1240,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1423,6 +1443,10 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1434,12 +1458,12 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/check-your-answers should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Check your answers before confirming your review</h1>
-                </div>
-            </div>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
                     <dd class="govuk-summary-list__value">Incomplete</dd>
@@ -1505,7 +1529,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete should render the incomplete reason page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -1667,6 +1691,10 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1698,9 +1726,13 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/date should render the update due date page with correct pre-populated date values, if there is an existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -1742,6 +1774,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1755,6 +1791,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1766,9 +1806,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-document-details/
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text, if the folder is not additional documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload documents</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1813,9 +1855,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1864,9 +1908,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1915,9 +1961,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/ should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload additional documents</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1981,9 +2029,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2028,9 +2078,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2079,9 +2131,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2130,9 +2184,11 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the lpa questionnaire validation outcome is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Update additional document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2198,6 +2254,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -2211,6 +2271,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -2222,7 +2286,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2268,6 +2332,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -2308,8 +2376,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Changed description documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Changed description documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2425,8 +2493,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Additional documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2524,6 +2592,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -2538,6 +2610,10 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -2563,8 +2639,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2672,8 +2748,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2776,8 +2852,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2856,8 +2932,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2958,8 +3034,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3051,8 +3127,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3131,8 +3207,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3171,8 +3247,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3215,12 +3291,12 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
 exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/:folderId/:documentId should render the change document name page for the document being changed 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Changed description documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -3507,8 +3583,8 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3638,6 +3714,11 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Press advert notification</dt>
                             <dd                             class="govuk-summary-list__value">Not provided</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification"> Add<span class="govuk-visually-hidden"> Press advert notification</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter"> Add<span class="govuk-visually-hidden"> Appeal notification letter</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -3849,7 +3930,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4026,7 +4107,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4203,7 +4284,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4380,7 +4461,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4556,7 +4637,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4732,7 +4813,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -4892,7 +4973,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5067,9 +5148,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5126,9 +5211,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5185,9 +5274,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5244,9 +5337,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5303,9 +5400,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5362,9 +5463,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5421,9 +5526,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5480,9 +5589,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5539,9 +5652,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5596,9 +5713,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5653,9 +5774,13 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl govuk-!-margin-bottom-1">Appeal 351062</span>
-            <h1             class="govuk-fieldset__legend--xl govuk-!-margin-top-0">Update LPA questionnaire due date</h1>
-                <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-inset-text govuk-!-margin-bottom-7">The current due date for the LPA questionnaire is 11 October 2024</div>
         </div>
     </div>
     <form method="post" novalidate="novalidate">
@@ -5697,6 +5822,10 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -5710,6 +5839,10 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-documents/:folde
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -5723,6 +5856,10 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/add-documents/:folde
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -5749,7 +5886,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/environment-service-
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">

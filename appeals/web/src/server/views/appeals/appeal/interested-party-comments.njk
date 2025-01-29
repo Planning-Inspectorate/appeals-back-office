@@ -5,6 +5,7 @@
 {%- from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner -%}
 {%- from "govuk/components/error-summary/macro.njk" import govukErrorSummary -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
 {%- set backLinkText = pageContent.backLinkText -%}
@@ -39,16 +40,7 @@
       </div>
     </div>
   {%- endif -%}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      {%- if pageContent.preHeading -%}
-        <span class="govuk-caption-l govuk-!-margin-bottom-3">{{ pageContent.preHeading }}</span>
-      {%- endif -%}
-      {%- if pageContent.heading -%}
-        <h1 class="{{ pageContent.headingClasses if pageContent.headingClasses else "govuk-heading-xl govuk-!-margin-bottom-3" }}">{{ pageContent.heading }}</h1>
-      {%- endif -%}
-    </div>
-  </div>
+	{{ pageHeading(pageContent) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

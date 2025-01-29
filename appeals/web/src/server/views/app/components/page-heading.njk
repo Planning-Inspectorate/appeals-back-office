@@ -1,0 +1,17 @@
+{%- macro pageHeading(params) -%}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {%- if params.preHeading -%}
+        <span class="govuk-caption-l">{{ params.preHeading }}</span>
+      {%- endif -%}
+
+      {%- if params.heading -%}
+        <h1 class="{{ params.headingClasses if params.headingClasses else "govuk-heading-l" }}">{{ params.heading }}</h1>
+      {%- endif -%}
+
+      {%- if params.hint -%}
+        <div class="govuk-hint">{{ params.hint }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endmacro -%}

@@ -110,7 +110,12 @@ const { value, error } = schema.validate({
 				id: environment.GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID || 'mock-decision-is-invalid-lpa-id'
 			},
 			lpaqComplete: {
-				id: environment.GOV_NOTIFY_LPAQ_COMPLETE_ID || 'mock-lpaq-complete-id'
+				appellant: {
+					id: environment.GOV_NOTIFY_LPAQ_COMPLETE_APPELLANT_ID || 'mock-lpaq-complete-appellant-id'
+				},
+				lpa: {
+					id: environment.GOV_NOTIFY_LPAQ_COMPLETE_ID || 'mock-lpaq-complete-id'
+				}
 			},
 			lpaqIncomplete: {
 				id: environment.GOV_NOTIFY_LPAQ_INCOMPLETE_ID || 'mock-lpaq-incomplete-id'
@@ -230,7 +235,14 @@ const { value, error } = schema.validate({
 				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
 			},
 			commentRejected: {
-				id: environment.GOV_NOTIFY_COMMENT_REJECTED || 'mock-comment-rejected-id'
+				appellant: {
+					id:
+						environment.GOV_NOTIFY_COMMENT_REJECTED_APPELLANT_ID ||
+						'mock-comment-rejected-appellant-id'
+				},
+				lpa: {
+					id: environment.GOV_NOTIFY_COMMENT_REJECTED_LPA_ID || 'mock-comment-rejected-lpa-id'
+				}
 			},
 			commentRejectedDeadlineExtended: {
 				id:

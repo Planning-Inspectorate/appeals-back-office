@@ -1,0 +1,373 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with awaiting review comments 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add interested party comment</a>
+            </p>
+            <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
+            data-module="govuk-tabs">
+                <h2 class="govuk-tabs__title"> Contents</h2>
+                <ul class="govuk-tabs__list">
+                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
+                    </li>
+                </ul>
+                <div class="govuk-tabs__panel" id="awaiting-review">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3812/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3811/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3810/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="valid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3852/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3851/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Haley Eland</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3850/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Haley Eland</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="invalid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3872/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3871/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3870/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
+            </p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with invalid comments 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add interested party comment</a>
+            </p>
+            <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
+            data-module="govuk-tabs">
+                <h2 class="govuk-tabs__title"> Contents</h2>
+                <ul class="govuk-tabs__list">
+                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
+                    </li>
+                </ul>
+                <div class="govuk-tabs__panel" id="awaiting-review">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3812/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3811/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3810/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="valid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3852/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3851/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Haley Eland</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3850/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Haley Eland</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="invalid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3872/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3871/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3870/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
+            </p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with valid comments 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/2/interested-party-comments/add"
+                class="govuk-link">Add interested party comment</a>
+            </p>
+            <div id="interested-party-comments-tabs" class="govuk-tabs pins-tabs"
+            data-module="govuk-tabs">
+                <h2 class="govuk-tabs__title"> Contents</h2>
+                <ul class="govuk-tabs__list">
+                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#awaiting-review"> Awaiting review</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#valid"> Accepted</a>
+                    </li>
+                    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#invalid"> Rejected</a>
+                    </li>
+                </ul>
+                <div class="govuk-tabs__panel" id="awaiting-review">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3812/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3811/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3810/review" class="govuk-link">Review<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="valid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3852/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Roger Simmons</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3851/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Roger Simmons</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Haley Eland</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3850/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Haley Eland</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="invalid">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Interested party</th>
+                                <th scope="col" class="govuk-table__header">Submitted</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3872/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Ryan Marshall</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3871/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Ryan Marshall</span></a>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-width-one-half">Eva Sharma</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half">24 September 2024</td>
+                                <td class="govuk-table__cell govuk-!-width-one-half"><a href="./interested-party-comments/3870/view" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments from Eva Sharma</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
+            </p>
+        </div>
+    </div>
+</main>"
+`;

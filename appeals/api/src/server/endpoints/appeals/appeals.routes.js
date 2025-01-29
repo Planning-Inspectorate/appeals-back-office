@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { getAppeals, getMyAppeals } from './appeals.controller.js';
+import { getAppeals, getMyAppeals, updateCompletedEventsController } from './appeals.controller.js';
 import { getAppealsValidator } from './appeals.validators.js';
 import { validateAppealStatus, validateHasInspector } from './appeals.middleware.js';
 
@@ -109,6 +109,23 @@ router.get(
 	getAppealsValidator,
 	validateAppealStatus,
 	asyncHandler(getMyAppeals)
+);
+
+router.post(
+	'/update-complete-events',
+	/*
+		#swagger.tags = ['Appeal Lists']
+		#swagger.path = '/appeals/update-complete-events'
+		#swagger.description = 'Updates the status of any appeals in the EVENT status where the event has now taken place'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(updateCompletedEventsController)
 );
 
 export { router as appealsRoutes };

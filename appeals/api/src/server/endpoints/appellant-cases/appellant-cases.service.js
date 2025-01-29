@@ -18,7 +18,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import config from '#config/config.js';
 import formatDate from '#utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
@@ -122,8 +122,7 @@ const updateAppellantCaseValidationOutcome = async (
 			}
 
 			const incompleteReasonsList = getFormattedReasons(
-				// @ts-ignore
-				updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
+				updatedAppellantCase?.appellantCaseIncompleteReasonsSelected ?? []
 			);
 
 			if (updatedDueDate) {
@@ -150,7 +149,7 @@ const updateAppellantCaseValidationOutcome = async (
 			}
 
 			const invalidReasonsList = getFormattedReasons(
-				updatedAppellantCase?.appellantCaseInvalidReasonsSelected
+				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
 			);
 
 			try {

@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] = `
+"<body class="govuk-template__body ">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper " id="main-content"
+            role="main">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Check your answers</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party&#39;s address</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address"> Change<span class="govuk-visually-hidden"> interested party address</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="post" novalidate="novalidate">
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`edit-ip-comment GET address (review=false) should match the snapshot 1`] = `
+"<body class="govuk-template__body ">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/view"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper " id="main-content"
+            role="main">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="add">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`edit-ip-comment GET address (review=false) should match the snapshot 2`] = `
+"<body class="govuk-template__body ">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/view"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper " id="main-content"
+            role="main">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="update">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`edit-ip-comment GET address (review=true) should match the snapshot 1`] = `
+"<body class="govuk-template__body ">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/review"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper " id="main-content"
+            role="main">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="add">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`edit-ip-comment GET address (review=true) should match the snapshot 2`] = `
+"<body class="govuk-template__body ">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/review"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper " id="main-content"
+            role="main">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="update">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;

@@ -1,10 +1,9 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
-/** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire */
 
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
- * @returns {*}
+ * @returns {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>}
  */
 export const mapQuestionnaireIn = (command) => {
 	const casedata = command.casedata;
@@ -42,7 +41,7 @@ export const mapQuestionnaireIn = (command) => {
 					};
 				})
 		  }
-		: null;
+		: undefined;
 
 	return {
 		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,

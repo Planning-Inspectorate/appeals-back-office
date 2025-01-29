@@ -1,9 +1,22 @@
 import { request } from '#tests/../app-test.js';
 import { mocks } from '#tests/appeals/index.js';
+import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { savedFolder } from '#tests/documents/mocks.js';
-import { ERROR_MUST_BE_NUMBER, ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import {
+	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
+	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
+	ERROR_CANNOT_BE_EMPTY_STRING,
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
+	ERROR_MUST_BE_NUMBER,
+	ERROR_MUST_BE_STRING,
+	ERROR_MUST_BE_UUID,
+	ERROR_MUST_NOT_BE_IN_FUTURE,
+	ERROR_NOT_FOUND
+} from '#endpoints/constants.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
@@ -145,6 +158,9 @@ const s78AppealDto = {
 			status: 'Valid',
 			receivedAt: fullPlanningAppeal.caseCreatedDate.toISOString()
 		},
+		appellantFinalComments: {
+			status: "not_received",
+		},
 		lpaQuestionnaire: {
 			dueDate: fullPlanningAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString(),
 			status: 'received',
@@ -152,6 +168,9 @@ const s78AppealDto = {
 		},
 		ipComments: {
 			status: 'received'
+		},
+		lpaFinalComments: {
+			status: "not_received",
 		},
 		lpaStatement: {
 			status: 'not_received',
@@ -259,62 +278,493 @@ describe('Appeal detail routes', () => {
 				});
 			});
 		});
-	});
 
-	describe('appeals/case-reference/:caseReference', () => {
-		describe('GET', () => {
-			test('gets a single household appeal', async () => {
+		describe('PATCH', () => {
+			test('updates an appeal', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...mocks.householdAppeal,
-					folders: [
-						{
-							...savedFolder,
-							path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
-						}
-					]
-				});
-				const response = await request
-					.get(`/appeals/case-reference/${mocks.householdAppeal.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(householdAppealDto);
-			});
-
-			test('gets a single full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					folders: [
-						{
-							...savedFolder,
-							path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
-						}
-					]
-				});
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
-					.get(`/appeals/case-reference/${mocks.s78Appeal.reference}`)
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						startedAt: '2023-05-05T00:00:00.000Z',
+						validAt: '2023-05-25T00:00:00.000Z'
+					})
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(s78AppealDto);
-			});
-			test('returns an error if a caseReference is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(null);
-
-				const response = await request
-					.get('/appeals/case-reference/5')
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					errors: {
-						caseReference: ERROR_NOT_FOUND
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						caseStartedDate: '2023-05-05T00:00:00.000Z',
+						caseValidDate: '2023-05-25T00:00:00.000Z',
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: householdAppeal.id
 					}
 				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					startedAt: '2023-05-05T00:00:00.000Z',
+					validAt: '2023-05-25T00:00:00.000Z'
+				});
+			});
+
+			test('updates the planning application reference', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: '1234/A/567890'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						applicationReference: '1234/A/567890',
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					planningApplicationReference: '1234/A/567890'
+				});
+			});
+
+			test('assigns a case officer to an appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					caseOfficerId: null,
+					caseOfficer: undefined
+				});
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						caseOfficerUserId: householdAppeal.caseOfficer.id,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							householdAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: householdAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+				});
+			});
+
+			test('replace a case officer in an appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue(householdAppeal.caseOfficer);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						caseOfficerUserId: householdAppeal.caseOfficer.id,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							householdAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: householdAppeal.caseOfficer.id
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+				});
+			});
+
+			test('assigns an inspector to an appeal', async () => {
+				jest.clearAllMocks();
+				const inspector = '37b537ee-8a4e-42c3-8b97-089ddb8949e7';
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({ id: 10, azureAdUserId: inspector });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						inspector
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						inspectorUserId: 10,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: householdAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					inspector
+				});
+			});
+
+			test('returns an error if startedAt is not in the correct format', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						startedAt: '05/05/2023'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if startedAt does not contain leading zeros', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						startedAt: '2023-5-5'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if startedAt is not a valid date', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						startedAt: '2023-02-30'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						startedAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if validAt is not in the correct format', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						validAt: '05/05/2023'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if validAt does not contain leading zeros', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						validAt: '2023-5-5'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if validAt is not a valid date', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						validAt: '2023-02-30'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						validAt: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+					}
+				});
+			});
+
+			test('returns an error if validAt is in the future', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						validAt: '3000-02-02T00:00:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						validAt: ERROR_MUST_NOT_BE_IN_FUTURE
+					}
+				});
+			});
+
+			test('returns an error if caseOfficer is not a valid uuid', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						caseOfficer: '1'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						caseOfficer: ERROR_MUST_BE_UUID
+					}
+				});
+			});
+
+			test('returns an error if inspector is not a valid uuid', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						inspector: '1'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						inspector: ERROR_MUST_BE_UUID
+					}
+				});
+			});
+
+			test('returns an error if given an incorrect field name', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				// @ts-ignore
+				databaseConnector.appeal.update.mockImplementationOnce(() => {
+					throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+				});
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						startedAtDate: '2023-02-10'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(500);
+				expect(response.body).toEqual({
+					errors: {
+						body: ERROR_FAILED_TO_SAVE_DATA
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is not a string', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: 123
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference is empty', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: ''
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_CANNOT_BE_EMPTY_STRING
+					}
+				});
+			});
+
+			test('returns an error if the planning application reference null', async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						planningApplicationReference: null
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						planningApplicationReference: ERROR_MUST_BE_STRING
+					}
+				});
+			});
+
+			test('does not throw an error if given an empty body', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.update.mockResolvedValue(true);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({});
+			});
+		});
+	});
+});
+
+describe('appeals/case-reference/:caseReference', () => {
+	describe('GET', () => {
+		test('gets a single household appeal', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...mocks.householdAppeal,
+				folders: [
+					{
+						...savedFolder,
+						path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+					}
+				]
+			});
+			const response = await request
+				.get(`/appeals/case-reference/${mocks.householdAppeal.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(householdAppealDto);
+		});
+
+		test('gets a single full planning appeal', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...fullPlanningAppeal,
+				folders: [
+					{
+						...savedFolder,
+						path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+					}
+				]
+			});
+
+			const response = await request
+				.get(`/appeals/case-reference/${mocks.s78Appeal.reference}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(s78AppealDto);
+		});
+		test('returns an error if a caseReference is not found', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await request
+				.get('/appeals/case-reference/5')
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toEqual({
+				errors: {
+					caseReference: ERROR_NOT_FOUND
+				}
 			});
 		});
 	});

@@ -5,6 +5,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -18,6 +22,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -31,6 +39,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -44,6 +56,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -55,12 +71,12 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId should render the change document details page with one set of fields for the document being changed (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Cross team correspondence documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Cross team correspondence documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -133,12 +149,12 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId should render the change document details page with one set of fields for the document being changed (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Inspector correspondence documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Inspector correspondence documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -211,12 +227,12 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-name/:folderId/:documentId should render the change document name page for the document being changed (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Changed description documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -239,12 +255,12 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/change-document-name/:folderId/:documentId should render the change document name page for the document being changed (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Changed description documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Change document details</span>
-                    <h1                     class="govuk-heading-l govuk-!-margin-bottom-6">Changed description documents</h1>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
@@ -269,6 +285,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -282,6 +302,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -295,6 +319,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -308,6 +336,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -321,6 +353,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -335,6 +371,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -347,8 +387,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/ should render the manage folder page with one document item for each document present in the folder if the folderId is valid (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Cross-team correspondence documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Cross-team correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -403,8 +443,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/ should render the manage folder page with one document item for each document present in the folder if the folderId is valid (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage folder</span>
-            <h1             class="govuk-heading-l">Inspector correspondence documents</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Inspector correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -461,6 +501,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -475,6 +519,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -489,6 +537,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -503,6 +555,10 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -530,8 +586,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -636,8 +692,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -740,8 +796,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -833,8 +889,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -913,8 +969,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1002,8 +1058,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1104,8 +1160,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1197,8 +1253,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage document</span>
-            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1277,8 +1333,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1317,8 +1373,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there are multiple document versions (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1357,8 +1413,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1401,8 +1457,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1445,9 +1501,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId should render the upload documents page (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload cross-team correspondence</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload cross-team correspondence</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1492,9 +1550,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId should render the upload documents page (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload inspector correspondence</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload inspector correspondence</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1539,9 +1599,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId should render the upload document version page (cross-team) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1586,9 +1648,11 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 exports[`internal correspondence GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId should render the upload document version page (inspector) 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="top-errors-hook govuk-grid-column-two-thirds"></div>
-        <div class="govuk-grid-column-full"><span class="govuk-caption-xl">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Upload an updated document</h1>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1635,6 +1699,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1648,6 +1716,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1661,6 +1733,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1674,6 +1750,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1700,8 +1780,8 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1759,8 +1839,8 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l govuk-!-margin-bottom-3">Manage versions</span>
-            <h1             class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1805,6 +1885,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1818,6 +1902,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1831,6 +1919,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1844,6 +1936,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1857,6 +1953,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1870,6 +1970,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1883,6 +1987,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
@@ -1896,6 +2004,10 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>

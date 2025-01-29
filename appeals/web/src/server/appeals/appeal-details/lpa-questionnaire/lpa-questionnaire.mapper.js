@@ -191,6 +191,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
+		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
@@ -823,7 +824,8 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lettersToNeighbours?.display.summaryListItem,
-				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem
+				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem,
+				mappedLPAQData.lpaq?.appealNotification?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -1009,7 +1011,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.notificationMethods?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteNotice?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lettersToNeighbours?.display.summaryListItem,
-				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem
+				mappedLPAQData.lpaq?.pressAdvert?.display.summaryListItem,
+				mappedLPAQData.lpaq?.appealNotification?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

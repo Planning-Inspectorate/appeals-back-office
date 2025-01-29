@@ -3,11 +3,11 @@
 exports[`final-comments GET / should render the reject appellant final comments page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
@@ -88,11 +88,11 @@ exports[`final-comments GET / should render the reject appellant final comments 
 exports[`final-comments GET / should render the reject lpa final comments page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                </div>
-            </div>
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">

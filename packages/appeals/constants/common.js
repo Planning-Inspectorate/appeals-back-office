@@ -1,6 +1,4 @@
 export const ODW_SYSTEM_ID = 'back-office-appeals';
-export const ODW_APPELLANT_SVCUSR = 'Appellant';
-export const ODW_AGENT_SVCUSR = 'Agent';
 export const APPEAL_START_RANGE = 6000000;
 
 export const EVENT_TYPE = Object.freeze({
@@ -34,7 +32,6 @@ export const PROCEDURE_TYPE_MAP = Object.freeze({
 	inquiry: 'an inquiry'
 });
 
-//TODO: remove when available in appeal-representation.schema
 export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	LPA_STATEMENT: 'lpa_statement',
 	APPELLANT_STATEMENT: 'appellant_statement',
@@ -43,8 +40,6 @@ export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	APPELLANT_FINAL_COMMENT: 'appellant_final_comment'
 });
 
-//TODO: remove when available in appeal-representation.schema - here just for reference
-// eslint-disable-next-line no-unused-vars
 export const APPEAL_REPRESENTATION_STATUS = Object.freeze({
 	AWAITING_REVIEW: 'awaiting_review',
 	VALID: 'valid',
@@ -53,6 +48,7 @@ export const APPEAL_REPRESENTATION_STATUS = Object.freeze({
 	WITHDRAWN: 'withdrawn',
 	INCOMPLETE: 'incomplete'
 });
+
 export const COMMENT_STATUS = Object.freeze({
 	AWAITING_REVIEW: 'awaiting_review',
 	VALID: 'valid',

@@ -1,3 +1,5 @@
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
+
 export const validAppellantCase = {
 	casedata: {
 		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
@@ -112,6 +114,77 @@ export const validLpaQuestionnaire = {
 	]
 };
 
+export const validRepresentationIp = {
+	caseReference: '6004741',
+	representation: 'Hello, not about cheese but still a rep of some kind (IP comment)',
+	representationType: 'comment',
+	representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+	newUser: {
+		emailAddress: 'test@test.com',
+		firstName: 'Testy',
+		lastName: 'McTest',
+		salutation: 'Mr',
+		serviceUserType: 'InterestedParty',
+		organisation: 'A company',
+		telephoneNumber: '0123456789'
+	},
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'interestedPartyComment',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
+export const validRepresentationLpaStatement = {
+	caseReference: '6004741',
+	representation: 'Hello, not about cheese but still a rep of some kind (LPA statement)',
+	representationType: 'statement',
+	representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+	lpaCode: 'Q9999',
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaStatement',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
+export const validRepresentationAppellantFinalComment = {
+	caseReference: '6004741',
+	representation: 'Hello, not about cheese but still a rep of some kind (Appellant final comment)',
+	representationType: 'statement',
+	representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+	serviceUserId: '1',
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'appellantFinalComment',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
 export const appealIngestionInput = {
 	appealType: {
 		connect: {
@@ -188,143 +261,9 @@ export const appealIngestionInput = {
 		create: []
 	},
 	folders: {
-		create: [
-			{
-				path: 'appellant-case/appellantStatement'
-			},
-			{
-				path: 'appellant-case/originalApplicationForm'
-			},
-			{
-				path: 'appellant-case/applicationDecisionLetter'
-			},
-			{
-				path: 'appellant-case/changedDescription'
-			},
-			{
-				path: 'appellant-case/appellantCaseWithdrawalLetter'
-			},
-			{
-				path: 'appellant-case/appellantCaseCorrespondence'
-			},
-			{
-				path: 'appellant-case/designAccessStatement'
-			},
-			{
-				path: 'appellant-case/plansDrawings'
-			},
-			{
-				path: 'appellant-case/newPlansDrawings'
-			},
-			{
-				path: 'appellant-case/planningObligation'
-			},
-			{
-				path: 'appellant-case/ownershipCertificate'
-			},
-			{
-				path: 'appellant-case/otherNewDocuments'
-			},
-			{
-				path: 'appellant-case/environmentalAssessment'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotified'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedSiteNotice'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedLetterToNeighbours'
-			},
-			{
-				path: 'lpa-questionnaire/whoNotifiedPressAdvert'
-			},
-			{
-				path: 'lpa-questionnaire/conservationMap'
-			},
-			{
-				path: 'lpa-questionnaire/otherPartyRepresentations'
-			},
-			{
-				path: 'lpa-questionnaire/planningOfficerReport'
-			},
-			{
-				path: 'lpa-questionnaire/plansDrawings'
-			},
-			{
-				path: 'lpa-questionnaire/developmentPlanPolicies'
-			},
-			{
-				path: 'lpa-questionnaire/treePreservationPlan'
-			},
-			{
-				path: 'lpa-questionnaire/definitiveMapStatement'
-			},
-			{
-				path: 'lpa-questionnaire/communityInfrastructureLevy'
-			},
-			{
-				path: 'lpa-questionnaire/supplementaryPlanning'
-			},
-			{
-				path: 'lpa-questionnaire/emergingPlan'
-			},
-			{
-				path: 'lpa-questionnaire/consultationResponses'
-			},
-			{
-				path: 'lpa-questionnaire/eiaEnvironmentalStatement'
-			},
-			{
-				path: 'lpa-questionnaire/eiaScreeningOpinion'
-			},
-			{
-				path: 'lpa-questionnaire/eiaScreeningDirection'
-			},
-			{
-				path: 'lpa-questionnaire/lpaCaseCorrespondence'
-			},
-			{
-				path: 'lpa-questionnaire/otherRelevantPolicies'
-			},
-			{
-				path: 'costs/appellantCostsApplication'
-			},
-			{
-				path: 'costs/appellantCostsWithdrawal'
-			},
-			{
-				path: 'costs/appellantCostsCorrespondence'
-			},
-			{
-				path: 'costs/lpaCostsApplication'
-			},
-			{
-				path: 'costs/lpaCostsWithdrawal'
-			},
-			{
-				path: 'costs/lpaCostsCorrespondence'
-			},
-			{
-				path: 'costs/costsDecisionLetter'
-			},
-			{
-				path: 'internal/crossTeamCorrespondence'
-			},
-			{
-				path: 'internal/inspectorCorrespondence'
-			},
-			{
-				path: 'internal/uncategorised'
-			},
-			{
-				path: 'appeal-decision/caseDecisionLetter'
-			},
-			{
-				path: 'representation/representationAttachments'
-			}
-		]
+		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+			return { path: f };
+		})
 	}
 };
 

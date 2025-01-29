@@ -389,18 +389,6 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the site visit type was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Site visit type has been selected</p>
-    </div>
-</div>"
-`;
-
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -455,8 +443,8 @@ aria-labelledby="govuk-notification-banner-title" data-module="govuk-notificatio
 exports[`appeal-details GET /:appealId should not render action links to the manage linked appeals page or the add linked appeal page in the linked appeals row, if the appeal is linked as a child of an external lead appeal 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -936,8 +924,8 @@ aria-labelledby="govuk-notification-banner-title" data-module="govuk-notificatio
 exports[`appeal-details GET /:appealId should render a Decision inset panel when the appealStatus is complete 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1405,8 +1393,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
 exports[`appeal-details GET /:appealId should render a child tag next to the appeal status tag if the appeal is a child 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1876,8 +1864,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
 exports[`appeal-details GET /:appealId should render a lead tag next to the appeal status tag if the appeal is a parent 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2352,6 +2340,10 @@ exports[`appeal-details GET /:appealId should render a page not found when the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
             <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
@@ -2364,8 +2356,8 @@ exports[`appeal-details GET /:appealId should render a page not found when the a
 exports[`appeal-details GET /:appealId should render action links to the manage linked appeals page and the add linked appeal page in the linked appeals row, if there are linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2856,8 +2848,8 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3320,8 +3312,8 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
 exports[`appeal-details GET /:appealId should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3795,8 +3787,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4275,8 +4267,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4755,8 +4747,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5220,8 +5212,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
 exports[`appeal-details GET /:appealId should render the case reference for each linked appeal in the linked appeals row, with each internal linked appeal item linking to the respective case details page, if there are linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5724,8 +5716,8 @@ data-module="govuk-header">
 exports[`appeal-details GET /:appealId should render the lead or child status after the case reference link of each linked appeal in the linked appeals row, if there are linked appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6200,8 +6192,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
 exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId with multiple linked/other appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6688,8 +6680,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
 exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId with no linked/other appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7148,8 +7140,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
 exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId with single linked/other appeals 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7631,8 +7623,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
 exports[`appeal-details GET /:appealId should render the received appeal details for a valid appealId without start date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -8106,8 +8098,8 @@ exports[`appeal-details should not render a back button 1`] = `
         <div class="govuk-width-container govuk-width-container">
             <main class="govuk-main-wrapper " id="main-content" role="main">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-                        <h1                         class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Case details</h1>
                     </div>
                 </div>
                 <div class="govuk-grid-row">

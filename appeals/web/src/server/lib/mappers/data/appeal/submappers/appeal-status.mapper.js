@@ -1,3 +1,5 @@
+import { mapStatusText } from '#lib/appeal-status.js';
+
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  * @typedef {import('#app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth
@@ -17,7 +19,13 @@ export const mapAppealStatus = ({ appealDetails }) => ({
 			classes: 'appeal-appeal-status'
 		},
 		statusTag: {
-			status: appealDetails?.appealStatus || '',
+			status: (() => {
+				if (!appealDetails?.appealStatus || !appealDetails?.appealType) {
+					return '';
+				}
+
+				return mapStatusText(appealDetails.appealStatus, appealDetails.appealType);
+			})(),
 			classes: 'govuk-!-margin-bottom-4'
 		}
 	}

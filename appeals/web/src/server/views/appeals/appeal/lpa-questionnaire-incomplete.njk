@@ -3,6 +3,7 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 {%- from "../components/add-another-reason.njk" import addAnotherReason -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set pageTitle = "Why is the LPA questionnaire incomplete" -%}
 
@@ -11,11 +12,9 @@
 {%- endset -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal {{ appeal.shortReference }}</span>
-		</div>
-	</div>
+	{{ pageHeading({
+		preHeading: 'Appeal ' + appeal.shortReference
+	}) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

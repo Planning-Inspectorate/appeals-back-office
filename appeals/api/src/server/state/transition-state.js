@@ -16,7 +16,6 @@ import { AUDIT_TRAIL_PROGRESSED_TO_STATUS } from '#endpoints/constants.js';
  * @param {string} azureAdUserId
  * @param {AppealStatus[]} currentState
  * @param {string} trigger
- * @returns {Promise<void>}
  */
 const transitionState = async (appealId, appealType, azureAdUserId, currentState, trigger) => {
 	const currentStatus = currentState[0].status;

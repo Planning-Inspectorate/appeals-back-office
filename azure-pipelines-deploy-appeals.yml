@@ -37,7 +37,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.18.2
+      ref: refs/tags/release/3.20.0
   pipelines:
     - pipeline: build
       source: Build
@@ -94,14 +94,16 @@ extends:
                       DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                     script: npm run db:migrate:prod
                     workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-appeals-bo-api-$(ENVIRONMENT)
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: back-office/back-office-appeals-api
                   ${{ if eq(parameters.slotDeployment, true) }}:
-                    appSlotName: staging
+                    slot: staging
+                  ${{ else }}:
+                    slot: default
               - script: |
                   if [[ ${{ parameters.slotDeployment }} == "True" ]]; then
                     echo "Verifying API Version on slot (using git hash $(resources.pipeline.build.sourceCommit))..."
@@ -117,14 +119,16 @@ extends:
             condition: eq(${{ parameters.deployAppealsWeb }}, true)
             steps:
               - checkout: self
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-appeals-bo-web-$(ENVIRONMENT)
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: back-office/appeals-web
                   ${{ if eq(parameters.slotDeployment, true) }}:
-                    appSlotName: staging
+                      slot: staging
+                  ${{ else }}:
+                      slot: default
               - script: |
                   if [[ ${{ parameters.slotDeployment }} == "True" ]]; then
                     echo "Verifying Web Version on slot (using git hash $(resources.pipeline.build.sourceCommit))..."

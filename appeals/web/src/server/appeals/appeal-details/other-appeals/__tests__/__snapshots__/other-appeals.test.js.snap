@@ -3,7 +3,7 @@
 exports[`other-appeals GET /other-appeals/add should render the "What is the appeal reference?" page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -25,12 +25,12 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
 exports[`other-appeals GET /other-appeals/confirm should render the "Related appeal details" page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Related appeal details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Related appeal details</h1>
-                </div>
-            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-top-5 govuk-!-margin-bottom-6">
                     <dl class="govuk-summary-list">
@@ -92,7 +92,7 @@ exports[`other-appeals GET /other-appeals/confirm should render the "Related app
 exports[`other-appeals GET /other-appeals/manage should render the "Do you want to remove the relationship?" page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -142,7 +142,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -177,8 +177,8 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
 exports[`other-appeals GET /other-appeals/manage should render the "Manage related appeals" page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal 351062</span>
-            <h1             class="govuk-heading-xl govuk-!-margin-bottom-3">Manage related appeals</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Manage related appeals</h1>
         </div>
     </div>
     <h2 class="govuk-!-margin-top-6">Related appeals</h2>
@@ -228,7 +228,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -265,7 +265,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -302,7 +302,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -339,7 +339,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -373,11 +373,15 @@ exports[`other-appeals POST /other-appeals/confirm should re-render the "Related
                     </div>
                 </div>
             </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full"><span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal APP/Q9999/D/21/351062</span>
-                    <h1                     class="govuk-heading-xl govuk-!-margin-bottom-3">Related appeal details</h1>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Related appeal details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full govuk-!-margin-top-5 govuk-!-margin-bottom-6">
                     <dl class="govuk-summary-list">

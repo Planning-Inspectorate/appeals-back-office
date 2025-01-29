@@ -18,6 +18,8 @@ export const pageHeading = 'Case details';
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('./accordions/index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
+ * @param {*} [appellantFinalComments]
+ * @param {*} [lpaFinalComments]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
@@ -26,9 +28,18 @@ export async function appealDetailsPage(
 	currentRoute,
 	session,
 	request,
-	representationTypesAwaitingReview
+	representationTypesAwaitingReview,
+	appellantFinalComments,
+	lpaFinalComments
 ) {
-	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session);
+	const mappedData = await initialiseAndMapAppealData(
+		appealDetails,
+		currentRoute,
+		session,
+		false,
+		appellantFinalComments,
+		lpaFinalComments
+	);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
@@ -58,6 +69,7 @@ export async function appealDetailsPage(
 		title: `Case details - ${shortAppealReference}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Case details',
+		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents
 	};
 }

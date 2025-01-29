@@ -7,15 +7,19 @@ import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	VALIDATION_OUTCOME_COMPLETE
 } from '../constants.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '#utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/appeal-formatter.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import config from '#config/config.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -83,6 +87,21 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			appealStatus,
 			validationOutcome.name
 		);
+
+		const updatedAppeal = await appealRepository.getAppealById(appealId);
+		if (
+			updatedAppeal &&
+			arrayOfStatusesContainsString(updatedAppeal?.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
+			updatedAppeal?.siteVisit
+		) {
+			await transitionState(
+				appealId,
+				appealType,
+				azureAdUserId,
+				updatedAppeal.appealStatus,
+				VALIDATION_OUTCOME_COMPLETE
+			);
+		}
 	} else {
 		createAuditTrail({
 			appealId,
@@ -101,21 +120,10 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			);
 		}
 
-		const recipientEmail = appeal.lpa?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.lpaqComplete, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
-		}
+		// @ts-ignore
+		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpa');
+		// @ts-ignore
+		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'appellant');
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -129,8 +137,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			}
 
 			const incompleteReasonsList = getFormattedReasons(
-				// @ts-ignore
-				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected
+				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected ?? []
 			);
 
 			try {
@@ -151,5 +158,34 @@ const updateLPAQuestionnaireValidationOutcome = async (
 
 	return timetable?.lpaQuestionnaireDueDate;
 };
+
+/**
+ *
+ * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param { Appeal } appeal
+ * @param { string } siteAddress
+ * @param { string } userType
+ * @returns {Promise<void>}
+ */
+async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, userType) {
+	// @ts-ignore
+	const recipientEmail = appeal[userType]?.email;
+
+	const template = config.govNotify.template.lpaqComplete[userType];
+	if (!recipientEmail) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	}
+
+	try {
+		await notifyClient.sendEmail(template, recipientEmail, {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress
+		});
+	} catch (error) {
+		logger.error(error);
+		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+	}
+}
 
 export { checkLPAQuestionnaireExists, updateLPAQuestionnaireValidationOutcome };

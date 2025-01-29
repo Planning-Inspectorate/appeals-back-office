@@ -2,6 +2,7 @@
 
 {%- from "govuk/components/radios/macro.njk" import govukRadios -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set pageTitle = "Are you sure?" -%}
 
@@ -10,12 +11,10 @@
 {%- endset -%}
 
 {%- block pageHeading -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-l govuk-!-margin-bottom-3">Appeal {{ appeal.shortReference }}</span>
-			<h1 class="govuk-heading-l govuk-!-margin-bottom-8">Assign a new {{ 'inspector' if isInspector else 'case officer' }}?</h1>
-		</div>
-	</div>
+	{{ pageHeading({
+    preHeading: "Appeal " + appeal.shortReference,
+    heading: "Assign a new " + ("inspector" if isInspector else "case officer") + "?"
+  }) }}
 {%- endblock -%}
 
 {%- block pageContent -%}

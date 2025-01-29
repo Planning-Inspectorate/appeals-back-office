@@ -39,7 +39,7 @@ const updateAppealById = async (req, res) => {
 
 	try {
 		if (appealDetailService.assignedUserType({ caseOfficer, inspector })) {
-			await appealDetailService.assignUser(appealId, { caseOfficer, inspector }, azureAdUserId);
+			await appealDetailService.assignUser(appeal, { caseOfficer, inspector }, azureAdUserId);
 		} else {
 			await appealDetailService.updateAppealDetails(
 				{

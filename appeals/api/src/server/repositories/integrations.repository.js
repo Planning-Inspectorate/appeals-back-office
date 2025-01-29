@@ -6,6 +6,7 @@ import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.mappers/document-folder.mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 /**
@@ -53,7 +54,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 /**
  *
  * @param {string} caseReference
- * @param {import('#db-client').Prisma.LPAQuestionnaireCreateInput} data
+ * @param {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
  * @returns
@@ -97,6 +98,41 @@ export const createOrUpdateLpaQuestionnaire = async (
 
 		return {
 			appeal,
+			documentVersions
+		};
+	});
+
+	return transaction;
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>} data
+ * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} attachments
+ * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
+ */
+export const createRepresentation = async (appeal, data, attachments) => {
+	const transaction = await databaseConnector.$transaction(async (tx) => {
+		const rep = await tx.representation.create({
+			data: {
+				...data,
+				appeal: {
+					connect: { id: appeal.id }
+				}
+			}
+		});
+
+		const documentVersions = await setDocumentVersions(
+			tx,
+			appeal.id,
+			appeal.reference,
+			attachments
+		);
+		await attachToRepresentation(tx, rep.id, documentVersions);
+
+		return {
+			rep,
 			documentVersions
 		};
 	});
@@ -233,4 +269,25 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		});
 	}
 	return [];
+};
+
+/**
+ *
+ * @param {import('#db-client').Prisma.TransactionClient} tx
+ * @param {number} repId
+ * @param {import('#db-client').DocumentVersion[]} documents
+ * @returns
+ */
+const attachToRepresentation = async (tx, repId, documents) => {
+	if (documents) {
+		await tx.representationAttachment.createMany({
+			data: documents.map((document) => {
+				return {
+					documentGuid: document.documentGuid,
+					version: document.version,
+					representationId: repId
+				};
+			})
+		});
+	}
 };

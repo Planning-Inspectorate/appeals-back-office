@@ -225,7 +225,6 @@ export function addLinkedAppealCheckAndConfirmPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Details of the appeal you're linking to`,
-		headingClasses: 'govuk-heading-l',
 		pageComponents: [
 			{
 				type: 'summary-list',

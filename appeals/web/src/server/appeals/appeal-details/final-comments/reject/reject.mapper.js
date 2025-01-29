@@ -21,8 +21,7 @@ export function rejectFinalCommentsPage(appealDetails, finalCommentsType) {
 		heading: 'Why are you rejecting the comment?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
 		preHeading: `Appeal ${shortReference}`,
-		hint: 'Select all that apply.',
-		headingClasses: 'govuk-heading-l'
+		hint: 'Select all that apply.'
 	};
 
 	return pageContent;
@@ -128,7 +127,6 @@ export const confirmRejectFinalCommentPage = (
 		heading: `Check details and reject ${formatFinalCommentsTypeText(
 			finalCommentsType
 		)} final comments`,
-		headingClasses: 'govuk-heading-l',
 		forceRenderSubmitButton: true,
 		submitButtonText: `Reject ${formatFinalCommentsTypeText(finalCommentsType)} final comments`,
 		pageComponents

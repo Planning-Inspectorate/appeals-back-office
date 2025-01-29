@@ -1,13 +1,19 @@
 import userRepository from '#repositories/user.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { USER_TYPE_CASE_OFFICER, USER_TYPE_INSPECTOR } from '#endpoints/constants.js';
+import {
+	USER_TYPE_CASE_OFFICER,
+	USER_TYPE_INSPECTOR,
+	VALIDATION_OUTCOME_COMPLETE
+} from '#endpoints/constants.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import { formatAppeals } from '#endpoints/appeals/appeals.formatter.js';
+import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
  * @param {string | number | null} [value]
@@ -22,9 +28,12 @@ const hasValueOrIsNull = (value) => Boolean(value) || value === null;
 const assignedUserType = ({ caseOfficer, inspector }) => {
 	if (hasValueOrIsNull(caseOfficer)) {
 		return USER_TYPE_CASE_OFFICER;
-	} else if (hasValueOrIsNull(inspector)) {
+	}
+
+	if (hasValueOrIsNull(inspector)) {
 		return USER_TYPE_INSPECTOR;
 	}
+
 	return null;
 };
 
@@ -60,6 +69,8 @@ export const mapAppealStatuses = (rawStatuses) => {
 		APPEAL_CASE_STATUS.VALIDATION,
 		APPEAL_CASE_STATUS.READY_TO_START,
 		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		APPEAL_CASE_STATUS.EVENT,
+		APPEAL_CASE_STATUS.AWAITING_EVENT,
 		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 		APPEAL_CASE_STATUS.COMPLETE,
@@ -76,16 +87,14 @@ export const mapAppealStatuses = (rawStatuses) => {
 				)
 		)
 	];
-	const orderedStatuses = statusOrder.filter((status) => extractedStatuses.includes(status));
 
-	// Now add all those statuses not listed above in the statusOrder
-	extractedStatuses.forEach((status) => {
-		if (!orderedStatuses.includes(status)) {
-			orderedStatuses.push(status);
-		}
-	});
-
-	return orderedStatuses;
+	// return the two arrays above with duplicates removed
+	return Array.from(
+		new Set([
+			...statusOrder.filter((status) => extractedStatuses.includes(status)),
+			...extractedStatuses
+		])
+	);
 };
 
 /**
@@ -202,4 +211,27 @@ const retrieveAppealListData = async (
 	};
 };
 
-export { assignUser, hasValueOrIsNull, assignedUserType, retrieveAppealListData };
+/** @param {string} azureAdUserId */
+async function updateCompletedEvents(azureAdUserId) {
+	const appealsToUpdate = await appealRepository.getAppealsWithCompletedEvents();
+
+	await Promise.all(
+		appealsToUpdate.map((appeal) =>
+			transitionState(
+				appeal.id,
+				appeal.appealType,
+				azureAdUserId,
+				appeal.appealStatus,
+				VALIDATION_OUTCOME_COMPLETE
+			)
+		)
+	);
+}
+
+export {
+	assignUser,
+	hasValueOrIsNull,
+	assignedUserType,
+	retrieveAppealListData,
+	updateCompletedEvents
+};

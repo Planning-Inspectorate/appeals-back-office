@@ -3,7 +3,7 @@
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
-import { mapper } from '#appeals/appeal-details/interested-party-comments/common/date-submitted.js';
+import { mapper } from '#appeals/appeal-details/representations/interested-party-comments/common/date-submitted.js';
 
 /**
  * @param {object} options

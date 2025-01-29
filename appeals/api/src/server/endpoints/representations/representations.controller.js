@@ -3,6 +3,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import representationRepository from '#repositories/representation.repository.js';
+import * as CONSTANTS from '#endpoints/constants.js';
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import {
@@ -13,6 +14,11 @@ import {
 } from '#endpoints/constants.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -48,6 +54,7 @@ export const getRepresentations = async (req, res) => {
 
 		return res.send({
 			itemCount: itemCount,
+			// @ts-ignore
 			items: comments.map(formatRepresentation),
 			page: pageNumber,
 			pageCount: getPageCount(itemCount, pageSize),
@@ -125,6 +132,7 @@ export const addRedactedRepresentation = async (req, res) => {
 		});
 	}
 
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Update);
 	return res.send(formatRepresentation(rep));
 };
 
@@ -135,7 +143,7 @@ export const addRedactedRepresentation = async (req, res) => {
  */
 export async function updateRepresentation(request, response) {
 	const {
-		params: { repId },
+		params: { appealId, repId },
 		body: { status, allowResubmit }
 	} = request;
 
@@ -151,20 +159,35 @@ export async function updateRepresentation(request, response) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
-	const updatedRep = await representationService.updateRepresentation(
-		parseInt(repId),
-		request.body
-	);
+	await representationService.updateRepresentation(parseInt(repId), request.body);
+
+	const updatedRep = await representationService.getRepresentation(parseInt(repId));
+
+	if (status !== rep.status) {
+		await createAuditTrail({
+			appealId: parseInt(appealId),
+			azureAdUserId: String(request.get('azureAdUserId')),
+			details:
+				// @ts-ignore
+				stringTokenReplacement(
+					CONSTANTS[
+						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
+					],
+					[status]
+				)
+		});
+	}
 
 	if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
 		await representationService.notifyRejection(
 			request.notifyClient,
 			request.appeal,
-			rep,
+			updatedRep,
 			allowResubmit
 		);
 	}
 
+	await broadcasters.broadcastRepresentation(updatedRep.id, EventType.Update);
 	return response.send(formatRepresentation(updatedRep));
 }
 
@@ -180,6 +203,7 @@ export const createRepresentation = (representationType) => async (req, res) => 
 		...req.body
 	});
 
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	return res.send(rep);
 };
 

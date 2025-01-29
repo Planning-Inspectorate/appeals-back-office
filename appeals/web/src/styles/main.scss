@@ -37,17 +37,12 @@
 @use "6-skeleton/container";
 
 // 7 - COMPONENTS
-@use "7-components/InfoBox/InfoBox" as InfoBox;
-@use "7-components/DashboardBox/DashboardBox" as DashboardBox;
-@use "7-components/ListMenu/ListMenu" as ListMenu;
 @use "7-components/add-another";
 @use "7-components/app-header";
 @use "7-components/file-upload";
-@use "7-components/files-list";
 @use "7-components/autocomplete";
 @use "7-components/button-group";
 @use "7-components/header";
-@use "7-components/masthead";
 @use "7-components/related";
 @use "7-components/summary-list";
 @use "7-components/table";

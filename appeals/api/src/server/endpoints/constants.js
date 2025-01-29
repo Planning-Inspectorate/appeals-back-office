@@ -13,6 +13,16 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED =
+	'LPA statement status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_UPDATED =
+	'Appellant statement status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_COMMENT_STATUS_UPDATED = 'Comment status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_UPDATED =
+	'LPA final comment status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_UPDATED =
+	'Appellant final comment status updated to {replacement0}';
+
 export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
 
@@ -42,6 +52,7 @@ export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
 export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
 	'Document {replacement0} has been renamed as {replacement1}';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
+export const AUDIT_TRAIL_REP_IMPORT_MSG = 'A representation was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =
@@ -144,6 +155,7 @@ export const ERROR_GOV_NOTIFY_CONNECTIVITY =
 export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
 export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
+export const ERROR_INVALID_APPEAL_TYPE_REP = `Representations not accepted on this appeal type`;
 export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_INCOMPLETE}, ${VALIDATION_OUTCOME_INVALID}, ${VALIDATION_OUTCOME_VALID}`;
 export const ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_COMPLETE}, ${VALIDATION_OUTCOME_INCOMPLETE}`;
 export const ERROR_INVALID_SITE_VISIT_TYPE =
@@ -199,6 +211,7 @@ export const ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED =
 export const ERROR_INVALID_APPELLANT_CASE_DATA =
 	'The integration payload APPELLANT_CASE is invalid.';
 export const ERROR_INVALID_LPAQ_DATA = 'The integration payload LPA_QUESTIONNAIRE is invalid.';
+export const ERROR_INVALID_REP_DATA = 'The integration payload APPEAL_REPRESENTATION is invalid.';
 export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;

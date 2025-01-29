@@ -20,6 +20,7 @@ import { mapSiteAccess } from './submappers/map-site-access.js';
 import { mapSiteNotice } from './submappers/map-site-notice.js';
 import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
 import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
+import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 
 export const submaps = {
 	affectsListedBuildingDetails: mapAffectsListedBuildingDetails,
@@ -30,6 +31,7 @@ export const submaps = {
 	siteNotice: mapSiteNotice,
 	lettersToNeighbours: mapLettersToNeighbours,
 	pressAdvert: mapPressAdvert,
+	appealNotification: mapAppealNotification,
 	notificationMethods: mapNotificationMethods,
 	representations: mapRepresentations,
 	officersReport: mapOfficersReport,

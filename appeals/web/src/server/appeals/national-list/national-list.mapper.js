@@ -4,6 +4,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { mapStatusText } from '#lib/appeal-status.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -380,7 +381,7 @@ export function nationalListPage(
 										{
 											type: 'status-tag',
 											parameters: {
-												status: appeal.appealStatus || 'ERROR'
+												status: mapStatusText(appeal.appealStatus, appeal.appealType)
 											}
 										}
 									]
@@ -396,7 +397,6 @@ export function nationalListPage(
 	const pageContent = {
 		title: 'All cases',
 		heading: 'Search all cases',
-		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
 		pageComponents: [...searchPageContent, ...appealsDataPageContent]
 	};
 

@@ -96,7 +96,6 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'LPA statement',
-		headingClasses: 'govuk-heading-l',
 		pageComponents
 	};
 
@@ -159,7 +158,6 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
-		headingClasses: 'govuk-heading-l',
 		submitButtonText: 'Continue',
 		pageComponents
 	};

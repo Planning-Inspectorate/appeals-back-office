@@ -1,4 +1,8 @@
-import { validAppellantCase, validLpaQuestionnaire } from '#tests/integrations/mocks.js';
+import {
+	validAppellantCase,
+	validLpaQuestionnaire,
+	validRepresentationIp
+} from '#tests/integrations/mocks.js';
 import { createRepRequest, repUpdateRequest, repResponse } from '#tests/representations/mocks.js';
 import {
 	folder,
@@ -95,6 +99,9 @@ export const spec = {
 		QuestionnaireData: {
 			...validLpaQuestionnaire
 		},
+		RepresentationData: {
+			...validRepresentationIp
+		},
 		DecisionInfo: {
 			outcome: 'allowed',
 			documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
@@ -190,6 +197,28 @@ export const spec = {
 			page: 1,
 			pageCount: 27,
 			pageSize: 30
+		},
+		ManyAppeals: {
+			itemCount: 57,
+			items: [
+				{
+					appealId: 1,
+					appealReference: 'APP/Q9999/D/21/235348',
+					appealSite: {
+						addressLine1: '19 Beauchamp Road',
+						town: 'Bristol',
+						county: 'Bristol',
+						postCode: 'BS7 8LQ'
+					},
+					appealStatus: 'awaiting_lpa_questionnaire',
+					appealType: 'household',
+					createdAt: '2024-02-16T11:43:27.096Z',
+					localPlanningDepartment: 'Wiltshire Council',
+					appellantCaseStatus: 'Incomplete',
+					lpaQuestionnaireStatus: 'Incomplete',
+					dueDate: '2024-06-18T00:00:00.000Z'
+				}
+			]
 		},
 		SingleAppealResponse: {
 			agent: {
