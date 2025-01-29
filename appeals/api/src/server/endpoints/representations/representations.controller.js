@@ -154,29 +154,20 @@ export async function updateRepresentation(request, response) {
 	await representationService.updateRepresentation(parseInt(repId), request.body);
 
 	const updatedRep = await representationService.getRepresentation(parseInt(repId));
+	if (!updatedRep) {
+		throw new Error(`failed to get representation with ID: ${repId}`);
+	}
 
 	if (!updatedRep) {
 		return response.status(500).send({});
 	}
 
 	if (status !== rep.status) {
-		let details = stringTokenReplacement(
-			// @ts-ignore
-			CONSTANTS[
-				`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
-			],
-			[status]
-		);
-
-		if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation) {
-			details =
-				// @ts-ignore
-				CONSTANTS[
-					`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-						updatedRep.representationType
-					)}_REDACTED_AND_ACCEPTED`
-				];
-		}
+    const details = status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation
+      // @ts-ignore
+      ? CONSTANTS[`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_REDACTED_AND_ACCEPTED`]
+      // @ts-ignore
+      : stringTokenReplacement(CONSTANTS[`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_REDACTED_AND_ACCEPTED`]);
 
 		await createAuditTrail({
 			appealId: parseInt(appealId),
