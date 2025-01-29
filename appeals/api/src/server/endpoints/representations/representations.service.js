@@ -2,6 +2,7 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import addressRepository from '#repositories/address.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
@@ -12,6 +13,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '#endpoints/constants.js';
 import { addDays } from '#utils/business-days.js';
 import formatDate from '#utils/date-formatter.js';
+import BackOfficeAppError from '#utils/app-error.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -37,9 +39,9 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 
 	return await representationRepository.getRepresentations(
 		appealId,
+		options,
 		pageNumber - 1,
-		pageSize,
-		options
+		pageSize
 	);
 };
 
@@ -256,4 +258,49 @@ export async function updateRepresentation(repId, payload) {
 	}
 
 	return updatedRep;
+}
+
+/** @typedef {(appeal: Appeal) => Promise<Representation[]>} PublishFunction */
+
+/** @type {PublishFunction} */
+export async function publishLpaStatements(appeal) {
+	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.STATEMENTS) {
+		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
+	}
+
+	const result = await representationRepository.updateRepresentations(
+		appeal.id,
+		{
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			OR: [
+				{ status: APPEAL_REPRESENTATION_STATUS.VALID },
+				{ status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE }
+			]
+		},
+		{
+			status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		}
+	);
+
+	return result;
+}
+
+/** @type {PublishFunction} */
+export async function publishFinalComments(appeal) {
+	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
+		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
+	}
+
+	const result = await representationRepository.updateRepresentations(
+		appeal.id,
+		{
+			representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
+			status: APPEAL_REPRESENTATION_STATUS.VALID
+		},
+		{
+			status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		}
+	);
+
+	return result;
 }

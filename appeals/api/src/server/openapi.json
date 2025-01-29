@@ -4146,6 +4146,57 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/reps/publish": {
+			"post": {
+				"tags": ["Representations"],
+				"description": "Publish LPA statement and final comments for appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"example": "lpa_statement",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/listed-buildings": {
 			"post": {
 				"tags": ["Listed buildings"],
