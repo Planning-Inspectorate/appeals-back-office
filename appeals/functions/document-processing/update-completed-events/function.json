@@ -3,7 +3,7 @@
 		{
 			"type": "timerTrigger",
 			"direction": "in",
-			"schedule": "0 * * * *"
+			"schedule": "0 0 * * * *"
 		}
 	],
 	"disabled": false
