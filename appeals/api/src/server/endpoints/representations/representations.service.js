@@ -18,17 +18,6 @@ import formatDate from '#utils/date-formatter.js';
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
 
-export class RepresentationTypeError extends Error {
-	/**
-	 * @param {string} representationTypeValue
-	 * */
-	constructor(representationTypeValue) {
-		super();
-
-		this.message = `unrecognised Representation type: ${representationTypeValue}`;
-	}
-}
-
 /**
  * @param {number} appealId
  * @param {number} pageNumber
@@ -40,7 +29,10 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 		options.representationType &&
 		!options.representationType.every((t) => Object.values(APPEAL_REPRESENTATION_TYPE).includes(t))
 	) {
-		throw new RepresentationTypeError(String(options.representationType));
+		throw new BackOfficeAppError(
+			`unrecognised Representation type: ${options?.representationType}`,
+			400
+		);
 	}
 
 	return await representationRepository.getRepresentations(
