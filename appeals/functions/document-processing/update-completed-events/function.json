@@ -2,6 +2,7 @@
 	"bindings": [
 		{
 			"type": "timerTrigger",
+			"name": "updateCompletedEventsTimer",
 			"direction": "in",
 			"schedule": "0 0 * * * *"
 		}
