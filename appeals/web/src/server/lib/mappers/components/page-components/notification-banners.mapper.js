@@ -263,10 +263,15 @@ export const notificationBannerDefinitions = {
 		pages: ['viewFinalComments'],
 		text: 'Supporting document added'
 	},
-	finalCommentsAcceptSuccess: {
+	appellantFinalCommentsAcceptSuccess: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Final comments accepted'
+		text: 'Appellant final comments accepted'
+	},
+	lpaFinalCommentsAcceptSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA final comments accepted'
 	}
 };
 

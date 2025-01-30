@@ -25,6 +25,8 @@ export const viewPersonalList = async (request, response) => {
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));
 
+	console.log('🚀 ~ viewPersonalList ~ assignedAppeals:', JSON.stringify(assignedAppeals));
+
 	if (!assignedAppeals) {
 		return response.status(404).render('app/404.njk');
 	}

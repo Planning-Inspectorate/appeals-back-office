@@ -38,13 +38,15 @@ export const postConfirmAcceptFinalComment = async (request, response) => {
 		} = request;
 
 		await setRepresentationStatus(
-				apiClient,
-				parseInt(appealId, 10),
-				currentRepresentation.id,
-				'valid'
-			)
+			apiClient,
+			parseInt(appealId, 10),
+			currentRepresentation.id,
+			'valid'
+		);
 
-		addNotificationBannerToSession(session, 'finalCommentsAcceptSuccess', appealId);
+		currentRepresentation.representationType === 'appellant_final_comment'
+			? addNotificationBannerToSession(session, 'appellantFinalCommentsAcceptSuccess', appealId)
+			: addNotificationBannerToSession(session, 'lpaFinalCommentsAcceptSuccess', appealId);
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
