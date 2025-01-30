@@ -41,32 +41,24 @@ export const getRepresentations = async (req, res) => {
 				.map(/** @type {string} */ (t) => t.trim())
 		: undefined;
 
-	try {
-		const { itemCount, comments } = await representationService.getRepresentations(
-			appeal.id,
-			pageNumber,
-			pageSize,
-			{
-				representationType,
-				status: status ? String(status) : undefined
-			}
-		);
-
-		return res.send({
-			itemCount: itemCount,
-			// @ts-ignore
-			items: comments.map(formatRepresentation),
-			page: pageNumber,
-			pageCount: getPageCount(itemCount, pageSize),
-			pageSize
-		});
-	} catch (/** @type {*} */ error) {
-		if (error instanceof representationService.RepresentationTypeError) {
-			return res.status(400).send({ errors: error.message });
+	const { itemCount, comments } = await representationService.getRepresentations(
+		appeal.id,
+		pageNumber,
+		pageSize,
+		{
+			representationType,
+			status: status ? String(status) : undefined
 		}
+	);
 
-		return res.status(500).send({ errors: error.message });
-	}
+	return res.send({
+		itemCount: itemCount,
+		// @ts-ignore
+		items: comments.map(formatRepresentation),
+		page: pageNumber,
+		pageCount: getPageCount(itemCount, pageSize),
+		pageSize
+	});
 };
 
 /**
