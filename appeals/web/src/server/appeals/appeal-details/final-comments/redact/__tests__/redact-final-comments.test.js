@@ -11,6 +11,18 @@ import supertest from 'supertest';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+const finalCommentsTypes = [
+	{
+		type: 'appellant',
+		label: 'appellant',
+		origin: 'citizen'
+	},
+	{
+		type: 'lpa',
+		label: 'LPA',
+		origin: 'lpa'
+	}
+];
 
 describe('final-comments', () => {
 	beforeEach(() => {
@@ -21,23 +33,11 @@ describe('final-comments', () => {
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
-				appealStatus: 'statements'
+				appealStatus: 'final_comments'
 			})
 			.persist();
 	});
-
 	afterEach(teardown);
-
-	const finalCommentsTypes = [
-		{
-			type: 'appellant',
-			label: 'appellant'
-		},
-		{
-			type: 'lpa',
-			label: 'LPA'
-		}
-	];
 
 	describe('GET /', () => {
 		for (const finalCommentsType of finalCommentsTypes) {
@@ -50,6 +50,8 @@ describe('final-comments', () => {
 				const response = await request.get(
 					`${baseUrl}/2/final-comments/${finalCommentsType.type}/redact`
 				);
+
+				expect(response.statusCode).toBe(200);
 
 				const element = parseHtml(response.text);
 
@@ -79,7 +81,7 @@ describe('final-comments', () => {
 
 	describe('POST /', () => {
 		for (const finalCommentsType of finalCommentsTypes) {
-			it(`should redirect to the check your answers page`, async () => {
+			it(`should redirect to the redact ${finalCommentsType.type} final comments check your answers page`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
 					.reply(200, finalCommentsForReview)
@@ -101,7 +103,7 @@ describe('final-comments', () => {
 
 	describe('GET /confirm', () => {
 		for (const finalCommentsType of finalCommentsTypes) {
-			it(`should render a 500 error page if redactedRepresentation is not present in the session`, async () => {
+			it(`should render a 500 error page if redactedRepresentation is not present in the session (${finalCommentsType.type} final comments)`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
 					.reply(200, finalCommentsForReview)
@@ -118,7 +120,7 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain('Sorry, there is a problem with the service</h1>');
 			});
 
-			it(`should render the check your answers page with the expected content if redactedRepresentation is present in the session`, async () => {
+			it(`should render the check your answers page with the expected content if redactedRepresentation is present in the session (${finalCommentsType.type} final comments)`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
 					.reply(200, finalCommentsForReview)
@@ -164,6 +166,42 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain(
 					`Accept ${finalCommentsType.label} final comments</button></form>`
 				);
+			});
+		}
+	});
+
+	describe('POST /confirm', () => {
+		for (const finalCommentsType of finalCommentsTypes) {
+			it(`should call the patch representation by ID endpoint with a status of 'valid' and redirect to the case details page (${finalCommentsType.type} final comments)`, async () => {
+				nock('http://test/')
+					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
+					.reply(200, finalCommentsForReview)
+					.persist();
+
+				const redactedRepresentation = 'Test redacted final comment text';
+				const redactPagePostResponse = await request
+					.post(`${baseUrl}/2/final-comments/${finalCommentsType.type}/redact`)
+					.send({
+						redactedRepresentation
+					});
+
+				expect(redactPagePostResponse.statusCode).toBe(302);
+
+				const mockedPatchRepresentationEndpoint = nock('http://test/')
+					.patch(`/appeals/2/reps/3670`)
+					.reply(200, {
+						...finalCommentsForReview.items[0],
+						origin: finalCommentsType.origin,
+						status: 'valid'
+					});
+
+				const response = await request
+					.post(`${baseUrl}/2/final-comments/${finalCommentsType.type}/redact/confirm`)
+					.send({});
+
+				expect(mockedPatchRepresentationEndpoint.isDone()).toBe(true);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(`Found. Redirecting to /appeals-service/appeal-details/2`);
 			});
 		}
 	});

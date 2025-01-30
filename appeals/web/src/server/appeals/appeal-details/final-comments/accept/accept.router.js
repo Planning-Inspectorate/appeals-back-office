@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { validateAppeal } from '../../appeal-details.middleware.js';
+import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 import { getAcceptFinalComment, postConfirmAcceptFinalComment } from './accept.controller.js';
 

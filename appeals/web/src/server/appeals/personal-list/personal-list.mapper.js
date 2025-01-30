@@ -12,6 +12,7 @@ import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -167,6 +168,7 @@ export function personalListPage(
 								  ]
 					},
 					{
+						classes: 'action-required',
 						html: mapAppealStatusToActionRequiredHtml(
 							appeal.appealId,
 							appeal.appealStatus,
@@ -177,7 +179,11 @@ export function personalListPage(
 								lpaQuestionnaire: appeal.documentationSummary?.lpaQuestionnaire.status,
 								lpaStatement: appeal.documentationSummary?.lpaStatement.status,
 								lpaFinalComments: appeal.documentationSummary?.lpaFinalComments.status,
-								appellantFinalComments: appeal.documentationSummary?.appellantFinalComments.status
+								lpaFinalCommentsRepresentationStatus:
+									appeal.documentationSummary?.lpaFinalComments.representationStatus,
+								appellantFinalComments: appeal.documentationSummary?.appellantFinalComments.status,
+								appellantFinalCommentsRepresentationStatus:
+									appeal.documentationSummary?.appellantFinalComments.representationStatus
 							},
 							appeal.dueDate,
 							isCaseOfficer
@@ -256,7 +262,9 @@ export function personalListPage(
  * @param {string} statuses.lpaQuestionnaire
  * @param {string} statuses.lpaStatement
  * @param {string} statuses.lpaFinalComments
+ * @param {string} statuses.lpaFinalCommentsRepresentationStatus
  * @param {string} statuses.appellantFinalComments
+ * @param {string} statuses.appellantFinalCommentsRepresentationStatus
  * @param {string} appealDueDate
  * @param {boolean} [isCaseOfficer]
  * @returns {string}
@@ -271,7 +279,9 @@ export function mapAppealStatusToActionRequiredHtml(
 		lpaQuestionnaire: lpaQuestionnaireStatus,
 		lpaStatement: lpaStatementStatus,
 		lpaFinalComments: lpaFinalCommentsStatus,
-		appellantFinalComments: appellantFinalCommentsStatus
+		lpaFinalCommentsRepresentationStatus,
+		appellantFinalComments: appellantFinalCommentsStatus,
+		appellantFinalCommentsRepresentationStatus
 	},
 	appealDueDate,
 	isCaseOfficer = false
@@ -345,12 +355,15 @@ export function mapAppealStatusToActionRequiredHtml(
 				return 'Awaiting final comments';
 			}
 
-			const lpaAction = lpaReceived
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
-				: null;
-			const appellantAction = appellantReceived
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a`
-				: null;
+			const lpaAction =
+				lpaReceived && isRepresentationReviewRequired(lpaFinalCommentsRepresentationStatus)
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					: null;
+			const appellantAction =
+				appellantReceived &&
+				isRepresentationReviewRequired(appellantFinalCommentsRepresentationStatus)
+					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					: null;
 
 			return [lpaAction, appellantAction].filter(Boolean).join('<br>');
 		}

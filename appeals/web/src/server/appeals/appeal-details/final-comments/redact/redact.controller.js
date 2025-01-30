@@ -1,9 +1,8 @@
 import logger from '#lib/logger.js';
 import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.mapper.js';
-import { patchFinalCommentRedaction } from './redact.service.js';
-import { setRepresentationStatus } from '../../representations/representations.service.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { redactAndAccept } from '#appeals/appeal-details/representations/representations.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getRedactFinalComment = async (request, response) => {
@@ -47,7 +46,7 @@ export const postRedactFinalComment = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getAcceptFinalComment = async (request, response) => {
+export const getConfirmRedactFinalComment = async (request, response) => {
 	const {
 		errors,
 		currentRepresentation,
@@ -81,19 +80,28 @@ export const getAcceptFinalComment = async (request, response) => {
 export const postConfirmRedactFinalComment = async (request, response) => {
 	try {
 		const {
-			params: { appealId, commentId },
+			params: { appealId, finalCommentsType },
 			session,
-			apiClient
+			apiClient,
+			currentRepresentation
 		} = request;
 
-		await Promise.all([
-			patchFinalCommentRedaction(apiClient, appealId, commentId, session.redactedRepresentation),
-			setRepresentationStatus(apiClient, parseInt(appealId, 10), parseInt(commentId, 10), COMMENT_STATUS.VALID)
-		]);
+		await redactAndAccept(
+			apiClient,
+			appealId,
+			currentRepresentation.id,
+			session.redactedRepresentation
+		);
 
 		delete session.redactedRepresentation;
 
-		addNotificationBannerToSession(session, 'finalCommentsRedactionSuccess', appealId);
+		addNotificationBannerToSession(
+			session,
+			'finalCommentsRedactionSuccess',
+			appealId,
+			undefined,
+			`${formatFinalCommentsTypeText(finalCommentsType, true)} final comments redacted and accepted`
+		);
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

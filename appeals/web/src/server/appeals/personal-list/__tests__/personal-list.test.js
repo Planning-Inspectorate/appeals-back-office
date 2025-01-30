@@ -4,7 +4,8 @@ import supertest from 'supertest';
 import {
 	assignedAppealsPage1,
 	assignedAppealsPage2,
-	assignedAppealsPage3
+	assignedAppealsPage3,
+	assignedAppealsInFinalCommentsStatus
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { mapAppealStatusToActionRequiredHtml } from '../personal-list.mapper.js';
@@ -222,6 +223,120 @@ describe('personal-list', () => {
 			expect(element.innerHTML).toContain('There are currently no cases assigned to you.</h1>');
 			expect(element.innerHTML).toContain('Search all cases</a>');
 		});
+
+		describe('final comments', () => {
+			it('should display "Awaiting final comments" text in the action required column for cases in final comments status with no received final comments', async () => {
+				nock('http://test/')
+					.get('/appeals/my-appeals?status=final_comments&pageNumber=1&pageSize=30')
+					.reply(200, assignedAppealsInFinalCommentsStatus);
+
+				const response = await request.get(
+					`${baseUrl}${'?appealStatusFilter=final_comments&pageNumber=1&pageSize=30'}`
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('action-required">Awaiting final comments</td>');
+			});
+
+			it('should display a "Review appellant final comments" link in the action required column for cases with appellant final comments awaiting review', async () => {
+				nock('http://test/')
+					.get('/appeals/my-appeals?status=final_comments&pageNumber=1&pageSize=30')
+					.reply(200, {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									appellantFinalComments: {
+										receivedAt: '2025-01-29T10:19:51.401Z',
+										representationStatus: 'awaiting_review',
+										status: 'received'
+									}
+								}
+							}
+						]
+					});
+
+				const response = await request.get(
+					`${baseUrl}${'?appealStatusFilter=final_comments&pageNumber=1&pageSize=30'}`
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a></td>'
+				);
+			});
+
+			it('should display a "Review LPA final comments" link in the action required column for cases with LPA final comments awaiting review', async () => {
+				nock('http://test/')
+					.get('/appeals/my-appeals?status=final_comments&pageNumber=1&pageSize=30')
+					.reply(200, {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									lpaFinalComments: {
+										receivedAt: '2025-01-29T10:19:51.401Z',
+										representationStatus: 'awaiting_review',
+										status: 'received'
+									}
+								}
+							}
+						]
+					});
+
+				const response = await request.get(
+					`${baseUrl}${'?appealStatusFilter=final_comments&pageNumber=1&pageSize=30'}`
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a></td>'
+				);
+			});
+
+			it('should display both "Review appellant final comments" and "Review LPA final comments" links in the action required column for cases with appellant and LPA final comments awaiting review', async () => {
+				nock('http://test/')
+					.get('/appeals/my-appeals?status=final_comments&pageNumber=1&pageSize=30')
+					.reply(200, {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									appellantFinalComments: {
+										receivedAt: '2025-01-29T10:19:51.401Z',
+										representationStatus: 'awaiting_review',
+										status: 'received'
+									},
+									lpaFinalComments: {
+										receivedAt: '2025-01-29T10:19:51.401Z',
+										representationStatus: 'awaiting_review',
+										status: 'received'
+									}
+								}
+							}
+						]
+					});
+
+				const response = await request.get(
+					`${baseUrl}${'?appealStatusFilter=final_comments&pageNumber=1&pageSize=30'}`
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a><br><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a></td>'
+				);
+			});
+		});
 	});
 });
 
@@ -240,7 +355,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -261,7 +378,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -282,7 +401,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			false
@@ -301,7 +422,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -322,7 +445,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			false
@@ -341,7 +466,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -360,7 +487,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: 'Incomplete',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -381,7 +510,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: 'Incomplete',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			false
@@ -400,7 +531,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -421,7 +554,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			false
@@ -440,7 +575,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'2024-01-01',
 			true
@@ -459,7 +596,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -480,7 +619,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true
@@ -501,7 +642,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 				lpaQuestionnaire: '',
 				lpaStatement: '',
 				lpaFinalComments: '',
-				appellantFinalComments: ''
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
 			},
 			'',
 			true

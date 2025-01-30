@@ -4,7 +4,10 @@ import {
 } from '@pins/appeals/constants/common.js';
 import { appealDetailsPage } from './appeal-details.mapper.js';
 import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
-import { getRepresentationCounts } from './representations/representations.service.js';
+import {
+	getRepresentationCounts,
+	getSingularRepresentationByType
+} from './representations/representations.service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
@@ -51,14 +54,32 @@ export const viewAppealDetails = async (request, response) => {
 		currentAppeal.appealId.toString()
 	);
 
-	const currentUrl = request.originalUrl;
+	let appellantFinalComments, lpaFinalComments;
+
+	if (currentAppeal.appealType === APPEAL_TYPE.W) {
+		[appellantFinalComments, lpaFinalComments] = await Promise.all([
+			getSingularRepresentationByType(
+				request.apiClient,
+				currentAppeal.appealId.toString(),
+				APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			),
+			getSingularRepresentationByType(
+				request.apiClient,
+				currentAppeal.appealId.toString(),
+				APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+			)
+		]);
+	}
+
 	const mappedPageContent = await appealDetailsPage(
 		currentAppeal,
 		appealCaseNotes,
-		currentUrl,
+		request.originalUrl,
 		session,
 		request,
-		representationTypesAwaitingReview
+		representationTypesAwaitingReview,
+		appellantFinalComments,
+		lpaFinalComments
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {

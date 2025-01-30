@@ -91,10 +91,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -134,10 +136,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -200,10 +204,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -294,10 +300,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -388,10 +396,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -482,10 +492,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -563,10 +575,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -646,10 +660,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},
@@ -726,10 +742,12 @@ describe('appeals list routes', () => {
 								},
 								lpaFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								},
 								appellantFinalComments: {
 									receivedAt: null,
+									representationStatus: null,
 									status: 'not_received'
 								}
 							},

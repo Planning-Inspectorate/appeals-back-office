@@ -18,8 +18,8 @@ export const pageHeading = 'Case details';
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('./accordions/index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
- * @param {*} [appellantFinalComments]
- * @param {*} [lpaFinalComments]
+ * @param {import('./representations/representations.service.js').Representation|undefined} [appellantFinalComments]
+ * @param {import('./representations/representations.service.js').Representation|undefined} [lpaFinalComments]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(

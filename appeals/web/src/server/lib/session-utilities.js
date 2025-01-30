@@ -31,6 +31,7 @@ export const addNotificationBannerToSession = (
 
 	return true;
 };
+
 /**
  * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} session
  * @param {number|string} appealId

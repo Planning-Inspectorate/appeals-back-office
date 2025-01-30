@@ -418,6 +418,42 @@ const newS78Appeals = [
 		validAt: getPastDate({ months: 9 }),
 		assignCaseOfficer: false,
 		agent: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 5 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 1 }),
+		validAt: getPastDate({ months: 5 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 7 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 3 }),
+		validAt: getPastDate({ months: 5 }),
+		assignCaseOfficer: true,
+		agent: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 8 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 7 }),
+		validAt: getPastDate({ months: 8 }),
+		assignCaseOfficer: false,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 10 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 6 }),
+		validAt: getPastDate({ months: 10 }),
+		assignCaseOfficer: false,
+		agent: true
 	})
 ];
 

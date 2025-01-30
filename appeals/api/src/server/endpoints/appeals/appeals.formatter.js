@@ -130,8 +130,9 @@ const formatDocumentationSummary = (appeal) => {
 				appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
 		},
 		ipComments: {
-			status:
-				appeal.representations?.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED
+			status: appeal.representations?.length
+				? DOCUMENT_STATUS_RECEIVED
+				: DOCUMENT_STATUS_NOT_RECEIVED
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),
@@ -141,13 +142,15 @@ const formatDocumentationSummary = (appeal) => {
 			status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			receivedAt: lpaFinalComments
 				? lpaFinalComments?.dateCreated && lpaFinalComments?.dateCreated.toISOString()
-				: null
+				: null,
+			representationStatus: lpaFinalComments ? lpaFinalComments.status : null
 		},
 		appellantFinalComments: {
 			status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			receivedAt: appellantFinalComments
 				? appellantFinalComments?.dateCreated && appellantFinalComments?.dateCreated.toISOString()
-				: null
+				: null,
+			representationStatus: appellantFinalComments ? appellantFinalComments.status : null
 		}
 	};
 };

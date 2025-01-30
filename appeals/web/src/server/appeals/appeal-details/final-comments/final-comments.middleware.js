@@ -1,4 +1,4 @@
-import { getSingularRepresentationByType } from '../representations/representations.service.js';
+import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { getAttachmentsFolder } from './final-comments.service.js';
 

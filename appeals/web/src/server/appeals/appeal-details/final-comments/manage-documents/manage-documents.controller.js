@@ -9,7 +9,7 @@ import {
 	renderManageFolder
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

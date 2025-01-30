@@ -8,7 +8,7 @@ import { permissionNames } from '#environment/permissions.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import * as controller from './manage-documents.controller.js';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
-import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
+import * as documentsValidators from '#appeals/appeal-documents/appeal-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

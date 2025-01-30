@@ -22,6 +22,7 @@ import {
 	activeDirectoryUsersData,
 	text300Characters,
 	text301Characters,
+	finalCommentsForReview,
 	appellantFinalCommentsAwaitingReview,
 	lpaFinalCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
@@ -1100,78 +1101,6 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render an important notification banner when the appeal has unreviewed appellant final comments', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2,
-						appealStatus: 'final_comments'
-					});
-				nock('http://test/').get('/appeals/2/reps/count?status=awaiting_review').reply(200, {
-					statement: 0,
-					comment: 0,
-					lpa_final_comment: 0,
-					appellant_final_comment: 1
-				});
-				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
-				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
-
-				const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(unprettifiedElementHtml).toContain('Important</h3>');
-				expect(unprettifiedElementHtml).toContain(
-					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
-				);
-				expect(unprettifiedElementHtml).not.toContain(
-					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).not.toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
-				);
-			});
-
-			it('should render an important notification banner when the appeal has unreviewed LPA final comments', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2,
-						appealStatus: 'final_comments'
-					});
-				nock('http://test/').get('/appeals/2/reps/count?status=awaiting_review').reply(200, {
-					statement: 0,
-					comment: 0,
-					lpa_final_comment: 1,
-					appellant_final_comment: 0
-				});
-				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
-				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
-
-				const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(unprettifiedElementHtml).toContain('Important</h3>');
-				expect(unprettifiedElementHtml).toContain(
-					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
-				);
-				expect(unprettifiedElementHtml).not.toContain(
-					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).not.toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
-				);
-			});
-
 			it('should render important notification banners when the appeal has unreviewed appellant and LPA final comments', async () => {
 				nock('http://test/')
 					.get('/appeals/2')
@@ -1284,6 +1213,140 @@ describe('appeal-details', () => {
 				expect(response.statusCode).toBe(200);
 				const notificationBannerElement = response.text.includes('govuk-notification-banner');
 				expect(notificationBannerElement).toBe(false);
+			});
+
+			describe('final comments', () => {
+				const appealId = 3;
+				const testCases = [
+					{
+						name: 'appellant',
+						importantBannerHeading: 'Appellant final comments awaiting review',
+						successBannerHeading: 'Appellant final comments redacted and accepted',
+						visuallyHiddenText: 'appellant final comments',
+						origin: 'citizen'
+					},
+					{
+						name: 'lpa',
+						importantBannerHeading: 'LPA final comments awaiting review',
+						successBannerHeading: 'LPA final comments redacted and accepted',
+						visuallyHiddenText: 'L P A final comments',
+						origin: 'lpa'
+					}
+				];
+
+				beforeEach(() => {
+					nock.cleanAll();
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							appealStatus: 'final_comments'
+						})
+						.persist();
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+						.reply(200, finalCommentsForReview)
+						.persist();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+						.reply(200, finalCommentsForReview)
+						.persist();
+				});
+
+				for (const testCase of testCases) {
+					it(`should render an "${testCase.importantBannerHeading}" important notification banner when the appeal has unreviewed ${testCase.name} final comments`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								appealId,
+								appealStatus: 'final_comments'
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+							.reply(200, {
+								statement: 0,
+								comment: 0,
+								lpa_final_comment: 1,
+								appellant_final_comment: 1
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						const unprettifiedElementHtml = parseHtml(response.text, {
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(unprettifiedElementHtml).toContain('Important</h3>');
+						expect(unprettifiedElementHtml).toContain(
+							`<p class="govuk-notification-banner__heading">${testCase.importantBannerHeading}</p>`
+						);
+						expect(unprettifiedElementHtml).toContain(
+							`<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/final-comments/${testCase.name}" data-cy="banner-review-${testCase.name}-final-comments">Review <span class="govuk-visually-hidden">${testCase.visuallyHiddenText}</span></a></p>`
+						);
+					});
+
+					it(`should render an "${testCase.successBannerHeading}" success notification banner, and not render an "${testCase.importantBannerHeading}" notification banner, when an ${testCase.name} final comment is redacted and accepted`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+							.reply(200, {
+								statement: 0,
+								comment: 0,
+								lpa_final_comment: 0,
+								appellant_final_comment: 0
+							});
+
+						const redactedRepresentation = 'Test redacted final comment text';
+						const redactPagePostResponse = await request
+							.post(`${baseUrl}/${appealId}/final-comments/${testCase.name}/redact`)
+							.send({
+								redactedRepresentation
+							});
+
+						expect(redactPagePostResponse.statusCode).toBe(302);
+
+						nock('http://test/')
+							.patch(`/appeals/${appealId}/reps/3670`)
+							.reply(200, {
+								...finalCommentsForReview.items[0],
+								origin: testCase.origin,
+								status: 'valid'
+							});
+
+						const confirmRedactPagePostResponse = await request
+							.post(`${baseUrl}/${appealId}/final-comments/${testCase.name}/redact/confirm`)
+							.send({});
+
+						expect(confirmRedactPagePostResponse.statusCode).toBe(302);
+
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+							.reply(200, {
+								statement: 0,
+								comment: 0,
+								lpa_final_comment: 0,
+								appellant_final_comment: 0
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						const unprettifiedElementHtml = parseHtml(response.text, {
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(unprettifiedElementHtml).toContain('Success</h3>');
+						expect(unprettifiedElementHtml).toContain(
+							`<p class="govuk-notification-banner__heading">${testCase.successBannerHeading}</p>`
+						);
+						expect(unprettifiedElementHtml).not.toContain('Important</h3>');
+						expect(unprettifiedElementHtml).not.toContain(
+							`<p class="govuk-notification-banner__heading">${testCase.importantBannerHeading}</p>`
+						);
+					});
+				}
 			});
 		});
 		describe('Case notes', () => {
@@ -2003,6 +2066,7 @@ describe('appeal-details', () => {
 						documentationSummaryKey: 'appellantFinalComments',
 						reviewPageRoute: 'final-comments/appellant',
 						cyAttribute: 'review-appellant-final-comments',
+						viewCyAttribute: 'view-appellant-final-comments',
 						actionLinkHiddenText: 'appellant final comments'
 					},
 					{
@@ -2011,6 +2075,7 @@ describe('appeal-details', () => {
 						documentationSummaryKey: 'lpaFinalComments',
 						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
+						viewCyAttribute: 'view-lpa-final-comments',
 						actionLinkHiddenText: 'L P A final comments'
 					}
 				];
@@ -2056,7 +2121,8 @@ describe('appeal-details', () => {
 									...appealDataFullPlanning.documentationSummary,
 									[testCase.documentationSummaryKey]: {
 										status: 'not_received',
-										receivedAt: null
+										receivedAt: null,
+										representationStatus: null
 									}
 								}
 							});
@@ -2083,7 +2149,8 @@ describe('appeal-details', () => {
 									...appealDataFullPlanning.documentationSummary,
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
-										receivedAt: '2024-12-17T17:36:19.631Z'
+										receivedAt: '2024-12-17T17:36:19.631Z',
+										representationStatus: 'awaiting_review'
 									}
 								}
 							});
@@ -2098,6 +2165,147 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).toContain(
 							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
 						);
+					});
+
+					it(`should render an "${testCase.rowLabel}" row with a status of "Accepted", and the expected date in the "Received" column, and a "View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has valid/accepted ${testCase.name} final comments`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								appealId,
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[testCase.documentationSummaryKey]: {
+										status: 'received',
+										receivedAt: '2024-12-17T17:36:19.631Z',
+										representationStatus: 'valid'
+									}
+								}
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).toContain(
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+						);
+					});
+				}
+			});
+		});
+
+		describe('Timetable', () => {
+			describe('Final comments', () => {
+				const appealId = 3;
+				const testCases = [
+					{
+						name: 'appellant',
+						rowLabel: 'Appellant final comments due',
+						changePageRoute: 'appeal-timetables/appellant-final-comments'
+					},
+					{
+						name: 'lpa',
+						rowLabel: 'LPA final comments due',
+						changePageRoute: 'appeal-timetables/lpa-final-comments'
+					}
+				];
+
+				beforeEach(() => {
+					nock.cleanAll();
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							appealTimetable: {
+								appellantFinalCommentsDueDate: '2025-01-20T23:59:00.000Z',
+								lpaFinalCommentsDueDate: '2025-01-20T23:59:00.000Z'
+							}
+						});
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+						.reply(200, {
+							statement: 0,
+							comment: 0,
+							lpa_final_comment: 0,
+							appellant_final_comment: 0
+						});
+				});
+
+				for (const testCase of testCases) {
+					it(`should render an "${testCase.rowLabel}" row with the expected label, ${testCase.name} final comments due date, and a "Change" action link with the expected URL, if there are ${testCase.name} final comments awaiting review`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+							.reply(200, appellantFinalCommentsAwaitingReview);
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+							.reply(200, lpaFinalCommentsAwaitingReview);
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, {
+							rootElement: `.appeal-${testCase.name}-final-comments-due-date`,
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(unprettifiedHTML).toContain(
+							`<dt class="govuk-summary-list__key"> ${testCase.rowLabel}</dt>`
+						);
+						expect(unprettifiedHTML).toContain(
+							'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
+						);
+						expect(unprettifiedHTML).toContain(
+							`href="/appeals-service/appeal-details/${appealId}/${testCase.changePageRoute}" data-cy="change-${testCase.name}-final-comment-due-date"> Change<span class="govuk-visually-hidden"> ${testCase.rowLabel}</span></a>`
+						);
+					});
+
+					it(`should render an "${testCase.rowLabel}" row with the expected label, ${testCase.name} final comments due date, and no "Change" action link, if there are valid/accepted ${testCase.name} final comments`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+							.reply(200, {
+								...appellantFinalCommentsAwaitingReview,
+								items: [
+									{
+										...appellantFinalCommentsAwaitingReview.items[0],
+										status: 'valid'
+									}
+								]
+							});
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+							.reply(200, {
+								...lpaFinalCommentsAwaitingReview,
+								items: [
+									{
+										...lpaFinalCommentsAwaitingReview.items[0],
+										status: 'valid'
+									}
+								]
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, {
+							rootElement: `.appeal-${testCase.name}-final-comments-due-date`,
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(unprettifiedHTML).toContain(
+							`<dt class="govuk-summary-list__key"> ${testCase.rowLabel}</dt>`
+						);
+						expect(unprettifiedHTML).toContain(
+							'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
+						);
+						expect(unprettifiedHTML).not.toContain('<a class="govuk-link"');
 					});
 				}
 			});

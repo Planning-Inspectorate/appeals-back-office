@@ -2,7 +2,7 @@ import logger from '#lib/logger.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
 
-/** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**
@@ -74,7 +74,7 @@ export const postReviewFinalComments = async (request, response, next) => {
 				`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/reject`
 			);
 		}
-		
+
 		if (status === COMMENT_STATUS.VALID) {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/accept`

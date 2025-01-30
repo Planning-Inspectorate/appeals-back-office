@@ -41,8 +41,8 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 
 /**
  * @param {import('got').Got} apiClient
- * @param {number} appealId
- * @param {number} repId
+ * @param {number|string} appealId
+ * @param {number|string} repId
  * @param {string} status
  * @returns {Promise<Representation>}
  * */
@@ -51,7 +51,7 @@ export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
 
 /**
  * @param {import('got').Got} apiClient
- * @param {number} appealId
+ * @param {number|string} appealId
  * @param {number} repId
  * @param {string} redactedRepresentation
  * @returns {Promise<Representation>}

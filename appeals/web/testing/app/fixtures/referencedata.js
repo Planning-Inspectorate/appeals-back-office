@@ -306,12 +306,14 @@ export const appealData = {
 		appellantCase: {
 			status: 'received',
 			dueDate: '2024-10-02T10:27:06.626Z',
-			receivedAt: '2024-08-02T10:27:06.626Z'
+			receivedAt: '2024-08-02T10:27:06.626Z',
+			representationStatus: 'awaiting_review'
 		},
 		lpaQuestionnaire: {
 			status: 'not_received',
 			dueDate: '2024-10-11T10:27:06.626Z',
-			receivedAt: '2024-08-02T10:27:06.626Z'
+			receivedAt: '2024-08-02T10:27:06.626Z',
+			representationStatus: 'awaiting_review'
 		}
 	},
 	environmentalAssessment: {
@@ -1956,6 +1958,79 @@ export const assignedAppealsPage3 = {
 	pageSize: 1
 };
 
+export const assignedAppealsInFinalCommentsStatus = {
+	itemCount: 1,
+	items: [
+		{
+			appealId: 24281,
+			appealReference: '6024281',
+			appealSite: {
+				addressLine1: '8 The Chase',
+				postCode: 'BN14 0TT',
+				town: 'Findon'
+			},
+			appealStatus: 'final_comments',
+			appealType: 'Planning appeal',
+			createdAt: '2025-01-29T10:19:47.259Z',
+			localPlanningDepartment: 'Maidstone Borough Council',
+			lpaQuestionnaireId: 21447,
+			documentationSummary: {
+				appellantCase: {
+					dueDate: null,
+					receivedAt: '2025-01-29T10:19:47.259Z',
+					status: 'Valid'
+				},
+				appellantFinalComments: {
+					receivedAt: null,
+					representationStatus: null,
+					status: 'not_received'
+				},
+				ipComments: {
+					status: 'received'
+				},
+				lpaFinalComments: {
+					receivedAt: null,
+					representationStatus: null,
+					status: 'not_received'
+				},
+				lpaQuestionnaire: {
+					dueDate: '2024-07-05T22:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z',
+					status: 'received'
+				},
+				lpaStatement: {
+					receivedAt: '2025-01-29T10:19:51.271Z',
+					status: 'received'
+				}
+			},
+			dueDate: '2024-08-16T22:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 22293,
+				appellantFinalCommentsDueDate: '2024-08-16T22:59:00.000Z',
+				appellantStatementDueDate: '2024-08-02T22:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2024-08-02T22:59:00.000Z',
+				issueDeterminationDate: null,
+				lpaFinalCommentsDueDate: '2024-08-16T22:59:00.000Z',
+				lpaQuestionnaireDueDate: '2024-07-05T22:59:00.000Z',
+				lpaStatementDueDate: '2024-08-02T22:59:00.000Z',
+				s106ObligationDueDate: '2024-08-16T22:59:00.000Z'
+			},
+			isParentAppeal: false,
+			isChildAppeal: false,
+			commentCounts: {
+				awaiting_review: 4,
+				invalid: 3,
+				valid: 3
+			}
+		}
+	],
+	statuses: ['lpa_questionnaire', 'final_comments'],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const linkedAppeals = [
 	{
 		appealId: 5449,
@@ -2423,6 +2498,17 @@ export const interestedPartyCommentForReview = {
 		}
 	}
 };
+
+export const finalCommentsTypes = [
+	{
+		type: 'appellant',
+		label: 'appellant'
+	},
+	{
+		type: 'lpa',
+		label: 'LPA'
+	}
+];
 
 export const finalCommentsForReview = {
 	itemCount: 1,
