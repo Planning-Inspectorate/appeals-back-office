@@ -233,7 +233,7 @@ export const notificationBannerDefinitions = {
 	finalCommentsRedactionSuccess: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Final comments redacted'
+		text: 'Final comments redacted and accepted'
 	},
 	finalCommentsLPARejectionSuccess: {
 		type: 'success',

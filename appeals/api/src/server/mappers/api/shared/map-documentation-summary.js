@@ -3,7 +3,7 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { APPEAL_REPRESENTATION_TYPE, APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 import isFPA from '#utils/is-fpa.js';
 
@@ -23,6 +23,13 @@ export const mapDocumentationSummary = (data) => {
 		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 		) ?? null;
+
+	const appellantFinalComments = appeal.representations?.find(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+	);
+	const lpaFinalComments = appeal.representations?.find(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+	);
 
 	return {
 		appellantCase: {
@@ -50,23 +57,19 @@ export const mapDocumentationSummary = (data) => {
 				status: formatLpaStatementStatus(lpaStatement),
 				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null
 			},
-			appellantFinalComments: {
-				status: appeal.representations?.find(
-					(rep) =>
-						rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT &&
-						rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-				)
-					? DOCUMENT_STATUS_RECEIVED
-					: DOCUMENT_STATUS_NOT_RECEIVED
-			},
 			lpaFinalComments: {
-				status: appeal.representations?.find(
-					(rep) =>
-						rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT &&
-						rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-				)
-					? DOCUMENT_STATUS_RECEIVED
-					: DOCUMENT_STATUS_NOT_RECEIVED
+				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaFinalComments
+					? lpaFinalComments?.dateCreated && lpaFinalComments?.dateCreated.toISOString()
+					: null,
+				representationStatus: lpaFinalComments ? lpaFinalComments.status : null
+			},
+			appellantFinalComments: {
+				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantFinalComments
+					? appellantFinalComments?.dateCreated && appellantFinalComments?.dateCreated.toISOString()
+					: null,
+				representationStatus: appellantFinalComments ? appellantFinalComments.status : null
 			}
 		})
 	};

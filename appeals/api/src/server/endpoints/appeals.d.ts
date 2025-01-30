@@ -525,6 +525,7 @@ interface DocumentationSummaryEntry {
 	status: string;
 	dueDate?: Date | string | undefined | null;
 	receivedAt?: Date | string | undefined | null;
+	representationStatus?: string | undefined | null;
 }
 
 interface FolderInfo {

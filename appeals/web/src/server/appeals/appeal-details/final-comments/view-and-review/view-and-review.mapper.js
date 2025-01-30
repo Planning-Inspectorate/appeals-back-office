@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './page-components/common.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -17,41 +18,6 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const commentSummaryList = generateCommentsSummaryList(appealDetails.appealId, comment);
 
-	/** @type {PageComponent} */
-	const commentValidityRadioButtons = {
-		type: 'radios',
-		parameters: {
-			name: 'status',
-			idPrefix: 'status',
-			fieldset: {
-				legend: {
-					text: 'Review decision',
-					isPageHeading: false,
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			items: [
-				{
-					value: COMMENT_STATUS.VALID,
-					text: 'Accept final comments',
-					checked: comment?.status === COMMENT_STATUS.VALID
-				},
-				{
-					value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
-					text: 'Redact and accept final comments',
-					checked: false // This status isn't persisted so will always be unchecked
-				},
-				{
-					value: COMMENT_STATUS.INVALID,
-					text: 'Reject final comments',
-					checked:
-						comment?.status === COMMENT_STATUS.INVALID ||
-						(comment?.status === COMMENT_STATUS.AWAITING_REVIEW &&
-							session.rejectFinalComment?.commentId === comment.id)
-				}
-			]
-		}
-	};
 	const notificationBanners = buildNotificationBanners(
 		session,
 		'viewFinalComments',
@@ -60,20 +26,58 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 
 	const pageContent = {
 		title: `Review ${finalCommentsType} final comments`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Review ${finalCommentsType} final comments`,
 		submitButtonText: 'Continue',
-		pageComponents: [...notificationBanners, commentSummaryList, commentValidityRadioButtons]
+		pageComponents: [...notificationBanners, commentSummaryList]
 	};
+
+	if (isRepresentationReviewRequired(comment.status)) {
+		pageContent.pageComponents.push({
+			type: 'radios',
+			parameters: {
+				name: 'status',
+				idPrefix: 'status',
+				fieldset: {
+					legend: {
+						text: 'Review decision',
+						isPageHeading: false,
+						classes: 'govuk-fieldset__legend--m'
+					}
+				},
+				items: [
+					{
+						value: COMMENT_STATUS.VALID,
+						text: 'Accept final comments',
+						checked: comment?.status === COMMENT_STATUS.VALID
+					},
+					{
+						value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
+						text: 'Redact and accept final comments',
+						checked: false // This status isn't persisted so will always be unchecked
+					},
+					{
+						value: COMMENT_STATUS.INVALID,
+						text: 'Reject final comments',
+						checked:
+							comment?.status === COMMENT_STATUS.INVALID ||
+							(comment?.status === COMMENT_STATUS.AWAITING_REVIEW &&
+								session.rejectFinalComment?.commentId === comment.id)
+					}
+				]
+			}
+		});
+	}
 
 	return pageContent;
 }
 
 /**
  * @param {string} finalCommentsType
+ * @param {boolean} [capitaliseFirstLetter]
  * @returns {string}
  */
-export function formatFinalCommentsTypeText(finalCommentsType) {
-	return finalCommentsType === 'lpa' ? 'LPA' : 'appellant';
+export function formatFinalCommentsTypeText(finalCommentsType, capitaliseFirstLetter = false) {
+	return finalCommentsType === 'lpa' ? 'LPA' : `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
 }

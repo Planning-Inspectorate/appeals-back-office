@@ -37,7 +37,7 @@ export interface RepUpdateRequest {
 	/** @example "Some redacted text" */
 	redactedRepresentation?: string;
 	/** @example true */
-	siteVisitedRequest?: boolean;
+	siteVisitRequested?: boolean;
 }
 
 export interface CreateRepRequest {

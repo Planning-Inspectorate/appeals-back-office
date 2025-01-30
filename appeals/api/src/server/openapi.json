@@ -4646,7 +4646,7 @@
 						"type": "string",
 						"example": "Some redacted text"
 					},
-					"siteVisitedRequest": {
+					"siteVisitRequested": {
 						"type": "boolean",
 						"example": true
 					}

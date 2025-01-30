@@ -1,7 +1,7 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import { validateAppeal } from '../../../appeal-details.middleware.js';
-import { validateComment } from '../interested-party-comments.middleware.js';
+import { validateComment } from '#appeals/appeal-details/representations/interested-party-comments/interested-party-comments.middleware.js';
 import {
 	postConfirmRedactInterestedPartyComment,
 	postRedactInterestedPartyComment,

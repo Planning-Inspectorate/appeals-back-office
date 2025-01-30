@@ -9,7 +9,7 @@ import {
 	isValidRedactionStatus,
 	name as redactionStatusFieldName,
 	statusFormatMap
-} from '../../representations/interested-party-comments/common/redaction-status.js';
+} from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { patchRepresentationAttachments } from '../final-comments.service.js';
 

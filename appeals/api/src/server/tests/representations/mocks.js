@@ -18,7 +18,7 @@ export const repUpdateRequest = {
 	notes: 'Some notes',
 	allowResubmit: true,
 	redactedRepresentation: 'Some redacted text',
-	siteVisitedRequest: true
+	siteVisitRequested: true
 };
 
 export const repResponse = {

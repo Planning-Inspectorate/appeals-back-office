@@ -21,7 +21,8 @@ describe('redact', () => {
 				...appealDataFullPlanning,
 				appealId: 2,
 				appealStatus: 'statements'
-			});
+			})
+			.persist();
 
 		nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 

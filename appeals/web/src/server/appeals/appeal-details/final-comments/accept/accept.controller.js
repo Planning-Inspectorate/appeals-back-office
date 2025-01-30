@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { confirmAcceptFinalCommentPage } from './accept.mapper.js';
-import { setRepresentationStatus } from '../../representations/representations.service.js';
+import { setRepresentationStatus } from '#appeals/appeal-details/representations/representations.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -38,11 +38,11 @@ export const postConfirmAcceptFinalComment = async (request, response) => {
 		} = request;
 
 		await setRepresentationStatus(
-				apiClient,
-				parseInt(appealId, 10),
-				currentRepresentation.id,
-				'valid'
-			)
+			apiClient,
+			parseInt(appealId, 10),
+			currentRepresentation.id,
+			'valid'
+		);
 
 		addNotificationBannerToSession(session, 'finalCommentsAcceptSuccess', appealId);
 

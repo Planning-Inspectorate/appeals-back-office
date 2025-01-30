@@ -1,11 +1,11 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { validateAppeal } from '../../appeal-details.middleware.js';
+import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 import {
 	getRedactFinalComment,
 	postRedactFinalComment,
-	getAcceptFinalComment,
+	getConfirmRedactFinalComment,
 	postConfirmRedactFinalComment
 } from './redact.controller.js';
 
@@ -18,7 +18,7 @@ router
 
 router
 	.route('/confirm')
-	.get(validateAppeal, asyncHandler(getAcceptFinalComment))
+	.get(validateAppeal, asyncHandler(getConfirmRedactFinalComment))
 	.post(validateAppeal, asyncHandler(postConfirmRedactFinalComment));
 
 export default router;
