@@ -39,6 +39,7 @@ apps_config = {
       decision_is_invalid_appellant_id                                = "3de3de2a-f957-4657-9ae6-c54b6bb235f4"
       decision_is_invalid_lpa_id                                      = "8a71a1e7-45f4-4962-a5f2-324e7088f9ad"
       lpaq_complete_id                                                = "e89bf772-8275-4f21-98da-c9a5dd862120"
+      lpaq_complete_appellant_id                                      = "9713edc7-1d72-4c27-ba36-7352d177950c"
       lpaq_incomplete_id                                              = "f41e0e94-c410-4f8a-ad5d-3b8a9c169929"
       site_visit_change_accompanied_date_change_appellant_id          = "695939b8-5bd8-4ecc-92ae-167641d5408a"
       site_visit_change_accompanied_date_change_lpa_id                = "9c0fc905-6912-43a1-be4c-cc1f1e0303c2"
@@ -59,6 +60,8 @@ apps_config = {
       site_visit_schedule_unaccompanied_appellant_id                  = "3f3714f0-00f0-4fc8-8c49-551e4a844643"
       valid_appellant_case_id                                         = "76688636-beb1-4af5-8310-c99723c2ba41"
       comment_rejected_id                                             = "55b7ade6-1f47-4fa6-abca-0116874e7d14"
+      comment_rejected_appellant_id                                   = "03939380-0d9e-46fd-a80e-4390f9e04c78"
+      comment_rejected_lpa_id                                         = "d14c65ec-691d-4f5a-9b68-91fe0251b68d"
       comment_rejected_deadline_extended_id                           = "2dcee08f-d382-4b9f-ac45-95979d25cb5c"
     }
   }
