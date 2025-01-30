@@ -181,6 +181,16 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Timetable updated'
 	},
+	appellantFinalCommentsDueDateUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant final comments due date changed'
+	},
+	lpaFinalCommentsDueDateUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA final comments due date changed'
+	},
 	changePage: {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'ipComments']

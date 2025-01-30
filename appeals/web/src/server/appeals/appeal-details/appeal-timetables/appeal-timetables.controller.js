@@ -104,7 +104,19 @@ const processUpdateDueDate = async (request, response) => {
 				return response.status(500).render('app/500.njk');
 			}
 		}
-		addNotificationBannerToSession(request.session, 'timetableDueDateUpdated', appealId);
+
+		let bannerDefinitionKey = 'timetableDueDateUpdated';
+
+		switch (timetableType) {
+			case 'lpa-final-comments':
+				bannerDefinitionKey = 'lpaFinalCommentsDueDateUpdated';
+				break;
+			case 'appellant-final-comments':
+				bannerDefinitionKey = 'appellantFinalCommentsDueDateUpdated';
+				break;
+		}
+
+		addNotificationBannerToSession(request.session, bannerDefinitionKey, appealId);
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
