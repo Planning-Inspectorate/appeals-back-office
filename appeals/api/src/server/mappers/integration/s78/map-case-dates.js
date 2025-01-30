@@ -16,7 +16,7 @@ export const mapCaseDates = (data) => {
 		//TODO:
 		appellantCommentsSubmittedDate: null,
 		appellantStatementSubmittedDate: null,
-		finalCommentsDueDate: mapDate(appeal.appealTimetable?.lpaFinalCommentsDueDate),
+		finalCommentsDueDate: mapDate(appeal.appealTimetable?.finalCommentsDueDate),
 		interestedPartyRepsDueDate: mapDate(appeal.appealTimetable?.ipCommentsDueDate),
 		lpaCommentsSubmittedDate: null,
 		lpaProofsSubmittedDate: null,

@@ -4,8 +4,7 @@
  * @property {string?} [ipCommentsDueDate]
  * @property {string?} [appellantStatementDueDate]
  * @property {string?} [lpaStatementDueDate]
- * @property {string?} [appellantFinalCommentsDueDate]
- * @property {string?} [lpaFinalCommentsDueDate]
+ * @property {string?} [finalCommentsDueDate]
  * @property {string?} [s106ObligationDueDate]
  * @property {object | string | undefined} [errors]
  */
@@ -18,6 +17,7 @@
  * @returns {Promise<AppealTimetables>}
  */
 export function setAppealTimetables(apiClient, appealId, appealTimetableId, appealTimetables) {
+	console.log('appealTimetableId', appealTimetableId, appealTimetables);
 	return apiClient
 		.patch(`appeals/${appealId}/appeal-timetables/${appealTimetableId}`, { json: appealTimetables })
 		.json()

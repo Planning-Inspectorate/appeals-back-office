@@ -129,8 +129,7 @@ export default {
 		ipCommentsDueDate: new Date('2024-11-20T23:59:00.000Z'),
 		appellantStatementDueDate: new Date('2024-11-20T23:59:00.000Z'),
 		lpaStatementDueDate: new Date('2024-11-20T23:59:00.000Z'),
-		appellantFinalCommentsDueDate: new Date('2024-12-04T23:59:00.000Z'),
-		lpaFinalCommentsDueDate: new Date('2024-12-04T23:59:00.000Z'),
+		finalCommentsDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		s106ObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		issueDeterminationDate: null
 	},

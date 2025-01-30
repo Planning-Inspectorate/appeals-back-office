@@ -12,44 +12,22 @@ const finalCommentReviewData = {
 	...baseAppealData,
 	appealTimetable: {
 		appealTimetableId: 1,
-		lpaFinalCommentsDueDate: '2023-08-09'
+		finalCommentsDueDate: '2023-08-09'
 	}
 };
 
 describe('Appeal Timetables', () => {
 	afterEach(teardown);
-
-	it('should render "Schedule LPA Final Comment Review Date" page', async () => {
-		const appealData = {
-			...baseAppealData,
-			appealTimetable: {
-				appealTimetableId: 1
-			}
-		};
-
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
-
-		const response = await request.get(`${baseUrl}/lpa-final-comments`);
-		const element = parseHtml(response.text);
-
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Schedule LPA final comments due date</h1>');
-		expect(element.innerHTML).toContain('name="due-date-day" type="text" inputmode="numeric">');
-		expect(element.innerHTML).toContain('name="due-date-month" type="text" inputmode="numeric">');
-		expect(element.innerHTML).toContain('name="due-date-year" type="text" inputmode="numeric">');
-		expect(element.innerHTML).toContain('Confirm</button>');
-	});
-
-	it('should render "Change Final Comment Review Date" page', async () => {
+	it('should render "Change final comments due date" page', async () => {
 		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
 
-		const response = await request.get(`${baseUrl}/lpa-final-comments`);
+		const response = await request.get(`${baseUrl}/final-comments`);
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Change LPA final comments due date</h1>');
+		expect(element.innerHTML).toContain('Change final comments due date</h1>');
 		expect(element.innerHTML).toContain(
-			'The current due date for the LPA final comments is 9 August 2023'
+			'The current due date for the final comments is 9 August 2023'
 		);
 		expect(element.innerHTML).toContain(
 			'name="due-date-day" type="text" value="9" inputmode="numeric">'
@@ -63,10 +41,10 @@ describe('Appeal Timetables', () => {
 		expect(element.innerHTML).toContain('Confirm</button>');
 	});
 
-	it('should render "Change Final Comment Review Date" with error (no answer provided)', async () => {
+	it('should render "Change final comments due date" with error (no answer provided)', async () => {
 		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
 
-		const response = await request.post(`${baseUrl}/lpa-final-comments`).send({
+		const response = await request.post(`${baseUrl}/final-comments`).send({
 			'due-date-day': '',
 			'due-date-month': '',
 			'due-date-year': ''
@@ -74,22 +52,22 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Change LPA final comments due date</h1>');
+		expect(element.innerHTML).toContain('Change final comments due date</h1>');
 		expect(element.innerHTML).toContain('There is a problem</h2>');
 		expect(element.innerHTML).toContain('Date must include a day, a month and a year');
 	});
 
-	it('should render "Change Final Comment Review Date" with error (api error)', async () => {
+	it('should render "Change final comments due date" with error (api error)', async () => {
 		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
 		nock('http://test/')
 			.patch('/appeals/1/appeal-timetables/1')
 			.reply(400, {
 				errors: {
-					lpaFinalCommentsDueDate: 'must be a business day'
+					finalCommentsDueDate: 'must be a business day'
 				}
 			});
 
-		const response = await request.post(`${baseUrl}/lpa-final-comments`).send({
+		const response = await request.post(`${baseUrl}/final-comments`).send({
 			'due-date-day': '1',
 			'due-date-month': '1',
 			'due-date-year': '2050'
@@ -97,7 +75,7 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Change LPA final comments due date</h1>');
+		expect(element.innerHTML).toContain('Change final comments due date</h1>');
 		expect(element.innerHTML).toContain('There is a problem</h2>');
 		expect(element.innerHTML).toContain('Date must be a business day</a>');
 	});
@@ -108,7 +86,7 @@ describe('Appeal Timetables', () => {
 			finalCommentReviewDate: '2050-01-02T01:00:00.000Z'
 		});
 
-		const response = await request.post(`${baseUrl}/lpa-final-comments`).send({
+		const response = await request.post(`${baseUrl}/final-comments`).send({
 			'due-date-day': '2',
 			'due-date-month': '1',
 			'due-date-year': '2050'

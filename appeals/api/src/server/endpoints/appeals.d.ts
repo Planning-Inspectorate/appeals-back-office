@@ -468,8 +468,7 @@ interface AppealTimetable {
 	ipCommentsDueDate?: string | null;
 	appellantStatementDueDate?: string | null;
 	lpaStatementDueDate?: string | null;
-	appellantFinalCommentsDueDate?: string | null;
-	lpaFinalCommentsDueDate?: string | null;
+	finalCommentsDueDate?: string | null;
 	s106ObligationDueDate?: string | null;
 	issueDeterminationDate?: string | null;
 }

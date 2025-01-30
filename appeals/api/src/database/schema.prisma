@@ -94,18 +94,17 @@ model AppealType {
 /// AppealTimetable model
 /// Contains deadlines for appeal stages.
 model AppealTimetable {
-  id                            Int       @id @default(autoincrement())
-  appeal                        Appeal    @relation(fields: [appealId], references: [id])
-  appealId                      Int       @unique
-  caseResubmissionDueDate       DateTime?
-  lpaQuestionnaireDueDate       DateTime?
-  ipCommentsDueDate             DateTime?
-  appellantStatementDueDate     DateTime?
-  lpaStatementDueDate           DateTime?
-  appellantFinalCommentsDueDate DateTime?
-  lpaFinalCommentsDueDate       DateTime?
-  s106ObligationDueDate         DateTime?
-  issueDeterminationDate        DateTime?
+  id                        Int       @id @default(autoincrement())
+  appeal                    Appeal    @relation(fields: [appealId], references: [id])
+  appealId                  Int       @unique
+  caseResubmissionDueDate   DateTime?
+  lpaQuestionnaireDueDate   DateTime?
+  ipCommentsDueDate         DateTime?
+  appellantStatementDueDate DateTime?
+  lpaStatementDueDate       DateTime?
+  finalCommentsDueDate      DateTime?
+  s106ObligationDueDate     DateTime?
+  issueDeterminationDate    DateTime?
 }
 
 /// AppealStatus model

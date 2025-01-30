@@ -49,13 +49,7 @@ const patchAppealTimetableValidator = composeMiddleware(
 		customFn: validateFPATimetableDate
 	}),
 	validateDateParameter({
-		parameterName: 'appellantFinalCommentsDueDate',
-		mustBeFutureDate: true,
-		mustBeBusinessDay: true,
-		customFn: validateFPATimetableDate
-	}),
-	validateDateParameter({
-		parameterName: 'lpaFinalCommentsDueDate',
+		parameterName: 'finalCommentsDueDate',
 		mustBeFutureDate: true,
 		mustBeBusinessDay: true,
 		customFn: validateFPATimetableDate

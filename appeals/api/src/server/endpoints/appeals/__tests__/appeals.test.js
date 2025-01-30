@@ -975,7 +975,6 @@ describe('mapAppealToDueDate Tests', () => {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: null,
 				lpaStatementDueDate: null
 			}
@@ -1012,7 +1011,6 @@ describe('mapAppealToDueDate Tests', () => {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: null,
-				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: new Date('2023-03-01T00:00:00.000Z'),
 				lpaStatementDueDate: null
 			}
@@ -1040,7 +1038,6 @@ describe('mapAppealToDueDate Tests', () => {
 				id: 1262,
 				appealId: 523,
 				lpaQuestionnaireDueDate: null,
-				lpaFinalCommentsDueDate: null,
 				issueDeterminationDate: null,
 				lpaStatementDueDate: new Date('2023-03-01T00:00:00.000Z'),
 				resubmitAppealTypeDate: null
@@ -1060,26 +1057,6 @@ describe('mapAppealToDueDate Tests', () => {
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusSixtyDate);
-	});
-
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW status with appealTimetable lpaFinalCommentsDueDate', () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				lpaFinalCommentsDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				issueDeterminationDate: null,
-				lpaStatementDueDate: null,
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
-
-		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
 	});
 
 	test('handles STATE_TARGET_COMPLETE', () => {

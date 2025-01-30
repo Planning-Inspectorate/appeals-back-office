@@ -41,8 +41,7 @@ export function generateAccordion(
 					mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
 					mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
 					mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
-					mappedData.appeal.appellantFinalCommentDueDate.display.summaryListItem,
-					mappedData.appeal.lpaFinalCommentDueDate.display.summaryListItem,
+					mappedData.appeal.finalCommentDueDate.display.summaryListItem,
 					mappedData.appeal.s106ObligationDueDate.display.summaryListItem
 				].filter(isDefined)
 			}

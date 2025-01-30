@@ -137,10 +137,7 @@ const s78AppealDto = {
 		appellantStatementDueDate:
 			fullPlanningAppeal.appealTimetable.appellantStatementDueDate.toISOString(),
 		lpaStatementDueDate: fullPlanningAppeal.appealTimetable.lpaStatementDueDate.toISOString(),
-		appellantFinalCommentsDueDate:
-			fullPlanningAppeal.appealTimetable.appellantFinalCommentsDueDate.toISOString(),
-		lpaFinalCommentsDueDate:
-			fullPlanningAppeal.appealTimetable.lpaFinalCommentsDueDate.toISOString(),
+		finalCommentsDueDate: fullPlanningAppeal.appealTimetable.finalCommentsDueDate.toISOString(),
 		s106ObligationDueDate: fullPlanningAppeal.appealTimetable.s106ObligationDueDate.toISOString()
 	},
 	appealType: fullPlanningAppeal.appealType.type,
@@ -159,7 +156,7 @@ const s78AppealDto = {
 			receivedAt: fullPlanningAppeal.caseCreatedDate.toISOString()
 		},
 		appellantFinalComments: {
-			status: "not_received",
+			status: 'not_received'
 		},
 		lpaQuestionnaire: {
 			dueDate: fullPlanningAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString(),
@@ -170,7 +167,7 @@ const s78AppealDto = {
 			status: 'received'
 		},
 		lpaFinalComments: {
-			status: "not_received",
+			status: 'not_received'
 		},
 		lpaStatement: {
 			status: 'not_received',

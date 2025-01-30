@@ -12,10 +12,9 @@ BEGIN TRAN;
 -- AlterTable
 ALTER TABLE [dbo].[AppealTimetable] DROP COLUMN [finalCommentReviewDate],
 [statementReviewDate];
-ALTER TABLE [dbo].[AppealTimetable] ADD [appellantFinalCommentsDueDate] DATETIME2,
+ALTER TABLE [dbo].[AppealTimetable] ADD [finalCommentsDueDate] DATETIME2,
 [appellantStatementDueDate] DATETIME2,
 [ipCommentsDueDate] DATETIME2,
-[lpaFinalCommentsDueDate] DATETIME2,
 [lpaStatementDueDate] DATETIME2,
 [s106ObligationDueDate] DATETIME2;
 
