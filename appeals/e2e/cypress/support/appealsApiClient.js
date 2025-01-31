@@ -16,9 +16,8 @@ export const createApiSubmission = (submission, type) => {
 export const appealsApiClient = {
 	async caseSubmission(requestBody) {
 		try {
-			if (requestBody === undefined) {
-				requestBody = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
-			}
+			const submission = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
+			const { casedata, users, documents } = submission;
 
 			const url = baseUrl + apiPaths.caseSubmission;
 			const response = await fetch(url, {
@@ -26,7 +25,14 @@ export const appealsApiClient = {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(requestBody)
+				body: JSON.stringify({
+					casedata: {
+						...casedata,
+						...requestBody
+					},
+					users,
+					documents
+				})
 			});
 
 			if (!response.ok) {

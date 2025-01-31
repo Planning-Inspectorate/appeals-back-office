@@ -82,6 +82,11 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 							lpaQuestionnaireIncompleteReason: true,
 							lpaQuestionnaireIncompleteReasonText: true
 						}
+					},
+					designatedSiteNames: {
+						include: {
+							designatedSite: true
+						}
 					}
 				}
 			}
@@ -110,6 +115,7 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 
 	if (msg) {
 		const schema = getSchemaForCaseType(appeal.appealType?.key || APPEAL_CASE_TYPE.D);
+		const topic = getTopicForCaseType(appeal.appealType?.key || APPEAL_CASE_TYPE.D);
 
 		const validationResult = await validateFromSchema(schema, msg);
 		if (validationResult !== true && validationResult.errors) {
@@ -121,7 +127,6 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 			return false;
 		}
 
-		const topic = producers.boCaseData;
 		const res = await eventClient.sendEvents(topic, [msg], updateType, {
 			sourceSystem: ODW_SYSTEM_ID
 		});
@@ -139,4 +144,13 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
  */
 function getSchemaForCaseType(caseType) {
 	return caseType === APPEAL_CASE_TYPE.W ? schemas.events.appealS78 : schemas.events.appealHas;
+}
+
+/**
+ *
+ * @param {string} caseType
+ * @returns {string}
+ */
+function getTopicForCaseType(caseType) {
+	return caseType === APPEAL_CASE_TYPE.D ? producers.boCaseData : producers.boCaseDataS78;
 }

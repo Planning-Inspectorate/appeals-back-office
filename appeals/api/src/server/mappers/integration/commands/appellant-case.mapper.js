@@ -1,6 +1,8 @@
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
+
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
@@ -8,6 +10,8 @@
  */
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
+	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
+
 	const knowsAllOwners = casedata.knowsAllOwners
 		? {
 				connect: { key: casedata.knowsAllOwners }
@@ -50,10 +54,25 @@ export const mapAppellantCaseIn = (command) => {
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,
-		appellantProcedurePreference: casedata.appellantProcedurePreference,
-		appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
-		appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-		appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
+		...(isS78 && {
+			appellantProcedurePreference: casedata.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount,
+			planningObligation: casedata.planningObligation,
+			statusPlanningObligation: casedata.statusPlanningObligation,
+			agriculturalHolding: casedata.agriculturalHolding,
+			tenantAgriculturalHolding: casedata.tenantAgriculturalHolding,
+			otherTenantsAgriculturalHolding: casedata.otherTenantsAgriculturalHolding,
+			informedTenantsAgriculturalHolding: casedata.informedTenantsAgriculturalHolding,
+			siteViewableFromRoad: casedata.siteViewableFromRoad,
+			caseworkReason: casedata.caseworkReason,
+			developmentType: casedata.developmentType,
+			jurisdiction: casedata.jurisdiction,
+			numberOfResidencesNetChange: casedata.numberOfResidencesNetChange,
+			siteGridReferenceEasting: casedata.siteGridReferenceEasting,
+			siteGridReferenceNorthing: casedata.siteGridReferenceNorthing
+		})
 	};
 
 	// @ts-ignore

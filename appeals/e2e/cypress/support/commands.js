@@ -74,9 +74,9 @@ Cypress.Commands.add('getByData', (value) => {
 	return cy.get(`[data-cy="${value}"]`);
 });
 
-Cypress.Commands.add('createCase', (requestBody) => {
+Cypress.Commands.add('createCase', (customValues) => {
 	return cy.wrap(null).then(async () => {
-		const appealRef = await appealsApiClient.caseSubmission(requestBody);
+		const appealRef = await appealsApiClient.caseSubmission(customValues);
 		cy.log('Generated case with ref ' + appealRef);
 		return appealRef;
 	});

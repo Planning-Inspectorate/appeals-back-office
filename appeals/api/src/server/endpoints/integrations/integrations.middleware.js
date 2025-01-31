@@ -19,7 +19,6 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
  */
 export const validateAppellantCase = async (req, res, next) => {
 	const { body } = req;
-
 	pino.info('Received appellant case from topic', body);
 	const validationResult = await validateFromSchema(schemas.commands.appealSubmission, body, true);
 	if (validationResult !== true && validationResult.errors) {
@@ -46,8 +45,8 @@ export const validateAppellantCase = async (req, res, next) => {
 export const validateCaseType = async (req, res, next) => {
 	const { body } = req;
 	const validCaseTypes = getEnabledAppealTypes();
-
 	const caseType = body.casedata?.caseType;
+
 	if (validCaseTypes.indexOf(caseType) === -1) {
 		const errorDetails = `Error validating case types: ${caseType} not currently supported`;
 		pino.error(errorDetails);
@@ -85,10 +84,10 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 		});
 	}
 
-	const appealExists = await findAppealByReference(body?.casedata?.caseReference);
-	if (!appealExists) {
+	const referencedAppeal = await findAppealByReference(body?.casedata?.caseReference);
+	if (!referencedAppeal) {
 		pino.error(
-			`Error associating LPA submission to an existing appeal with reference '${body?.questionnaire?.caseReference}'`
+			`Error associating representation to an existing appeal with reference '${body?.caseReference}'`
 		);
 		return res.status(404).send({
 			errors: {
@@ -97,6 +96,7 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 		});
 	}
 
+	req.appeal = referencedAppeal;
 	next();
 };
 

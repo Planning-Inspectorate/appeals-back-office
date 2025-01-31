@@ -18,4 +18,15 @@ describe('Start case', () => {
 			// TODO Verify that the case has started
 		});
 	});
+
+	it('Start S78 case', { tags: tag.smoke }, () => {
+		cy.createCase({
+			caseType: 'W'
+		}).then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			// TODO Verify that the case has started
+		});
+	});
 });

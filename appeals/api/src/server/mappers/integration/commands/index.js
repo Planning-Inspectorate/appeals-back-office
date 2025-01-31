@@ -1,17 +1,15 @@
 import { randomUUID } from 'node:crypto';
-
-import { mapAddressIn, mapNeighbouringAddressIn } from './integrations.mappers/address.mapper.js';
-import { mapLpaIn } from './integrations.mappers/lpa.mapper.js';
-import { mapDocumentIn } from './integrations.mappers/document.mapper.js';
-import { mapServiceUserIn } from './integrations.mappers/service-user.mapper.js';
-import { mapAppellantCaseIn } from './integrations.mappers/appellant-case.mapper.js';
-import { mapQuestionnaireIn } from './integrations.mappers/questionnaire.mapper.js';
-import { mapAppealTypeIn } from './integrations.mappers/appeal-type.mapper.js';
-
-import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { renameDuplicateDocuments } from './integrations.utils.js';
-import { mapRepresentationIn } from './integrations.mappers/representation.mapper.js';
+import { mapAddressIn, mapNeighbouringAddressIn } from './address.mapper.js';
+import { mapDocumentIn } from './document.mapper.js';
+import { mapServiceUserIn } from './service-user.mapper.js';
+import { mapAppellantCaseIn } from './appellant-case.mapper.js';
+import { mapQuestionnaireIn } from './questionnaire.mapper.js';
+import { mapAppealTypeIn } from './appeal-type.mapper.js';
+import { mapRepresentationIn } from './representation.mapper.js';
+
+import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.utils.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
@@ -28,17 +26,6 @@ import { mapRepresentationIn } from './integrations.mappers/representation.mappe
 /** @typedef {import('#db-client').Prisma.RepresentationCreateInput & {represented: ServiceUserCreateInput|ServiceUserConnectInput}} RepresentationCreateInput */
 /** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
 
-const mappers = {
-	mapAddressIn,
-	mapNeighbouringAddressIn,
-	mapLpaIn,
-	mapDocumentIn,
-	mapAppealTypeIn,
-	mapAppellantCaseIn,
-	mapQuestionnaireIn,
-	mapServiceUserIn
-};
-
 /**
  * @param {AppellantSubmissionCommand} data
  * @returns {{ appeal: import('#db-client').Prisma.AppealCreateInput, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[] }}
@@ -48,14 +35,14 @@ const mapAppealSubmission = (data) => {
 	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
 	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
 
-	const caseType = mappers.mapAppealTypeIn(casedata.caseType || '');
+	const caseType = mapAppealTypeIn(casedata.caseType || '');
 
 	const neighbouringSitesInput = {
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
 			return {
 				source: 'back-office',
 				address: {
-					create: mappers.mapNeighbouringAddressIn(site)
+					create: mapNeighbouringAddressIn(site)
 				}
 			};
 		})
@@ -65,14 +52,14 @@ const mapAppealSubmission = (data) => {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
 		appealType: { connect: { key: caseType } },
-		appellant: { create: mappers.mapServiceUserIn(appellant) },
-		agent: { create: mappers.mapServiceUserIn(agent) },
+		appellant: { create: mapServiceUserIn(appellant) },
+		agent: { create: mapServiceUserIn(agent) },
 		lpa: {
 			connect: { lpaCode: casedata?.lpaCode }
 		},
 		applicationReference: casedata?.applicationReference,
-		address: { create: mappers.mapAddressIn(casedata) },
-		appellantCase: { create: mappers.mapAppellantCaseIn({ casedata }) },
+		address: { create: mapAddressIn(casedata) },
+		appellantCase: { create: mapAppellantCaseIn({ casedata }) },
 		neighbouringSites: neighbouringSitesInput,
 		folders: {
 			create: FOLDERS.map((/** @type {string} */ path) => {
@@ -82,7 +69,7 @@ const mapAppealSubmission = (data) => {
 	};
 
 	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
-		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)
+		mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)
 	);
 
 	return {
@@ -95,18 +82,20 @@ const mapAppealSubmission = (data) => {
 /**
  *
  * @param {LPAQuestionnaireCommand} data
+ * @param {Appeal|undefined} appeal
  * @returns {{ questionnaire: Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput,'appeal'>, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
  */
-const mapQuestionnaireSubmission = (data) => {
+const mapQuestionnaireSubmission = (data, appeal) => {
 	const { casedata, documents } = data;
+	const isS78 = appeal?.appealType?.key === APPEAL_CASE_TYPE.W || false;
 	const questionnaireInput = {
-		...mappers.mapQuestionnaireIn({ casedata }),
+		...mapQuestionnaireIn({ casedata }, isS78),
 		neighbouringSites: {
 			create: casedata.neighbouringSiteAddresses?.map((site) => {
 				return {
 					source: 'lpa',
 					address: {
-						create: mappers.mapNeighbouringAddressIn(site)
+						create: mapNeighbouringAddressIn(site)
 					}
 				};
 			})
@@ -114,7 +103,7 @@ const mapQuestionnaireSubmission = (data) => {
 	};
 
 	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
-		mappers.mapDocumentIn(document, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
+		mapDocumentIn(document, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
 	);
 
 	return {
@@ -134,7 +123,7 @@ const mapRepresentation = (data) => {
 	return mapRepresentationIn(data);
 };
 
-export const messageMappers = {
+export const commandMappers = {
 	mapAppealSubmission,
 	mapQuestionnaireSubmission,
 	mapRepresentation

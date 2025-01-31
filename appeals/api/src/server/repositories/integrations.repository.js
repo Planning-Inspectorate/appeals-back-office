@@ -3,7 +3,7 @@ import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
-import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.mappers/document-folder.mapper.js';
+import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.utils.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */

@@ -1,5 +1,6 @@
 export const producers = {
 	boCaseData: 'appeal-has',
+	boCaseDataS78: 'appeal-s78',
 	boDocument: 'appeal-document',
 	boServiceUser: 'appeal-service-user',
 	boEventData: 'appeal-event',

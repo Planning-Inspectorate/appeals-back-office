@@ -4,6 +4,7 @@ import { SERVICE_USER_TYPE } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
 
+// Start range for serviceUserIDs in network messages
 export const serviceUserIdStartRange = 200000000;
 
 /**
@@ -52,11 +53,11 @@ export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
  * @returns {'Applicant' | 'Appellant' | 'Agent' | 'RepresentationContact' | 'Subscriber'}
  */
 const mapServiceUserType = (type) => {
-	if (type.toLowerCase() === 'appellant') {
+	if (type.toLowerCase() === SERVICE_USER_TYPE.APPELLANT.toLowerCase()) {
 		// @ts-ignore
 		return SERVICE_USER_TYPE.APPELLANT;
 	}
-	if (type.toLowerCase() === 'agent') {
+	if (type.toLowerCase() === SERVICE_USER_TYPE.AGENT.toLowerCase()) {
 		// @ts-ignore
 		return SERVICE_USER_TYPE.AGENT;
 	}
