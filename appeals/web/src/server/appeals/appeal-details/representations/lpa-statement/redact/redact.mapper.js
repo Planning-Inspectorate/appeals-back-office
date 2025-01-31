@@ -86,17 +86,50 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 				rows: [
 					{
 						key: { text: 'Original statement' },
-						value: { text: lpaStatement.originalRepresentation }
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										text: lpaStatement.originalRepresentation
+									}
+								}
+							]
+						}
 					},
 					{
 						key: { text: 'Redacted statement' },
-						value: { text: session?.redactedRepresentation },
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										text: session?.redactedRepresentation
+									}
+								}
+							]
+						},
 						actions: {
 							items: [
 								{
 									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 									text: 'Change',
 									visuallyHiddenText: 'redacted statement'
+								}
+							]
+						}
+					},
+					{
+						key: { text: 'Review decision' },
+						value: { text: 'Redact and accept statement' },
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
+									text: 'Change',
+									visuallyHiddenText: 'review decision'
 								}
 							]
 						}
@@ -110,7 +143,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 
 	return {
 		title: 'Check details and accept statement',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${lpaStatement.id}/redact`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and accept statement',
 		forceRenderSubmitButton: true,
