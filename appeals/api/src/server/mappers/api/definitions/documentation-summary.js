@@ -11,6 +11,10 @@ const commonDocumentationSummaryProperties = {
 		type: 'string',
 		format: 'date-time',
 		nullable: true
+	},
+	representationStatus: {
+		type: 'string',
+		nullable: true
 	}
 };
 

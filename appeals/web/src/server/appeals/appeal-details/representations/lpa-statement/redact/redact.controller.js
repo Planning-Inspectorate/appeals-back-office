@@ -48,5 +48,5 @@ export async function postConfirm(request, response) {
 
 	addNotificationBannerToSession(session, 'lpaStatementRedactedAndAccepted', appealId);
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/lpa-statement`);
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }
