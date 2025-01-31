@@ -178,7 +178,8 @@ const s78AppealDto = {
 		},
 		lpaStatement: {
 			status: 'not_received',
-			receivedAt: null
+			receivedAt: null,
+			representationStatus: null
 		}
 	},
 	healthAndSafety: {
