@@ -32,7 +32,18 @@ const appealsApiRequests = {
 			siteAddressTown: 'Somewhereville',
 			siteAreaSquareMetres: 22,
 			siteSafetyDetails: ["It's dangerous"],
-			isGreenBelt: false
+			isGreenBelt: false,
+			// S78 fields
+			agriculturalHolding: true,
+			tenantAgriculturalHolding: true,
+			otherTenantsAgriculturalHolding: null,
+			informedTenantsAgriculturalHolding: null,
+			appellantProcedurePreference: null,
+			appellantProcedurePreferenceDetails: 'eiusmod ex exercitation',
+			appellantProcedurePreferenceDuration: 1,
+			inquiryHowManyWitnesses: 1,
+			planningObligation: false,
+			statusPlanningObligation: 'proident aute'
 		},
 		users: [
 			{
@@ -81,7 +92,42 @@ const appealsApiRequests = {
 				}
 			],
 			affectedListedBuildingNumbers: ['10001', '10002'],
-			lpaCostsAppliedFor: false
+			lpaCostsAppliedFor: false,
+			// S78 fields
+			extraConditions: null,
+			isPublicRightOfWay: false,
+			affectsScheduledMonument: false,
+			hasProtectedSpecies: false,
+			isAonbNationalLandscape: null,
+			isGypsyOrTravellerSite: false,
+			hasInfrastructureLevy: false,
+			isInfrastructureLevyFormallyAdopted: null,
+			infrastructureLevyAdoptedDate: null,
+			infrastructureLevyExpectedDate: null,
+			lpaProcedurePreference: 'hearing',
+			lpaProcedurePreferenceDetails: 'pref details lpa',
+			lpaProcedurePreferenceDuration: 3,
+			reasonForNeighbourVisits: null,
+			changedListedBuildingNumbers: ['14214', '62354'],
+			designatedSitesNames: ['cSAC', 'SAC'],
+			eiaSensitiveAreaDetails: null,
+			eiaConsultedBodiesDetails: null,
+			eiaScreeningOpinion: null,
+			eiaColumnTwoThreshold: null,
+			eiaRequiresEnvironmentalStatement: null,
+			eiaEnvironmentalImpactSchedule: null,
+			eiaDevelopmentDescription: null,
+			eiaCompletedEnvironmentalStatement: null,
+			hasStatutoryConsultees: false,
+			importantInformation: null,
+			redeterminedIndicator: null,
+			dateCostsReportDespatched: null,
+			dateNotRecoveredOrDerecovered: null,
+			dateRecovered: null,
+			originalCaseDecisionDate: null,
+			targetDate: null,
+			siteNoticesSentDate: null,
+			siteWithinSSSI: false
 		}
 	}
 };

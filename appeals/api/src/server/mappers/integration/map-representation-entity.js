@@ -40,7 +40,7 @@ export const mapRepresentationEntity = (data) => {
 			redactedRepresentation: data.redactedRepresentation,
 			originalRepresentation: data.originalRepresentation,
 			source: mapSource(data),
-			redactedBy: null,
+			redactedBy: data.reviewer || null,
 			serviceUserId: mapRepresentationUserId(data.representedId),
 			...mapReasons(data),
 			dateReceived: mapDate(data.dateCreated) ?? '',

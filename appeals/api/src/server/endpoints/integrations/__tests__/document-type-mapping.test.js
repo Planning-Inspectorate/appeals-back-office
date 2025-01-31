@@ -1,5 +1,5 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { getFolderIdFromDocumentType } from '../integrations.mappers/document-folder.mapper.js';
+import { getFolderIdFromDocumentType } from '../integrations.utils.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 describe('document type mapping', () => {

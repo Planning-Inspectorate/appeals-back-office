@@ -10,11 +10,10 @@ export const mapLpaQuestionnaire = (data) => {
 	const { appeal } = data;
 
 	const casedata = appeal.lpaQuestionnaire;
-
 	return {
 		lpaStatement: casedata?.lpaStatement ?? null,
 		isCorrectAppealType: casedata?.isCorrectAppealType ?? null,
-		isGreenBelt: casedata?.isGreenBelt ?? null,
+		...(casedata && { isGreenBelt: casedata?.isGreenBelt ?? null }),
 		inConservationArea: casedata?.inConservationArea ?? null,
 		newConditionDetails: casedata?.newConditionDetails ?? null,
 		// @ts-ignore

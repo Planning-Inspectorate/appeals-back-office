@@ -394,7 +394,6 @@ model LPAQuestionnaire {
   affectsScheduledMonument            Boolean?
   hasProtectedSpecies                 Boolean?
   isAonbNationalLandscape             Boolean?
-  designatedSitesNames                String?
   isGypsyOrTravellerSite              Boolean?
   isPublicRightOfWay                  Boolean?
   eiaEnvironmentalImpactSchedule      String?
@@ -626,7 +625,7 @@ model DocumentVersion {
   redactionStatusId    Int?
   document             Document?                 @relation("versionHistory", fields: [documentGuid], references: [guid])
   latestVersion        Document?                 @relation("latestVersion")
-  representation       RepresentationAttachment? @relation()
+  representation       RepresentationAttachment? @relation("documentVersion")
 
   @@id([documentGuid, version])
   @@index([documentGuid], map: "documentGuid")
@@ -709,7 +708,7 @@ model Representation {
 /// Representation model
 /// Stores exchange of comments and statements
 model RepresentationAttachment {
-  documentVersion  DocumentVersion @relation(fields: [documentGuid, version], references: [documentGuid, version])
+  documentVersion  DocumentVersion @relation("documentVersion", fields: [documentGuid, version], references: [documentGuid, version])
   documentGuid     String
   version          Int
   representation   Representation  @relation(fields: [representationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
