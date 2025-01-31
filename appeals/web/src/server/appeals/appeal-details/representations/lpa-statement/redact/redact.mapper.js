@@ -110,7 +110,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 
 	return {
 		title: 'Check details and accept statement',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${lpaStatement.id}/redact`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and accept statement',
 		forceRenderSubmitButton: true,
