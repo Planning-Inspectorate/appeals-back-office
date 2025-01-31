@@ -86,11 +86,31 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 				rows: [
 					{
 						key: { text: 'Original statement' },
-						value: { text: lpaStatement.originalRepresentation }
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										text: lpaStatement.originalRepresentation
+									}
+								}
+							]
+						}
 					},
 					{
 						key: { text: 'Redacted statement' },
-						value: { text: session?.redactedRepresentation },
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										text: session?.redactedRepresentation
+									}
+								}
+							]
+						},
 						actions: {
 							items: [
 								{
