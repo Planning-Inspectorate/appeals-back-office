@@ -10,7 +10,7 @@ export const mapInNearOrLikelyToAffectDesignatedSites = ({
 		id: 'in-near-or-likely-to-affect-designated-sites',
 		text: 'In, near or likely to affect designated sites',
 		value:
-			lpaQuestionnaireData?.designatedSiteNames?.map((designatedSite) => designatedSite.name) || [],
+			lpaQuestionnaireData?.designatedSiteNames?.map((designatedSite) => designatedSite.name) || ['Not applicable'],
 		link: `${currentRoute}/in-near-or-likely-to-affect-designated-sites/change`,
 		editable: userHasUpdateCase
 	});
