@@ -10069,6 +10069,10 @@
 								"type": "string",
 								"format": "date-time",
 								"nullable": true
+							},
+							"representationStatus": {
+								"type": "string",
+								"nullable": true
 							}
 						}
 					},
@@ -10086,6 +10090,10 @@
 							"receivedAt": {
 								"type": "string",
 								"format": "date-time",
+								"nullable": true
+							},
+							"representationStatus": {
+								"type": "string",
 								"nullable": true
 							}
 						}
@@ -10105,6 +10113,10 @@
 								"type": "string",
 								"format": "date-time",
 								"nullable": true
+							},
+							"representationStatus": {
+								"type": "string",
+								"nullable": true
 							}
 						}
 					},
@@ -10122,6 +10134,10 @@
 							"receivedAt": {
 								"type": "string",
 								"format": "date-time",
+								"nullable": true
+							},
+							"representationStatus": {
+								"type": "string",
 								"nullable": true
 							}
 						}
