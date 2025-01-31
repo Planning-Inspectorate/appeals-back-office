@@ -1,4 +1,4 @@
-import { messageMappers } from './integrations.mappers.js';
+import { commandMappers } from '#mappers/integration/commands/index.js';
 import { broadcasters } from './integrations.broadcasters.js';
 import { integrationService } from './integrations.service.js';
 import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
@@ -28,7 +28,7 @@ import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
  * @returns {Promise<Response>}
  */
 export const importAppeal = async (req, res) => {
-	const { appeal, documents, relatedReferences } = messageMappers.mapAppealSubmission(req.body);
+	const { appeal, documents, relatedReferences } = commandMappers.mapAppealSubmission(req.body);
 
 	const casedata = await integrationService.importAppellantCase(
 		appeal,
@@ -81,13 +81,14 @@ export const importAppeal = async (req, res) => {
 };
 
 /**
- * @param {{body: LPAQuestionnaireCommand}} req
+ * @param {{body: LPAQuestionnaireCommand, appeal: Appeal}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
 export const importLpaqSubmission = async (req, res) => {
 	const { caseReference, questionnaire, documents, relatedReferences } =
-		messageMappers.mapQuestionnaireSubmission(req.body);
+		commandMappers.mapQuestionnaireSubmission(req.body, req.appeal);
+
 	const casedata = await integrationService.importLPAQuestionnaire(
 		caseReference,
 		questionnaire,
@@ -131,7 +132,7 @@ export const importLpaqSubmission = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export const importRepresentation = async (req, res) => {
-	const { representation, attachments } = messageMappers.mapRepresentation(req.body);
+	const { representation, attachments } = commandMappers.mapRepresentation(req.body);
 
 	const hasNewUser = representation.represented?.create != null;
 	const isIpComment = representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT;
