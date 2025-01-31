@@ -1,5 +1,5 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { mapDocumentStatus } from '#lib/display-page-formatter.js';
+import { mapRepresentationDocumentSummaryStatus } from '#lib/representation-utilities.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -7,7 +7,10 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) =>
 	documentationFolderTableItem({
 		id: 'lpa-statement',
 		text: 'LPA statement',
-		statusText: mapDocumentStatus(appealDetails?.documentationSummary?.lpaStatement?.status),
+		statusText: mapRepresentationDocumentSummaryStatus(
+			appealDetails?.documentationSummary?.lpaStatement?.status,
+			appealDetails?.documentationSummary?.lpaStatement?.representationStatus
+		),
 		receivedText: dateISOStringToDisplayDate(
 			appealDetails?.documentationSummary?.lpaStatement?.receivedAt instanceof Date
 				? appealDetails?.documentationSummary?.lpaStatement?.receivedAt.toDateString()
