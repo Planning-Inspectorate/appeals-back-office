@@ -25,6 +25,7 @@ import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-polici
 import { mapEiaSensitiveAreaDetails } from './submappers/map-eia-sensitive-area-details.js';
 import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bodies-details.js';
 import { mapReasonForNeighbourVisits } from './submappers/map-reason-for-neighbour-visits.js';
+import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -53,5 +54,6 @@ export const submaps = {
 	otherRelevantPolicies: mapOtherRelevantPolicies,
 	eiaSensitiveAreaDetails: mapEiaSensitiveAreaDetails,
 	eiaConsultedBodiesDetails: mapEiaConsultedBodiesDetails,
-	reasonForNeighbourVisits: mapReasonForNeighbourVisits
+	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
+	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites
 };
