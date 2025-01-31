@@ -2493,6 +2493,7 @@ export interface DocumentationSummary {
 		dueDate?: string | null;
 		/** @format date-time */
 		receivedAt?: string | null;
+		representationStatus?: string | null;
 	};
 	lpaQuestionnaire?: {
 		status?: string;
@@ -2500,6 +2501,7 @@ export interface DocumentationSummary {
 		dueDate?: string | null;
 		/** @format date-time */
 		receivedAt?: string | null;
+		representationStatus?: string | null;
 	};
 	ipComments?: {
 		status?: string;
@@ -2507,6 +2509,7 @@ export interface DocumentationSummary {
 		dueDate?: string | null;
 		/** @format date-time */
 		receivedAt?: string | null;
+		representationStatus?: string | null;
 	};
 	lpaStatement?: {
 		status?: string;
@@ -2514,6 +2517,7 @@ export interface DocumentationSummary {
 		dueDate?: string | null;
 		/** @format date-time */
 		receivedAt?: string | null;
+		representationStatus?: string | null;
 	};
 }
 

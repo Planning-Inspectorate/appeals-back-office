@@ -1,7 +1,6 @@
 import {
 	formatAppellantCaseDocumentationStatus,
-	formatLpaQuestionnaireDocumentationStatus,
-	formatLpaStatementStatus
+	formatLpaQuestionnaireDocumentationStatus
 } from '#utils/format-documentation-status.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
@@ -54,22 +53,23 @@ export const mapDocumentationSummary = (data) => {
 						: DOCUMENT_STATUS_NOT_RECEIVED
 			},
 			lpaStatement: {
-				status: formatLpaStatementStatus(lpaStatement),
-				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null
+				status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null,
+				representationStatus: lpaStatement?.status ?? null
 			},
 			lpaFinalComments: {
 				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaFinalComments
 					? lpaFinalComments?.dateCreated && lpaFinalComments?.dateCreated.toISOString()
 					: null,
-				representationStatus: lpaFinalComments ? lpaFinalComments.status : null
+				representationStatus: lpaFinalComments?.status ?? null
 			},
 			appellantFinalComments: {
 				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: appellantFinalComments
 					? appellantFinalComments?.dateCreated && appellantFinalComments?.dateCreated.toISOString()
 					: null,
-				representationStatus: appellantFinalComments ? appellantFinalComments.status : null
+				representationStatus: appellantFinalComments?.status ?? null
 			}
 		})
 	};
