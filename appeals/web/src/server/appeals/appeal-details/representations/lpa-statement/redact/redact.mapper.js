@@ -100,6 +100,19 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 								}
 							]
 						}
+					},
+					{
+						key: { text: 'Review decision' },
+						value: { text: 'Redact and accept statement' },
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
+									text: 'Change',
+									visuallyHiddenText: 'review decision'
+								}
+							]
+						}
 					}
 				]
 			}
