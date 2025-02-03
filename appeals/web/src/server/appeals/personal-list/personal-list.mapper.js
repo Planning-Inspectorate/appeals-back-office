@@ -318,6 +318,8 @@ export function mapAppealStatusToActionRequiredHtml(
 					: 'Review LPA questionnaire';
 			}
 			return 'Awaiting LPA questionnaire';
+		case APPEAL_CASE_STATUS.EVENT:
+			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:

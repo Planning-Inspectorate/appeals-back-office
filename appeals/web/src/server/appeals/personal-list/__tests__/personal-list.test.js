@@ -585,6 +585,29 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		expect(result).toEqual('LPA questionnaire overdue');
 	});
 
+	it('should return "Set up site visit" link for event status', () => {
+		const result = mapAppealStatusToActionRequiredHtml(
+			appealId,
+			'event',
+			false,
+			null,
+			{
+				appellantCase: '',
+				lpaQuestionnaire: '',
+				lpaStatement: '',
+				lpaFinalComments: '',
+				lpaFinalCommentsRepresentationStatus: '',
+				appellantFinalComments: '',
+				appellantFinalCommentsRepresentationStatus: ''
+			},
+			'',
+			true
+		);
+		expect(result).toEqual(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit<span class="govuk-visually-hidden"> for appeal 123</span></a>`
+		);
+	});
+
 	it('should return "Issue decision" link for issue_determination status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			appealId,
