@@ -171,6 +171,21 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners should render a "Site visit ready to set up" important notification banner with a link to schedule the site visit when the appeal status is "event" 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Site visit ready to set up</p>
+        <p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner"
+            href="/appeals-service/appeal-details/2/site-visit/schedule-visit">Set up site visit</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">

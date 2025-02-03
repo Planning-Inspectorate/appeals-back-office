@@ -1215,6 +1215,33 @@ describe('appeal-details', () => {
 				expect(notificationBannerElement).toBe(false);
 			});
 
+			it('should render a "Site visit ready to set up" important notification banner with a link to schedule the site visit when the appeal status is "event"', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'event'
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Important</h3>');
+				expect(notificationBannerElementHTML).toContain('Site visit ready to set up</p>');
+				expect(notificationBannerElementHTML).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit"`
+				);
+				expect(notificationBannerElementHTML).toContain('data-cy="set-up-site-visit-banner"');
+				expect(notificationBannerElementHTML).toContain('Set up site visit</a>');
+			});
+
 			describe('final comments', () => {
 				const appealId = 3;
 				const testCases = [

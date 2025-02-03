@@ -81,6 +81,9 @@ export const notificationBannerDefinitions = {
 	readyForValidation: {
 		pages: ['appealDetails']
 	},
+	readyForSetUpSiteVisit: {
+		pages: ['appealDetails']
+	},
 	readyForLpaQuestionnaireReview: {
 		pages: ['appealDetails']
 	},

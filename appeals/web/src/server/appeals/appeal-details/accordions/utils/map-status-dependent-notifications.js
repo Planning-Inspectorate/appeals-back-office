@@ -1,5 +1,8 @@
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { addNotificationBannerToSession, clearNotificationBannerFromSession } from '#lib/session-utilities.js';
+import {
+	addNotificationBannerToSession,
+	clearNotificationBannerFromSession
+} from '#lib/session-utilities.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { removeAccordionComponentsActions } from './remove-accordion-components-actions.js';
 import {
@@ -46,6 +49,14 @@ export function mapStatusDependentNotifications(
 					`<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p><p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire-banner" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-questionnaire/${appealDetails.lpaQuestionnaireId}">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a></p>`
 				);
 			}
+			break;
+		case APPEAL_CASE_STATUS.EVENT:
+			addNotificationBannerToSession(
+				session,
+				'readyForSetUpSiteVisit',
+				appealDetails.appealId,
+				`<p class="govuk-notification-banner__heading">Site visit ready to set up</p><p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner" href="/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule-visit">Set up site visit</a></p>`
+			);
 			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			addNotificationBannerToSession(
