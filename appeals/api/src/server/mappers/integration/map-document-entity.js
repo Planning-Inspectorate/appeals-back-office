@@ -26,6 +26,11 @@ import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pin
  */
 export const mapDocumentEntity = (data) => {
 	const latestDocumentVersion = data.versions?.length === 1 ? data.versions[0] : null;
+	const docFriendlyName =
+		latestDocumentVersion?.representation !== null
+			? data.name.replace(/[a-f\d-]{36}_/, '')
+			: data.name;
+
 	const documentInput = {
 		...data,
 		latestDocumentVersion
@@ -47,7 +52,7 @@ export const mapDocumentEntity = (data) => {
 		caseId: documentInput.caseId,
 		caseReference: documentInput.case?.reference || '',
 		version: documentInput.latestDocumentVersion.version,
-		filename: documentInput.latestDocumentVersion.fileName || '',
+		filename: docFriendlyName || '',
 		originalFilename: documentInput.latestDocumentVersion.originalFilename || '',
 		size: documentInput.latestDocumentVersion.size ?? 0,
 		mime: documentInput.latestDocumentVersion.mime || '',

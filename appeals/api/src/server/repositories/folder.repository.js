@@ -11,6 +11,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @returns {PrismaPromise<Folder|null>}
  */
 export const getById = (id) => {
+	// @ts-ignore
 	return databaseConnector.folder.findUnique({
 		where: { id },
 		include: {
@@ -18,7 +19,8 @@ export const getById = (id) => {
 				include: {
 					latestDocumentVersion: {
 						include: {
-							redactionStatus: true
+							redactionStatus: true,
+							representation: true
 						}
 					}
 				},

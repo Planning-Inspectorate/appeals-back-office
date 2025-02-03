@@ -33,7 +33,8 @@ import { EventType } from '@pins/event-client';
 const getFolder = async (req, res) => {
 	const { appeal } = req;
 	const { folderId } = req.params;
-	const folder = await service.getFolderForAppeal(appeal.id, folderId);
+	const repId = Number(req.query.repId) || null;
+	const folder = await service.getFolderForAppeal(appeal.id, folderId, repId);
 
 	return res.send(folder);
 };

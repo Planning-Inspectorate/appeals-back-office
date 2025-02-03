@@ -1828,6 +1828,15 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "repId",
+						"in": "query",
+						"description": "The ID of a representation to filter attachments to",
+						"example": 1,
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {

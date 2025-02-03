@@ -50,6 +50,11 @@ router.get(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
+		#swagger.parameters['repId'] = {
+			in: 'query',
+			description: 'The ID of a representation to filter attachments to',
+			example: 1,
+		}
 		#swagger.responses[200] = {
 			description: 'Returns the contents of a single appeal folder, by id',
 			schema: { $ref: '#/components/schemas/Folder' }
