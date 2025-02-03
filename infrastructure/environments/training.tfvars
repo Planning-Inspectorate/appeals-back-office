@@ -63,6 +63,7 @@ apps_config = {
       comment_rejected_appellant_id                                   = "03939380-0d9e-46fd-a80e-4390f9e04c78"
       comment_rejected_lpa_id                                         = "d14c65ec-691d-4f5a-9b68-91fe0251b68d"
       comment_rejected_deadline_extended_id                           = "2dcee08f-d382-4b9f-ac45-95979d25cb5c"
+      lpa_statement_incomplete_id                                     = "a452a5c5-f5e2-4fce-b3de-09f083a6f53e"
     }
   }
 

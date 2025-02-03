@@ -248,6 +248,12 @@ const { value, error } = schema.validate({
 				id:
 					environment.GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED ||
 					'mock-comment-rejected-extended-id'
+			},
+			statementIncomplete: {
+				lpa: {
+					id:
+						environment.GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE || 'mock-comment-rejected-appellant-id'
+				}
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

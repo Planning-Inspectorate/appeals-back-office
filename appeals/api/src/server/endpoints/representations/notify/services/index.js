@@ -102,3 +102,34 @@ export const lpaFinalCommentRejection = async ({ notifyClient, appeal, represent
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
 };
+
+/** @type {Service} */
+export const lpaStatementIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit
+}) => {
+	const templateId = config.govNotify.template.statementIncomplete.lpa;
+	const siteAddress = formatSiteAddress(appeal);
+	const reasons = formatReasons(representation);
+	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+
+	const recipientEmail = appeal.lpa?.email;
+	if (!recipientEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+
+	try {
+		await notifyClient.sendEmail(templateId, recipientEmail, {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			url: FRONT_OFFICE_URL,
+			extendedDeadline,
+			reasons
+		});
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+	}
+};

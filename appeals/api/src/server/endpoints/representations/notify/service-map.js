@@ -11,8 +11,10 @@ Make sure you stick to the existing Service type
 and add any new arguments you might need to ServiceArgs
 */
 
-import { APPEAL_REPRESENTATION_STATUS } from 'pins-data-model';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	APPEAL_REPRESENTATION_STATUS
+} from '@pins/appeals/constants/common.js';
 
 import * as service from './services/index.js';
 
@@ -41,5 +43,10 @@ export const serviceMap = [
 		status: APPEAL_REPRESENTATION_STATUS.INVALID,
 		type: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
 		service: service.lpaFinalCommentRejection
+	},
+	{
+		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+		type: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+		service: service.lpaStatementIncomplete
 	}
 ];
