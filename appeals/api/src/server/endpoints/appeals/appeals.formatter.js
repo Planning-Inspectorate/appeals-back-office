@@ -83,10 +83,7 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 					appellantStatementDueDate:
 						appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,
 					lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
-					appellantFinalCommentsDueDate:
-						appeal.appealTimetable.appellantFinalCommentsDueDate?.toISOString() || null,
-					lpaFinalCommentsDueDate:
-						appeal.appealTimetable.lpaFinalCommentsDueDate?.toISOString() || null,
+					finalCommentsDueDate: appeal.appealTimetable.finalCommentsDueDate?.toISOString() || null,
 					s106ObligationDueDate:
 						appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
 					issueDeterminationDate:
@@ -208,11 +205,8 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			});
 		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
-			if (appeal.appealTimetable?.appellantFinalCommentsDueDate) {
-				return new Date(appeal.appealTimetable?.appellantFinalCommentsDueDate);
-			}
-			if (appeal.appealTimetable?.lpaFinalCommentsDueDate) {
-				return new Date(appeal.appealTimetable?.lpaFinalCommentsDueDate);
+			if (appeal.appealTimetable?.finalCommentsDueDate) {
+				return new Date(appeal.appealTimetable?.finalCommentsDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW

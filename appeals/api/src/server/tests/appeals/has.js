@@ -141,8 +141,7 @@ export default {
 		ipCommentsDueDate: null,
 		appellantStatementDueDate: null,
 		lpaStatementDueDate: null,
-		appellantFinalCommentsDueDate: null,
-		lpaFinalCommentsDueDate: null,
+		finalCommentsDueDate: null,
 		s106ObligationDueDate: null,
 		issueDeterminationDate: null
 	},

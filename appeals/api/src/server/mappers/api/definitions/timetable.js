@@ -31,12 +31,7 @@ const timetable = {
 			format: 'date-time',
 			nullable: true
 		},
-		appellantFinalCommentsDueDate: {
-			type: 'string',
-			format: 'date-time',
-			nullable: true
-		},
-		lpaFinalCommentsDueDate: {
+		finalCommentsDueDate: {
 			type: 'string',
 			format: 'date-time',
 			nullable: true

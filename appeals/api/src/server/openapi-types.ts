@@ -2430,9 +2430,7 @@ export interface Timetable {
 	/** @format date-time */
 	lpaStatementDueDate?: string | null;
 	/** @format date-time */
-	appellantFinalCommentsDueDate?: string | null;
-	/** @format date-time */
-	lpaFinalCommentsDueDate?: string | null;
+	finalCommentsDueDate?: string | null;
 	/** @format date-time */
 	s106ObligationDueDate?: string | null;
 }
@@ -10115,9 +10113,7 @@ export interface Appeal {
 		/** @format date-time */
 		lpaStatementDueDate?: string | null;
 		/** @format date-time */
-		appellantFinalCommentsDueDate?: string | null;
-		/** @format date-time */
-		lpaFinalCommentsDueDate?: string | null;
+		finalCommentsDueDate?: string | null;
 		/** @format date-time */
 		s106ObligationDueDate?: string | null;
 	};

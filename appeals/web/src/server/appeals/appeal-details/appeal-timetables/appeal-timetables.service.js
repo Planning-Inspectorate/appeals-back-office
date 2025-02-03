@@ -4,8 +4,7 @@
  * @property {string?} [ipCommentsDueDate]
  * @property {string?} [appellantStatementDueDate]
  * @property {string?} [lpaStatementDueDate]
- * @property {string?} [appellantFinalCommentsDueDate]
- * @property {string?} [lpaFinalCommentsDueDate]
+ * @property {string?} [finalCommentsDueDate]
  * @property {string?} [s106ObligationDueDate]
  * @property {object | string | undefined} [errors]
  */

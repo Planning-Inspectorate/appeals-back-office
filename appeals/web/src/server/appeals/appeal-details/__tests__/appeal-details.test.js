@@ -2201,18 +2201,6 @@ describe('appeal-details', () => {
 		describe('Timetable', () => {
 			describe('Final comments', () => {
 				const appealId = 3;
-				const testCases = [
-					{
-						name: 'appellant',
-						rowLabel: 'Appellant final comments due',
-						changePageRoute: 'appeal-timetables/appellant-final-comments'
-					},
-					{
-						name: 'lpa',
-						rowLabel: 'LPA final comments due',
-						changePageRoute: 'appeal-timetables/lpa-final-comments'
-					}
-				];
 
 				beforeEach(() => {
 					nock.cleanAll();
@@ -2222,8 +2210,7 @@ describe('appeal-details', () => {
 							...appealDataFullPlanning,
 							appealId,
 							appealTimetable: {
-								appellantFinalCommentsDueDate: '2025-01-20T23:59:00.000Z',
-								lpaFinalCommentsDueDate: '2025-01-20T23:59:00.000Z'
+								finalCommentsDueDate: '2025-01-20T23:59:00.000Z'
 							}
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
@@ -2237,77 +2224,75 @@ describe('appeal-details', () => {
 						});
 				});
 
-				for (const testCase of testCases) {
-					it(`should render an "${testCase.rowLabel}" row with the expected label, ${testCase.name} final comments due date, and a "Change" action link with the expected URL, if there are ${testCase.name} final comments awaiting review`, async () => {
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-							.reply(200, appellantFinalCommentsAwaitingReview);
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-							.reply(200, lpaFinalCommentsAwaitingReview);
+				it(`should render an "Final comments due" row with the expected label, final comments due date, and a "Change" action link with the expected URL, if there are final comments awaiting review`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+						.reply(200, appellantFinalCommentsAwaitingReview);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+						.reply(200, lpaFinalCommentsAwaitingReview);
 
-						const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-						expect(response.statusCode).toBe(200);
+					expect(response.statusCode).toBe(200);
 
-						const unprettifiedHTML = parseHtml(response.text, {
-							rootElement: `.appeal-${testCase.name}-final-comments-due-date`,
-							skipPrettyPrint: true
-						}).innerHTML;
+					const unprettifiedHTML = parseHtml(response.text, {
+						rootElement: `.appeal-final-comments-due-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
 
-						expect(unprettifiedHTML).toContain(
-							`<dt class="govuk-summary-list__key"> ${testCase.rowLabel}</dt>`
-						);
-						expect(unprettifiedHTML).toContain(
-							'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
-						);
-						expect(unprettifiedHTML).toContain(
-							`href="/appeals-service/appeal-details/${appealId}/${testCase.changePageRoute}" data-cy="change-${testCase.name}-final-comment-due-date"> Change<span class="govuk-visually-hidden"> ${testCase.rowLabel}</span></a>`
-						);
-					});
+					expect(unprettifiedHTML).toContain(
+						`<dt class="govuk-summary-list__key"> Final comments due</dt>`
+					);
+					expect(unprettifiedHTML).toContain(
+						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
+					);
+					expect(unprettifiedHTML).toContain(
+						`href="/appeals-service/appeal-details/${appealId}/appeal-timetables/final-comments" data-cy="change-final-comments-due-date"> Change<span class="govuk-visually-hidden"> Final comments due</span></a>`
+					);
+				});
 
-					it(`should render an "${testCase.rowLabel}" row with the expected label, ${testCase.name} final comments due date, and no "Change" action link, if there are valid/accepted ${testCase.name} final comments`, async () => {
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-							.reply(200, {
-								...appellantFinalCommentsAwaitingReview,
-								items: [
-									{
-										...appellantFinalCommentsAwaitingReview.items[0],
-										status: 'valid'
-									}
-								]
-							});
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-							.reply(200, {
-								...lpaFinalCommentsAwaitingReview,
-								items: [
-									{
-										...lpaFinalCommentsAwaitingReview.items[0],
-										status: 'valid'
-									}
-								]
-							});
+				it(`should render an "Final comments due" row with the expected label, final comments due date, and no "Change" action link, if there are valid/accepted final comments`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+						.reply(200, {
+							...appellantFinalCommentsAwaitingReview,
+							items: [
+								{
+									...appellantFinalCommentsAwaitingReview.items[0],
+									status: 'valid'
+								}
+							]
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+						.reply(200, {
+							...lpaFinalCommentsAwaitingReview,
+							items: [
+								{
+									...lpaFinalCommentsAwaitingReview.items[0],
+									status: 'valid'
+								}
+							]
+						});
 
-						const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-						expect(response.statusCode).toBe(200);
+					expect(response.statusCode).toBe(200);
 
-						const unprettifiedHTML = parseHtml(response.text, {
-							rootElement: `.appeal-${testCase.name}-final-comments-due-date`,
-							skipPrettyPrint: true
-						}).innerHTML;
+					const unprettifiedHTML = parseHtml(response.text, {
+						rootElement: `.appeal-final-comments-due-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
 
-						expect(unprettifiedHTML).toContain(
-							`<dt class="govuk-summary-list__key"> ${testCase.rowLabel}</dt>`
-						);
-						expect(unprettifiedHTML).toContain(
-							'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
-						);
-						expect(unprettifiedHTML).not.toContain('<a class="govuk-link"');
-					});
-				}
+					expect(unprettifiedHTML).toContain(
+						`<dt class="govuk-summary-list__key"> Final comments due</dt>`
+					);
+					expect(unprettifiedHTML).toContain(
+						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
+					);
+					expect(unprettifiedHTML).not.toContain('<a class="govuk-link"');
+				});
 			});
 		});
 

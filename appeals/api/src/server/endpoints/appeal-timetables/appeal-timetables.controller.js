@@ -60,8 +60,7 @@ const updateAppealTimetableById = async (req, res) => {
 			ipCommentsDueDate: body.ipCommentsDueDate,
 			appellantStatementDueDate: body.appellantStatementDueDate,
 			lpaStatementDueDate: body.lpaStatementDueDate,
-			appellantFinalCommentsDueDate: body.appellantFinalCommentsDueDate,
-			lpaFinalCommentsDueDate: body.lpaFinalCommentsDueDate,
+			finalCommentsDueDate: body.finalCommentsDueDate,
 			s106ObligationDueDate: body.s106ObligationDueDate,
 			issueDeterminationDate: body.issueDeterminationDate
 		};
