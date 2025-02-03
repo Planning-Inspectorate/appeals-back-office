@@ -39,10 +39,42 @@ import { validateBlobContents } from '#utils/blob-validation.js';
 /**
  * @param {number} appealId
  * @param {string} folderId
+ * @param {number|null} repId
  * @returns {Promise<FolderInfo | null>}
  */
-export const getFolderForAppeal = async (appealId, folderId) => {
+export const getFolderForAppeal = async (appealId, folderId, repId) => {
 	const folder = await getById(Number(folderId));
+	if (!folder) {
+		return null;
+	}
+
+	if (repId) {
+		const attachments = folder?.documents
+			.filter(
+				(doc) =>
+					doc.latestDocumentVersion?.representation != null &&
+					doc.latestDocumentVersion?.representation.representationId === repId
+			)
+			.map((doc) => {
+				const docFriendlyName = doc.name.replace(/[a-f\d-]{36}_/, '');
+				return {
+					...doc,
+					name: docFriendlyName,
+					latestDocumentVersion: {
+						...doc.latestDocumentVersion,
+						fileName: docFriendlyName
+					}
+				};
+			});
+
+		return (
+			formatFolder({
+				...folder,
+				// @ts-ignore
+				documents: attachments
+			}) || null
+		);
+	}
 	if (folder && folder.caseId === appealId) {
 		return formatFolder(folder) || null;
 	}

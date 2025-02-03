@@ -368,7 +368,7 @@ const getAppealsByIds = async (linkedAppealIds) => {
  *
  * @param {number} appealId
  * @param {Object<string, number>} data
- * @returns {Promise<AppealRelationship>}
+ * @returns {Promise<import('#db-client').ServiceUser>}
  */
 const removeAppealServiceUser = async (appealId, data) => {
 	const { userType, serviceUserId } = data;
