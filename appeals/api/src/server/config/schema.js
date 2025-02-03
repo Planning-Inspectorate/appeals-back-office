@@ -185,6 +185,11 @@ export default joi
 						}),
 						commentRejectedDeadlineExtended: joi.object({
 							id: joi.string().required()
+						}),
+						statementIncomplete: joi.object({
+							lpa: joi.object({
+								id: joi.string().required()
+							})
 						})
 					})
 					.required(),
