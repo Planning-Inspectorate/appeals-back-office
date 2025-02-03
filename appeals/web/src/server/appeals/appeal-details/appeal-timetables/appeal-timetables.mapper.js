@@ -13,19 +13,18 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  */
 
 /**
- * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'appellantFinalCommentsDueDate' | 'lpaFinalCommentsDueDate' | 's106ObligationDueDate' } AppealTimetableType
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 's106ObligationDueDate' } AppealTimetableType
  */
 
 /**
- * @type {Object.<'lpa-questionnaire' | 'ip-comments' | 'appellant-statement' | 'lpa-statement' | 'appellant-final-comments' | 'lpa-final-comments' | 's106-obligation' , 'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'appellantFinalCommentsDueDate' | 'lpaFinalCommentsDueDate' | 's106ObligationDueDate'>}
+ * @type {Object.<'lpa-questionnaire' | 'ip-comments' | 'appellant-statement' | 'lpa-statement' | 'final-comments' | 'lpa-final-comments' | 's106-obligation' , 'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 's106ObligationDueDate'>}
  */
 export const routeToObjectMapper = {
 	'lpa-questionnaire': 'lpaQuestionnaireDueDate',
 	'ip-comments': 'ipCommentsDueDate',
 	'appellant-statement': 'appellantStatementDueDate',
 	'lpa-statement': 'lpaStatementDueDate',
-	'appellant-final-comments': 'appellantFinalCommentsDueDate',
-	'lpa-final-comments': 'lpaFinalCommentsDueDate',
+	'final-comments': 'finalCommentsDueDate',
 	's106-obligation': 's106ObligationDueDate'
 };
 
@@ -127,10 +126,8 @@ const getTimetableTypeText = (timetableType) => {
 			return 'appellant statement';
 		case 'lpaStatementDueDate':
 			return 'LPA statement';
-		case 'appellantFinalCommentsDueDate':
-			return 'appellant final comments';
-		case 'lpaFinalCommentsDueDate':
-			return 'LPA final comments';
+		case 'finalCommentsDueDate':
+			return 'final comments';
 		case 's106ObligationDueDate':
 			return 'S106 obligation';
 		default:

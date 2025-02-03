@@ -26,7 +26,6 @@ export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
 	'LPA final comment redacted and accepted';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
 	'Appellant final comment redacted and accepted';
-
 export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
 
@@ -273,10 +272,7 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		lpaStatementDueDate: {
 			daysFromStartDate: 25
 		},
-		appellantFinalCommentsDueDate: {
-			daysFromStartDate: 35
-		},
-		lpaFinalCommentsDueDate: {
+		finalCommentsDueDate: {
 			daysFromStartDate: 35
 		},
 		s106ObligationDueDate: {

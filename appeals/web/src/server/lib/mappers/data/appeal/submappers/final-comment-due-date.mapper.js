@@ -3,7 +3,7 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppellantFinalCommentDueDate = ({
+export const mapFinalCommentDueDate = ({
 	appealDetails,
 	currentRoute,
 	userHasUpdateCasePermission,
@@ -12,11 +12,11 @@ export const mapAppellantFinalCommentDueDate = ({
 	const commentNotAccepted = appellantFinalComments?.status !== APPEAL_REPRESENTATION_STATUS.VALID;
 
 	return textSummaryListItem({
-		id: 'appellant-final-comment-due-date',
-		text: 'Appellant final comments due',
-		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.appellantFinalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/appellant-final-comments`,
+		id: 'final-comments-due-date',
+		text: 'Final comments due',
+		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate),
+		link: `${currentRoute}/appeal-timetables/final-comments`,
 		editable: Boolean(commentNotAccepted && userHasUpdateCasePermission && appealDetails.startedAt),
-		classes: 'appeal-appellant-final-comments-due-date'
+		classes: 'appeal-final-comments-due-date'
 	});
 };
