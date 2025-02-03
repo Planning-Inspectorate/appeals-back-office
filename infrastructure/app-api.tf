@@ -96,6 +96,7 @@ module "app_api" {
     GOV_NOTIFY_COMMENT_REJECTED_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.comment_rejected_appellant_id
     GOV_NOTIFY_COMMENT_REJECTED_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.comment_rejected_lpa_id
     GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED                              = var.apps_config.integrations.notify_template_ids.comment_rejected_deadline_extended_id
+    GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE					                               = var.apps_config.integrations.notify_template_ids.lpa_statement_incomplete_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
