@@ -122,18 +122,16 @@ const mapDesignatedSiteNames = (casedata, designatedSites) => {
 	if (casedata.designatedSitesNames && casedata.designatedSitesNames.length > 0) {
 		const defaultSiteNames = designatedSites.map((site) => site.key);
 
-		// @ts-ignore
-		const siteNames = casedata.designatedSitesNames.filter((/** @type {string} */ site) =>
+		const siteNames = casedata.designatedSitesNames.filter((site) =>
 			defaultSiteNames.includes(site)
 		);
-		// @ts-ignore
+
 		const customSiteName = casedata.designatedSitesNames.find(
 			(/** @type {string} */ site) => !defaultSiteNames.includes(site)
 		);
 
 		return {
 			designatedSiteNames: {
-				// @ts-ignore
 				create: siteNames.map((site) => {
 					return {
 						designatedSite: {
