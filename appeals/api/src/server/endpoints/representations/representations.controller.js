@@ -183,7 +183,7 @@ export async function updateRepresentation(request, response) {
 						CONSTANTS[
 							`AUDIT_TRAIL_REP_${camelToScreamingSnake(
 								updatedRep.representationType
-							)}_REDACTED_AND_ACCEPTED`
+							)}_STATUS_UPDATED`
 						],
 						[status]
 				  );

@@ -15,6 +15,8 @@ export const CASE_OUTCOME_INVALID = 'invalid';
 
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED =
 	'LPA statement status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_LPA_STATEMENT_REDACTED_AND_ACCEPTED =
+	'LPA statement redacted and accepted';
 export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_UPDATED =
 	'Appellant statement status updated to {replacement0}';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_UPDATED = 'Comment status updated to {replacement0}';
