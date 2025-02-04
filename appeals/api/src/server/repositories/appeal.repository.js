@@ -390,9 +390,19 @@ const getAppealsWithCompletedEvents = () =>
 				}
 			},
 			siteVisit: {
-				visitEndTime: {
-					lte: new Date()
-				}
+				OR: [
+					{
+						visitEndTime: {
+							lte: new Date()
+						}
+					},
+					{
+						visitEndTime: null,
+						visitDate: {
+							lte: new Date()
+						}
+					}
+				]
 			}
 		},
 		include: appealDetailsInclude
