@@ -368,6 +368,7 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 	dueDate: string | undefined | null;
 	receivedAt: string | undefined | null;
 	representationStatus: string | undefined | null;
+	validCount?: number;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {

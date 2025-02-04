@@ -1,4 +1,6 @@
 import { ensureArray } from '#lib/array-utilities.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -107,4 +109,65 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 	});
 
 	return Object.values(mappedReasons);
+}
+
+/**
+ * @param {Appeal} appeal
+ * @returns {PageContent}
+ * */
+export function statementAndCommentsSharePage(appeal) {
+	const shortAppealReference = appealShortReference(appeal.appealReference);
+
+	const ipCommentsText = (() => {
+		const numIpComments = appeal.documentationSummary?.ipComments?.validCount ?? 0;
+
+		return numIpComments > 0
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments" class="govuk-link">${numIpComments} interested party comments</a>`
+			: null;
+	})();
+
+	const statementsText =
+		appeal.documentationSummary?.lpaStatement?.representationStatus ===
+		APPEAL_REPRESENTATION_STATUS.VALID
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement" class="govuk-link">1 statement</a>`
+			: null;
+
+	const valueTexts = [ipCommentsText, statementsText].filter(Boolean);
+
+	/** @type {PageComponent} */
+	const textComponent =
+		valueTexts.length > 0
+			? {
+					type: 'inset-text',
+					parameters: {
+						html: `We’ll share ${valueTexts.length === 1 ? 'the ' : ''}${valueTexts.join(
+							' and '
+						)} with the relevant parties.`
+					}
+			  }
+			: {
+					type: 'html',
+					parameters: {
+						html: 'There are no interested party comments or statements to share.'
+					}
+			  };
+
+	return {
+		title: 'Share IP comments and statements',
+		backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}`,
+		preHeading: `Appeal ${shortAppealReference}`,
+		heading: 'Share IP comments and statements',
+		pageComponents: [
+			textComponent,
+			{
+				type: 'warning-text',
+				parameters: {
+					text: 'Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				}
+			}
+		],
+		submitButtonProperties: {
+			text: valueTexts.length > 0 ? 'Confirm' : 'Progress case'
+		}
+	};
 }

@@ -99,8 +99,14 @@ export async function getRepresentationRejectionReasonOptions(apiClient, represe
 export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) =>
 	apiClient
 		.patch(`appeals/${appealId}/reps/${commentId}/rejection-reasons`, {
-			json: {
-				rejectionReasons: rejectionReasons
-			}
+			json: { rejectionReasons }
 		})
 		.json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {'lpa_statement' | 'final_comment'} type
+ * */
+export const publishRepresentations = (apiClient, appealId, type) =>
+	apiClient.post(`appeals/${appealId}/reps/publish?type=${type}`).json();

@@ -169,6 +169,6 @@ router.use(
 	withdrawalRouter
 );
 
-router.use('/:appealId', representationsRouter);
+router.use('/:appealId', validateAppeal, representationsRouter);
 
 export default router;
