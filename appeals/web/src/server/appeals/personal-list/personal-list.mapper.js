@@ -13,6 +13,7 @@ import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
+import { mapStatusText } from '#lib/appeal-status.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -198,7 +199,9 @@ export function personalListPage(
 							{
 								type: 'status-tag',
 								parameters: {
-									status: appeal.appealStatus || 'ERROR'
+									status: appeal.appealStatus
+										? mapStatusText(appeal.appealStatus, appeal.appealType)
+										: 'ERROR'
 								}
 							}
 						]
@@ -320,6 +323,8 @@ export function mapAppealStatusToActionRequiredHtml(
 			return 'Awaiting LPA questionnaire';
 		case APPEAL_CASE_STATUS.EVENT:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		case APPEAL_CASE_STATUS.AWAITING_EVENT:
+			return '';
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
