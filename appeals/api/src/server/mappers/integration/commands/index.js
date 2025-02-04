@@ -15,6 +15,7 @@ import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.u
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
+/** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
@@ -83,13 +84,14 @@ const mapAppealSubmission = (data) => {
  *
  * @param {LPAQuestionnaireCommand} data
  * @param {Appeal|undefined} appeal
+ * @param {DesignatedSite[]} designatedSites
  * @returns {{ questionnaire: Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput,'appeal'>, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
  */
-const mapQuestionnaireSubmission = (data, appeal) => {
+const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 	const { casedata, documents } = data;
 	const isS78 = appeal?.appealType?.key === APPEAL_CASE_TYPE.W || false;
 	const questionnaireInput = {
-		...mapQuestionnaireIn({ casedata }, isS78),
+		...mapQuestionnaireIn({ casedata }, isS78, designatedSites),
 		neighbouringSites: {
 			create: casedata.neighbouringSiteAddresses?.map((site) => {
 				return {

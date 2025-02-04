@@ -84,8 +84,8 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 		});
 	}
 
-	const referencedAppeal = await findAppealByReference(body?.casedata?.caseReference);
-	if (!referencedAppeal) {
+	const referenceData = await loadReferenceData(body?.casedata?.caseReference);
+	if (!referenceData?.appeal) {
 		pino.error(
 			`Error associating representation to an existing appeal with reference '${body?.caseReference}'`
 		);
@@ -96,7 +96,8 @@ export const validateLpaQuestionnaire = async (req, res, next) => {
 		});
 	}
 
-	req.appeal = referencedAppeal;
+	req.appeal = referenceData.appeal;
+	req.designatedSites = referenceData.designatedSites;
 	next();
 };
 
@@ -123,8 +124,8 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const referencedAppeal = await findAppealByReference(body?.caseReference);
-	if (!referencedAppeal) {
+	const referenceData = await loadReferenceData(body?.caseReference);
+	if (!referenceData?.appeal) {
 		pino.error(
 			`Error associating representation to an existing appeal with reference '${body?.caseReference}'`
 		);
@@ -140,9 +141,9 @@ export const validateRepresentation = async (req, res, next) => {
 		validAppealTypesAcceptingReps.push(APPEAL_CASE_TYPE.W);
 	}
 
-	if (validAppealTypesAcceptingReps.indexOf(referencedAppeal.appealType?.key ?? '') === -1) {
+	if (validAppealTypesAcceptingReps.indexOf(referenceData.appeal.appealType?.key ?? '') === -1) {
 		pino.error(
-			`The reference appeal '${body?.caseReference}' does not accept representations (${referencedAppeal.appealType?.key})`
+			`The reference appeal '${body?.caseReference}' does not accept representations (${referenceData.appeal.appealType?.key})`
 		);
 		return res.status(400).send({
 			errors: {
@@ -154,21 +155,33 @@ export const validateRepresentation = async (req, res, next) => {
 	// TODO: additional validation,
 	// e.g. reject if rep time window is elapsed or custom logic depending on representationType and appeal status
 
-	req.appeal = referencedAppeal;
+	req.appeal = referenceData.appeal;
+	req.designatedSites = referenceData.designatedSites;
+
 	next();
 };
 
-const findAppealByReference = async (/** @type {string|undefined} */ reference) => {
+const loadReferenceData = async (/** @type {string|undefined} */ reference) => {
 	if (reference) {
-		const appeal = await databaseConnector.appeal.findUnique({
-			where: { reference },
-			include: {
-				appealStatus: true,
-				appealType: true
-			}
-		});
-		if (appeal) {
-			return appeal;
+		const result = await databaseConnector.$transaction([
+			databaseConnector.appeal.findUnique({
+				where: { reference },
+				include: {
+					appealStatus: true,
+					appealType: true
+				}
+			}),
+			databaseConnector.designatedSite.findMany()
+		]);
+
+		const appeal = result[0];
+		const designatedSites = result[1];
+
+		if (appeal && designatedSites) {
+			return {
+				appeal,
+				designatedSites
+			};
 		}
 	}
 

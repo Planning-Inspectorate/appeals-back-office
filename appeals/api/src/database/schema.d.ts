@@ -80,8 +80,9 @@ export interface AppellantCaseIncompleteReasonText
 export interface AppellantCaseInvalidReasonText extends schema.AppellantCaseInvalidReasonText {}
 export interface KnowledgeOfOtherLandowners extends schema.KnowledgeOfOtherLandowners {}
 export interface DesignatedSiteSelected extends schema.DesignatedSiteSelected {
-	designatedSite: schema.DesignatedSite;
+	designatedSite: DesignatedSite;
 }
+export interface DesignatedSite extends schema.DesignatedSite {}
 export interface LPAQuestionnaire extends schema.LPAQuestionnaire {
 	lpaQuestionnaireValidationOutcome?: LPAQuestionnaireValidationOutcome | null;
 	lpaQuestionnaireIncompleteReasonsSelected?: LPAQuestionnaireIncompleteReasonsSelected[] | null;

@@ -6,6 +6,7 @@ declare global {
 		interface Request {
 			appeal: Schema.Appeal;
 			appealTypes: Schema.AppealType[];
+			designatedSites: Schema.DesignatedSite[];
 			document: Schema.Document;
 			notifyClient: NotifyClient;
 			visitType: SiteVisitType;
