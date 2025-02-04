@@ -166,7 +166,8 @@ const s78AppealDto = {
 			receivedAt: fullPlanningAppeal.lpaQuestionnaire.lpaqCreatedDate.toISOString()
 		},
 		ipComments: {
-			status: 'received'
+			status: 'received',
+			validCount: 4
 		},
 		lpaFinalComments: {
 			receivedAt: null,

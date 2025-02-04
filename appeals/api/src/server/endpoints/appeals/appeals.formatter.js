@@ -1,4 +1,8 @@
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { sumBy } from 'lodash-es';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	APPEAL_REPRESENTATION_STATUS
+} from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
 import isFPA from '#utils/is-fpa.js';
 import {
@@ -101,6 +105,11 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
+	const ipComments =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+		) ?? [];
+
 	const lpaStatement = appeal.representations?.find(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
@@ -127,9 +136,10 @@ const formatDocumentationSummary = (appeal) => {
 				appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
 		},
 		ipComments: {
-			status: appeal.representations?.length
-				? DOCUMENT_STATUS_RECEIVED
-				: DOCUMENT_STATUS_NOT_RECEIVED
+			status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			validCount: sumBy(ipComments, (rep) =>
+				rep.status === APPEAL_REPRESENTATION_STATUS.VALID ? 1 : 0
+			)
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),

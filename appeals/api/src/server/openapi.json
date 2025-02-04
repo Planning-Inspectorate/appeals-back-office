@@ -10121,6 +10121,10 @@
 							"representationStatus": {
 								"type": "string",
 								"nullable": true
+							},
+							"validCount": {
+								"type": "number",
+								"nullable": true
 							}
 						}
 					},

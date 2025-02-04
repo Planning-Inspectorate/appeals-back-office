@@ -1,8 +1,12 @@
+import { sumBy } from 'lodash-es';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus
 } from '#utils/format-documentation-status.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	APPEAL_REPRESENTATION_STATUS
+} from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 import isFPA from '#utils/is-fpa.js';
 
@@ -17,6 +21,11 @@ import isFPA from '#utils/is-fpa.js';
  */
 export const mapDocumentationSummary = (data) => {
 	const { appeal } = data;
+
+	const ipComments =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+		) ?? [];
 
 	const lpaStatement =
 		appeal.representations?.find(
@@ -47,10 +56,10 @@ export const mapDocumentationSummary = (data) => {
 		},
 		...(isFPA(appeal.appealType?.key || '') && {
 			ipComments: {
-				status:
-					(appeal.representations || []).length > 0
-						? DOCUMENT_STATUS_RECEIVED
-						: DOCUMENT_STATUS_NOT_RECEIVED
+				status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				validCount: sumBy(ipComments, (rep) =>
+					rep.status === APPEAL_REPRESENTATION_STATUS.VALID ? 1 : 0
+				)
 			},
 			lpaStatement: {
 				status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,

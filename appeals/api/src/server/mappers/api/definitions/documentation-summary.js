@@ -37,7 +37,11 @@ const documentationSummary = {
 		ipComments: {
 			type: 'object',
 			properties: {
-				...commonDocumentationSummaryProperties
+				...commonDocumentationSummaryProperties,
+				validCount: {
+					type: 'number',
+					nullable: true
+				}
 			}
 		},
 		lpaStatement: {

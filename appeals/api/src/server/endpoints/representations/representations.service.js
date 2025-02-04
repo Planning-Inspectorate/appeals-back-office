@@ -4,6 +4,8 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import representationRepository from '#repositories/representation.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import BackOfficeAppError from '#utils/app-error.js';
+import transitionState from '#state/transition-state.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
@@ -187,10 +189,14 @@ export async function updateRepresentation(repId, payload) {
 	return updatedRep;
 }
 
-/** @typedef {(appeal: Appeal) => Promise<Representation[]>} PublishFunction */
+/** @typedef {(appeal: Appeal, azureAdUserId: string) => Promise<Representation[]>} PublishFunction */
 
-/** @type {PublishFunction} */
-export async function publishLpaStatements(appeal) {
+/**
+ * Also publishes any valid IP comments at the same time.
+ *
+ * @type {PublishFunction}
+ * */
+export async function publishLpaStatements(appeal, azureAdUserId) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.STATEMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
 	}
@@ -198,10 +204,17 @@ export async function publishLpaStatements(appeal) {
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
 		{
-			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 			OR: [
-				{ status: APPEAL_REPRESENTATION_STATUS.VALID },
-				{ status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE }
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+					status: {
+						in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
+					}
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
 			]
 		},
 		{
@@ -209,11 +222,19 @@ export async function publishLpaStatements(appeal) {
 		}
 	);
 
+	await transitionState(
+		appeal.id,
+		appeal.appealType,
+		azureAdUserId,
+		appeal.appealStatus,
+		APPEAL_CASE_STATUS.FINAL_COMMENTS
+	);
+
 	return result;
 }
 
 /** @type {PublishFunction} */
-export async function publishFinalComments(appeal) {
+export async function publishFinalComments(appeal, azureAdUserId) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
@@ -227,6 +248,14 @@ export async function publishFinalComments(appeal) {
 		{
 			status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
 		}
+	);
+
+	await transitionState(
+		appeal.id,
+		appeal.appealType,
+		azureAdUserId,
+		appeal.appealStatus,
+		VALIDATION_OUTCOME_COMPLETE
 	);
 
 	return result;

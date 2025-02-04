@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { request } from '#tests/../app-test.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, appealHas } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
-describe('/appeals/:id/representations', () => {
+describe('/appeals/:id/reps', () => {
 	beforeEach(() => {});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -522,6 +522,35 @@ describe('/appeals/:id/representations', () => {
 
 			expect(response.status).toEqual(500);
 			expect(response.body).toEqual({ errors: 'Internal Server Error' });
+		});
+	});
+});
+
+describe('/appeals/:id/reps/publish', () => {
+	test('400 when type parameter is invalid', async () => {
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(appealHas);
+
+		const response = await request
+			.post('/appeals/1/reps/publish')
+			.query({ type: 'invalid' })
+			.set('azureAdUserId', '732652365');
+
+		expect(response.status).toEqual(400);
+	});
+
+	describe('publish LPA statements', () => {
+		test('409 if case is not in STATEMENTS state', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealHas);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'lpa_statement' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(409);
 		});
 	});
 });

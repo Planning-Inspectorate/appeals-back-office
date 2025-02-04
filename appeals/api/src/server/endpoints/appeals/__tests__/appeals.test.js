@@ -80,7 +80,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -125,7 +126,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -193,7 +195,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -289,7 +292,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -385,7 +389,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -481,7 +486,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -564,7 +570,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -649,7 +656,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -731,7 +739,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								ipComments: {
-									status: 'not_received'
+									status: 'not_received',
+									validCount: 0
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',

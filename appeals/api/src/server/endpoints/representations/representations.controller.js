@@ -291,12 +291,17 @@ export async function publish(req, res) {
 		final_comment: representationService.publishFinalComments
 	};
 
+	const azureAdUserId = req.get('azureAdUserId');
+	if (!azureAdUserId) {
+		throw new BackOfficeAppError('azureAdUserId not provided', 401);
+	}
+
 	const publish = handlers[String(query.type)];
 	if (!publish) {
 		throw new BackOfficeAppError(`${query.type} is not a valid type`, 400);
 	}
 
-	const updatedReps = await publish(appeal);
+	const updatedReps = await publish(appeal, azureAdUserId);
 
 	await Promise.all(
 		updatedReps.map((rep) => broadcasters.broadcastRepresentation(rep.id, EventType.Update))

@@ -2510,6 +2510,7 @@ export interface DocumentationSummary {
 		/** @format date-time */
 		receivedAt?: string | null;
 		representationStatus?: string | null;
+		validCount?: number | null;
 	};
 	lpaStatement?: {
 		status?: string;
