@@ -50,7 +50,7 @@ export function nationalListPage(
 
 	const appealStatusFilterItemsArray = ['all', ...(appeals?.statuses || [])].map(
 		(appealStatus) => ({
-			text: capitalizeFirstLetter(appealStatusToStatusTag(appealStatus)),
+			text: appealStatusToStatusTag(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})

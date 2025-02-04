@@ -21,6 +21,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		text: 'Site visit type has been selected'
 	},
+	siteVisitArranged: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit has been arranged'
+	},
 	allocationDetailsUpdated: {
 		pages: ['appealDetails'],
 		type: 'success',

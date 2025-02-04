@@ -8,6 +8,7 @@ import {
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
 	getSiteVisitChangeType
 } from './site-visit.mapper.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  *
@@ -208,6 +209,12 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					confirmationPageTypeToRender
 				);
 
+				addNotificationBannerToSession(
+					request.session,
+					'siteVisitArranged',
+					appealDetails.appealId
+				);
+
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/visit-scheduled/${confirmationPageTypeToRender}`
 				);
@@ -219,6 +226,12 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.visitDate,
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime
+				);
+
+				addNotificationBannerToSession(
+					request.session,
+					'siteVisitArranged',
+					appealDetails.appealId
 				);
 
 				return response.redirect(
