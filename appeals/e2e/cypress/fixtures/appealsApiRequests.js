@@ -109,7 +109,7 @@ const appealsApiRequests = {
 			lpaProcedurePreferenceDuration: 3,
 			reasonForNeighbourVisits: null,
 			changedListedBuildingNumbers: ['14214', '62354'],
-			designatedSitesNames: ['cSAC', 'SAC'],
+			designatedSitesNames: ['cSAC', 'SAC', 'customVal1', 'customVal2'],
 			eiaSensitiveAreaDetails: null,
 			eiaConsultedBodiesDetails: null,
 			eiaScreeningOpinion: null,

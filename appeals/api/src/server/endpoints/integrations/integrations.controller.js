@@ -17,6 +17,7 @@ import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
 /** @typedef {import('express').Response} Response */
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
@@ -81,13 +82,13 @@ export const importAppeal = async (req, res) => {
 };
 
 /**
- * @param {{body: LPAQuestionnaireCommand, appeal: Appeal}} req
+ * @param {{body: LPAQuestionnaireCommand, appeal: Appeal, designatedSites: DesignatedSite[]}} req
  * @param {Response} res
  * @returns {Promise<Response>}
  */
 export const importLpaqSubmission = async (req, res) => {
 	const { caseReference, questionnaire, documents, relatedReferences } =
-		commandMappers.mapQuestionnaireSubmission(req.body, req.appeal);
+		commandMappers.mapQuestionnaireSubmission(req.body, req.appeal, req.designatedSites);
 
 	const casedata = await integrationService.importLPAQuestionnaire(
 		caseReference,

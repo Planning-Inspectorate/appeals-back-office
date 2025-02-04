@@ -1,11 +1,14 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
+
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
  * @param {boolean} isS78
+ * @param {DesignatedSite[]} designatedSites
  * @returns {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>}
  */
-export const mapQuestionnaireIn = (command, isS78) => {
+export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 	const casedata = command.casedata;
 	const siteAccessDetails =
 		casedata.siteAccessDetails != null && casedata.siteAccessDetails.length > 0
@@ -57,7 +60,7 @@ export const mapQuestionnaireIn = (command, isS78) => {
 			hasTreePreservationOrder: casedata.hasTreePreservationOrder,
 			isGypsyOrTravellerSite: casedata.isGypsyOrTravellerSite,
 			isPublicRightOfWay: casedata.isPublicRightOfWay,
-			...mapDesignatedSiteNames(casedata),
+			...mapDesignatedSiteNames(casedata, designatedSites),
 			eiaEnvironmentalImpactSchedule: casedata.eiaEnvironmentalImpactSchedule,
 			eiaDevelopmentDescription: casedata.eiaDevelopmentDescription,
 			eiaSensitiveAreaDetails: casedata.eiaSensitiveAreaDetails,
@@ -112,21 +115,34 @@ const mapListedBuildings = (casedata, isS78) => {
 /**
  *
  * @param {import('pins-data-model').Schemas.LPAQS78SubmissionProperties} casedata
+ * @param {DesignatedSite[]} designatedSites
  * @returns {*|undefined}
  */
-const mapDesignatedSiteNames = (casedata) => {
+const mapDesignatedSiteNames = (casedata, designatedSites) => {
 	if (casedata.designatedSitesNames && casedata.designatedSitesNames.length > 0) {
+		const defaultSiteNames = designatedSites.map((site) => site.key);
+
+		// @ts-ignore
+		const siteNames = casedata.designatedSitesNames.filter((/** @type {string} */ site) =>
+			defaultSiteNames.includes(site)
+		);
+		// @ts-ignore
+		const customSiteName = casedata.designatedSitesNames.find(
+			(/** @type {string} */ site) => !defaultSiteNames.includes(site)
+		);
+
 		return {
 			designatedSiteNames: {
 				// @ts-ignore
-				create: casedata.designatedSitesNames.map((site) => {
+				create: siteNames.map((site) => {
 					return {
 						designatedSite: {
 							connect: { key: site }
 						}
 					};
 				})
-			}
+			},
+			designatedSiteNameCustom: customSiteName
 		};
 	}
 };
