@@ -52,9 +52,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
 				eiaConsultedBodiesDetails: data.eiaConsultedBodiesDetails,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
-				designatedSiteNames: processDesignatedSites(id, data, transaction),
-				designatedSiteNameCustom:
-					data.designatedSiteNames?.find((s) => s.id === 0)?.name || undefined
+				...processDesignatedSites(id, data, transaction)
 			}
 		})
 	);
@@ -124,17 +122,30 @@ function processDesignatedSites(id, data, transaction) {
 
 		if (data.designatedSiteNames.length) {
 			const designatedSites = data.designatedSiteNames?.filter((s) => s.id > 0);
+			const customValue = data.designatedSiteNames?.find((s) => s.id === 0)?.name || null;
+
 			if (designatedSites.length) {
 				return {
-					create: designatedSites.map((site) => {
-						return {
-							designatedSite: {
-								connect: { id: site.id }
-							}
-						};
-					})
+					designatedSiteNames: {
+						create: designatedSites.map((site) => {
+							return {
+								designatedSite: {
+									connect: { id: site.id }
+								}
+							};
+						})
+					},
+					designatedSiteNameCustom: customValue
+				};
+			} else {
+				return {
+					designatedSiteNameCustom: customValue
 				};
 			}
+		} else {
+			return {
+				designatedSiteNameCustom: null
+			};
 		}
 	}
 }

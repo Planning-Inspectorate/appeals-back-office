@@ -18,12 +18,15 @@ import {
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
 	appealData,
+	appealDataFullPlanning,
 	notCheckedDocumentFolderInfoDocuments,
 	lpaQuestionnaireData,
 	fileUploadInfo,
 	lpaNotificationMethodsData,
 	text300Characters,
-	text301Characters
+	text301Characters,
+	designatedSiteNames,
+	lpaDesignatedSites
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
@@ -462,6 +465,49 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Success');
 			expect(notificationBannerElementHTML).toContain('Development category updated');
 		});
+
+		it('should render an "In, near or likely to effect designated sites changed" success notification banner when designated sites are changed', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				})
+				.persist();
+			nock('http://test/').get('/appeals/lpa-designated-sites').reply(200, lpaDesignatedSites);
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1,
+					designatedSiteNames: []
+				})
+				.persist();
+			nock('http://test/').patch('/appeals/2/lpa-questionnaires/1').reply(200, {});
+
+			const changePageResponse = await request
+				.post(
+					'/appeals-service/appeal-details/2/lpa-questionnaire/1/in-near-or-likely-to-affect-designated-sites/change'
+				)
+				.send({
+					inNearOrLikelyToAffectDesignatedSitesCheckboxes: 'SSSI',
+					customDesignation: ''
+				});
+
+			expect(changePageResponse.statusCode).toBe(302);
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+			const notificationBannerElementHTML = parseHtml(response.text, {
+				rootElement: notificationBannerElement
+			}).innerHTML;
+
+			expect(notificationBannerElementHTML).toContain('Success');
+			expect(notificationBannerElementHTML).toContain(
+				'In, near or likely to effect designated sites changed'
+			);
+		});
 	});
 
 	describe('GET /', () => {
@@ -692,6 +738,184 @@ describe('LPA Questionnaire review', () => {
 						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Extra conditions details" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
+			});
+		});
+
+		describe('designated-sites', () => {
+			it('should not render a designated sites row in the LPAQ for householder appeals', async () => {
+				nock('http://test/')
+					.get('/appeals/1/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataNotValidated);
+
+				const response = await request.get(baseUrl);
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).not.toContain('designated sites');
+			});
+
+			it('should render a designated sites row with the expected label for s78/full planning appeals', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'<dt class="govuk-summary-list__key"> In, near or likely to affect designated sites</dt>'
+				);
+			});
+
+			it('should render a designated sites row with a "Change" action link to the designated sites change page', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'href="/appeals-service/appeal-details/2/lpa-questionnaire/1/in-near-or-likely-to-affect-designated-sites/change" data-cy="change-in-near-or-likely-to-affect-designated-sites"> Change<span class="govuk-visually-hidden"> In, near or likely to affect designated sites</span></a>'
+				);
+			});
+
+			it('should render a designated sites row with the expected value of "Not applicable" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames: []
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'<dd class="govuk-summary-list__value"> Not applicable</dd>'
+				);
+			});
+
+			it('should render a designated sites row with the expected value as plaintext if LPAQ designatedSiteNames array contains a single designated site item', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames: [designatedSiteNames[0]]
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'<dd class="govuk-summary-list__value"> SSSI (site of special scientific interest)</dd>'
+				);
+			});
+
+			it('should render a designated sites row with the expected values contained in a list if LPAQ designatedSiteNames array contains multiple designated site items', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'<dd class="govuk-summary-list__value"><ul class="pins-summary-list-sublist"><li>SSSI (site of special scientific interest)</li><li>Other: test custom designation</li></ul></dd>'
+				);
+			});
+
+			it('should render a designated sites row with the expected value of "Other: <custom designated site name>" if LPAQ designatedSiteNames array contains a custom item', async () => {
+				nock('http://test/')
+					.get('/appeals/2')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/1')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 1,
+						designatedSiteNames: [designatedSiteNames[1]]
+					});
+
+				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					rootElement: '#constraints-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'<dd class="govuk-summary-list__value"> Other: test custom designation</dd>'
+				);
 			});
 		});
 	});

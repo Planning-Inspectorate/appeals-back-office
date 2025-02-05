@@ -960,6 +960,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
+				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
 				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem

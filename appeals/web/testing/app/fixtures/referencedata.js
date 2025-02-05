@@ -936,16 +936,6 @@ export const lpaQuestionnaireDataNotValidated = {
 		postCode: 'RG26 4BX'
 	},
 	communityInfrastructureLevyAdoptionDate: '2023-05-09T01:00:00.000Z',
-	designatedSites: [
-		{
-			key: 'pSPA',
-			name: 'potential special protection area'
-		},
-		{
-			key: 'SAC',
-			name: 'special area of conservation'
-		}
-	],
 	developmentDescription: '',
 	documents: {
 		conservationMap: {
@@ -2701,3 +2691,44 @@ export const text300Characters =
 	'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cill';
 
 export const text301Characters = text300Characters + 'u';
+
+export const lpaDesignatedSites = [
+	{
+		id: 1,
+		key: 'SSSI',
+		name: 'SSSI (site of special scientific interest)'
+	},
+	{
+		id: 2,
+		key: 'cSAC',
+		name: 'cSAC (candidate special area of conservation)'
+	},
+	{
+		id: 3,
+		key: 'SAC',
+		name: 'SAC (special area of conservation)'
+	},
+	{
+		id: 4,
+		key: 'pSPA',
+		name: 'pSPA (potential special protection area)'
+	},
+	{
+		id: 5,
+		key: 'SPA',
+		name: 'SPA Ramsar (Ramsar special protection area)'
+	}
+];
+
+export const designatedSiteNames = [
+	{
+		id: 1,
+		key: 'SSSI',
+		name: 'SSSI (site of special scientific interest)'
+	},
+	{
+		id: 0,
+		key: 'custom',
+		name: 'test custom designation'
+	}
+];

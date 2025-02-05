@@ -205,17 +205,16 @@
 /**
  * @typedef CheckboxItemsProperties
  * Documentation: https://design-system.service.gov.uk/components/checkboxes/#options-checkboxes-example--items
- * @type {SharedCheckboxItemsProperties & TextProperty | SharedCheckboxItemsProperties & HtmlProperty}
+ * @type {SharedCheckboxItemsProperties & (TextProperty | DividerProperty) | SharedCheckboxItemsProperties & (HtmlProperty | DividerProperty)}
  */
 /**
  * @typedef SharedCheckboxItemsProperties
  * @type {Object<string, any>}
  * @property {string} [id] 	Specific ID attribute for the checkbox item. If omitted, then component global idPrefix option will be applied.
  * @property {string} [name] Specific name for the checkbox item. If omitted, then component global name string will be applied.
- * @property {string} value Value for the checkbox input.
+ * @property {string} [value] Value for the checkbox input.
  * @property {LabelProperties} [label] 	Provide attributes and classes to each checkbox item label. See: https://design-system.service.gov.uk/components/checkboxes/#options-checkboxes-example--label
  * @property {HintProperties} [hint] Provide hint to each checkbox item.
- * @property {string} [divider] Divider text to separate checkbox items, for example the text 'or'.
  * @property {boolean} [checked] Whether the checkbox should be checked when the page loads. Takes precedence over the top-level values option.
  * @property {ConditionalProperties} [conditional] 	Provide additional content to reveal when the checkbox is checked.
  * @property {string} [behaviour] If set to exclusive, implements a 'None of these' type behaviour via JavaScript when checkboxes are clicked.
