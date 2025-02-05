@@ -76,11 +76,11 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 		const appellantTemplate = appeal.caseStartedDate
 			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].appellant
-			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].appellant;
+			: config.govNotify.template.appealValidStartCase.appellant;
 
 		const lpaTemplate = appeal.caseStartedDate
 			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].lpa
-			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].lpa;
+			: config.govNotify.template.appealValidStartCase.lpa;
 
 		if (timetable) {
 			await Promise.all([
