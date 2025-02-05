@@ -122,6 +122,8 @@ export const AUDIT_TRAIL_LPAQ_EIA_CONSULTED_BODIES_DETAILS_UPDATED =
 	'Consulted relevant statutory consultees changed';
 export const AUDIT_TRAIL_LPAQ_REASON_FOR_NEIGHBOUR_VISITS_UPDATED =
 	'Inspector needs neighbouring site access changed';
+export const AUDIT_TRAIL_LPAQ_DESIGNATED_SITE_NAMES_UPDATED =
+	'In, near or likely to effect designated sites changed';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';

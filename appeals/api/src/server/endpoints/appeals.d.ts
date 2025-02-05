@@ -282,6 +282,13 @@ interface SingleLPAQuestionnaireResponse {
 	appealSite: AppealSite;
 	localPlanningDepartment?: string;
 	procedureType?: string;
+	designatedSiteNames?:
+		| {
+				id: number;
+				key?: string;
+				name: string;
+		  }[]
+		| null;
 	documents: {
 		whoNotified?: FolderInfo | null;
 		whoNotifiedSiteNotice?: FolderInfo | null;

@@ -34,6 +34,7 @@ import eiaEnvironmentalImpactScheduleRouter from './eia-environmental-impact-sch
 import eiaDevelopmentDescriptionRouter from './eia-development-description/eia-development-description.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
+import designatedSitesRouter from './designated-sites/designated-sites.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -191,6 +192,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	neighbouringSiteAccessRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/in-near-or-likely-to-affect-designated-sites',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	designatedSitesRouter
 );
 
 router
