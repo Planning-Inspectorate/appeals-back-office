@@ -42,13 +42,16 @@ export function mapRepresentationDocumentSummaryActionLink(
  * @returns {string}
  */
 export function mapRepresentationDocumentSummaryStatus(documentationStatus, representationStatus) {
-	if (documentationStatus === 'received' && representationStatus) {
-		if (representationStatus === APPEAL_REPRESENTATION_STATUS.VALID) {
-			return 'Accepted';
-		}
-
-		return 'Received';
+	if (documentationStatus !== 'received' || !representationStatus) {
+		return 'Not received';
 	}
 
-	return 'Not received';
+	switch (representationStatus) {
+		case APPEAL_REPRESENTATION_STATUS.VALID:
+			return 'Accepted';
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
+			return 'Shared';
+		default:
+			return 'Received';
+	}
 }
