@@ -343,25 +343,16 @@ describe('personal-list', () => {
 describe('mapAppealStatusToActionRequiredHtml', () => {
 	const appealId = 123;
 	const lpaQuestionnaireId = 456;
+	const appeal = {
+		appealId,
+		lpaQuestionnaireId,
+		appealStatus: 'validation',
+		appealType: 'appeal',
+		appealSubtype: 'protection'
+	};
 
 	it('should return "Review appellant case" link for validation status with unvalidated appellant case', () => {
-		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'validation',
-			false,
-			lpaQuestionnaireId,
-			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
-			},
-			'',
-			true
-		);
+		const result = mapAppealStatusToActionRequiredHtml(appeal, true);
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
@@ -369,20 +360,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Awaiting appellant update" link for validation status with incomplete appellant case', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'validation',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: 'Incomplete',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -392,20 +373,10 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Awaiting appellant update" text for validation status with incomplete appellant case and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'validation',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: 'Incomplete',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			false
 		);
 		expect(result).toEqual('Awaiting appellant update');
@@ -413,20 +384,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Start case" link for ready_to_start status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'ready_to_start',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'ready_to_start',
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -436,20 +398,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Start case" text for ready_to_start status and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'ready_to_start',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'ready_to_start',
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			false
 		);
 		expect(result).toEqual('Start case');
@@ -457,20 +410,12 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Awaiting LPA questionnaire" for lpa_questionnaire status with no LPA questionnaire ID', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				lpaQuestionnaireId: null,
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual('Awaiting LPA questionnaire');
@@ -478,20 +423,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Awaiting LPA update" link for lpa_questionnaire status with incomplete LPA questionnaire', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: 'Incomplete',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				documentationSummary: { lpaQuestionnaire: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -501,20 +437,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Awaiting LPA update" text for lpa_questionnaire status with incomplete LPA questionnaire and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: 'Incomplete',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				documentationSummary: { lpaQuestionnaire: { status: 'Incomplete' } }
 			},
-			'',
 			false
 		);
 		expect(result).toEqual('Awaiting LPA update');
@@ -522,20 +449,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -545,20 +463,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Review LPA questionnaire" for lpa_questionnaire status with LPA questionnaire and isCaseOfficer false', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			lpaQuestionnaireId,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			false
 		);
 		expect(result).toEqual('Review LPA questionnaire');
@@ -566,20 +475,13 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "LPA questionnaire overdue" for lpa_questionnaire status with LPA questionnaire overdue', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'lpa_questionnaire',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'lpa_questionnaire',
+				lpaQuestionnaireId: null,
+				dueDate: '2024-01-01',
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'2024-01-01',
 			true
 		);
 		expect(result).toEqual('LPA questionnaire overdue');
@@ -587,20 +489,12 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Set up site visit" link for event status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'event',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'event',
+				lpaQuestionnaireId: null,
+				documentationSummary: { appellantCase: { status: 'Incomplete' } }
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -610,20 +504,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Issue decision" link for issue_determination status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'issue_determination',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'issue_determination',
+				lpaQuestionnaireId: null
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -633,20 +518,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "Update Horizon reference" link for awaiting_transfer status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'awaiting_transfer',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'awaiting_transfer',
+				lpaQuestionnaireId: null
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(
@@ -656,20 +532,11 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 	it('should return "View case" link for any other status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
-			appealId,
-			'some_other_status',
-			false,
-			null,
 			{
-				appellantCase: '',
-				lpaQuestionnaire: '',
-				lpaStatement: '',
-				lpaFinalComments: '',
-				lpaFinalCommentsRepresentationStatus: '',
-				appellantFinalComments: '',
-				appellantFinalCommentsRepresentationStatus: ''
+				...appeal,
+				appealStatus: 'some_other_status',
+				lpaQuestionnaireId: null
 			},
-			'',
 			true
 		);
 		expect(result).toEqual(

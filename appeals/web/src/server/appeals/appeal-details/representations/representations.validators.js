@@ -5,9 +5,10 @@ import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js'
 export function validateReadyToShare(request, response, next) {
 	const { currentAppeal } = request;
 
+	const { representationStatus, status } = currentAppeal.documentationSummary?.lpaStatement || {};
+
 	const statementValid =
-		currentAppeal.documentationSummary?.lpaStatement?.representationStatus ===
-		APPEAL_REPRESENTATION_STATUS.VALID;
+		representationStatus === APPEAL_REPRESENTATION_STATUS.VALID || status === 'not_received';
 
 	if (currentAppeal.appealStatus !== APPEAL_CASE_STATUS.STATEMENTS || !statementValid) {
 		return response.status(404).render('app/404.njk');

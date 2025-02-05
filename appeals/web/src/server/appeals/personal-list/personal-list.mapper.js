@@ -15,6 +15,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 
+/** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
@@ -170,25 +171,7 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: mapAppealStatusToActionRequiredHtml(
-							appeal.appealId,
-							appeal.appealStatus,
-							Boolean(appeal.commentCounts?.awaiting_review),
-							appeal.lpaQuestionnaireId,
-							{
-								appellantCase: appeal.documentationSummary?.appellantCase.status,
-								lpaQuestionnaire: appeal.documentationSummary?.lpaQuestionnaire.status,
-								lpaStatement: appeal.documentationSummary?.lpaStatement.status,
-								lpaFinalComments: appeal.documentationSummary?.lpaFinalComments.status,
-								lpaFinalCommentsRepresentationStatus:
-									appeal.documentationSummary?.lpaFinalComments.representationStatus,
-								appellantFinalComments: appeal.documentationSummary?.appellantFinalComments.status,
-								appellantFinalCommentsRepresentationStatus:
-									appeal.documentationSummary?.appellantFinalComments.representationStatus
-							},
-							appeal.dueDate,
-							isCaseOfficer
-						)
+						html: mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer)
 					},
 					{
 						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
@@ -256,40 +239,43 @@ export function personalListPage(
 }
 
 /**
- * @param {number} appealId
- * @param {string} appealStatus
- * @param {boolean} hasAwaitingComments
- * @param {number|null|undefined} lpaQuestionnaireId
- * @param {Object} statuses
- * @param {string} statuses.appellantCase
- * @param {string} statuses.lpaQuestionnaire
- * @param {string} statuses.lpaStatement
- * @param {string} statuses.lpaFinalComments
- * @param {string} statuses.lpaFinalCommentsRepresentationStatus
- * @param {string} statuses.appellantFinalComments
- * @param {string} statuses.appellantFinalCommentsRepresentationStatus
- * @param {string} appealDueDate
+ * @param {Partial<AppealSummary & { appealTimetable: Record<string,string> }>} appeal
  * @param {boolean} [isCaseOfficer]
  * @returns {string}
  */
-export function mapAppealStatusToActionRequiredHtml(
-	appealId,
-	appealStatus,
-	hasAwaitingComments,
-	lpaQuestionnaireId,
-	{
-		appellantCase: appellantCaseStatus,
-		lpaQuestionnaire: lpaQuestionnaireStatus,
-		lpaStatement: lpaStatementStatus,
-		lpaFinalComments: lpaFinalCommentsStatus,
+export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = false) {
+	const {
+		appealId,
+		appealStatus,
+		commentCounts,
+		lpaQuestionnaireId,
+		documentationSummary,
+		dueDate: appealDueDate,
+		appealTimetable
+	} = appeal;
+
+	const hasAwaitingComments = Boolean(commentCounts?.awaiting_review);
+
+	const {
+		appellantCaseStatus,
+		lpaQuestionnaireStatus,
+		lpaStatementStatus,
+		ipCommentsStatus,
+		lpaFinalCommentsStatus,
 		lpaFinalCommentsRepresentationStatus,
-		appellantFinalComments: appellantFinalCommentsStatus,
+		appellantFinalCommentsStatus,
 		appellantFinalCommentsRepresentationStatus
-	},
-	appealDueDate,
-	isCaseOfficer = false
-) {
-	const dueDatePassed = dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDueDate));
+	} = mapDocumentSummaryStatuses(documentationSummary || {});
+
+	const { lpaStatementDueDate, ipCommentsDueDate } = appealTimetable || {};
+
+	const appealDueDatePassed = dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDueDate));
+	const lpaStatementDueDatePassed = dateIsInThePast(
+		dateISOStringToDayMonthYearHourMinute(lpaStatementDueDate)
+	);
+	const ipCommentsDueDatePassed = dateIsInThePast(
+		dateISOStringToDayMonthYearHourMinute(ipCommentsDueDate)
+	);
 
 	switch (appealStatus) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
@@ -305,7 +291,7 @@ export function mapAppealStatusToActionRequiredHtml(
 
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
-			if (dueDatePassed) {
+			if (appealDueDatePassed) {
 				return 'LPA questionnaire overdue';
 			}
 
@@ -330,7 +316,13 @@ export function mapAppealStatusToActionRequiredHtml(
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			if (dueDatePassed && !hasAwaitingComments) {
+			if (lpaStatementStatus === 'not_received' && ipCommentsStatus === 'not_received') {
+				if (lpaStatementDueDatePassed && ipCommentsDueDatePassed) {
+					return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+				}
+			}
+
+			if (appealDueDatePassed && !hasAwaitingComments) {
 				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Share IP comments and LPA statement</a>`;
 			}
 
@@ -346,7 +338,7 @@ export function mapAppealStatusToActionRequiredHtml(
 			})();
 
 			const ipCommentsAction =
-				!dueDatePassed && hasAwaitingComments
+				!appealDueDatePassed && hasAwaitingComments
 					? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">${
 							hasAwaitingComments ? 'Review IP comments' : 'Awaiting IP comments'
 					  }<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
@@ -377,4 +369,25 @@ export function mapAppealStatusToActionRequiredHtml(
 		default:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 	}
+}
+
+/**
+ *
+ * @param {Record<string, {status: string, representationStatus: string}>} documentSummary
+ * @returns {Record<string, string>}
+ */
+function mapDocumentSummaryStatuses(documentSummary) {
+	const statuses = {};
+	for (const [key, value] of Object.entries(documentSummary)) {
+		if (value.status) {
+			// @ts-ignore
+			statuses[key + 'Status'] = value.status;
+		}
+		if (value.representationStatus) {
+			// @ts-ignore
+			statuses[key + 'RepresentationStatus'] = value.representationStatus;
+		}
+	}
+	// @ts-ignore
+	return statuses;
 }

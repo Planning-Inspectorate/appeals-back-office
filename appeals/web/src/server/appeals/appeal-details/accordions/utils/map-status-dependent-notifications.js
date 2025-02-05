@@ -88,7 +88,17 @@ export function mapStatusDependentNotifications(
 			removeAccordionComponentsActions(accordionComponents);
 			break;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			const isDueDatePassed = (() => {
+			const isIpCommentsDueDatePassed = (() => {
+				if (!appealDetails.appealTimetable?.ipCommentsDueDate) {
+					return false;
+				}
+
+				return dateIsInThePast(
+					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
+				);
+			})();
+
+			const isLpaStatementDueDatePassed = (() => {
 				if (!appealDetails.appealTimetable?.lpaStatementDueDate) {
 					return false;
 				}
@@ -99,7 +109,7 @@ export function mapStatusDependentNotifications(
 			})();
 
 			if (
-				isDueDatePassed &&
+				isLpaStatementDueDatePassed &&
 				!representationTypesAwaitingReview?.ipComments &&
 				!representationTypesAwaitingReview?.lpaStatement
 			) {
@@ -108,6 +118,23 @@ export function mapStatusDependentNotifications(
 					'shareCommentsAndLpaStatement',
 					appealDetails.appealId,
 					`<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+				);
+				break;
+			}
+
+			if (
+				isLpaStatementDueDatePassed &&
+				isIpCommentsDueDatePassed &&
+				!(
+					representationTypesAwaitingReview?.ipComments &&
+					representationTypesAwaitingReview?.lpaStatement
+				)
+			) {
+				addNotificationBannerToSession(
+					session,
+					'progressToFinalComments',
+					appealDetails.appealId,
+					`<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
 				);
 				break;
 			}

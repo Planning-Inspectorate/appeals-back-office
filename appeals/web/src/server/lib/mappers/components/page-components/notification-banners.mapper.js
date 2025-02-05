@@ -92,6 +92,9 @@ export const notificationBannerDefinitions = {
 	readyForLpaQuestionnaireReview: {
 		pages: ['appealDetails']
 	},
+	progressToFinalComments: {
+		pages: ['appealDetails']
+	},
 	lpaQuestionnaireNotValid: {
 		pages: ['lpaQuestionnaire'],
 		persist: true

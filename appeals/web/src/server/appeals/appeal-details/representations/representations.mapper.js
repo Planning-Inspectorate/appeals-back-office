@@ -152,11 +152,14 @@ export function statementAndCommentsSharePage(appeal) {
 					}
 			  };
 
+	const heading =
+		valueTexts.length > 0 ? 'Share IP comments and statements' : 'Progress to final comments';
+
 	return {
-		title: 'Share IP comments and statements',
+		title: heading,
 		backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Share IP comments and statements',
+		heading,
 		pageComponents: [
 			textComponent,
 			{
