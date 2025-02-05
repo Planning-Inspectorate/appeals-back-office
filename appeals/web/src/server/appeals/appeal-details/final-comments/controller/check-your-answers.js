@@ -16,20 +16,19 @@ import { patchRepresentationAttachments } from '../final-comments.service.js';
 /**
  * @type {import('@pins/express').RenderHandler<{}>}
  */
-export const renderCheckYourAnswers = (
-	{
+export const renderCheckYourAnswers = (request, response) => {
+	const {
 		errors,
-		currentAppeal: { appealReference, appealId },
+		currentAppeal: { appealReference },
 		session: {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
 			},
 			addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
-		},
-		params: { finalCommentsType }
-	},
-	response
-) => {
+		}
+	} = request;
+	const baseUrl = request.baseUrl;
+
 	if (!isValidRedactionStatus(redactionStatus)) {
 		throw new Error('Received invalid redaction status');
 	}
@@ -39,14 +38,14 @@ export const renderCheckYourAnswers = (
 			title: 'Check details and add document',
 			heading: 'Check details and add document',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/date-submitted`,
+			backLinkUrl: `${baseUrl}/date-submitted`,
 			submitButtonText: 'Add document',
 			responses: {
 				'Supporting document': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document`,
+							href: `${baseUrl}`,
 							visuallyHiddenText: 'supporting document'
 						}
 					}
@@ -55,7 +54,7 @@ export const renderCheckYourAnswers = (
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/redaction-status`,
+							href: `${baseUrl}/redaction-status`,
 							visuallyHiddenText: 'redaction status'
 						}
 					}
@@ -64,7 +63,7 @@ export const renderCheckYourAnswers = (
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-document/date-submitted`,
+							href: `${baseUrl}/date-submitted`,
 							visuallyHiddenText: 'date submitted'
 						}
 					}
@@ -79,16 +78,14 @@ export const renderCheckYourAnswers = (
 /**
  * @type {import('@pins/express').RequestHandler<{}>}
  */
-export const postCheckYourAnswers = async (
-	{
+export const postCheckYourAnswers = async (request, response) => {
+	const {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		currentRepresentation: { id },
-		params: { finalCommentsType }
-	},
-	response
-) => {
+		currentRepresentation: { id }
+	} = request;
+
 	const {
 		fileUploadInfo: {
 			files: [document],
@@ -141,7 +138,6 @@ export const postCheckYourAnswers = async (
 
 	addNotificationBannerToSession(session, 'finalCommentsDocumentAddedSuccess', appealId);
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}`
-	);
+	const nextPageUrl = request.originalUrl.split('/').slice(0, -2).join('/');
+	return response.redirect(nextPageUrl);
 };

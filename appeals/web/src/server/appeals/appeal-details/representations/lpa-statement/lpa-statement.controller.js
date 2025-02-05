@@ -21,8 +21,10 @@ export function renderReviewLpaStatement(request, response) {
 		});
 }
 
-/** @type {import('@pins/express').RequestHandler<{}>} */
-export const postReviewLpaStatement = (request, response) => {
+/**
+ * @type {import('@pins/express').RenderHandler<any, any, any>}
+ */
+export const postReviewLpaStatement = async (request, response, next) => {
 	const {
 		errors,
 		params: { appealId },
@@ -30,7 +32,8 @@ export const postReviewLpaStatement = (request, response) => {
 	} = request;
 
 	if (errors) {
-		return renderReviewLpaStatement(request, response);
+		// @ts-ignore
+		return renderReviewLpaStatement(request, response, next);
 	}
 
 	switch (status) {

@@ -3,7 +3,7 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /**
- * Maps representation types to their respective identifiers.
+ * Maps representation types to their respective URL path fragments.
  * @param {string} representationType
  * @returns {string}
  */

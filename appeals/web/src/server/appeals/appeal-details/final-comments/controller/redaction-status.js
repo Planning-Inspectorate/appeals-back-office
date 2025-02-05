@@ -45,19 +45,13 @@ const mapper = (appealDetails, errors, value, backLinkUrl) => ({
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation, finalCommentsType: string) => string} options.getBackLinkUrl
  * @param {(request: import('@pins/express').Request) => string} options.getValue
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const renderRedactionStatusFactory =
-	({ getBackLinkUrl, getValue }) =>
+	({ getValue }) =>
 	(request, response) => {
-		const { finalCommentsType } = request.params;
-		const backLinkUrl = getBackLinkUrl(
-			request.currentAppeal,
-			request.currentRepresentation,
-			finalCommentsType
-		);
+		const backLinkUrl = request.baseUrl;
 		const value = getValue(request);
 
 		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
@@ -70,20 +64,15 @@ export const renderRedactionStatusFactory =
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation, finalCommentsType: string) => string} options.getRedirectUrl
  * @param {Function} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const postRedactionStatusFactory =
-	({ getRedirectUrl, errorHandler }) =>
+	({ errorHandler }) =>
 	async (request, response, next) => {
-		const { finalCommentsType } = request.params;
 		try {
-			const redirectUrl = getRedirectUrl(
-				request.currentAppeal,
-				request.currentRepresentation,
-				finalCommentsType
-			);
+			const baseUrl = request.baseUrl;
+			const redirectUrl = `${baseUrl}/date-submitted`;
 
 			response.redirect(redirectUrl);
 		} catch (error) {
@@ -92,8 +81,6 @@ export const postRedactionStatusFactory =
 	};
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
-	getBackLinkUrl: (appealDetails, comment, finalCommentsType) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document`,
 	getValue: (request) =>
 		request.session.addDocument?.redactionStatus ||
 		request.body.redactionStatus ||
@@ -101,7 +88,5 @@ export const renderRedactionStatus = renderRedactionStatusFactory({
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
-	getRedirectUrl: (appealDetails, comment, finalCommentsType) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/date-submitted`,
 	errorHandler: renderRedactionStatus
 });

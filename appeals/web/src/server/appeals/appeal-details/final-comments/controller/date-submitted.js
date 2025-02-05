@@ -7,19 +7,15 @@ import { mapper } from '#appeals/appeal-details/representations/interested-party
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation, finalCommentsType: string) => string} options.getBackLinkUrl
  * @param {(request: import('@pins/express').Request) => RequestDate} options.getValue
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const renderDateSubmittedFactory =
-	({ getBackLinkUrl, getValue }) =>
+	({ getValue }) =>
 	(request, response) => {
-		const { finalCommentsType } = request.params;
-		const backLinkUrl = getBackLinkUrl(
-			request.currentAppeal,
-			request.currentRepresentation,
-			finalCommentsType
-		);
+		const baseUrl = request.baseUrl;
+		const backLinkUrl = `${baseUrl}/redaction-status`;
+
 		const value = getValue(request);
 
 		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
@@ -32,20 +28,15 @@ export const renderDateSubmittedFactory =
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation, finalCommentsType: string) => string} options.getRedirectUrl
  * @param {Function} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const postDateSubmittedFactory =
-	({ getRedirectUrl, errorHandler }) =>
+	({ errorHandler }) =>
 	async (request, response, next) => {
-		const { finalCommentsType } = request.params;
 		try {
-			const redirectUrl = getRedirectUrl(
-				request.currentAppeal,
-				request.currentRepresentation,
-				finalCommentsType
-			);
+			const baseUrl = request.baseUrl;
+			const redirectUrl = `${baseUrl}/check-your-answers`;
 
 			response.redirect(redirectUrl);
 		} catch (error) {
@@ -54,13 +45,9 @@ export const postDateSubmittedFactory =
 	};
 
 export const renderDateSubmitted = renderDateSubmittedFactory({
-	getBackLinkUrl: (appealDetails, comment, finalCommentsType) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/redaction-status`,
 	getValue: (request) => request.session.addDocument || request.body
 });
 
 export const postDateSubmitted = postDateSubmittedFactory({
-	getRedirectUrl: (appealDetails, comment, finalCommentsType) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/check-your-answers`,
 	errorHandler: renderDateSubmitted
 });

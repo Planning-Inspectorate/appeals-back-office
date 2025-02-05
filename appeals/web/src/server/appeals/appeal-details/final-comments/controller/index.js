@@ -6,14 +6,14 @@ import {
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
 	const { currentAppeal, session } = request;
-	const { finalCommentsType } = request.params;
+	const baseUrl = request.baseUrl;
 
 	return renderDocumentUploadHelper({
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/review`,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/add-document/redaction-status`,
+		backButtonUrl: `${baseUrl}/review`,
+		nextPageUrl: `${baseUrl}/redaction-status`,
 		pageHeadingTextOverride: 'Upload supporting document',
 		allowMultipleFiles: false,
 		documentType: session.costsDocumentType
@@ -24,13 +24,12 @@ export const renderDocumentUpload = async (request, response) => {
  * @type {import('@pins/express/types/express.js').RequestHandler<{}>}
  */
 export const postDocumentUpload = async (request, response) => {
-	const { currentAppeal } = request;
-	const { finalCommentsType } = request.params;
+	const baseUrl = request.baseUrl;
 
 	await postDocumentUploadHelper({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/final-comments/${finalCommentsType}/add-document/redaction-status`
+		nextPageUrl: `${baseUrl}/redaction-status`
 	});
 };
 

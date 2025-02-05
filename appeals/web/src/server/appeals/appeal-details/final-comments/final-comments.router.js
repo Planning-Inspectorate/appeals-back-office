@@ -7,8 +7,8 @@ import {
 	getRepresentationAttachmentsFolder,
 	withSingularRepresentation
 } from './final-comments.middleware.js';
-import addDocumentRouter from './add-document/add-document.router.js';
-import manageDocumentsRouter from './manage-documents/manage-documents.router.js';
+import addDocumentRouter from '../representations/document-attachments/add-document.router.js';
+import manageDocumentsRouter from '../representations/document-attachments/manage-documents.router.js';
 import acceptFinalCommentsRouter from './accept/accept.router.js';
 
 const router = createRouter({ mergeParams: true });
