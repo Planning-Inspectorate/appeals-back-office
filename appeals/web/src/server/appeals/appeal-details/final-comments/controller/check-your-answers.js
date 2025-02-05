@@ -138,6 +138,6 @@ export const postCheckYourAnswers = async (request, response) => {
 
 	addNotificationBannerToSession(session, 'finalCommentsDocumentAddedSuccess', appealId);
 
-	const nextPageUrl = request.originalUrl.split('/').slice(0, -2).join('/');
+	const nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
 	return response.redirect(nextPageUrl);
 };

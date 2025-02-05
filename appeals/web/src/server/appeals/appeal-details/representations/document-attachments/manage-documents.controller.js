@@ -16,7 +16,7 @@ import {
 export const getManageFolder = async (request, response) => {
 	const { currentFolder } = request;
 	const baseUrl = request.baseUrl;
-	const backLinkUrl = request.originalUrl.split('/').slice(0, -2).join('/');
+	const backLinkUrl = baseUrl.split('/').slice(0, -1).join('/');
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404');
