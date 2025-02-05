@@ -52,12 +52,22 @@ export default joi
 							})
 						}),
 						appealStartDateChange: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
+							has: {
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							},
+							s78: {
+								appellant: joi.object({
+									id: joi.string().required()
+								}),
+								lpa: joi.object({
+									id: joi.string().required()
+								})
+							}
 						}),
 						appealTypeChangedNonHas: joi.object({
 							id: joi.string().required()

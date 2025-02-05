@@ -52,7 +52,7 @@ const checkAppealTimetableExists = async (req, res, next) => {
  *
  * @param {Appeal} appeal
  * @param {string} startDate
- * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * @returns
@@ -68,13 +68,19 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		const timetable = await calculateTimetable(appealType.key, startedAt);
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
+		/** @type {Record<string, string>} */
+		const appealTypeMap = {
+			D: 'has',
+			W: 's78'
+		};
+
 		const appellantTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.appellant
-			: config.govNotify.template.appealValidStartCase.appellant;
+			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].appellant
+			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].appellant;
 
 		const lpaTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.lpa
-			: config.govNotify.template.appealValidStartCase.lpa;
+			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].lpa
+			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].lpa;
 
 		if (timetable) {
 			await Promise.all([

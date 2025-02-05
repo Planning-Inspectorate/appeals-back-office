@@ -61,15 +61,29 @@ const { value, error } = schema.validate({
 				}
 			},
 			appealStartDateChange: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID ||
-						'mock-appeal-start-date-change-appellant-id'
+				has: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_APPELLANT_ID ||
+							'mock-appeal-start-date-change-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_LPA_ID ||
+							'mock-appeal-start-date-change-lpa-id'
+					}
 				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID ||
-						'mock-appeal-start-date-change-lpa-id'
+				s78: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_APPELLANT_ID ||
+							'mock-appeal-start-date-change-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_LPA_ID ||
+							'mock-appeal-start-date-change-lpa-id'
+					}
 				}
 			},
 			appealTypeChangedNonHas: {
