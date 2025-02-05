@@ -269,6 +269,11 @@ export const notificationBannerDefinitions = {
 	shareCommentsAndLpaStatement: {
 		pages: ['appealDetails']
 	},
+	commentsAndLpaStatementShared: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Statements and IP comments shared'
+	},
 	finalCommentsDocumentAddedSuccess: {
 		type: 'success',
 		pages: ['viewFinalComments'],

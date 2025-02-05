@@ -1,3 +1,4 @@
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { statementAndCommentsSharePage } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
 
@@ -15,9 +16,11 @@ export function renderShareRepresentations(request, response) {
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export async function postShareRepresentations(request, response) {
-	const { apiClient, currentAppeal } = request;
+	const { apiClient, currentAppeal, session } = request;
 
 	await publishRepresentations(apiClient, currentAppeal.appealId, 'lpa_statement');
+
+	addNotificationBannerToSession(session, 'commentsAndLpaStatementShared', currentAppeal.appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 }
