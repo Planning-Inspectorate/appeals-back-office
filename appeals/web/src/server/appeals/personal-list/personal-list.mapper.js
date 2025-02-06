@@ -316,10 +316,13 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			if (lpaStatementStatus === 'not_received' && ipCommentsStatus === 'not_received') {
-				if (lpaStatementDueDatePassed && ipCommentsDueDatePassed) {
-					return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
-				}
+			if (
+				lpaStatementStatus === 'not_received' &&
+				ipCommentsStatus === 'not_received' &&
+				lpaStatementDueDatePassed &&
+				ipCommentsDueDatePassed
+			) {
+				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 			}
 
 			if (appealDueDatePassed && !hasAwaitingComments) {
