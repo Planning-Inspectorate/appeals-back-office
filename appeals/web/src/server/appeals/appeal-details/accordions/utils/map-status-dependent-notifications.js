@@ -3,7 +3,7 @@ import {
 	addNotificationBannerToSession,
 	clearNotificationBannerFromSession
 } from '#lib/session-utilities.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_REPRESENTATION_STATUS } from 'pins-data-model';
 import { removeAccordionComponentsActions } from './remove-accordion-components-actions.js';
 import {
 	generateIssueDecisionUrl,
@@ -88,31 +88,18 @@ export function mapStatusDependentNotifications(
 			removeAccordionComponentsActions(accordionComponents);
 			break;
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			const isIpCommentsDueDatePassed = (() => {
-				if (!appealDetails.appealTimetable?.ipCommentsDueDate) {
-					return false;
-				}
+			const isLpaStatementDueDatePassed = appealDetails.appealTimetable?.lpaStatementDueDate
+				? dateIsInThePast(
+						dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
+				  )
+				: false;
 
-				return dateIsInThePast(
-					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
-				);
-			})();
+			const hasItemsToShare =
+				appealDetails.documentationSummary?.lpaStatement?.representationStatus ===
+					APPEAL_REPRESENTATION_STATUS.VALID ||
+				(appealDetails.documentationSummary?.ipComments?.validCount ?? 0) > 0;
 
-			const isLpaStatementDueDatePassed = (() => {
-				if (!appealDetails.appealTimetable?.lpaStatementDueDate) {
-					return false;
-				}
-
-				return dateIsInThePast(
-					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
-				);
-			})();
-
-			if (
-				isLpaStatementDueDatePassed &&
-				!representationTypesAwaitingReview?.ipComments &&
-				!representationTypesAwaitingReview?.lpaStatement
-			) {
+			if (isLpaStatementDueDatePassed && hasItemsToShare) {
 				addNotificationBannerToSession(
 					session,
 					'shareCommentsAndLpaStatement',
@@ -122,14 +109,7 @@ export function mapStatusDependentNotifications(
 				break;
 			}
 
-			if (
-				isLpaStatementDueDatePassed &&
-				isIpCommentsDueDatePassed &&
-				!(
-					representationTypesAwaitingReview?.ipComments &&
-					representationTypesAwaitingReview?.lpaStatement
-				)
-			) {
+			if (isLpaStatementDueDatePassed && !hasItemsToShare) {
 				addNotificationBannerToSession(
 					session,
 					'progressToFinalComments',
@@ -147,6 +127,7 @@ export function mapStatusDependentNotifications(
 					`<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
 				);
 			}
+
 			if (representationTypesAwaitingReview?.lpaStatement) {
 				addNotificationBannerToSession(
 					session,
