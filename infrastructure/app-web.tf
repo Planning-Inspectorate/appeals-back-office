@@ -1,6 +1,6 @@
 module "app_web" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.31"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.38"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -26,6 +26,7 @@ module "app_web" {
   inbound_vnet_connectivity       = false
   integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
+  public_network_access           = true
 
   # monitoring
   action_group_ids                  = local.action_group_ids
