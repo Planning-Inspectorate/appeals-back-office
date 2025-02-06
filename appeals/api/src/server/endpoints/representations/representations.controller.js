@@ -303,6 +303,18 @@ export async function publish(req, res) {
 
 	const updatedReps = await publish(appeal, azureAdUserId);
 
+	if (updatedReps.length > 0) {
+		const details = stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_REP_SHARED, [
+			'Statements and IP comments'
+		]);
+
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details
+		});
+	}
+
 	await Promise.all(
 		updatedReps.map((rep) => broadcasters.broadcastRepresentation(rep.id, EventType.Update))
 	);
