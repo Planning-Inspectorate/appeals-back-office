@@ -107,6 +107,7 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
  * @param {import('got').Got} apiClient
  * @param {number} appealId
  * @param {'lpa_statement' | 'final_comment'} type
+ * @returns {Promise<Representation[]>}
  * */
 export const publishRepresentations = (apiClient, appealId, type) =>
 	apiClient.post(`appeals/${appealId}/reps/publish?type=${type}`).json();

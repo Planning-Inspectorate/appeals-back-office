@@ -18,9 +18,17 @@ export function renderShareRepresentations(request, response) {
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
 
-	await publishRepresentations(apiClient, currentAppeal.appealId, 'lpa_statement');
+	const publishedReps = await publishRepresentations(
+		apiClient,
+		currentAppeal.appealId,
+		'lpa_statement'
+	);
 
-	addNotificationBannerToSession(session, 'commentsAndLpaStatementShared', currentAppeal.appealId);
+	addNotificationBannerToSession(
+		session,
+		publishedReps.length > 0 ? 'commentsAndLpaStatementShared' : 'progressedToFinalComments',
+		currentAppeal.appealId
+	);
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 }

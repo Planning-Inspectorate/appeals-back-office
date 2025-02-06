@@ -274,6 +274,11 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Statements and IP comments shared'
 	},
+	progressedToFinalComments: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Progressed to Final Comments'
+	},
 	finalCommentsDocumentAddedSuccess: {
 		type: 'success',
 		pages: ['viewFinalComments'],
