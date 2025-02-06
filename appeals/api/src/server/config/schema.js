@@ -52,6 +52,17 @@ export default joi
 							})
 						}),
 						appealStartDateChange: joi.object({
+							appellant: joi.object({
+								id: joi.string().required()
+							}),
+							lpa: joi.object({
+								id: joi.string().required()
+							})
+						}),
+						appealTypeChangedNonHas: joi.object({
+							id: joi.string().required()
+						}),
+						appealValidStartCase: joi.object({
 							has: {
 								appellant: joi.object({
 									id: joi.string().required()
@@ -68,17 +79,6 @@ export default joi
 									id: joi.string().required()
 								})
 							}
-						}),
-						appealTypeChangedNonHas: joi.object({
-							id: joi.string().required()
-						}),
-						appealValidStartCase: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
 						}),
 						decisionIsAllowedSplitDismissed: joi.object({
 							appellant: joi.object({

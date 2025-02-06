@@ -61,13 +61,13 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_CONFIRMED_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_confirmed_id
     GOV_NOTIFY_APPEAL_INCOMPLETE_ID                                            = var.apps_config.integrations.notify_template_ids.appeal_incomplete_id
     GOV_NOTIFY_APPEAL_INVALID_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_invalid_id
-    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_APPELLANT_ID                       = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_has_appellant_id
-    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_LPA_ID                             = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_has_lpa_id
-    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_APPELLANT_ID                       = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_s78_appellant_id
-    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_LPA_ID                             = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_s78_lpa_id
+    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID                           = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_appellant_id
+    GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID                                 = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_lpa_id
     GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID                                  = var.apps_config.integrations.notify_template_ids.appeal_type_changed_non_has_id
     GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID                            = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_appellant_id
     GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID                                  = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_lpa_id
+    GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_APPELLANT_ID                        = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_s78_appellant_id
+    GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_LPA_ID                              = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_s78_lpa_id
     GOV_NOTIFY_APPEAL_WITHDRAWN_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_appellant_id
     GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_lpa_id
     GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID                = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_appellant_id

@@ -61,29 +61,15 @@ const { value, error } = schema.validate({
 				}
 			},
 			appealStartDateChange: {
-				has: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_APPELLANT_ID ||
-							'mock-appeal-start-date-change-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_HAS_LPA_ID ||
-							'mock-appeal-start-date-change-lpa-id'
-					}
+				appellant: {
+					id:
+						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID ||
+						'mock-appeal-start-date-change-appellant-id'
 				},
-				s78: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_APPELLANT_ID ||
-							'mock-appeal-start-date-change-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_S78_LPA_ID ||
-							'mock-appeal-start-date-change-lpa-id'
-					}
+				lpa: {
+					id:
+						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID ||
+						'mock-appeal-start-date-change-lpa-id'
 				}
 			},
 			appealTypeChangedNonHas: {
@@ -92,15 +78,29 @@ const { value, error } = schema.validate({
 					'mock-appeal-type-changed-non-has-id'
 			},
 			appealValidStartCase: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID ||
-						'mock-appeal-valid-start-case-appellant-id'
+				has: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID ||
+							'mock-appeal-valid-start-case-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID ||
+							'mock-appeal-valid-start-case-lpa-id'
+					}
 				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID ||
-						'mock-appeal-valid-start-case-lpa-id'
+				s78: {
+					appellant: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_APPELLANT_ID ||
+							'mock-appeal-valid-start-case-s78-appellant-id'
+					},
+					lpa: {
+						id:
+							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_LPA_ID ||
+							'mock-appeal-valid-start-case-s78-lpa-id'
+					}
 				}
 			},
 			decisionIsAllowedSplitDismissed: {

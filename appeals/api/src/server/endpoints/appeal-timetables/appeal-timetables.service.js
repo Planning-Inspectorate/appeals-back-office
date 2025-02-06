@@ -75,12 +75,12 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		};
 
 		const appellantTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].appellant
-			: config.govNotify.template.appealValidStartCase.appellant;
+			? config.govNotify.template.appealStartDateChange.appellant
+			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].appellant;
 
 		const lpaTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange[appealTypeMap[appealType.key]].lpa
-			: config.govNotify.template.appealValidStartCase.lpa;
+			? config.govNotify.template.appealStartDateChange.lpa
+			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].lpa;
 
 		if (timetable) {
 			await Promise.all([
@@ -100,68 +100,29 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 			const lpaEmail = appeal.lpa?.email || '';
 
-			const lpaAppealStartDateChangeEmailVariables = {
-				appeal_type: appeal.appealType?.type || '',
+			// Note that those properties not used within the specified template will be ignored
+			const commonEmailVariables = {
 				appeal_reference_number: appeal.reference,
-				LPA_reference: appeal.applicationReference || '',
-				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
-				site_Address: siteAddress,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
 				start_date: formatDate(new Date(startDate || ''), false),
+				appellant_email_address: recipientEmail || '',
+				url: FRONT_OFFICE_URL,
+				appeal_type: appeal.appealType?.type || '',
+				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
 				questionnaire_due_date: formatDate(
 					new Date(timetable.lpaQuestionnaireDueDate || ''),
 					false
 				),
-				appellant_email_address: recipientEmail || ''
-			};
-			const appellantAppealStartDateChangeEmailVariables = {
-				appeal_reference_number: appeal.reference,
-				start_date: formatDate(new Date(startDate || ''), false),
-				site_Address: siteAddress,
-				lpa_reference: appeal.applicationReference || '',
+				local_planning_authority: appeal.lpa?.name || '',
 				due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
 				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
-				finalCommentsDueDate: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
-			};
-			const lpaAppealValidCaseStartEmailVariables = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				url: FRONT_OFFICE_URL,
-				start_date: formatDate(new Date(startDate || ''), false),
-				questionnaire_due_date: formatDate(
-					new Date(timetable.lpaQuestionnaireDueDate || ''),
-					false
-				),
-				local_planning_authority: appeal.lpa?.name || '',
-				appeal_type: appeal.appealType?.type || '',
-				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
-				appellant_email_address: recipientEmail || ''
-			};
-			const appellantAppealValidCaseStartEmailVariables = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				url: FRONT_OFFICE_URL,
-				start_date: formatDate(new Date(startDate || ''), false),
-				questionnaire_due_date: formatDate(
-					new Date(timetable.lpaQuestionnaireDueDate || ''),
-					false
-				),
-				local_planning_authority: appeal.lpa?.name || '',
-				appeal_type: appeal.appealType?.type || '',
-				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
-				appellant_email_address: recipientEmail || ''
+				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
 			};
 
 			if (recipientEmail) {
 				try {
-					await notifyClient.sendEmail(
-						appellantTemplate,
-						recipientEmail,
-						appeal.caseStartedDate
-							? appellantAppealStartDateChangeEmailVariables
-							: appellantAppealValidCaseStartEmailVariables
-					);
+					await notifyClient.sendEmail(appellantTemplate, recipientEmail, commonEmailVariables);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
@@ -169,13 +130,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			if (lpaEmail) {
 				try {
-					await notifyClient.sendEmail(
-						lpaTemplate,
-						lpaEmail,
-						appeal.caseStartedDate
-							? lpaAppealStartDateChangeEmailVariables
-							: lpaAppealValidCaseStartEmailVariables
-					);
+					await notifyClient.sendEmail(lpaTemplate, lpaEmail, commonEmailVariables);
 				} catch (error) {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
