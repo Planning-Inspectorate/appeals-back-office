@@ -147,7 +147,7 @@ const renderEnvironmentServiceTeamReviewCase = async (request, response, errors 
 		lpaQuestionnaireDetails
 	);
 
-	return response.status(200).render('patterns/display-page.pattern.njk', {
+	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
 	});
