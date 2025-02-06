@@ -23,7 +23,8 @@ module "app_web" {
   # networking
   app_service_private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
   front_door_restriction          = true
-  inbound_vnet_connectivity       = false
+  endpoint_subnet_id              = azurerm_subnet.main.id
+  inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
   integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
   public_network_access           = true
