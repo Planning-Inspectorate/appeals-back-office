@@ -13,6 +13,7 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const AUDIT_TRAIL_REP_SHARED = '{replacement0} shared';
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED =
 	'LPA statement status updated to {replacement0}';
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_REDACTED_AND_ACCEPTED =
