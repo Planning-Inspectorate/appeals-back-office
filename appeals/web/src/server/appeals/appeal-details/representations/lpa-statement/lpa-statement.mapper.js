@@ -10,9 +10,10 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 /**
  * @param {number} appealId
  * @param {Representation} lpaStatement
+ * @param {{ isReview: boolean }} options
  * @returns {PageComponent}
  * */
-export function baseSummaryList(appealId, lpaStatement) {
+export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 	const attachmentsList =
 		lpaStatement.attachments.length > 0
 			? buildHtmUnorderedList(
@@ -45,6 +46,19 @@ export function baseSummaryList(appealId, lpaStatement) {
 									labelText: 'Statement'
 								}
 							}
+						]
+					},
+					actions: {
+						items: [
+							...(isReview
+								? []
+								: [
+										{
+											text: 'Redact',
+											href: `/appeals-service/appeal-details/${appealId}/lpa-statement/redact`,
+											visuallyHiddenText: 'redact statement'
+										}
+								  ])
 						]
 					}
 				},
@@ -86,7 +100,9 @@ export function baseSummaryList(appealId, lpaStatement) {
 export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement);
+	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
+		isReview: false
+	});
 
 	const pageComponents = [
 		...buildNotificationBanners(session, 'lpaStatement', appealDetails.appealId),
@@ -114,7 +130,9 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement);
+	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
+		isReview: true
+	});
 
 	/** @type {PageComponent} */
 	const lpaStatementValidityRadioButtons = {
