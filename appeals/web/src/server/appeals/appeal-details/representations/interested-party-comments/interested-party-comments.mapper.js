@@ -1,7 +1,11 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { addressToString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -100,4 +104,78 @@ function generateTableRows(items, isReview = false) {
 			classes: 'govuk-!-width-one-half'
 		}
 	]);
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation[]} comments
+ * @returns {PageContent}
+ * */
+export function sharedIpCommentsPage(appealDetails, comments) {
+	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageComponent} */
+	const table = {
+		type: 'table',
+		parameters: {
+			head: [
+				{
+					text: 'Address',
+					classes: 'govuk-!-width-one-quarter'
+				},
+				{
+					text: 'Comment',
+					classes: 'govuk-!-width-one-half'
+				},
+				{
+					text: 'Supporting documents',
+					classes: 'govuk-!-width-one-quarter'
+				}
+			],
+			rows: comments.map((comment) => [
+				{
+					html: addressToString(comment.represented.address)
+				},
+				{
+					html: '',
+					pageComponents: [
+						{
+							type: 'show-more',
+							parameters: {
+								text: comment.redactedRepresentation || comment.originalRepresentation,
+								labelText: 'Read more'
+							}
+						}
+					]
+				},
+				{
+					html: buildHtmUnorderedList(
+						comment.attachments.map(
+							(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+						)
+					)
+				}
+			])
+		}
+	};
+
+	const pageComponents = [
+		simpleHtmlComponent(
+			'a',
+			{ href: `/documents/${appealDetails.appealId}/bulk-download/documents`, class: 'govuk-link' },
+			'Download all documents'
+		),
+		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
+		table
+	];
+
+	preRenderPageComponents(pageComponents);
+
+	return {
+		title: 'Interested party comments',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${shortReference}`,
+		heading: 'Interested party comments',
+		pageComponents: pageComponents
+	};
 }

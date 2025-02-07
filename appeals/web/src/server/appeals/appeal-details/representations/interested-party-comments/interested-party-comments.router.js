@@ -21,6 +21,6 @@ router.use('/:commentId/add-document', validateAppeal, validateComment, addDocum
 
 router.use('/:commentId', validateAppeal, validateComment, viewAndReviewIpCommentRouter);
 
-router.route('/').get(validateAppeal, asyncHandler(controller.renderInterestedPartyComments));
+router.route('/').get(validateAppeal, asyncHandler(controller.handleInterestedPartyComments));
 
 export default router;
