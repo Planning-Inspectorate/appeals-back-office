@@ -26,7 +26,7 @@ module "app_api" {
   inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
   integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
-  public_network_access           = false
+  public_network_access           = !var.apps_config.private_endpoint_enabled
 
   # monitoring
   action_group_ids                  = local.action_group_ids
