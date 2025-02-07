@@ -17,7 +17,7 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) =>
 				: appealDetails?.documentationSummary?.lpaStatement?.receivedAt
 		),
 		actionHtml:
-			appealDetails?.documentationSummary?.lpaStatement?.representationStatus === 'received'
+				['awaiting_review', 'incomplete'].includes(appealDetails?.documentationSummary?.lpaStatement?.representationStatus ?? '')
 				? `<a href="${currentRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden">LPA statement</span></a>`
 				: `<a href="${currentRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden">LPA statement</span></a>`
 	});

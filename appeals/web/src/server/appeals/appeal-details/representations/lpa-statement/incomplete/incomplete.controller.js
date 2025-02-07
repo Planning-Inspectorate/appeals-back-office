@@ -12,6 +12,8 @@ import {
 	rejectionReasonHtml,
 	prepareRejectionReasons
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { representationIncomplete } from '../../representations.service.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -184,3 +186,25 @@ export const renderCheckYourAnswers = async (
 		errors
 	);
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCheckYourAnswers = async (request, response) => {
+	const {
+		apiClient,
+		params: { appealId },
+		session,
+		currentRepresentation
+	} = request;
+
+	addNotificationBannerToSession(session, 'lpaStatementIncomplete', appealId);
+
+	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id);
+	
+	return response
+		.status(200)
+		.redirect(`/appeals-service/appeal-details/${appealId}`);
+};
+

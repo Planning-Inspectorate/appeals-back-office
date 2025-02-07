@@ -8,7 +8,7 @@ import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.ma
 export const renderReviewLpaStatement = async (request, response) => {
 	const { errors, currentAppeal, currentRepresentation, session } = request;
 
-	const isReview = currentRepresentation.status === 'awaiting_review';
+	const isReview = ['awaiting_review', 'incomplete'].includes(currentRepresentation.status)
 
 	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
 		currentAppeal,

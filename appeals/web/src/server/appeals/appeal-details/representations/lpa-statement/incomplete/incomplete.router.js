@@ -4,7 +4,8 @@ import {
 	renderCheckYourAnswers,
 	renderReasons,
 	renderSetNewDate,
-	postSetNewDate
+	postSetNewDate,
+	postCheckYourAnswers
 } from './incomplete.controller.js';
 import {
 	validateRejectionReasonTextItems,
@@ -21,5 +22,5 @@ router.get('/date', renderSetNewDate);
 router.post('/date', validateSetNewDate, postSetNewDate);
 
 router.get('/confirm', renderCheckYourAnswers);
-
+router.post('/confirm', postCheckYourAnswers);
 export default router;

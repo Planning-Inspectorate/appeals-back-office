@@ -81,6 +81,19 @@ export const acceptRepresentation = (apiClient, appealId, repId) =>
 
 /**
  * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} repId
+ * @returns {Promise<Representation>}
+ * */
+export const representationIncomplete = (apiClient, appealId, repId) =>
+	apiClient
+		.patch(`appeals/${appealId}/reps/${repId}`, {
+			json: { status: 'incomplete' }
+		})
+		.json();
+
+/**
+ * @param {import('got').Got} apiClient
  * @param {string} representationType
  * @returns {Promise<import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]>}
  */

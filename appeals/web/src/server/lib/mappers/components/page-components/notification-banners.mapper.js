@@ -266,6 +266,11 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'LPA statement redacted and accepted'
 	},
+	lpaStatementIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA statement incomplete'
+	},
 	shareCommentsAndLpaStatement: {
 		pages: ['appealDetails']
 	},
