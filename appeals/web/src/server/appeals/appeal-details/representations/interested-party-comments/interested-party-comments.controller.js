@@ -1,4 +1,3 @@
-import logger from '#lib/logger.js';
 import { interestedPartyCommentsPage } from './interested-party-comments.mapper.js';
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
 
@@ -18,45 +17,40 @@ export const renderInterestedPartyComments = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	try {
-		const [awaitingReviewComments, invalidComments, validComments] = await Promise.all([
-			interestedPartyCommentsService.getInterestedPartyComments(
-				request.apiClient,
-				currentAppeal.appealId,
-				'awaiting_review',
-				paginationParameters.pageNumber,
-				paginationParameters.pageSize
-			),
-			interestedPartyCommentsService.getInterestedPartyComments(
-				request.apiClient,
-				currentAppeal.appealId,
-				'invalid',
-				paginationParameters.pageNumber,
-				paginationParameters.pageSize
-			),
-			interestedPartyCommentsService.getInterestedPartyComments(
-				request.apiClient,
-				currentAppeal.appealId,
-				'valid',
-				paginationParameters.pageNumber,
-				paginationParameters.pageSize
-			)
-		]);
+	const [awaitingReviewComments, invalidComments, validComments] = await Promise.all([
+		interestedPartyCommentsService.getInterestedPartyComments(
+			request.apiClient,
+			currentAppeal.appealId,
+			'awaiting_review',
+			paginationParameters.pageNumber,
+			paginationParameters.pageSize
+		),
+		interestedPartyCommentsService.getInterestedPartyComments(
+			request.apiClient,
+			currentAppeal.appealId,
+			'invalid',
+			paginationParameters.pageNumber,
+			paginationParameters.pageSize
+		),
+		interestedPartyCommentsService.getInterestedPartyComments(
+			request.apiClient,
+			currentAppeal.appealId,
+			'valid',
+			paginationParameters.pageNumber,
+			paginationParameters.pageSize
+		)
+	]);
 
-		const mappedPageContent = await interestedPartyCommentsPage(
-			currentAppeal,
-			awaitingReviewComments,
-			validComments,
-			invalidComments,
-			session
-		);
+	const mappedPageContent = await interestedPartyCommentsPage(
+		currentAppeal,
+		awaitingReviewComments,
+		validComments,
+		invalidComments,
+		session
+	);
 
-		return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
-			pageContent: mappedPageContent,
-			errors
-		});
-	} catch (error) {
-		logger.error(error);
-		return response.status(500).render('app/500.njk');
-	}
+	return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
 };
