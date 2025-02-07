@@ -15,6 +15,10 @@ const commonDocumentationSummaryProperties = {
 	representationStatus: {
 		type: 'string',
 		nullable: true
+	},
+	counts: {
+		type: 'object',
+		nullable: true
 	}
 };
 
@@ -37,11 +41,7 @@ const documentationSummary = {
 		ipComments: {
 			type: 'object',
 			properties: {
-				...commonDocumentationSummaryProperties,
-				validCount: {
-					type: 'number',
-					nullable: true
-				}
+				...commonDocumentationSummaryProperties
 			}
 		},
 		lpaStatement: {

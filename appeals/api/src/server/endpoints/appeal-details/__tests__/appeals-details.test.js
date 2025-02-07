@@ -167,7 +167,10 @@ const s78AppealDto = {
 		},
 		ipComments: {
 			status: 'received',
-			validCount: 4
+			counts: {
+				valid: 4,
+				published: 0
+			}
 		},
 		lpaFinalComments: {
 			receivedAt: null,

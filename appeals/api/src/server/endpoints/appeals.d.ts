@@ -522,7 +522,7 @@ interface AppealListResponse {
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
-	ipComments?: IPCommentsDocumentationSummary;
+	ipComments?: DocumentationSummaryEntry;
 	lpaStatement?: DocumentationSummaryEntry;
 	lpaFinalComments?: DocumentationSummaryEntry;
 	appellantFinalComments?: DocumentationSummaryEntry;
@@ -533,10 +533,7 @@ interface DocumentationSummaryEntry {
 	dueDate?: Date | string | undefined | null;
 	receivedAt?: Date | string | undefined | null;
 	representationStatus?: string | undefined | null;
-}
-
-interface IPCommentsDocumentationSummary extends DocumentationSummaryEntry {
-	validCount: number;
+	counts: Record<string, number>;
 }
 
 interface FolderInfo {

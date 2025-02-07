@@ -2494,6 +2494,7 @@ export interface DocumentationSummary {
 		/** @format date-time */
 		receivedAt?: string | null;
 		representationStatus?: string | null;
+		counts?: object | null;
 	};
 	lpaQuestionnaire?: {
 		status?: string;
@@ -2502,6 +2503,7 @@ export interface DocumentationSummary {
 		/** @format date-time */
 		receivedAt?: string | null;
 		representationStatus?: string | null;
+		counts?: object | null;
 	};
 	ipComments?: {
 		status?: string;
@@ -2510,7 +2512,7 @@ export interface DocumentationSummary {
 		/** @format date-time */
 		receivedAt?: string | null;
 		representationStatus?: string | null;
-		validCount?: number | null;
+		counts?: object | null;
 	};
 	lpaStatement?: {
 		status?: string;
@@ -2519,6 +2521,7 @@ export interface DocumentationSummary {
 		/** @format date-time */
 		receivedAt?: string | null;
 		representationStatus?: string | null;
+		counts?: object | null;
 	};
 }
 

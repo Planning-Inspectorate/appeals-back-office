@@ -10077,6 +10077,10 @@
 							"representationStatus": {
 								"type": "string",
 								"nullable": true
+							},
+							"counts": {
+								"type": "object",
+								"nullable": true
 							}
 						}
 					},
@@ -10098,6 +10102,10 @@
 							},
 							"representationStatus": {
 								"type": "string",
+								"nullable": true
+							},
+							"counts": {
+								"type": "object",
 								"nullable": true
 							}
 						}
@@ -10122,8 +10130,8 @@
 								"type": "string",
 								"nullable": true
 							},
-							"validCount": {
-								"type": "number",
+							"counts": {
+								"type": "object",
 								"nullable": true
 							}
 						}
@@ -10146,6 +10154,10 @@
 							},
 							"representationStatus": {
 								"type": "string",
+								"nullable": true
+							},
+							"counts": {
+								"type": "object",
 								"nullable": true
 							}
 						}
