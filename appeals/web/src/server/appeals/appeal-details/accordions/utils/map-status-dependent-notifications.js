@@ -97,7 +97,7 @@ export function mapStatusDependentNotifications(
 			const hasItemsToShare =
 				appealDetails.documentationSummary?.lpaStatement?.representationStatus ===
 					APPEAL_REPRESENTATION_STATUS.VALID ||
-				(appealDetails.documentationSummary?.ipComments?.validCount ?? 0) > 0;
+				(appealDetails.documentationSummary?.ipComments?.counts?.valid ?? 0) > 0;
 
 			if (isLpaStatementDueDatePassed && hasItemsToShare) {
 				addNotificationBannerToSession(
