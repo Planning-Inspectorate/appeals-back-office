@@ -1,7 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import {
+	rejectionReasonHtml,
+	prepareRejectionReasons
+} from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
@@ -44,12 +47,11 @@ export const confirmRejectFinalCommentPage = (
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const { rejectionReason } = session.rejectFinalComments;
-	const otherOptionId = reasonOptions.find((reasonOption) => reasonOption.hasText === true)?.id;
-	const otherReasonsText = otherOptionId &&
-		session.rejectFinalComments[`rejectionReason-${otherOptionId}`] && {
-			[otherOptionId]: session.rejectFinalComments[`rejectionReason-${otherOptionId}`]
-		};
+	const rejectionReasons = prepareRejectionReasons(
+		session.rejectFinalComments,
+		session.rejectFinalComments.rejectionReason,
+		reasonOptions
+	);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -100,7 +102,7 @@ export const confirmRejectFinalCommentPage = (
 							)}'s final comments?`
 						},
 						value: {
-							html: mapReasonsToReasonsListHtml(reasonOptions, rejectionReason, otherReasonsText)
+							html: rejectionReasonHtml(rejectionReasons)
 						},
 						actions: {
 							items: [

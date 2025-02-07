@@ -3,13 +3,15 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { renderSelectRejectionReasons } from '../../common/render-select-rejection-reasons.js';
 import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
-import { rejectionReasonHtml } from '../../common/components/reject-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
-import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
+import {
+	rejectionReasonHtml,
+	prepareRejectionReasons
+} from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -87,11 +89,16 @@ export const renderCheckYourAnswers = async (
 	},
 	response
 ) => {
-	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+	const reasonOptions = await getRepresentationRejectionReasonOptions(
 		apiClient,
 		currentRepresentation.representationType
 	);
-	const selectedReasons = ensureArray(lpaStatement?.rejectionReason);
+
+	const rejectionReasons = prepareRejectionReasons(
+		lpaStatement,
+		lpaStatement.rejectionReason,
+		reasonOptions
+	);
 
 	const attachmentsList =
 		currentRepresentation.attachments.length > 0
@@ -147,7 +154,7 @@ export const renderCheckYourAnswers = async (
 					}
 				},
 				'Why is the statement incomplete?': {
-					html: rejectionReasonHtml(selectedReasons, rejectionReasons),
+					html: rejectionReasonHtml(rejectionReasons),
 					actions: {
 						Change: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`,

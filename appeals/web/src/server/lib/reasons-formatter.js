@@ -1,4 +1,7 @@
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import {
+	rejectionReasonHtml,
+	buildRejectionReasons
+} from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
@@ -16,34 +19,7 @@ export function mapReasonsToReasonsListHtml(reasonOptions, reasons, reasonsText)
 		return '';
 	}
 
-	if (!Array.isArray(reasons)) {
-		reasons = [reasons];
-	}
+	const items = buildRejectionReasons(reasonOptions, reasons, reasonsText);
 
-	const items = reasons
-		?.map((reason) => reasonOptions.find((option) => option.id === parseInt(reason || '', 10)))
-		.map((option) => {
-			if (!option) {
-				throw new Error('invalid or incomplete reason ID was not recognised');
-			}
-
-			/** @type {string[]} */
-			let textItems = [];
-
-			if (option.hasText && reasonsText && reasonsText[option.id]) {
-				textItems = reasonsText[option.id];
-			}
-
-			/** @type {Array<string|string[]>} */
-			const list = [`${option.name}${textItems.length ? ':' : ''}`];
-
-			if (textItems.length) {
-				list.push(textItems);
-			}
-
-			return list;
-		})
-		.flat() || [''];
-
-	return buildHtmUnorderedList(items);
+	return rejectionReasonHtml(items);
 }

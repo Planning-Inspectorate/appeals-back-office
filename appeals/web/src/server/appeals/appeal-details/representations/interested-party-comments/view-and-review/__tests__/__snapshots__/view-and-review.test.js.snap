@@ -209,11 +209,7 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you rejecting the comment?</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0 govuk-list--bullet">
-                            <li></li>
-                        </ul>
-                        </dd>
+                    <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/select-reason"> Change<span class="govuk-visually-hidden"> why you are rejecting the comment</span></a>
                         </dd>
                 </div>

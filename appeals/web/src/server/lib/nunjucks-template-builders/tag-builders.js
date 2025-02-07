@@ -11,22 +11,9 @@
  */
 
 /**
- * @param {HtmlLink} link
- * @returns {string}
- */
-export const buildHtmlLink = (link) => {
-	return [
-		`<a href="${link.href}"`,
-		link.target ? ` target="${link.target}"` : '',
-		' class="govuk-link">',
-		link.title,
-		'</a>'
-	].join('');
-};
-
-/**
- * @param {Array<string|string[]>} items
+ * @param {Array<string|string[]>|undefined} items
  * @param {number} [recursionDepth]
+ * @param {string} listClasses
  * @returns {string}
  */
 export const buildHtmUnorderedList = (
@@ -34,6 +21,9 @@ export const buildHtmUnorderedList = (
 	recursionDepth = 0,
 	listClasses = 'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0'
 ) => {
+	if (!items?.length) {
+		return '';
+	}
 	const listItems = items
 		.map(
 			(item) =>

@@ -1,18 +1,68 @@
+import { ensureArray } from '#lib/array-utilities.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 /**
- * @param {string[]} selectedReasons
- * @param {import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]} rejectionReasons
- * @returns {string}
- * */
-export const rejectionReasonHtml = (selectedReasons, rejectionReasons) => {
-	const reasonNames = selectedReasons.map(
-		(reasonId) => rejectionReasons.find((r) => r.id === parseInt(reasonId))?.name ?? ''
-	);
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
+ */
 
-	return buildHtmUnorderedList(
-		reasonNames,
-		0,
-		'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0 govuk-list--bullet'
+/**
+@param {Object} rejectComment
+@param {string|string[]} reasons
+@param {ReasonOption[]} reasonOptions
+ * @returns {string[]}
+ * */
+export const prepareRejectionReasons = (rejectComment, reasons, reasonOptions) => {
+	const reasonsText = reasonOptions
+		.filter((reasonOption) => reasonOption.hasText)
+		.reduce((acc, { id }) => {
+			// @ts-ignore
+			const otherReasons = rejectComment[`rejectionReason-${id}`];
+			if (otherReasons) {
+				return { ...acc, [id]: otherReasons };
+			}
+			return acc;
+		}, {});
+
+	return buildRejectionReasons(reasonOptions, reasons, reasonsText);
+};
+
+/**
+ * @param {ReasonOption[]} reasonOptions
+ * @param {string|string[]} reasons
+ * @param {Object<string, string[]>|undefined} reasonsText
+ * @returns {string[]}
+ * */
+export const buildRejectionReasons = (reasonOptions, reasons, reasonsText) => {
+	const selectedReasons = ensureArray(reasons)
+		.filter((reason) => !!reason)
+		.map((reason) => parseInt(reason, 10));
+	// @ts-ignore
+	return (
+		reasonOptions
+			.filter(({ id }) => selectedReasons.includes(id))
+			// @ts-ignore
+			.reduce((acc, reason) => {
+				const { id, name, hasText } = reason;
+				const otherReasons = hasText ? ensureArray(reasonsText && reasonsText[id]) : [];
+				if (otherReasons?.length) {
+					return [
+						...acc,
+						...otherReasons
+							.filter((otherReason) => otherReason?.trim()) // Remove empty other reasons
+							.map((otherReason) => `${name}: ${otherReason}`)
+					];
+				} else {
+					return [...acc, name];
+				}
+			}, [])
 	);
+};
+
+/**
+ *
+ * @param {(string | string[])[]|undefined} reasons
+ * @returns {string}
+ */
+export const rejectionReasonHtml = (reasons) => {
+	return buildHtmUnorderedList(reasons, 0, 'govuk-list govuk-!-margin-top-0 govuk-list--bullet');
 };

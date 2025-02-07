@@ -1472,20 +1472,10 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                            <li>Documents or information are missing:</li>
-                            <li>
-                                <ul class="">
-                                    <li>test reason text 1</li>
-                                    <li>test reason text 2</li>
-                                </ul>
-                            </li>
-                            <li>Policies are missing:</li>
-                            <li>
-                                <ul class="">
-                                    <li>test reason text 1</li>
-                                </ul>
-                            </li>
+                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
+                            <li>Documents or information are missing: test reason text 1</li>
+                            <li>Documents or information are missing: test reason text 2</li>
+                            <li>Policies are missing: test reason text 1</li>
                         </ul>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete"> Change<span class="govuk-visually-hidden"> incomplete reasons</span></a>

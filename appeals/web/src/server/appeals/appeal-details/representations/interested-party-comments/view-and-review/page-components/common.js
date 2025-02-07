@@ -21,24 +21,22 @@ export function generateWithdrawLink() {
 }
 
 /**
- * @param {import('#appeals/appeal-details/representations/types.js').RepresentationRejectionReason} rejectionReason
- * @returns {string}
- */
-const textToListItems = (rejectionReason) =>
-	rejectionReason.text?.reduce((textListItems, text) => `${textListItems}<li>${text}</li>`, '') ||
-	'';
-
-/**
  * @param {Representation} comment - The comment object.
  * @returns {string}
  */
 const generateRejectionReasonsList = (comment) => {
-	const listItemsString = comment.rejectionReasons.reduce((listItems, rejectionReason) => {
-		if (rejectionReason.text?.length) return listItems + textToListItems(rejectionReason);
-
-		return `${listItems}<li>${rejectionReason.name}</li>`;
-	}, '');
-
+	const listItemsString = comment.rejectionReasons
+		.reduce(
+			(listItems, { name, text }) =>
+				// @ts-ignore
+				text?.length
+					? [...listItems, ...text.map((item) => name + ' : ' + item)]
+					: [...listItems, name],
+			[]
+		)
+		// @ts-ignore
+		.map((item) => `<li>${item}</li>`)
+		.join('');
 	return `<ul class="govuk-list govuk-list--bullet">${listItemsString}</ul>`;
 };
 

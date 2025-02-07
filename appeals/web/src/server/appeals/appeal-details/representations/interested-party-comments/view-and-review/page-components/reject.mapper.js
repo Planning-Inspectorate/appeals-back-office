@@ -153,7 +153,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						text: 'Why are you rejecting the comment?'
 					},
 					value: {
-						html: rejectionReasonHtml(payload.rejectionReasons, rejectionReasons)
+						html: rejectionReasonHtml(payload.rejectionReasons)
 					},
 					actions: {
 						items: [

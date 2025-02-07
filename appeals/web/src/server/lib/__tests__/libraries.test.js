@@ -914,7 +914,7 @@ describe('Libraries', () => {
 				);
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 
@@ -922,7 +922,7 @@ describe('Libraries', () => {
 				const result = mapReasonsToReasonsListHtml(appellantCaseInvalidReasons, ['22', '23'], {});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 
@@ -932,7 +932,7 @@ describe('Libraries', () => {
 				});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0"><li>Documents have not been submitted on time:</li><li><ul class=""><li>test reason text 1</li><li>test reason text 2</li></ul></li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 		});

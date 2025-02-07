@@ -1,7 +1,6 @@
 import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
 import { renderSelectRejectionReasons } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '#appeals/appeal-details/representations/representations.service.js';
-import { ensureArray } from '#lib/array-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
@@ -11,6 +10,7 @@ import {
 } from './reject.mapper.js';
 import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
 import { rejectInterestedPartyComment } from './reject.service.js';
+import { prepareRejectionReasons } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 export const renderSelectReason = renderSelectRejectionReasons(
 	rejectInterestedPartyCommentPage,
@@ -133,8 +133,7 @@ export const postAllowResubmit = async (request, response) => {
 export const renderCheckYourAnswers = async (request, response) => {
 	const { currentAppeal, currentRepresentation, errors, session } = request;
 
-	const selectedReasons = ensureArray(session.rejectIpComment?.rejectionReason);
-	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+	const reasonOptions = await getRepresentationRejectionReasonOptions(
 		request.apiClient,
 		currentRepresentation.representationType
 	);
@@ -142,9 +141,13 @@ export const renderCheckYourAnswers = async (request, response) => {
 	const pageContent = rejectCheckYourAnswersPage(
 		currentAppeal,
 		currentRepresentation,
-		rejectionReasons,
+		reasonOptions,
 		{
-			rejectionReasons: selectedReasons,
+			rejectionReasons: prepareRejectionReasons(
+				session.rejectIpComment,
+				session.rejectIpComment.rejectionReason,
+				reasonOptions
+			),
 			allowResubmit: session.rejectIpComment?.allowResubmit === 'yes'
 		}
 	);

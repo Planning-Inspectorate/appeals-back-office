@@ -39,7 +39,7 @@ export const ipCommentRejection = async ({
 
 	const templateId = extendedDeadline
 		? config.govNotify.template.commentRejectedDeadlineExtended
-		: config.govNotify.template.commentRejected;
+		: config.govNotify.template.commentRejected.appellant;
 
 	try {
 		await notifyClient.sendEmail(templateId, recipientEmail, {
