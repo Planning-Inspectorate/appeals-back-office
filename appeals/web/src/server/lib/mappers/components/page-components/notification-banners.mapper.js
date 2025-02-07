@@ -2,6 +2,8 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
+/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'otherAppeal'|'otherAppealRemoved'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'serviceUserUpdated'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'isAppealTypeCorrectUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerType  */
+
 /**
  * @typedef {Object} NotificationBannerDefinition
  * @property {ServicePageName[]} pages
@@ -13,7 +15,7 @@
  */
 
 /**
- * @type {Object<string, NotificationBannerDefinition>}
+ * @type {Object<NotificationBannerType, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
 	siteVisitTypeSelected: {
@@ -288,7 +290,7 @@ export const notificationBannerDefinitions = {
  * @param {number|undefined} appealId
  * @returns {PageComponent[]}
  */
-export function buildNotificationBanners(session, servicePage, appealId) {
+export function buildSuccessBanners(session, servicePage, appealId) {
 	if (appealId === undefined || !('notificationBanners' in session)) {
 		return [];
 	}
@@ -344,4 +346,30 @@ export function buildNotificationBanners(session, servicePage, appealId) {
 	});
 
 	return notificationBanners;
+}
+
+/**
+ * @param {Object} options
+ * @param {NotificationBannerType} options.bannerType
+ * @param {string} [options.text]
+ * @param {string} [options.html]
+ * @param {PageComponent[]} [options.pageComponents]
+ * @returns {PageComponent}
+ */
+export function createImportantBanner({ bannerType, text, html, pageComponents }) {
+	const bannerDefinition = notificationBannerDefinitions[bannerType];
+
+	return {
+		type: 'notification-banner',
+		parameters: {
+			titleText: 'Important',
+			titleHeadingLevel: 3,
+			text: text || bannerDefinition.text,
+			html: html || bannerDefinition.html,
+			...(pageComponents && {
+				html: '',
+				pageComponents: pageComponents
+			})
+		}
+	};
 }

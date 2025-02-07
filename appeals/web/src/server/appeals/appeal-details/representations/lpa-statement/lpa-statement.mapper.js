@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { buildSuccessBanners } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -86,7 +86,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 	const lpaStatementSummaryList = baseSummaryList(lpaStatement);
 
 	const pageComponents = [
-		...buildNotificationBanners(session, 'lpaStatement', appealDetails.appealId),
+		...buildSuccessBanners(session, 'lpaStatement', appealDetails.appealId),
 		lpaStatementSummaryList
 	];
 	preRenderPageComponents(pageComponents);
@@ -147,7 +147,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 	};
 
 	const pageComponents = [
-		...buildNotificationBanners(session, 'lpaStatement', appealDetails.appealId),
+		...buildSuccessBanners(session, 'lpaStatement', appealDetails.appealId),
 		lpaStatementSummaryList,
 		lpaStatementValidityRadioButtons
 	];

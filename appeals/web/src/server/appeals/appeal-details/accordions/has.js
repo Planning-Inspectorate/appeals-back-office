@@ -7,20 +7,16 @@ import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
-import {
-	mapStatusDependentNotifications,
-	removeAccordionComponentsActions
-} from './utils/index.js';
+import { removeAccordionComponentsActions } from './utils/index.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
- *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {boolean} [ipCommentsAwaitingReview]
- * @returns
+ * @returns {SharedPageComponentProperties & AccordionPageComponent}
  */
-export function generateAccordion(appealDetails, mappedData, session, ipCommentsAwaitingReview) {
+export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
 	const siteDetails = getSiteDetails(mappedData);
@@ -89,14 +85,10 @@ export function generateAccordion(appealDetails, mappedData, session, ipComments
 		caseManagement
 	];
 
-	mapStatusDependentNotifications(appealDetails, session, accordionComponents, {
-		ipComments: ipCommentsAwaitingReview || false,
-		appellantFinalComments: false,
-		lpaFinalComments: false,
-		lpaStatement: false
-	});
-
-	if (!userHasPermission(permissionNames.viewCaseDetails, session)) {
+	if (
+		!userHasPermission(permissionNames.viewCaseDetails, session) ||
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.AWAITING_TRANSFER
+	) {
 		removeAccordionComponentsActions(accordionComponents);
 	}
 

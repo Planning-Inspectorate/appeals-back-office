@@ -11,7 +11,7 @@ import {
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { buildSuccessBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
@@ -568,7 +568,7 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId, l
 		};
 	}
 
-	return buildNotificationBanners(session, 'lpaQuestionnaire', appealId);
+	return buildSuccessBanners(session, 'lpaQuestionnaire', appealId);
 }
 
 /**
