@@ -1,5 +1,4 @@
-import { APPEAL_REPRESENTATION_STATUS } from 'pins-data-model';
-
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 /**
  * @param {string} representationStatus
  * @returns {boolean}
@@ -51,6 +50,8 @@ export function mapRepresentationDocumentSummaryStatus(documentationStatus, repr
 			return 'Accepted';
 		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
 			return 'Shared';
+		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE:
+			return 'Incomplete';
 		default:
 			return 'Received';
 	}

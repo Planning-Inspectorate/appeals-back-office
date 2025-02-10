@@ -3,7 +3,8 @@ import {
 	addNotificationBannerToSession,
 	clearNotificationBannerFromSession
 } from '#lib/session-utilities.js';
-import { APPEAL_CASE_STATUS, APPEAL_REPRESENTATION_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { removeAccordionComponentsActions } from './remove-accordion-components-actions.js';
 import {
 	generateIssueDecisionUrl,
@@ -99,12 +100,16 @@ export function mapStatusDependentNotifications(
 					APPEAL_REPRESENTATION_STATUS.VALID ||
 				(appealDetails.documentationSummary?.ipComments?.counts?.valid ?? 0) > 0;
 
-			if (isLpaStatementDueDatePassed && hasItemsToShare) {
+			const lpaStatementIncomplete =
+				appealDetails.documentationSummary?.lpaStatement?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
+
+			if (lpaStatementIncomplete) {
 				addNotificationBannerToSession(
 					session,
 					'shareCommentsAndLpaStatement',
 					appealDetails.appealId,
-					`<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+					`<p class="govuk-notification-banner__heading">LPA statement incomplete</p> <a href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
 				);
 				break;
 			}
@@ -119,7 +124,7 @@ export function mapStatusDependentNotifications(
 				break;
 			}
 
-			if (representationTypesAwaitingReview?.ipComments) {
+			if (representationTypesAwaitingReview?.ipComments && !lpaStatementIncomplete) {
 				addNotificationBannerToSession(
 					session,
 					'interestedPartyCommentsAwaitingReview',

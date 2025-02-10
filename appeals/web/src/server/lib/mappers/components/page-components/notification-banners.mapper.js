@@ -269,7 +269,7 @@ export const notificationBannerDefinitions = {
 	lpaStatementIncomplete: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'LPA statement incomplete'
+		text: 'Statement incomplete'
 	},
 	shareCommentsAndLpaStatement: {
 		pages: ['appealDetails']
