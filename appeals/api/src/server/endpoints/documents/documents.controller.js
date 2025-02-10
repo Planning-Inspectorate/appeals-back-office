@@ -286,7 +286,9 @@ const updateDocumentFileName = async (req, res) => {
 
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
+
 		if (latestDocument && latestDocument.name && latestDocument.latestDocumentVersion) {
+			await documentRepository.updateDocumentById(latestDocument.guid, document);
 			if (document.fileName && document.fileName !== latestDocument.name) {
 				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
 					latestDocument.name,
@@ -308,8 +310,6 @@ const updateDocumentFileName = async (req, res) => {
 					EventType.Update
 				);
 			}
-
-			await documentRepository.updateDocumentById(latestDocument.guid, document);
 		}
 	} catch (error) {
 		if (error) {
