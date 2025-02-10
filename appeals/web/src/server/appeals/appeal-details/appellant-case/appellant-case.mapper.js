@@ -15,7 +15,7 @@ import {
 	userHasPermission,
 	removeSummaryListActions,
 	buildNotificationBanners,
-	createImportantBanner
+	createNotificationBanner
 } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -455,8 +455,8 @@ export function mapAppellantCaseNotificationBanners(
 		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
 	) {
 		banners.unshift(
-			createImportantBanner({
-				bannerType: 'notCheckedDocument',
+			createNotificationBanner({
+				bannerDefinitionKey: 'notCheckedDocument',
 				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
 			})
 		);
@@ -514,8 +514,8 @@ export function mapAppellantCaseNotificationBanners(
 		}
 
 		banners.unshift(
-			createImportantBanner({
-				bannerType: 'appellantCaseNotValid',
+			createNotificationBanner({
+				bannerDefinitionKey: 'appellantCaseNotValid',
 				titleText: `Appeal is ${String(validationOutcome)}`,
 				pageComponents: bannerContentPageComponents
 			})

@@ -8,7 +8,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
-import { buildNotificationBanners, createImportantBanner } from '#lib/mappers/index.js';
+import { buildNotificationBanners, createNotificationBanner } from '#lib/mappers/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -875,8 +875,8 @@ export function manageFolderPage({
 
 	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
 		notificationBanners.unshift(
-			createImportantBanner({
-				bannerType: 'notCheckedDocument',
+			createNotificationBanner({
+				bannerDefinitionKey: 'notCheckedDocument',
 				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
 			})
 		);
@@ -1193,8 +1193,8 @@ export async function manageDocumentPage({
 
 	if (!virusCheckStatus.checked) {
 		notificationBanners.unshift(
-			createImportantBanner({
-				bannerType: 'notCheckedDocument',
+			createNotificationBanner({
+				bannerDefinitionKey: 'notCheckedDocument',
 				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
 			})
 		);

@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'otherAppeal'|'otherAppealRemoved'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'serviceUserUpdated'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'isAppealTypeCorrectUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerType  */
+/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'otherAppeal'|'otherAppealRemoved'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'serviceUserUpdated'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'isAppealTypeCorrectUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -10,12 +10,10 @@
  * @property {'success'} [type] default is 'important'
  * @property {string} [text]
  * @property {string} [html]
- * @property {PageComponent[]} [pageComponents]
- * @property {boolean} [persist] default is false
  */
 
 /**
- * @type {Object<NotificationBannerType, NotificationBannerDefinition>}
+ * @type {Object<NotificationBannerDefinitionKey, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
 	siteVisitTypeSelected: {
@@ -79,8 +77,7 @@ export const notificationBannerDefinitions = {
 		text: 'Document removed'
 	},
 	appellantCaseNotValid: {
-		pages: ['appellantCase'],
-		persist: true
+		pages: ['appellantCase']
 	},
 	readyForDecision: {
 		pages: ['appealDetails']
@@ -98,8 +95,7 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails']
 	},
 	lpaQuestionnaireNotValid: {
-		pages: ['lpaQuestionnaire'],
-		persist: true
+		pages: ['lpaQuestionnaire']
 	},
 	notCheckedDocument: {
 		pages: ['lpaQuestionnaire', 'manageDocuments', 'appellantCase', 'manageFolder'],
@@ -202,8 +198,7 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails']
 	},
 	interestedPartyCommentsAwaitingReview: {
-		pages: ['appealDetails'],
-		persist: true
+		pages: ['appealDetails']
 	},
 	interestedPartyCommentsValidSuccess: {
 		type: 'success',
@@ -236,12 +231,10 @@ export const notificationBannerDefinitions = {
 		text: 'Supporting document added'
 	},
 	appellantFinalCommentsAwaitingReview: {
-		pages: ['appealDetails'],
-		persist: true
+		pages: ['appealDetails']
 	},
 	lpaFinalCommentsAwaitingReview: {
-		pages: ['appealDetails'],
-		persist: true
+		pages: ['appealDetails']
 	},
 	finalCommentsRedactionSuccess: {
 		type: 'success',
@@ -287,84 +280,78 @@ export const notificationBannerDefinitions = {
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {ServicePageName} servicePage
- * @param {number|undefined} appealId
+ * @param {number} appealId
  * @returns {PageComponent[]}
  */
 export function buildNotificationBanners(session, servicePage, appealId) {
-	if (appealId === undefined || !('notificationBanners' in session)) {
+	const appealIdAsString = typeof appealId === 'number' ? appealId.toString() : appealId;
+
+	if (!('notificationBanners' in session) || !(appealIdAsString in session.notificationBanners)) {
 		return [];
 	}
+
+	/** @type {NotificationBannerDefinitionKey[]} */
+	const displayedBannerKeys = [];
 
 	/**
 	 * @type {PageComponent[]}
 	 */
-	const notificationBanners = Object.keys(session.notificationBanners).flatMap((key) => {
-		if (!Object.keys(notificationBannerDefinitions).includes(key)) {
-			return [];
-		}
+	const notificationBanners = session.notificationBanners[appealIdAsString]
+		.flatMap((/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData) => {
+			if (!Object.keys(notificationBannerDefinitions).includes(bannerData.key)) {
+				return [];
+			}
 
-		const bannerDefinition = notificationBannerDefinitions[key];
-		const bannerData = session.notificationBanners[key];
+			const bannerDefinition = notificationBannerDefinitions[bannerData.key];
 
-		if (!bannerDefinition.persist) {
-			delete session.notificationBanners[key];
-		}
+			if (!bannerDefinition.pages.includes(servicePage)) {
+				return [];
+			}
 
-		if (!bannerDefinition.pages.includes(servicePage) || bannerData.appealId !== appealId) {
-			return [];
-		}
+			const bannerText = bannerData?.text || bannerDefinition.text;
+			const bannerHtml = bannerData?.html || bannerDefinition.html;
 
-		const titleText = bannerDefinition.type === 'success' ? 'Success' : 'Important';
+			displayedBannerKeys.push(bannerData.key);
 
-		const bannerType = bannerData?.type || bannerDefinition.type;
-		const bannerText = bannerData?.text || bannerDefinition.text;
-		const bannerHtml = bannerData?.html || bannerDefinition.html;
-		const bannerPageComponents = bannerData?.pageComponents || bannerDefinition.pageComponents;
-
-		return [
-			{
-				type: 'notification-banner',
-				parameters: {
-					titleText: bannerData?.titleText || titleText,
-					titleHeadingLevel: 3,
-					...(bannerType && {
-						type: bannerType
-					}),
+			return [
+				createNotificationBanner({
+					bannerDefinitionKey: bannerData.key,
 					...(bannerText && {
 						text: bannerText
 					}),
 					...(bannerHtml && {
 						html: bannerHtml
-					}),
-					...(bannerPageComponents && {
-						html: bannerHtml || '',
-						pageComponents: bannerPageComponents
 					})
-				}
-			}
-		];
-	});
+				})
+			];
+		});
+	
+	session.notificationBanners[appealIdAsString] = session.notificationBanners[appealIdAsString]
+		.filter((/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData) => !displayedBannerKeys.includes(bannerData.key));
 
 	return notificationBanners;
 }
 
 /**
  * @param {Object} options
- * @param {NotificationBannerType} options.bannerType
+ * @param {NotificationBannerDefinitionKey} options.bannerDefinitionKey
  * @param {string} [options.titleText]
  * @param {string} [options.text]
  * @param {string} [options.html]
  * @param {PageComponent[]} [options.pageComponents]
  * @returns {PageComponent}
  */
-export function createImportantBanner({ bannerType, titleText, text, html, pageComponents }) {
-	const bannerDefinition = notificationBannerDefinitions[bannerType];
+export function createNotificationBanner({ bannerDefinitionKey, titleText, text, html, pageComponents }) {
+	const bannerDefinition = notificationBannerDefinitions[bannerDefinitionKey];
 
 	return {
 		type: 'notification-banner',
 		parameters: {
-			titleText: titleText || 'Important',
+			titleText: titleText || ('type' in bannerDefinition && bannerDefinition.type === 'success' ? 'Success' : 'Important'),
 			titleHeadingLevel: 3,
+			...('type' in bannerDefinition && {
+				type: bannerDefinition.type
+			}),
 			text: text || bannerDefinition.text,
 			html: html || bannerDefinition.html,
 			...(pageComponents && {

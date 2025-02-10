@@ -1,7 +1,7 @@
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { buildNotificationBanners, createImportantBanner } from '#lib/mappers/index.js';
+import { buildNotificationBanners, createNotificationBanner } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import {
@@ -48,8 +48,8 @@ export function manageWithdrawalRequestFolderPage(
 
 	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
 		notificationBanners.unshift(
-			createImportantBanner({
-				bannerType: 'notCheckedDocument',
+			createNotificationBanner({
+				bannerDefinitionKey: 'notCheckedDocument',
 				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
 			})
 		);

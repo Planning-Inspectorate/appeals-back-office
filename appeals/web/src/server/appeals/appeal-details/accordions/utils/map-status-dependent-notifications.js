@@ -4,7 +4,7 @@ import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
 } from '../../issue-decision/issue-decision.mapper.js';
-import { createImportantBanner } from '#lib/mappers/index.js';
+import { createNotificationBanner } from '#lib/mappers/index.js';
 
 /**
  * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
@@ -56,8 +56,8 @@ export function mapStatusDependentNotifications(appealDetails, representationTyp
  */
 function mapStatusDependentNotificationsForAssignCaseOfficer(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'assignCaseOfficer',
+		createNotificationBanner({
+			bannerDefinitionKey: 'assignCaseOfficer',
 			html: `<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/assign-user/case-officer" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 		})
 	];
@@ -69,8 +69,8 @@ function mapStatusDependentNotificationsForAssignCaseOfficer(appealId) {
  */
 function mapStatusDependentNotificationsForValidation(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'readyForValidation',
+		createNotificationBanner({
+			bannerDefinitionKey: 'readyForValidation',
 			html: `<p class="govuk-notification-banner__heading">Appeal ready for validation</p><p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="/appeals-service/appeal-details/${appealId}/appellant-case">Validate <span class="govuk-visually-hidden">appeal</span></a></p>`
 		})
 	];
@@ -84,8 +84,8 @@ function mapStatusDependentNotificationsForValidation(appealId) {
 function mapStatusDependentNotificationsForLPAQuestionnaire(appealId, lpaQuestionnaireId) {
 	if (typeof lpaQuestionnaireId === 'number') {
 		return [
-			createImportantBanner({
-				bannerType: 'readyForLpaQuestionnaireReview',
+			createNotificationBanner({
+				bannerDefinitionKey: 'readyForLpaQuestionnaireReview',
 				html: `<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p><p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire-banner" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a></p>`
 			})
 		];
@@ -100,8 +100,8 @@ function mapStatusDependentNotificationsForLPAQuestionnaire(appealId, lpaQuestio
  */
 function mapStatusDependentNotificationsForEvent(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'readyForSetUpSiteVisit',
+		createNotificationBanner({
+			bannerDefinitionKey: 'readyForSetUpSiteVisit',
 			html: `<p class="govuk-notification-banner__heading">Site visit ready to set up</p><p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit</a></p>`
 		})
 	];
@@ -113,8 +113,8 @@ function mapStatusDependentNotificationsForEvent(appealId) {
  */
 function mapStatusDependentNotificationsForIssueDetermination(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'readyForDecision',
+		createNotificationBanner({
+			bannerDefinitionKey: 'readyForDecision',
 			html: `<p class="govuk-notification-banner__heading">Ready for decision</p><p><a class="govuk-notification-banner__link" data-cy="issue-determination" href="${generateIssueDecisionUrl(
 				appealId
 			)}">Issue decision</a></p>`
@@ -128,8 +128,8 @@ function mapStatusDependentNotificationsForIssueDetermination(appealId) {
  */
 function mapStatusDependentNotificationsForReadyToStart(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'appealValidAndReadyToStart',
+		createNotificationBanner({
+			bannerDefinitionKey: 'appealValidAndReadyToStart',
 			html: `<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${generateStartTimetableUrl(
 				appealId
 			)}">Start case</a></p>`
@@ -143,8 +143,8 @@ function mapStatusDependentNotificationsForReadyToStart(appealId) {
  */
 function mapStatusDependentNotificationsForAwaitingTransfer(appealId) {
 	return [
-		createImportantBanner({
-			bannerType: 'appealAwaitingTransfer',
+		createNotificationBanner({
+			bannerDefinitionKey: 'appealAwaitingTransfer',
 			html: `<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">update the appeal with the new horizon reference</a>.</p>`
 		})
 	];
@@ -177,8 +177,8 @@ function mapStatusDependentNotificationsForStatements(
 		!representationTypesAwaitingReview?.lpaStatement
 	) {
 		return [
-			createImportantBanner({
-				bannerType: 'shareCommentsAndLpaStatement',
+			createNotificationBanner({
+				bannerDefinitionKey: 'shareCommentsAndLpaStatement',
 				html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
 			})
 		];
@@ -193,8 +193,8 @@ function mapStatusDependentNotificationsForStatements(
 		)
 	) {
 		return [
-			createImportantBanner({
-				bannerType: 'progressToFinalComments',
+			createNotificationBanner({
+				bannerDefinitionKey: 'progressToFinalComments',
 				html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
 			})
 		];
@@ -205,16 +205,16 @@ function mapStatusDependentNotificationsForStatements(
 
 	if (representationTypesAwaitingReview?.ipComments) {
 		banners.push(
-			createImportantBanner({
-				bannerType: 'interestedPartyCommentsAwaitingReview',
+			createNotificationBanner({
+				bannerDefinitionKey: 'interestedPartyCommentsAwaitingReview',
 				html: `<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
 			})
 		);
 	}
 	if (representationTypesAwaitingReview?.lpaStatement) {
 		banners.push(
-			createImportantBanner({
-				bannerType: 'lpaStatementAwaitingReview',
+			createNotificationBanner({
+				bannerDefinitionKey: 'lpaStatementAwaitingReview',
 				html: `<p class="govuk-notification-banner__heading">LPA statement awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>`
 			})
 		);
@@ -237,16 +237,16 @@ function mapStatusDependentNotificationsForFinalComments(
 
 	if (representationTypesAwaitingReview?.appellantFinalComments) {
 		banners.push(
-			createImportantBanner({
-				bannerType: 'appellantFinalCommentsAwaitingReview',
+			createNotificationBanner({
+				bannerDefinitionKey: 'appellantFinalCommentsAwaitingReview',
 				html: `<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
 			})
 		);
 	}
 	if (representationTypesAwaitingReview?.lpaFinalComments) {
 		banners.push(
-			createImportantBanner({
-				bannerType: 'lpaFinalCommentsAwaitingReview',
+			createNotificationBanner({
+				bannerDefinitionKey: 'lpaFinalCommentsAwaitingReview',
 				html: `<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
 			})
 		);

@@ -1024,10 +1024,12 @@ describe('Libraries', () => {
 	});
 
 	describe('session utilities', () => {
+		// TODO: A2-2102: update this test suite to account for changes to functionality of addNotificationBannerToSession
 		describe('addNotificationBannerToSession', () => {
 			it('should return false without modifying the session notificationBanners object if an unrecognised bannerDefinitionKey is provided', () => {
 				const testSession = { ...baseSession };
 
+				// @ts-ignore
 				const result = addNotificationBannerToSession(testSession, 'anUnrecognisedKey', 1);
 
 				expect(result).toBe(false);

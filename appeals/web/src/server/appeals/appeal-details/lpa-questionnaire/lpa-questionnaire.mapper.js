@@ -4,7 +4,7 @@ import {
 	userHasPermission,
 	inputInstructionIsRadiosInputInstruction,
 	yesNoInput,
-	createImportantBanner,
+	createNotificationBanner,
 	buildNotificationBanners
 } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
@@ -503,8 +503,8 @@ function mapLPAQuestionnaireNotificationBanners(
 
 	if (getDocumentsForVirusStatus(lpaqData, 'not_scanned').length > 0) {
 		banners.unshift(
-			createImportantBanner({
-				bannerType: 'notCheckedDocument',
+			createNotificationBanner({
+				bannerDefinitionKey: 'notCheckedDocument',
 				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
 			})
 		);
@@ -562,8 +562,8 @@ function mapLPAQuestionnaireNotificationBanners(
 		}
 
 		banners.unshift(
-			createImportantBanner({
-				bannerType: 'lpaQuestionnaireNotValid',
+			createNotificationBanner({
+				bannerDefinitionKey: 'lpaQuestionnaireNotValid',
 				titleText: `LPA Questionnaire is ${String(validationOutcome)}`,
 				pageComponents: bannerContentPageComponents
 			})
