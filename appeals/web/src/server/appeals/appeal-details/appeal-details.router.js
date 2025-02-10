@@ -29,6 +29,7 @@ import inspectorAccessRouter from './inspector-access/inspector-access.router.js
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+import progressCaseRouter from './progress-case/progress-case.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import finalCommentsRouter from './final-comments/final-comments.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
@@ -167,6 +168,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	withdrawalRouter
+);
+router.use(
+	'/:appealId/progress-case',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	progressCaseRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);
