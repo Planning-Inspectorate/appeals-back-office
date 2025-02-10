@@ -19,10 +19,6 @@ export const validateCheckAddress = createValidator(
 		.withMessage('Select yes if the interested party provided an address')
 );
 
-export const validateRedactionStatus = createValidator(
-	body('redactionStatus').exists().withMessage('Select a redaction status')
-);
-
 export const validateInterestedPartyDetails = createValidator(
 	createTextInputValidator(
 		'firstName',

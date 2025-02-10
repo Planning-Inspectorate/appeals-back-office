@@ -7,15 +7,15 @@ import {
 	renderRedactionStatus,
 	postDateSubmitted,
 	postRedactionStatus
-} from '../controller/index.js';
+} from '../../representations/document-attachments/add-document.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	createDateInputDateInPastOrTodayValidator,
 	createDateInputDateValidityValidator,
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
-import { validateRedactionStatus } from '#appeals/appeal-details/representations/interested-party-comments/add-ip-comment/add-ip-comment.validators.js';
 import { postCheckYourAnswers, renderCheckYourAnswers } from '../controller/check-your-answers.js';
+import { validateRedactionStatus } from '#appeals/appeal-details/withdrawal/withdrawal.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

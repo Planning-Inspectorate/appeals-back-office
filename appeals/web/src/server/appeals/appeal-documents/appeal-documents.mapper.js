@@ -27,7 +27,6 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
-
 /**
  * @param {string} appealId
  * @param {string} appealReference
@@ -70,9 +69,10 @@ export async function documentUploadPage(
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
-	const pathComponents = folderPath.split('/');
-	const documentStage = pathComponents[0];
-	const documentTypeComputed = documentType || pathComponents[1];
+	const pathComponents = folderPath ? folderPath.split('/') : [];
+	const documentStage = pathComponents.length > 0 ? pathComponents[0] : 'unknown';
+	const documentTypeComputed =
+		documentType || (pathComponents.length > 1 ? pathComponents[1] : 'unknown');
 
 	return {
 		backButtonUrl: backButtonUrl?.replace('{{folderId}}', folderId),
@@ -1772,8 +1772,8 @@ export const mapRedactionStatusKeyToName = (redactionStatusKey) => {
 			return 'No redaction required';
 		default:
 			return '';
-	};
-}
+	}
+};
 
 /**
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses

@@ -1,3 +1,5 @@
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
@@ -16,3 +18,7 @@ export function validateReadyToShare(request, response, next) {
 
 	return next();
 }
+
+export const validateRedactionStatus = createValidator(
+	body('redactionStatus').exists().withMessage('Select a redaction status')
+);

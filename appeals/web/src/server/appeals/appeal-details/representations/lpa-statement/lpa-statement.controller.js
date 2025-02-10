@@ -1,8 +1,11 @@
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
 
-/** @type {import('@pins/express').RequestHandler<{}>} */
-export function renderReviewLpaStatement(request, response) {
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderReviewLpaStatement = async (request, response) => {
 	const { errors, currentAppeal, currentRepresentation, session } = request;
 
 	const isReview = currentRepresentation.status === 'awaiting_review';
@@ -19,12 +22,13 @@ export function renderReviewLpaStatement(request, response) {
 			errors,
 			pageContent
 		});
-}
+};
 
 /**
- * @type {import('@pins/express').RenderHandler<any, any, any>}
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postReviewLpaStatement = async (request, response, next) => {
+export const postReviewLpaStatement = async (request, response) => {
 	const {
 		errors,
 		params: { appealId },
@@ -32,8 +36,7 @@ export const postReviewLpaStatement = async (request, response, next) => {
 	} = request;
 
 	if (errors) {
-		// @ts-ignore
-		return renderReviewLpaStatement(request, response, next);
+		return renderReviewLpaStatement(request, response);
 	}
 
 	switch (status) {

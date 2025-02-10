@@ -10,9 +10,9 @@ import * as controller from './add-ip-comment.controller.js';
 import {
 	validateCheckAddress,
 	validateInterestedPartyAddress,
-	validateInterestedPartyDetails,
-	validateRedactionStatus
+	validateInterestedPartyDetails
 } from './add-ip-comment.validators.js';
+import { validateRedactionStatus } from '../../representations.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

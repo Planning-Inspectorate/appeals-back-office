@@ -7,14 +7,14 @@ import {
 	renderRedactionStatus,
 	postDateSubmitted,
 	postRedactionStatus
-} from '../../final-comments/controller/index.js';
+} from './add-document.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	createDateInputDateInPastOrTodayValidator,
 	createDateInputDateValidityValidator,
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
-import { validateRedactionStatus } from '../interested-party-comments/add-ip-comment/add-ip-comment.validators.js';
+import { validateRedactionStatus } from '../representations.validators.js';
 import {
 	postCheckYourAnswers,
 	renderCheckYourAnswers

@@ -35,7 +35,7 @@ describe('lpa-statements', () => {
 		nock('http://test/')
 			.get('/appeals/2/document-folders')
 			.query({ path: 'representation/representationAttachments' })
-			.reply(200, [{ folderId: 1234 }]);
+			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
 
 		nock('http://test/')
 			.get('/appeals/2/reps?type=lpa_statement')
@@ -44,7 +44,7 @@ describe('lpa-statements', () => {
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
-			.reply(200, [{ folderId: 1234 }]);
+			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
 	});
 
 	afterEach(teardown);
@@ -277,6 +277,43 @@ describe('lpa-statements', () => {
 				'name="items[0][redactionStatus]" type="radio" value="no redaction required" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
+
+		describe('GET /add-document', () => {
+			beforeEach(() => {
+				nock('http://test/').get('/appeals/2/reps').reply(200, interestedPartyCommentForReview);
+
+				nock('http://test/')
+					.get('/appeals/3619/reps?type=lpa_statement')
+					.reply(200, finalCommentsForReview);
+			});
+
+			it('should render the add document details page', async () => {
+				const response = await request.get(`${baseUrl}/2/lpa-statement/add-document`);
+				expect(response.statusCode).toBe(200);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain('Upload supporting document</h1');
+			});
+
+			it('should render the redaction status page', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/lpa-statement/add-document/redaction-status`
+				);
+				expect(response.statusCode).toBe(200);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</h1');
+			});
+
+			it('should render the date submitted page', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/lpa-statement/add-document/date-submitted`
+				);
+				expect(response.statusCode).toBe(200);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain(
+					'When did the interested party submit the comment?</h1'
+				);
+			});
 		});
 	});
 });
