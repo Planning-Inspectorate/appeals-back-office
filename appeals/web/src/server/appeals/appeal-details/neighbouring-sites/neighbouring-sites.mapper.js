@@ -3,7 +3,7 @@ import {
 	appealSiteToMultilineAddressStringHtml
 } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { buildSuccessBanners } from '#lib/mappers/index.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 
@@ -97,7 +97,7 @@ export function addNeighbouringSiteCheckAndConfirmPage(
 export function manageNeighbouringSitesPage(request, appealData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	const notificationBanners = buildSuccessBanners(
+	const notificationBanners = buildNotificationBanners(
 		request.session,
 		'manageNeighbouringSites',
 		request.currentAppeal.appealId

@@ -290,7 +290,7 @@ export const notificationBannerDefinitions = {
  * @param {number|undefined} appealId
  * @returns {PageComponent[]}
  */
-export function buildSuccessBanners(session, servicePage, appealId) {
+export function buildNotificationBanners(session, servicePage, appealId) {
 	if (appealId === undefined || !('notificationBanners' in session)) {
 		return [];
 	}
@@ -351,18 +351,19 @@ export function buildSuccessBanners(session, servicePage, appealId) {
 /**
  * @param {Object} options
  * @param {NotificationBannerType} options.bannerType
+ * @param {string} [options.titleText]
  * @param {string} [options.text]
  * @param {string} [options.html]
  * @param {PageComponent[]} [options.pageComponents]
  * @returns {PageComponent}
  */
-export function createImportantBanner({ bannerType, text, html, pageComponents }) {
+export function createImportantBanner({ bannerType, titleText, text, html, pageComponents }) {
 	const bannerDefinition = notificationBannerDefinitions[bannerType];
 
 	return {
 		type: 'notification-banner',
 		parameters: {
-			titleText: 'Important',
+			titleText: titleText || 'Important',
 			titleHeadingLevel: 3,
 			text: text || bannerDefinition.text,
 			html: html || bannerDefinition.html,

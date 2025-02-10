@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { buildSuccessBanners } from '#lib/mappers/index.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
@@ -52,7 +52,7 @@ export async function appealDetailsPage(
 
 	const pageComponents = [
 		...mapStatusDependentNotifications(appealDetails, representationTypesAwaitingReview),
-		...buildSuccessBanners(session, 'appealDetails', appealDetails.appealId),
+		...buildNotificationBanners(session, 'appealDetails', appealDetails.appealId),
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		generateCaseSummary(mappedData),
 		...caseDownload,

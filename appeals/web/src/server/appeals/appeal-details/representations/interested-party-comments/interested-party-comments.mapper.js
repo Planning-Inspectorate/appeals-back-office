@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { buildSuccessBanners } from '#lib/mappers/index.js';
+import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 
 /**
@@ -27,7 +27,11 @@ export async function interestedPartyCommentsPage(
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const notificationBanners = buildSuccessBanners(session, 'ipComments', appealDetails.appealId);
+	const notificationBanners = buildNotificationBanners(
+		session,
+		'ipComments',
+		appealDetails.appealId
+	);
 
 	const pageContent = {
 		title: 'Interested party comments',
