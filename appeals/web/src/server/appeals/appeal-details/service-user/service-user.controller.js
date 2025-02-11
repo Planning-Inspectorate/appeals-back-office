@@ -114,9 +114,7 @@ export const postChangeServiceUser = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">${capitalize(userType)} details ${
-				isUpdate ? 'updated' : 'added'
-			}</p>`
+			text: `${capitalize(userType)} details ${isUpdate ? 'updated' : 'added'}`
 		});
 
 		delete request.session.updatedServiceUser;
@@ -198,7 +196,7 @@ export const postRemoveServiceUser = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">${capitalize(userType)} removed</p>`
+			text: `${capitalize(userType)} removed`
 		});
 
 		delete request.session.updatedServiceUser;

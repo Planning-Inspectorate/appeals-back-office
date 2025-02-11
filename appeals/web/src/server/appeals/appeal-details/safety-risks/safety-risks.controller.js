@@ -96,7 +96,7 @@ export const postChangeSafetyRisks = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Site health and safety risks (${formattedSource} answer) updated</p>`
+			text: `Site health and safety risks (${formattedSource} answer) updated`
 		});
 
 		delete request.session.safetyRisks;

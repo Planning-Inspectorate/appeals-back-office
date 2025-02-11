@@ -86,7 +86,7 @@ export const postChangeExtraConditions = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Extra conditions updated</p>`
+			text: `Extra conditions updated`
 		});
 
 		delete request.session.extraConditions;

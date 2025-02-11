@@ -180,7 +180,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'otherAppeal',
 				appealId: request.session.appealId,
-				html: `<p class="govuk-notification-banner__heading">This appeal is now related to ${request.session.relatedAppealReference}</p>`
+				text: `This appeal is now related to ${request.session.relatedAppealReference}`
 			});
 		} catch (error) {
 			let errorMessage = 'Something went wrong when posting related appeal';
@@ -330,7 +330,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'otherAppealRemoved',
 				appealId,
-				html: `<p class="govuk-notification-banner__heading">You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}</p>`
+				text: `You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}`
 			});
 
 			const appealData = request.currentAppeal;

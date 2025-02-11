@@ -103,7 +103,7 @@ export const postChangeInspectorAccess = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Inspector access (${source}) updated</p>`
+			text: `Inspector access (${source}) updated`
 		});
 
 		delete request.session.inspectorAccess;

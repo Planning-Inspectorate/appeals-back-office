@@ -211,9 +211,9 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'appealLinked',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">This appeal is now ${
-				targetIsLead ? 'the lead for' : 'a child of'
-			} appeal ${request.session.linkableAppeal?.linkableAppealSummary.appealReference}</p>`
+			text: `This appeal is now ${targetIsLead ? 'the lead for' : 'a child of'} appeal ${
+				request.session.linkableAppeal?.linkableAppealSummary.appealReference
+			}`
 		});
 
 		delete request.session.linkableAppeal;
@@ -272,9 +272,9 @@ export const postUnlinkAppeal = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'appealUnlinked',
 				appealId: backLinkAppealId,
-				html: `<p class="govuk-notification-banner__heading">You have unlinked this appeal from appeal ${
+				text: `You have unlinked this appeal from appeal ${
 					appealId === backLinkAppealId ? childRef : appealData.appealReference
-				}</p>`
+				}`
 			});
 
 			return response.redirect(`/appeals-service/appeal-details/${backLinkAppealId}`);

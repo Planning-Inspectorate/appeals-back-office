@@ -179,7 +179,7 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteAdded',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Neighbouring site added</p>`
+			text: 'Neighbouring site added'
 		});
 
 		delete request.session.neighbouringSite;
@@ -294,7 +294,7 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteRemoved',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Neighbouring site removed</p>`
+			text: 'Neighbouring site removed'
 		});
 
 		const redirectUrl =
@@ -431,7 +431,7 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteUpdated',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Neighbouring site updated</p>`
+			text: 'Neighbouring site updated'
 		});
 
 		delete request.session.neighbouringSite;
@@ -517,7 +517,7 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteAffected',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>`
+			text: 'Neighbouring site affected status updated'
 		});
 
 		delete request.session.neighbouringSite;

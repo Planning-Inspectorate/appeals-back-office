@@ -109,7 +109,7 @@ export const postChangeNotificationMethods = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			html: `<p class="govuk-notification-banner__heading">Notification methods updated</p>`
+			text: `Notification methods updated`
 		});
 
 		delete request.session.notificationMethods;
