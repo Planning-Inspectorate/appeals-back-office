@@ -7,13 +7,36 @@ import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js'
 export function validateReadyToShare(request, response, next) {
 	const { currentAppeal } = request;
 
-	const { representationStatus, status } = currentAppeal.documentationSummary?.lpaStatement || {};
+	switch (currentAppeal.appealStatus) {
+		case APPEAL_REPRESENTATION_STATUS.STATEMENTS: {
+			const { representationStatus, status } =
+				currentAppeal.documentationSummary?.lpaStatement || {};
+			const isValid =
+				representationStatus === APPEAL_REPRESENTATION_STATUS.VALID || status === 'not_received';
 
-	const statementValid =
-		representationStatus === APPEAL_REPRESENTATION_STATUS.VALID || status === 'not_received';
+			if (currentAppeal.appealStatus !== APPEAL_CASE_STATUS.STATEMENTS || !isValid) {
+				return response.status(404).render('app/404.njk');
+			}
 
-	if (currentAppeal.appealStatus !== APPEAL_CASE_STATUS.STATEMENTS || !statementValid) {
-		return response.status(404).render('app/404.njk');
+			break;
+		}
+		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
+			const { lpaFinalComments, appellantFinalComments } = currentAppeal.documentationSummary ?? {};
+
+			const lpaValid =
+				lpaFinalComments?.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+				lpaFinalComments?.status === 'not_received';
+			const appellantValid =
+				appellantFinalComments?.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+				appellantFinalComments?.status === 'not_received';
+
+			if (
+				currentAppeal.appealStatus !== APPEAL_CASE_STATUS.FINAL_COMMENTS ||
+				!(lpaValid || appellantValid)
+			) {
+				return response.status(404).render('app/404.njk');
+			}
+		}
 	}
 
 	return next();

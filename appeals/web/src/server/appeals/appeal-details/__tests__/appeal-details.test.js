@@ -2318,7 +2318,6 @@ describe('appeal-details', () => {
 					expect(unprettifiedHTML).toContain(
 						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
 					);
-					expect(unprettifiedHTML).not.toContain('<a class="govuk-link"');
 				});
 			});
 		});

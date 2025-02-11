@@ -1,12 +1,34 @@
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { statementAndCommentsSharePage } from './representations.mapper.js';
+import { statementAndCommentsSharePage, finalCommentsSharePage } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
 	const { errors, currentAppeal } = request;
 
-	const pageContent = statementAndCommentsSharePage(currentAppeal);
+	const pageContent = (() => {
+		switch (currentAppeal.appealStatus) {
+			case APPEAL_CASE_STATUS.STATEMENTS:
+				return statementAndCommentsSharePage(currentAppeal);
+			case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
+				const finalCommentsDueDate = currentAppeal.appealTimetable?.finalCommentsDueDate;
+				if (
+					!finalCommentsDueDate ||
+					!dateIsInThePast(dateISOStringToDayMonthYearHourMinute(finalCommentsDueDate))
+				) {
+					throw new Error('Final comments cannot be shared before the due date has passed');
+				}
+
+				return finalCommentsSharePage(currentAppeal);
+			}
+			default:
+				throw new Error(
+					`Cannot render share/progress page while in the ${currentAppeal.appealStatus} state`
+				);
+		}
+	})();
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		errors,
@@ -18,17 +40,38 @@ export function renderShareRepresentations(request, response) {
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
 
+	const apiTypeKeys = {
+		[APPEAL_CASE_STATUS.STATEMENTS]: 'lpa_statement',
+		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'final_comment'
+	};
+
+	const typeToPublish = /** @type {'lpa_statement' | 'final_comment' | undefined} */ (
+		apiTypeKeys[currentAppeal.appealStatus]
+	);
+	if (!typeToPublish) {
+		throw new Error(`Cannot share when in the ${currentAppeal.appealStatus} state`);
+	}
+
 	const publishedReps = await publishRepresentations(
 		apiClient,
 		currentAppeal.appealId,
-		'lpa_statement'
+		typeToPublish
 	);
 
-	addNotificationBannerToSession(
-		session,
-		publishedReps.length > 0 ? 'commentsAndLpaStatementShared' : 'progressedToFinalComments',
-		currentAppeal.appealId
-	);
+	const bannerKey = (() => {
+		switch (currentAppeal.appealStatus) {
+			case APPEAL_CASE_STATUS.STATEMENTS:
+				return publishedReps.length > 0
+					? 'commentsAndLpaStatementShared'
+					: 'progressedToFinalComments';
+			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
+				return publishedReps.length > 0 ? 'finalCommentsShared' : 'caseProgressed';
+		}
+	})();
+
+	if (bannerKey) {
+		addNotificationBannerToSession(session, bannerKey, currentAppeal.appealId);
+	}
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 }

@@ -304,15 +304,22 @@ export async function publish(req, res) {
 	const updatedReps = await publish(appeal, azureAdUserId);
 
 	if (updatedReps.length > 0) {
-		const details = stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_REP_SHARED, [
-			'Statements and IP comments'
-		]);
+		/** @type {Record<string, string>} */
+		const replacements = {
+			lpa_statement: 'Statements and IP comments',
+			final_comment: 'Final comments'
+		};
 
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId: req.get('azureAdUserId'),
-			details
-		});
+		const replacement = replacements[String(query.type)];
+		if (replacement) {
+			const details = stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_REP_SHARED, [replacement]);
+
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId: req.get('azureAdUserId'),
+				details
+			});
+		}
 	}
 
 	await Promise.all(
