@@ -39,7 +39,7 @@ export async function interestedPartyCommentsPage(
 
 	const pageContent = {
 		title: 'Interested party comments',
-		backLinkUrl: '/appeals-service/personal-list',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',

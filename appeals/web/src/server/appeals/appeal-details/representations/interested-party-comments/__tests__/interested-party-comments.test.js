@@ -96,6 +96,20 @@ describe('interested-party-comments', () => {
 			);
 		});
 
+		it('should render a back link to case details page', async () => {
+			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
+
+			const backLinkInnerHtml = parseHtml(response.text, {
+				rootElement: '.govuk-back-link'
+			}).innerHTML;
+
+			expect(response.statusCode).toEqual(200);
+
+			const backLinkUrl = '/appeals-service/appeal-details/2';
+
+			expect(backLinkInnerHtml).toContain(`href="${backLinkUrl}`);
+		});
+
 		it('should render interestedPartyComments page with invalid comments', async () => {
 			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
 			const dom = parseHtml(response.text);
