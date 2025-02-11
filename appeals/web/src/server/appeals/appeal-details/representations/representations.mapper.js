@@ -1,3 +1,4 @@
+import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
@@ -173,4 +174,79 @@ export function statementAndCommentsSharePage(appeal) {
 			text: valueTexts.length > 0 ? 'Confirm' : 'Progress case'
 		}
 	};
+}
+
+/**
+ * @param {Appeal} appeal
+ * @returns {PageContent}
+ * */
+export function finalCommentsSharePage(appeal) {
+	const hasValidFinalCommentsAppellant =
+		appeal.documentationSummary.appellantFinalComments?.representationStatus ===
+		COMMENT_STATUS.VALID;
+	const hasValidFinalCommentsLPA =
+		appeal.documentationSummary.lpaFinalComments?.representationStatus === COMMENT_STATUS.VALID;
+
+	const infoText = (() => {
+		if (hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant">appellant final comments</a> and <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa">LPA final comments</a> with the relevant parties.`;
+		}
+
+		if (hasValidFinalCommentsAppellant && !hasValidFinalCommentsLPA) {
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant">appellant final comments</a> with the relevant parties.`;
+		}
+
+		if (!hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa">LPA final comments</a> with the relevant parties.`;
+		}
+
+		return `There are no final comments to share.`;
+	})();
+
+	const hasItemsToShare = hasValidFinalCommentsLPA || hasValidFinalCommentsAppellant;
+	const title = hasItemsToShare ? 'Confirm that you want to share final comments' : 'Progress case';
+	const warningText = hasItemsToShare
+		? 'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
+		: 'Do not progress the case if you are awaiting any late final comments.';
+	const submitButtonText = hasItemsToShare ? 'Share final comments' : 'Progress case';
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}`,
+		preHeading: `Appeal ${appealShortReference(appeal.appealReference)}`,
+		heading: title,
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">${infoText}</p>`
+				}
+			},
+			{
+				type: 'warning-text',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					text: warningText
+				}
+			},
+			{
+				type: 'button',
+				wrapperHtml: {
+					opening:
+						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><form action="" method="POST" novalidate>',
+					closing: '</form></div></div>'
+				},
+				parameters: {
+					text: submitButtonText,
+					type: 'submit'
+				}
+			}
+		]
+	};
+
+	return pageContent;
 }
