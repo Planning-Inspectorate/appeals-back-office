@@ -33,6 +33,7 @@ variable "apps_config" {
       horizon_web_url               = string      # The URL base path to create deep links to Horizon cases
       horizon_timeout               = number      # The timeout, in milliseconds, for Horizon API connections
       service_bus_broadcast_enabled = bool        # Whether to send service bus messages
+      enableTestEndpoints           = bool        # Whether to use test endpoints to help e2e
       notify_template_ids           = map(string) # List of template IDs for notify integration
     })
 
