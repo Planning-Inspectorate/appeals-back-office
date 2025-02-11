@@ -6,22 +6,23 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
  */
 
 /**
-@param {Object} rejectComment
-@param {string|string[]} reasons
-@param {ReasonOption[]} reasonOptions
+ * @param {Object} rejectComment
+ * @param {string|string[]} reasons
+ * @param {ReasonOption[]} reasonOptions
  * @returns {string[]}
  * */
 export const prepareRejectionReasons = (rejectComment, reasons, reasonOptions) => {
-	const reasonsText = reasonOptions
-		.filter((reasonOption) => reasonOption.hasText)
-		.reduce((acc, { id }) => {
-			// @ts-ignore
-			const otherReasons = rejectComment[`rejectionReason-${id}`];
-			if (otherReasons) {
-				return { ...acc, [id]: otherReasons };
-			}
+	const reasonsText = reasonOptions.reduce((acc, { id, hasText }) => {
+		if (!hasText) {
 			return acc;
-		}, {});
+		}
+		// @ts-ignore
+		const otherReasons = rejectComment[`rejectionReason-${id}`];
+		if (otherReasons) {
+			return { ...acc, [id]: otherReasons };
+		}
+		return acc;
+	}, {});
 
 	return buildRejectionReasons(reasonOptions, reasons, reasonsText);
 };
@@ -37,25 +38,23 @@ export const buildRejectionReasons = (reasonOptions, reasons, reasonsText) => {
 		.filter((reason) => !!reason)
 		.map((reason) => parseInt(reason, 10));
 	// @ts-ignore
-	return (
-		reasonOptions
-			.filter(({ id }) => selectedReasons.includes(id))
-			// @ts-ignore
-			.reduce((acc, reason) => {
-				const { id, name, hasText } = reason;
-				const otherReasons = hasText ? ensureArray(reasonsText && reasonsText[id]) : [];
-				if (otherReasons?.length) {
-					return [
-						...acc,
-						...otherReasons
-							.filter((otherReason) => otherReason?.trim()) // Remove empty other reasons
-							.map((otherReason) => `${name}: ${otherReason}`)
-					];
-				} else {
-					return [...acc, name];
-				}
-			}, [])
-	);
+	return reasonOptions.reduce((acc, reason) => {
+		const { id, name, hasText } = reason;
+		if (!selectedReasons.includes(id)) {
+			return acc;
+		}
+		const otherReasons = hasText ? ensureArray(reasonsText && reasonsText[id]) : [];
+		if (otherReasons?.length) {
+			return [
+				...acc,
+				...otherReasons
+					.filter((otherReason) => otherReason?.trim()) // Remove empty other reasons
+					.map((otherReason) => `${name}: ${otherReason}`)
+			];
+		} else {
+			return [...acc, name];
+		}
+	}, []);
 };
 
 /**

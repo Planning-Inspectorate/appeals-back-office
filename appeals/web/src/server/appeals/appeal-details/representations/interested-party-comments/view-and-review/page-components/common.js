@@ -30,7 +30,7 @@ const generateRejectionReasonsList = (comment) => {
 			(listItems, { name, text }) =>
 				// @ts-ignore
 				text?.length
-					? [...listItems, ...text.map((item) => name + ' : ' + item)]
+					? [...listItems, ...text.map((item) => name + ': ' + item)]
 					: [...listItems, name],
 			[]
 		)
