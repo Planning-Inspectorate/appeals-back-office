@@ -1119,28 +1119,55 @@ describe('Libraries', () => {
 					}
 				});
 			});
-		});
 
-		it('should return true and correctly handle the html parameter when adding a banner to the session', () => {
-			const testSession = { ...baseSession };
-			const customHtml = '<p>Custom banner content</p>';
+			it('should return true and correctly handle the text parameter when adding a banner to the session', () => {
+				const testSession = { ...baseSession };
+				const customText = 'Custom banner content';
 
-			const result = addNotificationBannerToSession({
-				session: testSession,
-				bannerDefinitionKey: 'siteVisitTypeSelected',
-				appealId: 1,
-				html: customHtml
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					bannerDefinitionKey: 'documentAdded',
+					appealId: 1,
+					text: customText
+				});
+
+				expect(result).toBe(true);
+				expect(testSession).toEqual({
+					...baseSession,
+					notificationBanners: {
+						1: [
+							{
+								key: 'documentAdded',
+								text: customText
+							}
+						]
+					}
+				});
 			});
 
-			expect(result).toBe(true);
-			expect(testSession).toEqual({
-				...baseSession,
-				notificationBanners: {
-					siteVisitTypeSelected: {
-						appealId: 1,
-						html: customHtml
+			it('should return true and correctly handle the html parameter when adding a banner to the session', () => {
+				const testSession = { ...baseSession };
+				const customHtml = '<p>Custom banner content</p>';
+
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					bannerDefinitionKey: 'documentAdded',
+					appealId: 1,
+					html: customHtml
+				});
+
+				expect(result).toBe(true);
+				expect(testSession).toEqual({
+					...baseSession,
+					notificationBanners: {
+						1: [
+							{
+								key: 'documentAdded',
+								html: customHtml
+							}
+						]
 					}
-				}
+				});
 			});
 		});
 	});

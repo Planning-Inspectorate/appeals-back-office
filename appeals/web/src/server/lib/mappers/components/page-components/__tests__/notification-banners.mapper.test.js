@@ -49,18 +49,53 @@ describe('buildNotificationBanners', () => {
 
 	it('should return an empty array if no matching notification definitions exist', () => {
 		session.notificationBanners = {
-			nonExistentKey: { appealId }
+			[appealId]: [
+				{
+					key: 'nonExistentKey'
+				}
+			]
 		};
+
 		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 		expect(result).toEqual([]);
 	});
 
-	it('should build a notification banner for a matching key', () => {
+	it('should return an empty array if the banner is not configured to display on the specified page', () => {
 		session.notificationBanners = {
-			siteVisitTypeSelected: { appealId }
+			[appealId]: [
+				{
+					key: 'documentAdded'
+				}
+			]
 		};
 
-		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, 'appealDetails', appealId);
+		expect(result).toEqual([]);
+	});
+
+	it('should return an empty array if the appeal ID does not match', () => {
+		session.notificationBanners = {
+			[2]: [
+				{
+					key: 'documentAdded'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'appealDetails', appealId);
+		expect(result).toEqual([]);
+	});
+
+	it('should return a notification banner if a matching notification definition exists, the banner is configured to display on the specified page, and the appeal ID matches', () => {
+		session.notificationBanners = {
+			[appealId]: [
+				{
+					key: 'documentAdded'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
 		expect(result).toEqual([
 			{
@@ -69,42 +104,23 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'Site visit type has been selected'
+					text: 'Document added'
 				}
 			}
 		]);
 	});
 
-	it('should remove non-persistent banners from the session', () => {
+	it('should use custom text banner content from the session if provided', () => {
 		session.notificationBanners = {
-			siteVisitTypeSelected: { appealId }
+			[appealId]: [
+				{
+					key: 'documentAdded',
+					text: 'custom text content'
+				}
+			]
 		};
 
-		mapNotificationBannersFromSession(session, servicePage, appealId);
-
-		expect(session.notificationBanners).not.toHaveProperty('siteVisitTypeSelected');
-	});
-
-	it('should retain persistent banners in the session', () => {
-		session.notificationBanners = {
-			appellantCaseNotValid: { appealId }
-		};
-
-		mapNotificationBannersFromSession(session, 'appellantCase', appealId);
-
-		expect(session.notificationBanners).toHaveProperty('appellantCaseNotValid');
-	});
-
-	it('should use data from the session if provided', () => {
-		session.notificationBanners = {
-			siteVisitTypeSelected: {
-				appealId,
-				type: 'success',
-				text: 'Custom text'
-			}
-		};
-
-		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
 		expect(result).toEqual([
 			{
@@ -113,36 +129,23 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'Custom text'
+					text: 'custom text content'
 				}
 			}
 		]);
 	});
 
-	it('should handle banners with HTML content', () => {
+	it('should use custom html banner content from the session if provided', () => {
 		session.notificationBanners = {
-			appealAwaitingTransfer: { appealId }
-		};
-
-		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
-
-		expect(result).toEqual([
-			{
-				type: 'notification-banner',
-				parameters: {
-					titleText: 'Important',
-					titleHeadingLevel: 3,
-					html: '<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, update the appeal with the new horizon reference.</p>'
+			[appealId]: [
+				{
+					key: 'documentAdded',
+					html: '<p>custom text content</p>'
 				}
-			}
-		]);
-	});
-	it('should handle the interestedPartyCommentsRedactionSuccess banner', () => {
-		session.notificationBanners = {
-			interestedPartyCommentsRedactionSuccess: { appealId }
+			]
 		};
 
-		const result = mapNotificationBannersFromSession(session, 'viewIpComment', appealId);
+		const result = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
 		expect(result).toEqual([
 			{
@@ -151,7 +154,8 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'Comment redacted and accepted'
+					text: 'Document added',
+					html: '<p>custom text content</p>'
 				}
 			}
 		]);

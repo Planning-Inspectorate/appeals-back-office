@@ -1882,7 +1882,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1975,7 +1976,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -2068,7 +2070,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -2161,7 +2164,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -2254,7 +2258,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -2347,7 +2352,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -2974,7 +2980,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3067,7 +3074,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3160,7 +3168,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3253,7 +3262,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3346,7 +3356,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -3439,7 +3450,8 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -5892,7 +5904,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6074,7 +6087,8 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1">Refresh page to see if scan has finished</a>
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
