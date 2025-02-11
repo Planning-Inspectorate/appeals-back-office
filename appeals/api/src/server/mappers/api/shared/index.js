@@ -6,6 +6,7 @@ import { mapNeighbouringSites } from './map-neighbouring-sites.js';
 import { mapTransferStatus } from './map-transfer-status.js';
 import { mapAppealTeam } from './map-appeal-team.js';
 import { mapDocumentationSummary } from './map-documentation-summary.js';
+import { mapStateList } from './map-state-list.js';
 import { mapAppealRelationships } from './map-appeal-relationships.js';
 import { mapSiteVisit } from './map-site-visit.js';
 import { mapAppealWithdrawal } from './map-appeal-withdrawal.js';
@@ -22,6 +23,7 @@ export const apiSharedMappers = {
 	allocationDetails: mapAllocationDetails,
 	appealTimetable: mapAppealTimetable,
 	documentationSummary: mapDocumentationSummary,
+	stateList: mapStateList,
 	decision: mapAppealDecision,
 	appealRelationships: mapAppealRelationships,
 	neighbouringSites: mapNeighbouringSites,

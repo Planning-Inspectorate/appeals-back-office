@@ -50,6 +50,7 @@ const householdAppealDto = {
 		postCode: householdAppeal.address.postcode
 	},
 	appealStatus: householdAppeal.appealStatus[0].status,
+	stateList: householdAppeal.stateList,
 	appealType: householdAppeal.appealType.type,
 	appealTimetable: {
 		appealTimetableId: householdAppeal.appealTimetable.id,
@@ -128,6 +129,7 @@ const s78AppealDto = {
 		postCode: fullPlanningAppeal.address.postcode
 	},
 	appealStatus: fullPlanningAppeal.appealStatus[0].status,
+	stateList: fullPlanningAppeal.stateList,
 	appealTimetable: {
 		appealTimetableId: fullPlanningAppeal.appealTimetable.id,
 		caseResubmissionDueDate: null,

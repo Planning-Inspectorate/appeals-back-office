@@ -7,6 +7,7 @@ import { Team } from './team.js';
 import { Appeal } from './appeal.js';
 import { AppealSummary } from './appeal-summary.js';
 import { DocumentationSummary } from './documentation-summary.js';
+import { StateList } from './state-list.js';
 import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
 import { AppealWithdrawal } from './appeal-withdrawal.js';
@@ -30,6 +31,7 @@ const partials = {
 	Team,
 	AppealSummary,
 	DocumentationSummary,
+	StateList,
 	AppealDecision,
 	AppealWithdrawal,
 	AppealRelationship,

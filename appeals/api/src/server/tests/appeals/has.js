@@ -133,6 +133,60 @@ export default {
 			compoundStateName: null
 		}
 	],
+	stateList: [
+		{
+			completed: true,
+			key: 'assign_case_officer'
+		},
+		{
+			completed: true,
+			key: 'validation'
+		},
+		{
+			completed: true,
+			key: 'ready_to_start'
+		},
+		{
+			completed: false,
+			key: 'lpa_questionnaire'
+		},
+		{
+			completed: false,
+			key: 'event'
+		},
+		{
+			completed: false,
+			key: 'awaiting_event'
+		},
+		{
+			completed: false,
+			key: 'issue_determination'
+		},
+		{
+			completed: false,
+			key: 'awaiting_transfer'
+		},
+		{
+			completed: false,
+			key: 'invalid'
+		},
+		{
+			completed: false,
+			key: 'transferred'
+		},
+		{
+			completed: false,
+			key: 'closed'
+		},
+		{
+			completed: false,
+			key: 'withdrawn'
+		},
+		{
+			completed: false,
+			key: 'complete'
+		}
+	],
 	appealTimetable: {
 		id: 1,
 		appealId: 1,

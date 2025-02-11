@@ -28,12 +28,18 @@ interface NotifyTemplate {
 	id: string;
 }
 
+interface StateStub {
+	key: string;
+	completed: boolean;
+}
+
 interface SingleAppealDetailsResponse {
 	allocationDetails: AppealAllocation | null;
 	appealId: number;
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
+	stateList: StateStub[];
 	transferStatus?: {
 		transferredAppealType: string;
 		transferredAppealReference: string;
@@ -928,5 +934,6 @@ export {
 	AppealRelationshipRequest,
 	ServiceUserResponse,
 	GetCaseNotesResponse,
-	GetCaseNoteResponse
+	GetCaseNoteResponse,
+	StateStub
 };
