@@ -35,10 +35,9 @@ describe('All cases search', () => {
 		{ tags: tag.smoke },
 		() => {
 			const postcode = 'XX12 3XX';
-
-			let requestBody = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
-			requestBody.casedata.siteAddressPostcode = postcode;
-			cy.createCase(requestBody).then((caseRef) => {
+			cy.createCase({
+				siteAddressPostcode: postcode
+			}).then((caseRef) => {
 				const testData = { rowIndex: 0, cellIndex: 1, textToMatch: postcode, strict: false };
 				cy.visit(urlPaths.appealsList);
 				listCasesPage.nationalListSearch(postcode);
