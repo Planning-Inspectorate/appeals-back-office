@@ -82,13 +82,12 @@ export const postChangeIsAonbNationalLandscape = async (request, response) => {
 			session.isAonbNationalLandscape
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Outstanding natural beauty area status changed'
-		);
+			text: 'Outstanding natural beauty area status changed'
+		});
 
 		delete request.session.isAonbNationalLandscape;
 

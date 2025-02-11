@@ -83,11 +83,14 @@ export async function postCheckPage(request, response) {
 	const redirectPath = request.query.review === 'true' ? 'review' : 'view';
 
 	if (request.session.editIpComment.operationType) {
-		const bannerKey =
-			request.session.editIpComment.operationType === 'add'
-				? 'interestedPartyCommentsAddressAddedSuccess'
-				: 'interestedPartyCommentsAddressUpdatedSuccess';
-		addNotificationBannerToSession(session, bannerKey, currentAppeal.appealId);
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey:
+				request.session.editIpComment.operationType === 'add'
+					? 'interestedPartyCommentsAddressAddedSuccess'
+					: 'interestedPartyCommentsAddressUpdatedSuccess',
+			appealId: currentAppeal.appealId
+		});
 	}
 
 	return response

@@ -68,7 +68,11 @@ export const postChangeSiteAddress = async (request, response) => {
 	try {
 		await changeSiteAddress(request.apiClient, appealId, request.session.siteAddress, addressId);
 
-		addNotificationBannerToSession(request.session, 'siteAddressUpdated', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'siteAddressUpdated',
+			appealId
+		});
 
 		delete request.session.siteAddress;
 

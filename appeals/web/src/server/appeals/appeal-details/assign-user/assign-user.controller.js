@@ -197,11 +197,13 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 				isInspector
 			);
 
-			addNotificationBannerToSession(
-				request.session,
-				`${isInspector ? 'inspector' : 'caseOfficer'}${isUnassign ? 'Removed' : 'Added'}`,
-				Number.parseInt(appealId, 10)
-			);
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: `${isInspector ? 'inspector' : 'caseOfficer'}${
+					isUnassign ? 'Removed' : 'Added'
+				}`,
+				appealId
+			});
 
 			return response.redirect(
 				isUnassign

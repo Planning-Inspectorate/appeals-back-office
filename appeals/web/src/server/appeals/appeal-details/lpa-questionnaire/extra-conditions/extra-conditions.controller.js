@@ -82,12 +82,12 @@ export const postChangeExtraConditions = async (request, response) => {
 			request.session.extraConditions
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Extra conditions updated</p>`
-		);
+			html: `<p class="govuk-notification-banner__heading">Extra conditions updated</p>`
+		});
 
 		delete request.session.extraConditions;
 

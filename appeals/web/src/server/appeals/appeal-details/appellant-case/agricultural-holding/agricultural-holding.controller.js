@@ -84,13 +84,12 @@ export const postChangePartOfAgriculturalHolding = async (request, response) => 
 			request.session.partOfAgriculturalHolding.radio
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Part of agricultural holding updated'
-		);
+			text: 'Part of agricultural holding updated'
+		});
 
 		delete request.session.partOfAgriculturalHolding;
 
@@ -175,13 +174,12 @@ export const postChangeTenantOfAgriculturalHolding = async (request, response) =
 			request.session.tenantOfAgriculturalHolding.radio
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Tenant of agricultural holding updated'
-		);
+			text: 'Tenant of agricultural holding updated'
+		});
 
 		delete request.session.tenantOfAgriculturalHolding;
 
@@ -266,13 +264,12 @@ export const postChangeOtherTenantsOfAgriculturalHolding = async (request, respo
 			request.session.otherTenantsOfAgriculturalHolding.radio
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Other tenants of agricultural holding updated'
-		);
+			text: 'Other tenants of agricultural holding updated'
+		});
 
 		delete request.session.otherTenantsOfAgriculturalHolding;
 

@@ -128,7 +128,11 @@ export const postCheckYourAnswers = async (
 
 	delete session.fileUploadInfo;
 
-	addNotificationBannerToSession(session, 'interestedPartyCommentsDocumentAddedSuccess', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'interestedPartyCommentsDocumentAddedSuccess',
+		appealId
+	});
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/review`

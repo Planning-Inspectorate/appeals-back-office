@@ -143,12 +143,14 @@ export const postConfirmRejectFinalComment = async (request, response) => {
 
 	delete session.rejectFinalComments;
 
-	const notificationBannerKey =
-		finalCommentsType === 'appellant'
-			? 'finalCommentsAppellantRejectionSuccess'
-			: 'finalCommentsLPARejectionSuccess';
-
-	addNotificationBannerToSession(session, notificationBannerKey, appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey:
+			finalCommentsType === 'appellant'
+				? 'finalCommentsAppellantRejectionSuccess'
+				: 'finalCommentsLPARejectionSuccess',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };

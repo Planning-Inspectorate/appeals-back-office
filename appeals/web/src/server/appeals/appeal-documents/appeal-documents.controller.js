@@ -627,11 +627,11 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
 
 		delete request.session.fileUploadInfo;
 
-		addNotificationBannerToSession(
-			request.session,
-			'documentVersionAdded',
-			Number.parseInt(currentAppeal.appealId, 10)
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'documentVersionAdded',
+			appealId: currentAppeal.appealId
+		});
 
 		if (nextPageUrl) {
 			return response.redirect(nextPageUrl);
@@ -723,11 +723,11 @@ export const postChangeDocumentFileName = async ({
 		const updateDocumentsResult = await updateDocument(apiClient, appealId, apiRequest);
 
 		if (updateDocumentsResult) {
-			addNotificationBannerToSession(
-				request.session,
-				'documentFilenameUpdated',
-				Number.parseInt(appealId, 10)
-			);
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'documentFilenameUpdated',
+				appealId
+			});
 			return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
 		}
 
@@ -816,11 +816,11 @@ export const postChangeDocumentDetails = async ({
 			const updateDocumentsResult = await updateDocuments(apiClient, appealId, apiRequest);
 
 			if (updateDocumentsResult) {
-				addNotificationBannerToSession(
-					request.session,
-					'documentDetailsUpdated',
-					Number.parseInt(appealId, 10)
-				);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'documentDetailsUpdated',
+					appealId
+				});
 				return response.redirect(nextPageUrl || `/appeals-service/appeal-details/${appealId}/`);
 			}
 		}
@@ -937,11 +937,11 @@ export const postDeleteDocument = async ({
 		return safeRedirect(request, response, cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
 		await deleteDocument(apiClient, appealId, documentId, versionId);
-		addNotificationBannerToSession(
-			request.session,
-			'documentDeleted',
-			Number.parseInt(appealId, 10)
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'documentDeleted',
+			appealId
+		});
 		return response.redirect(returnUrl);
 	}
 

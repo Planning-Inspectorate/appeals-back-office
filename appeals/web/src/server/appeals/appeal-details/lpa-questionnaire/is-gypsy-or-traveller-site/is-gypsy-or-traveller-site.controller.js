@@ -82,13 +82,12 @@ export const postChangeIsGypsyOrTravellerSite = async (request, response) => {
 			session.isGypsyOrTravellerSite
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Gypsy or Traveller communities status changed'
-		);
+			text: 'Gypsy or Traveller communities status changed'
+		});
 
 		delete request.session.isGypsyOrTravellerSite;
 

@@ -63,13 +63,12 @@ export const postChangeEiaEnvironmentalImpactSchedule = async (request, response
 			)
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Development category updated'
-		);
+			text: 'Development category updated'
+		});
 
 		delete request.session.eiaEnvironmentalImpactSchedule;
 

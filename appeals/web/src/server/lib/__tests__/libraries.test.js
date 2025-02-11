@@ -1029,8 +1029,12 @@ describe('Libraries', () => {
 			it('should return false without modifying the session notificationBanners object if an unrecognised bannerDefinitionKey is provided', () => {
 				const testSession = { ...baseSession };
 
-				// @ts-ignore
-				const result = addNotificationBannerToSession(testSession, 'anUnrecognisedKey', 1);
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					// @ts-ignore
+					bannerDefinitionKey: 'anUnrecognisedKey',
+					appealId: 1
+				});
 
 				expect(result).toBe(false);
 				expect(testSession).toEqual(baseSession);
@@ -1039,7 +1043,11 @@ describe('Libraries', () => {
 			it('should return true and add a notificationBanners property to the session and add a property with name matching the bannerDefinitionKey and value of an object containing the provided appealId to the session notificationBanners object if a recognised bannerDefinitionKey is provided and there is no notificationBanners property in the session already', () => {
 				const testSession = { ...baseSession };
 
-				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeSelected', 1);
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					bannerDefinitionKey: 'siteVisitTypeSelected',
+					appealId: 1
+				});
 
 				expect(result).toBe(true);
 				expect(testSession).toEqual({
@@ -1063,7 +1071,11 @@ describe('Libraries', () => {
 					}
 				};
 
-				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeSelected', 1);
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					bannerDefinitionKey: 'siteVisitTypeSelected',
+					appealId: 1
+				});
 
 				expect(result).toBe(true);
 				expect(testSession).toEqual({
@@ -1085,12 +1097,12 @@ describe('Libraries', () => {
 			const testSession = { ...baseSession };
 			const customHtml = '<p>Custom banner content</p>';
 
-			const result = addNotificationBannerToSession(
-				testSession,
-				'siteVisitTypeSelected',
-				1,
-				customHtml
-			);
+			const result = addNotificationBannerToSession({
+				session: testSession,
+				bannerDefinitionKey: 'siteVisitTypeSelected',
+				appealId: 1,
+				html: customHtml
+			});
 
 			expect(result).toBe(true);
 			expect(testSession).toEqual({

@@ -244,11 +244,11 @@ export const postAllocationDetailsCheckAnswers = async (request, response) => {
 		delete request.session.allocationLevel;
 		delete request.session.allocationSpecialisms;
 
-		addNotificationBannerToSession(
-			request.session,
-			'allocationDetailsUpdated',
-			appealDetails.appealId
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'allocationDetailsUpdated',
+			appealId: appealDetails.appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
 	} catch (error) {

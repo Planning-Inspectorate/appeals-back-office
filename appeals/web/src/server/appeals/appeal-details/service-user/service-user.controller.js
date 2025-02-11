@@ -110,14 +110,14 @@ export const postChangeServiceUser = async (request, response) => {
 			);
 		}
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">${capitalize(userType)} details ${
+			html: `<p class="govuk-notification-banner__heading">${capitalize(userType)} details ${
 				isUpdate ? 'updated' : 'added'
 			}</p>`
-		);
+		});
 
 		delete request.session.updatedServiceUser;
 
@@ -194,12 +194,12 @@ export const postRemoveServiceUser = async (request, response) => {
 	try {
 		await removeServiceUser(request.apiClient, appealId, serviceUserId, userType);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">${capitalize(userType)} removed</p>`
-		);
+			html: `<p class="govuk-notification-banner__heading">${capitalize(userType)} removed</p>`
+		});
 
 		delete request.session.updatedServiceUser;
 

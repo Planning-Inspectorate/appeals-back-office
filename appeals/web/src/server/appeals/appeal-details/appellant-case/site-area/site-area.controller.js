@@ -71,13 +71,12 @@ export const postChangeSiteArea = async (request, response) => {
 	try {
 		await changeSiteArea(request.apiClient, appealId, appellantCaseId, request.session.siteArea);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Site area updated'
-		);
+			text: 'Site area updated'
+		});
 
 		delete request.session.siteArea;
 

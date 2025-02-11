@@ -79,13 +79,12 @@ export const postChangePlanningObligationStatus = async (request, response) => {
 			request.session.planningObligationStatus.radio
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Planning obligation status updated'
-		);
+			text: 'Planning obligation status updated'
+		});
 
 		delete request.session.planningObligationStatus;
 

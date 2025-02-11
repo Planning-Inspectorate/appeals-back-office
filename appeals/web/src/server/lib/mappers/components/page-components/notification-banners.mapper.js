@@ -296,8 +296,10 @@ export function buildNotificationBanners(session, servicePage, appealId) {
 	/**
 	 * @type {PageComponent[]}
 	 */
-	const notificationBanners = session.notificationBanners[appealIdAsString]
-		.flatMap((/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData) => {
+	const notificationBanners = session.notificationBanners[appealIdAsString].flatMap(
+		(
+			/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData
+		) => {
 			if (!Object.keys(notificationBannerDefinitions).includes(bannerData.key)) {
 				return [];
 			}
@@ -324,10 +326,15 @@ export function buildNotificationBanners(session, servicePage, appealId) {
 					})
 				})
 			];
-		});
-	
-	session.notificationBanners[appealIdAsString] = session.notificationBanners[appealIdAsString]
-		.filter((/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData) => !displayedBannerKeys.includes(bannerData.key));
+		}
+	);
+
+	session.notificationBanners[appealIdAsString] = session.notificationBanners[
+		appealIdAsString
+	].filter(
+		(/** @type {import('#lib/session-utilities.js').NotificationBannerSessionData} */ bannerData) =>
+			!displayedBannerKeys.includes(bannerData.key)
+	);
 
 	return notificationBanners;
 }
@@ -341,13 +348,23 @@ export function buildNotificationBanners(session, servicePage, appealId) {
  * @param {PageComponent[]} [options.pageComponents]
  * @returns {PageComponent}
  */
-export function createNotificationBanner({ bannerDefinitionKey, titleText, text, html, pageComponents }) {
+export function createNotificationBanner({
+	bannerDefinitionKey,
+	titleText,
+	text,
+	html,
+	pageComponents
+}) {
 	const bannerDefinition = notificationBannerDefinitions[bannerDefinitionKey];
 
 	return {
 		type: 'notification-banner',
 		parameters: {
-			titleText: titleText || ('type' in bannerDefinition && bannerDefinition.type === 'success' ? 'Success' : 'Important'),
+			titleText:
+				titleText ||
+				('type' in bannerDefinition && bannerDefinition.type === 'success'
+					? 'Success'
+					: 'Important'),
 			titleHeadingLevel: 3,
 			...('type' in bannerDefinition && {
 				type: bannerDefinition.type

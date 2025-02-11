@@ -103,13 +103,12 @@ export const postChangeApplicationSubmissionDate = async (request, response) => 
 			})
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Date application submitted updated'
-		);
+			text: 'Date application submitted updated'
+		});
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`

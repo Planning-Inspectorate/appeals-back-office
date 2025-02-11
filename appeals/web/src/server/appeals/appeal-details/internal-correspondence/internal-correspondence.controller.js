@@ -209,13 +209,12 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 			successCallback: () => {
-				addNotificationBannerToSession(
+				addNotificationBannerToSession({
 					session,
-					'internalCorrespondenceDocumentAdded',
-					currentAppeal.appealId,
-					'',
-					`${capitalize(correspondenceCategory)} correspondence documents uploaded`
-				);
+					bannerDefinitionKey: 'internalCorrespondenceDocumentAdded',
+					appealId: currentAppeal.appealId,
+					text: `${capitalize(correspondenceCategory)} correspondence documents uploaded`
+				});
 			}
 		});
 	} catch (error) {

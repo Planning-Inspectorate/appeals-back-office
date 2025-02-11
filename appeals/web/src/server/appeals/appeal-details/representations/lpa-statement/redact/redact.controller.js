@@ -46,7 +46,11 @@ export async function postConfirm(request, response) {
 
 	delete session.redactedRepresentation;
 
-	addNotificationBannerToSession(session, 'lpaStatementRedactedAndAccepted', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }

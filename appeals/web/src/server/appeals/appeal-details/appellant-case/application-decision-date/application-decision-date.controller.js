@@ -91,13 +91,12 @@ export const postChangeApplicationDecisionDate = async (request, response) => {
 			})
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Application decision date changed'
-		);
+			text: 'Application decision date changed'
+		});
 
 		delete request.session.applicationDecisionDate;
 

@@ -8,20 +8,20 @@ import { notificationBannerDefinitions } from './mappers/index.js';
  */
 
 /**
- *
- * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} session
- * @param {import('./mappers/index.js').NotificationBannerDefinitionKey} bannerDefinitionKey
- * @param {number|string} appealId
- * @param {string} [html]
- * @param {string} [text]
+ * @param {Object} options
+ * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} options.session
+ * @param {import('./mappers/index.js').NotificationBannerDefinitionKey} options.bannerDefinitionKey
+ * @param {number|string} options.appealId
+ * @param {string} [options.html]
+ * @param {string} [options.text]
  */
-export const addNotificationBannerToSession = (
+export const addNotificationBannerToSession = ({
 	session,
 	bannerDefinitionKey,
 	appealId,
 	html = '',
 	text = ''
-) => {
+}) => {
 	if (!(bannerDefinitionKey in notificationBannerDefinitions)) {
 		return false;
 	}

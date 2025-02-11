@@ -227,13 +227,12 @@ export async function postIPComment(request, response) {
 		delete request.session.addIpComment;
 		delete request.session.fileUploadInfo;
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
-			currentAppeal.appealId,
-			'',
-			'Interested party comment added'
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
+			appealId: currentAppeal.appealId,
+			text: 'Interested party comment added'
+		});
 
 		redirectToIPComments(request, response);
 	} catch (error) {

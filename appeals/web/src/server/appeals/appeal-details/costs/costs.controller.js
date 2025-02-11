@@ -274,15 +274,14 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					delete request.session.costsDocumentType;
 				}
 
-				addNotificationBannerToSession(
+				addNotificationBannerToSession({
 					session,
-					'costsDocumentAdded',
-					currentAppeal.appealId,
-					'',
-					`${
+					bannerDefinitionKey: 'costsDocumentAdded',
+					appealId: currentAppeal.appealId,
+					text: `${
 						costsCategory === 'lpa' ? 'LPA' : capitalize(costsCategory)
 					} costs ${costsDocumentType} documents uploaded`
-				);
+				});
 			}
 		});
 	} catch (error) {
@@ -592,13 +591,12 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 		await postUploadDocumentsCheckAndConfirm({ request, response });
 	}
 
-	addNotificationBannerToSession(
+	addNotificationBannerToSession({
 		session,
-		'costsDocumentAdded',
-		currentAppeal.appealId,
-		'',
-		`Costs decision ${documentId ? 'updated' : 'uploaded'}`
-	);
+		bannerDefinitionKey: 'costsDocumentAdded',
+		appealId: currentAppeal.appealId,
+		text: `Costs decision ${documentId ? 'updated' : 'uploaded'}`
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 };

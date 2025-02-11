@@ -209,11 +209,11 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					confirmationPageTypeToRender
 				);
 
-				addNotificationBannerToSession(
-					request.session,
-					'siteVisitArranged',
-					appealDetails.appealId
-				);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'siteVisitArranged',
+					appealId: appealDetails.appealId
+				});
 
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/visit-scheduled/${confirmationPageTypeToRender}`
@@ -228,11 +228,11 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime
 				);
 
-				addNotificationBannerToSession(
-					request.session,
-					'siteVisitArranged',
-					appealDetails.appealId
-				);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'siteVisitArranged',
+					appealId: appealDetails.appealId
+				});
 
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/visit-scheduled/new`

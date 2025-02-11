@@ -79,13 +79,12 @@ export const postChangeOwnersKnown = async (request, response) => {
 			request.session.ownersKnown
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Owners known updated'
-		);
+			text: 'Owners known updated'
+		});
 
 		delete request.session.ownersKnown;
 

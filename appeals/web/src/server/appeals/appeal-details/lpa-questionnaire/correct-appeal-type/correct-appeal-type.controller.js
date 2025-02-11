@@ -69,7 +69,11 @@ export const postChangeCorrectAppealType = async (request, response) => {
 			request.session.isCorrectType
 		);
 
-		addNotificationBannerToSession(request.session, 'isAppealTypeCorrectUpdated', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'isAppealTypeCorrectUpdated',
+			appealId
+		});
 
 		delete request.session.isCorrectType;
 

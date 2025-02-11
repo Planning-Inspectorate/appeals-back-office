@@ -65,13 +65,12 @@ export const postChangeNeighbouringSiteAccess = async (request, response) => {
 			request.session.neighbouringSiteAccess
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Inspector needs neighbouring site access changed'
-		);
+			text: 'Inspector needs neighbouring site access changed'
+		});
 
 		delete request.session.neighbouringSiteAccess;
 

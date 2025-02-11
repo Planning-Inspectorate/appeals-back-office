@@ -80,13 +80,12 @@ export const postChangeHasCommunityInfrastructureLevy = async (request, response
 			session.hasCommunityInfrastructureLevy
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Community infrastructure levy status changed'
-		);
+			text: 'Community infrastructure levy status changed'
+		});
 
 		delete request.session.hasCommunityInfrastructureLevy;
 
