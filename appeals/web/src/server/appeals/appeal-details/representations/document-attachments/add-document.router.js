@@ -15,10 +15,7 @@ import {
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import { validateRedactionStatus } from '../representations.validators.js';
-import {
-	postCheckYourAnswers,
-	renderCheckYourAnswers
-} from '../../final-comments/controller/check-your-answers.js';
+import { postCheckYourAnswers, renderCheckYourAnswers } from './controller/check-your-answers.js';
 
 const router = createRouter({ mergeParams: true });
 

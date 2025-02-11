@@ -14,13 +14,8 @@ import {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
-	const { currentFolder } = request;
 	const baseUrl = request.baseUrl;
 	const backLinkUrl = baseUrl.split('/').slice(0, -1).join('/');
-
-	if (!currentFolder) {
-		return response.status(404).render('app/404');
-	}
 
 	await renderManageFolder({
 		request,

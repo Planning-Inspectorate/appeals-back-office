@@ -33,8 +33,5 @@ export const postDocumentUpload = async (request, response) => {
 	});
 };
 
-export * from '../../final-comments/controller/date-submitted.js';
-export {
-	postRedactionStatus,
-	renderRedactionStatus
-} from '../../final-comments/controller/redaction-status.js';
+export * from './controller/date-submitted.js';
+export { postRedactionStatus, renderRedactionStatus } from './controller/redaction-status.js';
