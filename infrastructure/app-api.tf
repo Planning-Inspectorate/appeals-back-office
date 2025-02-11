@@ -56,6 +56,7 @@ module "app_api" {
     SRV_HORIZON_URL       = var.apps_config.integrations.horizon_api_url
     TIMEOUT_LIMIT_HORIZON = var.apps_config.integrations.horizon_timeout
     TEST_MAILBOX          = local.key_vault_refs["appeals-bo-test-mailbox"]
+    ENABLE_TEST_ENDPOINTS = var.apps_config.integrations.enableTestEndpoints
 
     # notify templates
     GOV_NOTIFY_APPEAL_CONFIRMED_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_confirmed_id

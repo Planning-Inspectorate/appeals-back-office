@@ -32,6 +32,7 @@ describe('Issue Decision', () => {
 				happyPathHelper.reviewAppellantCase(caseRef);
 				happyPathHelper.startCase(caseRef);
 				happyPathHelper.reviewLpaq(caseRef);
+				happyPathHelper.progressSiteVisit(caseRef);
 				caseDetailsPage.clickIssueDecision(caseRef);
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
 				caseDetailsPage.clickButtonByText('Continue');

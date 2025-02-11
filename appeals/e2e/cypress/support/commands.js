@@ -90,6 +90,14 @@ Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
 	});
 });
 
+Cypress.Commands.add('simulateSiteVisit', (reference) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateSiteVisitElapsed(reference);
+		cy.log('Simulated site visit elapsed for case ref ' + reference);
+		return;
+	});
+});
+
 Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
 	cy.reload();
 });

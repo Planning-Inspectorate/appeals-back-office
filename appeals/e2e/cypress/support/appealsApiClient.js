@@ -72,5 +72,22 @@ export const appealsApiClient = {
 			console.error('Error making API call:', error);
 			throw error;
 		}
+	},
+	async simulateSiteVisitElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/site-visit-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			const result = await response.json();
+			return result;
+		} catch {
+			return false;
+		}
 	}
 };

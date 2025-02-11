@@ -1,4 +1,5 @@
 import { Router as createRouter } from 'express';
+import config from '#config/config.js';
 import { appealsRoutes } from './appeals/appeals.routes.js';
 import { appellantCaseIncompleteReasonsRoutes } from './appellant-case-incomplete-reasons/appellant-case-incomplete-reasons.routes.js';
 import { appellantCaseInvalidReasonsRoutes } from './appellant-case-invalid-reasons/appellant-case-invalid-reasons.routes.js';
@@ -37,6 +38,7 @@ import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
+import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
@@ -81,6 +83,10 @@ router.use(environmentalImpactAssessmentRoutes);
 router.use(representationRoutes);
 router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);
+
+if (config.enableTestEndpoints) {
+	router.use(testUtilsRoutes);
+}
 
 router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);

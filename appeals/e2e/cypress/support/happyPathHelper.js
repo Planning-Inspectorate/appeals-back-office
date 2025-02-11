@@ -135,5 +135,21 @@ export const happyPathHelper = {
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateBannerMessage('Document removed');
+	},
+
+	progressSiteVisit(caseRef) {
+		caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
+		dateTimeSection.enterVisitStartTime('08', '00');
+		dateTimeSection.enterVisitEndTime('12', '00');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateConfirmationPanelMessage(
+			'Site visit scheduled',
+			'Appeal reference ' + caseRef
+		);
+		cy.simulateSiteVisit(caseRef).then((caseRef) => {
+			caseDetailsPage.clickLinkByText('Go back to case details');
+		});
 	}
 };

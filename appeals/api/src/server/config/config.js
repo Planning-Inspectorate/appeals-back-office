@@ -36,6 +36,8 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_S78_WRITTEN && environment.FEATURE_FLAG_S78_WRITTEN === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
+	enableTestEndpoints:
+		environment.ENABLE_TEST_ENDPOINTS && environment.ENABLE_TEST_ENDPOINTS === 'true',
 	govNotify: {
 		api: {
 			key: environment.GOV_NOTIFY_API_KEY
