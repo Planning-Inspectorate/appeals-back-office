@@ -229,9 +229,8 @@ export async function postIPComment(request, response) {
 
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'changePage',
-			appealId: currentAppeal.appealId,
-			text: 'Interested party comment added'
+			bannerDefinitionKey: 'interestedPartyCommentAdded',
+			appealId: currentAppeal.appealId
 		});
 
 		redirectToIPComments(request, response);

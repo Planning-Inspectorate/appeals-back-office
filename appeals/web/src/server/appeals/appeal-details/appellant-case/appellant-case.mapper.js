@@ -14,7 +14,7 @@ import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js
 import {
 	userHasPermission,
 	removeSummaryListActions,
-	buildNotificationBanners,
+	mapNotificationBannersFromSession,
 	createNotificationBanner
 } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -449,17 +449,12 @@ export function mapAppellantCaseNotificationBanners(
 	appealId,
 	appealDueDate
 ) {
-	const banners = buildNotificationBanners(session, 'appellantCase', appealId);
+	const banners = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
 	if (
 		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
 	) {
-		banners.unshift(
-			createNotificationBanner({
-				bannerDefinitionKey: 'notCheckedDocument',
-				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
-			})
-		);
+		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
 	}
 
 	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {

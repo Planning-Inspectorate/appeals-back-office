@@ -2,12 +2,12 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'otherAppeal'|'otherAppealRemoved'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'serviceUserUpdated'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'isAppealTypeCorrectUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerDefinitionKey  */
+/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'relatedAppeal'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
+ * @property {'success'|'important'} type default is 'important'
  * @property {ServicePageName[]} pages
- * @property {'success'} [type] default is 'important'
  * @property {string} [text]
  * @property {string} [html]
  */
@@ -17,146 +17,155 @@
  */
 export const notificationBannerDefinitions = {
 	siteVisitTypeSelected: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Site visit type has been selected'
 	},
 	siteVisitArranged: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Site visit has been arranged'
 	},
 	allocationDetailsUpdated: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Allocation details added'
 	},
 	caseOfficerAdded: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Case officer has been assigned'
 	},
 	inspectorAdded: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Inspector has been assigned'
 	},
 	caseOfficerRemoved: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Case officer has been removed'
 	},
 	inspectorRemoved: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Inspector has been removed'
 	},
 	documentAdded: {
-		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments', 'viewFinalComments'],
 		type: 'success',
+		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments', 'viewFinalComments'],
 		text: 'Document added'
 	},
 	documentVersionAdded: {
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		text: 'Document updated'
 	},
 	documentDetailsUpdated: {
-		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		type: 'success',
+		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		text: 'Document details updated'
 	},
 	documentFilenameUpdated: {
-		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		type: 'success',
+		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments'],
 		text: 'Document filename updated'
 	},
 	documentDeleted: {
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		text: 'Document removed'
 	},
 	appellantCaseNotValid: {
+		type: 'important',
 		pages: ['appellantCase']
 	},
 	readyForDecision: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	readyForValidation: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	readyForSetUpSiteVisit: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	readyForLpaQuestionnaireReview: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	progressToFinalComments: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	lpaQuestionnaireNotValid: {
+		type: 'important',
 		pages: ['lpaQuestionnaire']
 	},
 	notCheckedDocument: {
+		type: 'important',
 		pages: ['lpaQuestionnaire', 'manageDocuments', 'appellantCase', 'manageFolder'],
-		html: '<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="./" data-cy/"refresh-page/" >Refresh page to see if scan has finished</a>'
+		html: '<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="" data-cy="refresh-page" >Refresh page to see if scan has finished</a>'
 	},
 	appealAwaitingTransfer: {
+		type: 'important',
 		pages: ['appealDetails'],
 		html: '<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, update the appeal with the new horizon reference.</p>'
 	},
 	horizonReferenceAdded: {
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		text: 'Horizon reference added'
 	},
 	assignCaseOfficer: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	appealLinked: {
 		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
+		text: 'Appeals linked'
 	},
 	appealUnlinked: {
+		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
-		type: 'success'
+		text: 'Appeals unlinked'
 	},
-	otherAppeal: {
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
-		type: 'success'
-	},
-	otherAppealRemoved: {
+	relatedAppeal: {
+		type: 'success',
 		pages: ['appealDetails', 'manageRelatedAppeals', 'appellantCase', 'lpaQuestionnaire'],
-		type: 'success'
+		text: 'Appeal relationship updated'
 	},
 	neighbouringSiteAdded: {
 		type: 'success',
-		pages: ['appealDetails', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'lpaQuestionnaire'],
+		text: 'Neighbouring site added'
 	},
 	neighbouringSiteUpdated: {
 		type: 'success',
-		pages: ['appealDetails', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'lpaQuestionnaire'],
+		text: 'Neighbouring site updated'
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
-		pages: ['appealDetails', 'lpaQuestionnaire', 'manageNeighbouringSites']
+		pages: ['appealDetails', 'lpaQuestionnaire', 'manageNeighbouringSites'],
+		text: 'Neighbouring site removed'
 	},
 	appealValidAndReadyToStart: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	costsDocumentAdded: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Costs document uploaded'
 	},
 	internalCorrespondenceDocumentAdded: {
-		pages: ['appealDetails'],
 		type: 'success',
+		pages: ['appealDetails'],
 		text: 'Internal correspondence document uploaded'
-	},
-	serviceUserUpdated: {
-		pages: ['appealDetails', 'appellantCase'],
-		type: 'success'
 	},
 	lpaReferenceUpdated: {
 		type: 'success',
@@ -168,17 +177,13 @@ export const notificationBannerDefinitions = {
 	},
 	neighbouringSiteAffected: {
 		type: 'success',
-		pages: ['appealDetails', 'lpaQuestionnaire']
+		pages: ['appealDetails', 'lpaQuestionnaire'],
+		text: 'Neighbouring site affected status updated'
 	},
 	siteAddressUpdated: {
 		type: 'success',
 		pages: ['appellantCase'],
 		text: 'Site address updated'
-	},
-	isAppealTypeCorrectUpdated: {
-		type: 'success',
-		pages: ['lpaQuestionnaire'],
-		text: 'Correct appeal type (LPA response) has been updated'
 	},
 	lpaqDueDateUpdated: {
 		type: 'success',
@@ -195,9 +200,11 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire', 'ipComments']
 	},
 	lpaStatementAwaitingReview: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	interestedPartyCommentsAwaitingReview: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	interestedPartyCommentsValidSuccess: {
@@ -215,6 +222,11 @@ export const notificationBannerDefinitions = {
 		pages: ['viewIpComment'],
 		text: 'Comment redacted and accepted'
 	},
+	interestedPartyCommentAdded: {
+		type: 'success',
+		pages: ['viewIpComment'],
+		text: 'Comment added'
+	},
 	interestedPartyCommentsAddressAddedSuccess: {
 		type: 'success',
 		pages: ['viewIpComment', 'reviewIpComment'],
@@ -231,9 +243,11 @@ export const notificationBannerDefinitions = {
 		text: 'Supporting document added'
 	},
 	appellantFinalCommentsAwaitingReview: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	lpaFinalCommentsAwaitingReview: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	finalCommentsRedactionSuccess: {
@@ -262,6 +276,7 @@ export const notificationBannerDefinitions = {
 		text: 'LPA statement redacted and accepted'
 	},
 	shareCommentsAndLpaStatement: {
+		type: 'important',
 		pages: ['appealDetails']
 	},
 	finalCommentsDocumentAddedSuccess: {
@@ -283,7 +298,7 @@ export const notificationBannerDefinitions = {
  * @param {number} appealId
  * @returns {PageComponent[]}
  */
-export function buildNotificationBanners(session, servicePage, appealId) {
+export function mapNotificationBannersFromSession(session, servicePage, appealId) {
 	const appealIdAsString = typeof appealId === 'number' ? appealId.toString() : appealId;
 
 	if (!('notificationBanners' in session) || !(appealIdAsString in session.notificationBanners)) {

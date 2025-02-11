@@ -178,7 +178,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 
 			addNotificationBannerToSession({
 				session: request.session,
-				bannerDefinitionKey: 'otherAppeal',
+				bannerDefinitionKey: 'relatedAppeal',
 				appealId: request.session.appealId,
 				text: `This appeal is now related to ${request.session.relatedAppealReference}`
 			});
@@ -328,7 +328,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 
 			addNotificationBannerToSession({
 				session: request.session,
-				bannerDefinitionKey: 'otherAppealRemoved',
+				bannerDefinitionKey: 'relatedAppeal',
 				appealId,
 				text: `You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}`
 			});

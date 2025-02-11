@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { buildNotificationBanners } from '../notification-banners.mapper.js';
+import { mapNotificationBannersFromSession } from '../notification-banners.mapper.js';
 import { jest } from '@jest/globals';
 
 describe('buildNotificationBanners', () => {
@@ -37,13 +37,13 @@ describe('buildNotificationBanners', () => {
 	});
 
 	it('should return an empty array if appealId is undefined', () => {
-		const result = buildNotificationBanners(session, servicePage, undefined);
+		const result = mapNotificationBannersFromSession(session, servicePage, undefined);
 		expect(result).toEqual([]);
 	});
 
 	it('should return an empty array if notificationBanners does not exist in session', () => {
 		delete session.notificationBanners;
-		const result = buildNotificationBanners(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 		expect(result).toEqual([]);
 	});
 
@@ -51,7 +51,7 @@ describe('buildNotificationBanners', () => {
 		session.notificationBanners = {
 			nonExistentKey: { appealId }
 		};
-		const result = buildNotificationBanners(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 		expect(result).toEqual([]);
 	});
 
@@ -60,7 +60,7 @@ describe('buildNotificationBanners', () => {
 			siteVisitTypeSelected: { appealId }
 		};
 
-		const result = buildNotificationBanners(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 
 		expect(result).toEqual([
 			{
@@ -80,7 +80,7 @@ describe('buildNotificationBanners', () => {
 			siteVisitTypeSelected: { appealId }
 		};
 
-		buildNotificationBanners(session, servicePage, appealId);
+		mapNotificationBannersFromSession(session, servicePage, appealId);
 
 		expect(session.notificationBanners).not.toHaveProperty('siteVisitTypeSelected');
 	});
@@ -90,7 +90,7 @@ describe('buildNotificationBanners', () => {
 			appellantCaseNotValid: { appealId }
 		};
 
-		buildNotificationBanners(session, 'appellantCase', appealId);
+		mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
 		expect(session.notificationBanners).toHaveProperty('appellantCaseNotValid');
 	});
@@ -104,7 +104,7 @@ describe('buildNotificationBanners', () => {
 			}
 		};
 
-		const result = buildNotificationBanners(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 
 		expect(result).toEqual([
 			{
@@ -124,7 +124,7 @@ describe('buildNotificationBanners', () => {
 			appealAwaitingTransfer: { appealId }
 		};
 
-		const result = buildNotificationBanners(session, servicePage, appealId);
+		const result = mapNotificationBannersFromSession(session, servicePage, appealId);
 
 		expect(result).toEqual([
 			{
@@ -142,7 +142,7 @@ describe('buildNotificationBanners', () => {
 			interestedPartyCommentsRedactionSuccess: { appealId }
 		};
 
-		const result = buildNotificationBanners(session, 'viewIpComment', appealId);
+		const result = mapNotificationBannersFromSession(session, 'viewIpComment', appealId);
 
 		expect(result).toEqual([
 			{

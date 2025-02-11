@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -82,7 +82,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 		heading: 'Review comment',
 		submitButtonText: 'Confirm',
 		pageComponents: [
-			...buildNotificationBanners(session, 'reviewIpComment', appealDetails.appealId),
+			...mapNotificationBannersFromSession(session, 'reviewIpComment', appealDetails.appealId),
 			commentSummaryList,
 			siteVisitRequestCheckbox,
 			commentValidityRadioButtons,

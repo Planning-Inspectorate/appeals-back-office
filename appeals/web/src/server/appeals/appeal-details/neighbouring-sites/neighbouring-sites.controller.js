@@ -178,8 +178,7 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteAdded',
-			appealId,
-			text: 'Neighbouring site added'
+			appealId
 		});
 
 		delete request.session.neighbouringSite;
@@ -293,8 +292,7 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteRemoved',
-			appealId,
-			text: 'Neighbouring site removed'
+			appealId
 		});
 
 		const redirectUrl =
@@ -430,8 +428,7 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteUpdated',
-			appealId,
-			text: 'Neighbouring site updated'
+			appealId
 		});
 
 		delete request.session.neighbouringSite;
@@ -516,8 +513,7 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'neighbouringSiteAffected',
-			appealId,
-			text: 'Neighbouring site affected status updated'
+			appealId
 		});
 
 		delete request.session.neighbouringSite;

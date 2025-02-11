@@ -5,7 +5,7 @@ import {
 	inputInstructionIsRadiosInputInstruction,
 	yesNoInput,
 	createNotificationBanner,
-	buildNotificationBanners
+	mapNotificationBannersFromSession
 } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
@@ -499,15 +499,10 @@ function mapLPAQuestionnaireNotificationBanners(
 	lpaqDueDate
 ) {
 	const validationOutcome = lpaqData.validation?.outcome?.toLowerCase();
-	const banners = buildNotificationBanners(session, 'lpaQuestionnaire', appealId);
+	const banners = mapNotificationBannersFromSession(session, 'lpaQuestionnaire', appealId);
 
 	if (getDocumentsForVirusStatus(lpaqData, 'not_scanned').length > 0) {
-		banners.unshift(
-			createNotificationBanner({
-				bannerDefinitionKey: 'notCheckedDocument',
-				html: `<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
-			})
-		);
+		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
 	}
 
 	if (validationOutcome === 'incomplete') {

@@ -1024,7 +1024,6 @@ describe('Libraries', () => {
 	});
 
 	describe('session utilities', () => {
-		// TODO: A2-2102: update this test suite to account for changes to functionality of addNotificationBannerToSession
 		describe('addNotificationBannerToSession', () => {
 			it('should return false without modifying the session notificationBanners object if an unrecognised bannerDefinitionKey is provided', () => {
 				const testSession = { ...baseSession };
@@ -1040,7 +1039,7 @@ describe('Libraries', () => {
 				expect(testSession).toEqual(baseSession);
 			});
 
-			it('should return true and add a notificationBanners property to the session and add a property with name matching the bannerDefinitionKey and value of an object containing the provided appealId to the session notificationBanners object if a recognised bannerDefinitionKey is provided and there is no notificationBanners property in the session already', () => {
+			it('should return true and add the expected notification banner data to the session (scoped by stringified appealId) if a recognised bannerDefinitionKey is provided and there is no notificationBanners property in the session already', () => {
 				const testSession = { ...baseSession };
 
 				const result = addNotificationBannerToSession({
@@ -1053,21 +1052,49 @@ describe('Libraries', () => {
 				expect(testSession).toEqual({
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
-							appealId: 1,
-							html: ''
-						}
+						1: [
+							{
+								key: 'siteVisitTypeSelected'
+							}
+						]
 					}
 				});
 			});
 
-			it('should return true and add a property with name matching the bannerDefinitionKey and value of an object containing the provided appealId to the session notificationBanners object if a recognised bannerDefinitionKey is provided and there is already a notificationBanners property in the session', () => {
+			it('should return true and add the expected notification banner data to the session (scoped by stringified appealId) if a recognised bannerDefinitionKey is provided and there is already a notificationBanners property in the session which is empty', () => {
+				const testSession = {
+					...baseSession,
+					notificationBanners: {}
+				};
+
+				const result = addNotificationBannerToSession({
+					session: testSession,
+					bannerDefinitionKey: 'siteVisitTypeSelected',
+					appealId: 1
+				});
+
+				expect(result).toBe(true);
+				expect(testSession).toEqual({
+					...baseSession,
+					notificationBanners: {
+						1: [
+							{
+								key: 'siteVisitTypeSelected'
+							}
+						]
+					}
+				});
+			});
+
+			it('should return true and add the expected notification banner data to the session (scoped by stringified appealId) if a recognised bannerDefinitionKey is provided and there is already a notificationBanners property in the session which is populated with existing banner data', () => {
 				const testSession = {
 					...baseSession,
 					notificationBanners: {
-						allocationDetailsUpdated: {
-							appealId: 1
-						}
+						1: [
+							{
+								key: 'documentAdded'
+							}
+						]
 					}
 				};
 
@@ -1081,13 +1108,14 @@ describe('Libraries', () => {
 				expect(testSession).toEqual({
 					...baseSession,
 					notificationBanners: {
-						allocationDetailsUpdated: {
-							appealId: 1
-						},
-						siteVisitTypeSelected: {
-							appealId: 1,
-							html: ''
-						}
+						1: [
+							{
+								key: 'documentAdded'
+							},
+							{
+								key: 'siteVisitTypeSelected'
+							}
+						]
 					}
 				});
 			});
