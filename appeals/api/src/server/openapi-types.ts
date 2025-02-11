@@ -1119,6 +1119,8 @@ export interface SingleAppealResponse {
 			status?: string;
 		};
 	};
+	/** @example [] */
+	stateList?: any[];
 }
 
 export interface SingleAppellantCaseResponse {
@@ -2526,6 +2528,11 @@ export interface DocumentationSummary {
 		counts?: object | null;
 	};
 }
+
+export type StateList = {
+	key?: string;
+	order?: number;
+}[];
 
 export interface AppealDecision {
 	caseId?: number;

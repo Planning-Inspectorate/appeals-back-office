@@ -7013,6 +7013,11 @@
 								}
 							}
 						}
+					},
+					"stateList": {
+						"type": "array",
+						"example": [],
+						"items": {}
 					}
 				},
 				"xml": {
@@ -10195,6 +10200,20 @@
 								"type": "object",
 								"nullable": true
 							}
+						}
+					}
+				}
+			},
+			"StateList": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"key": {
+							"type": "string"
+						},
+						"order": {
+							"type": "number"
 						}
 					}
 				}

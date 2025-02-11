@@ -362,7 +362,8 @@ export const spec = {
 				lpaQuestionnaire: {
 					status: 'not_received'
 				}
-			}
+			},
+			stateList: []
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
