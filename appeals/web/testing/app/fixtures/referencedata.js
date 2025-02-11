@@ -147,6 +147,7 @@ export const appealData = {
 		postCode: 'SW4 0HY'
 	},
 	appealStatus: 'received_appeal',
+	stateList: [],
 	appealTimetable: {
 		appealTimetableId: 1053,
 		lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z'

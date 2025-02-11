@@ -21,3 +21,25 @@ export function mapStatusText(appealStatus, appealType) {
 			return appealStatus;
 	}
 }
+
+/**
+ * Returns true if the given state was previously passed through.
+ *
+ * @param {WebAppeal} appeal
+ * @param {string} state
+ * @returns {boolean}
+ * */
+export function isStatePassed(appeal, state) {
+	const { stateList } = appeal;
+
+	if (!stateList) {
+		return false;
+	}
+
+	const propState = stateList.find((s) => s.key === state);
+	if (!propState) {
+		return false;
+	}
+
+	return propState.completed;
+}

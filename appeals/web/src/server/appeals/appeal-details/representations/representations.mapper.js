@@ -232,20 +232,11 @@ export function finalCommentsSharePage(appeal) {
 				parameters: {
 					text: warningText
 				}
-			},
-			{
-				type: 'button',
-				wrapperHtml: {
-					opening:
-						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><form action="" method="POST" novalidate>',
-					closing: '</form></div></div>'
-				},
-				parameters: {
-					text: submitButtonText,
-					type: 'submit'
-				}
 			}
-		]
+		],
+		submitButtonProperties: {
+			text: submitButtonText
+		}
 	};
 
 	return pageContent;
