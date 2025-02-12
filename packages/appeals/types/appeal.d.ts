@@ -22,7 +22,6 @@ export interface AppealSummary {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
-	commentCounts?: Record<string, number>;
 }
 
 export interface AppealList {
