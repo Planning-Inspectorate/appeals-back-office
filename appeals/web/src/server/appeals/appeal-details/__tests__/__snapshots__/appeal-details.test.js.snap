@@ -1,5 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`appeal-details GET /:appealId "Progress case" important banners should render a "Progress case" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and both Appellant and LPA Final Comments are absent or invalid. 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a href="/appeals-service/appeal-details/1/share" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId "Progress case" important banners should render a "Share final comments" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and Appellant Final Comments are valid (but not LPA). 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a href="/appeals-service/appeal-details/1/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId "Progress case" important banners should render a "Share final comments" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and LPA Final Comments are valid (but not Appellant). 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a href="/appeals-service/appeal-details/1/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId "Progress case" important banners should render a "Share final comments" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and both Appellant and LPA Final Comments are valid. 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a href="/appeals-service/appeal-details/1/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Appeal decision" in the Documentation (label) column 1`] = `"<th scope="row" class="govuk-table__header appeal-decision-documentation">Appeal decision</th>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Awaiting decision" in the Status column, if a decision has not yet been issued 1`] = `"<td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>"`;

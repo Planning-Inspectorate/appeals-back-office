@@ -303,6 +303,9 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Final comments accepted'
+	},
+	shareFinalComments: {
+		pages: ['appealDetails']
 	}
 };
 

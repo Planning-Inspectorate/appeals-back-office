@@ -24,6 +24,13 @@ export function mapStatusDependentNotifications(
 	accordionComponents,
 	representationTypesAwaitingReview
 ) {
+	const finalCommentsDueDate = appealDetails.appealTimetable?.finalCommentsDueDate;
+
+	const isFinalCommentsDueDatePassed =
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.FINAL_COMMENTS && finalCommentsDueDate
+			? dateIsInThePast(dateISOStringToDayMonthYearHourMinute(finalCommentsDueDate))
+			: false;
+
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			addNotificationBannerToSession(
@@ -152,34 +159,66 @@ export function mapStatusDependentNotifications(
 			break;
 		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS:
-			if (representationTypesAwaitingReview?.appellantFinalComments) {
+			if (isFinalCommentsDueDatePassed) {
+				const { documentationSummary } = appealDetails;
+
+				const hasValidFinalCommentsAppellant =
+					documentationSummary.appellantFinalComments?.representationStatus &&
+					documentationSummary.appellantFinalComments?.representationStatus ===
+						APPEAL_REPRESENTATION_STATUS.VALID
+						? true
+						: false;
+				const hasValidFinalCommentsLPA =
+					documentationSummary.lpaFinalComments?.representationStatus &&
+					documentationSummary.lpaFinalComments?.representationStatus ===
+						APPEAL_REPRESENTATION_STATUS.VALID
+						? true
+						: false;
+
+				let bannerText = 'Progress case';
+				if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
+					bannerText = 'Share final comments';
+				}
+
 				addNotificationBannerToSession(
 					session,
-					'appellantFinalCommentsAwaitingReview',
+					'shareFinalComments',
 					appealDetails.appealId,
-					`<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
+					`<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">${bannerText}</a>`
 				);
 			} else {
-				clearNotificationBannerFromSession(
-					session,
-					appealDetails.appealId,
-					'appellantFinalCommentsAwaitingReview'
-				);
+				clearNotificationBannerFromSession(session, appealDetails.appealId, 'shareFinalComments');
+
+				if (representationTypesAwaitingReview?.appellantFinalComments) {
+					addNotificationBannerToSession(
+						session,
+						'appellantFinalCommentsAwaitingReview',
+						appealDetails.appealId,
+						`<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
+					);
+				} else {
+					clearNotificationBannerFromSession(
+						session,
+						appealDetails.appealId,
+						'appellantFinalCommentsAwaitingReview'
+					);
+				}
+				if (representationTypesAwaitingReview?.lpaFinalComments) {
+					addNotificationBannerToSession(
+						session,
+						'lpaFinalCommentsAwaitingReview',
+						appealDetails.appealId,
+						`<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
+					);
+				} else {
+					clearNotificationBannerFromSession(
+						session,
+						appealDetails.appealId,
+						'lpaFinalCommentsAwaitingReview'
+					);
+				}
 			}
-			if (representationTypesAwaitingReview?.lpaFinalComments) {
-				addNotificationBannerToSession(
-					session,
-					'lpaFinalCommentsAwaitingReview',
-					appealDetails.appealId,
-					`<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
-				);
-			} else {
-				clearNotificationBannerFromSession(
-					session,
-					appealDetails.appealId,
-					'lpaFinalCommentsAwaitingReview'
-				);
-			}
+
 			break;
 		default:
 			break;
