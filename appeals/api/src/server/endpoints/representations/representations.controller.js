@@ -1,3 +1,4 @@
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
@@ -283,12 +284,12 @@ export const updateRepresentationAttachments = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export async function publish(req, res) {
-	const { appeal, query } = req;
+	const { appeal } = req;
 
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
-		lpa_statement: representationService.publishLpaStatements,
-		final_comment: representationService.publishFinalComments
+		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishLpaStatements,
+		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: representationService.publishFinalComments
 	};
 
 	const azureAdUserId = req.get('azureAdUserId');
@@ -296,9 +297,17 @@ export async function publish(req, res) {
 		throw new BackOfficeAppError('azureAdUserId not provided', 401);
 	}
 
-	const publish = handlers[String(query.type)];
+	const currentStatus = appeal.appealStatus[0]?.status;
+	if (!currentStatus) {
+		throw new BackOfficeAppError(`no status found for appeal ${appeal.id}`, 500);
+	}
+
+	const publish = handlers[currentStatus];
 	if (!publish) {
-		throw new BackOfficeAppError(`${query.type} is not a valid type`, 400);
+		throw new BackOfficeAppError(
+			`cannot publish representations when appeal is in the ${currentStatus} state`,
+			409
+		);
 	}
 
 	const updatedReps = await publish(appeal, azureAdUserId);
@@ -306,11 +315,11 @@ export async function publish(req, res) {
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
 		const replacements = {
-			lpa_statement: 'Statements and IP comments',
-			final_comment: 'Final comments'
+			[APPEAL_CASE_STATUS.STATEMENTS]: 'Statements and IP comments',
+			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'Final comments'
 		};
 
-		const replacement = replacements[String(query.type)];
+		const replacement = replacements[currentStatus];
 		if (replacement) {
 			const details = stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_REP_SHARED, [replacement]);
 
