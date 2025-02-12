@@ -1044,7 +1044,7 @@ describe('Libraries', () => {
 
 				const result = addNotificationBannerToSession({
 					session: testSession,
-					bannerDefinitionKey: 'siteVisitTypeSelected',
+					bannerDefinitionKey: 'caseOfficerAdded',
 					appealId: 1
 				});
 
@@ -1054,7 +1054,7 @@ describe('Libraries', () => {
 					notificationBanners: {
 						1: [
 							{
-								key: 'siteVisitTypeSelected'
+								key: 'caseOfficerAdded'
 							}
 						]
 					}
@@ -1069,7 +1069,7 @@ describe('Libraries', () => {
 
 				const result = addNotificationBannerToSession({
 					session: testSession,
-					bannerDefinitionKey: 'siteVisitTypeSelected',
+					bannerDefinitionKey: 'caseOfficerAdded',
 					appealId: 1
 				});
 
@@ -1079,7 +1079,7 @@ describe('Libraries', () => {
 					notificationBanners: {
 						1: [
 							{
-								key: 'siteVisitTypeSelected'
+								key: 'caseOfficerAdded'
 							}
 						]
 					}
@@ -1100,7 +1100,7 @@ describe('Libraries', () => {
 
 				const result = addNotificationBannerToSession({
 					session: testSession,
-					bannerDefinitionKey: 'siteVisitTypeSelected',
+					bannerDefinitionKey: 'caseOfficerAdded',
 					appealId: 1
 				});
 
@@ -1113,7 +1113,7 @@ describe('Libraries', () => {
 								key: 'documentAdded'
 							},
 							{
-								key: 'siteVisitTypeSelected'
+								key: 'caseOfficerAdded'
 							}
 						]
 					}

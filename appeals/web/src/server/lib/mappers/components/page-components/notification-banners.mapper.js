@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'siteVisitTypeSelected'|'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'relatedAppeal'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'lpaReferenceUpdated'|'inspectorAccessUpdated'|'neighbouringSiteAffected'|'siteAddressUpdated'|'lpaqDueDateUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerDefinitionKey  */
+/** @typedef {'siteVisitArranged'|'allocationDetailsUpdated'|'caseOfficerAdded'|'inspectorAdded'|'caseOfficerRemoved'|'inspectorRemoved'|'documentAdded'|'documentVersionAdded'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentDeleted'|'appellantCaseNotValid'|'readyForDecision'|'readyForValidation'|'readyForSetUpSiteVisit'|'readyForLpaQuestionnaireReview'|'progressToFinalComments'|'lpaQuestionnaireNotValid'|'notCheckedDocument'|'appealAwaitingTransfer'|'horizonReferenceAdded'|'assignCaseOfficer'|'appealLinked'|'appealUnlinked'|'relatedAppeal'|'neighbouringSiteAdded'|'neighbouringSiteUpdated'|'neighbouringSiteRemoved'|'appealValidAndReadyToStart'|'costsDocumentAdded'|'internalCorrespondenceDocumentAdded'|'neighbouringSiteAffected'|'siteAddressUpdated'|'timetableDueDateUpdated'|'changePage'|'lpaStatementAwaitingReview'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsValidSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsDocumentAddedSuccess'|'appellantFinalCommentsAwaitingReview'|'lpaFinalCommentsAwaitingReview'|'finalCommentsRedactionSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsAppellantRejectionSuccess'|'lpaStatementAccepted'|'lpaStatementRedactedAndAccepted'|'shareCommentsAndLpaStatement'|'finalCommentsDocumentAddedSuccess'|'finalCommentsAcceptSuccess'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -16,11 +16,6 @@
  * @type {Object<NotificationBannerDefinitionKey, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
-	siteVisitTypeSelected: {
-		type: 'success',
-		pages: ['appealDetails'],
-		text: 'Site visit type has been selected'
-	},
 	siteVisitArranged: {
 		type: 'success',
 		pages: ['appealDetails'],
@@ -167,14 +162,6 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Internal correspondence document uploaded'
 	},
-	lpaReferenceUpdated: {
-		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
-	},
-	inspectorAccessUpdated: {
-		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire']
-	},
 	neighbouringSiteAffected: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire'],
@@ -184,11 +171,6 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appellantCase'],
 		text: 'Site address updated'
-	},
-	lpaqDueDateUpdated: {
-		type: 'success',
-		pages: ['appealDetails'],
-		text: 'LPA questionnaire due date changed'
 	},
 	timetableDueDateUpdated: {
 		type: 'success',
