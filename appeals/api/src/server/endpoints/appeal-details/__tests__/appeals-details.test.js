@@ -170,6 +170,7 @@ const s78AppealDto = {
 		ipComments: {
 			status: 'received',
 			counts: {
+				awaiting_review: 5,
 				valid: 4,
 				published: 0
 			}
