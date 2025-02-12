@@ -1,4 +1,4 @@
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { COMMENT_STATUS, APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
 
 /**
@@ -8,7 +8,10 @@ import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.ma
 export const renderReviewLpaStatement = async (request, response) => {
 	const { errors, currentAppeal, currentRepresentation, session } = request;
 
-	const isReview = ['awaiting_review', 'incomplete'].includes(currentRepresentation.status)
+	const isReview = [
+		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(currentRepresentation.status);
 
 	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
 		currentAppeal,

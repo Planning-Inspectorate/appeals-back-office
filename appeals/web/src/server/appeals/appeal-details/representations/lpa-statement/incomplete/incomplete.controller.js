@@ -199,12 +199,9 @@ export const postCheckYourAnswers = async (request, response) => {
 		currentRepresentation
 	} = request;
 
+	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id);
+
 	addNotificationBannerToSession(session, 'lpaStatementIncomplete', appealId);
 
-	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id);
-	
-	return response
-		.status(200)
-		.redirect(`/appeals-service/appeal-details/${appealId}`);
+	return response.status(200).redirect(`/appeals-service/appeal-details/${appealId}`);
 };
-
