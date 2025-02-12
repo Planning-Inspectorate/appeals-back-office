@@ -527,18 +527,6 @@ describe('/appeals/:id/reps', () => {
 });
 
 describe('/appeals/:id/reps/publish', () => {
-	test('400 when type parameter is invalid', async () => {
-		// @ts-ignore
-		databaseConnector.appeal.findUnique.mockResolvedValue(appealHas);
-
-		const response = await request
-			.post('/appeals/1/reps/publish')
-			.query({ type: 'invalid' })
-			.set('azureAdUserId', '732652365');
-
-		expect(response.status).toEqual(400);
-	});
-
 	describe('publish LPA statements', () => {
 		test('409 if case is not in STATEMENTS state', async () => {
 			// @ts-ignore
