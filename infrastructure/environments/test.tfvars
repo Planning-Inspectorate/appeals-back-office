@@ -67,6 +67,8 @@ apps_config = {
       comment_rejected_lpa_id                                         = "ebb2d0e0-2146-43a5-a6f5-d45e9ee0ca3f"
       comment_rejected_deadline_extended_id                           = "ccffeb37-c7e0-4c38-888c-6cf2755f6703"
       lpa_statement_incomplete_id                                     = "471cfa29-ecd4-485a-8ead-dbc73285637a"
+      appellant_final_comments_done_id                                = "c368f84b-01ad-4a78-9823-27ba4ce74351"
+      lpa_final_comments_done_id                                      = "be3c6c21-f429-4ab3-87f9-d5e280650543"
     }
   }
 
