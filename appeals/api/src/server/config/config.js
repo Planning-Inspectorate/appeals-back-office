@@ -280,6 +280,18 @@ const { value, error } = schema.validate({
 				lpa: {
 					id: environment.GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE || 'mock-lpa-finalc-comments-done-id'
 				}
+			},
+			receivedStatementsAndIpComments: {
+				appellant: {
+					id:
+						environment.GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_APPELLANT_ID ||
+						'mock-received-statement-and-ip-comments-appellant-id'
+				},
+				lpa: {
+					id:
+						environment.GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_LPA_ID ||
+						'mock-received-statement-and-ip-comments-lpa-id'
+				}
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

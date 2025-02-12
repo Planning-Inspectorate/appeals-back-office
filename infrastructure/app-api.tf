@@ -103,6 +103,8 @@ module "app_api" {
     GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE                                        = var.apps_config.integrations.notify_template_ids.lpa_statement_incomplete_id
     GOV_NOTIFY_APPELLANT_FINAL_COMMENTS_DONE                                   = var.apps_config.integrations.notify_template_ids.appellant_final_comments_done_id
     GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE                                         = var.apps_config.integrations.notify_template_ids.lpa_final_comments_done_id
+    GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_APPELLANT_ID                 = var.apps_config.integrations.notify_template_ids.received_statement_and_ip_comments_appellant_id
+    GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_LPA_ID                       = var.apps_config.integrations.notify_template_ids.received_statement_and_ip_comments_lpa_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
