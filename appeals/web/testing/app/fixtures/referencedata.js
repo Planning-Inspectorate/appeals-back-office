@@ -2008,12 +2008,7 @@ export const assignedAppealsInFinalCommentsStatus = {
 				s106ObligationDueDate: '2024-08-16T22:59:00.000Z'
 			},
 			isParentAppeal: false,
-			isChildAppeal: false,
-			commentCounts: {
-				awaiting_review: 4,
-				invalid: 3,
-				valid: 3
-			}
+			isChildAppeal: false
 		}
 	],
 	statuses: ['lpa_questionnaire', 'final_comments'],

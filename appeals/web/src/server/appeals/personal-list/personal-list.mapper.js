@@ -12,6 +12,7 @@ import * as authSession from '../../app/auth/auth-session.service.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 
@@ -247,14 +248,15 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 	const {
 		appealId,
 		appealStatus,
-		commentCounts,
 		lpaQuestionnaireId,
 		documentationSummary,
 		dueDate: appealDueDate,
 		appealTimetable
 	} = appeal;
 
-	const hasAwaitingComments = Boolean(commentCounts?.awaiting_review);
+	const hasAwaitingComments =
+		(documentationSummary?.ipComments?.counts?.[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ??
+			0) > 0;
 
 	const {
 		appellantCaseStatus,
