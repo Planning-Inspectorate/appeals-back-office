@@ -40,23 +40,7 @@ export function renderShareRepresentations(request, response) {
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
 
-	const apiTypeKeys = {
-		[APPEAL_CASE_STATUS.STATEMENTS]: 'lpa_statement',
-		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'final_comment'
-	};
-
-	const typeToPublish = /** @type {'lpa_statement' | 'final_comment' | undefined} */ (
-		apiTypeKeys[currentAppeal.appealStatus]
-	);
-	if (!typeToPublish) {
-		throw new Error(`Cannot share when in the ${currentAppeal.appealStatus} state`);
-	}
-
-	const publishedReps = await publishRepresentations(
-		apiClient,
-		currentAppeal.appealId,
-		typeToPublish
-	);
+	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
 
 	const bannerKey = (() => {
 		switch (currentAppeal.appealStatus) {
