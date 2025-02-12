@@ -522,7 +522,6 @@ interface AppealListResponse {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
-	commentCounts: Record<string, number>;
 }
 
 interface DocumentationSummary {
@@ -539,7 +538,7 @@ interface DocumentationSummaryEntry {
 	dueDate?: Date | string | undefined | null;
 	receivedAt?: Date | string | undefined | null;
 	representationStatus?: string | undefined | null;
-	counts: Record<string, number>;
+	counts?: Record<string, number>;
 }
 
 interface FolderInfo {

@@ -96,7 +96,8 @@ const getAllAppeals = (
 				lpa: true,
 				appellantCase: true,
 				inspector: true,
-				caseOfficer: true
+				caseOfficer: true,
+				appealTimetable: true
 			},
 			orderBy: { caseUpdatedDate: 'desc' }
 		})
@@ -107,37 +108,35 @@ const getAllAppeals = (
  * @param {string} userId
  * @param {number} pageNumber
  * @param {number} pageSize
- * @param {string} status
+ * @param {string} [status]
  * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
  */
 const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 	const where = {
-		...(status !== 'undefined' && {
+		...(status && {
 			appealStatus: {
 				some: { valid: true, status }
 			}
 		}),
 		appealType: { key: { in: getEnabledAppealTypes() } },
+		appealStatus: {
+			some: {
+				valid: true,
+				status: {
+					notIn: [
+						APPEAL_CASE_STATUS.COMPLETE,
+						APPEAL_CASE_STATUS.CLOSED,
+						APPEAL_CASE_STATUS.TRANSFERRED,
+						APPEAL_CASE_STATUS.INVALID,
+						APPEAL_CASE_STATUS.WITHDRAWN
+					]
+				}
+			}
+		},
 		OR: [
 			{ inspector: { azureAdUserId: { equals: userId } } },
 			{ caseOfficer: { azureAdUserId: { equals: userId } } }
-		],
-		AND: {
-			appealStatus: {
-				some: {
-					valid: true,
-					status: {
-						notIn: [
-							APPEAL_CASE_STATUS.COMPLETE,
-							APPEAL_CASE_STATUS.CLOSED,
-							APPEAL_CASE_STATUS.TRANSFERRED,
-							APPEAL_CASE_STATUS.INVALID,
-							APPEAL_CASE_STATUS.WITHDRAWN
-						]
-					}
-				}
-			}
-		}
+		]
 	};
 
 	return databaseConnector.$transaction([

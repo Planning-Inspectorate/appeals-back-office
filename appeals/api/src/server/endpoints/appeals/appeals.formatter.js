@@ -28,6 +28,7 @@ const approxStageCompletion = {
 /** @typedef {import('@pins/appeals.api').Schema.AppealRelationship} AppealRelationship */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
+/** @typedef {import('@pins/appeals.api').Appeals.AppealTimetable} AppealTimetable */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -36,10 +37,9 @@ const approxStageCompletion = {
 /**
  * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
- * @param {Record<string, number>} commentCounts
  * @returns {AppealListResponse}}
  */
-const formatAppeals = (appeal, linkedAppeals, commentCounts) => ({
+const formatAppeal = (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -49,18 +49,17 @@ const formatAppeals = (appeal, linkedAppeals, commentCounts) => ({
 	localPlanningDepartment: appeal.lpa?.name || '',
 	dueDate: null,
 	documentationSummary: formatDocumentationSummary(appeal),
+	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-	commentCounts
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
 });
 
 /**
  * @param {Appeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
- * @param {Record<string, number>} commentCounts
- * @returns {AppealListResponse}}
+ * @returns {AppealListResponse}
  */
-const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
+const formatMyAppeals = (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -75,30 +74,23 @@ const formatMyAppeals = (appeal, linkedAppeals, commentCounts) => ({
 		appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
 		appeal.caseExtensionDate
 	),
-	appealTimetable: appeal.appealTimetable
-		? {
-				appealTimetableId: appeal.appealTimetable.id,
-				lpaQuestionnaireDueDate:
-					appeal.appealTimetable.lpaQuestionnaireDueDate?.toISOString() || null,
-				caseResubmissionDueDate:
-					appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
-				...(isFPA(appeal.appealType?.key || '') && {
-					ipCommentsDueDate: appeal.appealTimetable.ipCommentsDueDate?.toISOString() || null,
-					appellantStatementDueDate:
-						appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,
-					lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
-					finalCommentsDueDate: appeal.appealTimetable.finalCommentsDueDate?.toISOString() || null,
-					s106ObligationDueDate:
-						appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
-					issueDeterminationDate:
-						appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
-				})
-		  }
-		: undefined,
+	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-	commentCounts
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
 });
+
+/**
+ * @param {Representation[]} reps
+ * @param {APPEAL_REPRESENTATION_STATUS[]} statuses
+ * */
+const makeCounts = (reps, statuses) =>
+	statuses.reduce(
+		(acc, status) => ({
+			...acc,
+			[status]: count(reps, (rep) => rep.status === status)
+		}),
+		{}
+	);
 
 /**
  * @param {Appeal} appeal
@@ -113,12 +105,14 @@ const formatDocumentationSummary = (appeal) => {
 	const lpaStatement = appeal.representations?.find(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
-	const lpaFinalComments = appeal.representations?.find(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-	);
-	const appellantFinalComments = appeal.representations?.find(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-	);
+	const lpaFinalComments =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+		) ?? [];
+	const appellantFinalComments =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+		) ?? [];
 
 	return {
 		appellantCase: {
@@ -137,37 +131,70 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		ipComments: {
 			status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			counts: {
-				[APPEAL_REPRESENTATION_STATUS.VALID]: count(
-					ipComments,
-					(rep) => rep.status === APPEAL_REPRESENTATION_STATUS.VALID
-				),
-				[APPEAL_REPRESENTATION_STATUS.PUBLISHED]: count(
-					ipComments,
-					(rep) => rep.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
-				)
-			}
+			counts: makeCounts(ipComments, [
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				APPEAL_REPRESENTATION_STATUS.PUBLISHED
+			])
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),
 			receivedAt: lpaStatement?.dateCreated
 		},
 		lpaFinalComments: {
-			status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: lpaFinalComments
-				? lpaFinalComments?.dateCreated && lpaFinalComments?.dateCreated.toISOString()
+			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			// TODO: We might want to remove these fields (receivedAt, representationStatus) and just use the `counts` field as with ipComments, but this will be a breaking change for the front end
+			receivedAt: lpaFinalComments[0]?.dateCreated
+				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
-			representationStatus: lpaFinalComments ? lpaFinalComments.status : null
+			representationStatus: lpaFinalComments[0]?.status ?? null,
+			counts: makeCounts(lpaFinalComments, [
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				APPEAL_REPRESENTATION_STATUS.PUBLISHED
+			])
 		},
 		appellantFinalComments: {
-			status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: appellantFinalComments
-				? appellantFinalComments?.dateCreated && appellantFinalComments?.dateCreated.toISOString()
+			status:
+				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			// TODO: See todo above
+			receivedAt: appellantFinalComments[0]?.dateCreated
+				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,
-			representationStatus: appellantFinalComments ? appellantFinalComments.status : null
+			representationStatus: appellantFinalComments[0]?.status ?? null,
+			counts: makeCounts(appellantFinalComments, [
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				APPEAL_REPRESENTATION_STATUS.PUBLISHED
+			])
 		}
 	};
 };
+
+/**
+ * @param {Appeal} appeal
+ * @returns {AppealTimetable | undefined}
+ * */
+function formatAppealTimetable(appeal) {
+	if (!appeal.appealTimetable) {
+		return undefined;
+	}
+
+	return {
+		appealTimetableId: appeal.appealTimetable.id,
+		lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate?.toISOString() || null,
+		caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
+		...(isFPA(appeal.appealType?.key || '') && {
+			ipCommentsDueDate: appeal.appealTimetable.ipCommentsDueDate?.toISOString() || null,
+			appellantStatementDueDate:
+				appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,
+			lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
+			finalCommentsDueDate: appeal.appealTimetable.finalCommentsDueDate?.toISOString() || null,
+			s106ObligationDueDate: appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
+			issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
+		})
+	};
+}
 
 /**
  * Map each appeal to include a due date.
@@ -267,4 +294,4 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	return relevantIds;
 };
 
-export { formatAppeals, formatMyAppeals, getIdsOfReferencedAppeals };
+export { formatAppeal, formatMyAppeals, getIdsOfReferencedAppeals };

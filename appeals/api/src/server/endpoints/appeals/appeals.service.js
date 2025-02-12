@@ -6,8 +6,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE
 } from '#endpoints/constants.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
-import representationRepository from '#repositories/representation.repository.js';
-import { formatAppeals } from '#endpoints/appeals/appeals.formatter.js';
+import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
@@ -99,7 +98,7 @@ export const mapAppealStatuses = (rawStatuses) => {
 
 /**
  *
- * @param appeals
+ * @param {Appeal[]} appeals
  * @returns {{ name:string, lpaCode:string }[]}
  */
 const mapAppealLPAs = (appeals) => {
@@ -113,6 +112,9 @@ const mapAppealLPAs = (appeals) => {
 	return Array.from(new Set(lpas)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
+/**
+ * @param {Appeal[]} appeals
+ * */
 const mapInspectors = async (appeals) => {
 	return appeals.reduce((inspectorList, { inspector }) => {
 		if (!inspector) {
@@ -125,6 +127,9 @@ const mapInspectors = async (appeals) => {
 	}, []);
 };
 
+/**
+ * @param {Appeal[]} appeals
+ * */
 const mapCaseOfficers = async (appeals) => {
 	return appeals.reduce((caseOfficerList, { caseOfficer }) => {
 		if (!caseOfficer) {
@@ -139,22 +144,17 @@ const mapCaseOfficers = async (appeals) => {
 
 /**
  *
- * @param appeals
+ * @param {Appeal[]} appeals
  * @returns {Promise<Awaited<unknown>[]>}
  */
-const mapAppeals = async (appeals) =>
+const mapAppeals = (appeals) =>
 	Promise.all(
 		appeals.map(async (appeal) => {
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-			const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
-				appeal.id,
-				'comment'
-			);
 
-			return formatAppeals(
+			return formatAppeal(
 				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
-				commentCounts
+				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
 			);
 		})
 	);

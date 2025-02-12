@@ -2,7 +2,6 @@ import { getPageCount } from '#utils/database-pagination.js';
 import { sortAppeals } from '#utils/appeal-sorter.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
-import representationRepository from '#repositories/representation.repository.js';
 import {
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
@@ -69,7 +68,7 @@ const getMyAppeals = async (req, res) => {
 	const { query } = req;
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
-	const status = String(query.status);
+	const status = query.status ? String(query.status) : undefined;
 	const azureUserId = req.get('azureAdUserId');
 
 	if (!azureUserId) {
@@ -86,15 +85,10 @@ const getMyAppeals = async (req, res) => {
 	const formattedAppeals = await Promise.all(
 		appeals.map(async (appeal) => {
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-			const commentCounts = await representationRepository.countAppealRepresentationsByStatus(
-				appeal.id,
-				'comment'
-			);
 
 			return formatMyAppeals(
 				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked'),
-				commentCounts
+				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
 			);
 		})
 	);
