@@ -4,8 +4,14 @@ import neighbouringSitesRepository from '#repositories/neighbouring-sites.reposi
 import representationRepository from '#repositories/representation.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import BackOfficeAppError from '#utils/app-error.js';
+import logger from '#utils/logger.js';
 import transitionState from '#state/transition-state.js';
-import { VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
+import {
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	VALIDATION_OUTCOME_COMPLETE
+} from '#endpoints/constants.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import config from '#config/config.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
@@ -189,7 +195,7 @@ export async function updateRepresentation(repId, payload) {
 	return updatedRep;
 }
 
-/** @typedef {(appeal: Appeal, azureAdUserId: string) => Promise<Representation[]>} PublishFunction */
+/** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
 
 /**
  * Also publishes any valid IP comments at the same time.
@@ -234,7 +240,7 @@ export async function publishLpaStatements(appeal, azureAdUserId) {
 }
 
 /** @type {PublishFunction} */
-export async function publishFinalComments(appeal, azureAdUserId) {
+export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
@@ -258,5 +264,85 @@ export async function publishFinalComments(appeal, azureAdUserId) {
 		VALIDATION_OUTCOME_COMPLETE
 	);
 
+	try {
+		if (
+			result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT)
+		) {
+			notifyLpaFinalCommentsPublished(appeal, notifyClient);
+		}
+		if (
+			result.some(
+				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			)
+		) {
+			notifyAppellantFinalCommentsPublished(appeal, notifyClient);
+		}
+	} catch (error) {
+		logger.error(error);
+	}
+
 	return result;
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {import('#endpoints/appeals.js').NotifyTemplate} template
+ * @param {string} recipientEmail
+ * */
+async function notifyFinalCommentsPublished(appeal, notifyClient, template, recipientEmail) {
+	const lpaReference = appeal.applicationReference;
+	if (!lpaReference) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference in appeal`
+		);
+	}
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	await notifyClient.sendEmail(template, recipientEmail, {
+		appeal_reference_number: appeal.reference,
+		site_address: siteAddress,
+		lpa_reference: lpaReference
+	});
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * */
+function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
+	const recipientEmail = appeal.lpa?.email;
+	if (!recipientEmail) {
+		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
+	}
+
+	return notifyFinalCommentsPublished(
+		appeal,
+		notifyClient,
+		config.govNotify.template.finalCommentsDone.lpa,
+		recipientEmail
+	);
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * */
+function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
+	const recipientEmail = appeal.appellant?.email;
+	if (!recipientEmail) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no appellant email address in appeal`
+		);
+	}
+
+	return notifyFinalCommentsPublished(
+		appeal,
+		notifyClient,
+		config.govNotify.template.finalCommentsDone.appellant,
+		recipientEmail
+	);
 }

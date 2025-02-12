@@ -26,8 +26,15 @@ import { getNotifyService } from './get-service.js';
 export const notifyOnStatusChange = (request, serviceArgs) => {
 	const { status } = request.body;
 	const { representationType: type, status: existingStatus } = serviceArgs.representation;
-	if (!status || status === existingStatus) return Promise.resolve();
+
+	if (!status || status === existingStatus) {
+		return Promise.resolve();
+	}
+
 	const service = getNotifyService(status, type);
-	if (!service) return Promise.resolve();
+	if (!service) {
+		return Promise.resolve();
+	}
+
 	return service(serviceArgs);
 };

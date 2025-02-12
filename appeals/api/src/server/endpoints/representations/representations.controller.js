@@ -301,7 +301,7 @@ export async function publish(req, res) {
 		throw new BackOfficeAppError(`${query.type} is not a valid type`, 400);
 	}
 
-	const updatedReps = await publish(appeal, azureAdUserId);
+	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient);
 
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
