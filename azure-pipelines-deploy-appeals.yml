@@ -135,7 +135,7 @@ extends:
                     bash ./packages/scripts/verify_commit_hash.sh "Web" "https://pins-app-appeals-bo-web-$(ENVIRONMENT)-staging.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
                   else
                     echo "Verifying Web Version (using git hash $(resources.pipeline.build.sourceCommit))..."
-                    bash ./packages/scripts/verify_commit_hash.sh "API" "https://pins-app-appeals-bo-web-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                    bash ./packages/scripts/verify_commit_hash.sh "Web" "https://pins-app-appeals-bo-web-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
                   fi
                 displayName: Web Verify Version
                 failOnStderr: true
