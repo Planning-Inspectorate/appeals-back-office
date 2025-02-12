@@ -17,6 +17,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import formatDate from '#utils/date-formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -65,6 +66,8 @@ export const getRepresentation = representationRepository.getById;
 /**
  *
  * @param {number} appealId
+ * @param {number} pageNumber
+ * @param {number} pageSize
  * @param {string} status //APPEAL_REPRESENTATION_STATUS
  */
 export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30, status) => {
@@ -202,7 +205,7 @@ export async function updateRepresentation(repId, payload) {
  *
  * @type {PublishFunction}
  * */
-export async function publishLpaStatements(appeal, azureAdUserId) {
+export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.STATEMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
 	}
@@ -235,6 +238,38 @@ export async function publishLpaStatements(appeal, azureAdUserId) {
 		appeal.appealStatus,
 		APPEAL_CASE_STATUS.FINAL_COMMENTS
 	);
+
+	const finalCommentsDueDate = formatDate(
+		new Date(appeal.appealTimetable.finalCommentsDueDate || ''),
+		false
+	);
+
+	try {
+		if (
+			result.some((rep) =>
+				[APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT || APPEAL_REPRESENTATION_TYPE.COMMENT].includes(
+					rep.representationType
+				)
+			)
+		) {
+			await notifyPublished(
+				appeal,
+				notifyClient,
+				config.govNotify.template.receivedStatementsAndIpComments.lpa,
+				appeal.lpa?.email,
+				finalCommentsDueDate
+			);
+			await notifyPublished(
+				appeal,
+				notifyClient,
+				config.govNotify.template.receivedStatementsAndIpComments.appellant,
+				appeal.agent?.email || appeal.appellant?.email,
+				finalCommentsDueDate
+			);
+		}
+	} catch (error) {
+		logger.error(error);
+	}
 
 	return result;
 }
@@ -289,12 +324,24 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {import('#endpoints/appeals.js').NotifyTemplate} template
  * @param {string} recipientEmail
+ * @param {string|undefined} finalCommentsDueDate
  * */
-async function notifyFinalCommentsPublished(appeal, notifyClient, template, recipientEmail) {
+async function notifyPublished(
+	appeal,
+	notifyClient,
+	template,
+	recipientEmail,
+	finalCommentsDueDate
+) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
 		throw new Error(
 			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference in appeal`
+		);
+	}
+	if (!recipientEmail) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: missing recipient email address for ${template.id} template`
 		);
 	}
 
@@ -305,7 +352,8 @@ async function notifyFinalCommentsPublished(appeal, notifyClient, template, reci
 	await notifyClient.sendEmail(template, recipientEmail, {
 		appeal_reference_number: appeal.reference,
 		site_address: siteAddress,
-		lpa_reference: lpaReference
+		lpa_reference: lpaReference,
+		final_comments_deadline: finalCommentsDueDate
 	});
 }
 
@@ -319,7 +367,7 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
 	}
 
-	return notifyFinalCommentsPublished(
+	return notifyPublished(
 		appeal,
 		notifyClient,
 		config.govNotify.template.finalCommentsDone.lpa,
@@ -339,7 +387,7 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
 		);
 	}
 
-	return notifyFinalCommentsPublished(
+	return notifyPublished(
 		appeal,
 		notifyClient,
 		config.govNotify.template.finalCommentsDone.appellant,
