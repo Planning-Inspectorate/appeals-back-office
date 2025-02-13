@@ -41,7 +41,8 @@ export class CaseDetailsPage extends Page {
 		startAppealWithdrawal: 'start-appeal-withdrawal',
 		viewAppealWithdrawal: 'view-appeal-withdrawal',
 		changeAppellant: 'change-appellant',
-		changeAgent: 'change-agent'
+		changeAgent: 'change-agent',
+		setupSiteVisitBanner: 'set-up-site-visit-banner'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -125,7 +126,8 @@ export class CaseDetailsPage extends Page {
 			cy.get('.govuk-summary-list__key').contains('Redaction status').siblings().eq(0),
 		docVersionNumber: () => cy.get('.govuk-summary-list__key').contains('Version').siblings().eq(0),
 		documentName: () => cy.get('.govuk-summary-list__key').contains('Name').siblings().eq(0),
-		fileNameTextInput: () => cy.get('#file-name')
+		fileNameTextInput: () => cy.get('#file-name'),
+		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -377,6 +379,10 @@ export class CaseDetailsPage extends Page {
 
 	viewDecisionLetter(text) {
 		this.basePageElements.linkByText(text);
+	}
+
+	clickSiteVisitBanner(caseRef) {
+		this.elements.siteVisitBanner(caseRef).click();
 	}
 
 	/***************************************************************
