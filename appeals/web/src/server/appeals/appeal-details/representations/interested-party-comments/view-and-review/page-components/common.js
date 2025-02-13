@@ -76,7 +76,7 @@ export function generateCommentSummaryList(
 		},
 		{
 			key: { text: 'Email' },
-			value: { text: comment.represented.email }
+			value: { text: comment.represented.email || 'Not provided' }
 		},
 		{
 			key: { text: 'Address' },
