@@ -472,11 +472,6 @@ export const appellantCaseDataNotValidated = {
 };
 
 export const lpaQuestionnaireData = {
-	affectsListedBuildingDetails: [
-		{
-			listEntry: '123456'
-		}
-	],
 	appealId: 1,
 	appealReference: 'APP/Q9999/D/21/30498',
 	appealSite: {
@@ -801,11 +796,13 @@ export const lpaQuestionnaireData = {
 	listedBuildingDetails: [
 		{
 			id: 1,
-			listEntry: '123456'
+			listEntry: '123456',
+			affectsListedBuilding: true
 		},
 		{
 			id: 2,
-			listEntry: '123457'
+			listEntry: '123457',
+			affectsListedBuilding: true
 		}
 	],
 	localPlanningDepartment: 'Dorset Council',
@@ -924,11 +921,6 @@ export const appellantCaseDataValidOutcome = {
 };
 
 export const lpaQuestionnaireDataNotValidated = {
-	affectsListedBuildingDetails: [
-		{
-			listEntry: '123456'
-		}
-	],
 	appealId: 1,
 	appealReference: 'APP/Q9999/D/21/30498',
 	appealSite: {
@@ -1209,10 +1201,12 @@ export const lpaQuestionnaireDataNotValidated = {
 	isTheSiteWithinAnAONB: true,
 	listedBuildingDetails: [
 		{
-			listEntry: '123456'
+			listEntry: '123456',
+			affectsListedBuilding: true
 		},
 		{
-			listEntry: '123457'
+			listEntry: '123457',
+			affectsListedBuilding: true
 		}
 	],
 	localPlanningDepartment: 'Dorset Council',
