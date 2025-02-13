@@ -9,7 +9,6 @@ import {
 	appealTypePage,
 	changeAppealFinalDatePage,
 	resubmitAppealPage,
-	resubmitConfirmationPage,
 	addHorizonReferencePage,
 	checkTransferPage
 } from './change-appeal-type.mapper.js';
@@ -193,9 +192,9 @@ export const postChangeAppealFinalDate = async (request, response) => {
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-type/confirm-resubmit`
-		);
+		addNotificationBannerToSession(request.session, 'appealTypeChanged', appealId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -378,17 +377,4 @@ export const postCheckTransfer = async (request, response) => {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getConfirmResubmit = async (request, response) => {
-	const appealData = request.currentAppeal;
-	const pageContent = resubmitConfirmationPage(appealData);
-
-	return response.status(200).render('appeals/confirmation.njk', {
-		pageContent
-	});
 };

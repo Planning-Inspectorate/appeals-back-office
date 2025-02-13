@@ -4,7 +4,6 @@ import {
 	updateDueDatePage
 } from '../appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case.service.js';
-import { decisionIncompleteConfirmationPage } from './outcome-incomplete.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
@@ -139,23 +138,6 @@ const renderUpdateDueDate = async (request, response) => {
 	});
 };
 
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderDecisionIncompleteConfirmationPage = async (request, response) => {
-	const {
-		currentAppeal: { appealId, appealReference }
-	} = request;
-
-	const pageContent = decisionIncompleteConfirmationPage(appealId, appealReference);
-
-	response.status(200).render('appeals/confirmation.njk', {
-		pageContent
-	});
-};
-
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getIncompleteReason = async (request, response) => {
 	renderIncompleteReason(request, response);
@@ -252,9 +234,4 @@ export const postUpdateDueDate = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getConfirmation = async (request, response) => {
-	renderDecisionIncompleteConfirmationPage(request, response);
 };

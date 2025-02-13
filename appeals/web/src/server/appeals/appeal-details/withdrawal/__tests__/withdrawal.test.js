@@ -460,51 +460,6 @@ describe('withdrawal', () => {
 			);
 		});
 	});
-
-	describe('GET /withdrawal/confirmation', () => {
-		beforeEach(async () => {
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
-			nock('http://test/')
-				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses)
-				.persist();
-			nock('http://test/').post('/appeals/1/documents').reply(200).persist();
-			nock('http://test/').post('/appeals/1/withdrawal').reply(200).persist();
-
-			await request
-				.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestStartPath}`)
-				.send({ 'upload-info': fileUploadInfo });
-			await request
-				.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestDatePath}`)
-				.send(mockRequestWithdrawalDate);
-			await request
-				.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestRedactionStatus}`)
-				.send({ 'withdrawal-redaction-status': 'Unredacted' });
-			await request
-				.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${checkYourAnswersPath}`)
-				.send({ 'confirm-withdrawal': 'yes' });
-		});
-
-		afterEach(teardown);
-		it('should render the confirmation page with the expected content', async () => {
-			const response = await request.get(
-				`${baseUrl}/${mockAppealId}${withdrawalPath}/confirmation`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<h1 class="govuk-panel__title"> Appeal withdrawn</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>'
-			);
-		});
-	});
 	describe('GET /view', () => {
 		afterEach(teardown);
 

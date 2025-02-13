@@ -9,11 +9,11 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addDocumentDetailsFormDataToFileUploadInfo } from '../../appeal-documents/appeal-documents.mapper.js';
 import { getDocumentRedactionStatuses } from '../../appeal-documents/appeal.documents.service.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	checkAndConfirmPage,
 	dateWithdrawalRequestPage,
 	manageWithdrawalRequestFolderPage,
-	withdrawalConfirmationPage,
 	withdrawalDocumentRedactionStatusPage
 } from './withdrawal.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
@@ -329,7 +329,13 @@ export const postCheckYourAnswers = async (request, response) => {
 			request.session.withdrawal.withdrawalRequestDate
 		);
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}/withdrawal/confirmation`);
+		addNotificationBannerToSession(
+			request.session,
+			'appealWithdrawalRequested',
+			currentAppeal.appealId
+		);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -355,22 +361,5 @@ export const renderCheckYourAnswers = async (request, response) => {
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getConfirmation = async (request, response) => {
-	const appealData = request.currentAppeal;
-
-	/** @type {import('./withdrawal.types.js').WithdrawalRequest} */
-	request.session.withdrawal = {};
-
-	const pageContent = withdrawalConfirmationPage(appealData);
-
-	return response.status(200).render('appeals/confirmation.njk', {
-		pageContent
 	});
 };

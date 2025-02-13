@@ -23,6 +23,4 @@ router
 		controller.postUpdateDueDate
 	);
 
-router.route('/confirmation').get(controller.getConfirmation);
-
 export default router;

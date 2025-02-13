@@ -632,32 +632,6 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
 		});
 	});
-
-	describe('GET /issue-decision/decision-sent', () => {
-		it('should render the confirmation page with the expected content', async () => {
-			await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Allowed' })
-				.expect(302);
-
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/decision-sent`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<h1 class="govuk-panel__title"> Decision sent</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}" class="govuk-link">Add costs decision</a>`
-			);
-		});
-	});
 });
 
 describe('mapDecisionOutcome', () => {
