@@ -4,9 +4,9 @@ import { ensureArray } from '#lib/array-utilities.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
-	allocationSpecialismsPage,
-	confirmPage
-} from './valid.mapper.js';
+	allocationSpecialismsPage
+} from '../allocation/allocation.mapper.js';
+import { confirmPage } from './valid.mapper.js';
 import { acceptRepresentation } from '../../representations.service.js';
 
 /**
