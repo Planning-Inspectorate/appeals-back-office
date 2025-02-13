@@ -82,6 +82,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -96,17 +97,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -131,6 +141,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -145,17 +156,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -203,6 +223,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -217,17 +238,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -303,6 +333,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -317,17 +348,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -403,6 +443,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -417,17 +458,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -503,6 +553,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -517,17 +568,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -590,6 +650,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -604,17 +665,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -679,6 +749,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -693,17 +764,26 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,
@@ -765,6 +845,7 @@ describe('appeals list routes', () => {
 								ipComments: {
 									status: 'not_received',
 									counts: {
+										awaiting_review: 0,
 										valid: 0,
 										published: 0
 									}
@@ -779,18 +860,27 @@ describe('appeals list routes', () => {
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
-									status: 'not_received'
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
 								}
 							},
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false,
-							commentCounts: {}
+							isChildAppeal: false
 						}
 					],
 					lpas,

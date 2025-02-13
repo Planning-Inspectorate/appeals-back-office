@@ -69,6 +69,8 @@ apps_config = {
       lpa_statement_incomplete_id                                     = "471cfa29-ecd4-485a-8ead-dbc73285637a"
       appellant_final_comments_done_id                                = "c368f84b-01ad-4a78-9823-27ba4ce74351"
       lpa_final_comments_done_id                                      = "be3c6c21-f429-4ab3-87f9-d5e280650543"
+      received_statement_and_ip_comments_appellant_id                 = "c368f84b-01ad-4a78-9823-27ba4ce74351"
+      received_statement_and_ip_comments_lpa_id                       = "be3c6c21-f429-4ab3-87f9-d5e280650543"
     }
   }
 

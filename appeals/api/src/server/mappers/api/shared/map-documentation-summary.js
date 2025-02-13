@@ -58,6 +58,10 @@ export const mapDocumentationSummary = (data) => {
 			ipComments: {
 				status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				counts: {
+					[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW]: count(
+						ipComments,
+						(rep) => rep.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+					),
 					[APPEAL_REPRESENTATION_STATUS.VALID]: count(
 						ipComments,
 						(rep) => rep.status === APPEAL_REPRESENTATION_STATUS.VALID

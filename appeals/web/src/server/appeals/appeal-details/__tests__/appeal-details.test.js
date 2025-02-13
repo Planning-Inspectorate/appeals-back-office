@@ -2083,6 +2083,127 @@ describe('appeal-details', () => {
 			);
 		});
 
+		describe('"Progress case" important banners', () => {
+			const appealId = 1;
+			const appealStatus = 'final_comments';
+			const testCases = [
+				{
+					conditionName: 'both Appellant and LPA Final Comments are valid',
+					appealData: {
+						...appealData,
+						appealId,
+						appealStatus,
+						appealTimetable: {
+							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
+						},
+						documentationSummary: {
+							lpaFinalComments: {
+								representationStatus: 'valid'
+							},
+							appellantFinalComments: {
+								representationStatus: 'valid'
+							}
+						}
+					},
+					bannerText: 'Share final comments'
+				},
+				{
+					conditionName: 'Appellant Final Comments are valid (but not LPA)',
+					appealData: {
+						...appealData,
+						appealId,
+						appealStatus,
+						appealTimetable: {
+							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
+						},
+						documentationSummary: {
+							lpaFinalComments: {
+								representationStatus: null
+							},
+							appellantFinalComments: {
+								representationStatus: 'valid'
+							}
+						}
+					},
+					bannerText: 'Share final comments'
+				},
+				{
+					conditionName: 'LPA Final Comments are valid (but not Appellant)',
+					appealData: {
+						...appealData,
+						appealId,
+						appealStatus,
+						appealTimetable: {
+							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
+						},
+						documentationSummary: {
+							lpaFinalComments: {
+								representationStatus: 'valid'
+							},
+							appellantFinalComments: {
+								representationStatus: null
+							}
+						}
+					},
+					bannerText: 'Share final comments'
+				},
+				{
+					conditionName: 'both Appellant and LPA Final Comments are absent or invalid',
+					appealData: {
+						...appealData,
+						appealId,
+						appealStatus,
+						appealTimetable: {
+							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
+						},
+						documentationSummary: {
+							lpaFinalComments: {
+								representationStatus: null
+							},
+							appellantFinalComments: {
+								representationStatus: null
+							}
+						}
+					},
+					bannerText: 'Progress case'
+				}
+			];
+
+			beforeEach(() => {
+				nock.cleanAll();
+			});
+
+			for (const testCase of testCases) {
+				it(`should render a "${testCase.bannerText}" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and ${testCase.conditionName}.`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...testCase.appealData
+						})
+						.persist();
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+						.reply(200, {
+							statement: 0,
+							comment: 0,
+							lpa_final_comment: 1,
+							appellant_final_comment: 1
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+					const element = parseHtml(response.text, { rootElement: '.govuk-notification-banner' });
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain('Important</h3>');
+					expect(element.innerHTML).toContain(`href="/appeals-service/appeal-details/1/share"`);
+					expect(element.innerHTML).toContain(`${testCase.bannerText}</a>`);
+				});
+			}
+		});
+
 		describe('Documentation', () => {
 			describe('Final comments', () => {
 				const appealId = 3;
