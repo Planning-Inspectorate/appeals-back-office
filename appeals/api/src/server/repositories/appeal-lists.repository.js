@@ -113,26 +113,34 @@ const getAllAppeals = (
  */
 const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 	const where = {
-		...(status && {
-			appealStatus: {
-				some: { valid: true, status }
-			}
-		}),
 		appealType: { key: { in: getEnabledAppealTypes() } },
-		appealStatus: {
-			some: {
-				valid: true,
-				status: {
-					notIn: [
-						APPEAL_CASE_STATUS.COMPLETE,
-						APPEAL_CASE_STATUS.CLOSED,
-						APPEAL_CASE_STATUS.TRANSFERRED,
-						APPEAL_CASE_STATUS.INVALID,
-						APPEAL_CASE_STATUS.WITHDRAWN
-					]
+		AND: [
+			...(status
+				? [
+						{
+							appealStatus: {
+								some: { valid: true, status }
+							}
+						}
+				  ]
+				: []),
+			{
+				appealStatus: {
+					some: {
+						valid: true,
+						status: {
+							notIn: [
+								APPEAL_CASE_STATUS.COMPLETE,
+								APPEAL_CASE_STATUS.CLOSED,
+								APPEAL_CASE_STATUS.TRANSFERRED,
+								APPEAL_CASE_STATUS.INVALID,
+								APPEAL_CASE_STATUS.WITHDRAWN
+							]
+						}
+					}
 				}
 			}
-		},
+		],
 		OR: [
 			{ inspector: { azureAdUserId: { equals: userId } } },
 			{ caseOfficer: { azureAdUserId: { equals: userId } } }
