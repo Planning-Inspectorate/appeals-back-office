@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { request } from '#tests/../app-test.js';
-import { householdAppeal, appealHas } from '#tests/appeals/mocks.js';
+import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 
@@ -530,7 +530,7 @@ describe('/appeals/:id/reps/publish', () => {
 	describe('publish LPA statements', () => {
 		test('409 if case is not in STATEMENTS state', async () => {
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(appealHas);
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealS78);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -539,6 +539,74 @@ describe('/appeals/:id/reps/publish', () => {
 
 			console.log(response.body);
 			expect(response.status).toEqual(409);
+		});
+
+		test('send notify comments and statements', async () => {
+			// @ts-ignore
+			const [appealStatusItem] = appealS78.appealStatus;
+			const mockAppeal = {
+				...appealS78,
+				appealTimetable: { ...appealS78.appealTimetable, finalCommentsDueDate: '2025-02-19' },
+				appealStatus: [{ ...appealStatusItem, status: 'statements' }]
+			};
+
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockAppeal.applicationReference,
+				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '19 February 2025',
+				site_address: expectedSiteAddress
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				1,
+				config.govNotify.template.receivedStatementsAndIpComments.lpa.id,
+				mockAppeal.lpa.email,
+				{
+					emailReplyToId: null,
+					personalisation: expectedEmailPayload,
+					reference: null
+				}
+			);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				2,
+				config.govNotify.template.receivedStatementsAndIpComments.appellant.id,
+				mockAppeal.appellant.email,
+				{
+					emailReplyToId: null,
+					personalisation: expectedEmailPayload,
+					reference: null
+				}
+			);
+			expect(response.status).toEqual(200);
 		});
 	});
 });

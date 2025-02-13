@@ -209,6 +209,14 @@ export default joi
 							lpa: joi.object({
 								id: joi.string().required()
 							})
+						}),
+						receivedStatementsAndIpComments: joi.object({
+							appellant: joi.object({
+								id: joi.string().required()
+							}),
+							lpa: joi.object({
+								id: joi.string().required()
+							})
 						})
 					})
 					.required(),
