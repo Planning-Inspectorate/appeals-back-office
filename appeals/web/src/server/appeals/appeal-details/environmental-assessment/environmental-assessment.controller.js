@@ -248,13 +248,12 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			response,
 			nextPageUrl: appealUrl(currentAppeal.appealId),
 			successCallback: () => {
-				addNotificationBannerToSession(
+				addNotificationBannerToSession({
 					session,
-					'environmentalAssessmentDocumentAdded',
-					currentAppeal.appealId,
-					'',
-					`Environmental assessment documents uploaded`
-				);
+					bannerDefinitionKey: 'documentAdded',
+					appealId: currentAppeal.appealId,
+					text: 'Environmental assessment documents uploaded'
+				});
 			}
 		});
 	} catch (error) {

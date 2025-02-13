@@ -350,7 +350,11 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`,
 			successCallback: () => {
-				addNotificationBannerToSession(request.session, 'documentAdded', currentAppeal.appealId);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'documentAdded',
+					appealId: currentAppeal.appealId
+				});
 			}
 		});
 	} catch (error) {

@@ -9,14 +9,16 @@ import {
 import { capitalize } from 'lodash-es';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-
-import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import {
+	userHasPermission,
+	removeSummaryListActions,
+	mapNotificationBannersFromSession,
+	createNotificationBanner
+} from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
@@ -25,10 +27,10 @@ import {
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { userHasPermission } from '#lib/mappers/index.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
+import { ensureArray } from '#lib/array-utilities.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -132,17 +134,6 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		reviewOutcomeComponents.push(documentsWarningComponent);
 	}
 
-	if (
-		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
-	) {
-		addNotificationBannerToSession(
-			session,
-			'notCheckedDocument',
-			appealDetails?.appealId,
-			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
-		);
-	}
-
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
@@ -164,7 +155,9 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	}
 
 	const existingValidationOutcome = getValidationOutcomeFromAppellantCase(appellantCaseData);
-	const notificationBanners = mapNotificationBannerComponentParameters(
+	const notificationBanners = mapAppellantCaseNotificationBanners(
+		appellantCaseData,
+		currentRoute,
 		session,
 		existingValidationOutcome,
 		existingValidationOutcome === 'invalid'
@@ -438,7 +431,8 @@ export function checkAndConfirmPage(
 }
 
 /**
- *
+ * @param {SingleAppellantCaseResponse} appellantCaseData
+ * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {AppellantCaseValidationOutcome|undefined} validationOutcome
  * @param {IncompleteInvalidReasonsResponse[]} notValidReasons
@@ -446,27 +440,25 @@ export function checkAndConfirmPage(
  * @param {string|null} [appealDueDate]
  * @returns {PageComponent[]}
  */
-export function mapNotificationBannerComponentParameters(
+export function mapAppellantCaseNotificationBanners(
+	appellantCaseData,
+	currentRoute,
 	session,
 	validationOutcome,
 	notValidReasons,
 	appealId,
 	appealDueDate
 ) {
-	if (
-		validationOutcome === 'valid' &&
-		'notificationBanners' in session &&
-		'appellantCaseNotValid' in session.notificationBanners
-	) {
-		delete session.notificationBanners.appellantCaseNotValid;
-	} else if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
-		if (!Array.isArray(notValidReasons)) {
-			notValidReasons = [notValidReasons];
-		}
+	const banners = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
-		if (!('notificationBanners' in session)) {
-			session.notificationBanners = {};
-		}
+	if (
+		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
+	) {
+		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
+	}
+
+	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
+		notValidReasons = ensureArray(notValidReasons);
 
 		const listClasses = 'govuk-!-margin-top-0';
 
@@ -516,15 +508,16 @@ export function mapNotificationBannerComponentParameters(
 			});
 		}
 
-		session.notificationBanners.appellantCaseNotValid = {
-			appealId,
-			titleText: `Appeal is ${String(validationOutcome)}`,
-			html: '',
-			pageComponents: bannerContentPageComponents
-		};
+		banners.unshift(
+			createNotificationBanner({
+				bannerDefinitionKey: 'appellantCaseNotValid',
+				titleText: `Appeal is ${String(validationOutcome)}`,
+				pageComponents: bannerContentPageComponents
+			})
+		);
 	}
 
-	return buildNotificationBanners(session, 'appellantCase', appealId);
+	return banners;
 }
 
 /**

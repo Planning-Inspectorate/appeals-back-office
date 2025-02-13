@@ -58,13 +58,12 @@ export const postChangeEiaDevelopmentDescription = async (request, response) => 
 			request.session.eiaDevelopmentDescription
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Description of development updated'
-		);
+			text: 'Description of development updated'
+		});
 
 		delete request.session.eiaDevelopmentDescription;
 

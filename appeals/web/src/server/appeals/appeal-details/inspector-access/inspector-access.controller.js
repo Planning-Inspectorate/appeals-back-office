@@ -99,12 +99,12 @@ export const postChangeInspectorAccess = async (request, response) => {
 			);
 		}
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Inspector access (${source}) updated</p>`
-		);
+			text: `Inspector access (${source}) updated`
+		});
 
 		delete request.session.inspectorAccess;
 

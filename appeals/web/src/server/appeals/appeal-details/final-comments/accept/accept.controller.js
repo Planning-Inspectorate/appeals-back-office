@@ -44,7 +44,11 @@ export const postConfirmAcceptFinalComment = async (request, response) => {
 			'valid'
 		);
 
-		addNotificationBannerToSession(session, 'finalCommentsAcceptSuccess', appealId);
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'finalCommentsAcceptSuccess',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

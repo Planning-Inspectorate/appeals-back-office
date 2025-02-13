@@ -70,13 +70,12 @@ export const postChangeEiaColumnTwoThreshold = async (request, response) => {
 			request.session.eiaColumnTwoThreshold
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Column 2 threshold criteria status changed'
-		);
+			text: 'Column 2 threshold criteria status changed'
+		});
 
 		delete request.session.eiaColumnTwoThreshold;
 
@@ -146,13 +145,12 @@ export const postChangeEiaRequiresEnvironmentalStatement = async (request, respo
 			request.session.eiaRequiresEnvironmentalStatement
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Environmental statement status changed'
-		);
+			text: 'Environmental statement status changed'
+		});
 
 		delete request.session.eiaRequiresEnvironmentalStatement;
 
@@ -226,13 +224,12 @@ export const postChangeEiaSensitiveAreaDetails = async (request, response) => {
 			request.session.eiaSensitiveAreaDetails
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'In, partly in, or likely to affect a sensitive area changed'
-		);
+			text: 'In, partly in, or likely to affect a sensitive area changed'
+		});
 
 		delete request.session.eiaSensitiveAreaDetails;
 
@@ -306,13 +303,12 @@ export const postChangeEiaConsultedBodiesDetails = async (request, response) => 
 			request.session.eiaConsultedBodiesDetails
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Consulted relevant statutory consultees changed'
-		);
+			text: 'Consulted relevant statutory consultees changed'
+		});
 
 		delete request.session.eiaConsultedBodiesDetails;
 

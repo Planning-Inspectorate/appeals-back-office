@@ -95,13 +95,15 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 
 		delete session.redactedRepresentation;
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'finalCommentsRedactionSuccess',
+			bannerDefinitionKey: 'finalCommentsRedactionSuccess',
 			appealId,
-			undefined,
-			`${formatFinalCommentsTypeText(finalCommentsType, true)} final comments redacted and accepted`
-		);
+			text: `${formatFinalCommentsTypeText(
+				finalCommentsType,
+				true
+			)} final comments redacted and accepted`
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

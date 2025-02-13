@@ -175,12 +175,11 @@ export const postAddNeighbouringSiteCheckAndConfirm = async (request, response) 
 			source,
 			request.session.neighbouringSite
 		);
-		addNotificationBannerToSession(
-			request.session,
-			'neighbouringSiteAdded',
-			appealId,
-			`<p class="govuk-notification-banner__heading">Neighbouring site added</p>`
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'neighbouringSiteAdded',
+			appealId
+		});
 
 		delete request.session.neighbouringSite;
 
@@ -289,12 +288,12 @@ export const postRemoveNeighbouringSite = async (request, response) => {
 		return response.redirect(`${origin}/neighbouring-sites/manage`);
 	} else if (body['remove-neighbouring-site'] === 'yes') {
 		await removeNeighbouringSite(request.apiClient, appealId, siteId);
-		addNotificationBannerToSession(
-			request.session,
-			'neighbouringSiteRemoved',
-			appealId,
-			`<p class="govuk-notification-banner__heading">Neighbouring site removed</p>`
-		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'neighbouringSiteRemoved',
+			appealId
+		});
 
 		const redirectUrl =
 			currentAppeal?.neighbouringSites?.length > 1 ? `${origin}/neighbouring-sites/manage` : origin;
@@ -426,12 +425,11 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 			request.session.neighbouringSite,
 			siteId
 		);
-		addNotificationBannerToSession(
-			request.session,
-			'neighbouringSiteUpdated',
-			appealId,
-			`<p class="govuk-notification-banner__heading">Neighbouring site updated</p>`
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'neighbouringSiteUpdated',
+			appealId
+		});
 
 		delete request.session.neighbouringSite;
 
@@ -512,12 +510,11 @@ export const postChangeNeighbouringSiteAffected = async (request, response) => {
 			neighbouringSiteAffected
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'neighbouringSiteAffected',
-			appealId,
-			`<p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>`
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'neighbouringSiteAffected',
+			appealId
+		});
 
 		delete request.session.neighbouringSite;
 
