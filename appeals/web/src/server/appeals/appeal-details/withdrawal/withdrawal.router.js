@@ -32,6 +32,4 @@ router
 	.get(asyncHandler(controller.getCheckYourAnswers))
 	.post(validators.validateCheckYourAnswers, asyncHandler(controller.postCheckYourAnswers));
 
-router.route('/confirmation').get(asyncHandler(controller.getConfirmation));
-
 export default router;

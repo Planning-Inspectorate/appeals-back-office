@@ -121,7 +121,7 @@ describe('notification banners mapper', () => {
 				{
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1
 						}
 					}
@@ -138,7 +138,7 @@ describe('notification banners mapper', () => {
 				{
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1
 						}
 					}
@@ -155,7 +155,7 @@ describe('notification banners mapper', () => {
 				{
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1
 						}
 					}
@@ -169,8 +169,8 @@ describe('notification banners mapper', () => {
 				parameters: {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
-					type: notificationBannerDefinitions.siteVisitTypeSelected.type,
-					text: notificationBannerDefinitions.siteVisitTypeSelected.text
+					type: notificationBannerDefinitions.siteVisitTypeChanged.type,
+					text: notificationBannerDefinitions.siteVisitTypeChanged.text
 				}
 			}
 		]);
@@ -182,7 +182,7 @@ describe('notification banners mapper', () => {
 				{
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1,
 							titleText: 'overriding title text',
 							type: 'important',
@@ -212,7 +212,7 @@ describe('notification banners mapper', () => {
 		const testSession = {
 			...baseSession,
 			notificationBanners: {
-				siteVisitTypeSelected: {
+				siteVisitTypeChanged: {
 					appealId: 1
 				}
 			}

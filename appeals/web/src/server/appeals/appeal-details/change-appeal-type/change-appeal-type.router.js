@@ -36,6 +36,4 @@ router
 	.get(asyncHandler(controller.getCheckTransfer))
 	.post(validators.validateCheckTransfer, asyncHandler(controller.postCheckTransfer));
 
-router.route('/confirm-resubmit').get(asyncHandler(controller.getConfirmResubmit));
-
 export default router;

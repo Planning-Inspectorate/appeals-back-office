@@ -398,53 +398,6 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 }
 
 /**
- *
- * @param {Appeal} appealData
- * @param {boolean} appealIsInvalid
- * @returns {PageContent}
- */
-export function decisionConfirmationPage(appealData, appealIsInvalid) {
-	const title = appealIsInvalid ? 'Appeal Invalid' : 'Decision sent';
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: title,
-		pageComponents: [
-			{
-				type: 'panel',
-				parameters: {
-					titleText: title,
-					headingLevel: 1,
-					html: `Appeal reference<br><strong>${appealShortReference(
-						appealData.appealReference
-					)}</strong>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}" class="govuk-link">Go back to case details</a></p>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}" class="govuk-link">Add costs decision</a></p>`
-				}
-			}
-		]
-	};
-
-	return pageContent;
-}
-
-/**
  * Checks if the given outcome is a valid InspectorDecisionRequest and returns the corresponding mapped value.
  * @param {string | undefined} outcome The outcome to check.
  * @returns {string} The mapped decision string, or a default value if the outcome is invalid or undefined.

@@ -48,6 +48,54 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
 </main>"
 `;
 
+exports[`inspector-access GET /change/:source should render changeInspectorAccess page for the appellant answer when source is appellant from appeals details 2`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Change the inspector access (appellant answer)</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspector-access-radio" name="inspectorAccessRadio"
+                                        type="radio" value="yes" data-aria-controls="conditional-inspector-access-radio">
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inspector-access-radio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="inspector-access-details">Inspector access (appellant details)</label>
+                                            <textarea class="govuk-textarea"
+                                            id="inspector-access-details" name="inspectorAccessDetails" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inspector-access-radio-2" name="inspectorAccessRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="inspector-access-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`inspector-access GET /change/:source should render changeInspectorAccess page for the appellant answer when source is appellant from appellant case 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

@@ -1037,13 +1037,13 @@ describe('Libraries', () => {
 			it('should return true and add a notificationBanners property to the session and add a property with name matching the bannerDefinitionKey and value of an object containing the provided appealId to the session notificationBanners object if a recognised bannerDefinitionKey is provided and there is no notificationBanners property in the session already', () => {
 				const testSession = { ...baseSession };
 
-				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeSelected', 1);
+				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeChanged', 1);
 
 				expect(result).toBe(true);
 				expect(testSession).toEqual({
 					...baseSession,
 					notificationBanners: {
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1,
 							html: ''
 						}
@@ -1061,7 +1061,7 @@ describe('Libraries', () => {
 					}
 				};
 
-				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeSelected', 1);
+				const result = addNotificationBannerToSession(testSession, 'siteVisitTypeChanged', 1);
 
 				expect(result).toBe(true);
 				expect(testSession).toEqual({
@@ -1070,7 +1070,7 @@ describe('Libraries', () => {
 						allocationDetailsUpdated: {
 							appealId: 1
 						},
-						siteVisitTypeSelected: {
+						siteVisitTypeChanged: {
 							appealId: 1,
 							html: ''
 						}
@@ -1085,7 +1085,7 @@ describe('Libraries', () => {
 
 			const result = addNotificationBannerToSession(
 				testSession,
-				'siteVisitTypeSelected',
+				'siteVisitTypeChanged',
 				1,
 				customHtml
 			);
@@ -1094,7 +1094,7 @@ describe('Libraries', () => {
 			expect(testSession).toEqual({
 				...baseSession,
 				notificationBanners: {
-					siteVisitTypeSelected: {
+					siteVisitTypeChanged: {
 						appealId: 1,
 						html: customHtml
 					}

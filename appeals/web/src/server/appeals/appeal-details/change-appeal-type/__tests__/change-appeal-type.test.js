@@ -11,7 +11,6 @@ const changeAppealTypePath = '/change-appeal-type';
 const appealTypePath = '/appeal-type';
 const resubmitPath = '/resubmit';
 const changeAppealFinalDatePath = '/change-appeal-final-date';
-const confirmationPath = '/confirm-resubmit';
 const addHorizonReferencePath = '/add-horizon-reference';
 const checkTransferPath = '/check-transfer';
 
@@ -181,7 +180,7 @@ describe('change-appeal-type', () => {
 			nock.cleanAll();
 		});
 
-		it('should redirect to the confirmation page when the required dates fields are populated and valid', async () => {
+		it('should redirect to the appeal details page when the required dates fields are populated and valid', async () => {
 			await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
 				.send({ appealType: 1 });
@@ -196,12 +195,8 @@ describe('change-appeal-type', () => {
 					'change-appeal-final-date-month': 11,
 					'change-appeal-final-date-year': 3000
 				});
-
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toContain(confirmationPath);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/confirm-resubmit'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
@@ -361,24 +356,6 @@ describe('change-appeal-type', () => {
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain('Date must be a business day</a>');
 	});
-
-	describe('POST /change-appeal-type/confirm-resubmit', () => {
-		it('should re-render the confirm page', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${confirmationPath}`);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Appeal closed</h1>');
-			expect(element.innerHTML).toContain(
-				'The appellant has been asked to resubmit using the correct appeal type.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
-		});
-	});
-
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {
 			const response = await request.get(

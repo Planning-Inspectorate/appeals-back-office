@@ -3,11 +3,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { siteVisitData, appealData } from '#testing/app/fixtures/referencedata.js';
-import { getSiteVisitChangeType } from '../site-visit.mapper.js';
-
-/**
- * @typedef {import('../site-visit.mapper.js').ScheduleOrManageSiteVisitConfirmationPageType} ScheduleOrManageSiteVisitConfirmationPageType
- */
+import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -459,7 +455,7 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('start time must be before end time</a>');
 		});
 
-		it('should redirect to the site visit scheduled confirmation page if all required fields are populated and valid', async () => {
+		it('should redirect to the site appeal details page if all required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
 				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
@@ -472,12 +468,10 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
-		it('should redirect to the site visit scheduled confirmation page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
+		it('should redirect to the appeals details page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
 				'visit-type': 'unaccompanied',
 				'visit-date-day': '1',
@@ -490,9 +484,7 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accompanied and start time is not populated', async () => {
@@ -522,7 +514,7 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
 
-		it('should redirect to the site visit scheduled confirmation page if visit type is accompanied and end time is not populated but all other required fields are populated and valid', async () => {
+		it('should redirect to the appeal details page if visit type is accompanied and end time is not populated but all other required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
 				'visit-type': 'accompanied',
 				'visit-date-day': '1',
@@ -535,9 +527,7 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and start time is not populated but all other required fields are populated and valid', async () => {
@@ -1027,7 +1017,7 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('start time must be before end time</a>');
 		});
 
-		it('should redirect to the site visit scheduled confirmation page if all required fields are populated and valid', async () => {
+		it('should redirect to the appeal details page if all required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
 				'visit-type': 'accessRequired',
 				'visit-date-day': '1',
@@ -1040,12 +1030,10 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
-		it('should redirect to the site visit scheduled confirmation page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
+		it('should redirect to the appeal details page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
 				'visit-type': 'unaccompanied',
 				'visit-date-day': '1',
@@ -1058,9 +1046,7 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
@@ -1165,13 +1151,11 @@ describe('site-visit', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/visit-scheduled/new'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
-	describe('getSiteVisitChangeType', () => {
+	describe('getSiteVisitSuccessBannerTypeAndChangeType', () => {
 		/** @type {WebAppeal} */
 		let appealDetails;
 		/** @type {UpdateOrCreateSiteVisitParameters} */
@@ -1192,46 +1176,65 @@ describe('site-visit', () => {
 			updateOrCreateSiteVisitParameters = {
 				appealIdNumber: 1,
 				apiVisitType: 'unaccompanied',
-				visitDate: '2023-05-20',
+				visitDate: '2023-05-20T00:00:00Z',
 				visitStartTime: '10:00',
 				visitEndTime: '11:00',
 				previousVisitType: ''
 			};
 		});
-
-		it('should return "visit-type" if visit type has changed but not date and time', () => {
+		it('Should return siteVisitTypeChanged and visit-type if site visit type has changed', () => {
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
-
-			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
-
-			expect(result).toBe('visit-type');
-			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitTypeChanged');
+			expect(result.changeType).toBe('visit-type');
 		});
-
-		it('should return "date-time" if date and time have changed but not visit type', () => {
-			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
-
-			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
-
-			expect(result).toBe('date-time');
-			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
+		it('Should return siteVisitRescheduled and date-time if site visit start time has changed', () => {
+			updateOrCreateSiteVisitParameters.visitStartTime = '10:30';
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitRescheduled');
+			expect(result.changeType).toBe('date-time');
 		});
-
-		it('should return "all" if both visit type and date/time have changed', () => {
+		it('Should return siteVisitRescheduled and date-time if site visit end time has changed', () => {
+			updateOrCreateSiteVisitParameters.visitEndTime = '11:30';
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitRescheduled');
+			expect(result.changeType).toBe('date-time');
+		});
+		it('Should return siteVisitRescheduled and date-time if site visit date has changed', () => {
+			updateOrCreateSiteVisitParameters.visitDate = '2023-06-20T00:00:00Z';
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitRescheduled');
+			expect(result.changeType).toBe('date-time');
+		});
+		it('Should return siteVisitChangedDefault and all if type site visit type and date or time has changed', () => {
+			updateOrCreateSiteVisitParameters.visitDate = '2023-06-20T00:00:00Z';
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
-			updateOrCreateSiteVisitParameters.visitDate = '2023-05-21';
-
-			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
-
-			expect(result).toBe('all');
-			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('unaccompanied');
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitChangedDefault');
+			expect(result.changeType).toBe('all');
 		});
-
-		it('should return "unchanged" if neither visit type nor date/time have changed', () => {
-			const result = getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters);
-
-			expect(result).toBe('unchanged');
-			expect(updateOrCreateSiteVisitParameters.previousVisitType).toBe('');
+		it('Should return siteVisitNoChanges if type nothing has changed', () => {
+			const result = getSiteVisitSuccessBannerTypeAndChangeType(
+				appealDetails,
+				updateOrCreateSiteVisitParameters
+			);
+			expect(result.bannerType).toBe('siteVisitNoChanges');
+			expect(result.changeType).toBe('unchanged');
 		});
 	});
 });

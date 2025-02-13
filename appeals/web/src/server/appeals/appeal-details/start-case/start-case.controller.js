@@ -1,13 +1,9 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import {
-	startCasePage,
-	startCaseConfirmationPage,
-	changeDatePage,
-	changeDateConfirmationPage
-} from './start-case.mapper.js';
+import { startCasePage, changeDatePage } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
 import { getTodaysISOString } from '#lib/dates.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -44,9 +40,9 @@ export const postStartDate = async (request, response) => {
 
 		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/start-case/add/confirmation`
-		);
+		addNotificationBannerToSession(request.session, 'caseStarted', appealId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
 			error,
@@ -57,16 +53,6 @@ export const postStartDate = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getAddConfirmation = async (request, response) => {
-	const { appealId, appealReference } = request.currentAppeal;
-	const pageContent = startCaseConfirmationPage(appealId, appealReference);
-
-	response.status(200).render('appeals/confirmation.njk', {
-		pageContent
-	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -85,7 +71,6 @@ const renderChangeDatePage = async (request, response) => {
 	if (!startedAt || documentationSummary?.lpaQuestionnaire?.status !== 'not_received') {
 		return response.render('app/500.njk');
 	}
-
 	const mappedPageContent = changeDatePage(
 		appealId,
 		appealReference,
@@ -108,9 +93,9 @@ export const postChangeDate = async (request, response) => {
 
 		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/start-case/change/confirmation`
-		);
+		addNotificationBannerToSession(request.session, 'startDateChanged', appealId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
 			error,
@@ -121,14 +106,4 @@ export const postChangeDate = async (request, response) => {
 
 		return response.render('app/500.njk');
 	}
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getChangeConfirmation = async (request, response) => {
-	const { appealId, appealReference } = request.currentAppeal;
-	const pageContent = changeDateConfirmationPage(appealId, appealReference);
-
-	response.render('appeals/confirmation.njk', {
-		pageContent
-	});
 };

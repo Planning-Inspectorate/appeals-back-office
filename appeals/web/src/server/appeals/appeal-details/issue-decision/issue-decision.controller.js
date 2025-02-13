@@ -5,7 +5,6 @@ import {
 	checkAndConfirmPage,
 	dateDecisionLetterPage,
 	issueDecisionPage,
-	decisionConfirmationPage,
 	mapDecisionOutcome,
 	decisionLetterUploadPageBodyComponents,
 	invalidReasonPage,
@@ -23,6 +22,7 @@ import {
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -348,9 +348,9 @@ export const postCheckDecision = async (request, response) => {
 			request.session.inspectorDecision.letterDate
 		);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/issue-decision/decision-sent`
-		);
+		addNotificationBannerToSession(request.session, 'issuedDecisionValid', appealId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -380,24 +380,6 @@ export const renderCheckDecision = async (request, response) => {
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
 		errors
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getDecisionSent = async (request, response) => {
-	const appealData = request.currentAppeal;
-	const appealIsInvalid = request.session.inspectorDecision.outcome === 'Invalid';
-
-	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-	request.session.inspectorDecision = {};
-
-	const pageContent = decisionConfirmationPage(appealData, appealIsInvalid);
-
-	return response.status(200).render('appeals/confirmation.njk', {
-		pageContent
 	});
 };
 
@@ -450,9 +432,9 @@ export const postCheckInvalidDecision = async (request, response) => {
 	try {
 		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/issue-decision/decision-sent`
-		);
+		addNotificationBannerToSession(request.session, 'issuedDecisionInvalid', appealId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 

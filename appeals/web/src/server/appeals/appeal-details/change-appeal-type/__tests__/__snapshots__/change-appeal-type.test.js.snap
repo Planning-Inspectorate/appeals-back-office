@@ -476,26 +476,6 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should rende
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/confirm-resubmit should re-render the confirm page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> Appeal closed</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The appellant has been asked to resubmit using the correct appeal type.</p>
-                <p                 class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
-                    </p>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render the resubmit page with an error message if required field is missing 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

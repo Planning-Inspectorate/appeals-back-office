@@ -57,7 +57,7 @@ describe('buildNotificationBanners', () => {
 
 	it('should build a notification banner for a matching key', () => {
 		session.notificationBanners = {
-			siteVisitTypeSelected: { appealId }
+			siteVisitTypeChanged: { appealId }
 		};
 
 		const result = buildNotificationBanners(session, servicePage, appealId);
@@ -69,7 +69,7 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'Site visit type has been selected'
+					text: 'Site visit type changed'
 				}
 			}
 		]);
@@ -77,12 +77,12 @@ describe('buildNotificationBanners', () => {
 
 	it('should remove non-persistent banners from the session', () => {
 		session.notificationBanners = {
-			siteVisitTypeSelected: { appealId }
+			siteVisitTypeChanged: { appealId }
 		};
 
 		buildNotificationBanners(session, servicePage, appealId);
 
-		expect(session.notificationBanners).not.toHaveProperty('siteVisitTypeSelected');
+		expect(session.notificationBanners).not.toHaveProperty('siteVisitTypeChanged');
 	});
 
 	it('should retain persistent banners in the session', () => {
@@ -97,7 +97,7 @@ describe('buildNotificationBanners', () => {
 
 	it('should use data from the session if provided', () => {
 		session.notificationBanners = {
-			siteVisitTypeSelected: {
+			siteVisitTypeChanged: {
 				appealId,
 				type: 'success',
 				text: 'Custom text'

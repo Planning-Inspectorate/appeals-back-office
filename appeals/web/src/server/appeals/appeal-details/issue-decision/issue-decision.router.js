@@ -88,6 +88,4 @@ router
 		asyncHandler(controller.postCheckInvalidDecision)
 	);
 
-router.route('/decision-sent').get(asyncHandler(controller.getDecisionSent));
-
 export default router;

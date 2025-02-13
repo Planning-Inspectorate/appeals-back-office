@@ -6,7 +6,7 @@ import {
 	stringIsSiteVisitConfirmationPageType,
 	siteVisitBookedPage,
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
-	getSiteVisitChangeType
+	getSiteVisitSuccessBannerTypeAndChangeType
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -192,7 +192,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 				);
 
 			if (appealDetails.siteVisit?.siteVisitId) {
-				const confirmationPageTypeToRender = getSiteVisitChangeType(
+				const successBannerAndChangeType = getSiteVisitSuccessBannerTypeAndChangeType(
 					appealDetails,
 					mappedUpdateOrCreateSiteVisitParameters
 				);
@@ -206,18 +206,16 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
 					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
-					confirmationPageTypeToRender
+					successBannerAndChangeType.changeType
 				);
 
 				addNotificationBannerToSession(
 					request.session,
-					'siteVisitArranged',
+					successBannerAndChangeType.bannerType,
 					appealDetails.appealId
 				);
 
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/visit-scheduled/${confirmationPageTypeToRender}`
-				);
+				return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
 			} else {
 				await siteVisitService.createSiteVisit(
 					request.apiClient,
@@ -230,13 +228,11 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 
 				addNotificationBannerToSession(
 					request.session,
-					'siteVisitArranged',
+					'siteVisitScheduled',
 					appealDetails.appealId
 				);
 
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/visit-scheduled/new`
-				);
+				return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
 			}
 		}
 		return response.status(404).render('app/404.njk');

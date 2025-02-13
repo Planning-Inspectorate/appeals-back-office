@@ -16,15 +16,30 @@
  * @type {Object<string, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
-	siteVisitTypeSelected: {
+	siteVisiScheduled: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit type has been selected'
+		text: 'Site visit scheduled'
 	},
-	siteVisitArranged: {
+	siteVisitRescheduled: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit has been arranged'
+		text: 'Site visit rescheduled'
+	},
+	siteVisitTypeChanged: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit type changed'
+	},
+	siteVisitNoChanges: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'No changes made'
+	},
+	siteVisitChangedDefault: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit changed'
 	},
 	allocationDetailsUpdated: {
 		pages: ['appealDetails'],
@@ -303,6 +318,51 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Final comments accepted'
+	},
+	lpaqReviewComplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire complete'
+	},
+	lpaqReviewIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire incomplete'
+	},
+	appealWithdrawalRequested: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal withdrawal requested'
+	},
+	appellantCaseInvalidOrIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant case invalid or incomplete'
+	},
+	appealTypeChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal closed'
+	},
+	caseStarted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Case started'
+	},
+	startDateChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Start date changed'
+	},
+	issuedDecisionValid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Decision sent'
+	},
+	issuedDecisionInvalid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal invalid'
 	}
 };
 
