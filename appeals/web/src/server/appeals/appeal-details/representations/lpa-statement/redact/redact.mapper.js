@@ -1,10 +1,12 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
+/** @typedef {import('../../../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth */
 
 /**
  * @param {Appeal} appealDetails
@@ -68,11 +70,24 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {import('express-session').Session & Record<string, string>} [session]
+ * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
+ * @param {SessionWithAuth & { redactLPAStatement?: { redactedRepresentation: string, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} session
  * @returns {PageContent}
  */
-export function redactConfirmPage(appealDetails, lpaStatement, session) {
+export function redactConfirmPage(appealDetails, lpaStatement, specialismData, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const sessionData = session.redactLPAStatement;
+	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
+
+	const specialisms = (() => {
+		if (!sessionData?.allocationSpecialisms) {
+			return [];
+		}
+
+		const items = ensureArray(sessionData.allocationSpecialisms);
+
+		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
+	})();
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -106,7 +121,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 								{
 									type: 'show-more',
 									parameters: {
-										text: session?.redactedRepresentation
+										text: session?.redactLPAStatement?.redactedRepresentation
 									}
 								}
 							]
@@ -133,7 +148,54 @@ export function redactConfirmPage(appealDetails, lpaStatement, session) {
 								}
 							]
 						}
-					}
+					},
+					{
+						key: { text: 'Do you need to update the allocation level and specialisms?' },
+						value: { text: updatingAllocation ? 'Yes' : 'No' },
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+									visuallyHiddenText: 'allocation level and specialisms'
+								}
+							]
+						}
+					},
+					...(updatingAllocation
+						? [
+								{
+									key: { text: 'Allocation level' },
+									value: { text: sessionData.allocationLevel },
+									actions: {
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+												visuallyHiddenText: 'allocation level'
+											}
+										]
+									}
+								},
+								{
+									key: { text: 'Allocation specialisms' },
+									value: {
+										html: `<ul class="govuk-list govuk-list--bullet">
+                    ${specialisms.map((s) => `<li>${s}</li>`).join('')}
+                  </ul>`
+									},
+									actions: {
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
+												visuallyHiddenText: 'allocation specialisms'
+											}
+										]
+									}
+								}
+						  ]
+						: [])
 				]
 			}
 		}
