@@ -14,10 +14,14 @@ export const mapAffectsListedBuildingDetails = ({
 			key: {
 				text: 'Listed buildings'
 			},
-			value: lpaQuestionnaireData.listedBuildingDetails?.length
+			value: lpaQuestionnaireData.listedBuildingDetails?.filter(
+				(lb) => lb.listEntry && lb.affectsListedBuilding === true
+			)?.length
 				? {
 						html: displayPageFormatter.formatListOfListedBuildingNumbers(
-							lpaQuestionnaireData.listedBuildingDetails || []
+							lpaQuestionnaireData.listedBuildingDetails.filter(
+								(lb) => lb.affectsListedBuilding === true
+							) || []
 						)
 				  }
 				: {

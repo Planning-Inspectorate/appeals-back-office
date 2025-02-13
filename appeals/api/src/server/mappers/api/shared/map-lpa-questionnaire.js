@@ -29,7 +29,7 @@ export const mapLpaQuestionnaire = (data) => {
 				({ lpaNotificationMethod: { name } }) => ({ name })
 			),
 			listedBuildingDetails:
-				formatListedBuildingDetails(true, lpaQuestionnaire.listedBuildingDetails) || undefined,
+				formatListedBuildingDetails(lpaQuestionnaire.listedBuildingDetails) || undefined,
 			isConservationArea: lpaQuestionnaire.inConservationArea,
 			isGreenBelt: lpaQuestionnaire.isGreenBelt,
 			isAffectingNeighbouringSites: lpaQuestionnaire.isAffectingNeighbouringSites,
