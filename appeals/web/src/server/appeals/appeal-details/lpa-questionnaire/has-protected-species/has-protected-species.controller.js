@@ -81,13 +81,12 @@ export const postChangeHasProtectedSpecies = async (request, response) => {
 			session.hasProtectedSpecies
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Protected species status changed'
-		);
+			text: 'Protected species status changed'
+		});
 
 		delete request.session.hasProtectedSpecies;
 

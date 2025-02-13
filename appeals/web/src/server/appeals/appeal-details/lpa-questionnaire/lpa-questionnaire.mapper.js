@@ -1,5 +1,12 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction, yesNoInput } from '#lib/mappers/index.js';
+import {
+	removeSummaryListActions,
+	userHasPermission,
+	inputInstructionIsRadiosInputInstruction,
+	yesNoInput,
+	createNotificationBanner,
+	mapNotificationBannersFromSession
+} from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 import {
@@ -10,19 +17,14 @@ import {
 } from '#lib/dates.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-
-import { buildNotificationBanners } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 
 /**
@@ -149,15 +151,6 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		reviewOutcomeComponents.push(documentsWarningComponent);
 	}
 
-	if (getDocumentsForVirusStatus(lpaqDetails, 'not_scanned').length > 0) {
-		addNotificationBannerToSession(
-			session,
-			'notCheckedDocument',
-			appealDetails?.appealId,
-			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${currentRoute}">Refresh page to see if scan has finished</a>`
-		);
-	}
-
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
 
@@ -176,9 +169,10 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		});
 	}
 
-	const notificationBanners = mapNotificationBannerComponentParameters(
-		session,
+	const notificationBanners = mapLPAQuestionnaireNotificationBanners(
 		lpaqDetails,
+		session,
+		currentRoute,
 		appealDetails.appealId,
 		appealDetails.appealTimetable?.lpaQuestionnaireDueDate || ''
 	);
@@ -490,26 +484,28 @@ export function checkAndConfirmPage(
 }
 
 /**
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {LPAQuestionnaire} lpaqData
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} currentRoute
  * @param {number} appealId
  * @param {string} lpaqDueDate
  * @returns {PageComponent[]}
  */
-function mapNotificationBannerComponentParameters(session, lpaqData, appealId, lpaqDueDate) {
+function mapLPAQuestionnaireNotificationBanners(
+	lpaqData,
+	session,
+	currentRoute,
+	appealId,
+	lpaqDueDate
+) {
 	const validationOutcome = lpaqData.validation?.outcome?.toLowerCase();
+	const banners = mapNotificationBannersFromSession(session, 'lpaQuestionnaire', appealId);
 
-	if (
-		validationOutcome === 'complete' &&
-		'notificationBanners' in session &&
-		'lpaQuestionnaireNotValid' in session.notificationBanners
-	) {
-		delete session.notificationBanners.lpaQuestionnaireNotValid;
-	} else if (validationOutcome === 'incomplete') {
-		if (!('notificationBanners' in session)) {
-			session.notificationBanners = {};
-		}
+	if (getDocumentsForVirusStatus(lpaqData, 'not_scanned').length > 0) {
+		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
+	}
 
+	if (validationOutcome === 'incomplete') {
 		const listClasses = 'govuk-!-margin-top-0';
 
 		/** @type {PageComponent[]} */
@@ -560,15 +556,16 @@ function mapNotificationBannerComponentParameters(session, lpaqData, appealId, l
 			});
 		}
 
-		session.notificationBanners.lpaQuestionnaireNotValid = {
-			appealId,
-			titleText: `LPA Questionnaire is ${String(validationOutcome)}`,
-			html: '',
-			pageComponents: bannerContentPageComponents
-		};
+		banners.unshift(
+			createNotificationBanner({
+				bannerDefinitionKey: 'lpaQuestionnaireNotValid',
+				titleText: `LPA Questionnaire is ${String(validationOutcome)}`,
+				pageComponents: bannerContentPageComponents
+			})
+		);
 	}
 
-	return buildNotificationBanners(session, 'lpaQuestionnaire', appealId);
+	return banners;
 }
 
 /**

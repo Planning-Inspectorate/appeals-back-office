@@ -65,13 +65,12 @@ export const postChangeApplicationOutcome = async (request, response) => {
 
 		await changeApplicationOutcome(apiClient, appealId, appellantCaseId, applicationOutcome);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Application decision outcome changed'
-		);
+			text: 'Application decision outcome changed'
+		});
 
 		delete request.session.applicationOutcome;
 

@@ -95,13 +95,12 @@ export const postChangeInNearOrLikelyToAffectDesignatedSites = async (request, r
 			mappedInputData
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'In, near or likely to effect designated sites changed'
-		);
+			text: 'In, near or likely to effect designated sites changed'
+		});
 
 		delete request.session.inNearOrLikelyToAffectDesignatedSites;
 

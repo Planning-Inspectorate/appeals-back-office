@@ -1,9 +1,8 @@
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, createNotificationBanner } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import {
 	folderPathToFolderNameText,
@@ -41,20 +40,17 @@ export function manageWithdrawalRequestFolderPage(
 	request,
 	pageHeadingTextOverride
 ) {
-	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
-		addNotificationBannerToSession(
-			request.session,
-			'notCheckedDocument',
-			parseInt(folder.caseId.toString(), 10),
-			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
-		);
-	}
-
-	const notificationBannerComponents = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageFolder',
 		parseInt(folder.caseId.toString(), 10)
 	);
+
+	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
+		notificationBanners.unshift(
+			createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' })
+		);
+	}
 
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
@@ -86,7 +82,7 @@ export function manageWithdrawalRequestFolderPage(
 		preHeading: 'Manage folder',
 		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: [
-			...notificationBannerComponents,
+			...notificationBanners,
 			...errorSummaryPageComponents,
 			{
 				type: 'table',

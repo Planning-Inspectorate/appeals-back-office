@@ -57,7 +57,11 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 	delete session.redactedRepresentation;
 	delete session.siteVisitRequested;
 
-	addNotificationBannerToSession(session, 'interestedPartyCommentsRedactionSuccess', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'interestedPartyCommentsRedactionSuccess',
+		appealId
+	});
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`

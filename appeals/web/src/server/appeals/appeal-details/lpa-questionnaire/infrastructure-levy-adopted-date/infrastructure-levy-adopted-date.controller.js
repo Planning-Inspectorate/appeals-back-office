@@ -86,13 +86,12 @@ export const postChangeInfrastructureLevyAdoptedDate = async (request, response)
 			session.infrastructureLevyAdoptedDate
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Levy adoption date changed'
-		);
+			text: 'Levy adoption date changed'
+		});
 
 		delete request.session.infrastructureLevyAdoptedDate;
 

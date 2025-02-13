@@ -57,13 +57,12 @@ export const postChangeDevelopmentDescription = async (request, response) => {
 			request.session.developmentDescription
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Original development description has been updated'
-		);
+			text: 'Original development description has been updated'
+		});
 		delete request.session.developmentDescription;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
 	} catch (error) {

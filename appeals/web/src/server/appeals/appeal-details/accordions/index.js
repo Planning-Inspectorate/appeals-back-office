@@ -17,15 +17,9 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
- * @param {RepresentationTypesAwaitingReview} [representationsAwaitingReview]
  * @returns {PageComponent}
  */
-export function generateAccordionItems(
-	appealDetails,
-	mappedData,
-	session,
-	representationsAwaitingReview
-) {
+export function generateAccordionItems(appealDetails, mappedData, session) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.D:
 			return generateHasAccordion(appealDetails, mappedData, session);
@@ -33,12 +27,7 @@ export function generateAccordionItems(
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				throw new Error('Feature flag inactive for S78');
 			}
-			return generateS78Accordion(
-				appealDetails,
-				mappedData,
-				session,
-				representationsAwaitingReview
-			);
+			return generateS78Accordion(appealDetails, mappedData, session);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}

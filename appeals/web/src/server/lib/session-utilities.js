@@ -1,20 +1,27 @@
 import { notificationBannerDefinitions } from './mappers/index.js';
 
 /**
- *
- * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} session
- * @param {keyof import('./mappers/index.js').notificationBannerDefinitions} bannerDefinitionKey
- * @param {number|string} appealId
- * @param {string} [html]
- * @param {string} [text]
+ * @typedef {Object} NotificationBannerSessionData
+ * @property {import('./mappers/index.js').NotificationBannerDefinitionKey} key
+ * @property {string} [html]
+ * @property {string} [text]
  */
-export const addNotificationBannerToSession = (
+
+/**
+ * @param {Object} options
+ * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} options.session
+ * @param {import('./mappers/index.js').NotificationBannerDefinitionKey} options.bannerDefinitionKey
+ * @param {number|string} options.appealId
+ * @param {string} [options.html]
+ * @param {string} [options.text]
+ */
+export const addNotificationBannerToSession = ({
 	session,
 	bannerDefinitionKey,
 	appealId,
 	html = '',
 	text = ''
-) => {
+}) => {
 	if (!(bannerDefinitionKey in notificationBannerDefinitions)) {
 		return false;
 	}
@@ -23,32 +30,21 @@ export const addNotificationBannerToSession = (
 		session.notificationBanners = {};
 	}
 
-	session.notificationBanners[bannerDefinitionKey] = {
-		appealId: typeof appealId === 'string' ? parseInt(appealId) : appealId,
-		html,
+	const appealIdAsString = appealId.toString();
+
+	if (!(appealIdAsString in session.notificationBanners)) {
+		/** @type {NotificationBannerSessionData[]} */
+		session.notificationBanners[appealIdAsString] = [];
+	}
+
+	/** @type {NotificationBannerSessionData} */
+	const notificationBannerSessionData = {
+		key: bannerDefinitionKey,
+		...(html && { html }),
 		...(text && { text })
 	};
 
-	return true;
-};
+	session.notificationBanners[appealIdAsString].push(notificationBannerSessionData);
 
-/**
- * @param {import('../app/auth/auth-session.service').SessionWithAuth & Object<string, any>} session
- * @param {number|string} appealId
- * @param {keyof import('./mappers/index.js').notificationBannerDefinitions} bannerDefinitionKey
- */
-export const clearNotificationBannerFromSession = (session, appealId, bannerDefinitionKey) => {
-	if (!(bannerDefinitionKey in notificationBannerDefinitions)) {
-		return false;
-	}
-	if (!('notificationBanners' in session)) {
-		return false;
-	}
-	if (!(bannerDefinitionKey in session.notificationBanners)) {
-		return false;
-	}
-	if (session.notificationBanners[bannerDefinitionKey]?.appealId !== appealId) {
-		return false;
-	}
-	delete session.notificationBanners[bannerDefinitionKey];
+	return true;
 };

@@ -42,7 +42,7 @@ export async function postShareRepresentations(request, response) {
 
 	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
 
-	const bannerKey = (() => {
+	const bannerDefinitionKey = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
 				return publishedReps.length > 0
@@ -53,8 +53,12 @@ export async function postShareRepresentations(request, response) {
 		}
 	})();
 
-	if (bannerKey) {
-		addNotificationBannerToSession(session, bannerKey, currentAppeal.appealId);
+	if (bannerDefinitionKey) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey,
+			appealId: currentAppeal.appealId
+		});
 	}
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
