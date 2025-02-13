@@ -89,9 +89,9 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
  */
 export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const affectedListedBuildings = lpaQuestionnaireData.listedBuildingDetails?.map((building) =>
-		listedBuildingTableRowFormatter(building)
-	);
+	const affectedListedBuildings = lpaQuestionnaireData.listedBuildingDetails
+		?.filter((lb) => lb.affectsListedBuilding)
+		?.map((building) => listedBuildingTableRowFormatter(building));
 
 	/** @type {PageContent} */
 	const pageContent = {
