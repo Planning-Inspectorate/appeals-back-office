@@ -139,6 +139,7 @@ export const happyPathHelper = {
 
 	progressSiteVisit(caseRef) {
 		caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+		caseDetailsPage.clickButtonByText('Manage the site visit');
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
@@ -151,5 +152,20 @@ export const happyPathHelper = {
 		cy.simulateSiteVisit(caseRef).then((caseRef) => {
 			caseDetailsPage.clickLinkByText('Go back to case details');
 		});
+	},
+
+	setupSiteVisitFromBanner(caseRef) {
+		caseDetailsPage.clickSiteVisitBanner();
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
+		dateTimeSection.enterVisitStartTime('08', '00');
+		dateTimeSection.enterVisitEndTime('12', '00');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.validateConfirmationPanelMessage(
+			'Site visit scheduled',
+			'Appeal reference ' + caseRef
+		),
+			caseDetailsPage.clickLinkByText('Go back to case details');
+		caseDetailsPage.validateBannerMessage('Site visit has been arranged');
 	}
 };
