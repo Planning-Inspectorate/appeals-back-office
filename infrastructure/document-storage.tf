@@ -63,75 +63,14 @@ resource "azurerm_eventgrid_topic" "document_scan_results" {
   }
 }
 
-## Setup the storage account to send scan results to the custom topic
-resource "azurerm_resource_group_template_deployment" "document_storage_malware_scanning_settings" {
-  name                = "malware-scan-settings"
-  resource_group_name = azurerm_resource_group.primary.name
-  deployment_mode     = "Incremental"
-  template_content    = <<EOT
-  {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "storage_account_id": {
-        "type": "string"
-      },
-      "subscription_id": {
-        "type": "string"
-      },
-      "resource_group": {
-        "type": "string"
-      },
-      "event_grid_topicId": {
-        "type": "string"
-      },
-      "cap_gb_per_month": {
-        "type": "int"
-      }
-    },
-    "resources": [
-      {
-        "type": "Microsoft.Security/DefenderForStorageSettings",
-        "apiVersion": "2022-12-01-preview",
-        "name": "current",
-        "properties": {
-          "isEnabled": true,
-          "malwareScanning": {
-            "onUpload": {
-              "isEnabled": true,
-              "capGBPerMonth": "[parameters('cap_gb_per_month')]"
-            },
-            "scanResultsEventGridTopicResourceId": "[parameters('event_grid_topicId')]"
-          },
-          "sensitiveDataDiscovery": {
-            "isEnabled": false
-          },
-          "overrideSubscriptionLevelSettings": true
-        },
-        "scope": "[parameters('storage_account_id')]"
-      }
-    ],
-    "outputs": {}
-  }
-  EOT
+resource "azurerm_security_center_storage_defender" "malware_scanning" {
+  storage_account_id = azurerm_storage_account.documents.id
 
-  parameters_content = jsonencode({
-    "storage_account_id" = {
-      value = azurerm_storage_account.documents.id
-    }
-    "subscription_id" = {
-      value = data.azurerm_subscription.current.id
-    }
-    "resource_group" = {
-      value = azurerm_resource_group.primary.name
-    }
-    "event_grid_topicId" = {
-      value = azurerm_eventgrid_topic.document_scan_results.id
-    }
-    "cap_gb_per_month" = {
-      value = 5000
-    }
-  })
+  override_subscription_settings_enabled      = true
+  malware_scanning_on_upload_enabled          = true
+  malware_scanning_on_upload_cap_gb_per_month = 5000
+  scan_results_event_grid_topic_id            = azurerm_eventgrid_topic.document_scan_results.id
+  sensitive_data_discovery_enabled            = false
 }
 
 ## RBAC for Entra Groups
