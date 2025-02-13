@@ -1139,13 +1139,23 @@ describe('mapAppealToDueDate Tests', () => {
 		expect(dueDate).toEqual(createdAtPlusFifteenDate);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 
-		const createdAtPlusThirtyDate = new Date('2023-01-31T00:00:00.000Z');
+		const createdAtPlusThirtyBusinessDays = new Date('2023-03-15T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusThirtyDate);
+		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
+	});
+
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+
+		const createdAtPlusThirtyBusinessDays = new Date('2023-02-10T00:00:00.000Z');
+		// @ts-ignore
+		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', () => {
