@@ -10,7 +10,7 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add } from 'date-fns';
+import { add, addBusinessDays } from 'date-fns';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 
@@ -227,9 +227,16 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			if (appeal.appealTimetable?.issueDeterminationDate) {
 				return new Date(appeal.appealTimetable?.issueDeterminationDate);
 			}
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
-			});
+			if (appeal.siteVisit) {
+				return addBusinessDays(
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
+					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
+				);
+			}
+			return addBusinessDays(
+				new Date(appeal.caseCreatedDate),
+				approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
+			);
 		}
 		case APPEAL_CASE_STATUS.COMPLETE: {
 			return null;
