@@ -7,6 +7,9 @@ const listedBuilding = {
 		listEntry: {
 			type: 'string'
 		},
+		affectsListedBuilding: {
+			type: 'boolean'
+		},
 		name: {
 			type: 'string',
 			nullable: true

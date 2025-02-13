@@ -857,6 +857,7 @@ type UpdateDocumentAvCheckRequest = {
 type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
+	affectsListedBuilding: boolean;
 };
 
 type LookupTables = AppellantCaseIncompleteReason | AppellantCaseInvalidReason | ValidationOutcome;

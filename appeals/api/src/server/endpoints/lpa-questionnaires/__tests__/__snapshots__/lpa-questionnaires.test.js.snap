@@ -42,6 +42,12 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "isCorrectAppealType": true,
   "listedBuildingDetails": [
     {
+      "affectsListedBuilding": false,
+      "id": 1,
+      "listEntry": "1",
+    },
+    {
+      "affectsListedBuilding": true,
       "id": 2,
       "listEntry": "2",
     },
@@ -109,6 +115,12 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "isCorrectAppealType": true,
   "listedBuildingDetails": [
     {
+      "affectsListedBuilding": false,
+      "id": 1,
+      "listEntry": "1",
+    },
+    {
+      "affectsListedBuilding": true,
       "id": 2,
       "listEntry": "2",
     },
@@ -194,6 +206,12 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   "isCorrectAppealType": true,
   "listedBuildingDetails": [
     {
+      "affectsListedBuilding": false,
+      "id": 1,
+      "listEntry": "1",
+    },
+    {
+      "affectsListedBuilding": true,
       "id": 2,
       "listEntry": "2",
     },
