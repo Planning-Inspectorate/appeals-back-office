@@ -64,12 +64,12 @@ resource "azurerm_eventgrid_topic" "document_scan_results" {
 }
 
 resource "azurerm_security_center_storage_defender" "malware_scanning" {
-  storage_account_id = var.document_storage_account_id
+  storage_account_id = azurerm_storage_account.documents.id
 
   override_subscription_settings_enabled      = true
   malware_scanning_on_upload_enabled          = true
   malware_scanning_on_upload_cap_gb_per_month = 5000
-  scan_results_event_grid_topic_id            = var.malware_scanning_topic_id
+  scan_results_event_grid_topic_id            = azurerm_eventgrid_topic.document_scan_results.id
   sensitive_data_discovery_enabled            = false
 }
 
