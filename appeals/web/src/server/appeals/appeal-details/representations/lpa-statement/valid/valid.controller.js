@@ -17,7 +17,7 @@ import { acceptRepresentation } from '../../representations.service.js';
 export function renderAllocationCheck(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const pageContent = allocationCheckPage(currentAppeal, session);
+	const pageContent = allocationCheckPage(currentAppeal, session.acceptLPAStatement);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -65,7 +65,7 @@ export async function renderAllocationLevel(request, response) {
 		currentAppeal,
 		currentRepresentation,
 		allocationLevels,
-		session
+		session.acceptLPAStatement
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -103,7 +103,11 @@ export async function renderAllocationSpecialisms(request, response) {
 	const { errors, currentAppeal, session } = request;
 
 	const specialisms = await api.getAllocationDetailsSpecialisms(request.apiClient);
-	const pageContent = allocationSpecialismsPage(currentAppeal, specialisms, session);
+	const pageContent = allocationSpecialismsPage(
+		currentAppeal,
+		specialisms,
+		session.acceptLPAStatement
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,

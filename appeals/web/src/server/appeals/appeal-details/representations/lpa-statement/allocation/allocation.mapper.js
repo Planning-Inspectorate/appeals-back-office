@@ -8,10 +8,10 @@ import { ensureArray } from '#lib/array-utilities.js';
 
 /**
  * @param {Appeal} appealDetails
- * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
+ * @param {Record<string, string>} [sessionData]
  * @returns {PageContent}
  */
-export function allocationCheckPage(appealDetails, session) {
+export function allocationCheckPage(appealDetails, sessionData) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent} */
@@ -35,7 +35,7 @@ export function allocationCheckPage(appealDetails, session) {
 			name: 'allocationLevelAndSpecialisms',
 			id: 'allocationLevelAndSpecialisms',
 			legendText: 'Do you need to update the allocation level and specialisms?',
-			value: session.acceptLPAStatement?.allocationLevelAndSpecialisms
+			value: sessionData?.allocationLevelAndSpecialisms
 		})
 	];
 
@@ -53,10 +53,10 @@ export function allocationCheckPage(appealDetails, session) {
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {string[]} allocationLevels
- * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
+ * @param {Record<string, string>} sessionData
  * @returns {PageContent}
  * */
-export function allocationLevelPage(appealDetails, lpaStatement, allocationLevels, session) {
+export function allocationLevelPage(appealDetails, lpaStatement, allocationLevels, sessionData) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
@@ -64,7 +64,7 @@ export function allocationLevelPage(appealDetails, lpaStatement, allocationLevel
 		radiosInput({
 			name: 'allocationLevel',
 			items: allocationLevels.map((l) => ({ text: l, value: l })),
-			value: session.acceptLPAStatement?.allocationLevel
+			value: sessionData?.allocationLevel
 		})
 	];
 
@@ -81,13 +81,14 @@ export function allocationLevelPage(appealDetails, lpaStatement, allocationLevel
 /**
  * @param {Appeal} appealDetails
  * @param {{ id: number, name: string }[]} specialisms
- * @param {SessionWithAuth & { acceptLPAStatement?: Record<string, string> }} session
+ * @param {Record<string, string>} sessionData
+ * @returns {PageContent}
  * */
-export function allocationSpecialismsPage(appealDetails, specialisms, session) {
+export function allocationSpecialismsPage(appealDetails, specialisms, sessionData) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const sessionSelections = (() => {
-		const allocationSpecialisms = session.acceptLPAStatement?.allocationSpecialisms;
+		const allocationSpecialisms = sessionData?.allocationSpecialisms;
 		if (!allocationSpecialisms) {
 			return [];
 		}
