@@ -301,29 +301,6 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
 </main>"
 `;
 
-exports[`issue-decision GET /issue-decision/decision-sent should render the confirmation page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> Decision sent</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The relevant parties have been informed. The appeal will be closed.</p>
-                <p                 class="govuk-body"><a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
-                    </p>
-                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"
-                        class="govuk-link">Add costs decision</a>
-                    </p>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date day is invalid 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

@@ -708,43 +708,6 @@ export function getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireData) {
 
 /**
  *
- * @param {string} appealId
- * @param {string} appealReference
- * @returns {PageContent}
- */
-export function reviewCompletePage(appealId, appealReference) {
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'LPA questionnaire complete',
-		pageComponents: [
-			{
-				type: 'panel',
-				parameters: {
-					titleText: 'LPA questionnaire complete',
-					headingLevel: 1,
-					html: `Appeal reference<br><strong>${appealShortReference(appealReference)}</strong>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: '<p class="govuk-body">The relevant parties have been informed.</p>'
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">Go back to case details</a></p>`
-				}
-			}
-		]
-	};
-
-	return pageContent;
-}
-
-/**
- *
  * @param {Appeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData

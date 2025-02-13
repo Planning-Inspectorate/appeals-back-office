@@ -2227,7 +2227,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should send a patch request to the appellant-cases API endpoint and redirect to the decision invalid confirmation page, if posted outcome was "invalid"', async () => {
+		it('should send a patch request to the appellant-cases API endpoint and redirect to the appeal details page, if posted outcome was "invalid"', async () => {
 			// post to invalid reason page controller is necessary to set required data in the session
 			const invalidReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${invalidOutcomePagePath}`)
@@ -2247,12 +2247,10 @@ describe('appellant-case', () => {
 
 			expect(mockedAppellantCasesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
-		it('should send a patch request to the appellant-cases API endpoint and redirect to the decision incomplete confirmation page, if posted outcome was "incomplete"', async () => {
+		it('should send a patch request to the appellant-cases API endpoint and redirect to the appeal details page, if posted outcome was "incomplete"', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
@@ -2272,9 +2270,7 @@ describe('appellant-case', () => {
 
 			expect(mockedAppellantCasesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/incomplete/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 

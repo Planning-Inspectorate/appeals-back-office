@@ -1499,19 +1499,17 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation should render the confirmation page with the expected content 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> LPA questionnaire complete</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The relevant parties have been informed.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
-            </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists</p>
         </div>
     </div>
 </main>"
@@ -1696,19 +1694,16 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation should render the confirmation page with the expected content if required data is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> LPA questionnaire incomplete</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The relevant parties have been informed.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
-            </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"

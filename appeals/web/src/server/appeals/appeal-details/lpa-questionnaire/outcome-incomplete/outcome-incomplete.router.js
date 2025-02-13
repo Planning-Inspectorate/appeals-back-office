@@ -25,6 +25,4 @@ router
 		asyncHandler(controller.postUpdateDueDate)
 	);
 
-router.route('/confirmation').get(asyncHandler(controller.getConfirmation));
-
 export default router;

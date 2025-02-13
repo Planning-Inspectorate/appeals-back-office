@@ -37,36 +37,16 @@ describe('start-case', () => {
 	});
 
 	describe('POST /start-case/add', () => {
-		it('should redirect to the confirmation page', async () => {
+		it('should redirect to appeal details page', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithoutStartDate);
 			nock('http://test/').post(`/appeals/1/appeal-timetables`).reply(200, {});
 
 			const response = await request.post(`${baseUrl}/1/start-case/add`).send({});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/add/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
-
-	describe('GET /start-case/add/confirmation', () => {
-		it('should render "Case started" confirmation page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealDataWithoutStartDate);
-
-			const response = await request.get(`${baseUrl}/1/start-case/add/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Case started</h1>');
-			expect(element.innerHTML).toContain('Case reference number');
-			expect(element.innerHTML).toContain(
-				'Case timetable activated. The relevant parties have been informed.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
-		});
-	});
-
 	describe('GET /start-case/change', () => {
 		it('should render the change start date page with the expected content', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
@@ -89,32 +69,14 @@ describe('start-case', () => {
 	});
 
 	describe('POST /start-case/change', () => {
-		it('should redirect to the confirmation page', async () => {
+		it('should redirect to the appeal details page', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/').post(`/appeals/1/appeal-timetables`).reply(200, {});
 
 			const response = await request.post(`${baseUrl}/1/start-case/change`).send({});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/change/confirmation'
-			);
-		});
-	});
-
-	describe('GET /start-case/change/confirmation', () => {
-		it('should render "Start date changed" confirmation page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-
-			const response = await request.get(`${baseUrl}/1/start-case/change/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Start date changed</h1>');
-			expect(element.innerHTML).toContain(
-				'Case timetable updated. The relevant parties have been informed.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });

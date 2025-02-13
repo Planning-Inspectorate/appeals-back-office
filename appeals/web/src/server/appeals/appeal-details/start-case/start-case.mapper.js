@@ -43,43 +43,6 @@ export function startCasePage(appealId, appealReference, today) {
 }
 
 /**
- *
- * @param {string} appealId
- * @param {string} appealReference
- * @returns {PageContent}
- */
-export function startCaseConfirmationPage(appealId, appealReference) {
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'Case started',
-		pageComponents: [
-			{
-				type: 'panel',
-				parameters: {
-					titleText: 'Case started',
-					headingLevel: 1,
-					html: `Case reference number<br><strong>${appealShortReference(appealReference)}</strong>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">Case timetable activated. The relevant parties have been informed.</p>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">Go back to case details</a></p>`
-				}
-			}
-		]
-	};
-
-	return pageContent;
-}
-
-/**
  * @param {number} appealId
  * @param {string} appealReference
  * @param {string} today
@@ -108,43 +71,6 @@ export function changeDatePage(appealId, appealReference, today) {
 				parameters: {
 					text: 'Confirm',
 					type: 'submit'
-				}
-			}
-		]
-	};
-
-	return pageContent;
-}
-
-/**
- *
- * @param {string} appealId
- * @param {string} appealReference
- * @returns {PageContent}
- */
-export function changeDateConfirmationPage(appealId, appealReference) {
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'Start date changed',
-		pageComponents: [
-			{
-				type: 'panel',
-				parameters: {
-					titleText: 'Start date changed',
-					headingLevel: 1,
-					html: `Case reference number<br><strong>${appealShortReference(appealReference)}</strong>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">Case timetable updated. The relevant parties have been informed.</p>`
-				}
-			},
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">Go back to case details</a></p>`
 				}
 			}
 		]

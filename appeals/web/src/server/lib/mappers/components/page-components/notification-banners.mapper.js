@@ -16,10 +16,30 @@
  * @type {Object<NotificationBannerDefinitionKey, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
-	siteVisitArranged: {
-		type: 'success',
+	siteVisiScheduled: {
 		pages: ['appealDetails'],
-		text: 'Site visit has been arranged'
+		type: 'success',
+		text: 'Site visit scheduled'
+	},
+	siteVisitRescheduled: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit rescheduled'
+	},
+	siteVisitTypeChanged: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit type changed'
+	},
+	siteVisitNoChanges: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'No changes made'
+	},
+	siteVisitChangedDefault: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit changed'
 	},
 	allocationDetailsUpdated: {
 		type: 'success',
@@ -300,8 +320,50 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Final comments accepted'
 	},
-	shareFinalComments: {
-		pages: ['appealDetails']
+	lpaqReviewComplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire complete'
+	},
+	lpaqReviewIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire incomplete'
+	},
+	appealWithdrawalRequested: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal withdrawal requested'
+	},
+	appellantCaseInvalidOrIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant case invalid or incomplete'
+	},
+	appealTypeChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal closed'
+	},
+	caseStarted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Case started'
+	},
+	startDateChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Start date changed'
+	},
+	issuedDecisionValid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Decision sent'
+	},
+	issuedDecisionInvalid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal invalid'
 	}
 };
 

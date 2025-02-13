@@ -506,48 +506,60 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 }
 
 /**
- * @typedef {'unchanged'|'visit-type'|'date-time'|'all'} ScheduleOrManageSiteVisitConfirmationPageType
+ * @typedef {'unchanged'|'visit-type'|'date-time'|'all'} SiteVisitChangeType
+ */
+
+/**
+ * @typedef {Object} bannerTypeAndChangeType
+ * @property {string} bannerType
+ * @property {SiteVisitChangeType} changeType
  */
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('./site-visit.service.js').UpdateOrCreateSiteVisitParameters} updateOrCreateSiteVisitParameters
- * @returns {ScheduleOrManageSiteVisitConfirmationPageType}
+ * @returns {bannerTypeAndChangeType}
  */
-export function getSiteVisitChangeType(appealDetails, updateOrCreateSiteVisitParameters) {
+export function getSiteVisitSuccessBannerTypeAndChangeType(
+	appealDetails,
+	updateOrCreateSiteVisitParameters
+) {
+	/**
+	 * @type {bannerTypeAndChangeType}
+	 */
+	const bannerTypeAndChangeType = {
+		bannerType: 'siteVisitChangedDefault',
+		changeType: 'unchanged'
+	};
 	const oldVisitDate = appealDetails.siteVisit?.visitDate;
-
-	// TODO: Tech debt (BOAT-981): align date conversion to use date-fns
-	const oldVisitDateString = String(oldVisitDate) && String(oldVisitDate).split('T')[0];
-
-	const oldApiVisitType = appealDetails.siteVisit?.visitType;
 	const oldVisitStartTime = appealDetails.siteVisit?.visitStartTime;
 	const oldVisitEndTime = appealDetails.siteVisit?.visitEndTime;
+	const oldApiVisitType = appealDetails.siteVisit?.visitType;
 	const visitTypeChanged =
 		oldApiVisitType &&
 		updateOrCreateSiteVisitParameters.apiVisitType &&
 		oldApiVisitType.toLowerCase() !== updateOrCreateSiteVisitParameters.apiVisitType.toLowerCase();
+
 	const dateTimeChanged =
-		oldVisitDateString !== updateOrCreateSiteVisitParameters.visitDate ||
+		oldVisitDate !== updateOrCreateSiteVisitParameters.visitDate ||
 		(!(oldVisitStartTime === null && updateOrCreateSiteVisitParameters.visitStartTime === '') &&
 			oldVisitStartTime !== updateOrCreateSiteVisitParameters.visitStartTime) ||
 		(!(oldVisitEndTime === null && updateOrCreateSiteVisitParameters.visitEndTime === '') &&
 			oldVisitEndTime !== updateOrCreateSiteVisitParameters.visitEndTime);
 
-	/** @type {ScheduleOrManageSiteVisitConfirmationPageType} */
-	let confirmationPageTypeToRender = 'unchanged';
-
 	if (visitTypeChanged && !dateTimeChanged) {
-		confirmationPageTypeToRender = 'visit-type';
+		bannerTypeAndChangeType.bannerType = 'siteVisitTypeChanged';
+		bannerTypeAndChangeType.changeType = 'visit-type';
 	} else if (!visitTypeChanged && dateTimeChanged) {
-		confirmationPageTypeToRender = 'date-time';
+		bannerTypeAndChangeType.bannerType = 'siteVisitRescheduled';
+		bannerTypeAndChangeType.changeType = 'date-time';
 	} else if (visitTypeChanged && dateTimeChanged) {
-		confirmationPageTypeToRender = 'all';
+		bannerTypeAndChangeType.bannerType = 'siteVisitChangedDefault';
+		bannerTypeAndChangeType.changeType = 'all';
+	} else {
+		bannerTypeAndChangeType.bannerType = 'siteVisitNoChanges';
+		bannerTypeAndChangeType.changeType = 'unchanged';
 	}
 
-	if (visitTypeChanged) {
-		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
-	}
-
-	return confirmationPageTypeToRender;
+	return bannerTypeAndChangeType;
 }

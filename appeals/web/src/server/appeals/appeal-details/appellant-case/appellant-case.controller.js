@@ -199,9 +199,15 @@ export const postCheckAndConfirm = async (request, response) => {
 		delete request.session.webAppellantCaseReviewOutcome;
 
 		if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
-			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/confirmation`
+			addNotificationBannerToSession(
+				request.session,
+				'appellantCaseInvalidOrIncomplete',
+				currentAppeal.appealId,
+				'',
+				`Appeal ${validationOutcome}`
 			);
+
+			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 		} else {
 			return response.status(500).render('app/500.njk');
 		}
