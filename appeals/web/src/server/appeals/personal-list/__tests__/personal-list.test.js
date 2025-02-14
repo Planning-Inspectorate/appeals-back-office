@@ -337,6 +337,156 @@ describe('personal-list', () => {
 				);
 			});
 		});
+		describe('"Progress case" actions', () => {
+			const testCases = [
+				{
+					conditionName: 'both Appellant and LPA Final Comments are valid',
+					appealData: {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								appealTimetable: {
+									...assignedAppealsInFinalCommentsStatus.items[0].appealTimetable,
+									finalCommentsDueDate: '2024-09-14T10:26:42.558Z'
+								},
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									lpaFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: 'valid',
+										counts: { awaiting_review: 0, valid: 1, published: 0 }
+									},
+									appellantFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: 'valid',
+										counts: { awaiting_review: 0, valid: 1, published: 0 }
+									}
+								}
+							}
+						]
+					},
+					linkText: 'Share final comments'
+				},
+				{
+					conditionName: 'Appellant Final Comments are valid (but not LPA)',
+					appealData: {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								appealTimetable: {
+									...assignedAppealsInFinalCommentsStatus.items[0].appealTimetable,
+									finalCommentsDueDate: '2024-09-14T10:26:42.558Z'
+								},
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									lpaFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: null,
+										counts: { awaiting_review: 0, valid: 0, published: 0 }
+									},
+									appellantFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: 'valid',
+										counts: { awaiting_review: 0, valid: 1, published: 0 }
+									}
+								}
+							}
+						]
+					},
+					linkText: 'Share final comments'
+				},
+				{
+					conditionName: 'LPA Final Comments are valid (but not Appellant)',
+					appealData: {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								appealTimetable: {
+									...assignedAppealsInFinalCommentsStatus.items[0].appealTimetable,
+									finalCommentsDueDate: '2024-09-14T10:26:42.558Z'
+								},
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									lpaFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: 'valid',
+										counts: { awaiting_review: 0, valid: 1, published: 0 }
+									},
+									appellantFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: null,
+										counts: { awaiting_review: 0, valid: 0, published: 0 }
+									}
+								}
+							}
+						]
+					},
+					linkText: 'Share final comments'
+				},
+				{
+					conditionName: 'both Appellant and LPA Final Comments are absent or invalid',
+					appealData: {
+						...assignedAppealsInFinalCommentsStatus,
+						items: [
+							{
+								...assignedAppealsInFinalCommentsStatus.items[0],
+								appealTimetable: {
+									...assignedAppealsInFinalCommentsStatus.items[0].appealTimetable,
+									finalCommentsDueDate: '2024-09-14T10:26:42.558Z'
+								},
+								documentationSummary: {
+									...assignedAppealsInFinalCommentsStatus.items[0].documentationSummary,
+									lpaFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: null,
+										counts: { awaiting_review: 0, valid: 0, published: 0 }
+									},
+									appellantFinalComments: {
+										status: 'received',
+										receivedAt: '2024-02-14T10:26:42.558Z',
+										representationStatus: null,
+										counts: { awaiting_review: 0, valid: 0, published: 0 }
+									}
+								}
+							}
+						]
+					},
+					linkText: 'Progress case'
+				}
+			];
+
+			beforeEach(() => {
+				nock.cleanAll();
+			});
+
+			for (const testCase of testCases) {
+				it(`should render a "${testCase.linkText}" link to progress case from final comments when Final Comments Due Date has passed and ${testCase.conditionName}.`, async () => {
+					nock('http://test/')
+						.get('/appeals/my-appeals?status=final_comments&pageNumber=1&pageSize=30')
+						.reply(200, testCase.appealData);
+
+					const response = await request.get(
+						`${baseUrl}${'?appealStatusFilter=final_comments&pageNumber=1&pageSize=30'}`
+					);
+
+					const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHtml).toContain(
+						`action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/share">${testCase.linkText}</a></td>`
+					);
+				});
+			}
+		});
 	});
 });
 
