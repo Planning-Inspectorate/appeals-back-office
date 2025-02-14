@@ -69,7 +69,11 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		body.siteVisitRequested === 'site-visit'
 	);
 
-	addNotificationBannerToSession(session, 'interestedPartyCommentsValidSuccess', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'interestedPartyCommentsValidSuccess',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
 };

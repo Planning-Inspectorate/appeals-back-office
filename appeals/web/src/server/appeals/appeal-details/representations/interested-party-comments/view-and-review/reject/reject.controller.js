@@ -70,7 +70,11 @@ export const postRejectInterestedPartyComment = async (request, response) => {
 		session.siteVisitRequested === 'site-visit'
 	);
 
-	addNotificationBannerToSession(session, 'interestedPartyCommentsRejectedSuccess', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'interestedPartyCommentsRejectedSuccess',
+		appealId
+	});
 
 	delete session.rejectIpComment;
 	delete session.siteVisitRequested;

@@ -136,7 +136,11 @@ export const postCheckYourAnswers = async (request, response) => {
 
 	delete session.fileUploadInfo;
 
-	addNotificationBannerToSession(session, 'finalCommentsDocumentAddedSuccess', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'finalCommentsDocumentAddedSuccess',
+		appealId
+	});
 
 	const nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
 	return response.redirect(nextPageUrl);

@@ -69,7 +69,12 @@ export const postChangeCorrectAppealType = async (request, response) => {
 			request.session.isCorrectType
 		);
 
-		addNotificationBannerToSession(request.session, 'isAppealTypeCorrectUpdated', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
+			appealId,
+			text: 'Correct appeal type (LPA response) has been updated'
+		});
 
 		delete request.session.isCorrectType;
 

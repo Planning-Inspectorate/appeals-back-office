@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './page-components/common.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -18,7 +18,7 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const commentSummaryList = generateCommentsSummaryList(appealDetails.appealId, comment);
 
-	const notificationBanners = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		session,
 		'viewFinalComments',
 		appealDetails.appealId

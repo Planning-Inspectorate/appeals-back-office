@@ -8,11 +8,10 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, createNotificationBanner } from '#lib/mappers/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
@@ -868,20 +867,17 @@ export function manageFolderPage({
 	pageHeadingTextOverride,
 	dateColumnLabelTextOverride
 }) {
-	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
-		addNotificationBannerToSession(
-			request.session,
-			'notCheckedDocument',
-			parseInt(folder.caseId.toString(), 10),
-			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
-		);
-	}
-
-	const notificationBannerComponents = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageFolder',
 		parseInt(folder.caseId.toString(), 10)
 	);
+
+	if (getDocumentsForVirusStatus(folder, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0) {
+		notificationBanners.unshift(
+			createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' })
+		);
+	}
 
 	/** @type {PageComponent[]} */
 	const errorSummaryPageComponents = [];
@@ -913,7 +909,7 @@ export function manageFolderPage({
 		preHeading: 'Manage folder',
 		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
 		pageComponents: [
-			...notificationBannerComponents,
+			...notificationBanners,
 			...errorSummaryPageComponents,
 			{
 				type: 'table',
@@ -1185,21 +1181,18 @@ export async function manageDocumentPage({
 	const latestVersion = getDocumentLatestVersion(document);
 	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);
 
-	if (!virusCheckStatus.checked) {
-		addNotificationBannerToSession(
-			session,
-			'notCheckedDocument',
-			parseInt(appealId.toString(), 10),
-			`<p class="govuk-notification-banner__heading">Virus scan in progress</p></br><a class="govuk-notification-banner__link" href="${request.originalUrl}">Refresh page to see if scan has finished</a>`
-		);
-	}
-
 	/** @type {PageComponent[]} */
-	const notificationBannerComponents = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		session,
 		'manageDocuments',
 		Number(appealId)
 	);
+
+	if (!virusCheckStatus.checked) {
+		notificationBanners.unshift(
+			createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' })
+		);
+	}
 
 	const versionId = latestVersion?.version?.toString() || '';
 	const uploadNewVersionUrl = uploadUpdatedDocumentUrl
@@ -1207,7 +1200,7 @@ export async function manageDocumentPage({
 		.replace('{{documentId}}', document.id || '');
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [...notificationBannerComponents];
+	const pageComponents = [...notificationBanners];
 
 	if (virusCheckStatus.checked && !virusCheckStatus.safe) {
 		/** @type {PageComponent} */

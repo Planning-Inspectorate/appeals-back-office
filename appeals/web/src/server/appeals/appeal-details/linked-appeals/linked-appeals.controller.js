@@ -207,14 +207,14 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 			);
 		}
 
-		addNotificationBannerToSession(
-			request.session,
-			'appealLinked',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealLinked',
 			appealId,
-			`<p class="govuk-notification-banner__heading">This appeal is now ${
-				targetIsLead ? 'the lead for' : 'a child of'
-			} appeal ${request.session.linkableAppeal?.linkableAppealSummary.appealReference}</p>`
-		);
+			text: `This appeal is now ${targetIsLead ? 'the lead for' : 'a child of'} appeal ${
+				request.session.linkableAppeal?.linkableAppealSummary.appealReference
+			}`
+		});
 
 		delete request.session.linkableAppeal;
 
@@ -268,14 +268,14 @@ export const postUnlinkAppeal = async (request, response) => {
 
 			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
 
-			addNotificationBannerToSession(
-				request.session,
-				'appealUnlinked',
-				backLinkAppealId,
-				`<p class="govuk-notification-banner__heading">You have unlinked this appeal from appeal ${
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'appealUnlinked',
+				appealId: backLinkAppealId,
+				text: `You have unlinked this appeal from appeal ${
 					appealId === backLinkAppealId ? childRef : appealData.appealReference
-				}</p>`
-			);
+				}`
+			});
 
 			return response.redirect(`/appeals-service/appeal-details/${backLinkAppealId}`);
 		}

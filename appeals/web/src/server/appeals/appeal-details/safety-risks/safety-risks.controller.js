@@ -92,12 +92,12 @@ export const postChangeSafetyRisks = async (request, response) => {
 			);
 		}
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			`<p class="govuk-notification-banner__heading">Site health and safety risks (${formattedSource} answer) updated</p>`
-		);
+			text: `Site health and safety risks (${formattedSource} answer) updated`
+		});
 
 		delete request.session.safetyRisks;
 

@@ -78,13 +78,12 @@ export const postChangeSiteOwnership = async (request, response) => {
 			request.session.siteOwnership
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Site ownership updated'
-		);
+			text: 'Site ownership updated'
+		});
 
 		delete request.session.siteOwnership;
 

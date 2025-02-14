@@ -367,7 +367,11 @@ export const postCheckTransfer = async (request, response) => {
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};
 
-		addNotificationBannerToSession(request.session, 'horizonReferenceAdded', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'horizonReferenceAdded',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

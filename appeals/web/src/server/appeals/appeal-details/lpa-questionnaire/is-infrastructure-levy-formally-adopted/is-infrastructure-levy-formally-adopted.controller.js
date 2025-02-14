@@ -82,13 +82,12 @@ export const postChangeIsInfrastructureLevyFormallyAdopted = async (request, res
 			session.isInfrastructureLevyFormallyAdopted
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Levy formally adopted status changed'
-		);
+			text: 'Levy formally adopted status changed'
+		});
 
 		delete request.session.isInfrastructureLevyFormallyAdopted;
 

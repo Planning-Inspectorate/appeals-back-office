@@ -1,7 +1,7 @@
 import { addressToString } from '#lib/address-formatter.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
 
 /**
@@ -232,7 +232,7 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
  * @returns {PageContent}
  */
 export function manageOtherAppealsPage(appealData, request, origin) {
-	const notificationBanners = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageRelatedAppeals',
 		request.currentAppeal.appealId
