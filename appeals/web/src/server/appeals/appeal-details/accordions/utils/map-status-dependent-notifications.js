@@ -171,6 +171,15 @@ function mapStatusDependentNotificationsForStatements(
 			APPEAL_REPRESENTATION_STATUS.VALID ||
 		(appealDetails.documentationSummary?.ipComments?.counts?.valid ?? 0) > 0;
 
+	if (isLpaStatementDueDatePassed && hasItemsToShare) {
+		return [
+			createNotificationBanner({
+				bannerDefinitionKey: 'shareCommentsAndLpaStatement',
+				html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+			})
+		];
+	}
+
 	const lpaStatementIncomplete =
 		appealDetails.documentationSummary?.lpaStatement?.representationStatus ===
 		APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
@@ -178,7 +187,7 @@ function mapStatusDependentNotificationsForStatements(
 	if (lpaStatementIncomplete) {
 		return [
 			createNotificationBanner({
-				bannerDefinitionKey: 'shareCommentsAndLpaStatement',
+				bannerDefinitionKey: 'updateLpaStatement',
 				html: `<p class="govuk-notification-banner__heading">LPA statement incomplete</p> <a href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
 			})
 		];
