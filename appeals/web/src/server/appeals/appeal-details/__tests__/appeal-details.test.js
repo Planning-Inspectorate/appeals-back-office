@@ -2342,6 +2342,34 @@ describe('appeal-details', () => {
 							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
+
+					it(`should render an "${testCase.rowLabel}" row with a status of "Rejected", and the expected date in the "Received" column, and a "View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has invalid ${testCase.name} final comments`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								appealId,
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[testCase.documentationSummaryKey]: {
+										status: 'received',
+										receivedAt: '2024-12-17T17:36:19.631Z',
+										representationStatus: 'invalid'
+									}
+								}
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).toContain(
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+						);
+					});
 				}
 			});
 		});
