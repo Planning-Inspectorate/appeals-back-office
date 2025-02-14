@@ -48,6 +48,8 @@ export function mapRepresentationDocumentSummaryStatus(documentationStatus, repr
 	switch (representationStatus) {
 		case APPEAL_REPRESENTATION_STATUS.VALID:
 			return 'Accepted';
+		case APPEAL_REPRESENTATION_STATUS.INVALID:
+			return 'Rejected';
 		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
 			return 'Shared';
 		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE:
