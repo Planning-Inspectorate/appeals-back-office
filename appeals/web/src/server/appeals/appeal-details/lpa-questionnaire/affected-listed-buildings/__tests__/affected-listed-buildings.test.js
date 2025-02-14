@@ -102,7 +102,7 @@ describe('affected-listed-buildings', () => {
 			}).innerHTML;
 			expect(summaryListHtml).toContain('Listed building number</dt>');
 			expect(summaryListHtml).toContain(
-				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" target="_blank">12345</a>'
+				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" class="govuk-link" target="_blank">12345</a>'
 			);
 		});
 	});
@@ -223,7 +223,7 @@ describe('affected-listed-buildings', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 			expect(unprettifiedElement).toContain('Listed building</dt>');
 			expect(unprettifiedElement).toContain(
-				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" target="_blank">12345</a>'
+				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" class="govuk-link" target="_blank">12345</a>'
 			);
 		});
 	});
