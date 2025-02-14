@@ -80,13 +80,12 @@ export const postChangeProcedurePreference = async (request, response) => {
 			request.session.lpaProcedurePreference.radio
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Procedure preference updated'
-		);
+			text: 'Procedure preference updated'
+		});
 
 		delete request.session.lpaProcedurePreference;
 
@@ -167,13 +166,12 @@ export const postChangeProcedurePreferenceDetails = async (request, response) =>
 			request.session.lpaProcedurePreferenceDetails.textarea
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Reason for preference updated'
-		);
+			text: 'Reason for preference updated'
+		});
 
 		delete request.session.lpaProcedurePreferenceDetails;
 
@@ -254,13 +252,12 @@ export const postChangeProcedurePreferenceDuration = async (request, response) =
 			request.session.procedurePreferenceDuration.input
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Expected length of procedure updated'
-		);
+			text: 'Expected length of procedure updated'
+		});
 
 		delete request.session.procedurePreferenceDuration;
 

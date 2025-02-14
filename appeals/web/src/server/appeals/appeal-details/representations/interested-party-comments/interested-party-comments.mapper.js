@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { buildNotificationBanners } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -31,7 +31,7 @@ export async function interestedPartyCommentsPage(
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const notificationBanners = buildNotificationBanners(
+	const notificationBanners = mapNotificationBannersFromSession(
 		session,
 		'ipComments',
 		appealDetails.appealId

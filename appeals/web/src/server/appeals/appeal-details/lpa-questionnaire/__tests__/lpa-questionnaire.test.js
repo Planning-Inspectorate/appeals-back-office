@@ -941,7 +941,6 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement,
 				skipPrettyPrint: true
 			}).innerHTML;
 
@@ -3216,7 +3215,7 @@ describe('LPA Questionnaire review', () => {
 			expect(lpaqResponse.statusCode).toBe(200);
 
 			const notificationBannerElementHTML = parseHtml(lpaqResponse.text, {
-				rootElement: notificationBannerElement
+				rootElement: '.govuk-notification-banner--success'
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Success</h3>');

@@ -1,17 +1,12 @@
 import {
 	appealData,
-	baseSession,
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createAccountInfo } from '#testing/app/app.js';
 import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
-import {
-	buildNotificationBanners,
-	notificationBannerDefinitions,
-	mapPagination
-} from '../index.js';
+import { mapPagination } from '../index.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -107,166 +102,6 @@ describe('lpaQuestionnaire-mapper', () => {
 		it('should have an id that is unique', async () => {
 			expect(areIdsDefinedAndUnique(validMappedData.lpaq)).toBe(true);
 		});
-	});
-});
-
-describe('notification banners mapper', () => {
-	it('should return an empty array if notificationBanners object is not present in the session', () => {
-		expect(buildNotificationBanners(baseSession, 'appealDetails', 1)).toEqual([]);
-	});
-
-	it('should not return a notification banner page component object if the notification type is not configured to display on the provided servicePage', () => {
-		expect(
-			buildNotificationBanners(
-				{
-					...baseSession,
-					notificationBanners: {
-						siteVisitTypeSelected: {
-							appealId: 1
-						}
-					}
-				},
-				'lpaQuestionnaire',
-				1
-			)
-		).toEqual([]);
-	});
-
-	it('should not return a notification banner page component object if the notification does not belong to the provided appealId', () => {
-		expect(
-			buildNotificationBanners(
-				{
-					...baseSession,
-					notificationBanners: {
-						siteVisitTypeSelected: {
-							appealId: 1
-						}
-					}
-				},
-				'appealDetails',
-				2
-			)
-		).toEqual([]);
-	});
-
-	it('should return a notification banner page component object with the expected shape and property values if the notification type is configured to show on the provided servicePage and the notification belongs to the provided appealId and overriding values are not present in the session notification object', () => {
-		expect(
-			buildNotificationBanners(
-				{
-					...baseSession,
-					notificationBanners: {
-						siteVisitTypeSelected: {
-							appealId: 1
-						}
-					}
-				},
-				'appealDetails',
-				1
-			)
-		).toEqual([
-			{
-				type: 'notification-banner',
-				parameters: {
-					titleText: 'Success',
-					titleHeadingLevel: 3,
-					type: notificationBannerDefinitions.siteVisitTypeSelected.type,
-					text: notificationBannerDefinitions.siteVisitTypeSelected.text
-				}
-			}
-		]);
-	});
-
-	it('should return a notification banner page component object with the expected shape and property values if the notification type is configured to show on the provided servicePage and the notification belongs to the provided appealId and overriding values are present in the session notification object', () => {
-		expect(
-			buildNotificationBanners(
-				{
-					...baseSession,
-					notificationBanners: {
-						siteVisitTypeSelected: {
-							appealId: 1,
-							titleText: 'overriding title text',
-							type: 'important',
-							text: 'overriding text',
-							html: '<span>overriding html</span>'
-						}
-					}
-				},
-				'appealDetails',
-				1
-			)
-		).toEqual([
-			{
-				type: 'notification-banner',
-				parameters: {
-					titleText: 'overriding title text',
-					titleHeadingLevel: 3,
-					type: 'important',
-					text: 'overriding text',
-					html: '<span>overriding html</span>'
-				}
-			}
-		]);
-	});
-
-	it('should delete the notification banner from the session if the notification type is configured to show on the provided servicePage and the notification belongs to the provided appealId and the notification type is configured to not persist', () => {
-		const testSession = {
-			...baseSession,
-			notificationBanners: {
-				siteVisitTypeSelected: {
-					appealId: 1
-				}
-			}
-		};
-
-		buildNotificationBanners(testSession, 'appealDetails', 1);
-
-		expect(testSession.notificationBanners).toEqual({});
-	});
-
-	it('should not delete the notification banner from the session if the notification type is configured to show on the provided servicePage and the notification belongs to the provided appealId and the notification type is configured to persist', () => {
-		const testSession = {
-			...baseSession,
-			notificationBanners: {
-				appellantCaseNotValid: {
-					appealId: 1
-				}
-			}
-		};
-
-		buildNotificationBanners(testSession, 'appellantCase', 1);
-
-		expect(testSession.notificationBanners).toEqual({
-			appellantCaseNotValid: {
-				appealId: 1
-			}
-		});
-	});
-
-	it('should return a notification banner page component object with the correct appealId in the URL for readyForDecision notification', () => {
-		expect(
-			buildNotificationBanners(
-				{
-					...baseSession,
-					notificationBanners: {
-						readyForDecision: {
-							appealId: 1,
-							html: '<p class="govuk-notification-banner__heading">The appeal is ready for a decision.</p><p class="govuk-notification-banner__heading"><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/issue-decision/decision">Issue a decision</a>.</p>'
-						}
-					}
-				},
-				'appealDetails',
-				1
-			)
-		).toEqual([
-			{
-				type: 'notification-banner',
-				parameters: {
-					titleHeadingLevel: 3,
-					html: '<p class="govuk-notification-banner__heading">The appeal is ready for a decision.</p><p class="govuk-notification-banner__heading"><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1/issue-decision/decision">Issue a decision</a>.</p>',
-					titleText: 'Important'
-				}
-			}
-		]);
 	});
 });
 

@@ -176,12 +176,12 @@ export const postConfirmOtherAppeals = async (request, response) => {
 				);
 			}
 
-			addNotificationBannerToSession(
-				request.session,
-				'otherAppeal',
-				request.session.appealId,
-				`<p class="govuk-notification-banner__heading">This appeal is now related to ${request.session.relatedAppealReference}</p>`
-			);
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'relatedAppeal',
+				appealId: request.session.appealId,
+				text: `This appeal is now related to ${request.session.relatedAppealReference}`
+			});
 		} catch (error) {
 			let errorMessage = 'Something went wrong when posting related appeal';
 			if (error instanceof Error) {
@@ -326,12 +326,12 @@ export const postRemoveOtherAppeals = async (request, response) => {
 
 			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
 
-			addNotificationBannerToSession(
-				request.session,
-				'otherAppealRemoved',
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'relatedAppeal',
 				appealId,
-				`<p class="govuk-notification-banner__heading">You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}</p>`
-			);
+				text: `You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}`
+			});
 
 			const appealData = request.currentAppeal;
 

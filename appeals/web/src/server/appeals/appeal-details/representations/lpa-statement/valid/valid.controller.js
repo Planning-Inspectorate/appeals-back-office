@@ -177,7 +177,11 @@ export async function postAcceptStatement(request, response) {
 
 	await acceptRepresentation(apiClient, parseInt(appealId), currentRepresentation.id);
 
-	addNotificationBannerToSession(session, 'lpaStatementAccepted', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'lpaStatementAccepted',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }

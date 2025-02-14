@@ -199,7 +199,11 @@ export async function postConfirm(request, response) {
 
 	delete session.redactLPAStatement;
 
-	addNotificationBannerToSession(session, 'lpaStatementRedactedAndAccepted', appealId);
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }

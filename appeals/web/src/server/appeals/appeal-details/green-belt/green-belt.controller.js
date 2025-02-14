@@ -102,13 +102,12 @@ export const postGreenBelt = async (request, response) => {
 			);
 		}
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Green belt status updated'
-		);
+			text: 'Green belt status updated'
+		});
 
 		delete request.session.isGreenBelt;
 

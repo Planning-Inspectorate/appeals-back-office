@@ -76,13 +76,12 @@ export const postChangeAffectsScheduledMonument = async (request, response) => {
 			session.affectsScheduledMonument
 		);
 
-		addNotificationBannerToSession(
+		addNotificationBannerToSession({
 			session,
-			'changePage',
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Scheduled monument status changed '
-		);
+			text: 'Scheduled monument status changed'
+		});
 
 		delete request.session.affectsScheduledMonument;
 
