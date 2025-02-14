@@ -34,6 +34,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.VALIDATION]: {
@@ -48,6 +51,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.READY_TO_START]: {
@@ -62,6 +68,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
@@ -80,6 +89,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.STATEMENTS]: {
@@ -92,6 +104,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: {
@@ -106,6 +121,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.EVENT]: {
@@ -119,6 +137,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.AWAITING_EVENT]: {
@@ -132,6 +153,9 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.ISSUE_DETERMINATION]: {
@@ -145,27 +169,48 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 				on: {
 					[APPEAL_CASE_STATUS.TRANSFERRED]: { target: APPEAL_CASE_STATUS.TRANSFERRED }
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
 				}
 			},
 			[APPEAL_CASE_STATUS.INVALID]: {
-				type: STATE_TYPE_FINAL
+				type: STATE_TYPE_FINAL,
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+				}
 			},
 			[APPEAL_CASE_STATUS.TRANSFERRED]: {
-				type: STATE_TYPE_FINAL
+				type: STATE_TYPE_FINAL,
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+				}
 			},
 			[APPEAL_CASE_STATUS.CLOSED]: {
-				type: STATE_TYPE_FINAL
+				type: STATE_TYPE_FINAL,
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+				}
 			},
 			[APPEAL_CASE_STATUS.WITHDRAWN]: {
-				type: STATE_TYPE_FINAL
+				type: STATE_TYPE_FINAL,
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+				}
 			},
 			[APPEAL_CASE_STATUS.COMPLETE]: {
-				type: STATE_TYPE_FINAL
+				type: STATE_TYPE_FINAL,
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+				}
 			}
 		}
 	});
