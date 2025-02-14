@@ -212,7 +212,9 @@ exports[`final-comments GET /review-comments with data should render review LPA 
         <div class="govuk-grid-column-full">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
-                    <dd class="govuk-summary-list__value">Awaiting final comments review</dd>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
@@ -265,7 +267,9 @@ exports[`final-comments GET /review-comments with data should render review LPA 
         <div class="govuk-grid-column-full">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
-                    <dd class="govuk-summary-list__value">Awaiting final comments review</dd>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
@@ -318,7 +322,9 @@ exports[`final-comments GET /review-comments with data should render review appe
         <div class="govuk-grid-column-full">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
-                    <dd class="govuk-summary-list__value">Awaiting final comments review</dd>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>

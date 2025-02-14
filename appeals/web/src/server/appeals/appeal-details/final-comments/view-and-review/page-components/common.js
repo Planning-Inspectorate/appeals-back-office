@@ -1,4 +1,5 @@
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -42,9 +43,20 @@ export function generateCommentsSummaryList(appealId, comment) {
 	const rows = [
 		{
 			key: { text: comment.redactedRepresentation ? 'Original final comments' : 'Final comments' },
-			value: {
-				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
-			},
+			value: commentIsDocument
+				? { text: 'Added as a document' }
+				: {
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									text: comment.originalRepresentation,
+									labelText: 'Read more'
+								}
+							}
+						]
+				  },
 			actions: {
 				items: []
 			}
@@ -76,7 +88,8 @@ export function generateCommentsSummaryList(appealId, comment) {
 		}
 	];
 
-	return {
+	/** @type {PageComponent} */
+	const summaryList = {
 		type: 'summary-list',
 		wrapperHtml: {
 			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
@@ -84,4 +97,8 @@ export function generateCommentsSummaryList(appealId, comment) {
 		},
 		parameters: { rows }
 	};
+
+	preRenderPageComponents([summaryList]);
+
+	return summaryList;
 }
