@@ -123,7 +123,7 @@ export function statementAndCommentsSharePage(appeal) {
 		const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
 
 		return numIpComments > 0
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments" class="govuk-link">${numIpComments} interested party comments</a>`
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid" class="govuk-link">${numIpComments} interested party comments</a>`
 			: null;
 	})();
 
