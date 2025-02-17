@@ -1143,10 +1143,10 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 
-		const createdAtPlusThirtyBusinessDays = new Date('2023-03-15T00:00:00.000Z');
+		const createdAtPlusTenBusinessDays = new Date('2023-02-15T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
+		expect(dueDate).toEqual(createdAtPlusTenBusinessDays);
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', () => {
