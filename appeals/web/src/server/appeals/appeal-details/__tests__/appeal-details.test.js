@@ -171,7 +171,7 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toMatch('Horizon reference added</p>');
 
-				//TODO: BOAT-1100: Move the tag test to it's own test
+				//TODO: Move the tag test to it's own test
 				expect(statusTagElementHTML).toMatchSnapshot();
 				expect(statusTagElementHTML).toMatch('Transferred');
 
@@ -1581,6 +1581,15 @@ describe('appeal-details', () => {
 			const element = parseHtml(response.text, { rootElement: 'header' });
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'<a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>'
+			);
+			expect(element.innerHTML).toContain(
+				'<a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>'
+			);
+			expect(element.innerHTML).toContain(
+				'<a class="govuk-header__link" href="/auth/signout">Sign out</a>'
+			);
 		});
 
 		it('should render the received appeal details for a valid appealId with single linked/other appeals', async () => {
@@ -3201,6 +3210,7 @@ describe('appeal-details', () => {
 		expect(backButton).toBeNull();
 
 		expect(element.innerHTML).toMatchSnapshot();
+		expect(element.innerHTML).not.toContain('class="govuk-back-link"');
 	});
 
 	it('should render "change" action links for appeal with LPAQ status "received"', async () => {
