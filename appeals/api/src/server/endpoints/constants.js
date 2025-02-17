@@ -25,6 +25,8 @@ export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_UPDATED =
 	'LPA final comment status updated to {replacement0}';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_UPDATED =
 	'Appellant final comment status updated to {replacement0}';
+export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_INVALID = 'LPA final comments rejected';
+export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_INVALID = 'Appellant final comments rejected';
 export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
 	'LPA final comment redacted and accepted';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
