@@ -62,7 +62,23 @@ export function generateCommentsSummaryList(appealId, comment) {
 			}
 		},
 		...(comment.redactedRepresentation
-			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
+			? [
+					{
+						key: { text: 'Redacted comment' },
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										text: comment.redactedRepresentation,
+										labelText: 'Read more'
+									}
+								}
+							]
+						}
+					}
+			  ]
 			: []),
 		{
 			key: { text: 'Supporting documents' },
