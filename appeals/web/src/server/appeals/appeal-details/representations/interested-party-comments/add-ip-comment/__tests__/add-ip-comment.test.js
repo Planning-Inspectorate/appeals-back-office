@@ -15,6 +15,7 @@ describe('add-ip-comment', () => {
 	afterEach(teardown);
 
 	describe('GET /add', () => {
+		// eslint-disable-next-line jest/expect-expect
 		it('should redirect to /add/ip-details', () => {
 			return new Promise((resolve) => {
 				request
