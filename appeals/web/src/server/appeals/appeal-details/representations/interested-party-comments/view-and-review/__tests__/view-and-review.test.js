@@ -236,6 +236,7 @@ describe('interested-party-comments', () => {
 			const innerHtml = dom.innerHTML;
 
 			expect(innerHtml).toMatchSnapshot();
+			expect(innerHtml).toContain('Check details and reject comment</h1>');
 		});
 	});
 
