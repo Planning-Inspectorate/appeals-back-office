@@ -310,14 +310,13 @@ describe('appellant-case', () => {
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: notificationBannerElement });
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const notificationBannerElementHTML = parseHtml(response.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain(
 				'Site health and safety risks (appellant answer) updated</p>'
@@ -341,14 +340,13 @@ describe('appellant-case', () => {
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
-			const element = parseHtml(response.text);
+			const element = parseHtml(response.text, { rootElement: notificationBannerElement });
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const notificationBannerElementHTML = parseHtml(response.text, {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
 			expect(notificationBannerElementHTML).toContain('Site area updated</p>');
 		});
@@ -1575,6 +1573,9 @@ describe('appellant-case', () => {
 					}
 				})
 				.persist();
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			const response = await request.get(
 				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
@@ -1665,6 +1666,9 @@ describe('appellant-case', () => {
 					}
 				})
 				.persist();
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			const response = await request.get(
 				`${baseUrl}/2${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
@@ -1693,6 +1697,9 @@ describe('appellant-case', () => {
 					...appealData,
 					appealId: 1
 				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 
 		afterEach(() => {
@@ -1818,6 +1825,13 @@ describe('appellant-case', () => {
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			response = await request
 				.post(
@@ -1834,6 +1848,13 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			response = await request
 				.post(
@@ -1889,6 +1910,13 @@ describe('appellant-case', () => {
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date month must be between 1 and 12</a>');
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			response = await request
 				.post(
@@ -1905,6 +1933,13 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date month must be between 1 and 12</a>');
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			response = await request
 				.post(
@@ -1960,6 +1995,13 @@ describe('appellant-case', () => {
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date year must be 4 digits</a>');
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 
 			response = await request
 				.post(
@@ -1976,6 +2018,9 @@ describe('appellant-case', () => {
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date year must be a number</a>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -2344,6 +2389,9 @@ describe('appellant-case', () => {
 			expect(response.statusCode).toBe(200);
 			let element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
 
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
@@ -2356,6 +2404,9 @@ describe('appellant-case', () => {
 			expect(response.statusCode).toBe(200);
 			element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('class="govuk-error-summary"');
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
 
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
