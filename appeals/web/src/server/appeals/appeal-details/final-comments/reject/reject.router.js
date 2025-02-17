@@ -12,7 +12,8 @@ router
 	.route('/')
 	.get(asyncHandler(controller.renderSelectReason))
 	.post(
-		validateRejectReason,
+		(/** @type {import('@pins/express/types/express.js').Request} */ req) =>
+			validateRejectReason(req.params.finalCommentsType),
 		validateRejectionReasonTextItems,
 		saveBodyToSession('rejectFinalComments'),
 		asyncHandler(controller.postRejectReason)

@@ -171,23 +171,33 @@ export async function updateRepresentation(request, response) {
 	}
 
 	if (status !== rep.status) {
-		const details =
-			status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation
-				? // @ts-ignore
-				  CONSTANTS[
-						`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-							updatedRep.representationType
-						)}_REDACTED_AND_ACCEPTED`
-				  ]
-				: stringTokenReplacement(
-						// @ts-ignore
-						CONSTANTS[
-							`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-								updatedRep.representationType
-							)}_STATUS_UPDATED`
-						],
-						[status]
-				  );
+		const details = (() => {
+			if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation) {
+				// @ts-ignore
+				return CONSTANTS[
+					`AUDIT_TRAIL_REP_${camelToScreamingSnake(
+						updatedRep.representationType
+					)}_REDACTED_AND_ACCEPTED`
+				];
+			} else if (
+				status === APPEAL_REPRESENTATION_STATUS.invalid &&
+				(updatedRep.representationType === 'appellantFinalComment' ||
+					updatedRep.representationType === 'lpaFinalComment')
+			) {
+				// @ts-ignore
+				return CONSTANTS[
+					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_INVALID`
+				];
+			} else {
+				stringTokenReplacement(
+					// @ts-ignore
+					CONSTANTS[
+						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
+					],
+					[status]
+				);
+			}
+		})();
 
 		await createAuditTrail({
 			appealId: parseInt(appealId),

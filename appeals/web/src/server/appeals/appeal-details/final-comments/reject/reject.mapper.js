@@ -21,7 +21,9 @@ export function rejectFinalCommentsPage(appealDetails, finalCommentsType) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const pageContent = {
-		heading: 'Why are you rejecting the comment?',
+		heading: `Why are you rejecting the ${formatFinalCommentsTypeText(
+			finalCommentsType
+		)}'s final comments?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
 		preHeading: `Appeal ${shortReference}`,
 		hint: 'Select all that apply.'
