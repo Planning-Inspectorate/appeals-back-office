@@ -199,24 +199,6 @@ export async function updateRepresentation(request, response) {
 			}
 		})();
 
-		// const details =
-		// 	status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation
-		// 		? // @ts-ignore
-		// 		  CONSTANTS[
-		// 				`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-		// 					updatedRep.representationType
-		// 				)}_REDACTED_AND_ACCEPTED`
-		// 		  ]
-		// 		: stringTokenReplacement(
-		// 				// @ts-ignore
-		// 				CONSTANTS[
-		// 					`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-		// 						updatedRep.representationType
-		// 					)}_STATUS_UPDATED`
-		// 				],
-		// 				[status]
-		// 		  );
-
 		await createAuditTrail({
 			appealId: parseInt(appealId),
 			azureAdUserId: String(request.get('azureAdUserId')),
