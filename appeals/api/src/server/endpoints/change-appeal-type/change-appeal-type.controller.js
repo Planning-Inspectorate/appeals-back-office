@@ -69,13 +69,7 @@ export const requestTransferOfAppeal = async (req, res) => {
 				caseUpdatedDate: new Date()
 			}
 		}),
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureAdUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.AWAITING_TRANSFER
-		),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 
@@ -100,13 +94,7 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 				caseUpdatedDate: new Date()
 			}
 		}),
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureAdUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.TRANSFERRED
-		),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 

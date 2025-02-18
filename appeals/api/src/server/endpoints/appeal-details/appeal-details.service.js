@@ -92,9 +92,7 @@ const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) =
 		if (shouldTransitionState && caseData.appealType) {
 			await transitionState(
 				caseData.id,
-				caseData.appealType,
 				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				caseData.appealStatus,
 				APPEAL_CASE_STATUS.VALIDATION
 			);
 		}

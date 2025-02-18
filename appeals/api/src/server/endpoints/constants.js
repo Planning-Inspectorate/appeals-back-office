@@ -29,8 +29,11 @@ export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
 	'LPA final comment redacted and accepted';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
 	'Appellant final comment redacted and accepted';
+
 export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
+export const APPEAL_TYPE_SHORTHAND_HEARING = 'H';
+export const APPEAL_TYPE_SHORTHAND_INQUIRY = 'I';
 
 export const AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED = 'The allocation details were added';
 export const AUDIT_TRAIL_CASE_NOTE_ADDED = 'Case note added: "{replacement0}"';

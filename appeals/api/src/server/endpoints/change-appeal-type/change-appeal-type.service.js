@@ -44,13 +44,7 @@ const changeAppealType = async (
 		await timetableRepository.upsertAppealTimetableById(appeal.id, {
 			caseResubmissionDueDate: setTimeInTimeZone(dueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
 		}),
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureAdUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.CLOSED
-		),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.CLOSED),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 

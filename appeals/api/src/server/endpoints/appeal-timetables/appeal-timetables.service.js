@@ -138,9 +138,7 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 
 			await transitionState(
 				appeal.id,
-				appealType,
 				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				appeal.appealStatus,
 				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 			);
 

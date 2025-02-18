@@ -1,9 +1,8 @@
 import { createMachine } from 'xstate';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import {
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
-	ERROR_INVALID_APPEAL_TYPE,
 	STATE_TYPE_FINAL,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
@@ -12,15 +11,17 @@ import {
 } from '#endpoints/constants.js';
 
 /**
- * @param {string} appealType
+ * @typedef {import('pins-data-model').APPEAL_CASE_TYPE} AppealType
+ * @typedef {import('pins-data-model').APPEAL_CASE_PROCEDURE} ProcedureType
+ * */
+
+/**
+ * @param {AppealType} appealType
+ * @param {ProcedureType} procedureType
  * @param {string} currentState
  */
-const createStateMachine = (appealType, currentState) => {
-	if (![APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealType)) {
-		throw new Error(ERROR_INVALID_APPEAL_TYPE);
-	}
-
-	return createMachine({
+const createStateMachine = (appealType, procedureType, currentState) =>
+	createMachine({
 		id: 'appeals-state-machine',
 		initial: currentState || APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 		states: {
@@ -36,7 +37,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.VALIDATION]: {
@@ -53,7 +55,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.READY_TO_START]: {
@@ -70,7 +73,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
@@ -91,12 +95,19 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.STATEMENTS]: {
 				on: {
-					[APPEAL_CASE_STATUS.FINAL_COMMENTS]: { target: APPEAL_CASE_STATUS.FINAL_COMMENTS },
+					[VALIDATION_OUTCOME_COMPLETE]: {
+						target: [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+							procedureType
+						)
+							? APPEAL_CASE_STATUS.EVENT
+							: APPEAL_CASE_STATUS.FINAL_COMMENTS
+					},
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
@@ -106,7 +117,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: {
@@ -123,10 +135,33 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN]
 				}
 			},
 			[APPEAL_CASE_STATUS.EVENT]: {
+				on: {
+					[VALIDATION_OUTCOME_COMPLETE]: {
+						target:
+							procedureType === APPEAL_CASE_PROCEDURE.INQUIRY
+								? APPEAL_CASE_STATUS.EVIDENCE
+								: APPEAL_CASE_STATUS.AWAITING_EVENT
+					},
+					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
+					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+					},
+					[APPEAL_CASE_STATUS.WITHDRAWN]: {
+						target: APPEAL_CASE_STATUS.WITHDRAWN
+					}
+				},
+				meta: {
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
+				}
+			},
+			[APPEAL_CASE_STATUS.EVIDENCE]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.AWAITING_EVENT },
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
@@ -139,7 +174,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.INQUIRY]
 				}
 			},
 			[APPEAL_CASE_STATUS.AWAITING_EVENT]: {
@@ -155,7 +191,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.ISSUE_DETERMINATION]: {
@@ -171,7 +208,8 @@ const createStateMachine = (appealType, currentState) => {
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
@@ -179,41 +217,46 @@ const createStateMachine = (appealType, currentState) => {
 					[APPEAL_CASE_STATUS.TRANSFERRED]: { target: APPEAL_CASE_STATUS.TRANSFERRED }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.INVALID]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.TRANSFERRED]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.CLOSED]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.WITHDRAWN]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			},
 			[APPEAL_CASE_STATUS.COMPLETE]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA]
+					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]
 				}
 			}
 		}
 	});
-};
 
 export default createStateMachine;

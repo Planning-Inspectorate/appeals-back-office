@@ -69,13 +69,7 @@ export const publishInvalidDecision = async (
 		} catch (error) {
 			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 		}
-		await transitionState(
-			appeal.id,
-			appeal.appealType,
-			azureUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.INVALID
-		);
+		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.INVALID);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;
