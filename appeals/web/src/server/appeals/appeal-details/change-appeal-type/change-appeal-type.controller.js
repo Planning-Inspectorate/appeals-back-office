@@ -192,7 +192,11 @@ export const postChangeAppealFinalDate = async (request, response) => {
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};
 
-		addNotificationBannerToSession(request.session, 'appealTypeChanged', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealTypeChanged',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

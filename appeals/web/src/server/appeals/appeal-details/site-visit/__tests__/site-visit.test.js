@@ -1182,7 +1182,7 @@ describe('site-visit', () => {
 				previousVisitType: ''
 			};
 		});
-		it('Should return siteVisitTypeChanged and visit-type if site visit type has changed', () => {
+		it('Should return "siteVisitTypeChanged" and "visit-type" if site visit type has changed', () => {
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
 				appealDetails,
@@ -1191,7 +1191,7 @@ describe('site-visit', () => {
 			expect(result.bannerType).toBe('siteVisitTypeChanged');
 			expect(result.changeType).toBe('visit-type');
 		});
-		it('Should return siteVisitRescheduled and date-time if site visit start time has changed', () => {
+		it('Should return "siteVisitRescheduled" and date-time if site visit start time has changed', () => {
 			updateOrCreateSiteVisitParameters.visitStartTime = '10:30';
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
 				appealDetails,
@@ -1200,7 +1200,7 @@ describe('site-visit', () => {
 			expect(result.bannerType).toBe('siteVisitRescheduled');
 			expect(result.changeType).toBe('date-time');
 		});
-		it('Should return siteVisitRescheduled and date-time if site visit end time has changed', () => {
+		it('Should return "siteVisitRescheduled" and date-time if site visit end time has changed', () => {
 			updateOrCreateSiteVisitParameters.visitEndTime = '11:30';
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
 				appealDetails,
@@ -1209,7 +1209,7 @@ describe('site-visit', () => {
 			expect(result.bannerType).toBe('siteVisitRescheduled');
 			expect(result.changeType).toBe('date-time');
 		});
-		it('Should return siteVisitRescheduled and date-time if site visit date has changed', () => {
+		it('Should return "siteVisitRescheduled" and "date-time" if site visit date has changed', () => {
 			updateOrCreateSiteVisitParameters.visitDate = '2023-06-20T00:00:00Z';
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
 				appealDetails,
@@ -1218,7 +1218,7 @@ describe('site-visit', () => {
 			expect(result.bannerType).toBe('siteVisitRescheduled');
 			expect(result.changeType).toBe('date-time');
 		});
-		it('Should return siteVisitChangedDefault and all if type site visit type and date or time has changed', () => {
+		it('Should return "siteVisitChangedDefault" and all if type site visit type and date or time has changed', () => {
 			updateOrCreateSiteVisitParameters.visitDate = '2023-06-20T00:00:00Z';
 			updateOrCreateSiteVisitParameters.apiVisitType = 'accompanied';
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
@@ -1228,7 +1228,7 @@ describe('site-visit', () => {
 			expect(result.bannerType).toBe('siteVisitChangedDefault');
 			expect(result.changeType).toBe('all');
 		});
-		it('Should return siteVisitNoChanges if type nothing has changed', () => {
+		it('Should return "siteVisitNoChanges" if type nothing has changed', () => {
 			const result = getSiteVisitSuccessBannerTypeAndChangeType(
 				appealDetails,
 				updateOrCreateSiteVisitParameters

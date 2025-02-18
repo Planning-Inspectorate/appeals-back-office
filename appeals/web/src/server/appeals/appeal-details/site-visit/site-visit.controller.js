@@ -211,7 +211,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 
 				addNotificationBannerToSession({
 					session: request.session,
-					bannerDefinitionKey: 'siteVisitArranged',
+					bannerDefinitionKey: 'siteVisitScheduled',
 					appealId: appealDetails.appealId
 				});
 
@@ -228,7 +228,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 
 				addNotificationBannerToSession({
 					session: request.session,
-					bannerDefinitionKey: 'siteVisitArranged',
+					bannerDefinitionKey: 'siteVisitScheduled',
 					appealId: appealDetails.appealId
 				});
 

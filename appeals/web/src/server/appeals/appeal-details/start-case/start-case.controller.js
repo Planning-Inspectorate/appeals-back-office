@@ -40,7 +40,11 @@ export const postStartDate = async (request, response) => {
 
 		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
-		addNotificationBannerToSession(request.session, 'caseStarted', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'caseStarted',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
@@ -93,7 +97,11 @@ export const postChangeDate = async (request, response) => {
 
 		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
 
-		addNotificationBannerToSession(request.session, 'startDateChanged', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'startDateChanged',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

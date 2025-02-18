@@ -2614,28 +2614,6 @@ describe('appellant-case', () => {
 			);
 		});
 	});
-
-	describe('GET /appellant-case/incomplete/confirmation', () => {
-		it('should render the outcome incomplete confirmation page', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${confirmationPagePath}`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Appeal incomplete</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'The relevant parties have been informed. We have told them what to do next and the due date for missing information.</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1">Go back to case details</a>'
-			);
-		});
-	});
-
 	describe('GET /appellant-case/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();

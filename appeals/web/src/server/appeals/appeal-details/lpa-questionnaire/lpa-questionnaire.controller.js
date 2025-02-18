@@ -101,11 +101,11 @@ export const postLpaQuestionnaire = async (request, response) => {
 						lpaQuestionnaireId,
 						mapWebValidationOutcomeToApiValidationOutcome('complete')
 					);
-					addNotificationBannerToSession(
-						request.session,
-						'lpaqReviewComplete',
-						currentAppeal.appealId
-					);
+					addNotificationBannerToSession({
+						session: request.session,
+						bannerDefinitionKey: 'lpaqReviewComplete',
+						appealId: currentAppeal.appealId
+					});
 					return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 				} else {
 					return response.redirect(
@@ -113,11 +113,11 @@ export const postLpaQuestionnaire = async (request, response) => {
 					);
 				}
 			} else if (reviewOutcome === 'incomplete') {
-				addNotificationBannerToSession(
-					request.session,
-					'lpaqReviewIncomplete',
-					currentAppeal.appealId
-				);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'lpaqReviewIncomplete',
+					appealId: currentAppeal.appealId
+				});
 				return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 			}
 		} else {
@@ -193,7 +193,11 @@ export const postEnvironmentServiceTeamReviewCase = async (request, response) =>
 
 	delete request.session.reviewOutcome;
 
-	addNotificationBannerToSession(request.session, 'lpaqReviewComplete', appealId);
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'lpaqReviewComplete',
+		appealId
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };
