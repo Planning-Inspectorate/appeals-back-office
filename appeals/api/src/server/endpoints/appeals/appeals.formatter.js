@@ -19,6 +19,7 @@ const approxStageCompletion = {
 	STATE_TARGET_LPA_QUESTIONNAIRE_DUE: 10,
 	STATE_TARGET_ASSIGN_CASE_OFFICER: 15,
 	STATE_TARGET_ISSUE_DETERMINATION: 30,
+	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 10,
 	STATE_TARGET_STATEMENT_REVIEW: 55,
 	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
 };
@@ -230,7 +231,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			if (appeal.siteVisit) {
 				return addBusinessDays(
 					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
-					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
+					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
 			return addBusinessDays(

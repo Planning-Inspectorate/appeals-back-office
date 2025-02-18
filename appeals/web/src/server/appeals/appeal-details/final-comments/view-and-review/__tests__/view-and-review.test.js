@@ -94,7 +94,9 @@ describe('final-comments', () => {
 			expect(partyKey?.textContent?.trim()).toBe('Final comments');
 			expect(finalCommentsValue?.textContent?.trim()).toBe('Awaiting final comments review');
 		});
+	});
 
+	describe('POST /review-comments with data', () => {
 		it('should render review LPA final comments page with error if no option is selected', async () => {
 			const response = await request.post(`${baseUrl}/2/final-comments/lpa`).send({
 				status: ''
@@ -121,6 +123,37 @@ describe('final-comments', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toContain('Page not found');
+		});
+	});
+
+	describe('GET /review-comments with redacted comment', () => {
+		it('should render the redacted comment summary list row value inside a show-more component, if there is a redacted version of the comment', async () => {
+			nock('http://test/')
+				.get('/appeals/2/reps?type=appellant_final_comment')
+				.reply(200, {
+					...finalCommentsForReview,
+					items: [
+						{
+							...finalCommentsForReview.items[0],
+							redactedRepresentation: 'a'.repeat(301)
+						}
+					]
+				});
+			const response = await request.get(`${baseUrl}/2/final-comments/appellant`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Review appellant final comments</h1>');
+
+			const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHTML).toContain('Redacted comment</dt>');
+			expect(unprettifiedHTML).toContain(
+				'class="pins-show-more" data-label="Read more" data-mode="text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>'
+			);
 		});
 	});
 

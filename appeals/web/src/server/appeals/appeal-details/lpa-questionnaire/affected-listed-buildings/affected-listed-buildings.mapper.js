@@ -63,7 +63,7 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 								text: 'Listed building number'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" target="_blank">${currentListedBuilding}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" class="govuk-link" target="_blank">${currentListedBuilding}</a>`
 							},
 							actions: {
 								items: [
@@ -198,7 +198,7 @@ export function removeAffectedListedBuildingPage(
 								text: 'Listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" target="_blank">${listedBuilding}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" class="govuk-link" target="_blank">${listedBuilding}</a>`
 							}
 						}
 					]
@@ -290,7 +290,7 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 								text: 'Listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" target="_blank">${listedBuildingData}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" class="govuk-link" target="_blank">${listedBuildingData}</a>`
 							},
 							actions: {
 								items: [
