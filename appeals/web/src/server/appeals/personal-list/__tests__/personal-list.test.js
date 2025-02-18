@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -13,6 +14,11 @@ import { mapAppealStatusToActionRequiredHtml } from '../personal-list.mapper.js'
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/personal-list';
+
+function getDateDaysInFutureISO(days) {
+	const date = new Date(new Date().setDate(new Date().getDate() + days));
+	return date.toISOString();
+}
 
 describe('personal-list', () => {
 	beforeEach(installMockApi);
@@ -692,5 +698,86 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		expect(result).toEqual(
 			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
 		);
+	});
+
+	describe('appeal status is statements', () => {
+		let appealInStatementsStatus;
+
+		beforeEach(() => {
+			appealInStatementsStatus = {
+				...appeal,
+				appealStatus: 'statements',
+				lpaQuestionnaireId: null,
+				appealType: 'appeal',
+				appealSubtype: 'protection',
+				documentationSummary: {
+					ipComments: {},
+					lpaStatement: {}
+				},
+				appealTimetable: {}
+			};
+		});
+
+		it('should return "Update LPA statement" link', () => {
+			appealInStatementsStatus.documentationSummary.lpaStatement.representationStatus =
+				'incomplete';
+			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			expect(result).toContain('Update LPA statement<span');
+			expect(result).toContain(`href="/appeals-service/appeal-details/${appealId}/lpa-statement"`);
+		});
+
+		it('should return "Review LPA statement" link', () => {
+			appealInStatementsStatus.documentationSummary.lpaStatement.status = 'received';
+			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			expect(result).toContain('Review LPA statement<span');
+			expect(result).toContain(`href="/appeals-service/appeal-details/${appealId}/lpa-statement"`);
+		});
+
+		it('should return "Review IP comments" link', () => {
+			appealInStatementsStatus.documentationSummary.lpaStatement.status = 'received';
+			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			expect(result).toContain('Review IP comments<span');
+			expect(result).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/interested-party-comments"`
+			);
+		});
+
+		it('should return both "Awaiting LPA statement" text and "Progress to final comments" link', () => {
+			appealInStatementsStatus.documentationSummary.lpaStatement.status = 'not_received';
+			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
+			appealInStatementsStatus.appealTimetable.lpaStatementDueDate = getDateDaysInFutureISO(-1);
+
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			const actions = result.split('<br>');
+
+			expect(actions[0]).toContain('Awaiting LPA statement<span');
+			expect(actions[1]).toContain('Progress to final comments<span');
+			expect(actions[1]).toContain(`href="/appeals-service/appeal-details/${appealId}/share"`);
+		});
+
+		it('should return both "Awaiting LPA statement" text and "Share IP comments and LPA statement" link', () => {
+			appealInStatementsStatus.documentationSummary.lpaStatement.status = 'not_received';
+			appealInStatementsStatus.documentationSummary.lpaStatement.representationStatus = 'valid';
+			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
+			appealInStatementsStatus.appealTimetable.lpaStatementDueDate = getDateDaysInFutureISO(-1);
+
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			const actions = result.split('<br>');
+
+			expect(actions[0]).toContain('Awaiting LPA statement<span');
+			expect(actions[1]).toContain('Share IP comments and LPA statement<span');
+			expect(actions[1]).toContain(`href="/appeals-service/appeal-details/${appealId}/share"`);
+		});
+
+		it('should return "Awaiting IP comments" link', () => {
+			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
+			expect(result).toContain('Awaiting IP comments<span');
+			expect(result).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/interested-party-comments"`
+			);
+		});
 	});
 });

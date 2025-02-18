@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStatusDependentNotifications when status is "statements" should return the "Interested party comments awaiting review" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/undefined/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "statements" should return the "LPA statement awaiting review" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">LPA statement awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/undefined/lpa-statement" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "statements" when the ip comments and LPA statement due dates are in the past and neither LPA Statement or IP Comments are awaiting a review should return the "Progress to final comments" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<a href="/appeals-service/appeal-details/undefined/share" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "statements" when the ip comments and LPA statement due dates are in the past and neither LPA Statement or IP Comments are awaiting a review should return the "Share IP comments and LPA statement" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<a href="/appeals-service/appeal-details/undefined/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "statements" when the ip comments and LPA statement due dates are in the past should return the "Update LPA statement" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">LPA statement incomplete</p> <a href="/appeals-service/appeal-details/undefined/lpa-statement" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/undefined/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
