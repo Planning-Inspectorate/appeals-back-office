@@ -63,6 +63,14 @@ resource "azurerm_eventgrid_topic" "document_scan_results" {
   }
 }
 
+removed {
+  from = azurerm_resource_group_template_deployment.document_storage_malware_scanning_settings
+
+  lifecycle {
+    destroy = false
+  }
+}
+
 import {
   to = azurerm_security_center_storage_defender.malware_scanning
   id = azurerm_storage_account.documents.id
