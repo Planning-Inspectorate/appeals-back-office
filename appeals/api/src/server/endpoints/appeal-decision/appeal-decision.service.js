@@ -72,13 +72,7 @@ export const publishDecision = async (
 			}
 		}
 
-		await transitionState(
-			appeal.id,
-			appeal.appealType || null,
-			azureUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.COMPLETE
-		);
+		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.COMPLETE);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;

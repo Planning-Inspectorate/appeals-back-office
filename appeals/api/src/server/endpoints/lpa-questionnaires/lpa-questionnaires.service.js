@@ -55,7 +55,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, appealStatus, appealType, applicationReference: lpaReference } = appeal;
+	const { id: appealId, applicationReference: lpaReference } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
 
 	if (lpaQuestionnaireDueDate) {
@@ -80,13 +80,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		await transitionState(
-			appealId,
-			appealType,
-			azureAdUserId,
-			appealStatus,
-			validationOutcome.name
-		);
+		await transitionState(appealId, azureAdUserId, validationOutcome.name);
 
 		const updatedAppeal = await appealRepository.getAppealById(appealId);
 		if (
@@ -94,13 +88,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			arrayOfStatusesContainsString(updatedAppeal?.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
 			updatedAppeal?.siteVisit
 		) {
-			await transitionState(
-				appealId,
-				appealType,
-				azureAdUserId,
-				updatedAppeal.appealStatus,
-				VALIDATION_OUTCOME_COMPLETE
-			);
+			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 	} else {
 		createAuditTrail({

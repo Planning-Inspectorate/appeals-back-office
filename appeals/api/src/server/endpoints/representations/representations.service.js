@@ -231,13 +231,7 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		}
 	);
 
-	await transitionState(
-		appeal.id,
-		appeal.appealType,
-		azureAdUserId,
-		appeal.appealStatus,
-		APPEAL_CASE_STATUS.FINAL_COMMENTS
-	);
+	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	const finalCommentsDueDate = formatDate(
 		new Date(appeal.appealTimetable.finalCommentsDueDate || ''),
@@ -291,13 +285,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		}
 	);
 
-	await transitionState(
-		appeal.id,
-		appeal.appealType,
-		azureAdUserId,
-		appeal.appealStatus,
-		VALIDATION_OUTCOME_COMPLETE
-	);
+	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	try {
 		if (

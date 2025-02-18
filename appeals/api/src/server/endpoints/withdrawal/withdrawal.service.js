@@ -57,13 +57,7 @@ export const publishWithdrawal = async (
 	}
 
 	if (result) {
-		await transitionState(
-			appeal.id,
-			appeal.appealType || null,
-			azureUserId,
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.WITHDRAWN
-		);
+		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.WITHDRAWN);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;

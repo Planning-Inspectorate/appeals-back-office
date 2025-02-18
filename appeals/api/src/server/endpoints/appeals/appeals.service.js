@@ -217,13 +217,7 @@ async function updateCompletedEvents(azureAdUserId) {
 
 	await Promise.all(
 		appealsToUpdate.map((appeal) =>
-			transitionState(
-				appeal.id,
-				appeal.appealType,
-				azureAdUserId,
-				appeal.appealStatus,
-				VALIDATION_OUTCOME_COMPLETE
-			)
+			transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE)
 		)
 	);
 }

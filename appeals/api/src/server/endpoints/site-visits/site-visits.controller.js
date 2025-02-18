@@ -73,13 +73,7 @@ const postSiteVisit = async (req, res) => {
 	}
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-		await transitionState(
-			appealId,
-			appeal.appealType,
-			azureAdUserId,
-			appeal.appealStatus,
-			VALIDATION_OUTCOME_COMPLETE
-		);
+		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
 	return res.send({

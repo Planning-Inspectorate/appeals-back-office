@@ -55,7 +55,7 @@ const updateAppellantCaseValidationOutcome = async (
 	{ appeal, appellantCaseId, azureAdUserId, data, validationOutcome, validAt, siteAddress },
 	notifyClient
 ) => {
-	const { appealStatus, appealType, id: appealId } = appeal;
+	const { id: appealId } = appeal;
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
@@ -68,13 +68,7 @@ const updateAppellantCaseValidationOutcome = async (
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		await transitionState(
-			appealId,
-			appealType,
-			azureAdUserId,
-			appealStatus,
-			validationOutcome.name
-		);
+		await transitionState(appealId, azureAdUserId, validationOutcome.name);
 	} else {
 		createAuditTrail({
 			appealId,

@@ -3,7 +3,7 @@ export default {
 	reference: '6000002',
 	submissionId: null,
 	appealTypeId: 2,
-	procedureTypeId: null,
+	procedureTypeId: 3,
 	addressId: 1,
 	lpaId: 1,
 	applicationReference: '38699/APP/0/694045',
@@ -31,7 +31,11 @@ export default {
 		addressTown: 'Bristol',
 		addressCountry: null
 	},
-	procedureType: null,
+	procedureType: {
+		id: 3,
+		name: 'Written',
+		key: 'written'
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	neighbouringSites: [],
