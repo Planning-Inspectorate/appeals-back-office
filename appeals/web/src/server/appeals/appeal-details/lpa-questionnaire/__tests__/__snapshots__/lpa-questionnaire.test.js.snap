@@ -1497,24 +1497,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation should render the confirmation page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Page not found</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">If you typed the web address, check it is correct.</p>
-            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete should render the incomplete reason page 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -1672,40 +1654,6 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
         </div>
         <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
     </form>
-</main>"
-`;
-
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation should render the 500 error page if required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation should render the confirmation page with the expected content if required data is present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
 </main>"
 `;
 
