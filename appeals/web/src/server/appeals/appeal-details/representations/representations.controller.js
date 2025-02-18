@@ -1,4 +1,5 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { statementAndCommentsSharePage, finalCommentsSharePage } from './representations.mapper.js';
@@ -49,7 +50,13 @@ export async function postShareRepresentations(request, response) {
 					? 'commentsAndLpaStatementShared'
 					: 'progressedToFinalComments';
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
-				return publishedReps.length > 0 ? 'finalCommentsShared' : 'caseProgressed';
+				return publishedReps.filter(
+					(rep) =>
+						rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+						rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+				).length > 0
+					? 'finalCommentsShared'
+					: 'caseProgressed';
 		}
 	})();
 

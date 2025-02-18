@@ -2647,6 +2647,25 @@ export const representationRejectionReasons = [
 	}
 ];
 
+export const shareRepsResponseFinalComment = {
+	id: 1,
+	appealId: 1,
+	representationType: 'appellant_final_comment',
+	dateCreated: '2025-02-18T13:17:24.741Z',
+	dateLastUpdated: '2025-02-18T13:19:05.714Z',
+	originalRepresentation:
+		'Final comment from appellant. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
+	redactedRepresentation: null,
+	representedId: 1,
+	representativeId: null,
+	lpaCode: null,
+	status: 'published',
+	reviewer: null,
+	notes: null,
+	siteVisitRequested: false,
+	source: 'citizen'
+};
+
 export const baseSession = {
 	id: '',
 	cookie: { originalMaxAge: 1 },
