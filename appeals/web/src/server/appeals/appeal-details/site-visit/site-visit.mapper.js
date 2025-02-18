@@ -510,7 +510,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
  */
 
 /**
- * @typedef {Object} bannerTypeAndChangeType
+ * @typedef {Object} BannerTypeAndChangeType
  * @property {string} bannerType
  * @property {SiteVisitChangeType} changeType
  */
@@ -518,16 +518,16 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('./site-visit.service.js').UpdateOrCreateSiteVisitParameters} updateOrCreateSiteVisitParameters
- * @returns {bannerTypeAndChangeType}
+ * @returns {BannerTypeAndChangeType}
  */
 export function getSiteVisitSuccessBannerTypeAndChangeType(
 	appealDetails,
 	updateOrCreateSiteVisitParameters
 ) {
 	/**
-	 * @type {bannerTypeAndChangeType}
+	 * @type {BannerTypeAndChangeType}
 	 */
-	const bannerTypeAndChangeType = {
+	const BannerTypeAndChangeType = {
 		bannerType: 'siteVisitChangedDefault',
 		changeType: 'unchanged'
 	};
@@ -548,18 +548,18 @@ export function getSiteVisitSuccessBannerTypeAndChangeType(
 			oldVisitEndTime !== updateOrCreateSiteVisitParameters.visitEndTime);
 
 	if (visitTypeChanged && !dateTimeChanged) {
-		bannerTypeAndChangeType.bannerType = 'siteVisitTypeChanged';
-		bannerTypeAndChangeType.changeType = 'visit-type';
+		BannerTypeAndChangeType.bannerType = 'siteVisitTypeChanged';
+		BannerTypeAndChangeType.changeType = 'visit-type';
 	} else if (!visitTypeChanged && dateTimeChanged) {
-		bannerTypeAndChangeType.bannerType = 'siteVisitRescheduled';
-		bannerTypeAndChangeType.changeType = 'date-time';
+		BannerTypeAndChangeType.bannerType = 'siteVisitRescheduled';
+		BannerTypeAndChangeType.changeType = 'date-time';
 	} else if (visitTypeChanged && dateTimeChanged) {
-		bannerTypeAndChangeType.bannerType = 'siteVisitChangedDefault';
-		bannerTypeAndChangeType.changeType = 'all';
+		BannerTypeAndChangeType.bannerType = 'siteVisitChangedDefault';
+		BannerTypeAndChangeType.changeType = 'all';
 	} else {
-		bannerTypeAndChangeType.bannerType = 'siteVisitNoChanges';
-		bannerTypeAndChangeType.changeType = 'unchanged';
+		BannerTypeAndChangeType.bannerType = 'siteVisitNoChanges';
+		BannerTypeAndChangeType.changeType = 'unchanged';
 	}
 
-	return bannerTypeAndChangeType;
+	return BannerTypeAndChangeType;
 }

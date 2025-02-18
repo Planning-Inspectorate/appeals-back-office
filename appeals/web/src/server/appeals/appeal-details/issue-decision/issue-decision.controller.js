@@ -348,7 +348,11 @@ export const postCheckDecision = async (request, response) => {
 			request.session.inspectorDecision.letterDate
 		);
 
-		addNotificationBannerToSession(request.session, 'issuedDecisionValid', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'issuedDecisionValid',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
@@ -432,7 +436,11 @@ export const postCheckInvalidDecision = async (request, response) => {
 	try {
 		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
 
-		addNotificationBannerToSession(request.session, 'issuedDecisionInvalid', appealId);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'issuedDecisionInvalid',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

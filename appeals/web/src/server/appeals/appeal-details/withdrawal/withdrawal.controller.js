@@ -329,11 +329,11 @@ export const postCheckYourAnswers = async (request, response) => {
 			request.session.withdrawal.withdrawalRequestDate
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'appealWithdrawalRequested',
-			currentAppeal.appealId
-		);
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealWithdrawalRequested',
+			appealId: currentAppeal.appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
