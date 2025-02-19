@@ -914,6 +914,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			},
 			rows: [
 				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+				mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
 				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
