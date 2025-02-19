@@ -1,5 +1,6 @@
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -58,7 +59,16 @@ export function generateCommentsSummaryList(appealId, comment) {
 						]
 				  },
 			actions: {
-				items: []
+				items:
+					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+						? []
+						: [
+								{
+									text: 'Redact',
+									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
+									visuallyHiddenText: 'final comments'
+								}
+						  ]
 			}
 		},
 		...(comment.redactedRepresentation
