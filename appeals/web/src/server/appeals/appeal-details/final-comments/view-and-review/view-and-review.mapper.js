@@ -3,6 +3,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentsSummaryList } from './page-components/common.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -24,16 +25,22 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		appealDetails.appealId
 	);
 
+	const reviewRequired = isRepresentationReviewRequired(comment.status);
+
+	const title = reviewRequired
+		? `Review ${finalCommentsType} final comments`
+		: `${capitalizeFirstLetter(finalCommentsType)} final comments`;
+
 	const pageContent = {
-		title: `Review ${finalCommentsType} final comments`,
+		title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: `Review ${finalCommentsType} final comments`,
+		heading: title,
 		submitButtonText: 'Continue',
 		pageComponents: [...notificationBanners, commentSummaryList]
 	};
 
-	if (isRepresentationReviewRequired(comment.status)) {
+	if (reviewRequired) {
 		pageContent.pageComponents.push({
 			type: 'radios',
 			parameters: {
