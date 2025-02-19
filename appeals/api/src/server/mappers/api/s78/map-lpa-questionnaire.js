@@ -52,8 +52,7 @@ export const mapLpaQuestionnaire = (data) => {
 			lpaProcedurePreferenceDetails: lpaQuestionnaire.lpaProcedurePreferenceDetails,
 			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration,
 			eiaSensitiveAreaDetails: lpaQuestionnaire.eiaSensitiveAreaDetails,
-			eiaConsultedBodiesDetails: lpaQuestionnaire.eiaConsultedBodiesDetails,
-			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits
+			consultedBodiesDetails: lpaQuestionnaire.consultedBodiesDetails
 		};
 	}
 };

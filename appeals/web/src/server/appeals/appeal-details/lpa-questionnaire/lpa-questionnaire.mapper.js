@@ -1031,7 +1031,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			rows: [
 				mappedLPAQData.lpaq?.representations?.display.summaryListItem,
 				mappedLPAQData.lpaq?.consultationResponses?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaConsultedBodiesDetails?.display.summaryListItem
+				mappedLPAQData.lpaq?.consultedBodiesDetails?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

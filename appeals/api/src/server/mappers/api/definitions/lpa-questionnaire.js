@@ -101,7 +101,7 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
-	eiaConsultedBodiesDetails: {
+	consultedBodiesDetails: {
 		type: 'string',
 		nullable: true
 	},

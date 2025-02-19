@@ -5943,7 +5943,7 @@ export type LpaQuestionnaire = {
 	eiaEnvironmentalImpactSchedule?: string | null;
 	eiaDevelopmentDescription?: string | null;
 	eiaSensitiveAreaDetails?: string | null;
-	eiaConsultedBodiesDetails?: string | null;
+	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
 	designatedSiteNames?:
 		| {
@@ -10760,7 +10760,7 @@ export interface LpaQuestionnaireUpdateRequest {
 	eiaEnvironmentalImpactSchedule?: string | null;
 	eiaDevelopmentDescription?: string | null;
 	eiaSensitiveAreaDetails?: string | null;
-	eiaConsultedBodiesDetails?: string | null;
+	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
 	designatedSiteNames?:
 		| {

@@ -8,7 +8,7 @@ import { HTTPError } from 'got';
  * @param {*} msg
  */
 export default async function (context, msg) {
-	context.log('LPA questionnaire import command', msg);
+	context.log('Representation import command');
 
 	const applicationProperties = context?.bindingData?.applicationProperties;
 
@@ -16,14 +16,14 @@ export default async function (context, msg) {
 		Boolean(applicationProperties) &&
 		Object.prototype.hasOwnProperty.call(applicationProperties, 'type');
 	if (!hasType) {
-		context.log.warn('Ignoring invalid message, no type', msg);
+		context.log.warn('Ignoring invalid message, no type');
 		return;
 	}
 
 	const type = applicationProperties?.type;
 
-	if (type !== EventType.Create && type !== EventType.Update) {
-		context.log.warn(`Ignoring invalid message, unsupported type '${type}'`, msg);
+	if (type !== EventType.Create) {
+		context.log.warn(`Ignoring invalid message, unsupported type '${type}'`);
 		return;
 	}
 

@@ -358,7 +358,7 @@ interface SingleLPAQuestionnaireResponse {
 	lpaProcedurePreferenceDetails: string | null;
 	lpaProcedurePreferenceDuration: number | null;
 	eiaSensitiveAreaDetails: string | null;
-	eiaConsultedBodiesDetails: string | null;
+	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
 }
 
@@ -392,7 +392,7 @@ interface UpdateLPAQuestionnaireRequest {
 	lpaProcedurePreferenceDetails: string;
 	lpaProcedurePreferenceDuration: number;
 	eiaSensitiveAreaDetails: string | null;
-	eiaConsultedBodiesDetails: string | null;
+	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
 }
 

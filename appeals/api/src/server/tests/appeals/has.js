@@ -240,7 +240,7 @@ export default {
 		eiaScreeningOpinion: null,
 		eiaRequiresEnvironmentalStatement: null,
 		eiaCompletedEnvironmentalStatement: null,
-		eiaConsultedBodiesDetails: null,
+		consultedBodiesDetails: null,
 		hasStatutoryConsultees: null,
 		hasInfrastructureLevy: null,
 		isInfrastructureLevyFormallyAdopted: null,

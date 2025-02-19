@@ -25,6 +25,7 @@ export const mapLpaQuestionnaire = (data) => {
 		affectedListedBuildingNumbers:
 			casedata?.listedBuildingDetails
 				?.filter((lp) => lp.affectsListedBuilding)
-				.map((lb) => lb.listEntry) || null
+				.map((lb) => lb.listEntry) || null,
+		reasonForNeighbourVisits: casedata?.reasonForNeighbourVisits
 	};
 };

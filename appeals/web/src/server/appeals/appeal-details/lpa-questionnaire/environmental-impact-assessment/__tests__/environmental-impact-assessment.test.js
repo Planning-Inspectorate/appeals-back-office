@@ -161,7 +161,7 @@ describe('environmental-impact-assessment', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
-							eiaConsultedBodiesDetails: testCase.value
+							consultedBodiesDetails: testCase.value
 						});
 
 					const response = await request.get(`${baseUrl}/1/lpa-questionnaire/2`);
@@ -189,7 +189,7 @@ describe('environmental-impact-assessment', () => {
 					.get('/appeals/1/lpa-questionnaires/2')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
-						eiaConsultedBodiesDetails: 'a'.repeat(301)
+						consultedBodiesDetails: 'a'.repeat(301)
 					});
 
 				const response = await request.get(`${baseUrl}/1/lpa-questionnaire/2`);
@@ -611,7 +611,7 @@ describe('environmental-impact-assessment', () => {
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
-						eiaConsultedBodiesDetails: null
+						consultedBodiesDetails: null
 					});
 
 				const response = await request.get(
@@ -644,7 +644,7 @@ describe('environmental-impact-assessment', () => {
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
-						eiaConsultedBodiesDetails: 'test consulted bodies details'
+						consultedBodiesDetails: 'test consulted bodies details'
 					});
 
 				const response = await request.get(

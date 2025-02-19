@@ -63,7 +63,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			lpaProcedurePreferenceDetails,
 			lpaProcedurePreferenceDuration,
 			eiaSensitiveAreaDetails,
-			eiaConsultedBodiesDetails,
+			consultedBodiesDetails,
 			reasonForNeighbourVisits,
 			designatedSiteNames
 		},
@@ -117,7 +117,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					lpaProcedurePreferenceDetails,
 					lpaProcedurePreferenceDuration,
 					eiaSensitiveAreaDetails,
-					eiaConsultedBodiesDetails,
+					consultedBodiesDetails,
 					reasonForNeighbourVisits,
 					designatedSiteNames
 			  });

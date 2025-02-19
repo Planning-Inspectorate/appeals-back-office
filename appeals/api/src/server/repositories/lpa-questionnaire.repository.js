@@ -50,7 +50,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaProcedurePreferenceDetails: data.lpaProcedurePreferenceDetails,
 				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration,
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
-				eiaConsultedBodiesDetails: data.eiaConsultedBodiesDetails,
+				consultedBodiesDetails: data.consultedBodiesDetails,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
 				...processDesignatedSites(id, data, transaction)
 			}

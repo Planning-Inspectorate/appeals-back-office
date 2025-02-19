@@ -53,7 +53,7 @@ export const submaps = {
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
 	otherRelevantPolicies: mapOtherRelevantPolicies,
 	eiaSensitiveAreaDetails: mapEiaSensitiveAreaDetails,
-	eiaConsultedBodiesDetails: mapEiaConsultedBodiesDetails,
+	consultedBodiesDetails: mapEiaConsultedBodiesDetails,
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
 	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites
 };
