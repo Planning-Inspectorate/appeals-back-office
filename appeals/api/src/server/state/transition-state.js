@@ -24,17 +24,19 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	const { appealStatus, appealType, procedureType } = appeal;
-	if (!(appealStatus && appealType && procedureType)) {
+	if (!appealStatus || !appealType) {
 		throw new Error(`appeal with ID ${appealId} is missing fields required to transition state`);
 	}
 
 	const currentState = appealStatus[0].status;
 
-	const stateMachine = createStateMachine(
-		appealType.key,
-		procedureType.key || APPEAL_CASE_PROCEDURE.WRITTEN,
-		currentState
-	);
+	if (!procedureType) {
+		logger.info(`Procedure type not set for appeal ${appealId}, defaulting to written`);
+	}
+
+	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
+
+	const stateMachine = createStateMachine(appealType.key, procedureKey, currentState);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {
