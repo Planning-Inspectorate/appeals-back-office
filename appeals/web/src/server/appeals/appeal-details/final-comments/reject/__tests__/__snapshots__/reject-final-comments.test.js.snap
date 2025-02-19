@@ -12,7 +12,7 @@ exports[`final-comments GET / should render the reject appellant final comments 
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h1 class="govuk-fieldset__heading"> Why are you rejecting the comment?</h1>
+                            <h1 class="govuk-fieldset__heading"> Why are you rejecting the appellant&#39;s final comments?</h1>
                         </legend>
                         <div id="rejection-reason-hint" class="govuk-hint">Select all that apply.</div>
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -97,7 +97,7 @@ exports[`final-comments GET / should render the reject lpa final comments page w
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                            <h1 class="govuk-fieldset__heading"> Why are you rejecting the comment?</h1>
+                            <h1 class="govuk-fieldset__heading"> Why are you rejecting the LPA&#39;s final comments?</h1>
                         </legend>
                         <div id="rejection-reason-hint" class="govuk-hint">Select all that apply.</div>
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
