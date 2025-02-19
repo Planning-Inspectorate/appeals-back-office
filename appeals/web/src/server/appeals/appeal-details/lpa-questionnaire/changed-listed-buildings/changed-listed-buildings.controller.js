@@ -123,13 +123,12 @@ export const postAddChangedListedBuildingCheckAndConfirm = async (request, respo
 			request.session.affectedListedBuilding
 		);
 
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Listed building added'
-		);
+			text: 'Changed listed building added'
+		});
 
 		delete request.session.affectedListedBuilding;
 
@@ -224,13 +223,13 @@ export const postRemoveChangedListedBuilding = async (request, response) => {
 	}
 
 	await removeChangedListedBuilding(apiClient, appealId, listedBuildingId);
-	addNotificationBannerToSession(
-		request.session,
-		'changePage',
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'changePage',
 		appealId,
-		'',
-		'Changed listed building removed'
-	);
+		text: 'Changed listed building removed'
+	});
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
@@ -351,13 +350,13 @@ export const postChangeChangedListedBuildingCheckAndConfirm = async (request, re
 			listedBuildingId,
 			request.session.affectedListedBuilding
 		);
-		addNotificationBannerToSession(
-			request.session,
-			'changePage',
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'changePage',
 			appealId,
-			'',
-			'Changed listed building updated'
-		);
+			text: 'Changed listed building updated'
+		});
 
 		delete request.session.affectedListedBuilding;
 
