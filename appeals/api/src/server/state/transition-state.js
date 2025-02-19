@@ -6,6 +6,7 @@ import appealStatusRepository from '#repositories/appeal-status.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { AUDIT_TRAIL_PROGRESSED_TO_STATUS } from '#endpoints/constants.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -29,7 +30,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	const currentState = appealStatus[0].status;
 
-	const stateMachine = createStateMachine(appealType.key, procedureType.key, currentState);
+	const stateMachine = createStateMachine(
+		appealType.key,
+		procedureType.key || APPEAL_CASE_PROCEDURE.WRITTEN,
+		currentState
+	);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {

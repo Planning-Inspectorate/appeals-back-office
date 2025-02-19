@@ -1,5 +1,6 @@
-import { APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import createStateMachine from './create-state-machine.js';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').ProcedureType} ProcedureType */
@@ -12,11 +13,15 @@ import createStateMachine from './create-state-machine.js';
  * @returns {StateStub[]}
  * */
 function listStates(appealType, procedureType, currentState) {
-	const stateMachine = createStateMachine(appealType.key, procedureType?.key, currentState);
+	const stateMachine = createStateMachine(
+		appealType.key,
+		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
+		currentState
+	);
 	const { states } = stateMachine;
 
-	if (!procedureType && appealType.key !== APPEAL_TYPE_SHORTHAND_HAS) {
-		throw new Error(`Procedure type is required to list states for appeal type: ${appealType.key}`);
+	if (!procedureType) {
+		logger.info('Procedure type not set, defaulting to written');
 	}
 
 	const stateList = Object.keys(states)
