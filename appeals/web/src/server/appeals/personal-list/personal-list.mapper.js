@@ -336,6 +336,7 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 					case 'not_received':
 						return `<span>Awaiting LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></span>`;
 					case 'received':
+					case 'incomplete':
 						return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Review LPA Statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 					default:
 						return null;
