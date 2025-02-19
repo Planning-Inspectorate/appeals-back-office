@@ -33,7 +33,9 @@ const appealsApiRequests = {
 			siteAreaSquareMetres: 22,
 			siteSafetyDetails: ["It's dangerous"],
 			isGreenBelt: false,
+			typeOfPlanningApplication: null,
 			// S78 fields
+			developmentType: null,
 			agriculturalHolding: true,
 			tenantAgriculturalHolding: true,
 			otherTenantsAgriculturalHolding: null,
@@ -111,7 +113,7 @@ const appealsApiRequests = {
 			changedListedBuildingNumbers: ['14214', '62354'],
 			designatedSitesNames: ['cSAC', 'SAC', 'customVal1', 'customVal2'],
 			eiaSensitiveAreaDetails: null,
-			eiaConsultedBodiesDetails: null,
+			consultedBodiesDetails: null,
 			eiaScreeningOpinion: null,
 			eiaColumnTwoThreshold: null,
 			eiaRequiresEnvironmentalStatement: null,

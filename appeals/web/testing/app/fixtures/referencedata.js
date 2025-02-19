@@ -1236,7 +1236,7 @@ export const lpaQuestionnaireDataNotValidated = {
 	scheduleType: 'Schedule 2',
 	sensitiveAreaDetails: 'The area is prone to flooding',
 	siteWithinGreenBelt: true,
-	statutoryConsulteesDetails: 'Some other people need to be consulted',
+	consultedBodiesDetails: 'Some other people need to be consulted',
 	validation: null
 };
 

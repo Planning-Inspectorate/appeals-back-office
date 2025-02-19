@@ -78,15 +78,15 @@ export function changeEiaConsultedBodiesDetails(
 	updatedConsultedBodiesDetails
 ) {
 	/** @type {string|null} */
-	let eiaConsultedBodiesDetails = updatedConsultedBodiesDetails.details;
+	let consultedBodiesDetails = updatedConsultedBodiesDetails.details;
 
 	if (!convertFromYesNoToBoolean(updatedConsultedBodiesDetails.radio)) {
-		eiaConsultedBodiesDetails = null;
+		consultedBodiesDetails = null;
 	}
 
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			eiaConsultedBodiesDetails
+			consultedBodiesDetails
 		}
 	});
 }

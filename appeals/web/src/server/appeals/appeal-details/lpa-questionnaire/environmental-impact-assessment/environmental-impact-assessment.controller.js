@@ -265,7 +265,7 @@ const renderChangeEiaConsultedBodiesDetails = async (request, response) => {
 
 	const mappedPageContents = changeEiaConsultedBodiesDetailsPage(
 		request.currentAppeal,
-		lpaQuestionnaire.eiaConsultedBodiesDetails,
+		lpaQuestionnaire.consultedBodiesDetails,
 		request.session.eiaConsultedBodiesDetails?.radio,
 		request.session.eiaConsultedBodiesDetails?.details
 	);

@@ -42,7 +42,7 @@ export const mapLpaQuestionnaire = (data) => {
 				.map((lb) => lb.listEntry) || null,
 		designatedSitesNames,
 		eiaSensitiveAreaDetails: casedata?.eiaSensitiveAreaDetails ?? null,
-		eiaConsultedBodiesDetails: casedata?.eiaConsultedBodiesDetails ?? null,
+		consultedBodiesDetails: casedata?.consultedBodiesDetails ?? null,
 		eiaScreeningOpinion: casedata?.eiaScreeningOpinion ?? null,
 
 		eiaColumnTwoThreshold: casedata?.eiaColumnTwoThreshold ?? null,

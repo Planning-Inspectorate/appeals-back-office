@@ -16451,7 +16451,7 @@
 						"type": "string",
 						"nullable": true
 					},
-					"eiaConsultedBodiesDetails": {
+					"consultedBodiesDetails": {
 						"type": "string",
 						"nullable": true
 					},
@@ -28544,7 +28544,7 @@
 						"type": "string",
 						"nullable": true
 					},
-					"eiaConsultedBodiesDetails": {
+					"consultedBodiesDetails": {
 						"type": "string",
 						"nullable": true
 					},

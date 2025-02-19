@@ -283,6 +283,7 @@ model AppellantCase {
   numberOfResidencesNetChange              Int?
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
+  typeOfPlanningApplication                String?
 }
 
 /// AppellantCaseValidationOutcome model
@@ -402,7 +403,7 @@ model LPAQuestionnaire {
   eiaScreeningOpinion                 Boolean?
   eiaRequiresEnvironmentalStatement   Boolean?
   eiaCompletedEnvironmentalStatement  Boolean?
-  eiaConsultedBodiesDetails           String?
+  consultedBodiesDetails              String?
   hasStatutoryConsultees              Boolean?
   hasInfrastructureLevy               Boolean?
   isInfrastructureLevyFormallyAdopted Boolean?

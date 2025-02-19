@@ -53,6 +53,7 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 				create: listedBuildingsData
 			}
 		}),
+		reasonForNeighbourVisits: casedata.reasonForNeighbourVisits,
 		...(isS78 && {
 			lpaStatement: casedata.lpaStatement,
 			affectsScheduledMonument: casedata.affectsScheduledMonument,
@@ -68,7 +69,7 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 			eiaScreeningOpinion: casedata.eiaScreeningOpinion,
 			eiaRequiresEnvironmentalStatement: casedata.eiaRequiresEnvironmentalStatement,
 			eiaCompletedEnvironmentalStatement: casedata.eiaCompletedEnvironmentalStatement,
-			eiaConsultedBodiesDetails: casedata.eiaConsultedBodiesDetails,
+			consultedBodiesDetails: casedata.consultedBodiesDetails,
 			hasStatutoryConsultees: casedata.hasStatutoryConsultees,
 			hasConsultationResponses: casedata.hasConsultationResponses,
 			hasEmergingPlan: casedata.hasEmergingPlan,
@@ -76,6 +77,7 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 			hasInfrastructureLevy: casedata.hasInfrastructureLevy,
 			isInfrastructureLevyFormallyAdopted: casedata.isInfrastructureLevyFormallyAdopted,
 			infrastructureLevyAdoptedDate: casedata.infrastructureLevyAdoptedDate,
+			infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate,
 			lpaProcedurePreference: casedata.lpaProcedurePreference,
 			lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
 			lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration

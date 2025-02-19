@@ -40,6 +40,7 @@ export const mapCaseDates = (data) => {
 		transferredCaseClosedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.CLOSED),
 		caseDecisionOutcomeDate: mapDate(appeal.inspectorDecision?.caseDecisionOutcomeDate),
 		caseDecisionPublishedDate: null,
-		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE)
+		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE),
+		appellantProofsSubmittedDate: null
 	};
 };

@@ -23,6 +23,7 @@ export const mapAppellantCase = (data) => {
 		tenantAgriculturalHolding: casedata?.tenantAgriculturalHolding ?? null,
 		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null,
 		caseworkReason: casedata?.caseworkReason ?? null,
+		// @ts-ignore
 		developmentType: casedata?.developmentType ?? null,
 		jurisdiction: casedata?.jurisdiction ?? null,
 		numberOfResidencesNetChange: casedata?.numberOfResidencesNetChange ?? null,
@@ -31,11 +32,12 @@ export const mapAppellantCase = (data) => {
 		siteViewableFromRoad: casedata?.siteViewableFromRoad ?? null,
 		planningObligation: casedata?.planningObligation ?? null,
 		statusPlanningObligation: casedata?.statusPlanningObligation ?? null,
+		// @ts-ignore
+		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
 
 		//TODO:
 
-		designAccessStatementProvided: null,
+		designAccessStatementProvided: null
 		//inquiryHowManyWitnesses: null,
-		typeOfPlanningApplication: null
 	};
 };
