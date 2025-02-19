@@ -24,7 +24,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	const { appealStatus, appealType, procedureType } = appeal;
-	if (!(appealStatus && appealType && procedureType)) {
+	if (!(appealStatus && appealType)) {
 		throw new Error(`appeal with ID ${appealId} is missing fields required to transition state`);
 	}
 
@@ -32,7 +32,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	const stateMachine = createStateMachine(
 		appealType.key,
-		procedureType.key || APPEAL_CASE_PROCEDURE.WRITTEN,
+		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
 		currentState
 	);
 	const stateMachineService = interpret(stateMachine);
