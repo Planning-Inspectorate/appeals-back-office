@@ -9,18 +9,21 @@ import formatDate from '#utils/date-formatter.js';
  * @param {Representation} representation
  * @returns {string[]}
  */
-export const formatReasons = (representation) =>
-	representation.representationRejectionReasonsSelected?.map((selectedReason) => {
-		if (selectedReason.representationRejectionReason.hasText) {
-			const reasonText =
-				selectedReason.representationRejectionReasonText
-					?.map((reason) => reason.text)
-					.filter((text) => typeof text === 'string' && text.trim() !== '')
-					.join(', ') || 'No details provided';
-			return `Other: ${reasonText}`;
-		}
-		return selectedReason.representationRejectionReason.name;
-	}) ?? [];
+export const formatReasons = (representation) => {
+	return (
+		representation.representationRejectionReasonsSelected?.map((selectedReason) => {
+			if (selectedReason.representationRejectionReason.hasText) {
+				const reasonText =
+					selectedReason.representationRejectionReasonText
+						?.map((reason) => reason.text)
+						.filter((text) => typeof text === 'string' && text.trim() !== '')
+						.join(', ') || 'No details provided';
+				return `${selectedReason.representationRejectionReason.name}: ${reasonText}`;
+			}
+			return selectedReason.representationRejectionReason.name;
+		}) ?? []
+	);
+};
 
 /**
  * @param {boolean} allowResubmit
@@ -37,7 +40,7 @@ export const formatExtendedDeadline = async (allowResubmit) => {
 
 /**
 
- * @param {Appeal} appeal 
+ * @param {Appeal} appeal
  * @returns {string}
  */
 export const formatSiteAddress = (appeal) =>

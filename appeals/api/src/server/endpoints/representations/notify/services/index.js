@@ -120,15 +120,17 @@ export const lpaStatementIncomplete = async ({
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
+	const vars = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		url: FRONT_OFFICE_URL,
+		deadline_date: extendedDeadline,
+		reason: reasons
+	};
+
 	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
-			extendedDeadline,
-			reasons
-		});
+		await notifyClient.sendEmail(templateId, recipientEmail, vars);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}

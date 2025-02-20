@@ -83,12 +83,13 @@ export const acceptRepresentation = (apiClient, appealId, repId) =>
  * @param {import('got').Got} apiClient
  * @param {number} appealId
  * @param {number} repId
+ * @param {{ allowResubmit: boolean }} data
  * @returns {Promise<Representation>}
  * */
-export const representationIncomplete = (apiClient, appealId, repId) =>
+export const representationIncomplete = (apiClient, appealId, repId, { allowResubmit }) =>
 	apiClient
 		.patch(`appeals/${appealId}/reps/${repId}`, {
-			json: { status: 'incomplete' }
+			json: { status: 'incomplete', allowResubmit }
 		})
 		.json();
 

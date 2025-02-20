@@ -3,7 +3,10 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { renderSelectRejectionReasons } from '../../common/render-select-rejection-reasons.js';
 import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
-import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
+import {
+	getRepresentationRejectionReasonOptions,
+	updateRejectionReasons
+} from '../../representations.service.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
@@ -14,6 +17,7 @@ import {
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { representationIncomplete } from '../../representations.service.js';
+import { mapRejectionReasonPayload } from '../../representations.mapper.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -199,7 +203,20 @@ export const postCheckYourAnswers = async (request, response) => {
 		currentRepresentation
 	} = request;
 
-	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id);
+	const rejectionReasons = mapRejectionReasonPayload(session.lpaStatement);
+	try {
+		await updateRejectionReasons(
+			apiClient,
+			appealId,
+			String(currentRepresentation.id),
+			rejectionReasons
+		);
+		await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
+			allowResubmit: session.lpaStatement.setNewDate
+		});
+	} catch (_) {
+		return response.status(500).render('app/500.njk');
+	}
 
 	addNotificationBannerToSession({
 		session,

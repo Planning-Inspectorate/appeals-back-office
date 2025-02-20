@@ -159,16 +159,10 @@ export async function updateRepresentation(request, response) {
 		return response.status(400).send({ errors: { status: ERROR_REP_PUBLISH_USING_ENDPOINT } });
 	}
 
-	await representationService.updateRepresentation(parseInt(repId), request.body);
-
-	const updatedRep = await representationService.getRepresentation(parseInt(repId));
-	if (!updatedRep) {
-		throw new Error(`failed to get representation with ID: ${repId}`);
-	}
-
-	if (!updatedRep) {
-		return response.status(500).send({});
-	}
+	const updatedRep = await representationService.updateRepresentation(
+		parseInt(repId),
+		request.body
+	);
 
 	if (status !== rep.status) {
 		const details = (() => {

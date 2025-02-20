@@ -1,11 +1,11 @@
 /*
-This code maps representation types and statuses to 
+This code maps representation types and statuses to
 a Notify email that is to be send when the status
 is updated. The code in this file should rarely need
-to be changed. 
+to be changed.
 
 To add a new Notify email head to ./type-map.js and
-a tuple with the status, representation type and 
+a tuple with the status, representation type and
 service function which sends the email there.
 
 You shouldn't need to edit this unless there's
