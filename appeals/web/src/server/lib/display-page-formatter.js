@@ -337,6 +337,8 @@ export function mapDocumentStatus(status, dueDate) {
 			return 'Received';
 		case 'not_received':
 			return 'Not received';
+		case 'shared':
+			return 'Shared';
 		case 'invalid':
 			return 'Invalid';
 		case 'incomplete':
