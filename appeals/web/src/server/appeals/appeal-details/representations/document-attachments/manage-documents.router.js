@@ -84,4 +84,49 @@ router
 		asyncHandler(controller.postDeleteDocumentPage)
 	);
 
+router
+	.route('/add-documents/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		validateCaseDocumentId,
+		asyncHandler(controller.getAddDocumentVersion)
+	)
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postAddDocumentVersion)
+	);
+
+router
+	.route('/add-document-details/:folderId/:documentId')
+	.get(validateAppeal, validateCaseFolderId, asyncHandler(controller.getAddDocumentVersionDetails))
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		validateCaseFolderId,
+		documentsValidators.validateDocumentDetailsBodyFormat,
+		documentsValidators.validateDocumentDetailsReceivedDatesFields,
+		documentsValidators.validateDocumentDetailsReceivedDateValid,
+		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
+		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		asyncHandler(controller.postDocumentVersionDetails)
+	);
+
+router
+	.route('/check-your-answers/:folderId/:documentId')
+	.get(
+		validateAppeal,
+		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+	)
+	.post(
+		validateAppeal,
+		validateCaseFolderId,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
+	);
+
 export default router;

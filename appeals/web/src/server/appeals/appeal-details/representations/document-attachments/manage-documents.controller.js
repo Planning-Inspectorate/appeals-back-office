@@ -2,12 +2,20 @@ import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
 	postDeleteDocument,
+	postDocumentDetails,
+	postDocumentUpload,
+	postUploadDocumentsCheckAndConfirm,
 	renderChangeDocumentDetails,
 	renderChangeDocumentFileName,
 	renderDeleteDocument,
+	renderDocumentDetails,
+	renderDocumentUpload,
 	renderManageDocument,
-	renderManageFolder
+	renderManageFolder,
+	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -29,17 +37,14 @@ export const getManageFolder = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageDocument = async (request, response) => {
-	const {
-		params: { appealId, finalCommentsType }
-	} = request;
 	const baseUrl = request.baseUrl;
 
 	await renderManageDocument({
 		request,
 		response,
 		backLinkUrl: `${baseUrl}/{{folderId}}`,
-		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${appealId}/final-comments/${finalCommentsType}/add-documents/{{folderId}}/{{documentId}}`,
-		removeDocumentUrl: `${baseUrl}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`,
+		uploadUpdatedDocumentUrl: `${baseUrl}/add-documents/{{folderId}}/{{documentId}}`,
+		removeDocumentUrl: `${baseUrl}/{{folderId}}/{{documentId}}/{{versionId}}/delete`,
 		pageTitleTextOverride: 'Manage versions',
 		dateRowLabelTextOverride: 'Date submitted',
 		manageDocumentPageBaseUrl: 'manage-documents/'
@@ -49,11 +54,10 @@ export const getManageDocument = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDeleteDocument = async (request, response) => {
 	const baseUrl = request.baseUrl;
-
 	await renderDeleteDocument({
 		request,
 		response,
-		backButtonUrl: `${baseUrl}/manage-documents/{{folderId}}/{{documentId}}`
+		backButtonUrl: `${baseUrl}/{{folderId}}/{{documentId}}`
 	});
 };
 
@@ -86,9 +90,9 @@ export const postDeleteDocumentPage = async (request, response) => {
 	await postDeleteDocument({
 		request,
 		response,
-		returnUrl: `${baseUrl}`,
-		cancelUrl: `${baseUrl}/manage-documents/{{folderId}}/{{documentId}}`,
-		uploadNewDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/final-comments/add-documents/{{folderId}}`
+		returnUrl: `${baseUrl}/{{folderId}}`,
+		cancelUrl: `${baseUrl}/{{folderId}}/{{documentId}}`,
+		uploadNewDocumentUrl: `${baseUrl}/add-documents/{{folderId}}/{{documentId}}`
 	});
 };
 
@@ -114,4 +118,141 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 		backButtonUrl: `${baseUrl}/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `${baseUrl}/${request.params.folderId}/${request.params.documentId}`
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentVersion = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	await renderDocumentUpload({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl: `${baseUrl}/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl: `${baseUrl}/add-document-details/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersion = async (request, response) => {
+	const {
+		currentAppeal,
+		currentFolder,
+		params: { documentId }
+	} = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	await postDocumentUpload({
+		request,
+		response,
+		nextPageUrl: `${baseUrl}/add-document-details/${currentFolder.folderId}/${documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentVersionDetails = async (request, response) => {
+	const {
+		currentFolder,
+		params: { folderId, documentId }
+	} = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentFolder) {
+		console.warn(`⚠️ currentFolder is undefined for folderId: ${folderId}. Rendering 404 page.`);
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		await renderDocumentDetails({
+			request,
+			response,
+			backLinkUrl: `${baseUrl}/add-documents/${folderId}/${documentId}`,
+			documentId
+		});
+	} catch (error) {
+		return response.status(500).render('app/500.njk', { error });
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postDocumentVersionDetails = async (request, response) => {
+	const {
+		currentFolder,
+		params: { documentId }
+	} = request;
+	const baseUrl = request.baseUrl;
+
+	await postDocumentDetails({
+		request,
+		response,
+		backLinkUrl: `${baseUrl}/add-document-details/${currentFolder.folderId}/${documentId}`,
+		nextPageUrl: `${baseUrl}/check-your-answers/${currentFolder.folderId}/${documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getAddDocumentsCheckAndConfirm = async (request, response) => {
+	const {
+		currentFolder,
+		params: { folderId, documentId }
+	} = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	const addDocumentDetailsPageUrl = `${baseUrl}/add-document-details/${request.params.folderId}/${request.params.documentId}`;
+
+	await renderUploadDocumentsCheckAndConfirm({
+		request,
+		response,
+		backLinkUrl: addDocumentDetailsPageUrl,
+		changeFileLinkUrl: `${baseUrl}/add-documents/${folderId}/${documentId}`,
+		changeDateLinkUrl: addDocumentDetailsPageUrl,
+		changeRedactionStatusLinkUrl: addDocumentDetailsPageUrl
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAddDocumentVersionCheckAndConfirm = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	try {
+		await postUploadDocumentsCheckAndConfirm({
+			request,
+			response,
+			nextPageUrl: baseUrl,
+			successCallback: () => {
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'documentAdded',
+					appealId: currentAppeal.appealId
+				});
+			}
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when adding documents to lpa questionnaire'
+		);
+
+		return response.render('app/500.njk');
+	}
 };
