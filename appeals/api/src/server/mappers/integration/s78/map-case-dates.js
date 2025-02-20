@@ -1,4 +1,5 @@
-import { mapDate } from '#utils/mapping/map-dates.js';
+import { findStatusDate, mapDate } from '#utils/mapping/map-dates.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealStatus} AppealStatus */
@@ -12,17 +13,24 @@ import { mapDate } from '#utils/mapping/map-dates.js';
 export const mapCaseDates = (data) => {
 	const { appeal } = data;
 
+	const lpaqValidationDate =
+		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.STATEMENTS) ??
+		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) ??
+		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT);
+
 	return {
+		finalCommentsDueDate: mapDate(appeal.appealTimetable?.finalCommentsDueDate),
+		interestedPartyRepsDueDate: mapDate(appeal.appealTimetable?.ipCommentsDueDate),
+		statementDueDate: mapDate(appeal.appealTimetable?.lpaStatementDueDate),
+		lpaQuestionnairePublishedDate: lpaqValidationDate,
+		lpaQuestionnaireValidationOutcomeDate: lpaqValidationDate,
 		//TODO:
 		appellantCommentsSubmittedDate: null,
 		appellantStatementSubmittedDate: null,
-		finalCommentsDueDate: mapDate(appeal.appealTimetable?.finalCommentsDueDate),
-		interestedPartyRepsDueDate: mapDate(appeal.appealTimetable?.ipCommentsDueDate),
 		lpaCommentsSubmittedDate: null,
 		lpaProofsSubmittedDate: null,
 		lpaStatementSubmittedDate: null,
 		proofsOfEvidenceDueDate: null,
-		siteNoticesSentDate: null,
-		statementDueDate: mapDate(appeal.appealTimetable?.lpaStatementDueDate)
+		siteNoticesSentDate: null
 	};
 };
