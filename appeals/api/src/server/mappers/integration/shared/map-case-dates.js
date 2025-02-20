@@ -12,6 +12,11 @@ import { mapDate, findStatusDate } from '#utils/mapping/map-dates.js';
  */
 export const mapCaseDates = (data) => {
 	const { appeal } = data;
+
+	const lpaqValidationDate =
+		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) ??
+		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT);
+
 	return {
 		applicationDate: mapDate(appeal.appellantCase?.applicationDate),
 		applicationDecisionDate: mapDate(appeal.appellantCase?.applicationDecisionDate),
@@ -27,20 +32,14 @@ export const mapCaseDates = (data) => {
 		lpaQuestionnaireCreatedDate: mapDate(appeal.lpaQuestionnaire?.lpaqCreatedDate),
 		lpaQuestionnaireSubmittedDate: mapDate(appeal.lpaQuestionnaire?.lpaQuestionnaireSubmittedDate),
 		lpaQuestionnaireDueDate: mapDate(appeal.appealTimetable?.lpaQuestionnaireDueDate),
-		lpaQuestionnairePublishedDate: findStatusDate(
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-		),
-		lpaQuestionnaireValidationOutcomeDate: findStatusDate(
-			appeal.appealStatus,
-			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-		),
+		lpaQuestionnairePublishedDate: lpaqValidationDate,
+		lpaQuestionnaireValidationOutcomeDate: lpaqValidationDate,
 		caseWithdrawnDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.WITHDRAWN),
 		caseTransferredDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.TRANSFERRED),
 		transferredCaseClosedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.CLOSED),
 		caseDecisionOutcomeDate: mapDate(appeal.inspectorDecision?.caseDecisionOutcomeDate),
 		caseDecisionPublishedDate: null,
 		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE),
-		appellantProofsSubmittedDate: null
+		appellantProofsSubmittedDate: null //TODO: S78HI
 	};
 };

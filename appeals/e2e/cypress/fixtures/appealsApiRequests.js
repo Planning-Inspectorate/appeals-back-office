@@ -33,9 +33,9 @@ const appealsApiRequests = {
 			siteAreaSquareMetres: 22,
 			siteSafetyDetails: ["It's dangerous"],
 			isGreenBelt: false,
-			typeOfPlanningApplication: null,
+			typeOfPlanningApplication: 'full-appeal',
 			// S78 fields
-			developmentType: null,
+			developmentType: 'minor-dwellings',
 			agriculturalHolding: true,
 			tenantAgriculturalHolding: true,
 			otherTenantsAgriculturalHolding: null,
