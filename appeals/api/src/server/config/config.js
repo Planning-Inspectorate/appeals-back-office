@@ -267,8 +267,7 @@ const { value, error } = schema.validate({
 			},
 			statementIncomplete: {
 				lpa: {
-					id:
-						environment.GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE || 'mock-comment-rejected-appellant-id'
+					id: environment.GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE || 'mock-lpa-statement-incomplete'
 				}
 			},
 			finalCommentsDone: {

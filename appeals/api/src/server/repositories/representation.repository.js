@@ -155,7 +155,13 @@ const updateRepresentationById = (id, data) => {
 		include: {
 			representative: true,
 			represented: true,
-			lpa: true
+			lpa: true,
+			representationRejectionReasonsSelected: {
+				include: {
+					representationRejectionReason: true,
+					representationRejectionReasonText: true
+				}
+			}
 		}
 	});
 };
