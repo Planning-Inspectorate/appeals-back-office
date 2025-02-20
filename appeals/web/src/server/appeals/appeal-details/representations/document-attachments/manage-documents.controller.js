@@ -179,7 +179,7 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 			documentId
 		});
 	} catch (error) {
-		return response.status(500).render('app/500.njk', { error });
+		return response.status(500).render('app/500.njk');
 	}
 };
 
