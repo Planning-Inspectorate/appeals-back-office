@@ -17,10 +17,17 @@ export const mapIpComments = ({ appealDetails, currentRoute }) => {
 		return 'View';
 	})();
 
+	let status = appealDetails?.documentationSummary?.ipComments?.status;
+	const published = appealDetails.documentationSummary?.ipComments?.counts?.published;
+
+	if (status === 'received' && published && published > 0) {
+		status = 'shared';
+	}
+
 	return documentationFolderTableItem({
 		id: 'ip-comments',
 		text: 'Interested party comments',
-		statusText: mapDocumentStatus(appealDetails?.documentationSummary?.ipComments?.status),
+		statusText: mapDocumentStatus(status),
 		receivedText: 'Not applicable',
 		actionHtml: `<a href="${currentRoute}/interested-party-comments" data-cy="review-ip-comments" class="govuk-link">${actionText}<span class="govuk-visually-hidden"> interested party comments</span></a>`
 	});
