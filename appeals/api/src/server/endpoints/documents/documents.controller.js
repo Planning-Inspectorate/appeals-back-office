@@ -88,44 +88,34 @@ const getDocumentAndVersions = async (req, res) => {
  * @returns {Promise<Response>}
  */
 const addDocuments = async (req, res) => {
+	const { appeal } = req;
+
 	try {
-		const { appeal } = req;
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
 
-		/**
-		 * @type {any}[]}
-		 */
-		const auditTrails = [];
+		const auditTrails = await Promise.all(
+			documentInfo.documents.filter(Boolean).map(async (document) => {
+				const auditTrail = await createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId: req.get('azureAdUserId'),
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [document.documentName, 1])
+				});
 
-		await Promise.all(
-			documentInfo.documents.map(
-				async (document) =>
-					document &&
-					(await auditTrails.push({
-						guid: document.GUID,
-						version: 1,
-						audit: await createAuditTrail({
-							appealId: appeal.id,
-							azureAdUserId: req.get('azureAdUserId'),
-							details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-								document.documentName,
-								1
-							])
-						})
-					}))
-			)
+				return {
+					guid: document.GUID,
+					version: 1,
+					audit: auditTrail
+				};
+			})
 		);
 
-		await Promise.all(
-			auditTrails.map(
-				(/** @type {{ guid: string; version: Number; audit: AuditTrail; }} */ auditTrail) =>
-					auditTrail &&
-					auditTrail.guid &&
-					auditTrail.version &&
-					auditTrail.audit &&
-					service.addDocumentAudit(auditTrail.guid, Number(1), auditTrail.audit, 'Create')
-			)
-		);
+		for (const auditTrail of auditTrails) {
+			if (!auditTrail?.guid || !auditTrail?.version || !auditTrail?.audit) {
+				continue;
+			}
+
+			service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
+		}
 
 		return res.send();
 	} catch (/** @type {Object<any, any>} */ error) {
