@@ -1,4 +1,3 @@
-/* eslint-disable jest/expect-expect */
 import {
 	appealDataFullPlanning,
 	finalCommentsForReview,
@@ -77,7 +76,7 @@ describe('final-comments', () => {
 					`<a href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}" class="govuk-back-link">Back</a>`
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
-				expect(unprettifiedHTML).toContain(`Why are you rejecting the comment?</h1>`);
+				expect(unprettifiedHTML).toContain(`final comments?</h1>`);
 				expect(unprettifiedHTML).toContain(
 					`<div id="rejection-reason-hint" class="govuk-hint"> Select all that apply.</div>`
 				);
