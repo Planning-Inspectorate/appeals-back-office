@@ -8,7 +8,8 @@ import {
 	documentRedactionStatuses,
 	finalCommentsForReview,
 	interestedPartyCommentForReview,
-	activeDirectoryUsersData
+	activeDirectoryUsersData,
+	documentFileVersionsInfoChecked
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -417,6 +418,116 @@ describe('final-comments', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain(
 				'When did the interested party submit the comment?</h1'
+			);
+		});
+	});
+
+	describe('GET /manage-documents/:folderId/:documentId/:versionId/delete', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+
+			nock('http://test/')
+				.get('/appeals/2/documents/1/versions')
+				.reply(200, documentFileVersionsInfoChecked);
+
+			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+
+		it('should render the delete document page with the expected content when there is a single document version', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/final-comments/lpa/manage-documents/1/1/1/delete`
+			);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage versions</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you sure you want to remove this version?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no">'
+			);
+		});
+	});
+
+	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+
+			nock('http://test/')
+				.get('/appeals/2/documents/1/versions')
+				.reply(200, documentFileVersionsInfoChecked);
+
+			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a document upload page with a file upload component', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/final-comments/lpa/manage-documents/add-documents/1/1`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'Only upload files to additional documents when no other folder is applicable.'
 			);
 		});
 	});
