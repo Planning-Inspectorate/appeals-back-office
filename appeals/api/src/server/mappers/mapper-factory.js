@@ -154,7 +154,8 @@ function createDataLayout(caseMap, mappingRequest) {
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.siteAccessRequired ?? null) }
 				},
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
-				...createFoldersLayout(folders, contextEnum.appealDetails)
+				...createFoldersLayout(folders, contextEnum.appealDetails),
+				isAffectingNeighbouringSites: appeal.lpaQuestionnaire?.isAffectingNeighbouringSites
 			};
 		}
 	}
