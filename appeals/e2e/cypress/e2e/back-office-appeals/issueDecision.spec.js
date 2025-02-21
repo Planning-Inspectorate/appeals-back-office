@@ -43,7 +43,6 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectCheckbox();
 				caseDetailsPage.clickButtonByText('Send Decision');
-				caseDetailsPage.clickLinkByText('Go back to case details');
 				caseDetailsPage.checkStatusOfCase('Complete', 0);
 				caseDetailsPage.checkDecisionOutcome(issueDecision);
 				caseDetailsPage.viewDecisionLetter('View decision letter');

@@ -41,7 +41,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.checkEmailRelevantParties();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanel('Appeal withdrawn');
-			caseDetailsPage.clickLinkByText('Go back to case details');
+
 			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 		});
 	});
@@ -68,7 +68,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.checkEmailRelevantParties();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanel('Appeal withdrawn');
-			caseDetailsPage.clickLinkByText('Go back to case details');
+
 			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 			caseDetailsPage.clickViewAppealWithdrawal();
 			caseDetailsPage.clickLinkByText('View');
