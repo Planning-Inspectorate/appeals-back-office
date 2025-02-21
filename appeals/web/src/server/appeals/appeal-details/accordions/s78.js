@@ -34,7 +34,8 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
 					mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
 					mappedData.appeal.finalCommentDueDate.display.summaryListItem,
-					mappedData.appeal.s106ObligationDueDate.display.summaryListItem
+					mappedData.appeal.s106ObligationDueDate.display.summaryListItem,
+					mappedData.appeal.siteVisitDate.display.summaryListItem
 				].filter(isDefined)
 			}
 		}
