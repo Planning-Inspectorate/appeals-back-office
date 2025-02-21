@@ -15,7 +15,6 @@ import { createNotificationBanner } from '#lib/mappers/index.js';
 export function mapStatusDependentNotifications(appealDetails, representationTypesAwaitingReview) {
 	/** @type {PageComponent[]} */
 	const notifications = [];
-
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			return mapStatusDependentNotificationsForAssignCaseOfficer(appealDetails.appealId);
@@ -47,7 +46,6 @@ export function mapStatusDependentNotifications(appealDetails, representationTyp
 		default:
 			break;
 	}
-
 	return notifications;
 }
 
@@ -258,13 +256,11 @@ function mapStatusDependentNotificationsForFinalComments(
 ) {
 	/** @type {PageComponent[]} */
 	const banners = [];
-
 	const finalCommentsDueDate = appealDetails.appealTimetable?.finalCommentsDueDate;
 	const isFinalCommentsDueDatePassed =
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.FINAL_COMMENTS && finalCommentsDueDate
 			? dateIsInThePast(dateISOStringToDayMonthYearHourMinute(finalCommentsDueDate))
 			: false;
-
 	if (isFinalCommentsDueDatePassed) {
 		const { documentationSummary } = appealDetails;
 
@@ -280,13 +276,10 @@ function mapStatusDependentNotificationsForFinalComments(
 				APPEAL_REPRESENTATION_STATUS.VALID
 				? true
 				: false;
-
 		let bannerText = 'Progress case';
-
 		if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
 			bannerText = 'Share final comments';
 		}
-
 		banners.push(
 			createNotificationBanner({
 				bannerDefinitionKey: 'shareFinalComments',
@@ -311,6 +304,5 @@ function mapStatusDependentNotificationsForFinalComments(
 			);
 		}
 	}
-
 	return banners;
 }

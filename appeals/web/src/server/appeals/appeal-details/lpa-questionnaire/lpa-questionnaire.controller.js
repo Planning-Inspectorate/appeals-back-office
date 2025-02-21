@@ -4,7 +4,6 @@ import {
 	checkAndConfirmPage,
 	mapWebValidationOutcomeToApiValidationOutcome,
 	getValidationOutcomeFromLpaQuestionnaire,
-	reviewCompletePage,
 	environmentServiceTeamReviewCasePage
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
@@ -102,18 +101,24 @@ export const postLpaQuestionnaire = async (request, response) => {
 						lpaQuestionnaireId,
 						mapWebValidationOutcomeToApiValidationOutcome('complete')
 					);
-					return response.redirect(
-						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
-					);
+					addNotificationBannerToSession({
+						session: request.session,
+						bannerDefinitionKey: 'lpaqReviewComplete',
+						appealId: currentAppeal.appealId
+					});
+					return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 				} else {
 					return response.redirect(
 						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 					);
 				}
 			} else if (reviewOutcome === 'incomplete') {
-				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
-				);
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'lpaqReviewIncomplete',
+					appealId: currentAppeal.appealId
+				});
+				return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 			}
 		} else {
 			return response.status(500).render('app/500.njk');
@@ -188,25 +193,13 @@ export const postEnvironmentServiceTeamReviewCase = async (request, response) =>
 
 	delete request.session.reviewOutcome;
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/confirmation`
-	);
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderLpaQuestionnaireReviewCompletePage = async (request, response) => {
-	const {
-		currentAppeal: { appealId, appealReference }
-	} = request;
-	const pageContent = reviewCompletePage(appealId, appealReference);
-
-	return response.status(200).render('appeals/confirmation.njk', {
-		pageContent
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'lpaqReviewComplete',
+		appealId
 	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };
 
 /**
@@ -312,11 +305,6 @@ export const postCheckAndConfirm = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const getConfirmation = async (request, response) => {
-	renderLpaQuestionnaireReviewCompletePage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealUnlinked'|'appealValidAndReadyToStart'|'appellantCaseNotValid'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAcceptSuccess'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'lpaFinalCommentsAwaitingReview'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'updateLpaStatement'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressToFinalComments'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitArranged'|'timetableDueDateUpdated'} NotificationBannerDefinitionKey  */
+/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawalRequested'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'changePage'|'caseStarted'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAcceptSuccess'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAwaitingReview'|'lpaQuestionnaireNotValid'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'updateLpaStatement'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressToFinalComments'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitScheduled'|'siteVisitRescheduled'|'siteVisitTypeChanged'|'siteVisitNoChanges'|'siteVisitChangedDefault'|'startDateChanged'|'timetableDueDateUpdated'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -16,10 +16,30 @@
  * @type {Object<NotificationBannerDefinitionKey, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
-	siteVisitArranged: {
-		type: 'success',
+	siteVisiScheduled: {
 		pages: ['appealDetails'],
-		text: 'Site visit has been arranged'
+		type: 'success',
+		text: 'Site visit scheduled'
+	},
+	siteVisitRescheduled: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit rescheduled'
+	},
+	siteVisitTypeChanged: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit type changed'
+	},
+	siteVisitNoChanges: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'No changes made'
+	},
+	siteVisitChangedDefault: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit changed'
 	},
 	allocationDetailsUpdated: {
 		type: 'success',
@@ -270,6 +290,10 @@ export const notificationBannerDefinitions = {
 		type: 'important',
 		pages: ['appealDetails']
 	},
+	shareFinalComments: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
 	commentsAndLpaStatementShared: {
 		type: 'success',
 		pages: ['appealDetails'],
@@ -300,8 +324,50 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		text: 'Final comments accepted'
 	},
-	shareFinalComments: {
-		pages: ['appealDetails']
+	lpaqReviewComplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire complete'
+	},
+	lpaqReviewIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA questionnaire incomplete'
+	},
+	appealWithdrawalRequested: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal withdrawal requested'
+	},
+	appellantCaseInvalidOrIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant case invalid or incomplete'
+	},
+	appealTypeChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal closed'
+	},
+	caseStarted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Case started'
+	},
+	startDateChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Start date changed'
+	},
+	issuedDecisionValid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Decision sent'
+	},
+	issuedDecisionInvalid: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal invalid'
 	}
 };
 

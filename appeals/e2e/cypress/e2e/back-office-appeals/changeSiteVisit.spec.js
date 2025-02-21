@@ -32,7 +32,6 @@ describe('Change site visit', () => {
 				'Site visit scheduled',
 				'Appeal reference ' + caseRef
 			);
-			caseDetailsPage.clickLinkByText('Go back to case details');
 			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
 			caseDetailsPage.elements.changeSetVisitType().click();
 			caseDetailsPage.clickButtonByText('Manage the site visit');
@@ -45,7 +44,6 @@ describe('Change site visit', () => {
 				'Site visit scheduled',
 				'Appeal reference ' + caseRef
 			);
-			caseDetailsPage.clickLinkByText('Go back to case details');
 			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
 		});
 	});
@@ -67,7 +65,6 @@ describe('Change site visit', () => {
 				'Site visit scheduled',
 				'Appeal reference ' + caseRef
 			);
-			caseDetailsPage.clickLinkByText('Go back to case details');
 			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
 			caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
@@ -79,7 +76,6 @@ describe('Change site visit', () => {
 				'Site visit scheduled',
 				'Appeal reference ' + caseRef
 			);
-			caseDetailsPage.clickLinkByText('Go back to case details');
 			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
 		});
 	});

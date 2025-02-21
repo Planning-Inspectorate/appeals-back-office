@@ -44,7 +44,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 	reviewS78Lpaq(caseRef) {
 		let dueDate = new Date();
@@ -56,7 +55,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.selectRadioButtonByValue('yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 
 	startCase(caseRef) {
@@ -64,13 +62,11 @@ export const happyPathHelper = {
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 
 	changeStartDate(caseRef) {
 		caseDetailsPage.clickChangeStartDate();
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.clickLinkByText('Go back to case details');
 	},
 
 	validVisitDate() {
@@ -163,9 +159,7 @@ export const happyPathHelper = {
 			'Site visit scheduled',
 			'Appeal reference ' + caseRef
 		);
-		cy.simulateSiteVisit(caseRef).then((caseRef) => {
-			caseDetailsPage.clickLinkByText('Go back to case details');
-		});
+		cy.simulateSiteVisit(caseRef).then((caseRef) => {});
 	},
 	setupSiteVisitFromBanner(caseRef) {
 		caseDetailsPage.clickSiteVisitBanner();
@@ -178,7 +172,6 @@ export const happyPathHelper = {
 			'Site visit scheduled',
 			'Appeal reference ' + caseRef
 		),
-			caseDetailsPage.clickLinkByText('Go back to case details');
-		caseDetailsPage.validateBannerMessage('Site visit has been arranged');
+			caseDetailsPage.validateBannerMessage('Site visit has been arranged');
 	}
 };

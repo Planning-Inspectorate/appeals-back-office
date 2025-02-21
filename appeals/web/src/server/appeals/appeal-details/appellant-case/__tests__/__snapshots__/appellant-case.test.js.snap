@@ -2956,27 +2956,6 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
 </main>"
 `;
 
-exports[`appellant-case GET /appellant-case/incomplete/confirmation should render the outcome incomplete confirmation page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> Appeal incomplete</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The relevant parties have been informed. We have told them what to do
-                    next and the due date for missing information.</p>
-                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Go back to case details</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`appellant-case GET /appellant-case/incomplete/date should render the update due date page with correct pre-populated date values if there is an existing due date 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

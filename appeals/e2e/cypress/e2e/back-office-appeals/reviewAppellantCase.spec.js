@@ -28,7 +28,6 @@ describe('Review appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterValidDate(dueDate);
 			caseDetailsPage.clickButtonByText('Confirm');
-
 			const status = 'Valid';
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
 			caseDetailsPage.verifyTableCellText(testData);
@@ -44,8 +43,6 @@ describe('Review appellant case', () => {
 			caseDetailsPage.chooseCheckboxByText('Documents have not been submitted on time');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Invalid';
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
 			listCasesPage.verifyTableCellText(testData);
@@ -67,8 +64,6 @@ describe('Review appellant case', () => {
 			dateTimeSection.enterDate(dueDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Incomplete';
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
 			caseDetailsPage.verifyTableCellText(testData);
@@ -92,8 +87,6 @@ describe('Review appellant case', () => {
 			dateTimeSection.enterDate(dueDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Incomplete';
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: status, strict: true };
 			caseDetailsPage.verifyTableCellText(testData);

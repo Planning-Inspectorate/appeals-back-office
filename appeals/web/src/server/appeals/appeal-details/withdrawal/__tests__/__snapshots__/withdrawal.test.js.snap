@@ -208,26 +208,6 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
 </main>"
 `;
 
-exports[`withdrawal GET /withdrawal/confirmation should render the confirmation page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds govuk-!-padding-top-2">
-                <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 class="govuk-panel__title"> Appeal withdrawn</h1>
-                    <div class="govuk-panel__body">Appeal reference
-                        <br><strong>351062</strong>
-                    </div>
-                </div>
-                <p class="govuk-body">The case has been closed. The relevant parties have been informed.</p>
-                <p                 class="govuk-body"><a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case details</a>
-                    </p>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`withdrawal GET /withdrawal-request-date should render the withdrawal request date page with the expected content if fileUploadInfo is present in the session 1`] = `
 "<main class="govuk-main-wrapper " id="main-content" role="main">
     <div class="govuk-grid-row">

@@ -235,14 +235,6 @@ router
 	);
 
 router
-	.route('/:lpaQuestionnaireId/confirmation')
-	.get(
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getConfirmation)
-	);
-
-router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId')
 	.get(
 		validateAppeal,

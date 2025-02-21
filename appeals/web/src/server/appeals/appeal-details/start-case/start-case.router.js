@@ -9,13 +9,9 @@ router
 	.get(asyncHandler(controller.getStartDate))
 	.post(asyncHandler(controller.postStartDate));
 
-router.route('/add/confirmation').get(asyncHandler(controller.getAddConfirmation));
-
 router
 	.route('/change')
 	.get(asyncHandler(controller.getChangeDate))
 	.post(asyncHandler(controller.postChangeDate));
-
-router.route('/change/confirmation').get(asyncHandler(controller.getChangeConfirmation));
 
 export default router;

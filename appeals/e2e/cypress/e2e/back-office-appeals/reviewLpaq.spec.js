@@ -27,8 +27,6 @@ describe('Review LPAQ', () => {
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Complete');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Complete';
 			const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
 			listCasesPage.verifyTableCellText(testData);
@@ -53,8 +51,6 @@ describe('Review LPAQ', () => {
 			dateTimeSection.enterDate(futureDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Incomplete';
 			const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
 			listCasesPage.verifyTableCellText(testData);
@@ -81,8 +77,6 @@ describe('Review LPAQ', () => {
 			dateTimeSection.enterDate(futureDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
-
 			const status = 'Incomplete';
 			const testData = { rowIndex: 1, cellIndex: 0, textToMatch: status, strict: true };
 			listCasesPage.verifyTableCellText(testData);

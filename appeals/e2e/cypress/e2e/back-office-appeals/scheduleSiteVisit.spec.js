@@ -35,7 +35,6 @@ describe('Schedule site visit', () => {
 					'Site visit scheduled',
 					'Appeal reference ' + caseRef
 				);
-				caseDetailsPage.clickLinkByText('Go back to case details');
 				caseDetailsPage.validateAnswer('Visit Type', visitType);
 			});
 		});
@@ -57,7 +56,6 @@ describe('Schedule site visit', () => {
 					'Site visit scheduled',
 					'Appeal reference ' + caseRef
 				);
-				caseDetailsPage.clickLinkByText('Go back to case details');
 				caseDetailsPage.validateAnswer('Visit type', visitType);
 			});
 		});

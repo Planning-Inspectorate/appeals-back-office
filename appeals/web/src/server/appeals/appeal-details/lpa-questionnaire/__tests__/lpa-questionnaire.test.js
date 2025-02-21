@@ -1000,7 +1000,7 @@ describe('LPA Questionnaire review', () => {
 			expect(errorSummaryHtml).toContain('Review outcome must be provided</a>');
 		});
 
-		it('should redirect to the complete page if no errors are present and posted outcome is "complete"', async () => {
+		it('should redirect to the case details page if no errors are present and posted outcome is "complete"', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome)
@@ -1012,9 +1012,7 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 
@@ -1764,88 +1762,6 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 	});
-
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete/confirmation', () => {
-		afterEach(() => {
-			nock.cleanAll();
-		});
-
-		it('should render the 500 error page if required data is not present in the session', async () => {
-			const response = await request.get(`${baseUrl}/incomplete/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
-		});
-
-		it('should render the confirmation page with the expected content if required data is present in the session', async () => {
-			// post to LPA questionnaire page controller is necessary to set required data in the session
-			const lpaQPostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-
-			expect(lpaQPostResponse.statusCode).toBe(302);
-
-			// post to incomplete reason page controller is necessary to set required data in the session
-			const incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
-				incompleteReason: incompleteReasonIds
-			});
-
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
-
-			// post to update date
-			nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
-
-			const updateDueDatePostResponse = await request.post(`${baseUrl}/incomplete/date`).send({
-				'due-date-day': '2',
-				'due-date-month': '10',
-				'due-date-year': '3000'
-			});
-
-			expect(updateDueDatePostResponse.statusCode).toBe(302);
-
-			const mockedlpaQuestionnairesEndpoint = nock('http://test/')
-				.patch('/appeals/1/lpa-questionnaires/2')
-				.reply(200, { validationOutcome: 'incomplete' });
-
-			// post to check and confirm page controller is necessary to set required data in the session
-			const checkAndConfirmPostResponse = await request.post(`${baseUrl}/check-your-answers`);
-
-			expect(mockedlpaQuestionnairesEndpoint.isDone()).toBe(true);
-			expect(checkAndConfirmPostResponse.statusCode).toBe(302);
-
-			const response = await request.get(`${baseUrl}/incomplete/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('LPA questionnaire incomplete</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'The relevant parties have been informed.</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Go back to case details</a>');
-		});
-	});
-
-	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/confirmation', () => {
-		it('should render the confirmation page with the expected content', async () => {
-			const response = await request.get(`${baseUrl}/confirmation`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('LPA questionnaire complete</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'The relevant parties have been informed.</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Go back to case details</a>');
-		});
-	});
-
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
@@ -3607,9 +3523,7 @@ describe('LPA Questionnaire review', () => {
 				.send({ eiaScreeningRequired: 'yes' });
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });
