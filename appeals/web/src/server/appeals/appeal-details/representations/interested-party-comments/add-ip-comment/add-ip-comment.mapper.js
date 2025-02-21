@@ -72,10 +72,11 @@ export const ipDetailsPage = (appealDetails, values, errors) => ({
 
 /**
  * @param {Appeal} appealDetails
+ * @param {string} value
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const checkAddressPage = (appealDetails, errors) => ({
+export const checkAddressPage = (appealDetails, value, errors) => ({
 	title: 'Did the interested party provide an address?',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -98,11 +99,13 @@ export const checkAddressPage = (appealDetails, errors) => ({
 				items: [
 					{
 						value: 'yes',
-						text: 'Yes'
+						text: 'Yes',
+						checked: value === 'yes'
 					},
 					{
 						value: 'no',
-						text: 'No'
+						text: 'No',
+						checked: value === 'no'
 					}
 				],
 				errorMessage: errorAddressProvidedRadio(errors)
@@ -116,9 +119,10 @@ export const checkAddressPage = (appealDetails, errors) => ({
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} providedAddress
  * @param {number} folderId
+ * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
-export const uploadPage = (appealDetails, errors, providedAddress, folderId) => ({
+export const uploadPage = (appealDetails, errors, providedAddress, folderId, fileUploadInfo) => ({
 	backButtonUrl: providedAddress
 		? `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
 		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
@@ -129,6 +133,13 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId) => 
 	// TODO: replace with real values
 	folderId: String(folderId),
 	useBlobEmulator: config.useBlobEmulator,
+	...(fileUploadInfo &&
+		Number(fileUploadInfo.appealId) === appealDetails.appealId &&
+		Number(fileUploadInfo.folderId) === folderId && {
+			uncommittedFiles: JSON.stringify({
+				files: fileUploadInfo.files
+			})
+		}),
 	blobStorageHost: config.useBlobEmulator ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 	blobStorageContainer: config.blobStorageDefaultContainer,
 	documentStage: DOCUMENT_STAGE,
