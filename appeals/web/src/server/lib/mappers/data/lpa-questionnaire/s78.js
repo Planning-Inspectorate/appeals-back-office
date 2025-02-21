@@ -26,6 +26,7 @@ import { mapEiaSensitiveAreaDetails } from './submappers/map-eia-sensitive-area-
 import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bodies-details.js';
 import { mapReasonForNeighbourVisits } from './submappers/map-reason-for-neighbour-visits.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
+import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
 
 export const submaps = {
 	...hasSubmaps,
@@ -55,5 +56,6 @@ export const submaps = {
 	eiaSensitiveAreaDetails: mapEiaSensitiveAreaDetails,
 	consultedBodiesDetails: mapEiaConsultedBodiesDetails,
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
-	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites
+	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites,
+	changedListedBuildingDetails: mapChangedListedBuildingDetails
 };
