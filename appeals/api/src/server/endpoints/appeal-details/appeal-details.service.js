@@ -24,15 +24,25 @@ import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Api.Team} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDto */
+/** @typedef {import('#mappers/mapper-factory.js').MapResult} MapResult */
 
 /**
  *
  * @param {{ appeal:Appeal, context:keyof contextEnum | undefined }} request
- * @returns
+ * @returns {Promise<MapResult | null>}
  */
-const loadAndFormatAppeal = async ({ appeal, context = contextEnum.appealDetails }) => {
+const loadAndFormatAppeal = async ({
+	appeal,
+	context = /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
+}) => {
 	const appealTypes = await loadAppealTypes();
-	return mapCase({ appeal, appealTypes, context });
+
+	const mappedAppeal = mapCase({ appeal, appealTypes, context });
+	if (!mappedAppeal) {
+		return null;
+	}
+
+	return mappedAppeal;
 };
 
 /**

@@ -15,12 +15,16 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
 
-	const dto = await appealDetailService.loadAndFormatAppeal({
+	const result = await appealDetailService.loadAndFormatAppeal({
 		appeal,
-		context: contextEnum.appealDetails
+		context: /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
 	});
 
-	return res.send(dto);
+	if (!result) {
+		return res.status(404).end();
+	}
+
+	return res.send(result);
 };
 
 /**
