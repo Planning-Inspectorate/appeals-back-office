@@ -35,10 +35,19 @@ import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpDetails(request, response) {
-	const pageContent = ipDetailsPage(request.currentAppeal, request.body, request.errors);
-
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors: request.errors,
+	const {
+		currentAppeal,
+		errors,
+		session: { addIpComment }
+	} = request;
+	const values = {
+		firstName: addIpComment?.firstName,
+		lastName: addIpComment?.lastName,
+		emailAddress: addIpComment?.emailAddress
+	};
+	const pageContent = ipDetailsPage(currentAppeal, values, errors);
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: errors,
 		pageContent
 	});
 }
@@ -49,14 +58,18 @@ export async function renderIpDetails(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderCheckAddress(request, response) {
-	const pageContent = checkAddressPage(request.currentAppeal, request.errors);
+	const {
+		currentAppeal,
+		errors,
+		session: { addIpComment }
+	} = request;
+	const value = addIpComment?.addressProvided;
+	const pageContent = checkAddressPage(currentAppeal, value, errors);
 
-	return response
-		.status(request.errors ? 400 : 200)
-		.render('patterns/check-and-confirm-page.pattern.njk', {
-			errors: request.errors,
-			pageContent
-		});
+	return response.status(errors ? 400 : 200).render('patterns/check-and-confirm-page.pattern.njk', {
+		errors: errors,
+		pageContent
+	});
 }
 
 /**
@@ -65,17 +78,29 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
+	const {
+		currentAppeal,
+		errors,
+		session: { addIpComment }
+	} = request;
+	const address = {
+		addressLine1: addIpComment?.addressLine1,
+		addressLine2: addIpComment?.addressLine2,
+		town: addIpComment?.town,
+		county: addIpComment?.county,
+		postCode: addIpComment?.postCode
+	};
 	const operationType = request.query.editAddress === 'true' ? 'update' : 'add';
 	const pageContent = ipAddressPage(
-		request.currentAppeal,
-		request.body,
-		request.errors,
+		currentAppeal,
+		address,
+		errors,
 		'add/check-address',
 		operationType
 	);
 
-	return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors: request.errors,
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors: errors,
 		pageContent
 	});
 }
@@ -86,14 +111,19 @@ export async function renderIpAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderUpload(request, response) {
-	const { currentAppeal, errors } = request;
+	const {
+		apiClient,
+		currentAppeal,
+		errors,
+		session: { fileUploadInfo }
+	} = request;
 	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
 
-	const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
-	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId);
+	const { folderId } = await getAttachmentsFolder(apiClient, currentAppeal.appealId);
+	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId, fileUploadInfo);
 
 	return response
-		.status(request.errors ? 400 : 200)
+		.status(errors ? 400 : 200)
 		.render('appeals/documents/document-upload.njk', pageContent);
 }
 
@@ -148,8 +178,6 @@ export async function postIpDetails(request, response) {
 	if (request.errors) {
 		return renderIpDetails(request, response);
 	}
-
-	request.session.addIpComment = request.body;
 
 	const { currentAppeal } = request;
 

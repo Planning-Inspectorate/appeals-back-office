@@ -63,6 +63,32 @@ describe('add-ip-comment', () => {
 		it('should render an Email address field', () => {
 			expect(pageHtml.querySelector('input#email-address')).not.toBeNull();
 		});
+
+		it('should render any previous response', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			//set session data with post request
+			await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/ip-details`)
+				.send({ firstName: 'First123', lastName: 'Last456', emailAddress: 'example@email.com' });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+			);
+
+			pageHtml = parseHtml(response.text);
+
+			expect(pageHtml.querySelector('input#first-name').getAttribute('value')).toEqual('First123');
+			expect(pageHtml.querySelector('input#last-name').getAttribute('value')).toEqual('Last456');
+			expect(pageHtml.querySelector('input#email-address').getAttribute('value')).toEqual(
+				'example@email.com'
+			);
+		});
 	});
 
 	describe('GET /add/check-address', () => {
@@ -95,6 +121,33 @@ describe('add-ip-comment', () => {
 		it('should render Yes and No radio buttons', () => {
 			expect(pageHtml.querySelector('input[type="radio"][value="yes"]')).not.toBeNull();
 			expect(pageHtml.querySelector('input[type="radio"][value="no"]')).not.toBeNull();
+		});
+
+		it('should render any previous response', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			//set session data with post request
+			await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/check-address`)
+				.send({ addressProvided: 'no' });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/check-address`
+			);
+
+			pageHtml = parseHtml(response.text);
+
+			expect(
+				pageHtml.querySelector('input[type="radio"][value="no"]').getAttribute('checked')
+			).toEqual('');
+			expect(
+				pageHtml.querySelector('input[type="radio"][value="yes"]').getAttribute('checked')
+			).toBeUndefined();
 		});
 	});
 
@@ -141,6 +194,40 @@ describe('add-ip-comment', () => {
 
 		it('should render a Postcode field', () => {
 			expect(pageHtml.querySelector('input#post-code')).not.toBeNull();
+		});
+
+		it('should render any previous response', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			//set session data with post request
+			await request.post(`${baseUrl}/${appealId}/interested-party-comments/add/ip-address`).send({
+				addressLine1: 'Line 1',
+				addressLine2: 'Line 2',
+				town: 'Town',
+				county: 'County',
+				postCode: 'AB1 2CD'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
+			);
+
+			pageHtml = parseHtml(response.text);
+
+			expect(pageHtml.querySelector('input#address-line-1').getAttribute('value')).toEqual(
+				'Line 1'
+			);
+			expect(pageHtml.querySelector('input#address-line-2').getAttribute('value')).toEqual(
+				'Line 2'
+			);
+			expect(pageHtml.querySelector('input#town').getAttribute('value')).toEqual('Town');
+			expect(pageHtml.querySelector('input#county').getAttribute('value')).toEqual('County');
+			expect(pageHtml.querySelector('input#post-code').getAttribute('value')).toEqual('AB1 2CD');
 		});
 	});
 
