@@ -98,6 +98,28 @@ Cypress.Commands.add('simulateSiteVisit', (reference) => {
 	});
 });
 
+Cypress.Commands.add('simulateStatementsDeadlineElapsed', (reference) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateStatementsElapsed(reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (reference) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateFinalCommentsElapsed(reference);
+		cy.log('Simulated site visit elapsed for case ref ' + reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('addRepresentation', (reference, type) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.addRepresentation(reference, type);
+		return;
+	});
+});
+
 Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
 	cy.reload();
 });

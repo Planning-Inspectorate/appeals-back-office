@@ -43,3 +43,69 @@ export const simulateSiteVisitElapsed = async (req, res) => {
 
 	return res.send(false);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateStatementsElapsed = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const timetable = await databaseConnector.appealTimetable.findFirst({
+		where: { appealId }
+	});
+
+	if (timetable !== null) {
+		const { id } = timetable;
+		const ipCommentsDueDate = sub(new Date(), { days: 3 });
+		const lpaStatementDueDate = sub(new Date(), { days: 3 });
+		const appellantStatementDueDate = sub(new Date(), { days: 3 });
+
+		await databaseConnector.appealTimetable.update({
+			where: { id },
+			data: {
+				ipCommentsDueDate,
+				lpaStatementDueDate,
+				appellantStatementDueDate
+			}
+		});
+
+		return res.send(true);
+	}
+
+	return res.send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateFinalCommentsElapsed = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const timetable = await databaseConnector.appealTimetable.findFirst({
+		where: { appealId }
+	});
+
+	if (timetable !== null) {
+		const { id } = timetable;
+		const finalCommentsDueDate = sub(new Date(), { days: 3 });
+
+		await databaseConnector.appealTimetable.update({
+			where: { id },
+			data: {
+				finalCommentsDueDate
+			}
+		});
+
+		return res.send(true);
+	}
+
+	return res.send(false);
+};

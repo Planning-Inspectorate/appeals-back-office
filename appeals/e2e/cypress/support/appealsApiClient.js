@@ -73,9 +73,63 @@ export const appealsApiClient = {
 			throw error;
 		}
 	},
+	async addRepresentation(reference, type) {
+		const submission = createApiSubmission(appealsApiRequests[type], type);
+		submission.caseReference = reference;
+		try {
+			const url = baseUrl + apiPaths.repSubmission;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(submission)
+			});
+
+			const result = await response.json();
+			return result;
+		} catch {
+			return false;
+		}
+	},
 	async simulateSiteVisitElapsed(reference) {
 		try {
 			const url = `${baseUrl}appeals/${reference}/site-visit-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			const result = await response.json();
+			return result;
+		} catch {
+			return false;
+		}
+	},
+	async simulateStatementsElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/statements-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			const result = await response.json();
+			return result;
+		} catch {
+			return false;
+		}
+	},
+	async simulateFinalCommentsElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/final-comments-elapsed`;
 			const response = await fetch(url, {
 				method: 'POST',
 				headers: {

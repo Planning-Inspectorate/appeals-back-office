@@ -42,7 +42,9 @@ export class CaseDetailsPage extends Page {
 		viewAppealWithdrawal: 'view-appeal-withdrawal',
 		changeAppellant: 'change-appellant',
 		changeAgent: 'change-agent',
-		setupSiteVisitBanner: 'set-up-site-visit-banner'
+		setupSiteVisitBanner: 'set-up-site-visit-banner',
+		reviewIpComments: 'review-ip-comments',
+		reviewLpaStatement: 'view-lpa-statement'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -127,12 +129,19 @@ export class CaseDetailsPage extends Page {
 		docVersionNumber: () => cy.get('.govuk-summary-list__key').contains('Version').siblings().eq(0),
 		documentName: () => cy.get('.govuk-summary-list__key').contains('Name').siblings().eq(0),
 		fileNameTextInput: () => cy.get('#file-name'),
-		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner)
+		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner),
+		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
+		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
+		caseStatusTag: () => cy.get('.govuk-tag')
 	};
 	/********************************************************
 	 ************************ Actions ************************
 	 *********************************************************/
 
+	checkAppealStatus(status) {
+		const appealStatus = this.elements.caseStatusTag().invoke('prop', 'innerText');
+		appealStatus.should('eq', status);
+	}
 	clickManageDocsCostDecision() {
 		this.elements.manageCostDecision().click();
 	}
@@ -518,5 +527,29 @@ export class CaseDetailsPage extends Page {
 
 	verifyWarningText(text) {
 		this.elements.getWarningText().contains(text);
+	}
+
+	reviewIpComments(valid) {
+		const rbValue = valid ? 'Accept comment' : 'Reject comment';
+		this.elements.ipCommentsReviewLink().click();
+		this.clickLinkByText('Review');
+		this.selectRadioButtonByValue(rbValue);
+		this.clickButtonByText('Confirm');
+		if (valid === false) {
+			this.chooseCheckboxByText('Not relevant to this appeal');
+			this.clickButtonByText('Continue');
+			this.selectRadioButtonByValue('No');
+			this.clickButtonByText('Continue');
+			this.clickButtonByText('Reject comment');
+		}
+	}
+
+	reviewLpaStatement() {
+		this.elements.lpaStatementReviewLink().click();
+		this.selectRadioButtonByValue('Accept statement');
+		this.clickButtonByText('Continue');
+		this.selectRadioButtonByValue('No');
+		this.clickButtonByText('Continue');
+		this.clickButtonByText('Confirm');
 	}
 }

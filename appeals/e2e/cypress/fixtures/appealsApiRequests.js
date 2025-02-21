@@ -57,7 +57,6 @@ const appealsApiRequests = {
 				telephoneNumber: '01234 818181',
 				organisation: 'K+C'
 			},
-
 			{
 				emailAddress: 'test@test.com',
 				firstName: 'Agent',
@@ -131,6 +130,43 @@ const appealsApiRequests = {
 			siteNoticesSentDate: null,
 			siteWithinSSSI: false
 		}
+	},
+	interestedPartyComment: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (IP comment)',
+		representationType: 'comment',
+		representationSubmittedDate: new Date(),
+		newUser: {
+			emailAddress: 'test@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'Mr',
+			serviceUserType: 'InterestedParty',
+			organisation: 'A company',
+			telephoneNumber: '0123456789'
+		}
+	},
+	lpaStatement: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (LPA statement)',
+		representationType: 'statement',
+		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+		lpaCode: 'Q9999'
+	},
+	appellantFinalComment: {
+		caseReference: '6000000',
+		representation:
+			'Hello, not about cheese but still a rep of some kind (Appellant final comment)',
+		representationType: 'final-comment',
+		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+		serviceUserId: '1'
+	},
+	lpaFinalComment: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (LPA final comment)',
+		representationType: 'final_comment',
+		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+		lpaCode: 'Q9999'
 	}
 };
 
@@ -165,6 +201,66 @@ const documentsApiRequest = {
 					size: 10293
 				}
 			]
+		},
+		interestedPartyComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'interestedPartyComment',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaStatement: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaStatement',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaFinalComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaFinalComment',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		appellantFinalComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'appellantFinalComment',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
 		}
 	},
 	test: {
@@ -189,6 +285,66 @@ const documentsApiRequest = {
 					dateCreated: '2024-03-01T13:48:35.847Z',
 					documentId: '001',
 					documentType: 'lpaCostsApplication',
+					documentURI:
+						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		ipComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'interestedPartyComment',
+					documentURI:
+						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaStatement: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaStatement',
+					documentURI:
+						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaFinalComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaFinalComment',
+					documentURI:
+						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		appellantFinalComment: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'appellantFinalComment',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
 					filename: 'img1.jpg',
