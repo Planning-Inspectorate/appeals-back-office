@@ -2,6 +2,7 @@ import { apiMappers } from './api/index.js';
 import { integrationMappers } from './integration/index.js';
 import { contextEnum } from './context-enum.js';
 import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import mergeMaps from '#utils/merge-maps.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -10,23 +11,30 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
 /** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
+/** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
  * @param {MappingRequest} mappingRequest
- * @returns {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case|undefined}
+ * @returns {MapResult | undefined}
  */
-export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appealDetails }) => {
-	if (context && appeal?.id && appeal?.caseCreatedDate) {
-		const caseMap =
-			context === contextEnum.broadcast
-				? createIntegrationMap({ appeal, context })
-				: createDataMap({ appeal, appealTypes, context });
-
-		return createDataLayout(caseMap, { appeal, context });
+export const mapCase = ({
+	appeal,
+	appealTypes = [],
+	context = /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
+}) => {
+	if (!context || !appeal?.id || !appeal?.caseCreatedDate) {
+		return;
 	}
+
+	const caseMap =
+		context === contextEnum.broadcast
+			? createIntegrationMap({ appeal, context })
+			: createDataMap({ appeal, appealTypes, context });
+
+	return createDataLayout(caseMap, { appeal, context });
 };
 
 /**
@@ -37,20 +45,16 @@ export const mapCase = ({ appeal, appealTypes = [], context = contextEnum.appeal
 function createDataMap(mappingRequest) {
 	const { appeal } = mappingRequest;
 
-	const casedata = createMap(apiMappers.apiSharedMappers, mappingRequest);
+	const caseData = createMap(apiMappers.apiSharedMappers, mappingRequest);
+
 	switch (appeal.appealType?.key) {
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
-			mergeMaps(casedata, s78);
-			break;
+			return mergeMaps(caseData, s78);
 		}
-		case APPEAL_CASE_TYPE.D:
-		default: {
-			break;
-		}
+		default:
+			return caseData;
 	}
-
-	return casedata;
 }
 
 /**
@@ -61,20 +65,16 @@ function createDataMap(mappingRequest) {
 function createIntegrationMap(mappingRequest) {
 	const { appeal } = mappingRequest;
 
-	const casedata = createMap(integrationMappers.integrationSharedMappers, mappingRequest);
+	const caseData = createMap(integrationMappers.integrationSharedMappers, mappingRequest);
+
 	switch (appeal.appealType?.key) {
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
-			mergeMaps(casedata, s78);
-			break;
+			return mergeMaps(caseData, s78);
 		}
-		case APPEAL_CASE_TYPE.D:
-		default: {
-			break;
-		}
+		default:
+			return caseData;
 	}
-
-	return casedata;
 }
 
 /**
@@ -83,33 +83,15 @@ function createIntegrationMap(mappingRequest) {
  * @param {MappingRequest} mappingRequest
  * @returns {Map<string, *>}
  */
-function createMap(mappers, mappingRequest) {
-	const casedata = new Map([]);
-	Object.entries(mappers).forEach(([key, mapper]) => {
+const createMap = (mappers, mappingRequest) =>
+	Object.entries(mappers).reduce((accumulator, [key, mapper]) => {
 		const mapped = mapper(mappingRequest);
 		if (mapped) {
-			casedata.set(key, mapped);
+			accumulator.set(key, mapped);
 		}
-	});
-	return casedata;
-}
 
-/**
- *
- * @param {Map<string, *>} existingMap
- * @param {Map<string, *>} newMap
- */
-function mergeMaps(existingMap, newMap) {
-	Array.from(existingMap.entries()).forEach(([key, value]) => {
-		const newValue = newMap.get(key);
-		if (newValue) {
-			existingMap.set(key, {
-				...value,
-				...newValue
-			});
-		}
-	});
-}
+		return accumulator;
+	}, new Map());
 
 /**
  *
@@ -181,7 +163,7 @@ function createDataLayout(caseMap, mappingRequest) {
 /***
  *
  * @param {Folder[]} folders
- * @param { keyof contextEnum} context
+ * @param {string} context
  *
  */
 function createFoldersLayout(folders, context) {
@@ -283,18 +265,15 @@ function createFoldersLayout(folders, context) {
 }
 
 /***
- *
  * @param {Folder[]} folders
  * @returns {Object<string, Folder>}
- *
  */
-function processFolders(folders) {
-	/** @type {Object<string, Folder>} */
-	const documents = {};
-	folders.map((folder) => {
+const processFolders = (folders) =>
+	folders.reduce((accumulator, folder) => {
 		const key = folder.path.split('/')[1];
-		documents[key] = folder;
-	});
 
-	return documents;
-}
+		return {
+			...accumulator,
+			[key]: folder
+		};
+	}, {});
