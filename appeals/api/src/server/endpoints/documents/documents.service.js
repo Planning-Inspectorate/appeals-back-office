@@ -15,13 +15,17 @@ import {
 } from '#repositories/document-metadata.repository.js';
 import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import {
+	ERROR_NOT_FOUND,
+	VALIDATION_OUTCOME_VALID,
+	VALIDATION_OUTCOME_INVALID,
+	VALIDATION_OUTCOME_COMPLETE
+} from '#endpoints/constants.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from 'pins-data-model';
 import { validateBlobContents } from '#utils/blob-validation.js';
@@ -234,12 +238,7 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 		throw new Error(`Invalid blobs submitted`);
 	}
 
-	const documentsCreated = await addDocumentAndVersion(
-		appeal.id,
-		appeal.reference,
-		appeal.appealStatus[0].status,
-		documentsToSendToDatabase
-	);
+	const documentsCreated = await addDocumentAndVersion(appeal, documentsToSendToDatabase);
 
 	for (const document of documentsCreated) {
 		if (document?.documentGuid) {
@@ -257,13 +256,11 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 };
 
 /**
- * @param {number} caseId
- * @param {string} reference
- * @param {string} appealStatus
+ * @param {Appeal} appeal
  * @param {*[]} documents
  * @returns {Promise<(DocumentVersion | null)[]>}
  */
-const addDocumentAndVersion = async (caseId, reference, appealStatus, documents) => {
+const addDocumentAndVersion = async (appeal, documents) => {
 	const { results } = await PromisePool.withConcurrency(5)
 		.for(documents)
 		.handleError((error, document) => {
@@ -285,11 +282,11 @@ const addDocumentAndVersion = async (caseId, reference, appealStatus, documents)
 					documentURI: d.documentURI,
 					dateReceived: d.dateReceived,
 					redactionStatusId: d.redactionStatusId,
-					isLateEntry: isLateEntry(d.stage, appealStatus)
+					isLateEntry: await isLateEntry(d.stage, appeal)
 				},
 				{
-					caseId,
-					reference,
+					caseId: appeal.id,
+					reference: appeal.reference,
 					folderId: Number(d.folderId),
 					blobStorageHost: d.blobStorageHost
 				}
@@ -352,7 +349,7 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		documentURI: documentToSendToDatabase.documentURI,
 		dateReceived: documentToSendToDatabase.dateReceived,
 		redactionStatusId: documentToSendToDatabase.redactionStatusId,
-		isLateEntry: isLateEntry(documentToSendToDatabase.stage, appeal.appealStatus[0].status)
+		isLateEntry: await isLateEntry(documentToSendToDatabase.stage, appeal)
 	});
 
 	if (!documentVersionCreated) {
@@ -423,27 +420,29 @@ export const addDocumentAudit = async (guid, version, auditTrail, action) => {
 };
 
 /**
- * @param { string } stage
- * @param { string } status
- * @return { boolean }
+ * @param {string} stage
+ * @param {Appeal} appeal
+ * @return {boolean}
  */
-const isLateEntry = (stage, status) => {
+function isLateEntry(stage, appeal) {
 	switch (stage) {
-		case APPEAL_CASE_STAGE.APPELLANT_CASE:
-			return (
-				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
-				status !== APPEAL_CASE_STATUS.VALIDATION &&
-				status !== APPEAL_CASE_STATUS.READY_TO_START
-			);
+		case APPEAL_CASE_STAGE.APPELLANT_CASE: {
+			const validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome?.name;
+			if (!validationOutcome) {
+				return false;
+			}
 
-		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
-			return (
-				status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER &&
-				status !== APPEAL_CASE_STATUS.VALIDATION &&
-				status !== APPEAL_CASE_STATUS.READY_TO_START &&
-				status !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-			);
+			return [VALIDATION_OUTCOME_VALID, VALIDATION_OUTCOME_INVALID].includes(validationOutcome);
+		}
+		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE: {
+			const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name;
+			if (!validationOutcome) {
+				return false;
+			}
+
+			return validationOutcome === VALIDATION_OUTCOME_COMPLETE;
+		}
 	}
 
 	return false;
-};
+}
