@@ -392,7 +392,6 @@ model LPAQuestionnaire {
 
   // S78 fields
   affectsScheduledMonument            Boolean?
-  hasProtectedSpecies                 Boolean?
   isAonbNationalLandscape             Boolean?
   isGypsyOrTravellerSite              Boolean?
   isPublicRightOfWay                  Boolean?
@@ -404,8 +403,13 @@ model LPAQuestionnaire {
   eiaRequiresEnvironmentalStatement   Boolean?
   eiaCompletedEnvironmentalStatement  Boolean?
   consultedBodiesDetails              String?
+  hasProtectedSpecies                 Boolean?
   hasStatutoryConsultees              Boolean?
   hasInfrastructureLevy               Boolean?
+  hasTreePreservationOrder            Boolean?
+  hasConsultationResponses            Boolean?
+  hasEmergingPlan                     Boolean?
+  hasSupplementaryPlanningDocs        Boolean?
   isInfrastructureLevyFormallyAdopted Boolean?
   infrastructureLevyAdoptedDate       DateTime?
   infrastructureLevyExpectedDate      DateTime?
