@@ -136,7 +136,21 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateBannerMessage('Document removed');
 	},
-
+	addThirdPartyComment(caseRef, state) {
+		cy.addRepresentation(caseRef, 'interestedPartyComment').then((caseRef) => {
+			caseDetailsPage.reviewIpComments(state);
+		});
+	},
+	addLpaStatement(caseRef) {
+		cy.addRepresentation(caseRef, 'lpaStatement').then((caseRef) => {
+			caseDetailsPage.reviewLpaStatement();
+		});
+	},
+	addLpaFinalComment(caseRef) {
+		cy.addRepresentation(caseRef, 'lpaFinalComment').then((caseRef) => {
+			//do something here?
+		});
+	},
 	progressSiteVisit(caseRef) {
 		caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
 		caseDetailsPage.clickButtonByText('Manage the site visit');
@@ -153,7 +167,6 @@ export const happyPathHelper = {
 			caseDetailsPage.clickLinkByText('Go back to case details');
 		});
 	},
-
 	setupSiteVisitFromBanner(caseRef) {
 		caseDetailsPage.clickSiteVisitBanner();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
