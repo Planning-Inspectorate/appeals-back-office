@@ -46,7 +46,6 @@ describe('Change Appeal Type', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickLinkByText('Go back to case details');
 			caseDetailsPage.checkStatusOfCase('Closed', 0);
 		});
 	});
