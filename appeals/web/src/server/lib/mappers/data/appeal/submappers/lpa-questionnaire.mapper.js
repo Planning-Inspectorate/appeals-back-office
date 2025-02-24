@@ -8,7 +8,8 @@ export const mapLpaQuestionnaire = ({ appealDetails, currentRoute }) =>
 		id: 'lpa-questionnaire',
 		text: 'LPA questionnaire',
 		statusText: displayPageFormatter.mapDocumentStatus(
-			appealDetails?.documentationSummary?.lpaQuestionnaire?.status
+			appealDetails?.documentationSummary?.lpaQuestionnaire?.status,
+			appealDetails?.documentationSummary?.lpaQuestionnaire?.dueDate
 		),
 		receivedText: dateISOStringToDisplayDate(
 			appealDetails?.documentationSummary?.lpaQuestionnaire?.receivedAt

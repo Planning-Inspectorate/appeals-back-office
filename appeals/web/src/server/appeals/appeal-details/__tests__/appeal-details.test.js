@@ -2214,6 +2214,78 @@ describe('appeal-details', () => {
 		});
 
 		describe('Documentation', () => {
+			describe('LPA Questionnaire', () => {
+				const appealId = 3;
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+						.reply(200, {
+							statement: 0,
+							comment: 0,
+							lpa_final_comment: 0,
+							appellant_final_comment: 0
+						});
+				});
+
+				it('should render an "LPA Questionnaire" row with a status of "Incomplete" if the LPA questionnaire status is Incomplete and the due date has not yet passed', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								lpaQuestionnaire: {
+									...appealDataFullPlanning.documentationSummary.lpaQuestionnaire,
+									status: 'Incomplete',
+									dueDate: '3000-01-15T00:00:00.000Z'
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).toContain(
+						'LPA questionnaire</th><td class="govuk-table__cell">Incomplete</td>'
+					);
+				});
+
+				it('should render an "LPA Questionnaire" row with a status of "Overdue" if the LPA questionnaire status is Incomplete and the due date has passed', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								lpaQuestionnaire: {
+									...appealDataFullPlanning.documentationSummary.lpaQuestionnaire,
+									status: 'Incomplete',
+									dueDate: '2025-01-15T00:00:00.000Z'
+								}
+							}
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).toContain(
+						'LPA questionnaire</th><td class="govuk-table__cell">Overdue</td>'
+					);
+				});
+			});
+
 			describe('Final comments', () => {
 				const appealId = 3;
 				const testCases = [
