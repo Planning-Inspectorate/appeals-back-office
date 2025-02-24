@@ -394,43 +394,56 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 				? dateIsInThePast(dateISOStringToDayMonthYearHourMinute(finalCommentsDueDate))
 				: false;
 
-			if (isFinalCommentsDueDatePassed) {
-				const hasValidFinalCommentsAppellant =
-					documentationSummary.appellantFinalComments?.representationStatus ===
-					APPEAL_REPRESENTATION_STATUS.VALID;
-				const hasValidFinalCommentsLPA =
-					documentationSummary.lpaFinalComments?.representationStatus ===
-					APPEAL_REPRESENTATION_STATUS.VALID;
+			const hasValidFinalCommentsAppellant =
+				documentationSummary.appellantFinalComments?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID;
 
-				let linkText = 'Progress case';
+			const hasValidFinalCommentsLPA =
+				documentationSummary.lpaFinalComments?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID;
 
-				if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
-					linkText = 'Share final comments';
+			const lpaReceived = lpaFinalCommentsStatus === 'received';
+			const appellantReceived = appellantFinalCommentsStatus === 'received';
+
+			const appellantFinalCommentsAwaitingReview =
+				appellantReceived &&
+				isRepresentationReviewRequired(appellantFinalCommentsRepresentationStatus);
+			const lpaFinalCommentsAwaitingReview =
+				lpaReceived && isRepresentationReviewRequired(lpaFinalCommentsRepresentationStatus);
+
+			// Build list of required actions
+			const actions = [];
+			if (appellantFinalCommentsAwaitingReview || lpaFinalCommentsAwaitingReview) {
+				if (appellantFinalCommentsAwaitingReview) {
+					actions.push(
+						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					);
 				}
-				return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">${linkText}</a>`;
+				if (lpaFinalCommentsAwaitingReview) {
+					actions.push(
+						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					);
+				}
 			} else {
-				const lpaReceived = lpaFinalCommentsStatus === 'received';
-				const appellantReceived = appellantFinalCommentsStatus === 'received';
-
 				if (!lpaReceived && !appellantReceived) {
-					return 'Awaiting final comments';
+					actions.push('Awaiting final comments');
 				}
-
-				const lpaAction =
-					lpaReceived && isRepresentationReviewRequired(lpaFinalCommentsRepresentationStatus)
-						? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
-						: null;
-				const appellantAction =
-					appellantReceived &&
-					isRepresentationReviewRequired(appellantFinalCommentsRepresentationStatus)
-						? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
-						: null;
-
-				return [lpaAction, appellantAction].filter(Boolean).join('<br>');
+				if (isFinalCommentsDueDatePassed) {
+					if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
+						actions.push(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Share final comments</a>`
+						);
+					} else {
+						actions.push(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress case</a>`
+						);
+					}
+				}
 			}
+			return actions.join('<br>');
 		}
 		default:
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return '';
 	}
 }
 

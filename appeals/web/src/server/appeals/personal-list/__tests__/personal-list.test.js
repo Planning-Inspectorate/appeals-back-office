@@ -339,7 +339,7 @@ describe('personal-list', () => {
 				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHtml).toContain(
-					'action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a><br><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a></td>'
+					'action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a><br><a class="govuk-link" href="/appeals-service/appeal-details/24281/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal 24281</span></a></td>'
 				);
 			});
 		});
@@ -686,7 +686,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 		);
 	});
 
-	it('should return "View case" link for any other status', () => {
+	it('should be blank for any other status', () => {
 		const result = mapAppealStatusToActionRequiredHtml(
 			{
 				...appeal,
@@ -695,9 +695,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			},
 			true
 		);
-		expect(result).toEqual(
-			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}">View case<span class="govuk-visually-hidden"> for appeal 123</span></a>`
-		);
+		expect(result).toEqual('');
 	});
 
 	describe('appeal status is statements', () => {
