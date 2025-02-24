@@ -1,5 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`mapStatusDependentNotifications when status is "final_comments" should return the "Appellant final comments awaiting review" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1234/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "final_comments" should return the "LPA final comments awaiting review" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/1234/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "final_comments" when the final comments due date is in the past should return the "Progress case" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<a href="/appeals-service/appeal-details/1234/share" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
+exports[`mapStatusDependentNotifications when status is "final_comments" when the final comments due date is in the past should return the "Share final comments" notification 1`] = `
+[
+  {
+    "parameters": {
+      "html": "<a href="/appeals-service/appeal-details/1234/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>",
+      "text": undefined,
+      "titleHeadingLevel": 3,
+      "titleText": "Important",
+      "type": "important",
+    },
+    "type": "notification-banner",
+  },
+]
+`;
+
 exports[`mapStatusDependentNotifications when status is "statements" should return the "Interested party comments awaiting review" notification 1`] = `
 [
   {
