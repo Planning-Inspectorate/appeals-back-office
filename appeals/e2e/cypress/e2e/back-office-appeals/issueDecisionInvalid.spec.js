@@ -29,7 +29,9 @@ describe('Issue Decision', () => {
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.reviewLpaq(caseRef);
 			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			happyPathHelper.progressSiteVisit(caseRef);
+			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+				cy.reload();
+			});
 			caseDetailsPage.clickIssueDecision(caseRef);
 			caseDetailsPage.selectRadioButtonByValue('Invalid');
 			caseDetailsPage.clickButtonByText('Continue');
