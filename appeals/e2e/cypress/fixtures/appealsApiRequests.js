@@ -157,7 +157,7 @@ const appealsApiRequests = {
 		caseReference: '6000000',
 		representation:
 			'Hello, not about cheese but still a rep of some kind (Appellant final comment)',
-		representationType: 'final-comment',
+		representationType: 'final_comment',
 		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
 		serviceUserId: '1'
 	},
@@ -294,7 +294,7 @@ const documentsApiRequest = {
 				}
 			]
 		},
-		ipComment: {
+		interestedPartyComment: {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',

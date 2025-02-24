@@ -552,4 +552,12 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Continue');
 		this.clickButtonByText('Confirm');
 	}
+
+	reviewFinalComment(type) {
+		cy.reload();
+		this.basePageElements.bannerLink().click();
+		this.selectRadioButtonByValue('Accept final comment');
+		this.clickButtonByText('Continue');
+		this.clickButtonByText(`Accept ${type} final comment`);
+	}
 }

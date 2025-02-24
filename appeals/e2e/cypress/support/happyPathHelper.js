@@ -132,21 +132,31 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateBannerMessage('Document removed');
 	},
+
 	addThirdPartyComment(caseRef, state) {
-		cy.addRepresentation(caseRef, 'interestedPartyComment').then((caseRef) => {
+		cy.addRepresentation(caseRef, 'interestedPartyComment', null).then((caseRef) => {
 			caseDetailsPage.reviewIpComments(state);
 		});
 	},
+
 	addLpaStatement(caseRef) {
-		cy.addRepresentation(caseRef, 'lpaStatement').then((caseRef) => {
+		cy.addRepresentation(caseRef, 'lpaStatement', null).then((caseRef) => {
 			caseDetailsPage.reviewLpaStatement();
 		});
 	},
+
 	addLpaFinalComment(caseRef) {
-		cy.addRepresentation(caseRef, 'lpaFinalComment').then((caseRef) => {
-			//do something here?
+		cy.addRepresentation(caseRef, 'lpaFinalComment', null).then((caseRef) => {
+			caseDetailsPage.reviewFinalComment('LPA');
 		});
 	},
+
+	addAppellantFinalComment(caseRef, serviceUserId) {
+		cy.addRepresentation(caseRef, 'appellantFinalComment', serviceUserId).then((caseRef) => {
+			caseDetailsPage.reviewFinalComment('appellant');
+		});
+	},
+
 	progressSiteVisit(caseRef) {
 		caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
 		caseDetailsPage.clickButtonByText('Manage the site visit');
@@ -161,6 +171,7 @@ export const happyPathHelper = {
 		);
 		cy.simulateSiteVisit(caseRef).then((caseRef) => {});
 	},
+
 	setupSiteVisitFromBanner(caseRef) {
 		caseDetailsPage.clickSiteVisitBanner();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));

@@ -27,26 +27,37 @@ describe('Progress S78 to final comments', () => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.checkAppealStatus('Validation'.toUpperCase());
+
 			happyPathHelper.reviewAppellantCase(caseRef);
 			caseDetailsPage.checkAppealStatus('Ready to start'.toUpperCase());
+
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.checkAppealStatus('LPA Questionnaire'.toUpperCase());
+
 			happyPathHelper.reviewS78Lpaq(caseRef);
 			caseDetailsPage.checkAppealStatus('Statements'.toUpperCase());
+
 			happyPathHelper.addThirdPartyComment(caseRef, true);
 			caseDetailsPage.clickBackLink();
 			happyPathHelper.addThirdPartyComment(caseRef, false);
 			caseDetailsPage.clickBackLink();
 			happyPathHelper.addLpaStatement(caseRef);
 			cy.simulateStatementsDeadlineElapsed(caseRef);
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAppealStatus('Final comments'.toUpperCase());
 
-			//adding an LPA final comment here, to be continued...
-			//happyPathHelper.addLpaFinalComment(caseRef);
+			happyPathHelper.addLpaFinalComment(caseRef);
+			cy.loadAppealDetails(caseRef).then((appealData) => {
+				const serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
+				happyPathHelper.addAppellantFinalComment(caseRef, serviceUserId);
+			});
+			cy.simulateFinalCommentsDeadlineElapsed(caseRef);
+			cy.reload();
+			caseDetailsPage.basePageElements.bannerLink().click();
+			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.checkAppealStatus('Final comments'.toUpperCase()); //TODO: should work after fixing notifications to LPA and appellant
 		});
 	});
 });

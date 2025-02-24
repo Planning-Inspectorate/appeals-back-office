@@ -73,9 +73,12 @@ export const appealsApiClient = {
 			throw error;
 		}
 	},
-	async addRepresentation(reference, type) {
+	async addRepresentation(reference, type, serviceUserId) {
 		const submission = createApiSubmission(appealsApiRequests[type], type);
 		submission.caseReference = reference;
+		if (serviceUserId !== null) {
+			submission.serviceUserId = serviceUserId;
+		}
 		try {
 			const url = baseUrl + apiPaths.repSubmission;
 			const response = await fetch(url, {
@@ -132,6 +135,23 @@ export const appealsApiClient = {
 			const url = `${baseUrl}appeals/${reference}/final-comments-elapsed`;
 			const response = await fetch(url, {
 				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			const result = await response.json();
+			return result;
+		} catch {
+			return false;
+		}
+	},
+	async loadCaseDetails(reference) {
+		try {
+			const url = `${baseUrl}appeals/case-reference/${reference}`;
+			const response = await fetch(url, {
+				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
