@@ -118,7 +118,9 @@ export const postLpaQuestionnaire = async (request, response) => {
 					bannerDefinitionKey: 'lpaqReviewIncomplete',
 					appealId: currentAppeal.appealId
 				});
-				return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+				);
 			}
 		} else {
 			return response.status(500).render('app/500.njk');
