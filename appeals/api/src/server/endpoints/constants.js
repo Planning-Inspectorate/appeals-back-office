@@ -63,7 +63,7 @@ export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
 export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
 	'Document {replacement0} has been renamed as {replacement1}';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
-export const AUDIT_TRAIL_REP_IMPORT_MSG = 'A representation was received';
+export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =

@@ -13,6 +13,7 @@ import {
 } from '#endpoints/constants.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
+
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 
@@ -151,10 +152,14 @@ export const importRepresentation = async (req, res) => {
 	const { documentVersions, rep } = casedata;
 	const appealId = req.appeal.id;
 	const repId = rep.id;
+	const repType =
+		representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+			? 'ip_comment'
+			: representation.representationType;
 
 	await createAuditTrail({
 		appealId,
-		details: AUDIT_TRAIL_REP_IMPORT_MSG,
+		details: stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]),
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
 
@@ -174,10 +179,7 @@ export const importRepresentation = async (req, res) => {
 
 	await Promise.all(
 		documentVersions.map(async (document) => {
-			await Promise.all([
-				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
-				writeDocumentAuditTrail(appealId, document)
-			]);
+			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
 		})
 	);
 
