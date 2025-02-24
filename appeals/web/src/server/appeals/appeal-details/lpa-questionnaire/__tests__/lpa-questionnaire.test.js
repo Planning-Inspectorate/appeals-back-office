@@ -1734,7 +1734,7 @@ describe('LPA Questionnaire review', () => {
 			nock.cleanAll();
 		});
 
-		it('should send a patch request to the LPA questionnaire API endpoint and redirect to the decision incomplete confirmation page, if posted outcome was "incomplete"', async () => {
+		it('should send a patch request to the LPA questionnaire API endpoint and redirect to the case details page, if posted outcome was "incomplete"', async () => {
 			// post to LPA questionnaire page controller is necessary to set required data in the session
 			const lpaQPostResponse = await request.post(baseUrl).send({
 				'review-outcome': 'incomplete'
@@ -1757,9 +1757,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(mockedlpaQuestionnairesEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete/confirmation'
-			);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
