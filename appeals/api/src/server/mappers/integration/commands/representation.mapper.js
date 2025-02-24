@@ -67,7 +67,7 @@ export const mapRepresentationIn = (submission) => {
  * @param {{representationType: string|null, lpaCode: string|null}} data
  * @returns {string}
  */
-const mapRepresentationType = (data) => {
+export const mapRepresentationType = (data) => {
 	if (data.representationType !== null) {
 		switch (data.representationType) {
 			case APPEAL_REPRESENTATION_TYPE.STATEMENT:

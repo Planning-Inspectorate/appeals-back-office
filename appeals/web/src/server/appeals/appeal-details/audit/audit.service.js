@@ -44,6 +44,8 @@ export const mapMessageContent = async (appeal, log, docInfo, session) => {
 		docInfo,
 		appeal?.lpaQuestionnaireId || null
 	);
+
+	result = await tryMapRepresentationType(result);
 	result = await tryMapStatus(result);
 	result = await tryMapUrl(result);
 
@@ -190,6 +192,22 @@ const tryMapStatus = async (log) => {
 		'progressed to complete',
 		'progressed to <strong class="govuk-tag govuk-tag--green single-line govuk-!-margin-bottom-4">Complete</strong>'
 	);
+	result = result.replace(
+		'progressed to event',
+		'progressed to <strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-4">Site visit ready to set up</strong>'
+	);
+	result = result.replace(
+		'progressed to awaiting_event',
+		'progressed to <strong class="govuk-tag govuk-tag--green single-line govuk-!-margin-bottom-4">Awaiting site visit</strong>'
+	);
+	result = result.replace(
+		'progressed to statements',
+		'progressed to <strong class="govuk-tag govuk-tag--orange single-line govuk-!-margin-bottom-4">Statements</strong>'
+	);
+	result = result.replace(
+		'progressed to final_comments',
+		'progressed to <strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Final comments</strong>'
+	);
 
 	return result;
 };
@@ -201,4 +219,20 @@ const tryMapStatus = async (log) => {
  */
 const tryMapUrl = async (log) => {
 	return log;
+};
+
+/**
+ *
+ * @param {string} log
+ * @returns {Promise<string>}
+ */
+const tryMapRepresentationType = async (log) => {
+	let result = log;
+
+	result = result.replace('ip_comment', 'An interested party comment');
+	result = result.replace('lpa_statement', 'The LPA statement');
+	result = result.replace('lpa_final_comment', 'The LPA final comment');
+	result = result.replace('appellant_final_comment', 'The appellant final comment');
+
+	return result;
 };
