@@ -113,10 +113,17 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (reference) => {
 	});
 });
 
-Cypress.Commands.add('addRepresentation', (reference, type) => {
+Cypress.Commands.add('addRepresentation', (reference, type, serviceUserId) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.addRepresentation(reference, type);
+		await appealsApiClient.addRepresentation(reference, type, serviceUserId);
 		return;
+	});
+});
+
+Cypress.Commands.add('loadAppealDetails', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		return details;
 	});
 });
 
