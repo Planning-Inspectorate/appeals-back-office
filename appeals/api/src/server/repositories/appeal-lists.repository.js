@@ -198,7 +198,8 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 						listedBuildingDetails: true
 					}
 				},
-				representations: true
+				representations: true,
+				siteVisit: { include: { siteVisitType: true } }
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize

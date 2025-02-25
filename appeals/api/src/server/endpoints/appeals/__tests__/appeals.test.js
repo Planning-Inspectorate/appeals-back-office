@@ -1213,6 +1213,15 @@ describe('mapAppealToDueDate Tests', () => {
 		expect(dueDate).toEqual(createdAtPlusSixtyDate);
 	});
 
+	test('handles STATE_TARGET_AWAITING_SITE_VISIT', () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
+
+		// @ts-ignore
+		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
+	});
+
 	test('handles STATE_TARGET_COMPLETE', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 
