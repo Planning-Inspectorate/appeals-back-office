@@ -22,7 +22,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/AppellantCaseData' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Appeal successfully created',
 			schema: { $ref: '#/components/schemas/Appeal' }
 		}
@@ -46,7 +46,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/QuestionnaireData' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Appeal successfully updated',
 			schema: { $ref: '#/components/schemas/Appeal' }
 		}
@@ -69,7 +69,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/RepresentationData' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Appeal successfully updated',
 			schema: { $ref: '#/components/schemas/Appeal' }
 		}

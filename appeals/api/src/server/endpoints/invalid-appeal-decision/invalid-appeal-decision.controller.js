@@ -27,5 +27,5 @@ export const postInvalidDecision = async (req, res) => {
 		notifyClient
 	);
 
-	return res.send(decision);
+	return res.status(201).send(decision);
 };

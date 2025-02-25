@@ -73,7 +73,7 @@ const updateAppealById = async (req, res) => {
 		...(planningApplicationReference !== undefined && { planningApplicationReference })
 	};
 
-	return res.status(200).send(response);
+	return res.send(response);
 };
 
 export const controller = {

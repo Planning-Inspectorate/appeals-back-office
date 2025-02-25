@@ -30,7 +30,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/SiteVisitCreateRequest' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Creates a single site visit',
 			schema: { $ref: '#/components/schemas/SiteVisitSingleResponse' }
 		}

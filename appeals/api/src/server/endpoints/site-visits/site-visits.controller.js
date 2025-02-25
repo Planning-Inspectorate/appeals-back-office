@@ -76,7 +76,7 @@ const postSiteVisit = async (req, res) => {
 		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
-	return res.send({
+	return res.status(201).send({
 		visitDate,
 		visitEndTime,
 		visitStartTime,

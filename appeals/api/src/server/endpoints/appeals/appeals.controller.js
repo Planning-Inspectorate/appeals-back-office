@@ -122,7 +122,7 @@ async function updateCompletedEventsController(req, res) {
 
 	await updateCompletedEvents(azureAdUserId);
 
-	return res.status(200).end();
+	return res.status(204).end();
 }
 
 export { getAppeals, getMyAppeals, updateCompletedEventsController };

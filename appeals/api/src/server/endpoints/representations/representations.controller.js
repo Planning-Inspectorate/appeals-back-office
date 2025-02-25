@@ -224,7 +224,7 @@ export const createRepresentation = (representationType) => async (req, res) => 
 	});
 
 	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
-	return res.send(rep);
+	return res.status(201).send(rep);
 };
 
 /**
@@ -279,7 +279,7 @@ export const updateRepresentationAttachments = async (req, res) => {
 		attachments
 	);
 
-	return res.status(200).send(updatedRepresentation);
+	return res.send(updatedRepresentation);
 };
 
 /**
@@ -339,5 +339,5 @@ export async function publish(req, res) {
 		updatedReps.map((rep) => broadcasters.broadcastRepresentation(rep.id, EventType.Update))
 	);
 
-	return res.status(200).send(updatedReps);
+	return res.send(updatedReps);
 }

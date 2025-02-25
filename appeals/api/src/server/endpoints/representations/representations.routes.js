@@ -151,7 +151,7 @@ router.post(
 		required: true,
 		schema: { $ref: '#/components/schemas/CreateRepRequest' },
 	}
-	#swagger.responses[200] = {
+	#swagger.responses[201] = {
 		description: 'Create a Representation against an appeal',
 		schema: { $ref: '#/components/schemas/RepResponse' }
 	}

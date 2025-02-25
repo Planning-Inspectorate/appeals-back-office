@@ -39,5 +39,5 @@ export const postInspectorDecision = async (req, res) => {
 		req.get('azureAdUserId') || ''
 	);
 
-	return res.send(decision);
+	return res.status(201).send(decision);
 };

@@ -47,7 +47,7 @@ router.post(
 		schema: { $ref: '#/components/schemas/CreateCaseNoteRequest' },
 		required: true
 	}
-	#swagger.responses[200] = {
+	#swagger.responses[201] = {
 		description: 'Returns the comment',
 		schema: { $ref: '#/components/schemas/GetCaseNoteResponse' }
 	}

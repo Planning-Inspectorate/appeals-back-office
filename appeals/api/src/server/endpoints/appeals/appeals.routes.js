@@ -122,7 +122,7 @@ router.post(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
-		#swagger.responses[200] = {}
+		#swagger.responses[204] = {}
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(updateCompletedEventsController)

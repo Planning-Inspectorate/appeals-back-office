@@ -134,7 +134,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/AddDocumentsRequest' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[204] = {
 			description: 'Document metadata successfully added',
 			schema: { $ref: '#/components/schemas/AddDocumentsResponse' }
 		}
@@ -164,7 +164,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/AddDocumentVersionRequest' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Document metadata successfully added',
 			schema: { $ref: '#/components/schemas/AddDocumentsResponse' }
 		}

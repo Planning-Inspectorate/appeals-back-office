@@ -39,7 +39,7 @@ export const addNeighbouringSite = async (req, res) => {
 		await broadcasters.broadcastAppeal(appeal.id);
 	}
 
-	return res.send({
+	return res.status(201).send({
 		siteId: result.id,
 		address: formatAddress(result?.address)
 	});

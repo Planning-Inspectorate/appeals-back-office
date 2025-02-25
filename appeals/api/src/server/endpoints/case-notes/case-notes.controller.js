@@ -38,5 +38,6 @@ export const postAppealCaseNote = async (request, response) => {
 	}
 
 	const caseNoteResponse = await services.postCaseNote(appealId, azureAdUserId, comment);
-	return response.send(caseNoteResponse);
+
+	return response.status(201).send(caseNoteResponse);
 };

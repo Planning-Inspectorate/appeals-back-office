@@ -35,7 +35,7 @@ export const addListedBuilding = async (req, res) => {
 		await broadcasters.broadcastAppeal(appeal.id);
 	}
 
-	return res.send({
+	return res.status(201).send({
 		listedBuildingId: result.id,
 		lpaQuestionnaireId: result.lpaQuestionnaireId,
 		listEntry: result.listEntry,

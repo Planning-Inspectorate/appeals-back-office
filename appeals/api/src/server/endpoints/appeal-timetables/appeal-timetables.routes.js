@@ -27,7 +27,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/StartCaseRequest' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Creates an appeal timetable and start the appeal',
 			schema: { $ref: '#/components/schemas/StartCaseResponse' }
 		}

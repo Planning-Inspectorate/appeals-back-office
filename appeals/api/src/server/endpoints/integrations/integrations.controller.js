@@ -79,7 +79,7 @@ export const importAppeal = async (req, res) => {
 		})
 	);
 
-	return res.send({ id, reference });
+	return res.status(201).send({ id, reference });
 };
 
 /**
@@ -125,7 +125,7 @@ export const importLpaqSubmission = async (req, res) => {
 		})
 	);
 
-	return res.send({ id, reference });
+	return res.status(201).send({ id, reference });
 };
 
 /**
@@ -183,7 +183,7 @@ export const importRepresentation = async (req, res) => {
 		})
 	);
 
-	return res.send(rep);
+	return res.status(201).send(rep);
 };
 
 /**
