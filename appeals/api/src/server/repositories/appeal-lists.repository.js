@@ -199,7 +199,9 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 					}
 				},
 				representations: true,
-				siteVisit: { include: { siteVisitType: true } }
+				siteVisit: {
+					include: { siteVisitType: true }
+				}
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize
