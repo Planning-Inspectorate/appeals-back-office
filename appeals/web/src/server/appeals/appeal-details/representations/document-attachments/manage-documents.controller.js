@@ -86,13 +86,14 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDeleteDocumentPage = async (request, response) => {
 	const baseUrl = request.baseUrl;
+	const basePath = baseUrl.split('/').slice(0, -1).join('/');
 
 	await postDeleteDocument({
 		request,
 		response,
-		returnUrl: `${baseUrl}/{{folderId}}`,
+		returnUrl: `${basePath}/add-document`,
 		cancelUrl: `${baseUrl}/{{folderId}}/{{documentId}}`,
-		uploadNewDocumentUrl: `${baseUrl}/add-documents/{{folderId}}/{{documentId}}`
+		uploadNewDocumentUrl: `${basePath}/add-document`
 	});
 };
 
