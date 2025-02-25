@@ -264,6 +264,9 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW
 			});
 		}
+		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
+			return new Date(appeal.siteVisit.visitDate);
+		}
 		default: {
 			return undefined;
 		}
