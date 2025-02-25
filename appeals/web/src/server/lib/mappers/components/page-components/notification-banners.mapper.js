@@ -16,7 +16,7 @@
  * @type {Object<NotificationBannerDefinitionKey, NotificationBannerDefinition>}
  */
 export const notificationBannerDefinitions = {
-	siteVisiScheduled: {
+	siteVisitScheduled: {
 		pages: ['appealDetails'],
 		type: 'success',
 		text: 'Site visit scheduled'
