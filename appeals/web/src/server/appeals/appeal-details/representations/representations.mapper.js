@@ -225,10 +225,6 @@ export function finalCommentsSharePage(appeal) {
 			},
 			{
 				type: 'warning-text',
-				wrapperHtml: {
-					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
-					closing: '</div></div>'
-				},
 				parameters: {
 					text: warningText
 				}
