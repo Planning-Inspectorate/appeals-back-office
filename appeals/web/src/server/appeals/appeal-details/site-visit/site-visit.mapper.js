@@ -527,7 +527,7 @@ export function getSiteVisitSuccessBannerTypeAndChangeType(
 	/**
 	 * @type {BannerTypeAndChangeType}
 	 */
-	const BannerTypeAndChangeType = {
+	const bannerTypeAndChangeType = {
 		bannerType: 'siteVisitChangedDefault',
 		changeType: 'unchanged'
 	};
@@ -548,18 +548,18 @@ export function getSiteVisitSuccessBannerTypeAndChangeType(
 			oldVisitEndTime !== updateOrCreateSiteVisitParameters.visitEndTime);
 
 	if (visitTypeChanged && !dateTimeChanged) {
-		BannerTypeAndChangeType.bannerType = 'siteVisitTypeChanged';
-		BannerTypeAndChangeType.changeType = 'visit-type';
+		bannerTypeAndChangeType.bannerType = 'siteVisitTypeChanged';
+		bannerTypeAndChangeType.changeType = 'visit-type';
 	} else if (!visitTypeChanged && dateTimeChanged) {
-		BannerTypeAndChangeType.bannerType = 'siteVisitRescheduled';
-		BannerTypeAndChangeType.changeType = 'date-time';
+		bannerTypeAndChangeType.bannerType = 'siteVisitRescheduled';
+		bannerTypeAndChangeType.changeType = 'date-time';
 	} else if (visitTypeChanged && dateTimeChanged) {
-		BannerTypeAndChangeType.bannerType = 'siteVisitChangedDefault';
-		BannerTypeAndChangeType.changeType = 'all';
+		bannerTypeAndChangeType.bannerType = 'siteVisitChangedDefault';
+		bannerTypeAndChangeType.changeType = 'all';
 	} else {
-		BannerTypeAndChangeType.bannerType = 'siteVisitNoChanges';
-		BannerTypeAndChangeType.changeType = 'unchanged';
+		bannerTypeAndChangeType.bannerType = 'siteVisitNoChanges';
+		bannerTypeAndChangeType.changeType = 'unchanged';
 	}
 
-	return BannerTypeAndChangeType;
+	return bannerTypeAndChangeType;
 }
