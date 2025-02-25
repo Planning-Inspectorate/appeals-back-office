@@ -29,51 +29,51 @@ export const linkAppeal = async (req, res) => {
 	const currentAppeal = req.appeal;
 	const linkedAppeal = await appealRepository.getAppealById(Number(linkedAppealId));
 
-	if (linkedAppeal) {
-		const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-		const linkedAppealType = !isCurrentAppealParent ? 'lead' : 'child';
-
-		if (
-			!canLinkAppeals(currentAppeal, currentAppealType) ||
-			!canLinkAppeals(linkedAppeal, linkedAppealType)
-		) {
-			return res.status(400).send({
-				errors: {
-					body: ERROR_LINKING_APPEALS
-				}
-			});
-		}
-
-		const relationship = isCurrentAppealParent
-			? {
-					parentId: currentAppeal.id,
-					parentRef: currentAppeal.reference,
-					childId: linkedAppeal.id,
-					childRef: linkedAppeal.reference,
-					type: CASE_RELATIONSHIP_LINKED,
-					externalSource: false
-			  }
-			: {
-					parentId: linkedAppeal.id,
-					parentRef: linkedAppeal.reference,
-					childId: currentAppeal.id,
-					childRef: currentAppeal.reference,
-					type: CASE_RELATIONSHIP_LINKED,
-					externalSource: false
-			  };
-
-		const result = await appealRepository.linkAppeal(relationship);
-		await createAuditTrail({
-			appealId: currentAppeal.id,
-			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_APPEAL_LINK_ADDED
-		});
-
-		await broadcasters.broadcastAppeal(currentAppeal.id);
-		return res.send(result);
+	if (!linkedAppeal) {
+		return res.status(404).end();
 	}
 
-	return res.status(404).send({});
+	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
+	const linkedAppealType = !isCurrentAppealParent ? 'lead' : 'child';
+
+	if (
+		!canLinkAppeals(currentAppeal, currentAppealType) ||
+		!canLinkAppeals(linkedAppeal, linkedAppealType)
+	) {
+		return res.status(400).send({
+			errors: {
+				body: ERROR_LINKING_APPEALS
+			}
+		});
+	}
+
+	const relationship = isCurrentAppealParent
+		? {
+				parentId: currentAppeal.id,
+				parentRef: currentAppeal.reference,
+				childId: linkedAppeal.id,
+				childRef: linkedAppeal.reference,
+				type: CASE_RELATIONSHIP_LINKED,
+				externalSource: false
+		  }
+		: {
+				parentId: linkedAppeal.id,
+				parentRef: linkedAppeal.reference,
+				childId: currentAppeal.id,
+				childRef: currentAppeal.reference,
+				type: CASE_RELATIONSHIP_LINKED,
+				externalSource: false
+		  };
+
+	const result = await appealRepository.linkAppeal(relationship);
+	await createAuditTrail({
+		appealId: currentAppeal.id,
+		azureAdUserId: req.get('azureAdUserId'),
+		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
+	});
+
+	await broadcasters.broadcastAppeal(currentAppeal.id);
+	return res.status(201).send(result);
 };
 
 /**

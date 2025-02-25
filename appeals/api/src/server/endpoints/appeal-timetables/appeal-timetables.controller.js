@@ -34,7 +34,7 @@ const startAppeal = async (req, res) => {
 		);
 
 		if (result.success) {
-			return res.send(result.timetable);
+			return res.status(201).send(result.timetable);
 		} else {
 			logger.error(`Could not create timetable for case ${appeal.reference}`);
 			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });

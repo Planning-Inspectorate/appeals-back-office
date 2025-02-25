@@ -23,7 +23,7 @@ router.post(
 			schema: { $ref: '#/components/schemas/InvalidDecisionInfo' },
 			required: true
 		}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Gets the Invalid decision info or null',
 			schema: { $ref: '#/components/schemas/InvalidDecisionInfo' }
 		}

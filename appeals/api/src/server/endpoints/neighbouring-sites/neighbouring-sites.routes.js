@@ -32,7 +32,7 @@ router.post(
 			required: true
 		}
 		#swagger.responses[400] = {}
-		#swagger.responses[200] = {
+		#swagger.responses[201] = {
 			description: 'Returns the siteId',
 			schema: { $ref: '#/components/schemas/NeighbouringSiteCreateResponse' }
 		}

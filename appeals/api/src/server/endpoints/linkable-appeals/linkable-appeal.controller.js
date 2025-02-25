@@ -14,10 +14,6 @@ export const getLinkableAppealById = async (req, res) => {
 		const response = await getLinkableAppealSummaryByCaseReference(appealReference);
 		return res.send(response);
 	} catch (error) {
-		if (error === 404) {
-			return res.status(404).send();
-		} else {
-			return res.status(500).send();
-		}
+		return res.status(error === 404 ? 404 : 500).end();
 	}
 };

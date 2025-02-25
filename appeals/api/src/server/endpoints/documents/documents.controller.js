@@ -117,7 +117,7 @@ const addDocuments = async (req, res) => {
 			service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
 		}
 
-		return res.send();
+		return res.status(204).send();
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
 			return res.status(409).send({
@@ -162,7 +162,7 @@ const addDocumentVersion = async (req, res) => {
 			);
 		}
 
-		return res.send(getStorageInfo(documentInfo.documents));
+		return res.status(201).send(getStorageInfo(documentInfo.documents));
 	}
 
 	return res.sendStatus(404);

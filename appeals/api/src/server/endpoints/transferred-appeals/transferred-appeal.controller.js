@@ -12,12 +12,12 @@ export const getTransferredAppealStatusByCaseReference = async (req, res) => {
 	const { appealReference } = req.params;
 	try {
 		const response = await service.getTransferredAppealStatusByCaseReference(appealReference);
-		return res.status(200).send(response);
+		return res.send(response);
 	} catch (error) {
 		if (error === 404) {
-			return res.status(200).send({ caseFound: false });
+			return res.send({ caseFound: false });
 		} else {
-			return res.status(500).send();
+			return res.status(500).end();
 		}
 	}
 };
