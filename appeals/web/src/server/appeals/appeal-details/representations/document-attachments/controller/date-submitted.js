@@ -35,6 +35,9 @@ export const postDateSubmittedFactory =
 	({ errorHandler }) =>
 	async (request, response, next) => {
 		try {
+			if (request.errors) {
+				return errorHandler(request, response, next);
+			}
 			const baseUrl = request.baseUrl;
 			const redirectUrl = `${baseUrl}/check-your-answers`;
 
