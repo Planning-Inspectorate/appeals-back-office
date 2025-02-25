@@ -531,4 +531,57 @@ describe('final-comments', () => {
 			);
 		});
 	});
+
+	describe('should render the delete document page with the expected content', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+
+			nock('http://test/')
+				.get('/appeals/2/documents/1/versions')
+				.reply(200, documentFileVersionsInfoChecked);
+
+			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders/1')
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a document upload page with a file upload component', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/final-comments/lpa/manage-documents/1/1/1/delete`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Manage versions</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you sure you want to remove this version?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no">'
+			);
+		});
+	});
 });
