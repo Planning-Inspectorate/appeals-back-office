@@ -177,7 +177,7 @@ describe('appeal neighbouring sites routes', () => {
 				.send(validAddress)
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 			expect(databaseConnector.neighbouringSite.create).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.neighbouringSite.create).toHaveBeenCalledWith({
 				data: {

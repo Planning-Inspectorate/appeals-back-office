@@ -226,7 +226,7 @@ describe('/appeals/:appealId/documents', () => {
 
 			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(2);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(204);
 		});
 	});
 

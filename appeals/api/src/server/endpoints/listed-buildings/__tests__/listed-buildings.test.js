@@ -26,7 +26,7 @@ describe('appeal affected listed buildings routes', () => {
 				.post(`/appeals/${householdAppeal.id}/listed-buildings`)
 				.send(validListedBuilding)
 				.set('azureAdUserId', azureAdUserId);
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 			expect(databaseConnector.listedBuildingSelected.create).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.listedBuildingSelected.create).toHaveBeenCalledWith({
 				data: {

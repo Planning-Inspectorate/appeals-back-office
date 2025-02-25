@@ -70,7 +70,7 @@ describe('site visit routes', () => {
 					}
 				});
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({
 					visitType: siteVisit.siteVisitType.name
 				});
@@ -122,7 +122,7 @@ describe('site visit routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
 					visitEndTime: siteVisit.visitEndTime,
@@ -178,7 +178,7 @@ describe('site visit routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
 					visitEndTime: siteVisit.visitEndTime,
@@ -229,7 +229,7 @@ describe('site visit routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({
 					visitDate: siteVisit.visitDate,
 					visitEndTime: siteVisit.visitEndTime,
@@ -283,7 +283,7 @@ describe('site visit routes', () => {
 					visitDate: siteVisit.visitDate,
 					visitType: siteVisit.siteVisitType.name
 				});
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 			});
 
 			test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
@@ -334,7 +334,7 @@ describe('site visit routes', () => {
 					}
 				);
 
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 			});
 
 			test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
@@ -401,7 +401,7 @@ describe('site visit routes', () => {
 					}
 				);
 
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 			});
 
 			test('creates an Access Required site visit and sends notify email to appellant/agent', async () => {
@@ -453,7 +453,7 @@ describe('site visit routes', () => {
 					}
 				);
 
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 			});
 
 			test('returns an error if appealId is not numeric', async () => {

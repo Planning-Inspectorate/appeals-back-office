@@ -212,7 +212,7 @@ describe('appeal decision routes', () => {
 				}
 			);
 
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 		});
 	});
 });

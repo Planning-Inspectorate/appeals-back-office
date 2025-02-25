@@ -114,7 +114,7 @@ describe('appeal case notes routes', () => {
 					.send({ comment: 'My Comment' })
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
+				expect(response.status).toEqual(201);
 			});
 			it('returns 500 if the it fails to create a user', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);

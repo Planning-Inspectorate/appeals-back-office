@@ -117,7 +117,7 @@ describe('/appeals/case-submission', () => {
 			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 
 			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 			expect(response.body).toEqual(result);
 		});
 	});
@@ -291,14 +291,12 @@ describe('/appeals/representation-submission', () => {
 				.post('/appeals/representation-submission')
 				.send(validRepresentation);
 
-			expect(response.status).toEqual(200);
-
 			expect(databaseConnector.representation.create).toHaveBeenCalled();
 			expect(databaseConnector.document.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 			expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 		});
 
 		test('valid rep payload: Appellant final comments', async () => {
@@ -360,14 +358,12 @@ describe('/appeals/representation-submission', () => {
 				.post('/appeals/representation-submission')
 				.send(validRepresentation);
 
-			expect(response.status).toEqual(200);
-
 			expect(databaseConnector.representation.create).toHaveBeenCalled();
 			expect(databaseConnector.document.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 			expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 		});
 	});
 });

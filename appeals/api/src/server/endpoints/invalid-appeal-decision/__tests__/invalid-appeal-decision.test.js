@@ -145,7 +145,7 @@ describe('invalid appeal decision routes', () => {
 					reference: null
 				}
 			);
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(201);
 		});
 	});
 });
