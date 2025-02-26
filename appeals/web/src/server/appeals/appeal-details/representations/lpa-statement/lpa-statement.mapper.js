@@ -60,7 +60,8 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 										}
 								  ])
 						]
-					}
+					},
+					classes: 'govuk-summary-list__row--no-actions'
 				},
 				{
 					key: { text: 'Supporting documents' },
