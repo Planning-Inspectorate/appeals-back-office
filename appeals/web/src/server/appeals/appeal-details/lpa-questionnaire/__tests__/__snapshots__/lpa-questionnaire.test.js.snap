@@ -3285,6 +3285,18 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render a "Development category updated" success notification banner when eia environmental impact schedule is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Development category updated</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
