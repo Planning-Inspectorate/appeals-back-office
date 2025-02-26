@@ -274,10 +274,10 @@ const { value, error } = schema.validate({
 				appellant: {
 					id:
 						environment.GOV_NOTIFY_APPELLANT_FINAL_COMMENTS_DONE ||
-						'mock-appellant-finalc-comments-done-id'
+						'mock-appellant-final-comments-done-id'
 				},
 				lpa: {
-					id: environment.GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE || 'mock-lpa-finalc-comments-done-id'
+					id: environment.GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE || 'mock-lpa-final-comments-done-id'
 				}
 			},
 			receivedStatementsAndIpComments: {
