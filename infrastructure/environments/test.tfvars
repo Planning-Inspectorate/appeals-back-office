@@ -23,7 +23,7 @@ apps_config = {
     horizon_web_url               = "https://horizontest.planninginspectorate.gov.uk/otcs/llisapi.dll?func=ll&objId="
     horizon_timeout               = 5000
     service_bus_broadcast_enabled = true
-    enableTestEndpoints           = true
+    enable_test_endpoints         = true
     notify_template_ids = {
       appeal_confirmed_id                                             = "783f94cc-1d6d-4153-8ad7-9070e449a57c"
       appeal_incomplete_id                                            = "f9cbd646-be00-45e2-96fc-f47e585e5b5e"
