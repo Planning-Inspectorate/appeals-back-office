@@ -67,8 +67,8 @@ apps_config = {
       comment_rejected_lpa_id                                         = "d14c65ec-691d-4f5a-9b68-91fe0251b68d"
       comment_rejected_deadline_extended_id                           = "2dcee08f-d382-4b9f-ac45-95979d25cb5c"
       lpa_statement_incomplete_id                                     = "a452a5c5-f5e2-4fce-b3de-09f083a6f53e"
-      appellant_final_comments_done_id                                = "26ae9f84-474b-4303-94b9-581af40d2c39"
-      lpa_final_comments_done_id                                      = "dde6eea2-2278-474b-b288-3f45d61d6c5d"
+      appellant_final_comments_done_id                                = ""
+      lpa_final_comments_done_id                                      = ""
       received_statement_and_ip_comments_appellant_id                 = "26ae9f84-474b-4303-94b9-581af40d2c39"
       received_statement_and_ip_comments_lpa_id                       = "dde6eea2-2278-474b-b288-3f45d61d6c5d"
     }
