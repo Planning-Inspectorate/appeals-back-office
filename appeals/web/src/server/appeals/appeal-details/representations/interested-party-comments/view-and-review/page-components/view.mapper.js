@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -22,9 +23,21 @@ export function viewInterestedPartyCommentPage(appealDetails, comment, session) 
 		appealDetails.appealId
 	);
 
+	let backLinkHash = '';
+	switch (comment.status) {
+		case APPEAL_REPRESENTATION_STATUS.INVALID:
+			backLinkHash = `#${APPEAL_REPRESENTATION_STATUS.INVALID}`;
+			break;
+		case `${APPEAL_REPRESENTATION_STATUS.VALID}`:
+			backLinkHash = `#${APPEAL_REPRESENTATION_STATUS.VALID}`;
+			break;
+		default:
+			break;
+	}
+
 	const pageContent = {
 		title: 'View comment',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments${backLinkHash}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'View comment',
 		pageComponents: [...notificationBanners, commentSummaryList, withdrawLink]
