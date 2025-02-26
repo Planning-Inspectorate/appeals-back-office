@@ -33,8 +33,8 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
@@ -43,17 +43,17 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/manage"
-                                        lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/add"
-                                        lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                            lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/affected-listed-buildings/add"
+                                            lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -400,8 +400,8 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                                 data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
@@ -410,17 +410,17 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
-                                        lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
-                                        lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                            lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
+                                            lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -789,8 +789,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
@@ -799,17 +799,17 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
-                                        lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
-                                        lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                            lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
+                                            lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -1138,8 +1138,8 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
@@ -1148,17 +1148,17 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
-                                        lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
-                                        lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                            lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
+                                            lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -3285,18 +3285,6 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`LPA Questionnaire review Notification banners should render a "Development category updated" success notification banner when eia environmental impact schedule is changed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Development category updated</p>
-    </div>
-</div>"
-`;
-
 exports[`LPA Questionnaire review Notification banners should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -3558,8 +3546,8 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                 data-cy="change-is-correct-appeal-type"> Change<span class="govuk-visually-hidden"> Correct appeal type</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Listed buildings</dt>
-                            <dd class="govuk-summary-list__value">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
+                            <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
@@ -3568,17 +3556,17 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
-                            </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
-                                        lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
-                                        lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
-                                    </li>
-                                </ul>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/manage"
+                                            lpaQuestionnaireData-cy="manage-affected-listed-building"> Manage<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/affected-listed-buildings/add"
+                                            lpaQuestionnaireData-cy="add-affected-listed-building"> Add<span class="govuk-visually-hidden"> Affected listed building</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
