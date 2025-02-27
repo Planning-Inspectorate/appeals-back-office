@@ -5,7 +5,6 @@ import {
 	isValidRepType,
 	isValidSource
 } from '#utils/mapping/map-enums.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE,
 	APPEAL_REPRESENTATION_STATUS as INTERNAL_REPRESENTATION_STATUS,
@@ -32,11 +31,7 @@ export const mapRepresentationEntity = (data) => {
 			representationType: mapRepresentationType(data.representationType),
 			...mapAppealInfo(data.appeal),
 			representationStatus: mapRepresentationStatus(data.status),
-			redacted: data.redactedRepresentation
-				? typeof data.redactedRepresentation === 'boolean'
-					? data.redactedRepresentation
-					: data.redactedRepresentation.trim() !== ''
-				: false,
+			redacted: data.redactedRepresentation !== null,
 			redactedRepresentation: data.redactedRepresentation,
 			originalRepresentation: data.originalRepresentation,
 			source: mapSource(data),
@@ -93,8 +88,8 @@ const mapRepresentationStatus = (status) => {
  * @returns {'lpa' | 'citizen' | null}
  */
 const mapSource = (data) => {
-	if (data.source === ODW_SYSTEM_ID) {
-		return data.lpaCode ? 'lpa' : 'citizen';
+	if (data.lpa) {
+		return 'lpa';
 	}
 
 	if (isValidSource(data.source)) {

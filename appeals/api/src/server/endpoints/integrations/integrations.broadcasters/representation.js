@@ -24,6 +24,7 @@ export const broadcastRepresentation = async (representationId, updateType) => {
 		where: { id: representationId },
 		include: {
 			appeal: true,
+			lpa: true,
 			representationRejectionReasonsSelected: {
 				include: {
 					representationRejectionReason: true,
