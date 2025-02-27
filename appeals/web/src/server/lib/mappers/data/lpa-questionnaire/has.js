@@ -1,28 +1,28 @@
-import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
-import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
-import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
-import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
-import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
-import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
-import { mapExtraConditions } from './submappers/map-extra-conditions.js';
-import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
-import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
-import { mapLpaHealthAndSafety } from './submappers/map-lpa-health-and-safety.js';
-import { mapNotificationMethods } from './submappers/map-notification-methods.js';
-import { mapNotifyingParties } from './submappers/map-notify-parties.js';
-import { mapOfficersReport } from './submappers/map-officers-report.js';
-import { mapOtherAppeals } from './submappers/map-other-appeals.js';
-import { mapPlansDrawings } from './submappers/map-plans-drawings.js';
-import { mapPressAdvert } from './submappers/map-press-advert.js';
-import { mapRepresentations } from './submappers/map-representations.js';
-import { mapReviewOutcome } from './submappers/map-review-outcome.js';
-import { mapSiteAccess } from './submappers/map-site-access.js';
-import { mapSiteNotice } from './submappers/map-site-notice.js';
-import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
-import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
-import { mapAppealNotification } from './submappers/map-appeal-notification.js';
+import { mapAdditionalDocumentsContents } from './row-mappers/map-additional-documents-contents.js';
+import { mapAdditionalDocuments } from './row-mappers/map-additional-documents.js';
+import { mapAffectsListedBuildingDetails } from './row-mappers/map-affects-listed-building-details.js';
+import { mapConservationAreaMap } from './row-mappers/map-conservation-area-map.js';
+import { mapDevelopmentPlanPolicies } from './row-mappers/map-development-plan-policies.js';
+import { mapEmergingPlan } from './row-mappers/map-emerging-plan.js';
+import { mapExtraConditions } from './row-mappers/map-extra-conditions.js';
+import { mapIsCorrectAppealType } from './row-mappers/map-is-correct-appeal-type.js';
+import { mapLettersToNeighbours } from './row-mappers/map-letters-to-neighbours.js';
+import { mapLpaHealthAndSafety } from './row-mappers/map-lpa-health-and-safety.js';
+import { mapNotificationMethods } from './row-mappers/map-notification-methods.js';
+import { mapNotifyingParties } from './row-mappers/map-notify-parties.js';
+import { mapOfficersReport } from './row-mappers/map-officers-report.js';
+import { mapOtherAppeals } from './row-mappers/map-other-appeals.js';
+import { mapPlansDrawings } from './row-mappers/map-plans-drawings.js';
+import { mapPressAdvert } from './row-mappers/map-press-advert.js';
+import { mapRepresentations } from './row-mappers/map-representations.js';
+import { mapReviewOutcome } from './row-mappers/map-review-outcome.js';
+import { mapSiteAccess } from './row-mappers/map-site-access.js';
+import { mapSiteNotice } from './row-mappers/map-site-notice.js';
+import { mapSiteWithinGreenBelt } from './row-mappers/map-site-within-green-belt.js';
+import { mapSupplementaryPlanning } from './row-mappers/map-supplementary-planning.js';
+import { mapAppealNotification } from './row-mappers/map-appeal-notification.js';
 
-export const submaps = {
+export const hasRowMaps = {
 	affectsListedBuildingDetails: mapAffectsListedBuildingDetails,
 	isCorrectAppealType: mapIsCorrectAppealType,
 	conservationAreaMap: mapConservationAreaMap,
