@@ -7,7 +7,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add')
-	.get(asyncHandler(controllers.getAddChangedListedBuilding))
+	.get(asyncHandler(controllers.renderAddChangedListedBuilding))
 	.post(
 		validators.validateChangedListedBuilding,
 		asyncHandler(controllers.postAddChangedListedBuilding)
@@ -15,7 +15,7 @@ router
 
 router
 	.route('/add/check-and-confirm')
-	.get(asyncHandler(controllers.getAddChangedListedBuildingCheckAndConfirm))
+	.get(asyncHandler(controllers.renderAddChangedListedBuildingCheckAndConfirm))
 	.post(asyncHandler(controllers.postAddChangedListedBuildingCheckAndConfirm));
 
 router.route('/manage').get(asyncHandler(controllers.getManageChangedListedBuildings));

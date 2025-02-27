@@ -1,4 +1,3 @@
-import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import {
@@ -19,15 +18,7 @@ import {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getAddChangedListedBuilding = async (request, response) => {
-	return renderAddChangedListedBuilding(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderAddChangedListedBuilding = async (request, response) => {
+export const renderAddChangedListedBuilding = async (request, response) => {
 	const { errors, currentAppeal } = request;
 
 	const mappedPageContents = addChangedListedBuildingPage(
@@ -46,39 +37,25 @@ const renderAddChangedListedBuilding = async (request, response) => {
  */
 export const postAddChangedListedBuilding = async (request, response) => {
 	request.session.affectedListedBuilding = request.body['changedListedBuilding'];
-	try {
-		if (request.errors) {
-			return renderAddChangedListedBuilding(request, response);
-		}
 
-		const {
-			params: { appealId, lpaQuestionnaireId }
-		} = request;
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/changed-listed-buildings/add/check-and-confirm`
-		);
-	} catch (error) {
-		logger.error(error);
+	if (request.errors) {
+		return renderAddChangedListedBuilding(request, response);
 	}
 
-	delete request.session.affectedListedBuilding;
-	return response.status(500).render('app/500.njk');
+	const {
+		params: { appealId, lpaQuestionnaireId }
+	} = request;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/changed-listed-buildings/add/check-and-confirm`
+	);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getAddChangedListedBuildingCheckAndConfirm = async (request, response) => {
-	return renderAddChangedListedBuildingCheckAndConfirm(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderAddChangedListedBuildingCheckAndConfirm = async (request, response) => {
+export const renderAddChangedListedBuildingCheckAndConfirm = async (request, response) => {
 	const { session, currentAppeal, errors } = request;
 
 	if (!session.affectedListedBuilding) {
@@ -115,32 +92,25 @@ export const postAddChangedListedBuildingCheckAndConfirm = async (request, respo
 		return renderAddChangedListedBuildingCheckAndConfirm(request, response);
 	}
 
-	try {
-		await addChangedListedBuilding(
-			apiClient,
-			appealId,
-			lpaQuestionnaireId,
-			request.session.affectedListedBuilding
-		);
+	await addChangedListedBuilding(
+		apiClient,
+		appealId,
+		lpaQuestionnaireId,
+		request.session.affectedListedBuilding
+	);
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'changePage',
-			appealId,
-			text: 'Changed listed building added'
-		});
-
-		delete request.session.affectedListedBuilding;
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
-		);
-	} catch (error) {
-		logger.error(error);
-	}
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'changePage',
+		appealId,
+		text: 'Changed listed building added'
+	});
 
 	delete request.session.affectedListedBuilding;
-	return response.status(500).render('app/500.njk');
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+	);
 };
 
 /**
@@ -211,8 +181,6 @@ export const postRemoveChangedListedBuilding = async (request, response) => {
 		params: { appealId, lpaQuestionnaireId, listedBuildingId },
 		apiClient
 	} = request;
-
-	console.log('here');
 
 	if (errors) {
 		return renderRemoveChangedListedBuilding(request, response);
@@ -343,29 +311,23 @@ export const postChangeChangedListedBuildingCheckAndConfirm = async (request, re
 		return renderChangeChangedListedBuildingCheckAndConfirm(request, response);
 	}
 
-	try {
-		await changeChangedListedBuilding(
-			request.apiClient,
-			appealId,
-			listedBuildingId,
-			request.session.affectedListedBuilding
-		);
+	await changeChangedListedBuilding(
+		request.apiClient,
+		appealId,
+		listedBuildingId,
+		request.session.affectedListedBuilding
+	);
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'changePage',
-			appealId,
-			text: 'Changed listed building updated'
-		});
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'changePage',
+		appealId,
+		text: 'Changed listed building updated'
+	});
 
-		delete request.session.affectedListedBuilding;
+	delete request.session.affectedListedBuilding;
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
-		);
-	} catch (error) {
-		logger.error(error);
-	}
-
-	return response.status(500).render('app/500.njk');
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+	);
 };

@@ -182,8 +182,6 @@ export function removeChangedListedBuildingPage(
 		(building) => building.id.toString() === listedBuildingId
 	)?.listEntry;
 
-	console.log(lpaQuestionnaireData.listedBuildingDetails);
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Remove changed listed building',
