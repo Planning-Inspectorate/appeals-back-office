@@ -39,17 +39,20 @@ export const mapRepresentationIn = (submission) => {
 		...(serviceUserId && {
 			represented: {
 				connect: { id: serviceUserId }
-			}
+			},
+			source: 'citizen'
 		}),
 		...(newUser && {
 			represented: {
 				create: serviceUser
-			}
+			},
+			source: 'citizen'
 		}),
 		...(data.lpaCode && {
 			lpa: {
 				connect: { lpaCode: data.lpaCode }
-			}
+			},
+			source: 'lpa'
 		}),
 		dateCreated: data.representationSubmittedDate ?? new Date(),
 		dateLastUpdated: new Date()
