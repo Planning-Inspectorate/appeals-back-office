@@ -26,7 +26,7 @@ import { mapEiaSensitiveAreaDetails } from './row-mappers/map-eia-sensitive-area
 import { mapEiaConsultedBodiesDetails } from './row-mappers/map-eia-consulted-bodies-details.js';
 import { mapReasonForNeighbourVisits } from './row-mappers/map-reason-for-neighbour-visits.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './row-mappers/map-designated-sites.js';
-import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
+import { mapChangedListedBuildingDetails } from './row-mappers/map-changed-listed-building-details.js';
 
 export const s78RowMaps = {
 	...hasRowMaps,
