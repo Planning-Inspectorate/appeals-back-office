@@ -397,14 +397,7 @@ interface UpdateLPAQuestionnaireRequest {
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
-	appeal: {
-		id: number;
-		appealStatus: AppealStatus[];
-		appealType?: AppealType | null;
-		lpa?: LPA | null;
-		reference: string;
-		applicationReference?: string | null;
-	};
+	appeal: Appeal;
 	azureAdUserId: string;
 	data: {
 		lpaQuestionnaireDueDate: Date;
