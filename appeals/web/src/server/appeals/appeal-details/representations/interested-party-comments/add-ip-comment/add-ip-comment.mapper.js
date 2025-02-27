@@ -8,11 +8,14 @@ import {
 import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { dateInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
+/** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
+/** @typedef {RequestDate} ReqBody */
 
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 
@@ -210,4 +213,27 @@ export const mapFileUploadInfoToMappedDocuments = (
 				blobStoragePath: file.blobStoreUrl
 			})
 	)
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {ReqBody} date
+ * @param {string} backLinkUrl
+ * @returns {PageContent}
+ * */
+export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
+	title: 'When did the interested party submit the comment?',
+	backLinkUrl,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	pageComponents: [
+		dateInput({
+			id: 'date',
+			name: 'date',
+			value: date,
+			legendText: 'When did the interested party submit the comment?',
+			legendIsPageHeading: true,
+			hint: 'For example, 27 3 2024'
+		})
+	]
 });

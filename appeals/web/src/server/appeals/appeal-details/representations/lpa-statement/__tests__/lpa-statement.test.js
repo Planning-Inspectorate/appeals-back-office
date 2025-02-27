@@ -311,7 +311,7 @@ describe('lpa-statements', () => {
 				expect(response.statusCode).toBe(200);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 				expect(unprettifiedElement.innerHTML).toContain(
-					'When did the interested party submit the comment?</h1'
+					'When was the supporting document submitted?</h1'
 				);
 			});
 		});
