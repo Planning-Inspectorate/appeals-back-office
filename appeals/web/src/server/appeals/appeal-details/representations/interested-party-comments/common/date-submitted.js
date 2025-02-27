@@ -1,33 +1,9 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateInput } from '#lib/mappers/index.js';
+import { dateSubmitted } from '../../document-attachments/add-document.mapper.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
-
-/**
- * @param {Appeal} appealDetails
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {ReqBody} date
- * @param {string} backLinkUrl
- * @returns {PageContent}
- * */
-export const mapper = (appealDetails, errors, date, backLinkUrl) => ({
-	title: 'When did the interested party submit the comment?',
-	backLinkUrl,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	pageComponents: [
-		dateInput({
-			id: 'date',
-			name: 'date',
-			value: date,
-			legendText: 'When did the interested party submit the comment?',
-			legendIsPageHeading: true,
-			hint: 'For example, 27 3 2024'
-		})
-	]
-});
 
 /**
  * @param {object} options
@@ -41,7 +17,7 @@ export const renderDateSubmittedFactory =
 		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
 		const value = getValue(request);
 
-		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
+		const pageContent = dateSubmitted(request.currentAppeal, request.errors, value, backLinkUrl);
 
 		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			errors: request.errors,
