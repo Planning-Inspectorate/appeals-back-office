@@ -73,7 +73,7 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain('Review decisions</dt>');
 				expect(unprettifiedHTML).toContain('Accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}"> Change</a>`
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/manage-documents`
 				);
 				expect(unprettifiedHTML).toContain(
 					`Accept ${finalCommentsType.label} final comments</button>`

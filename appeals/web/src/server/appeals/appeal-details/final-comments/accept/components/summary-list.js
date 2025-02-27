@@ -32,7 +32,15 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => ({
 			},
 			{
 				key: { text: 'Supporting documents' },
-				value: { text: '' }
+				value: { text: '' },
+				actions: {
+					items: [
+						{
+							text: 'Change',
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/`
+						}
+					]
+				}
 			},
 			{
 				key: { text: 'Review decisions' },
@@ -41,7 +49,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => ({
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}`
 						}
 					]
 				}
