@@ -21,6 +21,7 @@ import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -83,7 +84,7 @@ const updateAppellantCaseValidationOutcome = async (
 			await broadcasters.broadcastDocument(
 				documentUpdated.documentGuid,
 				documentUpdated.version,
-				'update'
+				EventType.Update
 			);
 		}
 
