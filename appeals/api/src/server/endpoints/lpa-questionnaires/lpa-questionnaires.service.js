@@ -20,6 +20,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import logger from '#utils/logger.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -104,7 +105,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			await broadcasters.broadcastDocument(
 				documentUpdated.documentGuid,
 				documentUpdated.version,
-				'update'
+				EventType.Update
 			);
 		}
 
