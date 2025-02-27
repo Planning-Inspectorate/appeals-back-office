@@ -15,12 +15,14 @@ exports[`final-comments GET / should render the accept appellant final comments 
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/"> Change</a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/manage-documents/undefined"> Change</a>
                     </dd>
                 </div>
             </dl>
@@ -51,12 +53,14 @@ exports[`final-comments GET / should render the accept lpa final comments page w
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/"> Change</a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/undefined"> Change</a>
                     </dd>
                 </div>
             </dl>

@@ -33,23 +33,6 @@ export const acceptFinalCommentPage = (
 					},
 					'Original final comments:'
 				),
-				{
-					type: 'inset-text',
-					parameters: {
-						id: 'original-comment',
-						classes: 'govuk-!-margin-top-2',
-						html: '',
-						pageComponents: [
-							{
-								type: 'show-more',
-								parameters: {
-									text: representation.originalRepresentation,
-									labelText: 'Read more'
-								}
-							}
-						]
-					}
-				},
 				...redactInput({ representation, labelText: 'Redacted final comments:', session }),
 				buttonComponent(
 					'Continue',
