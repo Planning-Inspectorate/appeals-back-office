@@ -1,8 +1,8 @@
 import { permissionNames } from '#environment/permissions.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '#lib/mappers/index.js';
-import { submaps as hasSubmaps } from './has.js';
-import { submaps as s78Submaps } from './s78.js';
+import { hasRowMaps } from './has.js';
+import { s78RowMaps } from './s78.js';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth & Express.Request["session"]} SessionWithAuth
@@ -10,7 +10,7 @@ import { submaps as s78Submaps } from './s78.js';
  */
 
 /**
- * @typedef {Object} SubMapperParams
+ * @typedef {Object} RowMapperParams
  * @property {SingleLPAQuestionnaireResponse} lpaQuestionnaireData
  * @property {WebAppeal} appealDetails
  * @property {string} currentRoute
@@ -19,13 +19,13 @@ import { submaps as s78Submaps } from './s78.js';
  */
 
 /**
- * @typedef {(params: SubMapperParams) => Instructions} SubMapper
+ * @typedef {(params: RowMapperParams) => Instructions} RowMapper
  */
 
-/** @type {Record<string, Record<string, SubMapper>>} */
-const submaps = {
-	[APPEAL_TYPE.D]: hasSubmaps,
-	[APPEAL_TYPE.W]: s78Submaps
+/** @type {Record<string, Record<string, RowMapper>>} */
+const rowMaps = {
+	[APPEAL_TYPE.D]: hasRowMaps,
+	[APPEAL_TYPE.W]: s78RowMaps
 };
 
 /**
@@ -54,10 +54,8 @@ export function initialiseAndMapLPAQData(
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = { lpaq: {} };
 
-	const submappers = submaps[appealDetails.appealType];
-
-	Object.entries(submappers).forEach(([key, submapper]) => {
-		mappedData.lpaq[key] = submapper({
+	Object.entries(rowMaps[appealDetails.appealType]).forEach(([key, rowMapper]) => {
+		mappedData.lpaq[key] = rowMapper({
 			lpaQuestionnaireData,
 			appealDetails,
 			currentRoute,
