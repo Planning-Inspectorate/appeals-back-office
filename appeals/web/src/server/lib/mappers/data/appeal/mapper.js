@@ -3,8 +3,8 @@ import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { submaps as s78Submaps } from './s78.js';
-import { submaps as hasSubmaps } from './has.js';
+import { s78RowMappers } from './s78.js';
+import { hasRowMappers } from './has.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -12,7 +12,7 @@ import { submaps as hasSubmaps } from './has.js';
  */
 
 /**
- * @typedef {Object} SubMapperParams
+ * @typedef {Object} RowMapperParams
  * @property {WebAppeal} appealDetails
  * @property {string} currentRoute
  * @property {SessionWithAuth} session
@@ -29,13 +29,13 @@ import { submaps as hasSubmaps } from './has.js';
  */
 
 /**
- * @typedef {(params: SubMapperParams) => Instructions} SubMapper
+ * @typedef {(params: RowMapperParams) => Instructions} RowMapper
  */
 
-/** @type {Record<string, Record<string, SubMapper>>} */
-const submaps = {
-	[APPEAL_TYPE.D]: hasSubmaps,
-	[APPEAL_TYPE.W]: s78Submaps
+/** @type {Record<string, Record<string, RowMapper>>} */
+const rowMappers = {
+	[APPEAL_TYPE.D]: hasRowMappers,
+	[APPEAL_TYPE.W]: s78RowMappers
 };
 
 /**
@@ -81,16 +81,13 @@ export async function initialiseAndMapAppealData(
 
 	const userHasUpdateCasePermission = userHasPermission(permissionNames.updateCase, session);
 
-	/** @type {Record<string, SubMapper>} */
-	const submappers = submaps[appealDetails.appealType];
-
 	/** @type {{appeal: MappedInstructions}} */
 	const mappedData = {
 		appeal: {}
 	};
 
-	Object.entries(submappers).forEach(([key, submapper]) => {
-		mappedData.appeal[key] = submapper({
+	Object.entries(rowMappers[appealDetails.appealType]).forEach(([key, rowMapper]) => {
+		mappedData.appeal[key] = rowMapper({
 			appealDetails,
 			currentRoute,
 			session,

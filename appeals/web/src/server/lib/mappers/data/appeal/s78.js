@@ -1,18 +1,18 @@
-import { submaps as hasSubmaps } from './has.js';
-import { mapFinalCommentDueDate } from './submappers/final-comment-due-date.mapper.js';
-import { mapIpCommentsDueDate } from './submappers/ip-comments-due-date.mapper.js';
-import { mapIpComments } from './submappers/ip-comments.mapper.js';
-import { mapLpaStatementDueDate } from './submappers/lpa-statement-due-date.mapper.js';
-import { mapS106ObligationDue } from './submappers/s106-obligation-due-date.mapper.js';
-import { mapAppellantStatementDueDate } from './submappers/appellant-statement-due-date.mapper.js';
-import { mapLpaStatement } from './submappers/lpa-statement.mapper.js';
-import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
-import { mapLPAFinalComments } from './submappers/lpa-final-comments.mapper.js';
-import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
+import { hasRowMappers } from './has.js';
+import { mapFinalCommentDueDate } from './row-mappers/final-comment-due-date.mapper.js';
+import { mapIpCommentsDueDate } from './row-mappers/ip-comments-due-date.mapper.js';
+import { mapIpComments } from './row-mappers/ip-comments.mapper.js';
+import { mapLpaStatementDueDate } from './row-mappers/lpa-statement-due-date.mapper.js';
+import { mapS106ObligationDue } from './row-mappers/s106-obligation-due-date.mapper.js';
+import { mapAppellantStatementDueDate } from './row-mappers/appellant-statement-due-date.mapper.js';
+import { mapLpaStatement } from './row-mappers/lpa-statement.mapper.js';
+import { mapAppellantFinalComments } from './row-mappers/appellant-final-comments.mapper.js';
+import { mapLPAFinalComments } from './row-mappers/lpa-final-comments.mapper.js';
+import { mapEnvironmentalAssessment } from './row-mappers/environmental-assessment.mapper.js';
 
-/** @type {Record<string, import('./mapper.js').SubMapper>} */
-export const submaps = {
-	...hasSubmaps,
+/** @type {Record<string, import('./mapper.js').RowMapper>} */
+export const s78RowMappers = {
+	...hasRowMappers,
 	appellantStatementDueDate: mapAppellantStatementDueDate,
 	lpaStatementDueDate: mapLpaStatementDueDate,
 	ipCommentsDueDate: mapIpCommentsDueDate,

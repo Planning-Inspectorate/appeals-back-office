@@ -1,11 +1,11 @@
 import { permissionNames } from '#environment/permissions.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { userHasPermission } from '../../utils/permissions.mapper.js';
-import { submaps as hasSubmaps } from './has.js';
-import { submaps as s78Submaps } from './s78.js';
+import { userHasPermission } from '#lib/mappers/index.js';
+import { hasRowMaps } from './has.js';
+import { s78RowMaps } from './s78.js';
 
 /**
- * @typedef SubMapperParams
+ * @typedef RowMapperParams
  * @property {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @property {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @property {string} currentRoute
@@ -13,13 +13,13 @@ import { submaps as s78Submaps } from './s78.js';
  */
 
 /**
- * @typedef {(params: SubMapperParams) => Instructions} SubMapper
+ * @typedef {(params: RowMapperParams) => Instructions} RowMapper
  */
 
-/** @type {Record<string, Record<string, SubMapper>>} */
-const submaps = {
-	[APPEAL_TYPE.D]: hasSubmaps,
-	[APPEAL_TYPE.W]: s78Submaps
+/** @type {Record<string, Record<string, RowMapper>>} */
+const rowMaps = {
+	[APPEAL_TYPE.D]: hasRowMaps,
+	[APPEAL_TYPE.W]: s78RowMaps
 };
 
 /**
@@ -46,20 +46,20 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 
-	const submapperParams = {
+	const rowMapperParams = {
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
 		userHasUpdateCase
 	};
-	/** @type {Record<string, SubMapper>} */
-	const submappers = submaps[appealDetails.appealType];
+	/** @type {Record<string, RowMapper>} */
+	const rowMappers = rowMaps[appealDetails.appealType];
 
 	/** @type {MappedInstructions} */
 	const mappedData = {};
 
-	Object.entries(submappers).forEach(([key, submapper]) => {
-		mappedData[key] = submapper(submapperParams);
+	Object.entries(rowMappers).forEach(([key, rowMapper]) => {
+		mappedData[key] = rowMapper(rowMapperParams);
 	});
 
 	return mappedData;
