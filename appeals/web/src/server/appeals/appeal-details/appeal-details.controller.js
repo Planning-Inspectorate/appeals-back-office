@@ -24,7 +24,7 @@ export const viewAppealDetails = async (request, response) => {
 
 	delete session.reviewOutcome;
 
-	/** @type {import('./accordions/index.js').RepresentationTypesAwaitingReview} */
+	/** @type {import('#appeals/appeals.types.js').RepresentationTypesAwaitingReview} */
 	const representationTypesAwaitingReview = await (async () => {
 		if (currentAppeal.appealType !== APPEAL_TYPE.W) {
 			return {

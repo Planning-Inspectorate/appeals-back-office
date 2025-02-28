@@ -4,12 +4,12 @@ import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js'
 import {
 	generateIssueDecisionUrl,
 	generateStartTimetableUrl
-} from '../../issue-decision/issue-decision.mapper.js';
+} from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { createNotificationBanner } from '#lib/mappers/index.js';
 
 /**
- * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('../index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('#appeals/appeals.types.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {PageComponent[]}
  */
 export function mapStatusDependentNotifications(appealDetails, representationTypesAwaitingReview) {
@@ -150,8 +150,8 @@ function mapStatusDependentNotificationsForAwaitingTransfer(appealId) {
 }
 
 /**
- * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('../index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('#appeals/appeals.types.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {PageComponent[]}
  */
 function mapStatusDependentNotificationsForStatements(
@@ -185,7 +185,6 @@ function mapStatusDependentNotificationsForStatements(
 
 	const bannerDefinitionKeys = [];
 
-	// Build list of required banners
 	if (lpaStatementIncomplete) {
 		bannerDefinitionKeys.push('updateLpaStatement');
 	}
@@ -212,48 +211,49 @@ function mapStatusDependentNotificationsForStatements(
 		}
 	}
 
-	// Return required banners
-	// @ts-ignore
-	return bannerDefinitionKeys.map((bannerDefinitionKey) => {
-		switch (bannerDefinitionKey) {
-			case 'updateLpaStatement':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<p class="govuk-notification-banner__heading">LPA statement incomplete</p> <a href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
-				});
-			case 'shareCommentsAndLpaStatement':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
-				});
-			case 'progressToFinalComments':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
-				});
-			case 'interestedPartyCommentsAwaitingReview':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
-				});
-			case 'lpaStatementAwaitingReview':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<p class="govuk-notification-banner__heading">LPA statement awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>`
-				});
-		}
-	});
+	return bannerDefinitionKeys
+		.map((bannerDefinitionKey) => {
+			switch (bannerDefinitionKey) {
+				case 'updateLpaStatement':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<p class="govuk-notification-banner__heading">LPA statement incomplete</p> <a href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
+					});
+				case 'shareCommentsAndLpaStatement':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+					});
+				case 'progressToFinalComments':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
+					});
+				case 'interestedPartyCommentsAwaitingReview':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>`
+					});
+				case 'lpaStatementAwaitingReview':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<p class="govuk-notification-banner__heading">LPA statement awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>`
+					});
+			}
+		})
+		.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined);
 }
 
 /**
- * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
- * @param {import('../index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('#appeals/appeals.types.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @returns {PageComponent[]}
  */
 function mapStatusDependentNotificationsForFinalComments(
 	appealDetails,
 	representationTypesAwaitingReview
 ) {
+	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
 	const bannerDefinitionKeys = [];
 	const finalCommentsDueDate = appealDetails.appealTimetable?.finalCommentsDueDate;
 	const isFinalCommentsDueDatePassed =
@@ -270,7 +270,6 @@ function mapStatusDependentNotificationsForFinalComments(
 		documentationSummary.lpaFinalComments?.representationStatus ===
 		APPEAL_REPRESENTATION_STATUS.VALID;
 
-	// Build list of required banners
 	if (
 		representationTypesAwaitingReview?.appellantFinalComments ||
 		representationTypesAwaitingReview?.lpaFinalComments
@@ -286,35 +285,35 @@ function mapStatusDependentNotificationsForFinalComments(
 			if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
 				bannerDefinitionKeys.push('shareFinalComments');
 			} else {
-				bannerDefinitionKeys.push('progressCase');
+				bannerDefinitionKeys.push('progressFromFinalComments');
 			}
 		}
 	}
 
-	// Return required banners
-	// @ts-ignore
-	return bannerDefinitionKeys.map((bannerDefinitionKey) => {
-		switch (bannerDefinitionKey) {
-			case 'shareFinalComments':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`
-				});
-			case 'progressCase':
-				return createNotificationBanner({
-					bannerDefinitionKey: 'shareFinalComments',
-					html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`
-				});
-			case 'appellantFinalCommentsAwaitingReview':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
-				});
-			case 'lpaFinalCommentsAwaitingReview':
-				return createNotificationBanner({
-					bannerDefinitionKey,
-					html: `<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
-				});
-		}
-	});
+	return bannerDefinitionKeys
+		.map((bannerDefinitionKey) => {
+			switch (bannerDefinitionKey) {
+				case 'shareFinalComments':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`
+					});
+				case 'progressFromFinalComments':
+					return createNotificationBanner({
+						bannerDefinitionKey: 'shareFinalComments',
+						html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`
+					});
+				case 'appellantFinalCommentsAwaitingReview':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>`
+					});
+				case 'lpaFinalCommentsAwaitingReview':
+					return createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p><p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>`
+					});
+			}
+		})
+		.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined);
 }

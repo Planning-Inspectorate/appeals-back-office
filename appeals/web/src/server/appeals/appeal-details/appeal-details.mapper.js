@@ -6,7 +6,7 @@ import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateCaseSummary } from './case-summary/case-summary.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
-import { mapStatusDependentNotifications } from './accordions/utils/map-status-dependent-notifications.js';
+import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 
 export const pageHeading = 'Case details';
 
@@ -18,7 +18,7 @@ export const pageHeading = 'Case details';
  * @param {string} currentRoute
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('./accordions/index.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
+ * @param {import('#appeals/appeals.types.js').RepresentationTypesAwaitingReview} [representationTypesAwaitingReview]
  * @param {import('./representations/representations.service.js').Representation|undefined} [appellantFinalComments]
  * @param {import('./representations/representations.service.js').Representation|undefined} [lpaFinalComments]
  * @returns {Promise<PageContent>}
