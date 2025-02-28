@@ -3393,18 +3393,6 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`LPA Questionnaire review Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
-    </div>
-</div>"
-`;
-
 exports[`LPA Questionnaire review Notification banners should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
