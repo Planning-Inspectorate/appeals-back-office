@@ -22,13 +22,15 @@ export const getAllCaseFolders = async (apiClient, appealId) => {
  * @param {import('got').Got} apiClient
  * @param {string|number} appealId
  * @param {string|number} folderId
+ * @param {string|number} [repId]
  * @returns {Promise<FolderInfo|undefined>}
  */
-export const getFolder = async (apiClient, appealId, folderId) => {
+export const getFolder = async (apiClient, appealId, folderId, repId) => {
 	try {
-		const locationInfo = await apiClient
-			.get(`appeals/${appealId}/document-folders/${folderId}`)
-			.json();
+		const query = repId ? `?repId=${repId}` : '';
+		const url = `appeals/${appealId}/document-folders/${folderId}${query}`;
+
+		const locationInfo = await apiClient.get(url).json();
 		return locationInfo;
 	} catch {
 		return undefined;

@@ -9,7 +9,9 @@ import {
 	representationRejectionReasons,
 	activeDirectoryUsersData,
 	costsFolderInfoAppellantApplication,
-	documentFileVersionsInfo
+	documentFileVersionsInfo,
+	interestedPartyCommentsForReview,
+	interestedPartyCommentsForView
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -37,6 +39,11 @@ describe('interested-party-comments', () => {
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
 			.reply(200, [{ folderId: 1234 }]);
+
+		nock('http://test/')
+			.get('/appeals/2/document-folders/1?repId=3670')
+			.reply(200, costsFolderInfoAppellantApplication)
+			.persist();
 	});
 
 	afterEach(teardown);
@@ -44,6 +51,9 @@ describe('interested-party-comments', () => {
 	describe('GET /review-comment with data', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 		});
 
 		it('should render review comment page with the provided comment details', async () => {
@@ -111,6 +121,10 @@ describe('interested-party-comments', () => {
 	describe('GET /view-comment with data', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForView);
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForView);
 		});
 
 		it('should render view comment page with the provided comment details', async () => {
@@ -154,6 +168,9 @@ describe('interested-party-comments', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 			nock('http://test/').patch('/appeals/2/reps/5').reply(200, {});
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 		});
 
 		it('should set representation status to valid', async () => {
@@ -174,6 +191,9 @@ describe('interested-party-comments', () => {
 			nock('http://test')
 				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 		});
 		afterEach(teardown);
 		it('should render reject comment page', async () => {
@@ -196,6 +216,9 @@ describe('interested-party-comments', () => {
 			nock('http://test/')
 				.post('/appeals/add-business-days')
 				.reply(200, JSON.stringify('2024-11-13T00:00:00.000Z'));
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 		});
 
 		afterEach(teardown);
@@ -221,6 +244,9 @@ describe('interested-party-comments', () => {
 			nock('http://test')
 				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 		});
 
 		afterEach(teardown);
@@ -248,6 +274,10 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/document-folders/1')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 		});
@@ -321,6 +351,10 @@ describe('interested-party-comments', () => {
 				.reply(200, documentFolderInfo)
 				.persist();
 
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
+
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 		});
 
@@ -382,6 +416,10 @@ describe('interested-party-comments', () => {
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
+
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 		});
 
@@ -432,6 +470,10 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=comment')
+				.reply(200, interestedPartyCommentsForReview);
 
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 		});
