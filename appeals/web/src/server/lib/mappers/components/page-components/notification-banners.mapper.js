@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawalRequested'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|'progressToFinalComments'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'} NotificationBannerDefinitionKey  */
+/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawalRequested'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|'progressFromStatements'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -111,7 +111,7 @@ export const notificationBannerDefinitions = {
 		type: 'important',
 		pages: ['appealDetails']
 	},
-	progressToFinalComments: {
+	progressFromStatements: {
 		type: 'important',
 		pages: ['appealDetails']
 	},
@@ -380,6 +380,26 @@ export const notificationBannerDefinitions = {
 	}
 };
 
+/** @type {Object<import('#lib/mappers/utils/required-actions.js').AppealRequiredAction, NotificationBannerDefinitionKey>} */
+const appealActionRequiredToNotificationBannerMapping = {
+	addHorizonReference: 'appealAwaitingTransfer',
+	arrangeSiteVisit: 'readyForSetUpSiteVisit',
+	assignCaseOfficer: 'assignCaseOfficer',
+	issueDecision: 'readyForDecision',
+	progressFromFinalComments: 'progressFromFinalComments',
+	progressFromStatements: 'progressFromStatements',
+	reviewAppellantCase: 'readyForValidation',
+	reviewAppellantFinalComments: 'appellantFinalCommentsAwaitingReview',
+	reviewIpComments: 'interestedPartyCommentsAwaitingReview',
+	reviewLpaFinalComments: 'lpaFinalCommentsAwaitingReview',
+	reviewLpaQuestionnaire: 'readyForLpaQuestionnaireReview',
+	reviewLpaStatement: 'lpaStatementAwaitingReview',
+	shareFinalComments: 'shareFinalComments',
+	shareIpCommentsAndLpaStatement: 'shareCommentsAndLpaStatement',
+	startAppeal: 'appealValidAndReadyToStart',
+	updateLpaStatement: 'updateLpaStatement'
+};
+
 /**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
@@ -481,4 +501,16 @@ export function createNotificationBanner({
 			})
 		}
 	};
+}
+
+/**
+ * @param {import('#lib/mappers/utils/required-actions.js').AppealRequiredAction} requiredAction
+ * @returns {NotificationBannerDefinitionKey|undefined}
+ */
+export function mapRequiredActionToNotificationBannerKey(requiredAction) {
+	if (!(requiredAction in Object.keys(appealActionRequiredToNotificationBannerMapping))) {
+		return;
+	}
+
+	return appealActionRequiredToNotificationBannerMapping[requiredAction];
 }

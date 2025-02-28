@@ -50,8 +50,10 @@ export async function appealDetailsPage(
 
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
 
+	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails);
+
 	const pageComponents = [
-		...mapStatusDependentNotifications(appealDetails, representationTypesAwaitingReview),
+		...statusDependentNotifications,
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId),
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		generateCaseSummary(mappedData),
