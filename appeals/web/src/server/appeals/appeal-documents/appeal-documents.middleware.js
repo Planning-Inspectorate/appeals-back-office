@@ -6,7 +6,8 @@ import { getFolder, getFileInfo } from './appeal.documents.service.js';
  */
 export const validateCaseFolderId = async (req, res, next) => {
 	const { appealId, folderId } = req.params;
-	const folder = await getFolder(req.apiClient, appealId, folderId);
+	const repId = req.currentRepresentation?.id;
+	const folder = await getFolder(req.apiClient, appealId, folderId, repId);
 
 	if (!folder) {
 		return res.status(404).render('app/404.njk');

@@ -54,7 +54,7 @@ describe('lpa-statements', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -117,7 +117,7 @@ describe('lpa-statements', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -126,7 +126,7 @@ describe('lpa-statements', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -183,7 +183,7 @@ describe('lpa-statements', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -225,7 +225,7 @@ describe('lpa-statements', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -234,7 +234,7 @@ describe('lpa-statements', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 

@@ -154,7 +154,11 @@ describe('/appeals/:id/reps', () => {
 			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
 			// @ts-ignore
-			databaseConnector.representation.update.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid',
+				notes: 'Some notes'
+			});
 
 			const response = await request
 				.patch('/appeals/1/reps/1')

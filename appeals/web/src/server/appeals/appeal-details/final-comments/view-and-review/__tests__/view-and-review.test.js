@@ -163,7 +163,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -226,7 +226,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -235,7 +235,7 @@ describe('final-comments', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -292,7 +292,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -334,7 +334,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -343,7 +343,7 @@ describe('final-comments', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -439,7 +439,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -492,7 +492,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get('/appeals/2/document-folders/1?repId=3670')
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -546,12 +546,15 @@ describe('final-comments', () => {
 				.get('/appeals/2/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
+			nock('http://test/')
+				.get('/appeals/2/reps?type=appellant_final_comment')
+				.reply(200, finalCommentsForReview);
+
 			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+				.get('/appeals/2/document-folders/1?repId=3670')
+				.reply(200, documentFolderInfo);
 
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')

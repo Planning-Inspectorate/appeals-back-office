@@ -81,7 +81,7 @@ export interface RepResponse {
 	/** @example "" */
 	notes?: string;
 	/** @example [] */
-	attachments?: any[];
+	attachments?: RepAttachment[];
 	/** @example "comment" */
 	representationType?: string;
 	/** @example false */
@@ -122,6 +122,22 @@ export interface RepResponse {
 		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
 		text?: string[];
 	}[];
+}
+export interface RepAttachment {
+	documentGuid: string;
+	version: number;
+	representationId: number;
+	documentVersion?: {
+		documentGuid: string;
+		version: number;
+		documentType?: string;
+		originalFilename?: string;
+		fileName?: string;
+		mime?: string;
+		size?: number;
+		blobStoragePath?: string;
+		documentURI?: string;
+	};
 }
 
 export interface ValidateDate {

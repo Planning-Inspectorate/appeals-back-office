@@ -123,6 +123,7 @@ export interface Document extends schema.Document {
 export interface DocumentVersion extends schema.DocumentVersion {
 	redactionStatus?: DocumentRedactionStatus | null;
 	representation?: RepresentationAttachment | null;
+	document?: Document | null;
 }
 export interface DocumentVersionAvScan extends schema.DocumentVersionAvScan {}
 
