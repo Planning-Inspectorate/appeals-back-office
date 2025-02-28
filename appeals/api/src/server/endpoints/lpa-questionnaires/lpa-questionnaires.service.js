@@ -20,6 +20,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import logger from '#utils/logger.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -104,14 +105,12 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			await broadcasters.broadcastDocument(
 				documentUpdated.documentGuid,
 				documentUpdated.version,
-				'update'
+				EventType.Update
 			);
 		}
 
-		// @ts-ignore
-		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpa');
-		// @ts-ignore
-		await sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'appellant');
+		await sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress);
+		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress);
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -148,22 +147,54 @@ const updateLPAQuestionnaireValidationOutcome = async (
 };
 
 /**
- *
- * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
- * @param { Appeal } appeal
- * @param { string } siteAddress
- * @param { string } userType
- * @returns {Promise<void>}
- */
-async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, userType) {
-	// @ts-ignore
-	const recipientEmail = appeal[userType]?.email;
-
-	const template = config.govNotify.template.lpaqComplete[userType];
-	if (!recipientEmail) {
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ * @param {string} siteAddress
+ * */
+function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
+	const email = appeal.lpa?.email;
+	if (!email) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
+	return sendLpaqCompleteEmail(
+		notifyClient,
+		appeal,
+		siteAddress,
+		config.govNotify.template.lpaqComplete.lpa,
+		email
+	);
+}
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ * @param {string} siteAddress
+ * */
+function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
+	const email = appeal.appellant?.email ?? appeal.agent?.email;
+	if (!email) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	}
+
+	return sendLpaqCompleteEmail(
+		notifyClient,
+		appeal,
+		siteAddress,
+		config.govNotify.template.lpaqComplete.appellant,
+		email
+	);
+}
+
+/**
+ *
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ * @param {string} siteAddress
+ * @param {import('#endpoints/appeals.js').NotifyTemplate} template
+ * @param {string} recipientEmail
+ */
+async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, template, recipientEmail) {
 	try {
 		await notifyClient.sendEmail(template, recipientEmail, {
 			appeal_reference_number: appeal.reference,

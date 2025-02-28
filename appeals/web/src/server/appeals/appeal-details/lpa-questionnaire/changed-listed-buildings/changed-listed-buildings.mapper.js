@@ -4,31 +4,30 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @param {Appeal} appealData
  * @param {string} currentListedBuilding
  * @returns {PageContent}
  */
-export function addAffectedListedBuildingPage(appealData, currentListedBuilding) {
+export function addChangedListedBuildingPage(appealData, currentListedBuilding) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add affected listed building',
+		title: 'Changed listed building entry number',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Add affected listed building`,
+		heading: `Changed listed building entry number`,
 		pageComponents: [
 			{
 				type: 'input',
 				parameters: {
-					id: 'affectedListedBuilding',
-					name: 'affectedListedBuilding',
+					id: 'changedListedBuilding',
+					name: 'changedListedBuilding',
 					type: 'text',
 					label: {
-						text: 'Listed building number'
+						text: 'This is a seven digit number from Historic England'
 					},
 					value: currentListedBuilding ?? ''
 				}
@@ -43,15 +42,18 @@ export function addAffectedListedBuildingPage(appealData, currentListedBuilding)
  * @param {Appeal} appealData
  * @param {string} currentListedBuilding
  */
-export function addAffectedListedBuildingCheckAndConfirmPage(appealData, currentListedBuilding) {
+export function addChangedListedBuildingCheckAndConfirmPage(appealData, currentListedBuilding) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Details of affected listed building you're adding to ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
+		title: `Details of changed listed building you're adding to ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/add`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Check your answer',
+		heading: 'Check details and add changed listed building',
+		submitButtonProperties: {
+			text: 'Add changed listed building'
+		},
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -63,13 +65,13 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 								text: 'Listed building number'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" class="govuk-link" target="_blank">${currentListedBuilding}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" target="_blank">${currentListedBuilding}</a>`
 							},
 							actions: {
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
+										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/add`,
 										visuallyHiddenText: 'listed building number'
 									}
 								]
@@ -87,30 +89,29 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
  * @param {Appeal} appealData
  * @param {LpaQuestionnaire} lpaQuestionnaireData
  */
-export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireData) {
+export function manageChangedListedBuildingPage(appealData, lpaQuestionnaireData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const affectedListedBuildings = lpaQuestionnaireData.listedBuildingDetails
-		?.filter((lb) => lb.affectsListedBuilding)
-		?.map((building) => listedBuildingTableRowFormatter(building));
+	const changedListedBuildings = lpaQuestionnaireData.listedBuildingDetails
+		?.filter((lb) => lb.affectsListedBuilding === false)
+		?.map(listedBuildingTableRowFormatter);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Manage affected listed buildings',
+		title: 'Manage changed listed buildings',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Manage affected listed buildings',
+		heading: 'Changed listed buildings',
 		pageComponents: [
 			{
 				type: 'table',
 				parameters: {
-					caption: 'Listed buildings',
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
 					head: [
 						{ text: 'Listed building' },
 						{ text: 'Action', classes: 'govuk-!-text-align-right' }
 					],
-					rows: affectedListedBuildings
+					rows: changedListedBuildings
 				}
 			}
 		]
@@ -171,7 +172,7 @@ function listedBuildingTableRowFormatter(building) {
  * @param {LpaQuestionnaire} lpaQuestionnaireData
  * @param {*} listedBuildingId
  */
-export function removeAffectedListedBuildingPage(
+export function removeChangedListedBuildingPage(
 	appealData,
 	lpaQuestionnaireData,
 	listedBuildingId
@@ -183,10 +184,11 @@ export function removeAffectedListedBuildingPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Remove affected listed building',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
+		title: 'Remove changed listed building',
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Remove affected listed building',
+		heading: 'Confirm that you want to remove the changed listed building',
+		submitButtonText: 'Remove changed listed building',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -198,16 +200,12 @@ export function removeAffectedListedBuildingPage(
 								text: 'Listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" class="govuk-link" target="_blank">${listedBuilding}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" target="_blank">${listedBuilding}</a>`
 							}
 						}
 					]
 				}
-			},
-			yesNoInput({
-				name: 'removeAffectedListedBuilding',
-				legendText: 'Do you want to remove this listed building?'
-			})
+			}
 		]
 	};
 
@@ -221,7 +219,7 @@ export function removeAffectedListedBuildingPage(
  * @param {*} listedBuildingData
  * @param {*} listedBuildingId
  */
-export function changeAffectedListedBuildingPage(
+export function changeChangedListedBuildingPage(
 	appealData,
 	lpaQuestionnaireData,
 	listedBuildingData,
@@ -237,19 +235,19 @@ export function changeAffectedListedBuildingPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change affected listed building`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
+		title: `Changed listed building entry number`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change affected listed building`,
+		heading: `Enter a changed listed building entry number`,
 		pageComponents: [
 			{
 				type: 'input',
 				parameters: {
-					id: 'affectedListedBuilding',
-					name: 'affectedListedBuilding',
+					id: 'changedListedBuilding',
+					name: 'changedListedBuilding',
 					type: 'text',
 					label: {
-						text: 'Listed building number'
+						text: 'This is a seven digit number from Historic England'
 					},
 					value: listedBuildingValue
 				}
@@ -266,7 +264,7 @@ export function changeAffectedListedBuildingPage(
  * @param {string} listedBuildingData
  * @param {string} listedBuildingId
  */
-export function changeAffectedListedBuildingCheckAndConfirmPage(
+export function changeChangedListedBuildingCheckAndConfirmPage(
 	appealData,
 	listedBuildingData,
 	listedBuildingId
@@ -275,10 +273,15 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Details of affected listed building you're updating for ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
+		title: `Details of changed listed building you're updating for ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/change/${listedBuildingId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Check your answer`,
+		heading: `Check details and update changed listed building`,
+		submitButtonProperties: {
+			text: 'Update changed listed building',
+			type: 'submit',
+			preventDoubleClick: 'true'
+		},
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -290,14 +293,14 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 								text: 'Listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" class="govuk-link" target="_blank">${listedBuildingData}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" target="_blank">${listedBuildingData}</a>`
 							},
 							actions: {
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
-										visuallyHiddenText: 'affected listed building'
+										href: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/changed-listed-buildings/change/${listedBuildingId}`,
+										visuallyHiddenText: 'changed listed building'
 									}
 								]
 							}

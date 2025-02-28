@@ -44,9 +44,14 @@ export const postConfirmAcceptFinalComment = async (request, response) => {
 			'valid'
 		);
 
+		const acceptFinalCommentsBannerType =
+			currentRepresentation.representationType === 'appellant_final_comment'
+				? 'appellantFinalCommentsAcceptSuccess'
+				: 'lpaFinalCommentsAcceptSuccess';
+
 		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'finalCommentsAcceptSuccess',
+			session: session,
+			bannerDefinitionKey: acceptFinalCommentsBannerType,
 			appealId
 		});
 

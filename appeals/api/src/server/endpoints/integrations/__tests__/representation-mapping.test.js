@@ -14,7 +14,6 @@ const mockRepresentation = {
 		reference: '6000001'
 	},
 	id: 1,
-	lpa: false,
 	status: 'invalid',
 	originalRepresentation: 'Original text of the representation',
 	redactedRepresentation: 'Redacted text of the representation',
@@ -65,9 +64,10 @@ describe('representation mapper', () => {
 			test(`Mapping correct status: ${status}`, async () => {
 				// @ts-ignore
 				const mapped = mapRepresentationEntity({ ...mockRepresentation, status });
-				// @ts-ignore
+
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);
@@ -77,9 +77,9 @@ describe('representation mapper', () => {
 			test(`Mapping correct type: ${representatonType}`, async () => {
 				// @ts-ignore
 				const mapped = mapRepresentationEntity({ ...mockRepresentation, representatonType });
-				// @ts-ignore
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);
@@ -87,14 +87,64 @@ describe('representation mapper', () => {
 		}
 		for (const reason of reasons) {
 			test(`Mapping correct reason: ${reason.name}`, async () => {
-				// @ts-ignore
 				const mapped = mapRepresentationEntity({
 					...mockRepresentation,
+					// @ts-ignore
 					representationRejectionReasonsSelected: [reason]
 				});
-				// @ts-ignore
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
+					mapped
+				);
+				expect(validationResult).toBe(true);
+			});
+		}
+		for (const source of [
+			{
+				lpa: null,
+				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+			},
+			{
+				lpa: null,
+				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			}
+		]) {
+			test(`Mapping citizen source: ${source}`, async () => {
+				const data = { ...mockRepresentation, ...source };
+				// @ts-ignore
+				const mapped = mapRepresentationEntity(data);
+				// @ts-ignore
+				expect(mapped.source).toEqual('citizen');
+
+				const validationResult = await validateFromSchema(
+					schemas.events.appealRepresentation,
+					// @ts-ignore
+					mapped
+				);
+				expect(validationResult).toBe(true);
+			});
+		}
+		for (const source of [
+			{
+				lpa: { lpaCode: 'XXXX' },
+				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+			},
+			{
+				lpa: { lpaCode: 'XXXX' },
+				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+			}
+		]) {
+			test(`Mapping lpa source: ${source}`, async () => {
+				const data = { ...mockRepresentation, ...source };
+				// @ts-ignore
+				const mapped = mapRepresentationEntity(data);
+				// @ts-ignore
+				expect(mapped.source).toEqual('lpa');
+
+				const validationResult = await validateFromSchema(
+					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);
@@ -107,9 +157,9 @@ describe('representation mapper', () => {
 			test(`Mapping incorrect status: ${status}`, async () => {
 				// @ts-ignore
 				const mapped = mapRepresentationEntity({ ...mockRepresentation, status });
-				// @ts-ignore
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);
@@ -120,9 +170,9 @@ describe('representation mapper', () => {
 			test(`Mapping incorrect type: ${representationType}`, async () => {
 				// @ts-ignore
 				const mapped = mapRepresentationEntity({ ...mockRepresentation, representationType });
-				// @ts-ignore
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);
@@ -131,14 +181,14 @@ describe('representation mapper', () => {
 		}
 		for (const reason of ['A reason not listed', 'another one not listed']) {
 			test(`Mapping reason: ${reason}`, async () => {
-				// @ts-ignore
 				const mapped = mapRepresentationEntity({
 					...mockRepresentation,
+					// @ts-ignore
 					representationRejectionReasonsSelected: [reason]
 				});
-				// @ts-ignore
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
+					// @ts-ignore
 					mapped
 				);
 				expect(validationResult).toBe(true);

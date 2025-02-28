@@ -10,7 +10,6 @@ import config from '@pins/appeals.web/environment/config.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
-	renderDateSubmittedFactory,
 	renderRedactionStatusFactory
 } from '../common/index.js';
 import {
@@ -29,6 +28,8 @@ import {
 } from './add-ip-comment.mapper.js';
 import { postRepresentationComment } from './add-ip-comment.service.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { dateSubmitted } from './add-ip-comment.mapper.js';
+
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -157,11 +158,25 @@ export const postRedactionStatus = postRedactionStatusFactory({
 	errorHandler: renderRedactionStatus
 });
 
-export const renderDateSubmitted = renderDateSubmittedFactory({
-	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
-	getValue: (request) => request.session.addIpComment || request.body
-});
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * */
+export function renderDateSubmitted(request, response) {
+	const { currentAppeal, errors, session, body } = request;
+
+	const pageContent = dateSubmitted(
+		currentAppeal,
+		errors,
+		session.addIpComment || body,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/redaction-status`
+	);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+}
 
 export const postDateSubmitted = postDateSubmittedFactory({
 	getRedirectUrl: (appealDetails) =>
