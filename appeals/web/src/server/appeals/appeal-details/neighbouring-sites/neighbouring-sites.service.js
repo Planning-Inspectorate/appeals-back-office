@@ -1,5 +1,3 @@
-import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
-
 /**
  *
  * @param {import('got').Got} apiClient
@@ -67,23 +65,5 @@ export function removeNeighbouringSite(apiClient, appealId, siteId) {
 		json: {
 			...formattedSiteId
 		}
-	});
-}
-
-/**
- * @param {import('got').Got} apiClient
- * @param {string} appealId
- * @param {string | undefined} lpaQuestionnaireId
- * @param {string} neighbouringSiteAffected
- * @returns {Promise<{}>}
- */
-export function changeNeighbouringSiteAffected(
-	apiClient,
-	appealId,
-	lpaQuestionnaireId,
-	neighbouringSiteAffected
-) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
-		json: { isAffectingNeighbouringSites: convertFromYesNoToBoolean(neighbouringSiteAffected) }
 	});
 }

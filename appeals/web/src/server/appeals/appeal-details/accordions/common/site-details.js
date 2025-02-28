@@ -10,7 +10,6 @@ export const getSiteDetails = (mappedData) => ({
 		rows: [
 			mappedData.appeal.lpaInspectorAccess.display.summaryListItem,
 			mappedData.appeal.appellantInspectorAccess.display.summaryListItem,
-			mappedData.appeal.neighbouringSiteIsAffected.display.summaryListItem,
 			mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
 			mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem,
 			mappedData.appeal.lpaHealthAndSafety.display.summaryListItem,

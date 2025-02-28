@@ -957,31 +957,6 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
-				const appealId = appealData.appealId;
-				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
-
-				nock('http://test/')
-					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-					.reply(200, {});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				await request.get(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`);
-
-				await request
-					.post(`${baseUrl}/${appealId}/neighbouring-sites/change/affected`)
-					.send({ neighbouringSiteAffected: 'yes' });
-
-				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
-				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain(
-					'Neighbouring site affected status updated</p>'
-				);
-			});
-
 			it('should render a success notification banner when a cross-team correspondence document was uploaded', async () => {
 				nock('http://test/')
 					.get('/appeals/1/document-folders/4')
@@ -3314,9 +3289,6 @@ describe('appeal-details', () => {
 		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 		expect(unprettifiedElement.innerHTML).toContain(
 			`href="/appeals-service/appeal-details/3/inspector-access/change/lpa"`
-		);
-		expect(unprettifiedElement.innerHTML).toContain(
-			`href="/appeals-service/appeal-details/3/neighbouring-sites/change/affected"`
 		);
 		expect(unprettifiedElement.innerHTML).toContain(
 			`href="/appeals-service/appeal-details/3/safety-risks/change/lpa"`

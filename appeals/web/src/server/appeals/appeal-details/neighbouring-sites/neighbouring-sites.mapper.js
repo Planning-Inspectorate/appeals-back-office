@@ -333,32 +333,6 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 }
 
 /**
- * @param {Appeal} appealData
- * @param {string} origin
- * @returns {PageContent}
- */
-export function changeNeighbouringSiteAffectedPage(appealData, origin) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'Update neighbouring site affected',
-		backLinkUrl: origin,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [
-			yesNoInput({
-				name: 'neighbouringSiteAffected',
-				value: appealData.isAffectingNeighbouringSites,
-				legendText: 'Could a neighbouring site be affected?',
-				legendIsPageHeading: true
-			})
-		]
-	};
-
-	return pageContent;
-}
-
-/**
  *
  * @param {Source} source
  * @returns
