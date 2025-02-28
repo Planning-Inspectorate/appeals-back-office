@@ -424,18 +424,6 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the neighbouring site affected value is updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site affected status updated</p>
-    </div>
-</div>"
-`;
-
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when the safety risks was updated 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -646,9 +634,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                         </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
@@ -1127,9 +1112,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
-                            </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-list govuk-list--bullet">
@@ -1601,9 +1583,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
-                                </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
@@ -2074,9 +2053,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                         </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
@@ -2569,9 +2545,6 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
-                                </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
@@ -3045,9 +3018,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
-                            </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-list govuk-list--bullet">
@@ -3508,9 +3478,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                     </dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
@@ -3984,11 +3951,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd                                 class="govuk-summary-list__value"><span>No</span>
                                     </dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
-                                    </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> Could a neighbouring site be affected?</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
@@ -4466,11 +4428,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> Could a neighbouring site be affected?</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-list govuk-list--bullet">
@@ -4946,11 +4903,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/change/affected"> Change<span class="govuk-visually-hidden"> Could a neighbouring site be affected?</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-list govuk-list--bullet">
@@ -5424,9 +5376,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                         </dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
@@ -5929,9 +5878,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
-                                </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
@@ -6417,9 +6363,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
-                                </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
@@ -6876,9 +6819,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     </dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
@@ -7360,9 +7300,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                    <dd                                     class="govuk-summary-list__value">No answer provided</dd>
-                                </div>
                                 <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
@@ -7819,9 +7756,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     </dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                     </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                <dd                                 class="govuk-summary-list__value">No answer provided</dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                 <dd                                 class="govuk-summary-list__value">
@@ -8294,9 +8228,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                                 </dd>
                                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inspector-access/change/appellant"> Change<span class="govuk-visually-hidden"> Inspection access (appellant answer)</span></a>
                                                 </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row appeal-neighbouring-site-is-affected"><dt class="govuk-summary-list__key"> Could a neighbouring site be affected?</dt>
-                                            <dd                                             class="govuk-summary-list__value">No answer provided</dd>
                                         </div>
                                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (LPA)</dt>
                                             <dd                                             class="govuk-summary-list__value">
