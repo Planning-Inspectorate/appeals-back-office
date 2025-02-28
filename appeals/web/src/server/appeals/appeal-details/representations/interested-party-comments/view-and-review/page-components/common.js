@@ -60,8 +60,12 @@ export function generateCommentSummaryList(
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
+	const filteredAttachments = comment.attachments.filter(
+		(attachment) => !attachment.documentVersion.document.isDeleted
+	);
+
 	const attachmentsList =
-		comment.attachments.length > 0
+		filteredAttachments.length > 0
 			? buildHtmUnorderedList(
 					comment.attachments.map(
 						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
@@ -142,7 +146,7 @@ export function generateCommentSummaryList(
 			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 			actions: {
 				items: [
-					...(comment.attachments?.length > 0
+					...(filteredAttachments.length > 0
 						? [
 								{
 									text: 'Manage',
