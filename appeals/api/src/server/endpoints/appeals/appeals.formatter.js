@@ -267,6 +267,12 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
 			return new Date(appeal.siteVisit.visitDate);
 		}
+		case APPEAL_CASE_STATUS.EVENT: {
+			return new Date(
+				appeal.appealTimetable?.finalCommentsDueDate ||
+					appeal.appealTimetable?.lpaQuestionnaireDueDate
+			);
+		}
 		default: {
 			return undefined;
 		}
