@@ -30,6 +30,8 @@ const renderChangeServiceUser = async (request, response) => {
 			? request.originalUrl.replace('/change/', '/remove/')
 			: '';
 
+	const userDetailsInSession = errors && request.session.updatedServiceUser;
+
 	const appealDetails = request.currentAppeal;
 	if (
 		appealDetails &&
@@ -38,7 +40,7 @@ const renderChangeServiceUser = async (request, response) => {
 	) {
 		const mappedPageContents = changeServiceUserPage(
 			appealDetails,
-			request.session.updatedServiceUser,
+			userDetailsInSession,
 			userType,
 			backLinkUrl,
 			removeLinkUrl,
