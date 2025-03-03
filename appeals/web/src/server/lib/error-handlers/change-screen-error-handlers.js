@@ -40,7 +40,7 @@ export const errorLastName = (/** @type {Error}*/ errors) => {
 };
 
 export const errorOrganisationNameAllowEmpty = (/** @type {Error}*/ errors) => {
-	return errors?.orgName
+	return errors?.organisationName
 		? {
 				text: 'Enter an organisation or company name, or leave empty'
 		  }
