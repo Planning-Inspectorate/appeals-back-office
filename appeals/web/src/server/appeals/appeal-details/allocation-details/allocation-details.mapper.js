@@ -10,13 +10,16 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {{ allocationDetailsLevels: AllocationDetailsLevel[] }} allocationDetailsData
  * @param { string | undefined } selectedAllocationLevel
  * @param {Appeal} appealDetails
+ * @param {*} errors
  * @returns {PageContent}
  */
 export function allocationDetailsLevelPage(
 	allocationDetailsData,
 	selectedAllocationLevel,
-	appealDetails
+	appealDetails,
+	errors
 ) {
+	console.log('🚀 ~ errors:', errors);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
@@ -42,7 +45,10 @@ export function allocationDetailsLevelPage(
 					items: allocationDetailsData.allocationDetailsLevels.map((item) => ({
 						value: item.level,
 						text: item.level
-					}))
+					})),
+					errorMessage: {
+						text: errors['allocation-level'].msg
+					}
 				}
 			}
 		]

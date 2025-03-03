@@ -29,7 +29,8 @@ const renderAllocationDetailsLevels = async (request, response, errors = null) =
 			appealDetails.appealId === request.session.appealId
 				? request.session.allocationLevel
 				: undefined,
-			appealDetails
+			appealDetails,
+			errors
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
