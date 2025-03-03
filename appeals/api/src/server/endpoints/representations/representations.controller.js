@@ -339,5 +339,6 @@ export async function publish(req, res) {
 		updatedReps.map((rep) => broadcasters.broadcastRepresentation(rep.id, EventType.Update))
 	);
 
+	await broadcasters.broadcastAppeal(appeal.id);
 	return res.send(updatedReps);
 }
