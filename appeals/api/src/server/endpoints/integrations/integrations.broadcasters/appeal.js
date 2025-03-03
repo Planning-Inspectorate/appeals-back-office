@@ -89,7 +89,8 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 						}
 					}
 				}
-			}
+			},
+			representations: true
 		}
 	});
 
