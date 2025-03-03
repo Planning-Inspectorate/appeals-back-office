@@ -4,6 +4,7 @@ import * as controller from './view-and-review.controller.js';
 import rejectRouter from './reject/reject.router.js';
 import * as documentsValidators from '../../../../appeal-documents/appeal-documents.validators.js';
 import {
+	assureCurrentRepresentation,
 	redirectIfCommentIsReviewed,
 	redirectIfCommentIsUnreviewed
 } from './view-and-review.middleware.js';
@@ -17,6 +18,8 @@ import { validateAppeal } from '#appeals/appeal-details/appeal-details.middlewar
 import { validateStatus } from '#appeals/appeal-details/representations/common/validators.js';
 
 const router = createRouter({ mergeParams: true });
+
+router.use(assureCurrentRepresentation);
 
 router.use('/reject', rejectRouter);
 

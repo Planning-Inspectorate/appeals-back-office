@@ -48,7 +48,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
                         <td class="govuk-table__cell">No redaction required</td>
-                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
                             class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
                         </td>
                         <td class="govuk-table__cell">2 March 2024</td>
                         <td class="govuk-table__cell">No redaction required</td>
-                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/interested-party-comments/3670/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
                             class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
                         </td>
                     </tr>
@@ -123,7 +123,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/5/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -131,12 +131,12 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date submitted</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/5/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
                     <dd class="govuk-summary-list__value">Redacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/5/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
                     </dd>
                 </div>
             </dl>

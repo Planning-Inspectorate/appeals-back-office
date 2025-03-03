@@ -23,6 +23,8 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
+const commentId = interestedPartyCommentForReview.id;
+
 describe('interested-party-comments', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -50,14 +52,18 @@ describe('interested-party-comments', () => {
 
 	describe('GET /review-comment with data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 			nock('http://test/')
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 		});
 
 		it('should render review comment page with the provided comment details', async () => {
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/review`);
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/${commentId}/review`
+			);
 
 			expect(response.statusCode).toBe(200);
 
@@ -81,8 +87,10 @@ describe('interested-party-comments', () => {
 			const testComment = structuredClone(interestedPartyCommentForReview);
 			testComment.represented.email = '';
 
-			nock('http://test/').get('/appeals/2/reps/55').reply(200, testComment);
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/55/review`);
+			nock('http://test/').get(`/appeals/2/reps/${commentId}`).reply(200, testComment);
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/${commentId}/review`
+			);
 
 			expect(response.statusCode).toBe(200);
 
@@ -120,7 +128,9 @@ describe('interested-party-comments', () => {
 
 	describe('GET /view-comment with data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForView);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForView);
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=comment')
@@ -128,7 +138,9 @@ describe('interested-party-comments', () => {
 		});
 
 		it('should render view comment page with the provided comment details', async () => {
-			const response = await request.get(`${baseUrl}/2/interested-party-comments/5/view`);
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/${commentId}/view`
+			);
 
 			expect(response.statusCode).toBe(200);
 
@@ -166,8 +178,10 @@ describe('interested-party-comments', () => {
 
 	describe('POST /review', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
-			nock('http://test/').patch('/appeals/2/reps/5').reply(200, {});
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
+			nock('http://test/').patch(`/appeals/2/reps/${commentId}`).reply(200, {});
 			nock('http://test/')
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
@@ -175,7 +189,7 @@ describe('interested-party-comments', () => {
 
 		it('should set representation status to valid', async () => {
 			const response = await request
-				.post(`${baseUrl}/2/interested-party-comments/5/review`)
+				.post(`${baseUrl}/2/interested-party-comments/${commentId}/review`)
 				.send({ status: 'valid' });
 
 			expect(response.statusCode).toBe(302);
@@ -187,7 +201,9 @@ describe('interested-party-comments', () => {
 
 	describe('GET /reject/select-reason', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 			nock('http://test')
 				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
@@ -198,7 +214,7 @@ describe('interested-party-comments', () => {
 		afterEach(teardown);
 		it('should render reject comment page', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/reject/select-reason`
+				`${baseUrl}/2/interested-party-comments/${commentId}/reject/select-reason`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -212,7 +228,9 @@ describe('interested-party-comments', () => {
 
 	describe('GET /reject/allow-resubmit', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 			nock('http://test/')
 				.post('/appeals/add-business-days')
 				.reply(200, JSON.stringify('2024-11-13T00:00:00.000Z'));
@@ -225,7 +243,7 @@ describe('interested-party-comments', () => {
 
 		it('should render allow resubmit page', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/reject/allow-resubmit`
+				`${baseUrl}/2/interested-party-comments/${commentId}/reject/allow-resubmit`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -240,7 +258,9 @@ describe('interested-party-comments', () => {
 
 	describe('GET /reject/check-your-answers', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 			nock('http://test')
 				.get('/appeals/representation-rejection-reasons?type=comment')
 				.reply(200, representationRejectionReasons);
@@ -253,7 +273,7 @@ describe('interested-party-comments', () => {
 
 		it('should render check your answers page', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/reject/check-your-answers`
+				`${baseUrl}/2/interested-party-comments/${commentId}/reject/check-your-answers`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -268,7 +288,9 @@ describe('interested-party-comments', () => {
 
 	describe('GET /manage-documents/:folderId/', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1')
@@ -286,7 +308,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
 
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/manage-documents/99`
+				`${baseUrl}/2/interested-party-comments/${commentId}/manage-documents/99`
 			);
 
 			expect(response.statusCode).toBe(404);
@@ -301,7 +323,7 @@ describe('interested-party-comments', () => {
 
 		it('should render manage folder page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/manage-documents/1`
+				`${baseUrl}/2/interested-party-comments/${commentId}/manage-documents/1`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -335,7 +357,9 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1')
@@ -362,7 +386,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
 
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/manage-documents/1/99`
+				`${baseUrl}/2/interested-party-comments/${commentId}/manage-documents/1/99`
 			);
 
 			expect(response.statusCode).toBe(404);
@@ -377,7 +401,7 @@ describe('interested-party-comments', () => {
 
 		it('should render manage document page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/manage-documents/1/1`
+				`${baseUrl}/2/interested-party-comments/${commentId}/manage-documents/1/1`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -409,7 +433,9 @@ describe('interested-party-comments', () => {
 					appealStatus: 'statements'
 				});
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1')
@@ -425,7 +451,7 @@ describe('interested-party-comments', () => {
 
 		it('should render change document page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/change-document-name/1/1`
+				`${baseUrl}/2/interested-party-comments/${commentId}/change-document-name/1/1`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -455,7 +481,9 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get(`/appeals/2/reps/${commentId}`)
+				.reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1')
@@ -480,7 +508,7 @@ describe('interested-party-comments', () => {
 
 		it('should render change document details page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/change-document-details/1/1`
+				`${baseUrl}/2/interested-party-comments/${commentId}/change-document-details/1/1`
 			);
 
 			expect(response.statusCode).toBe(200);

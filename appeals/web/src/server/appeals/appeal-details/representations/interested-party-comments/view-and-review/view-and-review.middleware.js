@@ -1,3 +1,14 @@
+import { getInterestedPartyComment } from '#appeals/appeal-details/representations/interested-party-comments/interested-party-comments.service.js';
+
+/** @type {import("express").Handler} */
+export const assureCurrentRepresentation = async (req, res, next) => {
+	const { appealId, commentId } = req.params;
+	if (req.currentRepresentation?.id !== parseInt(commentId)) {
+		req.currentRepresentation = await getInterestedPartyComment(req.apiClient, appealId, commentId);
+	}
+	next();
+};
+
 /** @type {import("express").Handler} */
 export const redirectIfCommentIsReviewed = (
 	{ currentAppeal, currentRepresentation },
