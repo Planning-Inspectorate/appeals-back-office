@@ -19,10 +19,6 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
-	isAffectingNeighbouringSites: {
-		type: 'boolean',
-		nullable: true
-	},
 	lpaProcedurePreference: {
 		type: 'string',
 		nullable: true
