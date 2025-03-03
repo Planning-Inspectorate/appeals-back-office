@@ -1,6 +1,5 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { formatFolder } from './documents.formatter.js';
-import { randomUUID } from 'node:crypto';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
@@ -25,10 +24,7 @@ export const mapDocumentsForDatabase = (
 
 		return {
 			GUID: document.GUID,
-			name:
-				document.stage === 'representation'
-					? `${randomUUID()}_${document.documentName}`
-					: document.documentName,
+			name: document.documentName,
 			caseId,
 			folderId: document.folderId,
 			mime: document.mimeType,

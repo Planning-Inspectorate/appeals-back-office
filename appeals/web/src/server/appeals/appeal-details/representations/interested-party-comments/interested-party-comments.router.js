@@ -8,8 +8,6 @@ import viewAndReviewIpCommentRouter from './view-and-review/view-and-review.rout
 import redactIpCommentRouter from './redact/redact.router.js';
 import * as controller from './interested-party-comments.controller.js';
 import { validateComment } from './interested-party-comments.middleware.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import { withSingularRepresentation } from '../representations.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -21,13 +19,7 @@ router.use('/:commentId/edit', validateAppeal, validateComment, editIpCommentRou
 
 router.use('/:commentId/add-document', validateAppeal, validateComment, addDocumentRouter);
 
-router.use(
-	'/:commentId',
-	validateAppeal,
-	validateComment,
-	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.COMMENT),
-	viewAndReviewIpCommentRouter
-);
+router.use('/:commentId', validateAppeal, validateComment, viewAndReviewIpCommentRouter);
 
 router.route('/').get(validateAppeal, asyncHandler(controller.handleInterestedPartyComments));
 

@@ -2454,68 +2454,6 @@ export const interestedPartyCommentsInvalid = {
 	pageSize: 1000
 };
 
-export const interestedPartyCommentsForReview = {
-	itemCount: 1,
-	items: [
-		{
-			id: 3670,
-			origin: 'citizen',
-			author: 'Lee Thornton',
-			status: 'awaiting_review',
-			originalRepresentation: 'Awaiting final comment',
-			redactedRepresentation: '',
-			created: '2024-10-09T17:23:24.406Z',
-			notes: '',
-			attachments: [],
-			representationType: 'comment',
-			siteVisitRequested: false,
-			represented: {
-				id: 3838,
-				name: 'Lee Thornton',
-				email: 'test1@example.com',
-				address: {
-					addressLine1: '',
-					postCode: ''
-				}
-			}
-		}
-	],
-	page: 1,
-	pageCount: 1,
-	pageSize: 30
-};
-
-export const interestedPartyCommentsForView = {
-	itemCount: 1,
-	items: [
-		{
-			id: 3670,
-			origin: 'citizen',
-			author: 'Lee Thornton',
-			status: 'valid',
-			originalRepresentation: 'Awaiting review final comment',
-			redactedRepresentation: '',
-			created: '2024-10-09T17:23:24.406Z',
-			notes: '',
-			attachments: [],
-			representationType: 'comment',
-			siteVisitRequested: false,
-			represented: {
-				id: 3838,
-				name: 'Lee Thornton',
-				email: 'test1@example.com',
-				address: {
-					addressLine1: '',
-					postCode: ''
-				}
-			}
-		}
-	],
-	page: 1,
-	pageCount: 1,
-	pageSize: 30
-};
-
 export const interestedPartyCommentForReview = {
 	id: 3670,
 	origin: 'citizen',

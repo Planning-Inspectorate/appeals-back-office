@@ -37,10 +37,7 @@ const formatDocument = (document) => {
 		caseId: document.caseId,
 		folderId: document.folderId,
 		id: document.guid,
-		name:
-			document.latestDocumentVersion?.documentType !== null
-				? document.name.replace(/[a-f\d-]{36}_/, '')
-				: document.name,
+		name: document.name,
 		isDeleted: document.isDeleted,
 		createdAt: document.createdAt?.toISOString() || '',
 		versionAudit: document.versionAudit || [],
@@ -65,9 +62,7 @@ const formatDocumentVersion = (latestDocumentVersion) => {
 		documentId: latestDocumentVersion.documentGuid,
 		version: latestDocumentVersion.version,
 		fileName: latestDocumentVersion.fileName || '',
-		originalFilename: latestDocumentVersion.originalFilename
-			? latestDocumentVersion.originalFilename.replace(/[a-f\d-]{36}_/, '')
-			: '',
+		originalFilename: latestDocumentVersion.originalFilename || '',
 		dateReceived: latestDocumentVersion.dateReceived?.toISOString() || '',
 		redactionStatus: latestDocumentVersion.redactionStatus?.name || '',
 		virusCheckStatus: getAvScanStatus(latestDocumentVersion),
