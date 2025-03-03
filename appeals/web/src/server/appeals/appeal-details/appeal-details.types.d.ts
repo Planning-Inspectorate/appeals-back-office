@@ -315,7 +315,6 @@ export interface SingleLPAQuestionnaireResponse {
 	includesScreeningOption?: boolean | null;
 	inquiryDays?: number | null;
 	inspectorAccessDetails?: string | null;
-	isAffectingNeighbouringSites: boolean | null;
 	isCommunityInfrastructureLevyFormallyAdopted?: boolean | null;
 	isConservationArea?: boolean | null;
 	isCorrectAppealType: boolean | null;

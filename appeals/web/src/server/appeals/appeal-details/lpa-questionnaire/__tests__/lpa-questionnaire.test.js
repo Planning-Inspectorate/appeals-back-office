@@ -110,28 +110,6 @@ describe('LPA Questionnaire review', () => {
 			expect(notificationBannerElementHTML).toContain('Green belt status updated');
 		});
 
-		it('should render a success notification banner when the neighbouring site affected value is updated', async () => {
-			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/1`).reply(200, {});
-			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
-				.reply(200, lpaQuestionnaireData)
-				.persist();
-			await request.get(`${baseUrl}/neighbouring-sites/change/affected`);
-
-			await request
-				.post(`${baseUrl}/neighbouring-sites/change/affected`)
-				.send({ neighbouringSiteAffected: 'yes' });
-
-			const caseDetailsResponse = await request.get(`${baseUrl}`);
-
-			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Neighbouring site affected status updated');
-		}, 10000);
-
 		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
 			const appealId = appealData.appealId;
 			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;

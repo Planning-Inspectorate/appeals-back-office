@@ -226,7 +226,6 @@ export default {
 		inConservationArea: true,
 		lpaCostsAppliedFor: false,
 		isGreenBelt: true,
-		isAffectingNeighbouringSites: null,
 		affectsScheduledMonument: null,
 		hasProtectedSpecies: null,
 		isAonbNationalLandscape: null,

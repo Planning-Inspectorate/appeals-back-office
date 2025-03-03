@@ -36,7 +36,6 @@ import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.map
 import { mapLpaQuestionnaireDueDate } from './submappers/lpa-questionnaire-due-date.mapper.js';
 import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
-import { mapNeighboringSiteIsAffected } from './submappers/neighboring-site-is-affected.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import { mapSiteVisitDate } from './submappers/site-visit-date.mapper.js';
@@ -62,7 +61,6 @@ export const submaps = {
 	appealStatus: mapAppealStatus,
 	lpaInspectorAccess: mapLpaInspectorAccess,
 	appellantInspectorAccess: mapAppellantInspectorAccess,
-	neighbouringSiteIsAffected: mapNeighboringSiteIsAffected,
 	lpaNeighbouringSites: mapLpaNeighbouringSites,
 	inspectorNeighbouringSites: mapInspectorNeighbouringSites,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,

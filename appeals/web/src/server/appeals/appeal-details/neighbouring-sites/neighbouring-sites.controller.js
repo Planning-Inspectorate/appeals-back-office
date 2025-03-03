@@ -5,7 +5,6 @@ import { HTTPError } from 'got';
 import {
 	addNeighbouringSiteCheckAndConfirmPage,
 	addNeighbouringSitePage,
-	changeNeighbouringSiteAffectedPage,
 	changeNeighbouringSiteCheckAndConfirmPage,
 	changeNeighbouringSitePage,
 	manageNeighbouringSitesPage,
@@ -15,7 +14,6 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	addNeighbouringSite,
 	changeNeighbouringSite,
-	changeNeighbouringSiteAffected,
 	removeNeighbouringSite
 } from './neighbouring-sites.service.js';
 
@@ -434,91 +432,6 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 		delete request.session.neighbouringSite;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
-	} catch (error) {
-		logger.error(error);
-	}
-
-	return response.status(500).render('app/500.njk');
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getChangeNeighbouringSiteAffected = async (request, response) => {
-	return renderChangeNeighbouringSiteAffected(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-const renderChangeNeighbouringSiteAffected = async (request, response) => {
-	const { errors } = request;
-
-	const appealData = request.currentAppeal;
-
-	const currentUrl = request.originalUrl;
-
-	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
-	const origin = currentUrl.split('/').slice(0, -3).join('/');
-
-	if (!appealData) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const mappedPageContent = changeNeighbouringSiteAffectedPage(appealData, origin);
-
-	return response.status(200).render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContent,
-		errors
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const postChangeNeighbouringSiteAffected = async (request, response) => {
-	const {
-		params: { appealId },
-		body: { neighbouringSiteAffected }
-	} = request;
-
-	if (request.errors) {
-		return renderChangeNeighbouringSiteAffected(request, response);
-	}
-
-	try {
-		const appealData = request.currentAppeal;
-		const lpaQuestionnaireId = appealData.lpaQuestionnaireId?.toString();
-
-		//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
-		const currentUrl = getOriginPathname(request);
-		const origin = currentUrl.split('/').slice(0, -3).join('/');
-
-		if (!isInternalUrl(origin, request)) {
-			return response.status(400).render('errorPageTemplate', {
-				message: 'Invalid redirection attempt detected.'
-			});
-		}
-
-		await changeNeighbouringSiteAffected(
-			request.apiClient,
-			appealId,
-			lpaQuestionnaireId,
-			neighbouringSiteAffected
-		);
-
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'neighbouringSiteAffected',
-			appealId
-		});
-
-		delete request.session.neighbouringSite;
-
-		return response.redirect(origin);
 	} catch (error) {
 		logger.error(error);
 	}

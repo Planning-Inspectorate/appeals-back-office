@@ -32,7 +32,6 @@ export const mapLpaQuestionnaire = (data) => {
 				formatListedBuildingDetails(lpaQuestionnaire.listedBuildingDetails) || undefined,
 			isConservationArea: lpaQuestionnaire.inConservationArea,
 			isGreenBelt: lpaQuestionnaire.isGreenBelt,
-			isAffectingNeighbouringSites: lpaQuestionnaire.isAffectingNeighbouringSites,
 			extraConditions: lpaQuestionnaire.newConditionDetails,
 			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null,
 			costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,

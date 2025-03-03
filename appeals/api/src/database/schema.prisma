@@ -388,7 +388,6 @@ model LPAQuestionnaire {
   inConservationArea                        Boolean?
   lpaCostsAppliedFor                        Boolean?
   isGreenBelt                               Boolean?
-  isAffectingNeighbouringSites              Boolean?
 
   // S78 fields
   affectsScheduledMonument            Boolean?

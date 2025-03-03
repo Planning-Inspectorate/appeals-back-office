@@ -26,11 +26,6 @@ router
 	);
 
 router
-	.route('/change/affected')
-	.get(asyncHandler(controller.getChangeNeighbouringSiteAffected))
-	.post(asyncHandler(controller.postChangeNeighbouringSiteAffected));
-
-router
 	.route('/change/site/:siteId')
 	.get(asyncHandler(controller.getChangeNeighbouringSite))
 	.post(
