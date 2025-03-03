@@ -166,7 +166,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Gets the decision info or null",
 						"content": {
 							"application/json": {
@@ -390,7 +390,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Creates an appeal timetable and start the appeal",
 						"content": {
 							"application/json": {
@@ -513,7 +513,7 @@
 				"description": "Request the creation of a new case",
 				"parameters": [],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Appeal successfully created",
 						"content": {
 							"application/json": {
@@ -560,7 +560,7 @@
 				"description": "Request adding LPA response to an existing case",
 				"parameters": [],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Appeal successfully updated",
 						"content": {
 							"application/json": {
@@ -607,7 +607,7 @@
 				"description": "Request adding a representation to an existing case",
 				"parameters": [],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Appeal successfully updated",
 						"content": {
 							"application/json": {
@@ -1495,8 +1495,8 @@
 					}
 				],
 				"responses": {
-					"200": {
-						"description": "OK"
+					"204": {
+						"description": "No Content"
 					},
 					"400": {
 						"description": "Bad Request"
@@ -1528,7 +1528,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Gets the Invalid decision info or null",
 						"content": {
 							"application/json": {
@@ -1950,7 +1950,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Document metadata successfully added",
 						"content": {
 							"application/json": {
@@ -2142,7 +2142,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"204": {
 						"description": "Document metadata successfully added",
 						"content": {
 							"application/json": {
@@ -2518,7 +2518,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Creates a single site visit",
 						"content": {
 							"application/json": {
@@ -3137,7 +3137,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Returns the siteId",
 						"content": {
 							"application/json": {
@@ -3914,7 +3914,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Create a Representation against an appeal",
 						"content": {
 							"application/json": {
@@ -4221,7 +4221,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Returns the listedBuildingId",
 						"content": {
 							"application/json": {
@@ -4468,7 +4468,7 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "Returns the comment",
 						"content": {
 							"application/json": {
@@ -8382,10 +8382,6 @@
 					"inspectorAccessDetails": {
 						"type": "string",
 						"example": "The entrance is at the back of the property"
-					},
-					"isAffectingNeighbouringSites": {
-						"type": "boolean",
-						"example": true
 					},
 					"isCommunityInfrastructureLevyFormallyAdopted": {
 						"type": "boolean",
@@ -16435,10 +16431,6 @@
 						"type": "boolean",
 						"nullable": true
 					},
-					"isAffectingNeighbouringSites": {
-						"type": "boolean",
-						"nullable": true
-					},
 					"lpaProcedurePreference": {
 						"type": "string",
 						"nullable": true
@@ -16643,6 +16635,9 @@
 								},
 								"listEntry": {
 									"type": "string"
+								},
+								"affectsListedBuilding": {
+									"type": "boolean"
 								},
 								"name": {
 									"type": "string",
@@ -23907,6 +23902,9 @@
 					"listEntry": {
 						"type": "string"
 					},
+					"affectsListedBuilding": {
+						"type": "boolean"
+					},
 					"name": {
 						"type": "string",
 						"nullable": true
@@ -28525,10 +28523,6 @@
 						"nullable": true
 					},
 					"isConservationArea": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"isAffectingNeighbouringSites": {
 						"type": "boolean",
 						"nullable": true
 					},

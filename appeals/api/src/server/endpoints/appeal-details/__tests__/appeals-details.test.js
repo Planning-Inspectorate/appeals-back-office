@@ -107,8 +107,7 @@ const householdAppealDto = {
 	procedureType: 'Written',
 	createdAt: householdAppeal.caseCreatedDate.toISOString(),
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
-	validAt: householdAppeal.caseValidDate?.toISOString(),
-	isAffectingNeighbouringSites: null
+	validAt: householdAppeal.caseValidDate?.toISOString()
 };
 
 const s78AppealDto = {
@@ -217,8 +216,7 @@ const s78AppealDto = {
 	procedureType: 'Written',
 	createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 	startedAt: fullPlanningAppeal.caseStartedDate?.toISOString(),
-	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
-	isAffectingNeighbouringSites: null
+	validAt: fullPlanningAppeal.caseValidDate?.toISOString()
 };
 
 describe('Appeal detail routes', () => {

@@ -1714,8 +1714,6 @@ export interface SingleLPAQuestionnaireResponse {
 	/** @example "The entrance is at the back of the property" */
 	inspectorAccessDetails?: string;
 	/** @example true */
-	isAffectingNeighbouringSites?: boolean;
-	/** @example true */
 	isCommunityInfrastructureLevyFormallyAdopted?: boolean;
 	/** @example true */
 	isConservationArea?: boolean;
@@ -5937,7 +5935,6 @@ export type LpaQuestionnaire = {
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;
-	isAffectingNeighbouringSites?: boolean | null;
 	lpaProcedurePreference?: string | null;
 	lpaProcedurePreferenceDetails?: string | null;
 	lpaProcedurePreferenceDuration?: number | null;
@@ -6000,6 +5997,7 @@ export type LpaQuestionnaire = {
 	listedBuildingDetails?: {
 		id?: number;
 		listEntry?: string;
+		affectsListedBuilding?: boolean;
 		name?: string | null;
 		grade?: string | null;
 	}[];
@@ -10148,6 +10146,7 @@ export interface InvalidIncompleteReason {
 export interface ListedBuilding {
 	id?: number;
 	listEntry?: string;
+	affectsListedBuilding?: boolean;
 	name?: string | null;
 	grade?: string | null;
 }
@@ -10754,7 +10753,6 @@ export interface LpaQuestionnaireUpdateRequest {
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;
-	isAffectingNeighbouringSites?: boolean | null;
 	lpaProcedurePreference?: string | null;
 	lpaProcedurePreferenceDetails?: string | null;
 	lpaProcedurePreferenceDuration?: number | null;

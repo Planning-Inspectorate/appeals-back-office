@@ -121,7 +121,6 @@ interface SingleAppealDetailsResponse {
 		withdrawalFolder?: FolderInfo | null;
 		withdrawalRequestDate: Date | null;
 	};
-	isAffectingNeighbouringSites?: boolean | null;
 	eiaScreeningRequired?: boolean | null;
 }
 
@@ -375,7 +374,6 @@ interface UpdateLPAQuestionnaireRequest {
 	incompleteReasons?: IncompleteInvalidReasons;
 	validationOutcomeId?: number;
 	lpaNotificationMethods?: LPANotificationMethodsSelectedUncheckedUpdateManyWithoutLpaQuestionnaireNestedInput;
-	isAffectingNeighbouringSites?: boolean;
 	eiaColumnTwoThreshold?: boolean;
 	eiaRequiresEnvironmentalStatement?: boolean;
 	eiaEnvironmentalImpactSchedule?: string | null;
@@ -630,7 +628,6 @@ interface UpdateLPAQuestionnaireRequest {
 	healthAndSafetyDetails?: string;
 	includesScreeningOption?: boolean;
 	incompleteReasons?: IncompleteInvalidReasons;
-	isAffectingNeighbouringSites?: boolean;
 	isConservationArea?: boolean;
 	isCorrectAppealType?: boolean;
 	isEnvironmentalStatementRequired?: boolean;

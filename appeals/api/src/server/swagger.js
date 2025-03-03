@@ -555,7 +555,6 @@ export const spec = {
 			includesScreeningOption: true,
 			inquiryDays: 2,
 			inspectorAccessDetails: 'The entrance is at the back of the property',
-			isAffectingNeighbouringSites: true,
 			isCommunityInfrastructureLevyFormallyAdopted: true,
 			isConservationArea: true,
 			isCorrectAppealType: true,
