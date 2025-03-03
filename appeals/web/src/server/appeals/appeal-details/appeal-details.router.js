@@ -30,7 +30,7 @@ import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
-import finalCommentsRouter from './final-comments/final-comments.router.js';
+import finalCommentsRouter from './representations/final-comments/final-comments.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import representationsRouter from './representations/representations.router.js';
