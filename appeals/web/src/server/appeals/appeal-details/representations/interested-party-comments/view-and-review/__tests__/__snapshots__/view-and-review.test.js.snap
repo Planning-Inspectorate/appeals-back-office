@@ -201,7 +201,7 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Comment</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more">Awaiting final comment</div>
+                        <div class="pins-show-more">Awaiting review comment 47</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
@@ -338,7 +338,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                                         <dd class="govuk-summary-list__value">Lee Thornton</dd>
                                     </div>
                                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
-                                        <dd class="govuk-summary-list__value">test1@example.com</dd>
+                                        <dd class="govuk-summary-list__value">Not provided</dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                                         <dd class="govuk-summary-list__value">Not provided</dd>
@@ -349,7 +349,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                                         <dd                                         class="govuk-summary-list__value">9 October 2024</dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
-                                        <dd class="govuk-summary-list__value">Awaiting final comment</dd>
+                                        <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
                                         </dd>
                                     </div>
@@ -428,7 +428,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                                         <dd                                         class="govuk-summary-list__value">9 October 2024</dd>
                                     </div>
                                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
-                                        <dd class="govuk-summary-list__value">Awaiting final comment</dd>
+                                        <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
                                         </dd>
                                     </div>
@@ -505,7 +505,7 @@ exports[`interested-party-comments GET /view-comment with data should render vie
                     <dd                     class="govuk-summary-list__value">9 October 2024</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
-                    <dd class="govuk-summary-list__value">Awaiting review final comment</dd>
+                    <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact"> Redact</a>
                     </dd>
                 </div>
