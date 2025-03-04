@@ -511,7 +511,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 
 /**
  * @typedef {Object} BannerTypeAndChangeType
- * @property {string} bannerType
+ * @property {import('#lib/mappers/components/page-components/notification-banners.mapper.js').NotificationBannerDefinitionKey} bannerType
  * @property {SiteVisitChangeType} changeType
  */
 
@@ -539,7 +539,6 @@ export function getSiteVisitSuccessBannerTypeAndChangeType(
 		oldApiVisitType &&
 		updateOrCreateSiteVisitParameters.apiVisitType &&
 		oldApiVisitType.toLowerCase() !== updateOrCreateSiteVisitParameters.apiVisitType.toLowerCase();
-
 	const dateTimeChanged =
 		oldVisitDate !== updateOrCreateSiteVisitParameters.visitDate ||
 		(!(oldVisitStartTime === null && updateOrCreateSiteVisitParameters.visitStartTime === '') &&
