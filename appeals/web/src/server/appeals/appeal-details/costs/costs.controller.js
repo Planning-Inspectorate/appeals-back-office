@@ -591,12 +591,14 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 		await postUploadDocumentsCheckAndConfirm({ request, response });
 	}
 
-	addNotificationBannerToSession({
-		session,
-		bannerDefinitionKey: 'costsDocumentAdded',
-		appealId: currentAppeal.appealId,
-		text: `Costs decision ${documentId ? 'updated' : 'uploaded'}`
-	});
+	if (!documentId) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'costsDocumentAdded',
+			appealId: currentAppeal.appealId,
+			text: 'Costs decision uploaded'
+		});
+	}
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 };
