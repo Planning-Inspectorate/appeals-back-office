@@ -1066,15 +1066,9 @@ export const spec = {
 				serviceUser: {
 					type: 'object',
 					properties: {
-						serviceUserId: {
-							type: 'number',
-							required: true,
-							description: 'ID in back-office',
-							example: 12345
-						},
 						userType: {
 							type: 'string',
-							required: false,
+							required: true,
 							description: 'Type of user',
 							example: 'agent'
 						},

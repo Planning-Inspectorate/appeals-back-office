@@ -2319,15 +2319,10 @@ export type SiteVisitSingleResponse = SiteVisitCreateRequest & {
 export interface UpdateServiceUserRequest {
 	serviceUser?: {
 		/**
-		 * ID in back-office
-		 * @example 12345
-		 */
-		serviceUserId?: number;
-		/**
 		 * Type of user
 		 * @example "agent"
 		 */
-		userType?: string;
+		userType: string;
 		/**
 		 * User's organisation (optional)
 		 * @example "Planning Support LTD"

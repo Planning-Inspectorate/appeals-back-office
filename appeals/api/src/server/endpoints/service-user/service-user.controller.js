@@ -21,10 +21,9 @@ import appealRepository from '#repositories/appeal.repository.js';
  */
 export const updateServiceUserById = async (req, res) => {
 	const { serviceUser } = req.body;
-	const { appealId } = req.params;
+	const { appealId, serviceUserId } = req.params;
 
 	const {
-		serviceUserId,
 		userType,
 		organisationName,
 		firstName,

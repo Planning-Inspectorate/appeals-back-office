@@ -15,10 +15,10 @@ import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-e
 const router = createRouter();
 
 router.patch(
-	'/:appealId/service-user',
+	'/:appealId/service-user/:serviceUserId',
 	/*
 	#swagger.tags = ['Service Users']
-	#swagger.path = '/appeals/{appealId}/service-user'
+	#swagger.path = '/appeals/{appealId}/service-user/{serviceUserId}'
 	#swagger.description = Updates a single service user by id
 	#swagger.parameters['azureAdUserId'] = {
 		in: 'header',
