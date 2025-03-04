@@ -294,7 +294,7 @@ describe('service-user', () => {
 
 			it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
 				const appealId = appealData.appealId;
-				nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+				nock('http://test/').patch(`/appeals/${appealId}/service-user/1`).reply(200, {
 					serviceUserId: 1
 				});
 				const validData = {
@@ -315,7 +315,7 @@ describe('service-user', () => {
 
 			it('should re-direct to appeals details if firstName, lastName are valid, and organisation, phone number, and email is empty', async () => {
 				const appealId = appealData.appealId;
-				nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+				nock('http://test/').patch(`/appeals/${appealId}/service-user/1`).reply(200, {
 					serviceUserId: 1
 				});
 				const validData = {
@@ -338,7 +338,7 @@ describe('service-user', () => {
 
 			it('should re-direct to appellant case if firstName, lastName are valid, and organisation, phone number, and email is empty', async () => {
 				const appealId = appealData.appealId;
-				nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+				nock('http://test/').patch(`/appeals/${appealId}/service-user/1`).reply(200, {
 					serviceUserId: 1
 				});
 				const validData = {

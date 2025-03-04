@@ -858,7 +858,7 @@ describe('appeal-details', () => {
 
 			it('should render a success notification banner when a service user was updated', async () => {
 				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
-				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+				nock('http://test/').patch(`/appeals/1/service-user/1`).reply(200, {
 					serviceUserId: 1
 				});
 				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
