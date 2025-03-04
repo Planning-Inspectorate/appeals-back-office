@@ -10,12 +10,12 @@ import { kebabCase } from 'lodash-es';
  * @param {boolean} [isPageHeading=false]
  * @returns
  */
-function addFieldsetLegendText(component, legendText, isPageHeading = false) {
+function addFieldsetLegendText(component, legendText, isPageHeading = false, legendTextSize = 'l') {
 	component.parameters.fieldset = {
 		legend: {
 			text: legendText,
 			isPageHeading,
-			classes: 'govuk-fieldset__legend--l'
+			classes: `govuk-fieldset__legend--${legendTextSize}`
 		}
 	};
 }
@@ -59,6 +59,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {string} [params.id]
  * @param {string|boolean|null} [params.value]
  * @param {string} [params.legendText]
+ * @param {string} [params.legendTextSize]
  * @param {boolean} [params.legendIsPageHeading]
  * @param {ConditionalParams} [params.yesConditional]
  * @param {string} [params.customYesLabel]
@@ -71,6 +72,7 @@ export function yesNoInput({
 	id,
 	value,
 	legendText,
+	legendTextSize = 'l',
 	legendIsPageHeading = false,
 	yesConditional,
 	customYesLabel,
@@ -110,7 +112,7 @@ export function yesNoInput({
 		}
 	};
 	if (legendText) {
-		addFieldsetLegendText(component, legendText, legendIsPageHeading);
+		addFieldsetLegendText(component, legendText, legendIsPageHeading, legendTextSize);
 	}
 	if (typeof hint === 'string') {
 		component.parameters.hint = { text: hint };

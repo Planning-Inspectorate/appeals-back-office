@@ -7,6 +7,7 @@ import logger from '../../../lib/logger.js';
 import { objectContainsAllKeys } from '../../../lib/object-utilities.js';
 import * as api from '#lib/api/allocation-details.api.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { moveItemInArray } from '#lib/array-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -51,10 +52,22 @@ const renderAllocationDetailsSpecialism = async (request, response, errors = nul
 		return response.status(500).render('app/500.njk');
 	}
 
-	const [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
+	let [allocationDetailsLevels, allocationDetailsSpecialisms] = await Promise.all([
 		api.getAllocationDetailsLevels(request.apiClient),
 		api.getAllocationDetailsSpecialisms(request.apiClient)
 	]);
+
+	// move "General allocation" to the top as per A2-1426
+	const generalAllocationIndex = allocationDetailsSpecialisms.findIndex(
+		(specialism) => specialism.name === 'General allocation'
+	);
+	if (generalAllocationIndex > 0) {
+		allocationDetailsSpecialisms = moveItemInArray(
+			allocationDetailsSpecialisms,
+			generalAllocationIndex,
+			0
+		);
+	}
 
 	const selectedAllocationLevel = allocationDetailsLevels.find(
 		(levelItem) => levelItem.level === request.session.allocationLevel
