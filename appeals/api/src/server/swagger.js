@@ -1074,7 +1074,7 @@ export const spec = {
 						},
 						userType: {
 							type: 'string',
-							required: true,
+							required: false,
 							description: 'Type of user',
 							example: 'agent'
 						},
@@ -1086,7 +1086,7 @@ export const spec = {
 						},
 						firstName: {
 							type: 'string',
-							required: true,
+							required: false,
 							description: "User's first name",
 							example: 'Harry'
 						},
@@ -1098,9 +1098,15 @@ export const spec = {
 						},
 						lastName: {
 							type: 'string',
-							required: true,
+							required: false,
 							description: "User's last name",
 							example: 'Potter'
+						},
+						anonymised: {
+							type: 'boolean',
+							required: false,
+							description: "Whether the user's name should be anonymised",
+							example: true
 						},
 						email: {
 							type: 'string',

@@ -30,6 +30,7 @@ export const updateServiceUserById = async (req, res) => {
 		firstName,
 		middleName,
 		lastName,
+		anonymised,
 		email,
 		phoneNumber,
 		addressId
@@ -40,6 +41,7 @@ export const updateServiceUserById = async (req, res) => {
 		firstName,
 		middleName,
 		lastName,
+		anonymised,
 		email,
 		phoneNumber,
 		addressId
@@ -55,7 +57,7 @@ export const updateServiceUserById = async (req, res) => {
 		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [userType])
 	});
 
-	await broadcasters.broadcastServiceUser(
+	broadcasters.broadcastServiceUser(
 		dbSavedResult.id,
 		EventType.Update,
 		userType,

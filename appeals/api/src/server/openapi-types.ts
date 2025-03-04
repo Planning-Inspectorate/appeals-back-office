@@ -81,7 +81,7 @@ export interface RepResponse {
 	/** @example "" */
 	notes?: string;
 	/** @example [] */
-	attachments?: RepAttachment[];
+	attachments?: any[];
 	/** @example "comment" */
 	representationType?: string;
 	/** @example false */
@@ -122,22 +122,6 @@ export interface RepResponse {
 		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
 		text?: string[];
 	}[];
-}
-export interface RepAttachment {
-	documentGuid: string;
-	version: number;
-	representationId: number;
-	documentVersion?: {
-		documentGuid: string;
-		version: number;
-		documentType?: string;
-		originalFilename?: string;
-		fileName?: string;
-		mime?: string;
-		size?: number;
-		blobStoragePath?: string;
-		documentURI?: string;
-	};
 }
 
 export interface ValidateDate {
@@ -512,7 +496,6 @@ export interface Folder {
 				| 'plansDrawings'
 				| 'rule6ProofOfEvidence'
 				| 'rule6Statement'
-				| 'rule6WitnessesEvidence'
 				| 'statementCommonGround'
 				| 'supplementaryPlanning'
 				| 'treePreservationPlan'
@@ -608,7 +591,6 @@ export interface Folder {
 				| 'plansDrawings'
 				| 'rule6ProofOfEvidence'
 				| 'rule6Statement'
-				| 'rule6WitnessesEvidence'
 				| 'statementCommonGround'
 				| 'supplementaryPlanning'
 				| 'treePreservationPlan'
@@ -2340,12 +2322,12 @@ export interface UpdateServiceUserRequest {
 		 * ID in back-office
 		 * @example 12345
 		 */
-		serviceUserId: number;
+		serviceUserId?: number;
 		/**
 		 * Type of user
 		 * @example "agent"
 		 */
-		userType: string;
+		userType?: string;
 		/**
 		 * User's organisation (optional)
 		 * @example "Planning Support LTD"
@@ -2355,7 +2337,7 @@ export interface UpdateServiceUserRequest {
 		 * User's first name
 		 * @example "Harry"
 		 */
-		firstName: string;
+		firstName?: string;
 		/**
 		 * User's middle name (optional)
 		 * @example "James"
@@ -2365,7 +2347,12 @@ export interface UpdateServiceUserRequest {
 		 * User's last name
 		 * @example "Potter"
 		 */
-		lastName: string;
+		lastName?: string;
+		/**
+		 * Whether the user's name should be anonymised
+		 * @example true
+		 */
+		anonymised?: boolean;
 		/**
 		 * User's email address (optional)
 		 * @example "harry.potter@magic.com"
@@ -2624,7 +2611,6 @@ export interface AppealDecision {
 				| 'plansDrawings'
 				| 'rule6ProofOfEvidence'
 				| 'rule6Statement'
-				| 'rule6WitnessesEvidence'
 				| 'statementCommonGround'
 				| 'supplementaryPlanning'
 				| 'treePreservationPlan'
@@ -2720,7 +2706,6 @@ export interface AppealDecision {
 				| 'plansDrawings'
 				| 'rule6ProofOfEvidence'
 				| 'rule6Statement'
-				| 'rule6WitnessesEvidence'
 				| 'statementCommonGround'
 				| 'supplementaryPlanning'
 				| 'treePreservationPlan'
@@ -2839,7 +2824,6 @@ export interface AppealWithdrawal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
@@ -2935,7 +2919,6 @@ export interface AppealWithdrawal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
@@ -3058,7 +3041,6 @@ export interface Document {
 			| 'plansDrawings'
 			| 'rule6ProofOfEvidence'
 			| 'rule6Statement'
-			| 'rule6WitnessesEvidence'
 			| 'statementCommonGround'
 			| 'supplementaryPlanning'
 			| 'treePreservationPlan'
@@ -3154,7 +3136,6 @@ export interface Document {
 			| 'plansDrawings'
 			| 'rule6ProofOfEvidence'
 			| 'rule6Statement'
-			| 'rule6WitnessesEvidence'
 			| 'statementCommonGround'
 			| 'supplementaryPlanning'
 			| 'treePreservationPlan'
@@ -3252,7 +3233,6 @@ export interface DocumentVersion {
 		| 'plansDrawings'
 		| 'rule6ProofOfEvidence'
 		| 'rule6Statement'
-		| 'rule6WitnessesEvidence'
 		| 'statementCommonGround'
 		| 'supplementaryPlanning'
 		| 'treePreservationPlan'
@@ -3495,7 +3475,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -3591,7 +3570,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -3701,7 +3679,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -3797,7 +3774,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -3907,7 +3883,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4003,7 +3978,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4113,7 +4087,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4209,7 +4182,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4319,7 +4291,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4415,7 +4386,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4525,7 +4495,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4621,7 +4590,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4731,7 +4699,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4827,7 +4794,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -4937,7 +4903,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5033,7 +4998,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5143,7 +5107,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5239,7 +5202,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5349,7 +5311,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5445,7 +5406,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5555,7 +5515,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5651,7 +5610,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5761,7 +5719,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -5857,7 +5814,6 @@ export type AppellantCase = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6078,7 +6034,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6174,7 +6129,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6284,7 +6238,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6380,7 +6333,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6490,7 +6442,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6586,7 +6537,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6696,7 +6646,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6792,7 +6741,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6902,7 +6850,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -6998,7 +6945,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7108,7 +7054,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7204,7 +7149,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7314,7 +7258,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7410,7 +7353,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7520,7 +7462,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7616,7 +7557,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7726,7 +7666,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7822,7 +7761,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -7932,7 +7870,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8028,7 +7965,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8138,7 +8074,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8234,7 +8169,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8344,7 +8278,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8440,7 +8373,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8550,7 +8482,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8646,7 +8577,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8756,7 +8686,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8852,7 +8781,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -8962,7 +8890,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9058,7 +8985,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9168,7 +9094,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9264,7 +9189,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9374,7 +9298,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9470,7 +9393,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9580,7 +9502,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9676,7 +9597,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9786,7 +9706,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9882,7 +9801,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -9992,7 +9910,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -10088,7 +10005,6 @@ export type LpaQuestionnaire = {
 						| 'plansDrawings'
 						| 'rule6ProofOfEvidence'
 						| 'rule6Statement'
-						| 'rule6WitnessesEvidence'
 						| 'statementCommonGround'
 						| 'supplementaryPlanning'
 						| 'treePreservationPlan'
@@ -10342,7 +10258,6 @@ export interface Appeal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
@@ -10438,7 +10353,6 @@ export interface Appeal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
@@ -10557,7 +10471,6 @@ export interface Appeal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
@@ -10653,7 +10566,6 @@ export interface Appeal {
 					| 'plansDrawings'
 					| 'rule6ProofOfEvidence'
 					| 'rule6Statement'
-					| 'rule6WitnessesEvidence'
 					| 'statementCommonGround'
 					| 'supplementaryPlanning'
 					| 'treePreservationPlan'
