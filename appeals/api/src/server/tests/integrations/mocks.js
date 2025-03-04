@@ -123,6 +123,7 @@ export const validRepresentationIp = {
 		emailAddress: 'test@test.com',
 		firstName: 'Testy',
 		lastName: 'McTest',
+		anonymised: false,
 		salutation: 'Mr',
 		serviceUserType: 'InterestedParty',
 		organisation: 'A company',

@@ -5434,6 +5434,10 @@
 								"type": "string",
 								"example": "McTest"
 							},
+							"anonymised": {
+								"type": "boolean",
+								"example": false
+							},
 							"salutation": {
 								"type": "string",
 								"example": "Mr"

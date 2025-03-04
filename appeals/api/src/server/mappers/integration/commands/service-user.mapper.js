@@ -10,6 +10,7 @@ export const mapServiceUserIn = (data) => {
 			salutation: data.salutation,
 			firstName: data.firstName,
 			lastName: data.lastName,
+			anonymised: data.anonymised,
 			email: data.emailAddress,
 			webAddress: data.website,
 			phoneNumber: data.telephoneNumber,

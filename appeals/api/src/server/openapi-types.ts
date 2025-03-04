@@ -334,6 +334,8 @@ export interface RepresentationData {
 		firstName?: string;
 		/** @example "McTest" */
 		lastName?: string;
+		/** @example false */
+		anonymised?: boolean;
 		/** @example "Mr" */
 		salutation?: string;
 		/** @example "InterestedParty" */
