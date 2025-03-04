@@ -67,7 +67,7 @@ export function generateCommentSummaryList(
 	const attachmentsList =
 		filteredAttachments.length > 0
 			? buildHtmUnorderedList(
-					comment.attachments.map(
+					filteredAttachments.map(
 						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
 					)
 			  )
