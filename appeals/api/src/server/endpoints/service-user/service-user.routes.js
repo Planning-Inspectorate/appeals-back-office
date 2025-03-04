@@ -77,7 +77,7 @@ router.delete(
 	/*
 	#swagger.tags = ['Service Users']
 	#swagger.path = '/appeals/{appealId}/service-user'
-	#swagger.description = Deletes a single service user by id
+	#swagger.description = 'Deletes the agent ServiceUser on the specified appeal'
 	#swagger.parameters['azureAdUserId'] = {
 		in: 'header',
 		required: true,

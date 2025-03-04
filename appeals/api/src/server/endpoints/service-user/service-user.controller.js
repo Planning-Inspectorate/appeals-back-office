@@ -104,16 +104,21 @@ export async function updateServiceUserAddress(request, response) {
 export async function removeServiceUserById(request, response) {
 	const {
 		body: { userType },
-		params
+		params,
+		appeal
 	} = request;
+
 	const appealId = Number(params.appealId);
 	const azureAdUserId = request.get('azureAdUserId');
 
-	const serviceUserId = parseInt(request.appeal?.agent?.id);
+	const agentId = Number(appeal?.agent?.id);
+	if (!agentId) {
+		return response.status(400).end();
+	}
 
 	const deletedServiceUser = await appealRepository.removeAppealServiceUser(appealId, {
 		userType,
-		serviceUserId
+		serviceUserId: agentId
 	});
 
 	if (!deletedServiceUser) {
