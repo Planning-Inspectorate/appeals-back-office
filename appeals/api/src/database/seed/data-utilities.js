@@ -1,7 +1,7 @@
 /**
  * @returns {boolean}
  */
-export const randomBool = () => Math.random() < 0.5;
+export const randomBool = (probability = 0.5) => Math.random() < probability;
 
 /**
  * Returns a value at random from the supplied enum object

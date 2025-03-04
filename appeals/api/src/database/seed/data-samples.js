@@ -103,7 +103,8 @@ export const appellantsList = personList.map(({ firstName, lastName, company, em
 	firstName,
 	lastName,
 	organisationName: company,
-	email
+	email,
+	anonymised: randomBool(0.25)
 }));
 
 /**
@@ -113,7 +114,8 @@ export const agentsList = personList.map(({ firstName, lastName, company, email 
 	firstName,
 	lastName,
 	organisationName: company,
-	email
+	email,
+	anonymised: randomBool()
 }));
 
 /** @type {AppealSite[]} */
