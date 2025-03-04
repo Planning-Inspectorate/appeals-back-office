@@ -211,7 +211,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 
 				addNotificationBannerToSession({
 					session: request.session,
-					bannerDefinitionKey: 'siteVisitScheduled',
+					bannerDefinitionKey: successBannerAndChangeType.bannerType,
 					appealId: appealDetails.appealId
 				});
 

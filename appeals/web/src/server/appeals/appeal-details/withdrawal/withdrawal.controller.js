@@ -331,7 +331,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'appealWithdrawalRequested',
+			bannerDefinitionKey: 'appealWithdrawn',
 			appealId: currentAppeal.appealId
 		});
 
