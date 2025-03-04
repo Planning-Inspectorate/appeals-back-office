@@ -7,6 +7,8 @@ import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
 import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import { mapPagination } from '../index.js';
+import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -134,6 +136,70 @@ describe('pagination mapper', () => {
 			expect(result.items?.[4]?.href).toEqual(
 				`${testBaseUrl}?pageSize=10&pageNumber=5${testAdditionalQueryString}`
 			);
+		});
+	});
+});
+
+describe('mapRepresentationDocumentSummaryActionLink', () => {
+	const baseRoute = '/appeals-service/appeal-details/4419';
+
+	describe('LPA Statement links', () => {
+		it('should return "Review" link for LPA statement when awaiting review', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				'lpa-statement'
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
+			);
+		});
+
+		it('should return "Review" link for LPA statement when incomplete', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+				'lpa-statement'
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
+			);
+		});
+
+		it('should return "View" link for LPA statement when valid', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				'lpa-statement'
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
+			);
+		});
+
+		it('should return "View" link for LPA statement when published', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.PUBLISHED,
+				'lpa-statement'
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
+			);
+		});
+
+		it('should return an empty string when LPA statement is not received', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'not_received',
+				null,
+				'lpa-statement'
+			);
+			expect(link).toBe('');
 		});
 	});
 });
