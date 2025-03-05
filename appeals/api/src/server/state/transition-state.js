@@ -5,8 +5,13 @@ import appealRepository from '#repositories/appeal.repository.js';
 import appealStatusRepository from '#repositories/appeal-status.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_PROGRESSED_TO_STATUS } from '#endpoints/constants.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import {
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	APPEAL_TYPE_SHORTHAND_HAS,
+	APPEAL_TYPE_SHORTHAND_FPA,
+	VALIDATION_OUTCOME_COMPLETE
+} from '#endpoints/constants.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -49,14 +54,25 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	const newState = String(stateMachineService.state.value);
 
-	if (newState !== currentState) {
-		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+	if (newState === currentState) {
+		stateMachineService.stop();
+		return;
+	}
 
-		createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [newState])
-		});
+	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+
+	createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [newState])
+	});
+
+	if (
+		newState === APPEAL_CASE_STATUS.EVENT &&
+		[APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealType.key) &&
+		appeal.siteVisit
+	) {
+		transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
 	stateMachineService.stop();

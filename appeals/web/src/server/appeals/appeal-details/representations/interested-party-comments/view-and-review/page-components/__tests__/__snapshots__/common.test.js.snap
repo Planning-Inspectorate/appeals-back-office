@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateCommentSummaryList should return the comment summary list including data 1`] = `
+{
+  "parameters": {
+    "rows": [
+      {
+        "key": {
+          "text": "Interested party",
+        },
+        "value": {
+          "text": "John Doe",
+        },
+      },
+      {
+        "key": {
+          "text": "Email",
+        },
+        "value": {
+          "text": "john.dow@example.com",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/edit/address?review=undefined&editAddress=true",
+              "text": "Change",
+              "visuallyHiddenText": "address",
+            },
+          ],
+        },
+        "key": {
+          "text": "Address",
+        },
+        "value": {
+          "html": "123 Random street, </br>SW1A 1AA",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/edit/site-visit-requested",
+              "text": "Change",
+              "visuallyHiddenText": "site visited requested",
+            },
+          ],
+        },
+        "key": {
+          "text": "Site visit requested",
+        },
+        "value": {
+          "text": "Yes",
+        },
+      },
+      {
+        "key": {
+          "text": "When did the interested party submit the comment?",
+        },
+        "value": {
+          "html": "",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/redact",
+              "text": "Redact",
+            },
+          ],
+        },
+        "key": {
+          "text": "Comment",
+        },
+        "value": {
+          "text": "Test comment",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/add-document",
+              "text": "Add",
+              "visuallyHiddenText": "supporting documents",
+            },
+          ],
+        },
+        "key": {
+          "text": "Supporting documents",
+        },
+        "value": {
+          "text": "Not provided",
+        },
+      },
+    ],
+  },
+  "type": "summary-list",
+  "wrapperHtml": {
+    "closing": "</div></div>",
+    "opening": "<div class="govuk-grid-row"><div class="govuk-grid-column-full">",
+  },
+}
+`;
+
+exports[`generateCommentSummaryList should return the default comment summary list 1`] = `
+{
+  "parameters": {
+    "rows": [
+      {
+        "key": {
+          "text": "Interested party",
+        },
+        "value": {
+          "text": "Not provided",
+        },
+      },
+      {
+        "key": {
+          "text": "Email",
+        },
+        "value": {
+          "text": "Not provided",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/edit/address?review=undefined&editAddress=false",
+              "text": "Add",
+              "visuallyHiddenText": "address",
+            },
+          ],
+        },
+        "key": {
+          "text": "Address",
+        },
+        "value": {
+          "text": "Not provided",
+        },
+      },
+      {
+        "actions": {
+          "items": [],
+        },
+        "key": {
+          "text": "Site visit requested",
+        },
+        "value": {
+          "text": "No",
+        },
+      },
+      {
+        "key": {
+          "text": "When did the interested party submit the comment?",
+        },
+        "value": {
+          "html": "",
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/redact",
+              "text": "Redact",
+            },
+          ],
+        },
+        "key": {
+          "text": "Comment",
+        },
+        "value": {
+          "text": undefined,
+        },
+      },
+      {
+        "actions": {
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/add-document",
+              "text": "Add",
+              "visuallyHiddenText": "supporting documents",
+            },
+          ],
+        },
+        "key": {
+          "text": "Supporting documents",
+        },
+        "value": {
+          "text": "Not provided",
+        },
+      },
+    ],
+  },
+  "type": "summary-list",
+  "wrapperHtml": {
+    "closing": "</div></div>",
+    "opening": "<div class="govuk-grid-row"><div class="govuk-grid-column-full">",
+  },
+}
+`;

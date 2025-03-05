@@ -5,7 +5,7 @@ import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import incompleteRouter from './incomplete/incomplete.router.js';
 import validRouter from './valid/valid.router.js';
 import redactRouter from './redact/redact.router.js';
-import { getRepresentationAttachmentsFolder } from '#appeals/appeal-details/final-comments/final-comments.middleware.js';
+import { getRepresentationAttachmentsFolder } from '#appeals/appeal-details/representations/final-comments/final-comments.middleware.js';
 import addDocumentRouter from '../document-attachments/add-document.router.js';
 import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
 

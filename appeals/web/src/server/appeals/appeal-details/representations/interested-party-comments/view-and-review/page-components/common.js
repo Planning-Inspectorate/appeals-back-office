@@ -52,40 +52,39 @@ export function generateCommentSummaryList(
 	comment,
 	{ isReviewPage } = { isReviewPage: false }
 ) {
-	const hasAddress =
-		comment.represented.address &&
-		comment.represented.address.addressLine1 &&
-		comment.represented.address.postCode;
+	const { addressLine1, postCode } = comment.represented?.address ?? {};
+	const hasAddress = addressLine1 && postCode;
 
-	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
+	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
-	const filteredAttachments = comment.attachments.filter(
+	const filteredAttachments = comment.attachments?.filter(
 		(attachment) => !attachment.documentVersion.document.isDeleted
 	);
 
-	const attachmentsList =
-		filteredAttachments.length > 0
-			? buildHtmUnorderedList(
-					comment.attachments.map(
-						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
+	const attachmentsList = filteredAttachments?.length
+		? buildHtmUnorderedList(
+				filteredAttachments.map(
+					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+				)
+		  )
+		: null;
+
+	const { address, name, email } = comment.represented || {};
 
 	const rows = [
 		{
 			key: { text: 'Interested party' },
-			value: { text: comment.represented.name }
+			value: { text: name || 'Not provided' }
 		},
 		{
 			key: { text: 'Email' },
-			value: { text: comment.represented.email || 'Not provided' }
+			value: { text: email || 'Not provided' }
 		},
 		{
 			key: { text: 'Address' },
 			value: hasAddress
-				? { html: addressToMultilineStringHtml(comment.represented.address) }
+				? { html: addressToMultilineStringHtml(address) }
 				: { text: 'Not provided' },
 			actions: {
 				items: [
@@ -146,7 +145,7 @@ export function generateCommentSummaryList(
 			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 			actions: {
 				items: [
-					...(filteredAttachments.length > 0
+					...(filteredAttachments?.length
 						? [
 								{
 									text: 'Manage',
