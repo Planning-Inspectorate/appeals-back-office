@@ -21,6 +21,6 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) =>
 			currentRoute,
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,
 			appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
-			'appellant'
+			'appellant-final-comments'
 		)
 	});

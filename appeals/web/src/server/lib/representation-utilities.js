@@ -8,41 +8,48 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
+ * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement'} RepresentationType
+ *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
  * @param {string|null|undefined} representationStatus
- * @param {'appellant'|'lpa'|'lpa-statement'} finalCommentsType
+ * @param {RepresentationType} representationType
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
 	currentRoute,
 	documentationStatus,
 	representationStatus,
-	finalCommentsType
+	representationType
 ) {
-	if (documentationStatus === 'received' && representationStatus) {
-		const reviewRequired =
-			representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW ||
-			representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
-
-		if (finalCommentsType === 'lpa-statement') {
-			return `<a href="${currentRoute}/lpa-statement" data-cy="${
-				reviewRequired ? 'review' : 'view'
-			}-lpa-statement" class="govuk-link">${
-				reviewRequired ? 'Review' : 'View'
-			}<span class="govuk-visually-hidden"> LPA statement</span></a>`;
-		}
-
-		return `<a href="${currentRoute}/final-comments/${finalCommentsType}" data-cy="${
-			reviewRequired ? 'review' : 'view'
-		}-${finalCommentsType}-final-comments" class="govuk-link">${
-			reviewRequired ? 'Review' : 'View'
-		} <span class="govuk-visually-hidden">${
-			finalCommentsType === 'lpa' ? 'L P A' : finalCommentsType
-		} final comments</span></a>`;
+	if (documentationStatus !== 'received') {
+		return '';
 	}
 
-	return '';
+	const reviewRequired = [
+		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(representationStatus);
+
+	/** @type {Record<RepresentationType, string>} */
+	const visuallyHiddenTexts = {
+		'lpa-statement': 'LPA statement',
+		'appellant-final-comments': 'appellant final comments',
+		'lpa-final-comments': 'L P A final comments'
+	};
+
+	/** @type {Record<RepresentationType, string>} */
+	const hrefs = {
+		'lpa-statement': `${currentRoute}/lpa-statement`,
+		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
+		'appellant-final-comments': `${currentRoute}/final-comments/appellant`
+	};
+
+	return `<a href="${hrefs[representationType]}" data-cy="${
+		reviewRequired ? 'review' : 'view'
+	}-${representationType}" class="govuk-link">${
+		reviewRequired ? 'Review' : 'View'
+	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 }
 
 /**

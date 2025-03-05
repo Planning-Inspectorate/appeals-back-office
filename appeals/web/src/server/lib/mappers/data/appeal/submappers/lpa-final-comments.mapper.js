@@ -21,6 +21,6 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) =>
 			currentRoute,
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,
 			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
-			'lpa'
+			'lpa-final-comments'
 		)
 	});
