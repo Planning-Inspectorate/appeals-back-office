@@ -261,11 +261,11 @@ export const addBusinessDays = async (apiClient, startDate, numDays) => {
  */
 const getExtendedDeadlineConfiguration = (appealType) => {
 	switch (appealType) {
-		case APPEAL_TYPE.D:
+		case APPEAL_TYPE.HOUSEHOLDER:
 			return {
 				weeks: 12
 			};
-		case APPEAL_TYPE.W:
+		case APPEAL_TYPE.S78:
 			return {
 				months: 6
 			};

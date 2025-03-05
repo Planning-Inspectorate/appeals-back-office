@@ -21,9 +21,9 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
  */
 export function generateAccordionItems(appealDetails, mappedData, session) {
 	switch (appealDetails.appealType) {
-		case APPEAL_TYPE.D:
+		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHasAccordion(appealDetails, mappedData, session);
-		case APPEAL_TYPE.W:
+		case APPEAL_TYPE.S78:
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				throw new Error('Feature flag inactive for S78');
 			}

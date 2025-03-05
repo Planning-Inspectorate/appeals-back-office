@@ -31,19 +31,19 @@ import { FOLDERS } from '@pins/appeals/constants/documents.js';
  *
  */
 export const appealTypes = [
-	{ key: APPEAL_CASE_TYPE.D, type: APPEAL_TYPE.D, processCode: 'HAS', enabled: true },
-	{ key: APPEAL_CASE_TYPE.C, type: APPEAL_TYPE.C, enabled: false },
-	{ key: APPEAL_CASE_TYPE.F, type: APPEAL_TYPE.F, enabled: false },
-	{ key: APPEAL_CASE_TYPE.G, type: APPEAL_TYPE.G, enabled: false },
-	{ key: APPEAL_CASE_TYPE.H, type: APPEAL_TYPE.H, enabled: false },
-	{ key: APPEAL_CASE_TYPE.L, type: APPEAL_TYPE.L, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Q, type: APPEAL_TYPE.Q, enabled: false },
-	{ key: APPEAL_CASE_TYPE.S, type: APPEAL_TYPE.S, enabled: false },
-	{ key: APPEAL_CASE_TYPE.V, type: APPEAL_TYPE.V, enabled: false },
-	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.W, enabled: false },
-	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.X, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Y, type: APPEAL_TYPE.Y, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Z, type: APPEAL_TYPE.Z, enabled: false }
+	{ key: APPEAL_CASE_TYPE.D, type: APPEAL_TYPE.HOUSEHOLDER, processCode: 'HAS', enabled: true },
+	{ key: APPEAL_CASE_TYPE.C, type: APPEAL_TYPE.ENFORCEMENT_NOTICE, enabled: false },
+	{ key: APPEAL_CASE_TYPE.F, type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING, enabled: false },
+	{ key: APPEAL_CASE_TYPE.G, type: APPEAL_TYPE.DISCONTINUANCE_NOTICE, enabled: false },
+	{ key: APPEAL_CASE_TYPE.H, type: APPEAL_TYPE.ADVERTISEMENT, enabled: false },
+	{ key: APPEAL_CASE_TYPE.L, type: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY, enabled: false },
+	{ key: APPEAL_CASE_TYPE.Q, type: APPEAL_TYPE.PLANNING_OBLIGATION, enabled: false },
+	{ key: APPEAL_CASE_TYPE.S, type: APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION, enabled: false },
+	{ key: APPEAL_CASE_TYPE.V, type: APPEAL_TYPE.CALL_IN_APPLICATION, enabled: false },
+	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.S78, enabled: false },
+	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE, enabled: false },
+	{ key: APPEAL_CASE_TYPE.Y, type: APPEAL_TYPE.PLANNED_LISTED_BUILDING, enabled: false },
+	{ key: APPEAL_CASE_TYPE.Z, type: APPEAL_TYPE.COMMERCIAL, enabled: false }
 ];
 
 /**

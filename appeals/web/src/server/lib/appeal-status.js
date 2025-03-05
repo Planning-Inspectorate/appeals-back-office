@@ -8,7 +8,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
  * @returns {string}
  * */
 export function mapStatusText(appealStatus, appealType) {
-	if (![APPEAL_TYPE.D, APPEAL_TYPE.W].includes(appealType)) {
+	if (![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78].includes(appealType)) {
 		return appealStatus;
 	}
 
