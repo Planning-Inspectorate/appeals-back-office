@@ -68,7 +68,13 @@ export const notificationBannerDefinitions = {
 	},
 	documentAdded: {
 		type: 'success',
-		pages: ['appellantCase', 'lpaQuestionnaire', 'manageDocuments', 'viewFinalComments'],
+		pages: [
+			'appealDetails',
+			'appellantCase',
+			'lpaQuestionnaire',
+			'manageDocuments',
+			'viewFinalComments'
+		],
 		text: 'Document added'
 	},
 	documentVersionAdded: {
