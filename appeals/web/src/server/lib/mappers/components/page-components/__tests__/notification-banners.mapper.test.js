@@ -69,7 +69,7 @@ describe('buildNotificationBanners', () => {
 			]
 		};
 
-		const result = mapNotificationBannersFromSession(session, 'appealDetails', appealId);
+		const result = mapNotificationBannersFromSession(session, 'manageNeighbouringSites', appealId);
 		expect(result).toEqual([]);
 	});
 
