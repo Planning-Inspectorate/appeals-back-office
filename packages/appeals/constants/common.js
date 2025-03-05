@@ -10,19 +10,19 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 });
 
 export const APPEAL_TYPE = Object.freeze({
-	D: 'Householder',
-	W: 'Planning appeal',
-	C: 'Enforcement notice appeal',
-	F: 'Enforcement listed building and conservation area appeal',
-	G: 'Discontinuance notice appeal',
-	H: 'Advertisement appeal',
-	L: 'Community infrastructure levy',
-	Q: 'Planning obligation appeal',
-	S: 'Affordable housing obligation appeal',
-	V: 'Call-in application',
-	X: 'Lawful development certificate appeal',
-	Y: 'Planned listed building and conservation area appeal',
-	Z: 'Commercial (CAS) appeal'
+	HOUSEHOLDER: 'Householder',
+	S78: 'Planning appeal',
+	ENFORCEMENT_NOTICE: 'Enforcement notice appeal',
+	ENFORCEMENT_LISTED_BUILDING: 'Enforcement listed building and conservation area appeal',
+	DISCONTINUANCE_NOTICE: 'Discontinuance notice appeal',
+	ADVERTISEMENT: 'Advertisement appeal',
+	COMMUNITY_INFRASTRUCTURE_LEVY: 'Community infrastructure levy',
+	PLANNING_OBLIGATION: 'Planning obligation appeal',
+	AFFORDABLE_HOUSING_OBLIGATION: 'Affordable housing obligation appeal',
+	CALL_IN_APPLICATION: 'Call-in application',
+	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate appeal',
+	PLANNED_LISTED_BUILDING: 'Planned listed building and conservation area appeal',
+	COMMERCIAL: 'Commercial (CAS) appeal'
 });
 
 /** @type {Object<string, string>} */

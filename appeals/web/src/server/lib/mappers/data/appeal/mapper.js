@@ -34,8 +34,8 @@ import { submaps as hasSubmaps } from './has.js';
 
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
-	[APPEAL_TYPE.D]: hasSubmaps,
-	[APPEAL_TYPE.W]: s78Submaps
+	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
+	[APPEAL_TYPE.S78]: s78Submaps
 };
 
 /**

@@ -94,7 +94,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 		if (currentAppeal) {
 			if (reviewOutcome === 'complete') {
-				if (currentAppeal.appealType === APPEAL_TYPE.D) {
+				if (currentAppeal.appealType === APPEAL_TYPE.HOUSEHOLDER) {
 					await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
 						request.apiClient,
 						appealId,

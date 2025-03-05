@@ -715,9 +715,9 @@ export function getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireData) {
  */
 function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, mappedLPAQData) {
 	switch (appealDetails.appealType) {
-		case APPEAL_TYPE.D:
+		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
-		case APPEAL_TYPE.W:
+		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {

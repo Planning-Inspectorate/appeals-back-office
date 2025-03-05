@@ -669,14 +669,14 @@ function generateCaseTypeSpecificComponents(
 	userHasUpdateCasePermission
 ) {
 	switch (appealDetails.appealType) {
-		case APPEAL_TYPE.D:
+		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASComponents(
 				appealDetails,
 				appellantCaseData,
 				mappedAppellantCaseData,
 				userHasUpdateCasePermission
 			);
-		case APPEAL_TYPE.W:
+		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78Components(
 					appealDetails,

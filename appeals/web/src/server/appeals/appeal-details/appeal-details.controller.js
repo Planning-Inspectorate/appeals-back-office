@@ -26,7 +26,7 @@ export const viewAppealDetails = async (request, response) => {
 
 	/** @type {import('./accordions/index.js').RepresentationTypesAwaitingReview} */
 	const representationTypesAwaitingReview = await (async () => {
-		if (currentAppeal.appealType !== APPEAL_TYPE.W) {
+		if (currentAppeal.appealType !== APPEAL_TYPE.S78) {
 			return {
 				ipComments: false,
 				appellantFinalComments: false,
@@ -56,7 +56,7 @@ export const viewAppealDetails = async (request, response) => {
 
 	let appellantFinalComments, lpaFinalComments;
 
-	if (currentAppeal.appealType === APPEAL_TYPE.W) {
+	if (currentAppeal.appealType === APPEAL_TYPE.S78) {
 		[appellantFinalComments, lpaFinalComments] = await Promise.all([
 			getSingularRepresentationByType(
 				request.apiClient,
