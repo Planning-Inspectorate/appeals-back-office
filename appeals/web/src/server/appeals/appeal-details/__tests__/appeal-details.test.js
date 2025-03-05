@@ -2367,7 +2367,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 
@@ -2395,7 +2395,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 
@@ -2423,7 +2423,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View <span class="govuk-visually-hidden">${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 				}
