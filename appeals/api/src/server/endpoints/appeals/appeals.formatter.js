@@ -233,7 +233,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			}
 			if (appeal.siteVisit) {
 				return addBusinessDays(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || ''),
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
@@ -268,7 +268,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			});
 		}
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			return new Date(appeal.siteVisit?.visitDate || '');
+			return new Date(appeal.siteVisit?.visitDate || 0);
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
