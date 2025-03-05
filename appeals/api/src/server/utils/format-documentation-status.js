@@ -1,11 +1,13 @@
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
 
-/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
+/** @typedef {DBAppeals[0]} DBAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 /**
- * @param {Appeal} appeal
+ * @param {DBAppeal | DBUserAppeal} appeal
  * @returns {string}
  */
 export const formatAppellantCaseDocumentationStatus = (appeal) => {
@@ -17,7 +19,7 @@ export const formatAppellantCaseDocumentationStatus = (appeal) => {
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {DBAppeal | DBUserAppeal} appeal
  * @returns {string}
  */
 export const formatLpaQuestionnaireDocumentationStatus = (appeal) => {
