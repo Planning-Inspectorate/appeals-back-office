@@ -11,7 +11,7 @@ import {
 	statusFormatMap
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { patchRepresentationAttachments } from '../../../final-comments/final-comments.service.js';
+import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
 
 /**
  * @type {import('@pins/express').RenderHandler<{}>}
@@ -83,7 +83,7 @@ export const postCheckYourAnswers = async (request, response) => {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		currentRepresentation: { id }
+		currentRepresentation: { id, representationType }
 	} = request;
 
 	const {
@@ -136,12 +136,21 @@ export const postCheckYourAnswers = async (request, response) => {
 
 	delete session.fileUploadInfo;
 
-	addNotificationBannerToSession({
-		session,
-		bannerDefinitionKey: 'finalCommentsDocumentAddedSuccess',
-		appealId
-	});
+	let nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
+	if (representationType === 'comment') {
+		nextPageUrl = `${nextPageUrl}/review`;
 
-	const nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'interestedPartyCommentsDocumentAddedSuccess',
+			appealId
+		});
+	} else {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'finalCommentsDocumentAddedSuccess',
+			appealId
+		});
+	}
 	return response.redirect(nextPageUrl);
 };

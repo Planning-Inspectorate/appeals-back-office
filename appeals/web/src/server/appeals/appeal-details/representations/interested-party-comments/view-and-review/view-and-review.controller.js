@@ -27,7 +27,7 @@ export const renderViewInterestedPartyComment = render(
 
 export const renderReviewInterestedPartyComment = render(
 	reviewInterestedPartyCommentPage,
-	'patterns/change-page.pattern.njk'
+	'patterns/display-page.pattern.njk'
 );
 
 /**

@@ -21,7 +21,7 @@ export function allocationDetailsLevelPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Select allocation level - ${shortAppealReference}`,
+		title: `Allocation level - ${shortAppealReference}`,
 		backLinkText: 'Back to case details',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
@@ -34,7 +34,7 @@ export function allocationDetailsLevelPage(
 					value: selectedAllocationLevel || null,
 					fieldset: {
 						legend: {
-							text: 'Select allocation level',
+							text: 'Allocation level',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
@@ -68,38 +68,16 @@ export function allocationDetailsSpecialismPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Select allocation specialisms - ${shortAppealReference}`,
+		title: `Allocation specialisms - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/allocation-details/allocation-level`,
 		backLinkText: 'Back',
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Select allocation specialisms',
+		heading: 'Allocation specialisms',
 		pageComponents: [
 			{
-				type: 'summary-list',
-				wrapperHtml: {
-					opening:
-						'<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds govuk-!-margin-top-5 govuk-!-margin-bottom-6">',
-					closing: '</div></div>'
-				},
+				type: 'hint',
 				parameters: {
-					rows: [
-						{
-							key: {
-								text: 'Level'
-							},
-							value: {
-								text: selectedAllocationLevel && selectedAllocationLevel.level
-							}
-						},
-						{
-							key: {
-								text: 'Band'
-							},
-							value: {
-								text: selectedAllocationLevel && selectedAllocationLevel.band
-							}
-						}
-					]
+					text: 'Select all that apply'
 				}
 			},
 			{
@@ -107,14 +85,7 @@ export function allocationDetailsSpecialismPage(
 				parameters: {
 					name: 'allocation-specialisms',
 					idPrefix: 'allocation-specialisms',
-					classes: 'govuk-checkboxes--small',
-					fieldset: {
-						legend: {
-							text: 'Select allocation specialism',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
+					classes: 'govuk-checkboxes--medium',
 					items: allocationDetailsData.allocationDetailsSpecialisms.map((item) => ({
 						text: item.name,
 						value: item.id,
@@ -177,14 +148,6 @@ export function allocationDetailsCheckAnswersPage(
 										visuallyHiddenText: 'level'
 									}
 								]
-							}
-						},
-						{
-							key: {
-								text: 'Band'
-							},
-							value: {
-								text: selectedAllocationLevel.band
 							}
 						},
 						{

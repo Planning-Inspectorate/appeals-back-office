@@ -7,7 +7,7 @@ import {
 	renderRedactionStatus,
 	postDateSubmitted,
 	postRedactionStatus
-} from '../../representations/document-attachments/add-document.controller.js';
+} from '../../document-attachments/add-document.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	createDateInputDateInPastOrTodayValidator,
@@ -17,7 +17,7 @@ import {
 import {
 	postCheckYourAnswers,
 	renderCheckYourAnswers
-} from '../../representations/document-attachments/controller/check-your-answers.js';
+} from '../../document-attachments/controller/check-your-answers.js';
 import { validateRedactionStatus } from '#appeals/appeal-details/withdrawal/withdrawal.validators.js';
 
 const router = createRouter({ mergeParams: true });
