@@ -13,6 +13,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
 /**
  * @param {string | number | null} [value]
@@ -98,24 +99,29 @@ export const mapAppealStatuses = (rawStatuses) => {
 
 /**
  *
- * @param {Appeal[]} appeals
+ * @param {DBAppeals} appeals
  * @returns {{ name:string, lpaCode:string }[]}
  */
 const mapAppealLPAs = (appeals) => {
+	/** @type {{name: string, lpaCode: string}[]} */
+	const initialLPAs = [];
 	const lpas = appeals.reduce((lpaList, { lpa }) => {
 		if (lpaList.some(({ lpaCode }) => lpaCode === lpa.lpaCode)) {
 			return lpaList;
 		}
 		const { name, lpaCode } = lpa;
 		return [...lpaList, { name, lpaCode }];
-	}, []);
+	}, initialLPAs);
 	return Array.from(new Set(lpas)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
 /**
- * @param {Appeal[]} appeals
+ * @param {DBAppeals} appeals
  * */
 const mapInspectors = async (appeals) => {
+	// TODO refactor this to a Set with a filter(Boolean)
+	/** @type {{id: number, azureAdUserId: string | null}[]} */
+	const initialInspectors = [];
 	return appeals.reduce((inspectorList, { inspector }) => {
 		if (!inspector) {
 			return inspectorList;
@@ -124,13 +130,16 @@ const mapInspectors = async (appeals) => {
 			return inspectorList;
 		}
 		return [...inspectorList, inspector];
-	}, []);
+	}, initialInspectors);
 };
 
 /**
- * @param {Appeal[]} appeals
+ * @param {DBAppeals} appeals
  * */
 const mapCaseOfficers = async (appeals) => {
+	// TODO refactor this to a Set with a filter(Boolean)
+	/** @type {{id: number, azureAdUserId: string | null}[]} */
+	const initialOfficers = [];
 	return appeals.reduce((caseOfficerList, { caseOfficer }) => {
 		if (!caseOfficer) {
 			return caseOfficerList;
@@ -139,12 +148,12 @@ const mapCaseOfficers = async (appeals) => {
 			return caseOfficerList;
 		}
 		return [...caseOfficerList, caseOfficer];
-	}, []);
+	}, initialOfficers);
 };
 
 /**
  *
- * @param {Appeal[]} appeals
+ * @param {DBAppeals} appeals
  * @returns {Promise<Awaited<unknown>[]>}
  */
 const mapAppeals = (appeals) =>
@@ -183,7 +192,7 @@ const retrieveAppealListData = async (
 	caseOfficerId,
 	isGreenBelt
 ) => {
-	const [appeals = []] = await appealListRepository.getAllAppeals(
+	const appeals = await appealListRepository.getAllAppeals(
 		searchTerm,
 		status,
 		hasInspector,
