@@ -21,7 +21,7 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Select allocation level</h1>');
+		expect(element.innerHTML).toContain('Allocation level</h1>');
 		expect(element.innerHTML).toContain('Continue</button>');
 	});
 
@@ -69,7 +69,7 @@ describe('Allocation Details', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Select allocation specialisms</h1>');
+		expect(element.innerHTML).toContain('Allocation specialisms</h1>');
 	});
 
 	it('should render "Select allocation specialism" with error (no answer provided)', async () => {
@@ -142,7 +142,6 @@ describe('Allocation Details', () => {
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('Check answers</h1>');
 		expect(element.innerHTML).toContain('Level</dt>');
-		expect(element.innerHTML).toContain('Band</dt>');
 		expect(element.innerHTML).toContain('Specialism</dt>');
 		expect(element.innerHTML).toContain('Confirm</button>');
 	});

@@ -27,8 +27,5 @@ const mapDetailsHtml = (details) => {
 		return 'No allocation level for this appeal';
 	}
 	const specialismsList = details.specialisms.join('</li><li>');
-	return `Level: ${details.level}<br />
-					Band: ${details.band}<br />
-					Specialisms:
-					<ul class="govuk-!-margin-0"><li>${specialismsList}</li></ul>`;
+	return `<ul class="govuk-!-margin-0"><li>Level: ${details.level}</li><li>${specialismsList}</li></ul>`;
 };

@@ -154,15 +154,25 @@ describe('lpa questionnaires routes', () => {
 		describe('PATCH', () => {
 			test('updates an lpa questionnaire when the validation outcome is complete for a household appeal', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...householdAppeal,
-					appealStatus: [
-						{
-							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-							valid: true
-						}
-					]
-				});
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce({
+						...householdAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+								valid: true
+							}
+						]
+					})
+					.mockResolvedValueOnce({
+						...householdAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.EVENT,
+								valid: true
+							}
+						]
+					});
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
 					lpaQuestionnaireValidationOutcomes[0]
@@ -208,7 +218,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						createdAt: expect.any(Date),
-						status: APPEAL_CASE_STATUS.EVENT,
+						status: APPEAL_CASE_STATUS.AWAITING_EVENT,
 						valid: true
 					}
 				});
@@ -216,7 +226,7 @@ describe('lpa questionnaires routes', () => {
 					data: {
 						appealId: householdAppeal.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
-							APPEAL_CASE_STATUS.EVENT
+							APPEAL_CASE_STATUS.AWAITING_EVENT
 						]),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
@@ -234,15 +244,25 @@ describe('lpa questionnaires routes', () => {
 
 			test('sends a correctly formatted notify email when the outcome is complete for a household appeal', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...householdAppeal,
-					appealStatus: [
-						{
-							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-							valid: true
-						}
-					]
-				});
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce({
+						...householdAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+								valid: true
+							}
+						]
+					})
+					.mockResolvedValue({
+						...householdAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.EVENT,
+								valid: true
+							}
+						]
+					});
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
 					lpaQuestionnaireValidationOutcomes[0]

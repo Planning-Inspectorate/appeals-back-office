@@ -291,10 +291,10 @@ export const lpaQuestionnaireIncompleteReasons = [
  */
 
 export const specialisms = [
+	{ name: 'General allocation' },
 	{ name: 'Schedule 1' },
 	{ name: 'Schedule 2' },
 	{ name: 'Enforcement' },
-	{ name: 'General allocation' },
 	{ name: 'Housing orders' },
 	{ name: 'Rights of way' },
 	{ name: 'Shopping' },

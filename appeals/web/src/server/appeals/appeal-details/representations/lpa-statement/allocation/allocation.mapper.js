@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { moveItemInArray } from '#lib/array-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -35,6 +36,7 @@ export function allocationCheckPage(appealDetails, sessionData) {
 			name: 'allocationLevelAndSpecialisms',
 			id: 'allocationLevelAndSpecialisms',
 			legendText: 'Do you need to update the allocation level and specialisms?',
+			legendTextSize: 'm',
 			value: sessionData?.allocationLevelAndSpecialisms
 		})
 	];
@@ -85,6 +87,15 @@ export function allocationLevelPage(appealDetails, lpaStatement, allocationLevel
  * @returns {PageContent}
  * */
 export function allocationSpecialismsPage(appealDetails, specialisms, sessionData) {
+	// move "General allocation" to the top as per A2-1426
+	let specialismsSorted = specialisms.slice();
+	const generalAllocationIndex = specialisms.findIndex(
+		(specialism) => specialism.name === 'General allocation'
+	);
+	if (generalAllocationIndex > 0) {
+		specialismsSorted = moveItemInArray(specialismsSorted, generalAllocationIndex, 0);
+	}
+
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const sessionSelections = (() => {
@@ -103,7 +114,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, sessionDat
 			parameters: {
 				name: 'allocationSpecialisms',
 				id: 'allocationSpecialisms',
-				items: specialisms.map((s) => ({
+				items: specialismsSorted.map((s) => ({
 					text: s.name,
 					value: s.id,
 					checked: sessionSelections.includes(String(s.id))

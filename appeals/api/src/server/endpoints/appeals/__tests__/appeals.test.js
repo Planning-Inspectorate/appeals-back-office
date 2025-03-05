@@ -1222,6 +1222,37 @@ describe('mapAppealToDueDate Tests', () => {
 		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
 	});
 
+	describe('handles STATE_TARGET_SITE_VISIT', () => {
+		let mockAppealWithTimetable = {};
+
+		beforeEach(() => {
+			mockAppealWithTimetable = {
+				...mockAppeal,
+				appealTimetable: {
+					id: 1262,
+					appealId: 523,
+					lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z')
+				}
+			};
+			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
+		});
+
+		test('when final comments due date does not exist', () => {
+			// @ts-ignore
+			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.lpaQuestionnaireDueDate);
+		});
+
+		test('when final comments due date does exist', () => {
+			// @ts-ignore
+			mockAppealWithTimetable.appealTimetable.finalCommentsDueDate = new Date(
+				'2023-03-22T00:00:00.000Z'
+			);
+			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.finalCommentsDueDate);
+		});
+	});
+
 	test('handles STATE_TARGET_COMPLETE', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 

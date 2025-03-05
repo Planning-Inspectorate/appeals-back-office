@@ -11,7 +11,7 @@ export function isRepresentationReviewRequired(representationStatus) {
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
  * @param {string|null|undefined} representationStatus
- * @param {'appellant'|'lpa'} finalCommentsType
+ * @param {'appellant'|'lpa'|'lpa-statement'} finalCommentsType
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
@@ -21,7 +21,17 @@ export function mapRepresentationDocumentSummaryActionLink(
 	finalCommentsType
 ) {
 	if (documentationStatus === 'received' && representationStatus) {
-		const reviewRequired = isRepresentationReviewRequired(representationStatus);
+		const reviewRequired =
+			representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW ||
+			representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
+
+		if (finalCommentsType === 'lpa-statement') {
+			return `<a href="${currentRoute}/lpa-statement" data-cy="${
+				reviewRequired ? 'review' : 'view'
+			}-lpa-statement" class="govuk-link">${
+				reviewRequired ? 'Review' : 'View'
+			}<span class="govuk-visually-hidden"> LPA statement</span></a>`;
+		}
 
 		return `<a href="${currentRoute}/final-comments/${finalCommentsType}" data-cy="${
 			reviewRequired ? 'review' : 'view'

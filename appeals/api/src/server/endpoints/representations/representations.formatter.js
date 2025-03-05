@@ -5,7 +5,7 @@ import { formatName } from '#utils/format-name.js';
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Schema.RepresentationAttachment} RepresentationAttachment */
 /** @typedef {import('@pins/appeals.api').Api.RepResponse} FormattedRep */
-/** @typedef {import('@pins/appeals.api').Api.RepAttachment} FormattedRepAttachment */
+/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
 
 /**
  *
@@ -70,7 +70,7 @@ const formatRepresentationSource = (rep) => {
 /**
  *
  * @param {RepresentationAttachment} attachment
- * @returns {FormattedRepAttachment}
+ * @returns {RepAttachment}
  */
 const formatAttachment = (attachment) => {
 	const { documentGuid, version, representationId, documentVersion } = attachment;
