@@ -61,7 +61,8 @@ const updateAppellantCaseById = async (req, res) => {
 			appellantProcedurePreference,
 			appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount
+			appellantProcedurePreferenceWitnessCount,
+			developmentType
 		},
 		params,
 		validationOutcome
@@ -129,7 +130,8 @@ const updateAppellantCaseById = async (req, res) => {
 					appellantProcedurePreference,
 					appellantProcedurePreferenceDetails,
 					appellantProcedurePreferenceDuration,
-					appellantProcedurePreferenceWitnessCount
+					appellantProcedurePreferenceWitnessCount,
+					developmentType
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
