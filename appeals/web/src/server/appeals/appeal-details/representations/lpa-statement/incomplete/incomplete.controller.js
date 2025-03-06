@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
-import { renderSelectRejectionReasons } from '../../common/render-select-rejection-reasons.js';
+import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
 import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
 import {
 	getRepresentationRejectionReasonOptions,
@@ -24,7 +24,33 @@ const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
 };
 
-export const renderReasons = renderSelectRejectionReasons(rejectLpaStatementPage, 'lpaStatement');
+/** @type {import('express').Handler} */
+export async function renderReasons(request, response) {
+	const { params, currentAppeal, currentRepresentation, apiClient, session, errors } = request;
+
+	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+		apiClient,
+		currentRepresentation.representationType
+	);
+
+	const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
+		currentRepresentation,
+		rejectionReasons,
+		session,
+		['lpaStatement', params.appealId],
+		errors?.['']
+			? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
+			: undefined
+	);
+
+	const pageContent = rejectLpaStatementPage(currentAppeal);
+
+	return response.status(200).render('appeals/appeal/reject-representation.njk', {
+		errors,
+		pageContent,
+		rejectionReasons: mappedRejectionReasons
+	});
+}
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -91,7 +117,7 @@ export const renderCheckYourAnswers = async (
 		errors,
 		currentAppeal: { appealReference, appealId },
 		currentRepresentation,
-		session: { lpaStatement },
+		session,
 		apiClient
 	},
 	response
@@ -100,6 +126,8 @@ export const renderCheckYourAnswers = async (
 		apiClient,
 		currentRepresentation.representationType
 	);
+
+	const lpaStatement = session.lpaStatement[appealId];
 
 	const rejectionReasons = prepareRejectionReasons(
 		lpaStatement,
@@ -209,20 +237,18 @@ export const postCheckYourAnswers = async (request, response) => {
 		currentRepresentation
 	} = request;
 
-	const rejectionReasons = mapRejectionReasonPayload(session.lpaStatement);
-	try {
-		await updateRejectionReasons(
-			apiClient,
-			appealId,
-			String(currentRepresentation.id),
-			rejectionReasons
-		);
-		await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
-			allowResubmit: session.lpaStatement.setNewDate
-		});
-	} catch (_) {
-		return response.status(500).render('app/500.njk');
-	}
+	const rejectionReasons = mapRejectionReasonPayload(session.lpaStatement[appealId]);
+
+	await updateRejectionReasons(
+		apiClient,
+		appealId,
+		String(currentRepresentation.id),
+		rejectionReasons
+	);
+
+	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
+		allowResubmit: session.lpaStatement.setNewDate
+	});
 
 	addNotificationBannerToSession({
 		session,
