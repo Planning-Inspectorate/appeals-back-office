@@ -126,7 +126,7 @@ export const lpaStatementIncomplete = async ({
 		site_address: siteAddress,
 		url: FRONT_OFFICE_URL,
 		deadline_date: extendedDeadline,
-		reason: reasons
+		reasons
 	};
 
 	try {
