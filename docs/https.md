@@ -17,6 +17,6 @@ HTTPS_PORT=8080
 # The path to the SSL certificate files – required when https is enabled.
 SSL_CERT_FILE=certificate.pem
 SSL_KEY_FILE=certificate-key.pem
-```
 
 Once the settings are saved, the web front-end will be available on `https://localhost:8080`
+```
