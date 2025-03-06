@@ -104,14 +104,13 @@ export const mapAppealStatuses = (rawStatuses) => {
  */
 const mapAppealLPAs = (appeals) => {
 	/** @type {{name: string, lpaCode: string}[]} */
-	const initialLPAs = [];
 	const lpas = appeals.reduce((lpaList, { lpa }) => {
 		if (lpaList.some(({ lpaCode }) => lpaCode === lpa.lpaCode)) {
 			return lpaList;
 		}
 		const { name, lpaCode } = lpa;
 		return [...lpaList, { name, lpaCode }];
-	}, initialLPAs);
+	}, /** @type {{name: string, lpaCode: string}[]} */ ([]));
 	return Array.from(new Set(lpas)).sort((a, b) => a.name.localeCompare(b.name));
 };
 
@@ -120,8 +119,6 @@ const mapAppealLPAs = (appeals) => {
  * */
 const mapInspectors = async (appeals) => {
 	// TODO refactor this to a Set with a filter(Boolean)
-	/** @type {{id: number, azureAdUserId: string | null}[]} */
-	const initialInspectors = [];
 	return appeals.reduce((inspectorList, { inspector }) => {
 		if (!inspector) {
 			return inspectorList;
@@ -130,7 +127,7 @@ const mapInspectors = async (appeals) => {
 			return inspectorList;
 		}
 		return [...inspectorList, inspector];
-	}, initialInspectors);
+	}, /** @type {{id: number, azureAdUserId: string | null}[]} */ ([]));
 };
 
 /**
@@ -138,8 +135,6 @@ const mapInspectors = async (appeals) => {
  * */
 const mapCaseOfficers = async (appeals) => {
 	// TODO refactor this to a Set with a filter(Boolean)
-	/** @type {{id: number, azureAdUserId: string | null}[]} */
-	const initialOfficers = [];
 	return appeals.reduce((caseOfficerList, { caseOfficer }) => {
 		if (!caseOfficer) {
 			return caseOfficerList;
@@ -148,7 +143,7 @@ const mapCaseOfficers = async (appeals) => {
 			return caseOfficerList;
 		}
 		return [...caseOfficerList, caseOfficer];
-	}, initialOfficers);
+	}, /** @type {{id: number, azureAdUserId: string | null}[]} */ ([]));
 };
 
 /**
