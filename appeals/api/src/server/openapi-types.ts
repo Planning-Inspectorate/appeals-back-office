@@ -3363,6 +3363,21 @@ export type AppellantCase = {
 		details?: string | null;
 		isChanged?: boolean;
 	};
+	developmentType?:
+		| 'agriculture-aquaculture'
+		| 'change-extensions'
+		| 'chemical-industry'
+		| 'energy-industry'
+		| 'extractive-industry'
+		| 'food-industry'
+		| 'infrastructure-projects'
+		| 'mineral-industry'
+		| 'other-projects'
+		| 'production-processing-of-metals'
+		| 'rubber-industry'
+		| 'textile-industries'
+		| 'tourism-leisure'
+		| null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -10701,6 +10716,21 @@ export interface AppellantCaseUpdateRequest {
 		details?: string | null;
 		isChanged?: boolean;
 	};
+	developmentType?:
+		| 'agriculture-aquaculture'
+		| 'change-extensions'
+		| 'chemical-industry'
+		| 'energy-industry'
+		| 'extractive-industry'
+		| 'food-industry'
+		| 'infrastructure-projects'
+		| 'mineral-industry'
+		| 'other-projects'
+		| 'production-processing-of-metals'
+		| 'rubber-industry'
+		| 'textile-industries'
+		| 'tourism-leisure'
+		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;
