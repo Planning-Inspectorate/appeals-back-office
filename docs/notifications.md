@@ -7,7 +7,7 @@ You can update the api back-end environment settings in `appeals/api/.env` to ad
 
 ```shell
 TEST_MAILBOX=test@example.com
-GOV_NOTIFY_API_KEY=(retrieved)
+GOV_NOTIFY_API_KEY=**********
 ```
 
 > [!IMPORTANT]
