@@ -15,12 +15,13 @@ import { validateSetNewDate } from './incomplete.validator.js';
 
 const router = Router({ mergeParams: true });
 
-router.get('/reasons', renderReasons);
-router.post('/reasons', validateRejectReason, validateRejectionReasonTextItems, postReasons);
+router
+	.route('/reasons')
+	.get(renderReasons)
+	.post(validateRejectReason, validateRejectionReasonTextItems, postReasons);
 
-router.get('/date', renderSetNewDate);
-router.post('/date', validateSetNewDate, postSetNewDate);
+router.route('/date').get(renderSetNewDate).post(validateSetNewDate, postSetNewDate);
 
-router.get('/confirm', renderCheckYourAnswers);
-router.post('/confirm', postCheckYourAnswers);
+router.route('/confirm').get(renderCheckYourAnswers).post(postCheckYourAnswers);
+
 export default router;
