@@ -4,6 +4,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
@@ -20,6 +21,7 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
  * @param {RepresentationList} valid
  * @param {RepresentationList} invalid
  * @param {import('@pins/express').Session} session
+ * @param {string | undefined} backUrl
  * @returns {Promise<PageContent>}
  */
 export async function interestedPartyCommentsPage(
@@ -27,9 +29,12 @@ export async function interestedPartyCommentsPage(
 	awaitingReview,
 	valid,
 	invalid,
-	session
+	session,
+	backUrl
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
 
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
@@ -39,7 +44,7 @@ export async function interestedPartyCommentsPage(
 
 	const pageContent = {
 		title: 'Interested party comments',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl,
 		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',

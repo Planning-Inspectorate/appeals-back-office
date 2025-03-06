@@ -3,6 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -96,10 +97,13 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
+ * @param {string | undefined} backUrl
  * @returns {PageContent}
  * */
-export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
+export function viewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
 
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: false
@@ -113,7 +117,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
 
 	const pageContent = {
 		title: 'LPA statement',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'LPA statement',
 		pageComponents
@@ -126,10 +130,13 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session) {
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session
+ * @param {string | undefined} backUrl
  * @returns {PageContent}
  */
-export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
+export function reviewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
 
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: true
@@ -177,7 +184,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session) {
 
 	const pageContent = {
 		title: 'Review LPA statement',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
 		submitButtonText: 'Continue',

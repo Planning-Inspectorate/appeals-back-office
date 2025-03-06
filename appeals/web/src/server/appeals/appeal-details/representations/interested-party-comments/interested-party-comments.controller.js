@@ -20,7 +20,7 @@ export const handleInterestedPartyComments = (request, response) =>
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderInterestedPartyComments(request, response) {
-	const { errors, currentAppeal, session } = request;
+	const { errors, currentAppeal, session, query } = request;
 	const paginationParameters = {
 		pageNumber: 1,
 		pageSize: 1000
@@ -54,12 +54,15 @@ export async function renderInterestedPartyComments(request, response) {
 		)
 	]);
 
+	const backUrl = query.backUrl ? String(query.backUrl) : '/';
+
 	const mappedPageContent = await interestedPartyCommentsPage(
 		currentAppeal,
 		awaitingReviewComments,
 		validComments,
 		invalidComments,
-		session
+		session,
+		backUrl
 	);
 
 	return response.status(200).render('appeals/appeal/interested-party-comments.njk', {

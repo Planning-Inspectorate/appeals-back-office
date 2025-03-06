@@ -6,7 +6,9 @@ import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.ma
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderReviewLpaStatement = async (request, response) => {
-	const { errors, currentAppeal, currentRepresentation, session } = request;
+	const { errors, currentAppeal, currentRepresentation, session, query } = request;
+
+	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 
 	const isReview = [
 		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
@@ -16,7 +18,8 @@ export const renderReviewLpaStatement = async (request, response) => {
 	const pageContent = (isReview ? reviewLpaStatementPage : viewLpaStatementPage)(
 		currentAppeal,
 		currentRepresentation,
-		session
+		session,
+		backUrl
 	);
 
 	return response
