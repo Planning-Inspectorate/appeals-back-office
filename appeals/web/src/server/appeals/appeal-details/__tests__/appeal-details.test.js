@@ -33,6 +33,8 @@ import usersService from '#appeals/appeal-users/users-service.js';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+const pastDate = '2025-01-06T23:59:00.000Z';
+const futureDate = '3000-01-06T23:59:00.000Z';
 
 describe('appeal-details', () => {
 	beforeEach(() => {
@@ -1045,15 +1047,26 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2,
-						appealStatus: 'statements'
+						appealStatus: 'statements',
+						appealTimetable: {
+							...appealDataFullPlanning.appealTimetable,
+							ipCommentsDueDate: futureDate,
+							lpaStatementDueDate: futureDate
+						},
+						documentationSummary: {
+							...appealDataFullPlanning.documentationSummary,
+							ipComments: {
+								status: 'received',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
 					});
-				nock('http://test/').get('/appeals/2/reps/count?status=awaiting_review').reply(200, {
-					statement: 2,
-					comment: 4,
-					lpa_final_comment: 1,
-					appellant_final_comment: 1
-				});
 				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
+
 				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
 
 				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
@@ -1076,49 +1089,24 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render important notification banners when the appeal has unreviewed appellant and LPA final comments', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2,
-						appealStatus: 'final_comments'
-					});
-				nock('http://test/').get('/appeals/2/reps/count?status=awaiting_review').reply(200, {
-					statement: 0,
-					comment: 0,
-					lpa_final_comment: 1,
-					appellant_final_comment: 1
-				});
-				nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
-
-				const caseDetailsResponse = await request.get(`${baseUrl}/2`);
-
-				const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(unprettifiedElementHtml).toContain('Important</h3>');
-				expect(unprettifiedElementHtml).toContain(
-					'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/appellant" data-cy="banner-review-appellant-final-comments">Review <span class="govuk-visually-hidden">appellant final comments</span></a></p>'
-				);
-				expect(unprettifiedElementHtml).toContain(
-					'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
-				);
-				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/final-comments/lpa" data-cy="banner-review-lpa-final-comments">Review <span class="govuk-visually-hidden">L P A final comments</span></a></p>'
-				);
-			});
-
 			it('should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation"', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
-					.reply(200, { ...appealData, appealId, appealStatus: 'validation' });
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'validation',
+						documentationSummary: {
+							...appealData.documentationSummary,
+							appellantCase: {
+								...appealData.documentationSummary.appellantCase,
+								dueDate: futureDate,
+								status: 'received'
+							}
+						}
+					});
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -1148,7 +1136,15 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'lpa_questionnaire',
-						lpaQuestionnaireId
+						lpaQuestionnaireId,
+						documentationSummary: {
+							...appealData.documentationSummary,
+							lpaQuestionnaire: {
+								...appealData.documentationSummary.lpaQuestionnaire,
+								status: 'received',
+								dueDate: futureDate
+							}
+						}
 					});
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				const response = await request.get(`${baseUrl}/${appealId}`);
@@ -1236,16 +1232,8 @@ describe('appeal-details', () => {
 					}
 				];
 
-				beforeEach(() => {
+				const resetMocks = () => {
 					nock.cleanAll();
-					nock('http://test/')
-						.get(`/appeals/${appealId}`)
-						.reply(200, {
-							...appealDataFullPlanning,
-							appealId,
-							appealStatus: 'final_comments'
-						})
-						.persist();
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
@@ -1255,6 +1243,10 @@ describe('appeal-details', () => {
 						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
 						.reply(200, finalCommentsForReview)
 						.persist();
+				};
+
+				beforeEach(() => {
+					resetMocks();
 				});
 
 				for (const testCase of testCases) {
@@ -1264,17 +1256,17 @@ describe('appeal-details', () => {
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
-								appealStatus: 'final_comments'
+								appealStatus: 'final_comments',
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[`${testCase.name}FinalComments`]: {
+										status: 'received',
+										receivedAt: pastDate,
+										representationStatus: 'awaiting_review'
+									}
+								}
 							});
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
-							.reply(200, {
-								statement: 0,
-								comment: 0,
-								lpa_final_comment: 1,
-								appellant_final_comment: 1
-							});
 
 						const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -1293,13 +1285,25 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.successBannerHeading}" success notification banner, and not render an "${testCase.importantBannerHeading}" notification banner, when an ${testCase.name} final comment is redacted and accepted`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+							.get(`/appeals/${appealId}`)
 							.reply(200, {
-								statement: 0,
-								comment: 0,
-								lpa_final_comment: 0,
-								appellant_final_comment: 0
-							});
+								...appealDataFullPlanning,
+								appealId,
+								appealStatus: 'final_comments',
+								appealTimetable: {
+									...appealDataFullPlanning.appealTimetable,
+									finalCommentsDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[`${testCase.name}FinalComments`]: {
+										status: 'received',
+										receivedAt: pastDate,
+										representationStatus: 'awaiting_review'
+									}
+								}
+							})
+							.persist();
 
 						const redactedRepresentation = 'Test redacted final comment text';
 						const redactPagePostResponse = await request
@@ -1324,13 +1328,25 @@ describe('appeal-details', () => {
 
 						expect(confirmRedactPagePostResponse.statusCode).toBe(302);
 
+						resetMocks();
 						nock('http://test/')
-							.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+							.get(`/appeals/${appealId}`)
 							.reply(200, {
-								statement: 0,
-								comment: 0,
-								lpa_final_comment: 0,
-								appellant_final_comment: 0
+								...appealDataFullPlanning,
+								appealId,
+								appealStatus: 'final_comments',
+								appealTimetable: {
+									...appealDataFullPlanning.appealTimetable,
+									finalCommentsDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataFullPlanning.documentationSummary,
+									[`${testCase.name}FinalComments`]: {
+										status: 'received',
+										receivedAt: pastDate,
+										representationStatus: 'valid'
+									}
+								}
 							});
 
 						const response = await request.get(`${baseUrl}/${appealId}`);
@@ -1758,7 +1774,7 @@ describe('appeal-details', () => {
 		});
 
 		it('should render the appellant case status as "Incomplete" if the appellant case validation status is incomplete, and the due date is today', async () => {
-			// Do not fakes here stop nock from timing out, by stopping jest from freezing time
+			// doNotFakes here stop nock from timing out, by stopping jest from freezing time
 			jest
 				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
 				.setSystemTime(new Date('2024-02-15'));
