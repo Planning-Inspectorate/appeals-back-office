@@ -30,10 +30,9 @@ export const assignServiceUser = (apiClient, appealId, userType, data) =>
  * @returns {Promise<{}>}
  */
 export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) =>
-	apiClient.patch(`appeals/${appealId}/service-user`, {
+	apiClient.patch(`appeals/${appealId}/service-user/${serviceUserId}`, {
 		json: {
 			serviceUser: {
-				serviceUserId,
 				userType,
 				firstName: data.firstName,
 				lastName: data.lastName,

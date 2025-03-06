@@ -12,39 +12,38 @@ export const serviceUserIdStartRange = 200000000;
  * @param {ServiceUser} data
  * @param {string} serviceUserType
  * @param {string} caseReference
- * @returns {AppealServiceUser | undefined}
+ * @returns {AppealServiceUser}
  */
 export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
-	if (data) {
-		const userId = serviceUserIdStartRange + data.id;
-		const userSuid = serviceUserIdStartRange + data.id;
-		const user = {
-			id: userId.toString(),
-			organisation: data.organisationName ?? null,
-			organisationType: null,
-			salutation: data.salutation ?? null,
-			firstName: data.firstName ?? null,
-			lastName: data.lastName ?? null,
-			emailAddress: data.email ?? null,
-			webAddress: data.website ?? null,
-			telephoneNumber: data.phoneNumber ?? null,
-			addressLine1: data.address?.addressLine1 ?? null,
-			addressLine2: data.address?.addressLine2 ?? null,
-			addressTown: data.address?.addressTown ?? null,
-			addressCounty: data.address?.addressCounty ?? null,
-			postcode: data.address?.postcode ?? null,
-			addressCountry: data.address?.addressCountry ?? null,
-			sourceSuid: userSuid.toString(),
-			caseReference,
-			sourceSystem: ODW_SYSTEM_ID,
-			serviceUserType: mapServiceUserType(serviceUserType),
-			role: null,
-			otherPhoneNumber: null,
-			faxNumber: null
-		};
+	const userId = serviceUserIdStartRange + data.id;
+	const userSuid = serviceUserIdStartRange + data.id;
+	const user = {
+		id: userId.toString(),
+		organisation: data.organisationName ?? null,
+		organisationType: null,
+		salutation: data.salutation ?? null,
+		firstName: data.firstName ?? null,
+		lastName: data.lastName ?? null,
+		anonymised: data.anonymised ?? null,
+		emailAddress: data.email ?? null,
+		webAddress: data.website ?? null,
+		telephoneNumber: data.phoneNumber ?? null,
+		addressLine1: data.address?.addressLine1 ?? null,
+		addressLine2: data.address?.addressLine2 ?? null,
+		addressTown: data.address?.addressTown ?? null,
+		addressCounty: data.address?.addressCounty ?? null,
+		postcode: data.address?.postcode ?? null,
+		addressCountry: data.address?.addressCountry ?? null,
+		sourceSuid: userSuid.toString(),
+		caseReference,
+		sourceSystem: ODW_SYSTEM_ID,
+		serviceUserType: mapServiceUserType(serviceUserType),
+		role: null,
+		otherPhoneNumber: null,
+		faxNumber: null
+	};
 
-		return user;
-	}
+	return user;
 };
 
 /**

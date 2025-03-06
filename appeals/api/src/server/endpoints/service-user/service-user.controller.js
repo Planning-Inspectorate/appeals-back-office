@@ -21,15 +21,15 @@ import appealRepository from '#repositories/appeal.repository.js';
  */
 export const updateServiceUserById = async (req, res) => {
 	const { serviceUser } = req.body;
-	const { appealId } = req.params;
+	const { appealId, serviceUserId } = req.params;
 
 	const {
-		serviceUserId,
 		userType,
 		organisationName,
 		firstName,
 		middleName,
 		lastName,
+		anonymised,
 		email,
 		phoneNumber,
 		addressId
@@ -40,6 +40,7 @@ export const updateServiceUserById = async (req, res) => {
 		firstName,
 		middleName,
 		lastName,
+		anonymised,
 		email,
 		phoneNumber,
 		addressId
@@ -55,7 +56,7 @@ export const updateServiceUserById = async (req, res) => {
 		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [userType])
 	});
 
-	await broadcasters.broadcastServiceUser(
+	broadcasters.broadcastServiceUser(
 		dbSavedResult.id,
 		EventType.Update,
 		userType,
@@ -103,16 +104,21 @@ export async function updateServiceUserAddress(request, response) {
 export async function removeServiceUserById(request, response) {
 	const {
 		body: { userType },
-		params
+		params,
+		appeal
 	} = request;
+
 	const appealId = Number(params.appealId);
 	const azureAdUserId = request.get('azureAdUserId');
 
-	const serviceUserId = parseInt(request.appeal?.agent?.id);
+	const agentId = Number(appeal?.agent?.id);
+	if (!agentId) {
+		return response.status(400).end();
+	}
 
 	const deletedServiceUser = await appealRepository.removeAppealServiceUser(appealId, {
 		userType,
-		serviceUserId
+		serviceUserId: agentId
 	});
 
 	if (!deletedServiceUser) {

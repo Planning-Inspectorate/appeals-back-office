@@ -181,6 +181,7 @@ model ServiceUser {
   firstName               String?
   middleName              String?
   lastName                String?
+  anonymised              Boolean          @default(false)
   email                   String?
   website                 String?
   phoneNumber             String?

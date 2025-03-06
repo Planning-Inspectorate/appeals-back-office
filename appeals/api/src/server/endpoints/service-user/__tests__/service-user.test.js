@@ -41,7 +41,7 @@ describe('appeal service user routes', () => {
 			databaseConnector.serviceUser.findUnique.mockResolvedValue(null);
 
 			const response = await request
-				.patch(`/appeals/0/service-user`)
+				.patch(`/appeals/0/service-user/1`)
 				.send({ serviceUser: validServiceUser })
 				.set('azureAdUserId', azureAdUserId);
 
@@ -53,7 +53,7 @@ describe('appeal service user routes', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.patch(`/appeals/${householdAppeal.id}/service-user/${validServiceUser.serviceUserId}`)
 				.send({ serviceUser: serviceUserWithMissingRequiredFields })
 				.set('azureAdUserId', azureAdUserId);
 
@@ -67,7 +67,7 @@ describe('appeal service user routes', () => {
 			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
 			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.patch(`/appeals/${householdAppeal.id}/service-user/${validServiceUser.serviceUserId}`)
 				.send({ serviceUser: serviceUserWithInvalidEmail })
 				.set('azureAdUserId', azureAdUserId);
 
@@ -81,7 +81,7 @@ describe('appeal service user routes', () => {
 			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
 			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.patch(`/appeals/${householdAppeal.id}/service-user/${validServiceUser.serviceUserId}`)
 				.send({ serviceUser: serviceUserWithInvalidUserType })
 				.set('azureAdUserId', azureAdUserId);
 
@@ -103,7 +103,7 @@ describe('appeal service user routes', () => {
 			});
 
 			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.patch(`/appeals/${householdAppeal.id}/service-user/${validServiceUser.serviceUserId}`)
 				.send({ serviceUser: validServiceUser })
 				.set('azureAdUserId', azureAdUserId);
 

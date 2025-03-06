@@ -3304,13 +3304,21 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/service-user": {
+		"/appeals/{appealId}/service-user/{serviceUserId}": {
 			"patch": {
 				"tags": ["Service Users"],
 				"description": "Updates a single service user by id",
 				"parameters": [
 					{
 						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "serviceUserId",
 						"in": "path",
 						"required": true,
 						"schema": {
@@ -3363,69 +3371,6 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/UpdateServiceUserRequest"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"tags": ["Service Users"],
-				"description": "Deletes a single service user by id",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Deletes a single service user by id",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/DeleteServiceUserResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/DeleteServiceUserResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Service user to delete",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/DeleteServiceUserRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/DeleteServiceUserRequest"
 							}
 						}
 					}
@@ -3499,6 +3444,71 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/UpdateAddressRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/service-user": {
+			"delete": {
+				"tags": ["Service Users"],
+				"description": "Deletes a single service user by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes a single service user by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteServiceUserResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteServiceUserResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Service user to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteServiceUserRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteServiceUserRequest"
 							}
 						}
 					}
@@ -5434,6 +5444,10 @@
 								"type": "string",
 								"example": "McTest"
 							},
+							"anonymised": {
+								"type": "boolean",
+								"example": false
+							},
 							"salutation": {
 								"type": "string",
 								"example": "Mr"
@@ -5794,7 +5808,6 @@
 												"plansDrawings",
 												"rule6ProofOfEvidence",
 												"rule6Statement",
-												"rule6WitnessesEvidence",
 												"statementCommonGround",
 												"supplementaryPlanning",
 												"treePreservationPlan",
@@ -5953,7 +5966,6 @@
 													"plansDrawings",
 													"rule6ProofOfEvidence",
 													"rule6Statement",
-													"rule6WitnessesEvidence",
 													"statementCommonGround",
 													"supplementaryPlanning",
 													"treePreservationPlan",
@@ -9765,12 +9777,6 @@
 					"serviceUser": {
 						"type": "object",
 						"properties": {
-							"serviceUserId": {
-								"type": "number",
-								"required": true,
-								"description": "ID in back-office",
-								"example": 12345
-							},
 							"userType": {
 								"type": "string",
 								"required": true,
@@ -9785,7 +9791,7 @@
 							},
 							"firstName": {
 								"type": "string",
-								"required": true,
+								"required": false,
 								"description": "User's first name",
 								"example": "Harry"
 							},
@@ -9797,9 +9803,15 @@
 							},
 							"lastName": {
 								"type": "string",
-								"required": true,
+								"required": false,
 								"description": "User's last name",
 								"example": "Potter"
+							},
+							"anonymised": {
+								"type": "boolean",
+								"required": false,
+								"description": "Whether the user's name should be anonymised",
+								"example": true
 							},
 							"email": {
 								"type": "string",
@@ -10402,7 +10414,6 @@
 												"plansDrawings",
 												"rule6ProofOfEvidence",
 												"rule6Statement",
-												"rule6WitnessesEvidence",
 												"statementCommonGround",
 												"supplementaryPlanning",
 												"treePreservationPlan",
@@ -10561,7 +10572,6 @@
 													"plansDrawings",
 													"rule6ProofOfEvidence",
 													"rule6Statement",
-													"rule6WitnessesEvidence",
 													"statementCommonGround",
 													"supplementaryPlanning",
 													"treePreservationPlan",
@@ -10786,7 +10796,6 @@
 														"plansDrawings",
 														"rule6ProofOfEvidence",
 														"rule6Statement",
-														"rule6WitnessesEvidence",
 														"statementCommonGround",
 														"supplementaryPlanning",
 														"treePreservationPlan",
@@ -10945,7 +10954,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -11176,7 +11184,6 @@
 									"plansDrawings",
 									"rule6ProofOfEvidence",
 									"rule6Statement",
-									"rule6WitnessesEvidence",
 									"statementCommonGround",
 									"supplementaryPlanning",
 									"treePreservationPlan",
@@ -11329,7 +11336,6 @@
 										"plansDrawings",
 										"rule6ProofOfEvidence",
 										"rule6Statement",
-										"rule6WitnessesEvidence",
 										"statementCommonGround",
 										"supplementaryPlanning",
 										"treePreservationPlan",
@@ -11483,7 +11489,6 @@
 							"plansDrawings",
 							"rule6ProofOfEvidence",
 							"rule6Statement",
-							"rule6WitnessesEvidence",
 							"statementCommonGround",
 							"supplementaryPlanning",
 							"treePreservationPlan",
@@ -12116,7 +12121,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -12275,7 +12279,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -12475,7 +12478,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -12634,7 +12636,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -12834,7 +12835,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -12993,7 +12993,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -13193,7 +13192,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -13352,7 +13350,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -13552,7 +13549,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -13711,7 +13707,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -13911,7 +13906,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -14070,7 +14064,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -14270,7 +14263,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -14429,7 +14421,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -14629,7 +14620,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -14788,7 +14778,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -14988,7 +14977,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -15147,7 +15135,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -15347,7 +15334,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -15506,7 +15492,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -15706,7 +15691,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -15865,7 +15849,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -16065,7 +16048,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -16224,7 +16206,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -16786,7 +16767,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -16945,7 +16925,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -17145,7 +17124,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -17304,7 +17282,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -17504,7 +17481,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -17663,7 +17639,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -17863,7 +17838,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -18022,7 +17996,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -18222,7 +18195,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -18381,7 +18353,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -18581,7 +18552,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -18740,7 +18710,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -18940,7 +18909,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -19099,7 +19067,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -19299,7 +19266,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -19458,7 +19424,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -19658,7 +19623,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -19817,7 +19781,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -20017,7 +19980,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -20176,7 +20138,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -20376,7 +20337,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -20535,7 +20495,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -20735,7 +20694,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -20894,7 +20852,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -21094,7 +21051,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -21253,7 +21209,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -21453,7 +21408,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -21612,7 +21566,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -21812,7 +21765,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -21971,7 +21923,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -22171,7 +22122,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -22330,7 +22280,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -22530,7 +22479,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -22689,7 +22637,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -22889,7 +22836,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -23048,7 +22994,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -23248,7 +23193,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -23407,7 +23351,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -23607,7 +23550,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -23766,7 +23708,6 @@
 																	"plansDrawings",
 																	"rule6ProofOfEvidence",
 																	"rule6Statement",
-																	"rule6WitnessesEvidence",
 																	"statementCommonGround",
 																	"supplementaryPlanning",
 																	"treePreservationPlan",
@@ -24474,7 +24415,6 @@
 														"plansDrawings",
 														"rule6ProofOfEvidence",
 														"rule6Statement",
-														"rule6WitnessesEvidence",
 														"statementCommonGround",
 														"supplementaryPlanning",
 														"treePreservationPlan",
@@ -24633,7 +24573,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -24855,7 +24794,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -25014,7 +24952,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -25213,7 +25150,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -25372,7 +25308,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -25571,7 +25506,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -25730,7 +25664,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -25929,7 +25862,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -26088,7 +26020,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -26287,7 +26218,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -26446,7 +26376,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -26645,7 +26574,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -26804,7 +26732,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -27003,7 +26930,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -27162,7 +27088,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -27363,7 +27288,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -27522,7 +27446,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -27721,7 +27644,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",
@@ -27880,7 +27802,6 @@
 																"plansDrawings",
 																"rule6ProofOfEvidence",
 																"rule6Statement",
-																"rule6WitnessesEvidence",
 																"statementCommonGround",
 																"supplementaryPlanning",
 																"treePreservationPlan",
@@ -28080,7 +28001,6 @@
 														"plansDrawings",
 														"rule6ProofOfEvidence",
 														"rule6Statement",
-														"rule6WitnessesEvidence",
 														"statementCommonGround",
 														"supplementaryPlanning",
 														"treePreservationPlan",
@@ -28239,7 +28159,6 @@
 															"plansDrawings",
 															"rule6ProofOfEvidence",
 															"rule6Statement",
-															"rule6WitnessesEvidence",
 															"statementCommonGround",
 															"supplementaryPlanning",
 															"treePreservationPlan",

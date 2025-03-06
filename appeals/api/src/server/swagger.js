@@ -1066,12 +1066,6 @@ export const spec = {
 				serviceUser: {
 					type: 'object',
 					properties: {
-						serviceUserId: {
-							type: 'number',
-							required: true,
-							description: 'ID in back-office',
-							example: 12345
-						},
 						userType: {
 							type: 'string',
 							required: true,
@@ -1086,7 +1080,7 @@ export const spec = {
 						},
 						firstName: {
 							type: 'string',
-							required: true,
+							required: false,
 							description: "User's first name",
 							example: 'Harry'
 						},
@@ -1098,9 +1092,15 @@ export const spec = {
 						},
 						lastName: {
 							type: 'string',
-							required: true,
+							required: false,
 							description: "User's last name",
 							example: 'Potter'
+						},
+						anonymised: {
+							type: 'boolean',
+							required: false,
+							description: "Whether the user's name should be anonymised",
+							example: true
 						},
 						email: {
 							type: 'string',
