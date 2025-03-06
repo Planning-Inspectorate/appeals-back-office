@@ -9,7 +9,7 @@ exports[`representations GET /share should contain link to interested-party-comm
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-inset-text">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments#valid"
+            <div class="govuk-inset-text">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=/share#valid"
                 class="govuk-link">1 interested party comments</a> with the relevant parties.</div>
             <div             class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                 <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Do not confirm

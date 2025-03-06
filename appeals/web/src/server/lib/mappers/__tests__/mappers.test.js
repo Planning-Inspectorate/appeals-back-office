@@ -9,6 +9,7 @@ import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import { mapPagination } from '../index.js';
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -200,6 +201,37 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				'lpa-statement'
 			);
 			expect(link).toBe('');
+		});
+	});
+});
+
+describe('URL mappers', () => {
+	const appealId = '1';
+
+	describe('constructUrl', () => {
+		it('should return the sign-in page URL when given "/signin" as input', () => {
+			const url = constructUrl('/signin');
+			expect(url).toBe('/auth/signin');
+		});
+
+		it('should return the "assigned to me" page URL when given "/personal-list" as input', () => {
+			const url = constructUrl('/personal-list');
+			expect(url).toBe('/appeals-service/personal-list');
+		});
+
+		it('should return the "case details" page URL when given "/" along with appeal ID as input', () => {
+			const url = constructUrl('/', appealId);
+			expect(url).toBe('/appeals-service/appeal-details/1/');
+		});
+
+		it('should return the "share" page URL when given "/share" along with appeal ID as input', () => {
+			const url = constructUrl('/share', appealId);
+			expect(url).toBe('/appeals-service/appeal-details/1/share');
+		});
+
+		it('should return the all cases page URL when given value that does not exist in URL map and as input and appeal ID not provided', () => {
+			const url = constructUrl('/foo');
+			expect(url).toBe('/appeals-service/all-cases');
 		});
 	});
 });

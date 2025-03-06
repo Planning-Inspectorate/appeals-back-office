@@ -7,12 +7,13 @@ import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
 
 /**
  *
- * @param {(appealDetails: Appeal, finalCommentsType: string, comments: Representation, session: import('express-session').Session & Record<string, string>) => PageContent} contentMapper
+ * @param {(appealDetails: Appeal, finalCommentsType: string, comments: Representation, session: import('express-session').Session & Record<string, string>, backUrl: string) => PageContent} contentMapper
  * @param {string} templatePath
  * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
-	const { errors, currentRepresentation, currentAppeal, session } = request;
+	const { errors, currentRepresentation, currentAppeal, session, query } = request;
+	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 
 	let { finalCommentsType } = request.params;
 
@@ -28,7 +29,8 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 		currentAppeal,
 		finalCommentsType,
 		currentRepresentation,
-		session
+		session,
+		backUrl
 	);
 
 	return response.status(200).render(templatePath, {

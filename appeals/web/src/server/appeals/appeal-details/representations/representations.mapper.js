@@ -123,14 +123,14 @@ export function statementAndCommentsSharePage(appeal) {
 		const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
 
 		return numIpComments > 0
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid" class="govuk-link">${numIpComments} interested party comments</a>`
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments?backUrl=/share#valid" class="govuk-link">${numIpComments} interested party comments</a>`
 			: null;
 	})();
 
 	const statementsText =
 		appeal.documentationSummary?.lpaStatement?.representationStatus ===
 		APPEAL_REPRESENTATION_STATUS.VALID
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement" class="govuk-link">1 statement</a>`
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
 			: null;
 
 	const valueTexts = [ipCommentsText, statementsText].filter(Boolean);
@@ -189,15 +189,15 @@ export function finalCommentsSharePage(appeal) {
 
 	const infoText = (() => {
 		if (hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant">appellant final comments</a> and <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> and <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
 		}
 
 		if (hasValidFinalCommentsAppellant && !hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant">appellant final comments</a> with the relevant parties.`;
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> with the relevant parties.`;
 		}
 
 		if (!hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
 		}
 
 		return `There are no final comments to share.`;

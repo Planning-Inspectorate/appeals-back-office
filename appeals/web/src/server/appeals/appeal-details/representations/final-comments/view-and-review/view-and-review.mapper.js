@@ -4,6 +4,7 @@ import { generateCommentsSummaryList } from './page-components/common.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -13,9 +14,16 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  * @param {string} finalCommentsType
  * @param {Representation} comment
  * @param {import('@pins/express').Session} session
+ * @param {string | undefined} backUrl
  * @returns {PageContent}
  */
-export function reviewFinalCommentsPage(appealDetails, finalCommentsType, comment, session) {
+export function reviewFinalCommentsPage(
+	appealDetails,
+	finalCommentsType,
+	comment,
+	session,
+	backUrl
+) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const commentSummaryList = generateCommentsSummaryList(appealDetails.appealId, comment);
 
@@ -25,6 +33,8 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 		appealDetails.appealId
 	);
 
+	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
+
 	const reviewRequired = isRepresentationReviewRequired(comment.status);
 
 	const title = reviewRequired
@@ -33,7 +43,7 @@ export function reviewFinalCommentsPage(appealDetails, finalCommentsType, commen
 
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		heading: title,
 		submitButtonText: 'Continue',
