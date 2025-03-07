@@ -8,15 +8,18 @@ import {
 	APPEAL_REPRESENTATION_TYPE,
 	APPEAL_INVALID_OR_INCOMPLETE_DETAILS,
 	APPEAL_SOURCE,
-	APPEAL_VIRUS_CHECK_STATUS
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_EIA_DEVELOPMENT_DESCRIPTION
 } from 'pins-data-model';
+
+/** @typedef {import('pins-data-model/src/schemas.js').AppealS78Case} AppealS78Case */
+/** @typedef {import('pins-data-model/src/schemas.js').AppealDocument} AppealDocument */
+/** @typedef {import('pins-data-model/src/schemas.js').AppealRepresentation} AppealRepresentation */
 
 /**
  *
  * @param {string} outcome
- * @returns {outcome is
- * 	'allowed'|'dismissed'|'invalid'|'split_decision'
- * }
+ * @returns {outcome is AppealS78Case['caseDecisionOutcome']}
  */
 export const isValidOutcome = (outcome) =>
 	Object.values(APPEAL_CASE_DECISION_OUTCOME).includes(outcome);
@@ -24,26 +27,14 @@ export const isValidOutcome = (outcome) =>
 /**
  *
  * @param {string} stage
- * @returns {stage is
- * 	'appeal-decision'|'appellant-case'|'costs'|'evidence'|'final-comments'|'internal'|'lpa-questionnaire'|
- * 	'statements'|'third-party-comments'|'witnesses'
- * }
+ * @returns {stage is AppealS78Case['caseStatus']}
  */
 export const isValidStage = (stage) => Object.values(APPEAL_CASE_STAGE).includes(stage);
 
 /**
  *
  * @param {string} documentType
- * @returns {documentType is
- * 	    'appealNotification'|'appellantCaseCorrespondence'|'appellantCaseWithdrawalLetter'|'appellantCostsApplication'|
- *		'appellantStatement'|'applicationDecisionLetter'|'caseDecisionLetter'|
- *		'changedDescription'|'communityInfrastructureLevy'|'conservationMap'|'consultationResponses'|'costsDecisionLetter'|
- *		'crossTeamCorrespondence'|'definitiveMapStatement'|'designAccessStatement'|'developmentPlanPolicies'|'eiaEnvironmentalStatement'|
- *		'eiaScreeningDirection'|'eiaScreeningOpinion'|'emergingPlan'|'inspectorCorrespondence'|'lpaCaseCorrespondence'|
- *		'lpaCostsApplication'|'lpaCostsCorrespondence'|'lpaCostsWithdrawal'|'newPlansDrawings'|'originalApplicationForm'|
- *		'otherNewDocuments'|'otherPartyRepresentations'|'otherRelevantPolicies'|'ownershipCertificate'|'planningObligation'|
- *		'planningOfficerReport'|'plansDrawings'|'statementCommonGround'|'supplementaryPlanning'|'treePreservationPlan'| 'uncategorised'|
- *		'whoNotified'|'whoNotifiedLetterToNeighbours'|'whoNotifiedPressAdvert'|'whoNotifiedSiteNotice'}
+ * @returns {documentType is AppealDocument['documentType']}
  */
 export const isValidDocumentType = (documentType) =>
 	Object.values(APPEAL_DOCUMENT_TYPE).includes(documentType);
@@ -51,7 +42,7 @@ export const isValidDocumentType = (documentType) =>
 /**
  *
  * @param {string} virusCheckStatus
- * @returns {virusCheckStatus is 'affected'|'not_scanned'|'scanned'}
+ * @returns {virusCheckStatus is AppealDocument['virusCheckStatus']}
  */
 export const isValidVirusCheckStatus = (virusCheckStatus) =>
 	Object.values(APPEAL_VIRUS_CHECK_STATUS).includes(virusCheckStatus);
@@ -59,7 +50,7 @@ export const isValidVirusCheckStatus = (virusCheckStatus) =>
 /**
  *
  * @param {string} redactionStatus
- * @returns {redactionStatus is 'no_redaction_required'|'not_redacted'|'redacted'}
+ * @returns {redactionStatus is AppealDocument['redactedStatus']}
  */
 export const isValidRedactionStatus = (redactionStatus) =>
 	Object.values(APPEAL_REDACTED_STATUS).includes(redactionStatus);
@@ -67,7 +58,7 @@ export const isValidRedactionStatus = (redactionStatus) =>
 /**
  *
  * @param {string} repStatus
- * @returns {repStatus is 'archived' | 'awaiting_review' | 'draft' | 'invalid' | 'invalid_incomplete' | 'published' | 'referred' | 'valid' | 'withdrawn'}
+ * @returns {repStatus is AppealRepresentation['representationStatus']}
  */
 export const isValidRepStatus = (repStatus) =>
 	Object.values(APPEAL_REPRESENTATION_STATUS).includes(repStatus);
@@ -75,7 +66,7 @@ export const isValidRepStatus = (repStatus) =>
 /**
  *
  * @param {string} repType
- * @returns {repType is 'comment' | 'final_comment' | 'proofs_evidence' | 'statement'}
+ * @returns {repType is AppealRepresentation['representationType']}
  */
 export const isValidRepType = (repType) =>
 	Object.values(APPEAL_REPRESENTATION_TYPE).includes(repType);
@@ -83,14 +74,14 @@ export const isValidRepType = (repType) =>
 /**
  *
  * @param {string} source
- * @returns {source is 'lpa' | 'citizen'}
+ * @returns {source is AppealRepresentation['source']}
  */
 export const isValidSource = (source) => Object.values(APPEAL_SOURCE).includes(source);
 
 /**
  *
  * @param {string} reason
- * @returns {reason is 'Contains links to web pages'|'Duplicated or repeated comment'|'Includes inflammatory content'|'Includes personal or medical information'|'No list of suggested conditions'|'Not relevant to this appeal'|'Received after deadline'|'other_reason'}
+ * @returns {reason is AppealRepresentation['invalidOrIncompleteDetails']}
  */
 export const isValidRejectionReason = (reason) =>
 	Object.values(APPEAL_INVALID_OR_INCOMPLETE_DETAILS).includes(reason);
@@ -98,7 +89,16 @@ export const isValidRejectionReason = (reason) =>
 /**
  *
  * @param {string} appealType
- * @returns {appealType is 'C'|'D'|'F'|'G'|'H'|'L'|'Q'|'S'|'V'|'W'|'X'|'Y'|'Z'}
+ * @returns {appealType is AppealDocument['caseType']}
  */
 export const isValidAppealType = (appealType) =>
 	Object.values(APPEAL_CASE_TYPE).includes(appealType);
+
+/**
+ * @param {string | null | undefined} developmentType
+ * @returns {developmentType is AppealS78Case['eiaDevelopmentDescription']}
+ */
+export const isValidDevelopmentType = (developmentType) => {
+	if (!developmentType) return false;
+	return Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).includes(developmentType);
+};

@@ -1,6 +1,9 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+
+import { isValidDevelopmentType } from '#utils/mapping/map-enums.js';
+
 /**
  *
  * @param {MappingRequest} data
@@ -25,6 +28,9 @@ export const mapAppellantCase = (data) => {
 			isPartOfAgriculturalHolding: appellantCase?.agriculturalHolding,
 			isTenant: appellantCase?.tenantAgriculturalHolding,
 			hasOtherTenants: appellantCase?.otherTenantsAgriculturalHolding
-		}
+		},
+		developmentType: isValidDevelopmentType(appellantCase?.developmentType)
+			? appellantCase?.developmentType
+			: null
 	};
 };
