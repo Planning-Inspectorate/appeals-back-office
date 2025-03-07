@@ -62,6 +62,11 @@ router.get(
 			description: 'The Green belt filter is applied',
 			example: 'true',
 		}
+		#swagger.parameters['appealTypeId'] = {
+			in: 'query',
+			description: 'The appeal type filter is assigned an  appeal type id',
+			example: 1,
+		}
 		#swagger.responses[200] = {
 			description: 'Requested appeals',
 			schema: { $ref: '#/components/schemas/AllAppeals' },

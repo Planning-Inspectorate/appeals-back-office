@@ -19,6 +19,7 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
+ * @param {number} appealTypeId
  * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[]]>}
  */
 const getAllAppeals = (
@@ -28,7 +29,8 @@ const getAllAppeals = (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
-	isGreenBelt
+	isGreenBelt,
+	appealTypeId
 ) => {
 	const where = {
 		appealStatus: {
@@ -79,6 +81,9 @@ const getAllAppeals = (
 		}),
 		...(!!caseOfficerId && {
 			caseOfficerUserId: caseOfficerId
+		}),
+		...(!!appealTypeId && {
+			appealTypeId
 		})
 	};
 
