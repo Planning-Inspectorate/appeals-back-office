@@ -174,6 +174,7 @@ const mapAppeals = (appeals) =>
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
+ * @param {number} appealTypeId
  * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
@@ -185,7 +186,8 @@ const retrieveAppealListData = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
-	isGreenBelt
+	isGreenBelt,
+	appealTypeId
 ) => {
 	const appeals = await appealListRepository.getAllAppeals(
 		searchTerm,
@@ -194,7 +196,8 @@ const retrieveAppealListData = async (
 		lpaCode,
 		inspectorId && Number(inspectorId),
 		caseOfficerId && Number(caseOfficerId),
-		isGreenBelt
+		isGreenBelt,
+		appealTypeId
 	);
 
 	const start = (pageNumber - 1) * pageSize;

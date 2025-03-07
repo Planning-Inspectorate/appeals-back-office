@@ -25,6 +25,7 @@ const getAppeals = async (req, res) => {
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
 	const isGreenBelt = query.isGreenBelt === 'true';
+	const appealTypeId = Number(query.appealTypeId) || null;
 
 	const {
 		itemCount,
@@ -43,7 +44,8 @@ const getAppeals = async (req, res) => {
 		lpaCode,
 		inspectorId,
 		caseOfficerId,
-		isGreenBelt
+		isGreenBelt,
+		appealTypeId
 	);
 
 	return res.send({

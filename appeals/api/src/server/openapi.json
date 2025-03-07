@@ -1391,6 +1391,15 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "appealTypeId",
+						"in": "query",
+						"description": "The appeal type filter is assigned an appeal type id",
+						"example": 1,
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
