@@ -2,14 +2,12 @@ import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
 	postDeleteDocument,
-	postDocumentDetails,
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
 	renderChangeDocumentFileName,
 	renderDeleteDocument,
-	renderDocumentDetails,
 	renderDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
@@ -117,62 +115,6 @@ export const postDocumentVersionUpload = async (request, response) => {
 		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}/${documentId}`
-	});
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const getAddDocumentDetails = async (request, response) => {
-	const {
-		currentAppeal,
-		currentFolder,
-		params: { documentId }
-	} = request;
-
-	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const pageHeadingText = 'Environmental assessment documents';
-
-	const documentIdFragment = documentId ? `/${documentId}` : '';
-
-	await renderDocumentDetails({
-		request,
-		response,
-		backLinkUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/upload-documents/${
-			currentFolder?.folderId
-		}${documentIdFragment}`,
-		pageHeadingTextOverride: pageHeadingText,
-		documentId
-	});
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const postAddDocumentDetails = async (request, response) => {
-	const {
-		currentAppeal,
-		currentFolder,
-		params: { documentId }
-	} = request;
-
-	if (!currentAppeal || !currentFolder) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const pageHeadingText = 'Environmental assessment documents';
-
-	const documentIdFragment = documentId ? `/${documentId}` : '';
-
-	await postDocumentDetails({
-		request,
-		response,
-		backLinkUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/upload-documents/${
-			currentFolder?.folderId
-		}`,
-		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
-			currentFolder?.folderId
-		}${documentIdFragment}`,
-		pageHeadingTextOverride: pageHeadingText
 	});
 };
 
@@ -341,7 +283,7 @@ export const getManageDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const getDeleteCostsDocument = async (request, response) => {
+export const getDeleteDocument = async (request, response) => {
 	const { currentFolder } = request;
 
 	if (!currentFolder) {
@@ -358,7 +300,7 @@ export const getDeleteCostsDocument = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postDeleteCostsDocument = async (request, response) => {
+export const postDeleteEnvAssessmentDocument = async (request, response) => {
 	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
