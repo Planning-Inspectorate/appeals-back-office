@@ -1,6 +1,382 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/ should render the manage documents page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Environmental assessment documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/environmental-assessment/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/environmental-assessment/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/environmental-assessment/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/environmental-assessment/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/:documentId should render the manage documents page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage environmental assessment document</span>
+            <h1             class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
+                        </div>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/change-document-name/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2>Document versions</h2>
+            <p class="govuk-body">View and remove versions of this document</p>
+            <details class="govuk-details"
+            data-module="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <table class="govuk-table govuk-!-font-size-16">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Version</th>
+                                <th scope="col" class="govuk-table__header">Name</th>
+                                <th scope="col" class="govuk-table__header">Activity</th>
+                                <th scope="col" class="govuk-table__header">Redaction status</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">1</td>
+                                <td class="govuk-table__cell">
+                                    <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                </div>
+                </td>
+                <td class="govuk-table__cell">
+                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
+                        <br>by John Smith</p>
+                </td>
+                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell"></td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+        </details>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document version page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">test-pdf-documentFileVersionsInfo.pdf</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+            </dl>
+            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the
+                    only version of a document will delete the document from the case</strong>
+            </div>
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="delete-file-answer" name="delete-file-answer"
+                            type="radio" value="yes">
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="delete-file-answer-2" name="delete-file-answer"
+                            type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="delete-file-answer-2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button"
+                id="remove-document-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment GET /environmental-assessment/upload-documents/:folderId should render the upload documents page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload environmental assessment documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/environmental-assessment/check-your-answers/2864"
+            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
+            data-document-type="environmentalAssessment" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
+                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
+                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment GET /environmental-assessment/upload-documents/:folderId/:documentId should render the upload documents page 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload an updated document</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/environmental-assessment/check-your-answers/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
+            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-id="15d19184-155b-4b6c-bba6-2bd2a61ca9a3" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
+            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
+                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId should eventually redirect to case details page displaying the success banner 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check your answers</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-4">Uploaded file</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> File</dt>
+                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                        target="_blank">test-document.txt</a>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId should eventually redirect to case details page displaying the success banner 2`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
@@ -8,6 +384,50 @@ role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govu
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Environmental assessment documents uploaded</p>
+    </div>
+</div>"
+`;
+
+exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId/:documentId should eventually redirect to case details page displaying the success banner 1`] = `
+"<main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check your answers</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-4">Uploaded file</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> File</dt>
+                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2"
+                        target="_blank">test-document.txt</a>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId/:documentId should eventually redirect to case details page displaying the success banner 2`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Document updated</p>
     </div>
 </div>"
 `;

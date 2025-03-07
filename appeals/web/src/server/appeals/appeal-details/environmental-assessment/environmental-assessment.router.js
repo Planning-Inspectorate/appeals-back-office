@@ -38,26 +38,6 @@ router
 	);
 
 router
-	.route(['/add-document-details/:folderId', '/add-document-details/:folderId/:documentId'])
-	.get(
-		validateAppeal,
-		validateCaseFolderId,
-		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getAddDocumentDetails)
-	)
-	.post(
-		validateAppeal,
-		validateCaseFolderId,
-		documentsValidators.validateDocumentDetailsBodyFormat,
-		documentsValidators.validateDocumentDetailsReceivedDatesFields,
-		documentsValidators.validateDocumentDetailsReceivedDateValid,
-		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
-		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.postAddDocumentDetails)
-	);
-
-router
 	.route('/check-your-answers/:folderId')
 	.get(
 		validateAppeal,
@@ -101,14 +81,14 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getDeleteCostsDocument)
+		asyncHandler(controller.getDeleteDocument)
 	)
 	.post(
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncHandler(controller.postDeleteCostsDocument)
+		asyncHandler(controller.postDeleteEnvAssessmentDocument)
 	);
 
 router
