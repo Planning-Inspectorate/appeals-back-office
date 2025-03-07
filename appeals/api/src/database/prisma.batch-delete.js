@@ -1,5 +1,5 @@
 /**
- * @param {Function} findManyFunction
+ * @param {(args: {take: number, select: { documentGuid: boolean, version: boolean }}) => Promise<{ documentGuid: string, version: number }[]>} findManyFunction
  * @param {Function} deleteManyFunction
  * @param {number} batchSize
  * @returns {Promise<void>}

@@ -3,12 +3,12 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
-/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
-/** @typedef {import('@pins/appeals.api').Schema.User} User */
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
- * @template T
+ * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
+ */
+
+/**
+ * @typedef {Awaited<ReturnType<getUserAppeals>>[1][0]} DBUserAppeal
  */
 
 /**
@@ -22,7 +22,7 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {number} appealTypeId
  * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[]]>}
  */
-const getAllAppeals = (
+const getAllAppeals = async (
 	searchTerm,
 	status,
 	hasInspector,
@@ -87,26 +87,37 @@ const getAllAppeals = (
 		})
 	};
 
-	return databaseConnector.$transaction([
-		databaseConnector.appeal.findMany({
-			where,
-			include: {
-				address: true,
-				appealStatus: {
-					where: {
-						valid: true
-					}
-				},
-				appealType: true,
-				lpa: true,
-				appellantCase: true,
-				inspector: true,
-				caseOfficer: true,
-				appealTimetable: true
+	const appeals = await databaseConnector.appeal.findMany({
+		where,
+		include: {
+			address: true,
+			appealStatus: {
+				where: {
+					valid: true
+				}
 			},
-			orderBy: { caseUpdatedDate: 'desc' }
-		})
-	]);
+			appealType: true,
+			lpa: true,
+			appellantCase: {
+				include: {
+					appellantCaseValidationOutcome: true
+				}
+			},
+			inspector: true,
+			caseOfficer: true,
+			appealTimetable: true,
+			representations: true,
+			lpaQuestionnaire: {
+				include: {
+					lpaQuestionnaireValidationOutcome: true
+				}
+			},
+			siteVisit: true
+		},
+		orderBy: { caseUpdatedDate: 'desc' }
+	});
+
+	return appeals;
 };
 
 /**
@@ -114,7 +125,6 @@ const getAllAppeals = (
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string} [status]
- * @returns {Promise<[number, Omit<Appeal, 'parentAppeals' | 'childAppeals'>[], *[]]>}
  */
 const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 	const where = {

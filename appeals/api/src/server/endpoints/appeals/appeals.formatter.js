@@ -34,9 +34,12 @@ const approxStageCompletion = {
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
+/** @typedef {DBAppeals[0]} DBAppeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 /**
- * @param {Appeal} appeal
+ * @param {DBAppeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}}
  */
@@ -56,7 +59,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 });
 
 /**
- * @param {Appeal} appeal
+ * @param {DBUserAppeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}
  */
@@ -94,7 +97,7 @@ const makeCounts = (reps, statuses) =>
 	);
 
 /**
- * @param {Appeal} appeal
+ * @param {DBAppeal | DBUserAppeal} appeal
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
@@ -173,7 +176,7 @@ const formatDocumentationSummary = (appeal) => {
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {DBAppeal | DBUserAppeal} appeal
  * @returns {AppealTimetable | undefined}
  * */
 function formatAppealTimetable(appeal) {
@@ -199,7 +202,7 @@ function formatAppealTimetable(appeal) {
 
 /**
  * Map each appeal to include a due date.
- * @param {Appeal} appeal
+ * @param {DBAppeal | DBUserAppeal} appeal
  * @param {string} appellantCaseStatus
  * @param {Date | null} appellantCaseDueDate
  * @returns { Date | null | undefined }
@@ -230,7 +233,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			}
 			if (appeal.siteVisit) {
 				return addBusinessDays(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
@@ -265,7 +268,7 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			});
 		}
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			return new Date(appeal.siteVisit.visitDate);
+			return new Date(appeal.siteVisit?.visitDate || 0);
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
