@@ -191,6 +191,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
 		submitButtonText: 'Continue',
+		formWrapperColumnClass: 'govuk-grid-column-two-thirds',
 		pageComponents
 	};
 

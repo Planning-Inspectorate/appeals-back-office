@@ -22,12 +22,10 @@ export const renderReviewLpaStatement = async (request, response) => {
 		backUrl
 	);
 
-	return response
-		.status(200)
-		.render(isReview ? 'patterns/change-page.pattern.njk' : 'patterns/display-page.pattern.njk', {
-			errors,
-			pageContent
-		});
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		errors,
+		pageContent
+	});
 };
 
 /**

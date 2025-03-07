@@ -336,6 +336,7 @@
  * @property {boolean} [forceRenderSubmitButton]
  * @property {PageComponent[]} [postPageComponents]
  * @property {string} [hint]
+ * @property {string} [formWrapperColumnClass]
  */
 
 /**
