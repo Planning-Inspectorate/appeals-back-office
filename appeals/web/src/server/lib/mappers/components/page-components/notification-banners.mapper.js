@@ -239,8 +239,8 @@ export const notificationBannerDefinitions = {
 	},
 	interestedPartyCommentAdded: {
 		type: 'success',
-		pages: ['viewIpComment'],
-		text: 'Comment added'
+		pages: ['viewIpComment', 'ipComments'],
+		text: 'Interested party comment added'
 	},
 	interestedPartyCommentsAddressAddedSuccess: {
 		type: 'success',
