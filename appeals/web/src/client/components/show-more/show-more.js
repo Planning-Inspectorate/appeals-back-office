@@ -145,17 +145,12 @@ const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ compo
 
 	componentInstance.elements.root.appendChild(contentSpan);
 
-	if (
-		componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText).length >
-		componentInstance.options.maximumCharactersBeforeHiding
-	) {
-		const ellipsisSpan = document.createElement('span');
+	const ellipsisSpan = document.createElement('span');
 
-		ellipsisSpan.className = CLASSES.ellipsis;
-		ellipsisSpan.setAttribute('aria-hidden', 'true');
-		ellipsisSpan.textContent = '…';
-		componentInstance.elements.root.appendChild(ellipsisSpan);
-	}
+	ellipsisSpan.className = CLASSES.ellipsis;
+	ellipsisSpan.setAttribute('aria-hidden', 'true');
+	ellipsisSpan.textContent = '…';
+	componentInstance.elements.root.appendChild(ellipsisSpan);
 };
 
 const initialiseOptions = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
@@ -190,37 +185,39 @@ const initialiseComponentInstance = async (
 ) => {
 	initialiseOptions(componentInstance);
 
+	if (
+		componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText).length <=
+		componentInstance.options.maximumCharactersBeforeHiding
+	) {
+		return;
+	}
+
 	if (isHtmlMode(componentInstance)) {
 		htmlModeToggleExpanded(componentInstance);
 	} else {
 		await initialiseTextMode(componentInstance);
 	}
 
-	if (
-		componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText).length >
-		componentInstance.options.maximumCharactersBeforeHiding
-	) {
-		const button = document.createElement('button');
-		button.className = CLASSES.toggleButton;
-		button.setAttribute('aria-expanded', 'false');
-		button.setAttribute('type', 'button');
+	const button = document.createElement('button');
+	button.className = CLASSES.toggleButton;
+	button.setAttribute('aria-expanded', 'false');
+	button.setAttribute('type', 'button');
 
-		const buttonLabel = document.createElement('span');
-		buttonLabel.className = CLASSES.toggleButtonLabel;
-		buttonLabel.textContent = componentInstance.options.toggleButtonTextCollapsed;
+	const buttonLabel = document.createElement('span');
+	buttonLabel.className = CLASSES.toggleButtonLabel;
+	buttonLabel.textContent = componentInstance.options.toggleButtonTextCollapsed;
 
-		const visuallyHiddenText = document.createElement('span');
-		visuallyHiddenText.className = 'govuk-visually-hidden';
-		const labelText = componentInstance.elements.root.getAttribute(ATTRIBUTES.label);
-		visuallyHiddenText.textContent = `, ${labelText}`;
+	const visuallyHiddenText = document.createElement('span');
+	visuallyHiddenText.className = 'govuk-visually-hidden';
+	const labelText = componentInstance.elements.root.getAttribute(ATTRIBUTES.label);
+	visuallyHiddenText.textContent = `, ${labelText}`;
 
-		button.appendChild(buttonLabel);
-		button.appendChild(visuallyHiddenText);
+	button.appendChild(buttonLabel);
+	button.appendChild(visuallyHiddenText);
 
-		componentInstance.elements.root.appendChild(button);
+	componentInstance.elements.root.appendChild(button);
 
-		bindEvents(componentInstance);
-	}
+	bindEvents(componentInstance);
 };
 
 const initialiseShowMore = () => {
