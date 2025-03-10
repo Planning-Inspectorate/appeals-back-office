@@ -142,7 +142,6 @@ const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ compo
 	);
 
 	componentInstance.elements.root.innerHTML = '';
-
 	componentInstance.elements.root.appendChild(contentSpan);
 
 	const ellipsisSpan = document.createElement('span');
