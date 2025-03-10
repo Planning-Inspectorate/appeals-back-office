@@ -15,14 +15,17 @@ import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
  * @returns {PageComponent}
  * */
 export function baseSummaryList(appealId, lpaStatement, { isReview }) {
-	const attachmentsList =
-		lpaStatement.attachments.length > 0
-			? buildHtmUnorderedList(
-					lpaStatement.attachments.map(
-						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
+	const filteredAttachments = lpaStatement.attachments?.filter(
+		(attachment) => !attachment.documentVersion.document.isDeleted
+	);
+
+	const attachmentsList = filteredAttachments?.length
+		? buildHtmUnorderedList(
+				filteredAttachments.map(
+					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+				)
+		  )
+		: null;
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
@@ -69,7 +72,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 					actions: {
 						items: [
-							...(lpaStatement.attachments?.length > 0
+							...(filteredAttachments.length > 0
 								? [
 										{
 											text: 'Manage',
