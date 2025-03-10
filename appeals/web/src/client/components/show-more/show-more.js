@@ -141,14 +141,14 @@ const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ compo
 		componentInstance.elements.root.innerText
 	);
 
-	componentInstance.elements.root.innerHTML = '';
-	componentInstance.elements.root.appendChild(contentSpan);
-
 	const ellipsisSpan = document.createElement('span');
 
 	ellipsisSpan.className = CLASSES.ellipsis;
 	ellipsisSpan.setAttribute('aria-hidden', 'true');
 	ellipsisSpan.textContent = '…';
+
+	componentInstance.elements.root.innerHTML = '';
+	componentInstance.elements.root.appendChild(contentSpan);
 	componentInstance.elements.root.appendChild(ellipsisSpan);
 };
 
