@@ -30,14 +30,17 @@ export function generateCommentsSummaryList(appealId, comment) {
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
-	const attachmentsList =
-		comment.attachments.length > 0
-			? buildHtmUnorderedList(
-					comment.attachments.map(
-						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
+	const filteredAttachments = comment.attachments?.filter(
+		(attachment) => !attachment.documentVersion.document.isDeleted
+	);
+
+	const attachmentsList = filteredAttachments?.length
+		? buildHtmUnorderedList(
+				filteredAttachments.map(
+					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+				)
+		  )
+		: null;
 
 	const commentTypePath = mapRepresentationTypeToPath(comment.representationType);
 
@@ -95,7 +98,7 @@ export function generateCommentsSummaryList(appealId, comment) {
 			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 			actions: {
 				items: [
-					...(comment.attachments?.length > 0
+					...(filteredAttachments?.length > 0
 						? [
 								{
 									text: 'Manage',

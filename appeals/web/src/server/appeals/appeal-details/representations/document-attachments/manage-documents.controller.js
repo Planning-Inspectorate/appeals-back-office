@@ -91,7 +91,7 @@ export const postDeleteDocumentPage = async (request, response) => {
 	await postDeleteDocument({
 		request,
 		response,
-		returnUrl: `${basePath}/add-document`,
+		returnUrl: basePath,
 		cancelUrl: `${baseUrl}/{{folderId}}/{{documentId}}`,
 		uploadNewDocumentUrl: `${basePath}/add-document`
 	});

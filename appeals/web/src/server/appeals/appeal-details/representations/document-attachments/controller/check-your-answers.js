@@ -137,20 +137,27 @@ export const postCheckYourAnswers = async (request, response) => {
 	delete session.fileUploadInfo;
 
 	let nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
-	if (representationType === 'comment') {
-		nextPageUrl = `${nextPageUrl}/review`;
 
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'interestedPartyCommentsDocumentAddedSuccess',
-			appealId
-		});
-	} else {
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'finalCommentsDocumentAddedSuccess',
-			appealId
-		});
+	/**@type {import('../../../../../lib/mappers/index.js').NotificationBannerDefinitionKey} */
+	let bannerDefinitionKey;
+
+	switch (representationType) {
+		case 'comment':
+			nextPageUrl = `${nextPageUrl}/review`;
+			bannerDefinitionKey = 'interestedPartyCommentsDocumentAddedSuccess';
+			break;
+		case 'lpa_statement':
+			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
+			break;
+		default:
+			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
+			break;
 	}
+
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: bannerDefinitionKey,
+		appealId
+	});
 	return response.redirect(nextPageUrl);
 };

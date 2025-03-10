@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'changePage'|'caseStarted'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'appellantFinalCommentsAcceptSuccess'|'lpaFinalCommentsAcceptSuccess'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAwaitingReview'|'lpaQuestionnaireNotValid'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'updateLpaStatement'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressToFinalComments'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitScheduled'|'siteVisitRescheduled'|'siteVisitTypeChanged'|'siteVisitNoChanges'|'siteVisitChangedDefault'|'startDateChanged'|'timetableDueDateUpdated'} NotificationBannerDefinitionKey  */
+/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'changePage'|'caseStarted'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'appellantFinalCommentsAcceptSuccess'|'lpaFinalCommentsAcceptSuccess'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAwaitingReview'|'lpaQuestionnaireNotValid'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'updateLpaStatement'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'lpaStatementDocumentAddedSuccess'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressToFinalComments'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitScheduled'|'siteVisitRescheduled'|'siteVisitTypeChanged'|'siteVisitNoChanges'|'siteVisitChangedDefault'|'startDateChanged'|'timetableDueDateUpdated'} NotificationBannerDefinitionKey  */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -94,7 +94,14 @@ export const notificationBannerDefinitions = {
 	},
 	documentDeleted: {
 		type: 'success',
-		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
+		pages: [
+			'appealDetails',
+			'appellantCase',
+			'lpaQuestionnaire',
+			'lpaStatement',
+			'viewFinalComments',
+			'ipComments'
+		],
 		text: 'Document removed'
 	},
 	appellantCaseNotValid: {
@@ -282,6 +289,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'LPA statement redacted and accepted'
+	},
+	lpaStatementDocumentAddedSuccess: {
+		type: 'success',
+		pages: ['lpaStatement'],
+		text: 'Supporting document added'
 	},
 	updateLpaStatement: {
 		type: 'important',
