@@ -587,6 +587,37 @@ describe('add-ip-comment', () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 		});
 
+		it('should send an API request to create a new document with correct redactionStatusId', async () => {
+			const documentFolderInfo = [
+				{
+					caseId: '2',
+					documents: [],
+					folderId: 55539,
+					path: 'representation/representationAttachments'
+				}
+			];
+
+			nock('http://test/')
+				.get(`/appeals/document-redaction-statuses`)
+				.reply(200, [
+					{ id: 1, key: 'unredacted' },
+					{ id: 2, key: 'no_redaction_required' },
+					{ id: 3, key: 'redacted' }
+				]);
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
+			nock('http://test/').get(`/appeals/document-redaction-statuses`).reply(200, 1);
+			const addDocumentsResponse = await request
+				.post(`${baseUrl}/2/interested-party-comments/add/upload`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(addDocumentsResponse.statusCode).toBe(302);
+		});
+
 		it('should createIPComment on successful submission', async () => {
 			const appealId = 2;
 			const comment = {
