@@ -19,7 +19,7 @@ import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './util
  * */
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
+/** @typedef {import('#endpoints/representations/representations.service.js').UpdatedDBRepresentation} Representation */
 /** @typedef {(args: ServiceArgs) => Promise<void>} Service */
 
 /** @type {Service} */

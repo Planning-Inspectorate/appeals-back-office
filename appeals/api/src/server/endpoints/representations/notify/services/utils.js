@@ -3,7 +3,7 @@ import { addDays } from '#utils/business-days.js';
 import formatDate from '#utils/date-formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
+/** @typedef {import('#endpoints/representations/representations.service.js').UpdatedDBRepresentation} Representation */
 
 /**
  * @param {Representation} representation

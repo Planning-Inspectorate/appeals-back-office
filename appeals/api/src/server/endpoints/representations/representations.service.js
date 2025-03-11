@@ -58,31 +58,15 @@ export const getRepresentationCounts = async (appealId, options = {}) => {
 };
 
 /**
- *
  * @param {number} id
  */
 export const getRepresentation = representationRepository.getById;
 
-/**
- *
- * @param {number} appealId
- * @param {number} pageNumber
- * @param {number} pageSize
- * @param {string} status //APPEAL_REPRESENTATION_STATUS
- */
-export const addRepresentation = async (appealId, pageNumber = 0, pageSize = 30, status) => {
-	const reps = await representationRepository.getThirdPartyCommentsByAppealId(
-		appealId,
-		pageNumber,
-		pageSize,
-		status
-	);
-	return reps;
-};
+/** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
 /**
  * @typedef {Object} CreateRepresentationInput
- * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
@@ -139,7 +123,6 @@ export const createRepresentation = async (appealId, input) => {
  *
  * @param {number} representationId - The ID of the representation.
  * @param {Array<{ id: number, text: string[] }>} rejectionReasons
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
  */
 export const updateRejectionReasons = async (representationId, rejectionReasons) =>
 	representationRepository.updateRejectionReasons(representationId, rejectionReasons);
@@ -166,8 +149,7 @@ export const updateAttachments = async (repId, attachments) => {
 
 /**
  * @param {number} repId
- * @param {RepresentationUpdateInput} payload
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * @param {import('express').Request['body']} payload
  * */
 export async function updateRepresentation(repId, payload) {
 	if (payload.rejectionReasons) {
@@ -197,6 +179,8 @@ export async function updateRepresentation(repId, payload) {
 
 	return updatedRep;
 }
+
+/** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
 
 /** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
 
@@ -234,7 +218,7 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	const finalCommentsDueDate = formatDate(
-		new Date(appeal.appealTimetable.finalCommentsDueDate || ''),
+		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
 		false
 	);
 
@@ -311,15 +295,15 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {import('#endpoints/appeals.js').NotifyTemplate} template
- * @param {string} recipientEmail
- * @param {string|undefined} finalCommentsDueDate
+ * @param {string | null} [recipientEmail]
+ * @param {string} [finalCommentsDueDate]
  * */
 async function notifyPublished(
 	appeal,
 	notifyClient,
 	template,
 	recipientEmail,
-	finalCommentsDueDate
+	finalCommentsDueDate = ''
 ) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
