@@ -353,11 +353,11 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 
 			if (ipCommentsAwaitingReview || lpaStatementAwaitingReview) {
 				actions.push(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=/personal-list">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				);
 				if (!lpaStatementIncomplete && lpaStatementAwaitingReview) {
 					actions.push(
-						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=/personal-list">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 					);
 				}
 			} else if (
@@ -368,14 +368,14 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 			) {
 				if (hasItemsToShare) {
 					actions.push(
-						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 					);
 				} else if (
 					(lpaStatementStatus === 'not_received' && allIpCommentsHaveBeenRejected) ||
 					nothingHasBeenReceived
 				) {
 					actions.push(
-						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+						`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 					);
 				}
 			}
@@ -431,11 +431,11 @@ export function mapAppealStatusToActionRequiredHtml(appeal, isCaseOfficer = fals
 				if (isFinalCommentsDueDatePassed) {
 					if (hasValidFinalCommentsAppellant || hasValidFinalCommentsLPA) {
 						actions.push(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Share final comments</a>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share final comments</a>`
 						);
 					} else {
 						actions.push(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share">Progress case</a>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress case</a>`
 						);
 					}
 				}
