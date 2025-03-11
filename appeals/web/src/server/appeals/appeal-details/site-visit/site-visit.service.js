@@ -45,6 +45,7 @@ export async function createSiteVisit(
  * @param {string} [visitDate]
  * @param {string} [visitStartTime]
  * @param {string} [visitEndTime]
+ * @param {string} [inspectorName]
  * @param {string} [siteVisitChangeType]
  */
 export async function updateSiteVisit(
@@ -56,6 +57,7 @@ export async function updateSiteVisit(
 	visitStartTime,
 	visitEndTime,
 	previousVisitType,
+	inspectorName,
 	siteVisitChangeType
 ) {
 	return apiClient
@@ -66,6 +68,7 @@ export async function updateSiteVisit(
 				visitStartTime,
 				visitEndTime,
 				...(previousVisitType && { previousVisitType }),
+				inspectorName,
 				siteVisitChangeType
 			}
 		})
