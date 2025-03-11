@@ -29,6 +29,7 @@ import {
 import { postRepresentationComment } from './add-ip-comment.service.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { dateSubmitted } from './add-ip-comment.mapper.js';
+import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  *
@@ -245,7 +246,7 @@ export async function postIpAddress(request, response) {
  */
 export async function postIPComment(request, response) {
 	try {
-		const { currentAppeal } = request;
+		const { apiClient, currentAppeal } = request;
 
 		const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
 
@@ -254,10 +255,21 @@ export async function postIPComment(request, response) {
 			request.session?.fileUploadInfo
 		);
 
+		const redactionStatus = request.session?.addIpComment?.redactionStatus;
+		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
+
+		if (!redactionStatuses) throw new Error('Redaction statuses could not be retrieved');
+		const redactionStatusId = redactionStatuses.find(({ key }) => redactionStatus === key)?.id;
+		if (!redactionStatusId) {
+			throw new Error(
+				'Submitted redaction status did not correspond with a known redaction status key'
+			);
+		}
+
 		const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments(
 			currentAppeal.appealId,
 			folderId,
-			2,
+			redactionStatusId,
 			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 			config.blobStorageDefaultContainer,
 			request.session.fileUploadInfo
