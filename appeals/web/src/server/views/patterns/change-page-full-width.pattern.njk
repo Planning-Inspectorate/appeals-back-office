@@ -1,0 +1,33 @@
+{%- extends "app/layouts/app.layout.njk" -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../app/components/page-heading.njk" import pageHeading -%}
+
+{%- set backLinkUrl = pageContent.backLinkUrl -%}
+{%- set backLinkText = pageContent.backLinkText -%}
+{%- set pageTitle = pageContent.title if pageContent.title else 'Change' -%}
+
+{%- block pageHeading -%}
+	{{ pageHeading(pageContent) }}
+{%- endblock -%}
+
+{%- block pageContent -%}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<form method="POST" novalidate="novalidate">
+				{%- for component in pageContent.pageComponents -%}
+					{%- include "../appeals/components/page-component.njk" -%}
+				{%- endfor -%}
+				{{ govukButton({
+					text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
+					type: "submit",
+					preventDoubleClick: true
+				}) }}
+				{%- if pageContent.postPageComponents -%}
+					{%- for component in pageContent.postPageComponents -%}
+						{%- include "../appeals/components/page-component.njk" -%}
+					{%- endfor -%}
+				{%- endif -%}
+			</form>
+		</div>
+	</div>
+{%- endblock -%}
