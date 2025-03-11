@@ -488,7 +488,7 @@ describe('personal-list', () => {
 					const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 					expect(unprettifiedHtml).toContain(
-						`action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/share">${testCase.linkText}</a></td>`
+						`action-required"><a class="govuk-link" href="/appeals-service/appeal-details/24281/share?backUrl=/personal-list">${testCase.linkText}</a></td>`
 					);
 				});
 			}
@@ -730,7 +730,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			appealInStatementsStatus.appealTimetable.ipCommentsDueDate = getDateDaysInFutureISO(-1);
 			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
 			expect(result).toContain('Review LPA statement<span');
-			expect(result).toContain(`href="/appeals-service/appeal-details/${appealId}/lpa-statement"`);
+			expect(result).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=/personal-list"`
+			);
 		});
 
 		it('should return "Review IP comments" link', () => {
@@ -739,7 +741,7 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 			const result = mapAppealStatusToActionRequiredHtml(appealInStatementsStatus);
 			expect(result).toContain('Review IP comments<span');
 			expect(result).toContain(
-				`href="/appeals-service/appeal-details/${appealId}/interested-party-comments"`
+				`href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=/personal-list"`
 			);
 		});
 
@@ -753,7 +755,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 			expect(actions[0]).toContain('Awaiting LPA statement<span');
 			expect(actions[1]).toContain('Progress to final comments<span');
-			expect(actions[1]).toContain(`href="/appeals-service/appeal-details/${appealId}/share"`);
+			expect(actions[1]).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list"`
+			);
 		});
 
 		it('should return both "Awaiting LPA statement" text and "Share IP comments and LPA statement" link', () => {
@@ -767,7 +771,9 @@ describe('mapAppealStatusToActionRequiredHtml', () => {
 
 			expect(actions[0]).toContain('Awaiting LPA statement<span');
 			expect(actions[1]).toContain('Share IP comments and LPA statement<span');
-			expect(actions[1]).toContain(`href="/appeals-service/appeal-details/${appealId}/share"`);
+			expect(actions[1]).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list"`
+			);
 		});
 
 		it('should return "Awaiting IP comments" link', () => {

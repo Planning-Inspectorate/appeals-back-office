@@ -7,12 +7,14 @@ import { publishRepresentations } from './representations.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, query } = request;
+
+	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 
 	const pageContent = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				return statementAndCommentsSharePage(currentAppeal);
+				return statementAndCommentsSharePage(currentAppeal, backUrl);
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
 				const finalCommentsDueDate = currentAppeal.appealTimetable?.finalCommentsDueDate;
 				if (
@@ -22,7 +24,7 @@ export function renderShareRepresentations(request, response) {
 					throw new Error('Final comments cannot be shared before the due date has passed');
 				}
 
-				return finalCommentsSharePage(currentAppeal);
+				return finalCommentsSharePage(currentAppeal, backUrl);
 			}
 			default:
 				throw new Error(
