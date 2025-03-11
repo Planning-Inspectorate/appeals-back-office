@@ -25,7 +25,6 @@ export const getAllCaseNotesByAppealId = (caseId) => {
 /**
  *
  * @param {number} id
- * @returns {PrismaPromise<CaseNote|null>}
  */
 export const getCaseNoteByCaseNoteId = (id) => {
 	return databaseConnector.caseNote.findUnique({
@@ -36,7 +35,6 @@ export const getCaseNoteByCaseNoteId = (id) => {
 /**
  *
  * @param {import('#endpoints/appeals.js').CreateCaseNote} data
- * @returns {PrismaPromise<CaseNote>}
  */
 export const postCaseNote = (data) => {
 	return databaseConnector.caseNote.create({

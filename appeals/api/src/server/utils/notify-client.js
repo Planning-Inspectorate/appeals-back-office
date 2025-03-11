@@ -43,7 +43,7 @@ class NotifyClient {
 	/**
 	 * @param {NotifyTemplate} template
 	 * @param {string | undefined} recipientEmail
-	 * @param {{[key: string]: string}} [personalisation]
+	 * @param {{[key: string]: string | string[]}} [personalisation]
 	 */
 	async sendEmail(template, recipientEmail, personalisation) {
 		if (!this.govNotify) {

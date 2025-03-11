@@ -27,7 +27,7 @@ export const isValidOutcome = (outcome) =>
 /**
  *
  * @param {string} stage
- * @returns {stage is AppealS78Case['caseStatus']}
+ * @returns {stage is AppealDocument['caseStage']}
  */
 export const isValidStage = (stage) => Object.values(APPEAL_CASE_STAGE).includes(stage);
 

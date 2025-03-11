@@ -6,11 +6,19 @@ import commonRepository from '#repositories/common.repository.js';
 /** @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasons} IncompleteInvalidReasons */
 
 /**
+ * @param {string[] | number[] | IncompleteInvalidReasons} arr
+ * @returns {arr is IncompleteInvalidReasons}
+ */
+const isIncompleteInvalidReasons = (arr) => {
+	return arr.every((el) => typeof el === 'object' && Object.hasOwn(el, 'id'));
+};
+
+/**
  * @param {string} fieldName
  * @param {string} databaseTable
  * @returns {(req: {
  * 	 body: {
- * 		 [key: string]: string | string[] | IncompleteInvalidReasons,
+ * 		 [key: string]: string | string[] | IncompleteInvalidReasons | number[],
  *     validationOutcome: string
  *   }
  * }, res: Response, next: NextFunction) => Promise<object | void>}
@@ -23,7 +31,7 @@ const checkLookupValuesAreValid = (fieldName, databaseTable) => async (req, res,
 	if (valuesToCheck) {
 		valuesToCheck = typeof valuesToCheck !== 'object' ? [valuesToCheck] : valuesToCheck;
 
-		if (typeof valuesToCheck[0] === 'object') {
+		if (isIncompleteInvalidReasons(valuesToCheck)) {
 			valuesToCheck = valuesToCheck.map(({ id }) => id);
 		}
 
