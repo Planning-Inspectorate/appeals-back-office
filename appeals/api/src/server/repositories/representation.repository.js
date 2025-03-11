@@ -6,9 +6,7 @@ import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 /** @typedef {import('#db-client').Prisma.RepresentationWhereInput} RepresentationWhereInput */
 
 /**
- *
  * @param {number} id
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation | null>}
  */
 const getById = (id) => {
 	return databaseConnector.representation.findUnique({
@@ -132,10 +130,8 @@ const getRepresentationCounts = async (appealId, options) => {
 };
 
 /**
- *
  * @param {number} id
  * @param {RepresentationUpdateInput} data
- * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  */
 const updateRepresentationById = (id, data) => {
 	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested } = data;
@@ -154,7 +150,11 @@ const updateRepresentationById = (id, data) => {
 		},
 		include: {
 			representative: true,
-			represented: true,
+			represented: {
+				include: {
+					address: true
+				}
+			},
 			lpa: true,
 			representationRejectionReasonsSelected: {
 				include: {

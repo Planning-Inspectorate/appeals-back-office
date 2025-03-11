@@ -2,14 +2,20 @@ import { APPEAL_ORIGIN } from 'pins-data-model';
 import formatAddress from '#utils/format-address.js';
 import { formatName } from '#utils/format-name.js';
 
-/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
-/** @typedef {import('@pins/appeals.api').Schema.RepresentationAttachment} RepresentationAttachment */
+/** @typedef {import('./representations.service.js').DBRepresentation} Representation */
+/** @typedef {import('./representations.service.js').UpdatedDBRepresentation} UpdatedRepresentation */
+/** @typedef {NonNullable<Representation>['attachments'][0]} RepresentationAttachment */
 /** @typedef {import('@pins/appeals.api').Api.RepResponse} FormattedRep */
 /** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
 
 /**
- *
- * @param {Representation} rep
+ * @param {Object} rep
+ * @returns {rep is Representation}
+ */
+const repHasAttachments = (rep) => Object.hasOwn(rep, 'attachments');
+
+/**
+ * @param {NonNullable<Representation> | UpdatedRepresentation} rep
  * @returns {FormattedRep}
  */
 export const formatRepresentation = (rep) => {
@@ -23,7 +29,12 @@ export const formatRepresentation = (rep) => {
 		redactedRepresentation: rep.redactedRepresentation || '',
 		created: rep.dateCreated.toISOString(),
 		notes: rep.notes || '',
-		attachments: rep.attachments ? rep.attachments.map(formatAttachment) : [],
+		attachments: (() => {
+			if (!repHasAttachments(rep)) {
+				return [];
+			}
+			return rep.attachments.map(formatAttachment);
+		})(),
 		representationType: rep.representationType,
 		siteVisitRequested: rep.siteVisitRequested,
 		source: rep.source
@@ -52,7 +63,7 @@ export const formatRepresentation = (rep) => {
 
 /**
  *
- * @param {Representation} rep
+ * @param {NonNullable<Representation> | UpdatedRepresentation} rep
  * @returns {string}
  */
 const formatRepresentationSource = (rep) => {
@@ -70,7 +81,6 @@ const formatRepresentationSource = (rep) => {
 /**
  *
  * @param {RepresentationAttachment} attachment
- * @returns {RepAttachment}
  */
 const formatAttachment = (attachment) => {
 	const { documentGuid, version, representationId, documentVersion } = attachment;

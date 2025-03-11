@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';

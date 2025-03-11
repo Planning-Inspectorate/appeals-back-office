@@ -2,7 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
-/** @typedef {import('#db-client').Prisma.ServiceUserCreateInput} ServiceUserCreateInput */
+/** @typedef {import('#db-client').Prisma.ServiceUserUncheckedCreateInput} ServiceUserCreateInput */
 
 /**
  * @param {number} id
