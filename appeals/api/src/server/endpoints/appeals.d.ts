@@ -796,6 +796,7 @@ export interface UpdateSiteVisitData {
 	appealReferenceNumber: string;
 	lpaReference: string;
 	siteAddress: string;
+	inspectorName?: string;
 	siteVisitChangeType: string;
 }
 

@@ -15,7 +15,6 @@ import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
 import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
-import NotifyClient from '#utils/notify-client.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 
@@ -169,7 +168,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			site_address: updateSiteVisitData.siteAddress,
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			end_time: formatTime(updateSiteVisitData.visitEndTime),
-			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false)
+			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
+			inspector_name: updateSiteVisitData.inspectorName
 		};
 
 		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {

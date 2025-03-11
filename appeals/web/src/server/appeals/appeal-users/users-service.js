@@ -55,11 +55,7 @@ const getUserById = async (id, session) => {
 	// TODO: add users from other groups as required
 	const users = [...caseOfficerUsers, ...inspectorUsers];
 
-	for (const user of users) {
-		if (user.id === id) {
-			return user;
-		}
-	}
+	return users.find((user) => user.id === id);
 };
 
 /**

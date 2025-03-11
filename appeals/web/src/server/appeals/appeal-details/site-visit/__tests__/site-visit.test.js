@@ -1,9 +1,16 @@
+// @ts-nocheck
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
-import { siteVisitData, appealData } from '#testing/app/fixtures/referencedata.js';
+import {
+	siteVisitData,
+	appealData,
+	activeDirectoryUsersData
+} from '#testing/app/fixtures/referencedata.js';
 import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { jest } from '@jest/globals';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -582,6 +589,40 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('End time must include an hour</a>');
 			expect(errorSummaryHtml).toContain('End time must include a minute</a>');
+		});
+
+		it('should update a site visit if all required fields are populated and valid', async () => {
+			const siteVisitId = 2;
+			const appealId = 3;
+			const appealDataWithSiteVisit = structuredClone(appealData);
+			const existingSiteVisit = structuredClone(siteVisitData);
+			appealDataWithSiteVisit.siteVisit.siteVisitId = siteVisitId;
+			appealDataWithSiteVisit.appealId = appealId;
+			appealDataWithSiteVisit.inspector = activeDirectoryUsersData[0].id;
+			existingSiteVisit.siteVisitId = siteVisitId;
+			nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealDataWithSiteVisit);
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/site-visits/${siteVisitId}`)
+				.reply(200, existingSiteVisit);
+			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+
+			const response = await request
+				.post(`${baseUrl}/${appealId}${siteVisitPath}/schedule-visit`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+			);
 		});
 	});
 

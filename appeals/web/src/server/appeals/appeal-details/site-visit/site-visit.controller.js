@@ -9,6 +9,7 @@ import {
 	getSiteVisitSuccessBannerTypeAndChangeType
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import usersService from '#appeals/appeal-users/users-service.js';
 
 /**
  *
@@ -197,6 +198,10 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters
 				);
 
+				const inspector =
+					appealDetails.inspector &&
+					(await usersService.getUserById(appealDetails.inspector, request.session));
+
 				await siteVisitService.updateSiteVisit(
 					request.apiClient,
 					mappedUpdateOrCreateSiteVisitParameters.appealIdNumber,
@@ -206,6 +211,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
 					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
+					inspector?.name || '',
 					successBannerAndChangeType.changeType
 				);
 

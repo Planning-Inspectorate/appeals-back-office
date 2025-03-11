@@ -91,7 +91,14 @@ const postSiteVisit = async (req, res) => {
  */
 const rearrangeSiteVisit = async (req, res) => {
 	const {
-		body: { visitDate, visitEndTime, visitStartTime, previousVisitType, siteVisitChangeType },
+		body: {
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			inspectorName = '',
+			previousVisitType,
+			siteVisitChangeType
+		},
 		params,
 		params: { siteVisitId },
 		visitType,
@@ -124,6 +131,7 @@ const rearrangeSiteVisit = async (req, res) => {
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
 		lpaReference: appeal.applicationReference || '',
+		inspectorName,
 		siteAddress
 	};
 
