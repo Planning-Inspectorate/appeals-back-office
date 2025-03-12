@@ -1,5 +1,5 @@
 # Stage 1/2 - Builder
-FROM node:20-alpine3.20 AS pins-web-builder
+FROM node:22-alpine3.20 AS pins-web-builder
 
 RUN apk update
 

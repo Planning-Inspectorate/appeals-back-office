@@ -18,6 +18,7 @@ import serviceUserRepository from '#repositories/service-user.repository.js';
 import { getCache } from '#utils/cache-data.js';
 import { setCache } from '#utils/cache-data.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
+import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -44,12 +45,6 @@ const loadAndFormatAppeal = async ({
 
 	return mappedAppeal;
 };
-
-/**
- * @param {string | number | null} [value]
- * @returns {boolean}
- */
-const hasValueOrIsNull = (value) => Boolean(value) || value === null;
 
 /**
  * @param {Pick<UsersToAssign, 'caseOfficer' | 'inspector'>} param0

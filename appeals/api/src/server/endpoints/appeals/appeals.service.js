@@ -1,10 +1,5 @@
-import userRepository from '#repositories/user.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import {
-	USER_TYPE_CASE_OFFICER,
-	USER_TYPE_INSPECTOR,
-	VALIDATION_OUTCOME_COMPLETE
-} from '#endpoints/constants.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
@@ -14,50 +9,6 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
-
-/**
- * @param {string | number | null} [value]
- * @returns {boolean}
- */
-const hasValueOrIsNull = (value) => Boolean(value) || value === null;
-
-/**
- * @param {Pick<UsersToAssign, 'caseOfficer' | 'inspector'>} param0
- * @returns {AssignedUser | null}
- */
-const assignedUserType = ({ caseOfficer, inspector }) => {
-	if (hasValueOrIsNull(caseOfficer)) {
-		return USER_TYPE_CASE_OFFICER;
-	}
-
-	if (hasValueOrIsNull(inspector)) {
-		return USER_TYPE_INSPECTOR;
-	}
-
-	return null;
-};
-
-/**
- * @param {number} id
- * @param {UsersToAssign} param0
- * @returns {Promise<object | null>}
- */
-const assignUser = async (id, { caseOfficer, inspector }) => {
-	const assignedUserId = caseOfficer || inspector;
-	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector });
-
-	if (typeOfAssignedUser) {
-		let userId = null;
-
-		if (assignedUserId) {
-			({ id: userId } = await userRepository.findOrCreateUser(assignedUserId));
-		}
-
-		await appealRepository.updateAppealById(id, { [typeOfAssignedUser]: userId });
-	}
-
-	return null;
-};
 
 /**
  * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
@@ -229,10 +180,4 @@ async function updateCompletedEvents(azureAdUserId) {
 	);
 }
 
-export {
-	assignUser,
-	hasValueOrIsNull,
-	assignedUserType,
-	retrieveAppealListData,
-	updateCompletedEvents
-};
+export { retrieveAppealListData, updateCompletedEvents };

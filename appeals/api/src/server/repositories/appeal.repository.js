@@ -1,6 +1,6 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { databaseConnector } from '#utils/database-connector.js';
-import { hasValueOrIsNull } from '#endpoints/appeals/appeals.service.js';
+import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
