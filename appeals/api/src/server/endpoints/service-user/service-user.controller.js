@@ -108,12 +108,15 @@ export async function removeServiceUserById(request, response) {
 	const appealId = Number(params.appealId);
 	const azureAdUserId = request.get('azureAdUserId');
 
-	const serviceUserId = parseInt(request.appeal?.agent?.id);
+	const serviceUserId = request.appeal?.agent?.id;
 
-	const deletedServiceUser = await appealRepository.removeAppealServiceUser(appealId, {
-		userType,
-		serviceUserId
-	});
+	let deletedServiceUser;
+	if (serviceUserId) {
+		deletedServiceUser = await appealRepository.removeAppealServiceUser(appealId, {
+			userType,
+			serviceUserId
+		});
+	}
 
 	if (!deletedServiceUser) {
 		return response.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });

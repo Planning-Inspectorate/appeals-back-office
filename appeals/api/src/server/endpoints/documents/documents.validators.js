@@ -19,7 +19,7 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
+/** @typedef {import('../../openapi-types').UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
 
 /**
  * @param {UpdateDocumentsRequest} documents
@@ -43,13 +43,13 @@ const validateDocumentRedactionStatusIds = async (documents) => {
 };
 
 /**
- * @param {UpdateDocumentsAvCheckRequest[]} documents
+ * @param {UpdateDocumentsAvCheckRequest['documents']} documents
  * @returns {Promise<boolean>}
  */
 const validateAvCheckResult = async (documents) => {
 	const validAvResults = [APPEAL_VIRUS_CHECK_STATUS.SCANNED, APPEAL_VIRUS_CHECK_STATUS.AFFECTED];
-	const hasValidStatusIds = documents.every(({ virusCheckStatus }) =>
-		validAvResults.includes(virusCheckStatus)
+	const hasValidStatusIds = documents?.every(
+		({ virusCheckStatus }) => virusCheckStatus && validAvResults.includes(virusCheckStatus)
 	);
 
 	if (!hasValidStatusIds) {
@@ -101,7 +101,7 @@ const patchDocumentsValidator = composeMiddleware(
 const patchDocumentFileNameValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
-	validateFileNameParameter({ parameterName: 'documents.*.fileName' }),
+	validateFileNameParameter('documents.*.fileName'),
 	validationErrorHandler
 );
 

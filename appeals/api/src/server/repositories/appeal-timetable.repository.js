@@ -10,7 +10,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /**
  * @param {number} id
- * @param {Timetable} data
+ * @param {Partial<AppealTimetable>} data
  * @returns {PrismaPromise<AppealTimetable>}
  */
 const upsertAppealTimetableById = (id, data) =>

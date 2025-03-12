@@ -273,7 +273,8 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
 				appeal.appealTimetable?.finalCommentsDueDate ||
-					appeal.appealTimetable?.lpaQuestionnaireDueDate
+					appeal.appealTimetable?.lpaQuestionnaireDueDate ||
+					0
 			);
 		}
 		default: {
