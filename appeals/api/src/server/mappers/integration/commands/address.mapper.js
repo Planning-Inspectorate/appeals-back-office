@@ -8,11 +8,11 @@
  */
 export const mapAddressIn = (casedata) => {
 	return {
-		addressLine1: casedata.siteAddressLine1,
-		addressLine2: casedata.siteAddressLine2,
-		addressCounty: casedata.siteAddressCounty,
-		postcode: casedata.siteAddressPostcode,
-		addressTown: casedata.siteAddressTown
+		addressLine1: casedata.siteAddressLine1 || casedata.addressLine1,
+		addressLine2: casedata.siteAddressLine2 || casedata.addressLine2,
+		addressCounty: casedata.siteAddressCounty || casedata.addressCounty,
+		postcode: casedata.siteAddressPostcode || casedata.addressPostcode,
+		addressTown: casedata.siteAddressTown || casedata.addressTown
 	};
 };
 
