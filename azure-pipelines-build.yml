@@ -41,22 +41,22 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm run tscheck
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm run test
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
@@ -124,7 +124,7 @@ extends:
           # install only function deps
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-user-import --workspace=@pins/functions-bo-appeals-document-processing
 
           # merge node modules
