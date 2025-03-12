@@ -11,23 +11,5 @@
 {%- endblock -%}
 
 {%- block pageContent -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<form method="POST" novalidate="novalidate">
-				{%- for component in pageContent.pageComponents -%}
-					{%- include "../appeals/components/page-component.njk" -%}
-				{%- endfor -%}
-				{{ govukButton({
-					text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
-					type: "submit",
-					preventDoubleClick: true
-				}) }}
-				{%- if pageContent.postPageComponents -%}
-					{%- for component in pageContent.postPageComponents -%}
-						{%- include "../appeals/components/page-component.njk" -%}
-					{%- endfor -%}
-				{%- endif -%}
-			</form>
-		</div>
-	</div>
+	{%- include "../app/includes/change-page-content.pattern.njk" -%}
 {%- endblock -%}
