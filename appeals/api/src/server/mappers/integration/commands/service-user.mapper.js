@@ -16,10 +16,24 @@ export const mapServiceUserIn = (data) => {
 			webAddress: data.website,
 			phoneNumber: data.telephoneNumber,
 			otherPhoneNumber: data.otherPhoneNumber,
-			faxNumber: data.faxNumber,
-			address: { create: mapAddressIn(data) }
+			faxNumber: data.faxNumber
 		};
 
 		return serviceUser;
+	}
+};
+
+/**
+ *
+ * @param {*} data
+ * @returns {import('#db-client').Prisma.ServiceUserCreateInput|undefined}
+ */
+export const mapServiceUserWithAddressIn = (data) => {
+	if (data) {
+		const serviceUser = mapServiceUserIn(data);
+		return {
+			...serviceUser,
+			address: { create: mapAddressIn(data) }
+		};
 	}
 };
