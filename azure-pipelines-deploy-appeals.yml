@@ -89,7 +89,7 @@ extends:
                         variable: appeals-bo-sql-admin-connection-string
                 - template: ../steps/node_script.yml
                   parameters:
-                    nodeVersion: 20
+                    nodeVersion: 22
                     environmentVariables:
                       DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                     script: npm run db:migrate:prod
