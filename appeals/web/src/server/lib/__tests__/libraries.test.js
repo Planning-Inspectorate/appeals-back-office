@@ -34,6 +34,7 @@ import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
 import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
+import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1214,6 +1215,16 @@ describe('Libraries', () => {
 				expect(result.pageNumber).toEqual(3);
 				expect(result.pageSize).toEqual(16);
 			});
+		});
+	});
+
+	describe('addInvisibleSpacesAfterRedactionCharacters', () => {
+		it('should add a unicode invisible space after each █ character', () => {
+			const originalString = 'some text ██████████████████████ more text';
+			const formattedString =
+				'some text █\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B█\u200B more text';
+
+			expect(addInvisibleSpacesAfterRedactionCharacters(originalString)).toEqual(formattedString);
 		});
 	});
 });
