@@ -1,4 +1,15 @@
-import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import {
+	APPEAL_REDACTED_STATUS,
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_CASE_STATUS
+} from 'pins-data-model';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	DOCUMENT_STATUS_RECEIVED,
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	VALIDATION_OUTCOME_INCOMPLETE
+	// @ts-ignore
+} from '@pins/appeals.api/src/server/endpoints/constants.js';
 import { sample } from 'lodash-es';
 
 export const documentFileInfo = {
@@ -1744,66 +1755,227 @@ export const documentFileMultipleVersionsInfoWithLatestAsLateEntry = {
 };
 
 export const assignedAppealsPage1 = {
-	itemCount: 9,
+	itemCount: 5,
 	items: [
 		{
-			appealId: 189,
-			appealReference: 'TEST/458673',
+			appealId: 28535,
+			appealReference: '6028535',
 			appealSite: {
-				addressLine1: '72 Clapham High St',
-				county: 'Wandsworth',
-				postCode: 'SW4 7UL'
+				addressLine1: '92 Huntsmoor Road',
+				town: 'Tadley',
+				postCode: 'RG26 4BX'
 			},
-			appealStatus: 'lpa_questionnaire',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.830Z',
-			localPlanningDepartment: 'Maidstone Borough Council',
-			lpaQuestionnaireId: 82,
+			appealStatus: 'final_comments',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.831Z',
+			localPlanningDepartment: 'Wiltshire Council',
+			lpaQuestionnaireId: 25074,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.831Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-08-09T22:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 8,
+						valid: 2,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:35.101Z'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2024-09-23T22:59:00.000Z',
 			appealTimetable: {
-				appealTimetableId: 83,
-				lpaQuestionnaireDueDate: '2022-04-08T09:00:00.000Z'
+				appealTimetableId: 26862,
+				lpaQuestionnaireDueDate: '2024-08-09T22:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2024-09-09T22:59:00.000Z',
+				appellantStatementDueDate: '2024-09-09T22:59:00.000Z',
+				lpaStatementDueDate: '2024-09-09T22:59:00.000Z',
+				finalCommentsDueDate: '2024-09-23T22:59:00.000Z',
+				s106ObligationDueDate: '2024-09-23T22:59:00.000Z',
+				issueDeterminationDate: null
 			},
-			dueDate: '2022-04-08T09:00:00.000Z',
 			isParentAppeal: true,
 			isChildAppeal: false
 		},
 		{
-			appealId: 161,
-			appealReference: 'TEST/685020',
+			appealId: 28524,
+			appealReference: '6028524',
 			appealSite: {
-				addressLine1: '44 Rivervale',
-				town: 'Bridport',
-				postCode: 'DT6 5RN'
+				addressLine1: '92 Huntsmoor Road',
+				town: 'Tadley',
+				postCode: 'RG26 4BX'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.081Z',
-			localPlanningDepartment: 'Wiltshire Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.081Z',
+			appealStatus: 'lpa_questionnaire',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.496Z',
+			localPlanningDepartment: 'System Test Borough Council 2',
+			lpaQuestionnaireId: 25063,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.496Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2025-01-10T23:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 5,
+						valid: 2,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.538Z'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.544Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-01-10T23:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26851,
+				lpaQuestionnaireDueDate: '2025-01-10T23:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2025-02-07T23:59:00.000Z',
+				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
+				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
+				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
+				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
+				issueDeterminationDate: null
+			},
 			isParentAppeal: false,
 			isChildAppeal: true
 		},
 		{
-			appealId: 162,
-			appealReference: 'TEST/424942',
+			appealId: 28526,
+			appealReference: '6028526',
 			appealSite: {
-				addressLine1: '44 Rivervale',
-				town: 'Bridport',
-				postCode: 'DT6 5RN'
+				addressLine1: '8 The Chase',
+				town: 'Findon',
+				postCode: 'BN14 0TT'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.142Z',
-			localPlanningDepartment: 'Dorset Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.142Z',
+			appealStatus: 'statements',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.563Z',
+			localPlanningDepartment: 'Maidstone Borough Council',
+			lpaQuestionnaireId: 25065,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.563Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2025-01-10T23:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 5,
+						valid: 3,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'incomplete',
+					receivedAt: '2025-03-04T14:30:33.805Z'
+				},
+				lpaFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.821Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.813Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-02-07T23:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26853,
+				lpaQuestionnaireDueDate: '2025-01-10T23:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2025-04-07T22:59:00.000Z',
+				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
+				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
+				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
+				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
+				issueDeterminationDate: null
+			},
 			isParentAppeal: false,
 			isChildAppeal: false
 		},
 		{
-			appealId: 163,
-			appealReference: 'TEST/769207',
+			appealId: 28512,
+			appealReference: '6028512',
 			appealSite: {
 				addressLine1: 'Copthalls',
 				addressLine2: 'Clevedon Road',
@@ -1811,134 +1983,553 @@ export const assignedAppealsPage1 = {
 				postCode: 'BS48 1PN'
 			},
 			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.169Z',
-			localPlanningDepartment: 'Wiltshire Council',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.083Z',
+			localPlanningDepartment: 'Worthing Borough Council',
 			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.169Z',
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.083Z'
+				},
+				lpaQuestionnaire: {
+					status: 'not_received'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 9,
+						valid: 0,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:31.842Z'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:31.852Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-03-09T14:30:30.083Z',
 			isParentAppeal: false,
 			isChildAppeal: false
 		},
 		{
-			appealId: 164,
-			appealReference: 'TEST/83896',
+			appealId: 28515,
+			appealReference: '6028515',
 			appealSite: {
-				addressLine1: '92 Huntsmoor Road',
-				town: 'Tadley',
-				postCode: 'RG26 4BX'
+				addressLine1: '44 Rivervale',
+				town: 'Bridport',
+				postCode: 'DT6 5RN'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.199Z',
-			localPlanningDepartment: 'Dorset Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.199Z',
+			appealStatus: 'validation',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.165Z',
+			localPlanningDepartment: 'Bristol City Council',
+			lpaQuestionnaireId: 25054,
+			documentationSummary: {
+				appellantCase: {
+					status: 'received',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.165Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 7,
+						valid: 1,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:32.273Z'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
 			isParentAppeal: false,
 			isChildAppeal: false
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
+	statuses: ['final_comments', 'lpa_questionnaire', 'statements', 'ready_to_start', 'validation'],
 	page: 1,
-	pageCount: 2,
+	pageCount: 3,
 	pageSize: 5
 };
 
 export const assignedAppealsPage2 = {
-	itemCount: 9,
+	itemCount: 5,
 	items: [
 		{
-			appealId: 165,
-			appealReference: 'TEST/333600',
+			appealId: 28513,
+			appealReference: '6028513',
 			appealSite: {
-				addressLine1: '21 The Pavement',
-				county: 'Wandsworth',
-				postCode: 'SW4 0HY'
+				addressLine1: '19 Beauchamp Road',
+				town: 'Bristol',
+				postCode: 'BS7 8LQ'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.226Z',
-			localPlanningDepartment: 'Bristol City Council',
+			appealStatus: 'awaiting_transfer',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.111Z',
+			localPlanningDepartment: 'Barnsley Metropolitan Borough Council',
 			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.226Z'
+			documentationSummary: {
+				appellantCase: {
+					status: 'received',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.111Z'
+				},
+				lpaQuestionnaire: {
+					status: 'not_received'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 6,
+						valid: 1,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:31.998Z'
+				},
+				lpaFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:32.005Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
 		},
 		{
-			appealId: 166,
-			appealReference: 'TEST/216911',
+			appealId: 28510,
+			appealReference: '6028510',
 			appealSite: {
 				addressLine1: 'FOR TRAINERS ONLY',
-				addressLine2: '92 Huntsmoor Road',
-				town: 'Tadley',
-				postCode: 'RG26 4BX'
+				addressLine2: '19 Beauchamp Road',
+				town: 'Bristol',
+				postCode: 'BS7 8LQ'
 			},
-			appealStatus: 'ready_to_start',
+			appealStatus: 'event',
 			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.255Z',
-			localPlanningDepartment: 'Waveney District Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.255Z'
+			createdAt: '2025-03-04T14:30:30.013Z',
+			localPlanningDepartment: 'Worthing Borough Council',
+			lpaQuestionnaireId: 25053,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.013Z'
+				},
+				lpaQuestionnaire: {
+					status: 'Complete',
+					dueDate: '2025-03-11T23:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'not_received',
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'not_received'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			appealTimetable: {
+				appealTimetableId: 26843,
+				lpaQuestionnaireDueDate: '2025-03-11T23:59:00.000Z',
+				caseResubmissionDueDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
 		},
 		{
-			appealId: 167,
-			appealReference: 'TEST/600715',
+			appealId: 28525,
+			appealReference: '6028525',
 			appealSite: {
-				addressLine1: 'FOR TRAINERS ONLY',
-				addressLine2: '55 Butcher Street',
-				town: 'Thurnscoe',
-				postCode: 'S63 0RB'
+				addressLine1: '96 The Avenue',
+				addressLine2: 'Maidstone',
+				county: 'Kent',
+				postCode: 'MD21 5XY'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.279Z',
-			localPlanningDepartment: 'Dorset Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.279Z'
-		},
-		{
-			appealId: 168,
-			appealReference: 'TEST/700910',
-			appealSite: {
-				addressLine1: 'FOR TRAINERS ONLY',
-				addressLine2: '21 The Pavement',
-				county: 'Wandsworth',
-				postCode: 'SW4 0HY'
-			},
-			appealStatus: 'issue_determination',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.298Z',
+			appealStatus: 'lpa_questionnaire',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.528Z',
 			localPlanningDepartment: 'Wiltshire Council',
-			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.298Z'
+			lpaQuestionnaireId: 25064,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.528Z'
+				},
+				lpaQuestionnaire: {
+					status: 'Incomplete',
+					dueDate: '2025-04-09T23:00:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 8,
+						valid: 1,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.665Z'
+				},
+				lpaFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:33.673Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-04-09T23:00:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26852,
+				lpaQuestionnaireDueDate: '2025-04-09T23:00:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2025-02-07T23:59:00.000Z',
+				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
+				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
+				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
+				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
+				issueDeterminationDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
+		},
+		{
+			appealId: 28531,
+			appealReference: '6028531',
+			appealSite: {
+				addressLine1: '96 The Avenue',
+				addressLine2: 'Maidstone',
+				county: 'Kent',
+				postCode: 'MD21 5XY'
+			},
+			appealStatus: 'final_comments',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.710Z',
+			localPlanningDepartment: 'Barnsley Metropolitan Borough Council',
+			lpaQuestionnaireId: 25070,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.710Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-11-11T23:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 3,
+						valid: 3,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:34.533Z'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-12-23T23:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26858,
+				lpaQuestionnaireDueDate: '2024-11-11T23:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2024-12-09T23:59:00.000Z',
+				appellantStatementDueDate: '2024-12-09T23:59:00.000Z',
+				lpaStatementDueDate: '2024-12-09T23:59:00.000Z',
+				finalCommentsDueDate: '2025-12-23T23:59:00.000Z',
+				s106ObligationDueDate: '2024-12-23T23:59:00.000Z',
+				issueDeterminationDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
+		},
+		{
+			appealId: 28533,
+			appealReference: '6028533',
+			appealSite: {
+				addressLine1: '8 The Chase',
+				town: 'Findon',
+				postCode: 'BN14 0TT'
+			},
+			appealStatus: 'final_comments',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.772Z',
+			localPlanningDepartment: 'Barnsley Metropolitan Borough Council',
+			lpaQuestionnaireId: 25072,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.772Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2025-02-11T23:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 5,
+						valid: 2,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:34.814Z'
+				},
+				lpaFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:34.825Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null,
+					counts: {
+						awaiting_review: 0,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-03-25T23:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26860,
+				lpaQuestionnaireDueDate: '2025-02-11T23:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2025-03-11T23:59:00.000Z',
+				appellantStatementDueDate: '2025-03-11T23:59:00.000Z',
+				lpaStatementDueDate: '2025-03-11T23:59:00.000Z',
+				finalCommentsDueDate: '2025-03-25T23:59:00.000Z',
+				s106ObligationDueDate: '2025-03-25T23:59:00.000Z',
+				issueDeterminationDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
+	statuses: ['awaiting_transfer', 'event', 'lpa_questionnaire', 'final_comments'],
 	page: 2,
-	pageCount: 2,
+	pageCount: 3,
 	pageSize: 5
 };
 
 export const assignedAppealsPage3 = {
-	itemCount: 9,
+	itemCount: 1,
 	items: [
 		{
-			appealId: 165,
-			appealReference: 'TEST/333600',
+			appealId: 28514,
+			appealReference: '6028514',
 			appealSite: {
-				addressLine1: '21 The Pavement',
-				county: 'Wandsworth',
-				postCode: 'SW4 0HY'
+				addressLine1: 'FOR TRAINERS ONLY',
+				addressLine2: '1 Grove Cottage',
+				town: 'Woodton',
+				postCode: 'NR35 2ND'
 			},
-			appealStatus: 'ready_to_start',
-			appealType: 'Householder',
-			createdAt: '2024-01-02T11:43:21.226Z',
-			localPlanningDepartment: 'Bristol City Council',
+			appealStatus: 'lpa_questionnaire',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.139Z',
+			localPlanningDepartment: 'System Test Borough Council 2',
 			lpaQuestionnaireId: null,
-			dueDate: '2024-01-07T11:43:21.226Z'
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.139Z'
+				},
+				lpaQuestionnaire: {
+					status: 'not_received',
+					dueDate: '2025-03-11T23:59:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 5,
+						valid: 4,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:32.129Z'
+				},
+				lpaFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:32.146Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				},
+				appellantFinalComments: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:32.138Z',
+					representationStatus: 'awaiting_review',
+					counts: {
+						awaiting_review: 1,
+						valid: 0,
+						published: 0
+					}
+				}
+			},
+			dueDate: '2025-03-11T23:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26864,
+				lpaQuestionnaireDueDate: '2025-03-11T23:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2025-04-08T22:59:00.000Z',
+				appellantStatementDueDate: '2025-04-08T22:59:00.000Z',
+				lpaStatementDueDate: '2025-04-08T22:59:00.000Z',
+				finalCommentsDueDate: '2025-04-24T22:59:00.000Z',
+				s106ObligationDueDate: '2025-04-24T22:59:00.000Z',
+				issueDeterminationDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false
 		}
 	],
-	statuses: ['ready_to_start', 'lpa_questionnaire', 'issue_determination'],
-	page: 2,
-	pageCount: 2,
-	pageSize: 1
+	statuses: ['lpa_questionnaire'],
+	page: 3,
+	pageCount: 3,
+	pageSize: 5
 };
 
 export const assignedAppealsInFinalCommentsStatus = {
@@ -2718,6 +3309,311 @@ export const shareRepsResponseFinalComment = {
 	notes: null,
 	siteVisitRequested: false,
 	source: 'citizen'
+};
+
+const pastDate = '2025-01-06T23:59:00.000Z';
+const futureDate = '3000-01-06T23:59:00.000Z';
+export const baseAppealDataToGetRequiredActions = {
+	appealId: 1,
+	lpaQuestionnaireId: 1
+};
+
+export const appealDataToGetRequiredActions = {
+	addHorizonReference: {
+		...baseAppealDataToGetRequiredActions,
+		lpaQuestionnaireId: 1,
+		appealStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+	},
+	arrangeSiteVisit: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVENT
+	},
+	assignCaseOfficer: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+	},
+	awaitingAppellantUpdate: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.VALIDATION,
+		documentationSummary: {
+			appellantCase: {
+				dueDate: futureDate,
+				status: VALIDATION_OUTCOME_INCOMPLETE
+			}
+		}
+	},
+	awaitingFinalComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+		appealTimetable: {
+			finalCommentsDueDate: futureDate
+		},
+		documentationSummary: {
+			appellantFinalComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			},
+			lpaFinalComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		}
+	},
+	awaitingIpComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: futureDate,
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			}
+		}
+	},
+	awaitingLpaQuestionnaire: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		documentationSummary: {
+			lpaQuestionnaire: {
+				dueDate: futureDate,
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		}
+	},
+	awaitingLpaStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 1,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	awaitingLpaUpdate: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		documentationSummary: {
+			lpaQuestionnaire: {
+				dueDate: futureDate,
+				status: VALIDATION_OUTCOME_INCOMPLETE
+			}
+		}
+	},
+	issueDecision: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+	},
+	lpaQuestionnaireOverdue: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		documentationSummary: {
+			lpaQuestionnaire: {
+				dueDate: pastDate,
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		}
+	},
+	progressFromFinalComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+		appealTimetable: {
+			finalCommentsDueDate: pastDate
+		},
+		documentationSummary: {
+			appellantFinalComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			},
+			lpaFinalComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		}
+	},
+	progressFromStatements: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	reviewAppellantCase: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.VALIDATION,
+		documentationSummary: {
+			appellantCase: {
+				dueDate: futureDate,
+				status: DOCUMENT_STATUS_RECEIVED
+			}
+		}
+	},
+	reviewAppellantFinalComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+		appealTimetable: {
+			finalCommentsDueDate: futureDate
+		},
+		documentationSummary: {
+			appellantFinalComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	reviewLpaFinalComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+		appealTimetable: {
+			finalCommentsDueDate: futureDate
+		},
+		documentationSummary: {
+			lpaFinalComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	reviewIpComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 1,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			}
+		}
+	},
+	reviewLpaQuestionnaire: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		documentationSummary: {
+			lpaQuestionnaire: {
+				status: DOCUMENT_STATUS_RECEIVED
+			}
+		}
+	},
+	reviewLpaStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		documentationSummary: {
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	shareFinalComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+		appealTimetable: {
+			finalCommentsDueDate: pastDate
+		},
+		documentationSummary: {
+			appellantFinalComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			lpaFinalComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		}
+	},
+	shareIpCommentsAndLpaStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 1,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	startAppeal: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.READY_TO_START
+	},
+	updateLpaStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			}
+		}
+	}
 };
 
 export const baseSession = {

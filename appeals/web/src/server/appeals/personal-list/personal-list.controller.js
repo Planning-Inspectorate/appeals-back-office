@@ -18,6 +18,7 @@ export const viewPersonalList = async (request, response) => {
 
 	const urlWithoutQuery = originalUrl.split('?')[0];
 	const paginationParameters = getPaginationParametersFromQuery(query);
+
 	const assignedAppeals = await getAppealsAssignedToCurrentUser(
 		request.apiClient,
 		appealStatusFilter,
@@ -35,6 +36,7 @@ export const viewPersonalList = async (request, response) => {
 		appealStatusFilter,
 		request.session
 	);
+
 	const pagination = mapPagination(
 		assignedAppeals.page,
 		assignedAppeals.pageCount,

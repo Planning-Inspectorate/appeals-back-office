@@ -972,6 +972,7 @@ You don't want to kill all your dark areas they are very important. I will take 
 	for (const appellantCase of appellantCases) {
 		const status = appealStatus.find(({ appealId }) => appealId === appellantCase.appealId);
 		const validationOutcome =
+			status?.status !== APPEAL_CASE_STATUS.VALIDATION &&
 			status?.status !== APPEAL_CASE_STATUS.READY_TO_START &&
 			status?.status !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
 				? appellantCaseValidationOutcomes[2]

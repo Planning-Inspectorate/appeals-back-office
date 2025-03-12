@@ -5,14 +5,6 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
- * @typedef {Object} RepresentationTypesAwaitingReview
- * @property {boolean} ipComments
- * @property {boolean} appellantFinalComments
- * @property {boolean} lpaFinalComments
- * @property {boolean} lpaStatement
- */
-
-/**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData

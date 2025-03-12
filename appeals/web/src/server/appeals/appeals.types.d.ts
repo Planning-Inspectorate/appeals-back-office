@@ -29,6 +29,13 @@ export interface DayMonthYearHourMinute {
 export type DocumentVirusCheckStatus = 'not_scanned' | 'scanned' | 'affected';
 export type DocumentRowDisplayMode = 'none' | 'number' | 'list';
 
+export interface RepresentationTypesAwaitingReview {
+	ipComments: boolean;
+	appellantFinalComments: boolean;
+	lpaFinalComments: boolean;
+	lpaStatement: boolean;
+}
+
 declare global {
 	namespace Express {
 		interface Request {
