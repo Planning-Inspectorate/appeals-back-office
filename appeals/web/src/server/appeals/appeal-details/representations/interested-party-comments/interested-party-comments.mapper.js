@@ -7,6 +7,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -147,7 +148,9 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 						{
 							type: 'show-more',
 							parameters: {
-								text: comment.redactedRepresentation || comment.originalRepresentation,
+								text: comment.redactedRepresentation
+									? addInvisibleSpacesAfterRedactionCharacters(comment.redactedRepresentation)
+									: comment.originalRepresentation,
 								labelText: 'Read more'
 							}
 						}
