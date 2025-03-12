@@ -1045,8 +1045,8 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
-				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem,
-				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem
+				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
+				// mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
