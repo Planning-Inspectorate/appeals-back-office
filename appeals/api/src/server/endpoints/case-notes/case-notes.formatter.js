@@ -3,7 +3,6 @@
 /**
  *
  * @param {CaseNote[]} caseNotes
- * @returns {GetCaseNotesResponse}
  */
 export const formatCaseNotes = (caseNotes) => {
 	return caseNotes

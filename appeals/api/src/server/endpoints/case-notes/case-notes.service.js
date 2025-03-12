@@ -7,9 +7,8 @@ import logger from '#utils/logger.js';
 /**
  *
  * @param {string} appealId
- * @param {string | undefined} azureAdUserId
+ * @param {string} azureAdUserId
  * @param {string} comment
- * @returns {Promise<T>}
  */
 const postCaseNote = async (appealId, azureAdUserId, comment) => {
 	try {

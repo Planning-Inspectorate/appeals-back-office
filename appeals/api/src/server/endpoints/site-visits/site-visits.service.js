@@ -118,7 +118,7 @@ const checkSiteVisitExists = async (req, res, next) => {
 /**
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
- * @param { NotifyClient } notifyClient
+ * @param {import('notifications-node-client').NotifyClient} notifyClient
  */
 const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
 	try {
