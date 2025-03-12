@@ -185,7 +185,7 @@ const initialiseComponentInstance = async (
 	initialiseOptions(componentInstance);
 
 	if (
-		componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText).length <=
+		componentInstance.elements.root.innerText.length <=
 		componentInstance.options.maximumCharactersBeforeHiding
 	) {
 		return;
