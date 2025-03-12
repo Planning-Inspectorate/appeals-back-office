@@ -179,6 +179,10 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 				}
 			} = request;
 
+			const inspector =
+				appealDetails.inspector &&
+				(await usersService.getUserById(appealDetails.inspector, request.session));
+
 			const mappedUpdateOrCreateSiteVisitParameters =
 				mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters(
 					appealId,
@@ -189,7 +193,8 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					visitStartTimeMinute,
 					visitEndTimeHour,
 					visitEndTimeMinute,
-					visitType
+					visitType,
+					inspector?.name || ''
 				);
 
 			if (appealDetails.siteVisit?.siteVisitId) {
@@ -197,10 +202,6 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					appealDetails,
 					mappedUpdateOrCreateSiteVisitParameters
 				);
-
-				const inspector =
-					appealDetails.inspector &&
-					(await usersService.getUserById(appealDetails.inspector, request.session));
 
 				await siteVisitService.updateSiteVisit(
 					request.apiClient,
@@ -211,7 +212,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
 					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
-					inspector?.name || '',
+					mappedUpdateOrCreateSiteVisitParameters.inspectorName,
 					successBannerAndChangeType.changeType
 				);
 
@@ -229,7 +230,8 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					mappedUpdateOrCreateSiteVisitParameters.apiVisitType,
 					mappedUpdateOrCreateSiteVisitParameters.visitDate,
 					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
-					mappedUpdateOrCreateSiteVisitParameters.visitEndTime
+					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
+					mappedUpdateOrCreateSiteVisitParameters.inspectorName
 				);
 
 				addNotificationBannerToSession({

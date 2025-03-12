@@ -32,7 +32,7 @@ const getSiteVisitById = async (req, res) => {
  */
 const postSiteVisit = async (req, res) => {
 	const {
-		body: { visitDate, visitEndTime, visitStartTime },
+		body: { visitDate, visitEndTime, visitStartTime, inspectorName = '' },
 		params,
 		visitType,
 		appeal
@@ -62,6 +62,7 @@ const postSiteVisit = async (req, res) => {
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
 		lpaReference: appeal.applicationReference || '',
+		inspectorName,
 		siteAddress
 	};
 
