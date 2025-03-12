@@ -781,6 +781,7 @@ export interface CreateSiteVisitData {
 	appealReferenceNumber: string;
 	lpaReference: string;
 	siteAddress: string;
+	inspectorName?: string;
 }
 
 export interface UpdateSiteVisitData {

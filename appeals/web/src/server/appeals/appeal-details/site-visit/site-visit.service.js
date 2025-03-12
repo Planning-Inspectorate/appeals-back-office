@@ -4,6 +4,7 @@
  * @property {string} visitDate
  * @property {string|undefined} visitStartTime
  * @property {string|undefined} visitEndTime
+ * @property {string} inspectorName
  * @property {import('@pins/appeals/types/inspector.js').SiteVisitType} apiVisitType
  * @property {string} previousVisitType
  */
@@ -15,6 +16,7 @@
  * @param {string} visitDate
  * @param {string|undefined} visitStartTime
  * @param {string|undefined} visitEndTime
+ * @param {string} inspectorName
  */
 export async function createSiteVisit(
 	apiClient,
@@ -22,13 +24,15 @@ export async function createSiteVisit(
 	visitType,
 	visitDate,
 	visitStartTime,
-	visitEndTime
+	visitEndTime,
+	inspectorName
 ) {
 	return apiClient
 		.post(`appeals/${appealId}/site-visits`, {
 			json: {
 				visitDate,
 				visitType,
+				inspectorName,
 				...(visitStartTime !== '' && { visitStartTime }),
 				...(visitEndTime !== '' && { visitEndTime })
 			}
@@ -41,10 +45,10 @@ export async function createSiteVisit(
  * @param {number} appealId
  * @param {number} siteVisitId
  * @param {import('@pins/appeals/types/inspector.js').SiteVisitType} visitType
- * @param {string} [previousVisitType]
  * @param {string} [visitDate]
  * @param {string} [visitStartTime]
  * @param {string} [visitEndTime]
+ * @param {string} [previousVisitType]
  * @param {string} [inspectorName]
  * @param {string} [siteVisitChangeType]
  */

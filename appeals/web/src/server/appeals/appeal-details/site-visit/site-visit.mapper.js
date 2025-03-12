@@ -460,6 +460,7 @@ export function siteVisitBookedPage(appealId, appealReference) {
  * @param {string} visitEndTimeHour
  * @param {string} visitEndTimeMinute
  * @param {WebSiteVisitType} visitType
+ * @param {string} inspectorName
  * @returns {import('./site-visit.service.js').UpdateOrCreateSiteVisitParameters}
  */
 export function mapPostScheduleOrManageSiteVisitCommonParameters(
@@ -471,7 +472,8 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 	visitStartTimeMinute,
 	visitEndTimeHour,
 	visitEndTimeMinute,
-	visitType
+	visitType,
+	inspectorName
 ) {
 	return {
 		appealIdNumber: parseInt(appealId, 10),
@@ -501,7 +503,8 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 				  })
 				: undefined,
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
-		previousVisitType: ''
+		previousVisitType: '',
+		inspectorName
 	};
 }
 

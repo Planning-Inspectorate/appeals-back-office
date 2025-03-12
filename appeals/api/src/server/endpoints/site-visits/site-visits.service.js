@@ -67,7 +67,8 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			site_address: siteVisitData.siteAddress,
 			start_time: formatTime(siteVisitData.visitStartTime),
 			end_time: formatTime(siteVisitData.visitEndTime),
-			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false)
+			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false),
+			inspector_name: siteVisitData.inspectorName
 		};
 
 		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
