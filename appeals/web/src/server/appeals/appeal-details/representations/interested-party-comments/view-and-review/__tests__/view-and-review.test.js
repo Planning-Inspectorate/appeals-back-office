@@ -425,7 +425,7 @@ describe('interested-party-comments', () => {
 
 		it('should render change document page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/change-document-name/1/1`
+				`${baseUrl}/2/interested-party-comments/5/manage-documents/change-document-name/1/1`
 			);
 
 			expect(response.statusCode).toBe(200);
@@ -480,7 +480,7 @@ describe('interested-party-comments', () => {
 
 		it('should render change document details page with the provided comment details', async () => {
 			const response = await request.get(
-				`${baseUrl}/2/interested-party-comments/5/change-document-details/1/1`
+				`${baseUrl}/2/interested-party-comments/5/manage-documents/change-document-details/1/1`
 			);
 
 			expect(response.statusCode).toBe(200);

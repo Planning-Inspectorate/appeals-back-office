@@ -15,10 +15,19 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import { validateStatus } from '#appeals/appeal-details/representations/common/validators.js';
+import manageDocumentsRouter from '#appeals/appeal-details/representations/document-attachments/manage-documents.router.js';
+import { validateComment } from '#appeals/appeal-details/representations/interested-party-comments/interested-party-comments.middleware.js';
+import addDocumentRouter from '#appeals/appeal-details/representations/document-attachments/add-document.router.js';
 
 const router = createRouter({ mergeParams: true });
 
+// Redirects to review to correct back link within shared addDocumentRouter and manageDocumentsRouter
+router.get('/', redirectIfCommentIsUnreviewed);
+router.get('/add-document/review', redirectIfCommentIsUnreviewed);
+
 router.use('/reject', rejectRouter);
+
+router.use('/add-document', validateAppeal, validateComment, addDocumentRouter);
 
 router
 	.route('/view')
@@ -29,59 +38,7 @@ router
 	.get(redirectIfCommentIsReviewed, asyncHandler(controller.renderReviewInterestedPartyComment))
 	.post(validateStatus, asyncHandler(controller.postReviewInterestedPartyComment));
 
-router
-	.route('/manage-documents/:folderId/')
-	.get(
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		asyncHandler(controller.getManageFolder)
-	);
-
-router
-	.route('/manage-documents/:folderId/:documentId')
-	.get(
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		validateCaseDocumentId,
-		asyncHandler(controller.getManageDocument)
-	);
-
-router
-	.route('/change-document-name/:folderId/:documentId')
-	.get(
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		asyncHandler(controller.getChangeDocumentFileNameDetails)
-	)
-	.post(
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		documentsValidators.validateDocumentNameBodyFormat,
-		documentsValidators.validateDocumentName,
-		asyncHandler(controller.postChangeDocumentFileNameDetails)
-	);
-
-router
-	.route('/change-document-details/:folderId/:documentId')
-	.get(
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		asyncHandler(controller.getChangeDocumentVersionDetails)
-	)
-	.post(
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
-		documentsValidators.validateDocumentDetailsBodyFormat,
-		documentsValidators.validateDocumentDetailsReceivedDatesFields,
-		documentsValidators.validateDocumentDetailsReceivedDateValid,
-		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
-		documentsValidators.validateDocumentDetailsRedactionStatuses,
-		asyncHandler(controller.postChangeDocumentVersionDetails)
-	);
+router.use('/manage-documents', manageDocumentsRouter);
 
 router
 	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
