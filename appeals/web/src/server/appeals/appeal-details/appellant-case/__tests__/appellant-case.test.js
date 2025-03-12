@@ -4995,6 +4995,3 @@ describe('appellant-case', () => {
 		});
 	});
 });
-
-// TODO: remove
-nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
