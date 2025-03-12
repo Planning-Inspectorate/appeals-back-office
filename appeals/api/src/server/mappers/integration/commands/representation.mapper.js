@@ -26,7 +26,7 @@ export const mapRepresentationIn = (submission) => {
 
 	const attachments = documents.map((doc) => mapDocumentIn(doc, 'representation'));
 	const serviceUserId = data.serviceUserId
-		? Number(data.serviceUserId) - serviceUserIdStartRange
+		? serviceUserIdStartRange - Number(data.serviceUserId)
 		: undefined;
 
 	const representation = {

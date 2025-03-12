@@ -1,3 +1,5 @@
+import { mapAddressIn } from './address.mapper.js';
+
 /**
  *
  * @param {*} data
@@ -14,7 +16,8 @@ export const mapServiceUserIn = (data) => {
 			webAddress: data.website,
 			phoneNumber: data.telephoneNumber,
 			otherPhoneNumber: data.otherPhoneNumber,
-			faxNumber: data.faxNumber
+			faxNumber: data.faxNumber,
+			address: { create: mapAddressIn(data) }
 		};
 
 		return serviceUser;
