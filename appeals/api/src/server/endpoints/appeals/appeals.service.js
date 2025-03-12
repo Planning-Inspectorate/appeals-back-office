@@ -3,6 +3,7 @@ import { VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
@@ -178,6 +179,8 @@ async function updateCompletedEvents(azureAdUserId) {
 			transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE)
 		)
 	);
+
+	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));
 }
 
 export { retrieveAppealListData, updateCompletedEvents };
