@@ -19,26 +19,15 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
-	const user = await databaseConnector.serviceUser.findUnique({
-		where: { id: userId }
-	});
+
+	const user = await getServiceUser(userId);
 
 	if (!user) {
 		pino.error(`Trying to broadcast info for service-user ${userId}, but it was not found.`);
 		return false;
 	}
 
-	let userAddress;
-	if (user.addressId) {
-		userAddress = await databaseConnector.address.findUnique({
-			where: { id: user.addressId }
-		});
-		if (!userAddress) {
-			userAddress = undefined;
-		}
-	}
-
-	const msg = mapServiceUserEntity(user, userAddress, roleName, caseReference);
+	const msg = mapServiceUserEntity(user, roleName, caseReference);
 
 	if (msg) {
 		const validationResult = await validateFromSchema(schemas.events.serviceUser, msg);
@@ -64,3 +53,16 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 
 	return false;
 };
+
+/**
+ *
+ * @param {number} userId
+ */
+const getServiceUser = (userId) => {
+	return databaseConnector.serviceUser.findUnique({
+		where: { id: userId },
+		include: { address: true }
+	});
+};
+
+/** @typedef {Awaited<ReturnType<getServiceUser>>} GetServiceUser */

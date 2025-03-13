@@ -1,7 +1,7 @@
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { SERVICE_USER_TYPE } from 'pins-data-model';
 
-/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
+/** @typedef {import('#endpoints/integrations/integrations.broadcasters/service-users.js').GetServiceUser} ServiceUser */
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 /** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
 
@@ -11,12 +11,11 @@ export const serviceUserIdStartRange = 200000000;
 /**
  *
  * @param {ServiceUser} data
- * @param {Address | undefined} address
  * @param {string} serviceUserType
  * @param {string} caseReference
  * @returns {AppealServiceUser | undefined}
  */
-export const mapServiceUserEntity = (data, address, serviceUserType, caseReference) => {
+export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
 	if (data) {
 		const userId = serviceUserIdStartRange + data.id;
 		const userSuid = serviceUserIdStartRange + data.id;
@@ -30,12 +29,12 @@ export const mapServiceUserEntity = (data, address, serviceUserType, caseReferen
 			emailAddress: data.email ?? null,
 			webAddress: data.website ?? null,
 			telephoneNumber: data.phoneNumber ?? null,
-			addressLine1: address?.addressLine1 ?? null,
-			addressLine2: address?.addressLine2 ?? null,
-			addressTown: address?.addressTown ?? null,
-			addressCounty: address?.addressCounty ?? null,
-			postcode: address?.postcode ?? null,
-			addressCountry: address?.addressCountry ?? null,
+			addressLine1: data.address?.addressLine1 ?? null,
+			addressLine2: data.address?.addressLine2 ?? null,
+			addressTown: data.address?.addressTown ?? null,
+			addressCounty: data.address?.addressCounty ?? null,
+			postcode: data.address?.postcode ?? null,
+			addressCountry: data.address?.addressCountry ?? null,
 			sourceSuid: userSuid.toString(),
 			caseReference,
 			sourceSystem: ODW_SYSTEM_ID,
