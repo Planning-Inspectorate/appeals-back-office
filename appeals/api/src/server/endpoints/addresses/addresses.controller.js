@@ -1,5 +1,8 @@
 import logger from '#utils/logger.js';
-import { AUDIT_TRAIL_ADDRESS_UPDATED, ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
+import {
+	AUDIT_TRAIL_ADDRESS_UPDATED,
+	ERROR_FAILED_TO_SAVE_DATA
+} from '@pins/appeals/constants/support.js';
 import { formatAddress } from './addresses.formatter.js';
 import addressRepository from '#repositories/address.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';

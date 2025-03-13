@@ -5,7 +5,7 @@ import {
 	ERROR_MUST_BE_STRING,
 	LENGTH_300,
 	LENGTH_1000
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

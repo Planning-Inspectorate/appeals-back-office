@@ -7,7 +7,10 @@
  */
 
 import config from '#config/config.js';
-import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '#endpoints/constants.js';
+import {
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	FRONT_OFFICE_URL
+} from '@pins/appeals/constants/support.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 
 /**

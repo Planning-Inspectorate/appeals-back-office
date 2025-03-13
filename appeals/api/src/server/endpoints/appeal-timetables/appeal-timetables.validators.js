@@ -3,7 +3,7 @@ import { validationErrorHandler } from '#middleware/error-handler.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import isFPA from '#utils/is-fpa.js';
-import { ERROR_MUST_NOT_HAVE_TIMETABLE_DATE } from '#endpoints/constants.js';
+import { ERROR_MUST_NOT_HAVE_TIMETABLE_DATE } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */

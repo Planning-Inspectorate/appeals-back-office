@@ -20,7 +20,7 @@ import {
 	VALIDATION_OUTCOME_VALID,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_COMPLETE
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import {

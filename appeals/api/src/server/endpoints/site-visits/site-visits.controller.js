@@ -1,5 +1,8 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { ERROR_FAILED_TO_SAVE_DATA, VALIDATION_OUTCOME_COMPLETE } from '#endpoints/constants.js';
+import {
+	ERROR_FAILED_TO_SAVE_DATA,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
 import logger from '#utils/logger.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { formatSiteVisit } from './site-visits.formatter.js';

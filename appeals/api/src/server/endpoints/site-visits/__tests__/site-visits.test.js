@@ -15,7 +15,7 @@ import {
 	SITE_VISIT_TYPE_UNACCOMPANIED,
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_ACCESS_REQUIRED
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 
 import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';

@@ -9,7 +9,7 @@ import {
 	getAppellantCaseValidator,
 	patchAppellantCaseValidator
 } from './appellant-cases.validators.js';
-import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '../constants.js';
+import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 
 const router = createRouter();
 

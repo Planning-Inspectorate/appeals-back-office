@@ -6,13 +6,13 @@ import {
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate, { formatTime } from '#utils/date-formatter.js';
 import { format } from 'date-fns';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';

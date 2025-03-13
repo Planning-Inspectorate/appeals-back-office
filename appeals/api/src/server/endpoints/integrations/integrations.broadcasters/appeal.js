@@ -8,7 +8,10 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
 
 /**

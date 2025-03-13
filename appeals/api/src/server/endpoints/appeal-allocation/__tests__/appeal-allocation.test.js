@@ -6,7 +6,7 @@ import {
 	AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED,
 	ERROR_APPEAL_ALLOCATION_LEVELS,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const specialisms = [

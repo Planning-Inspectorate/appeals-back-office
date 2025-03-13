@@ -4,7 +4,7 @@ import {
 	ERROR_MUST_BE_STRING,
 	ERROR_INVALID_EMAIL,
 	ERROR_MUST_BE_ARRAY_OF_STRINGS
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { composeMiddleware } from '@pins/express';

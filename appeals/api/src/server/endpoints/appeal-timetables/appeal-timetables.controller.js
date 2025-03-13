@@ -1,5 +1,5 @@
 import logger from '#utils/logger.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '../constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
 

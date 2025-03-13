@@ -9,7 +9,7 @@ import {
 	ERROR_MUST_BE_IN_FUTURE,
 	ERROR_MUST_NOT_HAVE_TIMETABLE_DATE,
 	ERROR_NOT_FOUND
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';

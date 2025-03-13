@@ -1,4 +1,4 @@
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import representationRepository from '#repositories/representation.repository.js';
 
 /** @typedef {import('express').Request} Request */

@@ -1,4 +1,4 @@
-import { ERROR_NOT_FOUND } from '../constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

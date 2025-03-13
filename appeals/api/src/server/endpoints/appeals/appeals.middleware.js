@@ -1,4 +1,7 @@
-import { ERROR_MUST_BE_BOOLEAN, ERROR_MUST_BE_VALID_APPEAL_STATE } from '#endpoints/constants.js';
+import {
+	ERROR_MUST_BE_BOOLEAN,
+	ERROR_MUST_BE_VALID_APPEAL_STATE
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */

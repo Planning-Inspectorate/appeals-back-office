@@ -8,7 +8,7 @@ import {
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /**
  * @typedef {import('pins-data-model').APPEAL_CASE_TYPE} AppealType

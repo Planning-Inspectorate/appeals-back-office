@@ -7,7 +7,7 @@ import {
 	ERROR_APPEAL_ALLOCATION_LEVELS,
 	ERROR_APPEAL_ALLOCATION_SPECIALISMS,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import commonRepository from '#repositories/common.repository.js';
 import config from '../../config/config.js';
 

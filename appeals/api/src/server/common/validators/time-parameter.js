@@ -1,4 +1,4 @@
-import { ERROR_MUST_BE_CORRECT_TIME_FORMAT } from '#endpoints/constants.js';
+import { ERROR_MUST_BE_CORRECT_TIME_FORMAT } from '@pins/appeals/constants/support.js';
 import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

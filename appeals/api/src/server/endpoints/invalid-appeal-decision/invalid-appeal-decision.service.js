@@ -5,7 +5,7 @@ import {
 	CASE_OUTCOME_INVALID,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NO_RECIPIENT_EMAIL
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 // eslint-disable-next-line no-unused-vars

@@ -9,7 +9,7 @@ import transitionState from '#state/transition-state.js';
 import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import config from '#config/config.js';
 import {

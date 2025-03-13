@@ -11,7 +11,7 @@ import {
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

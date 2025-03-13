@@ -8,7 +8,7 @@ import {
 	patchSiteVisitValidator,
 	postSiteVisitValidator
 } from './site-visits.validators.js';
-import { ERROR_INVALID_SITE_VISIT_TYPE } from '#endpoints/constants.js';
+import { ERROR_INVALID_SITE_VISIT_TYPE } from '@pins/appeals/constants/support.js';
 import { checkSiteVisitExists } from './site-visits.service.js';
 
 const router = createRouter();

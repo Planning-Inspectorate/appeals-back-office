@@ -1,4 +1,7 @@
-import { APPEAL_TYPE_SHORTHAND_FPA, APPEAL_TYPE_SHORTHAND_HAS } from '#endpoints/constants.js';
+import {
+	APPEAL_TYPE_SHORTHAND_FPA,
+	APPEAL_TYPE_SHORTHAND_HAS
+} from '@pins/appeals/constants/support.js';
 import has from './has.js';
 import s78 from './s78.js';
 

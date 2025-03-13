@@ -1,7 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { sub } from 'date-fns';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
-import { AUDIT_TRAIL_SYSTEM_UUID } from '#endpoints/constants.js';
+import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('express').Request} Request */

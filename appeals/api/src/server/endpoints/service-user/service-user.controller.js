@@ -3,7 +3,7 @@ import {
 	AUDIT_TRAIL_SERVICE_USER_REMOVED,
 	AUDIT_TRAIL_SERVICE_USER_UPDATED,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';

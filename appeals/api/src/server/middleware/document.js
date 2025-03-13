@@ -1,5 +1,5 @@
 import { getDocumentById } from '#repositories/document.repository.js';
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /**
  * @type {import("express").RequestHandler}

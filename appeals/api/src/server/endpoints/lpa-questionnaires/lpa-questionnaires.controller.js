@@ -1,4 +1,4 @@
-import * as CONSTANTS from '#endpoints/constants.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';

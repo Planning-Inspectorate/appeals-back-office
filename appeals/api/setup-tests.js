@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
-import { NODE_ENV_PRODUCTION } from '#endpoints/constants.js';
+import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});

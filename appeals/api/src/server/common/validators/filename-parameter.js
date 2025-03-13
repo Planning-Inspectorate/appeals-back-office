@@ -1,4 +1,4 @@
-import { ERROR_INVALID_FILENAME } from '#endpoints/constants.js';
+import { ERROR_INVALID_FILENAME } from '@pins/appeals/constants/support.js';
 import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

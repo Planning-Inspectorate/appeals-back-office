@@ -1,4 +1,4 @@
-import { ERROR_NOT_FOUND, ERROR_INVALID_APPEAL_STATE } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND, ERROR_INVALID_APPEAL_STATE } from '@pins/appeals/constants/support.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 

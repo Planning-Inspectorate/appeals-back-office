@@ -9,7 +9,7 @@ import {
 	ERROR_MUST_BE_SET_AS_HEADER,
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';

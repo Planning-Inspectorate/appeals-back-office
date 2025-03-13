@@ -3,7 +3,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import checkStringsMatch from './check-strings-match.js';
 
 /**

@@ -12,7 +12,7 @@ import {
 } from '#common/validators/number-parameter.js';
 import { validateEmailParameter } from '#common/validators/email-parameter.js';
 import { validateUserType } from '#common/validators/user-type-parameter.js';
-import { LENGTH_8, LENGTH_250 } from '#endpoints/constants.js';
+import { LENGTH_8, LENGTH_250 } from '@pins/appeals/constants/support.js';
 
 export const updateServiceUserValidator = composeMiddleware(
 	validateRequiredNumberParameter('serviceUser.serviceUserId'),

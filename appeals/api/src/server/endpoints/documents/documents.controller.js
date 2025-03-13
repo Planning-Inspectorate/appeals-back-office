@@ -10,7 +10,7 @@ import {
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
 import * as documentRepository from '#repositories/document.repository.js';

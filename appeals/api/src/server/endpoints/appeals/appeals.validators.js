@@ -6,7 +6,7 @@ import {
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
-} from '../constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 /** @typedef {import('express').Request} Request */

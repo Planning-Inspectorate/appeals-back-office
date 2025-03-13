@@ -14,7 +14,7 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
 	FRONT_OFFICE_URL
-} from '../constants.js';
+} from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';

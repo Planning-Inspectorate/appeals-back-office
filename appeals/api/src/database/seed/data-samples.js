@@ -6,7 +6,7 @@ import { sub } from 'date-fns';
 import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
-} from '../../server/endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
 	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,

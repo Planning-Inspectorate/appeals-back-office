@@ -26,7 +26,7 @@ import {
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_UNACCOMPANIED
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 import { ApiDefinitions } from '#mappers/api/definitions/index.js';
 

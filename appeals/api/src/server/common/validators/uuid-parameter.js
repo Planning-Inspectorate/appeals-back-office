@@ -1,4 +1,4 @@
-import { ERROR_MUST_BE_UUID } from '#endpoints/constants.js';
+import { ERROR_MUST_BE_UUID } from '@pins/appeals/constants/support.js';
 import { param } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

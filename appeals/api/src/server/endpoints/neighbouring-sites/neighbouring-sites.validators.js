@@ -15,7 +15,7 @@ import {
 	UK_POSTCODE_REGEX,
 	LENGTH_8,
 	LENGTH_250
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 const createNeighbouringSiteValidator = composeMiddleware(
 	validateRequiredStringParameter('addressLine1', LENGTH_250),

@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 import {
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import {
 	validAppellantCase,
 	validLpaQuestionnaire,

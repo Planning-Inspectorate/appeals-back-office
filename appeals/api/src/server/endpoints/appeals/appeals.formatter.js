@@ -12,7 +12,10 @@ import {
 } from '#utils/format-documentation-status.js';
 import { add, addBusinessDays } from 'date-fns';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
+import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,

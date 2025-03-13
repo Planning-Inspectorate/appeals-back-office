@@ -7,7 +7,7 @@ import {
 	LENGTH_8,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 import {
 	appellantCaseIncompleteReasons,
 	appellantCaseInvalidReasons,

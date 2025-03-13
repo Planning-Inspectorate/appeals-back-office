@@ -4,7 +4,7 @@ import {
 	CONFIG_BANKHOLIDAYS_FEED_URL,
 	CONFIG_APPEAL_TIMETABLE,
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import {
 	DEADLINE_HOUR,

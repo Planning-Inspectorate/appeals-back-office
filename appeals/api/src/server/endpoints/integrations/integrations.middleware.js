@@ -7,7 +7,7 @@ import {
 	ERROR_INVALID_LPAQ_DATA,
 	ERROR_INVALID_REP_DATA,
 	ERROR_INVALID_APPEAL_TYPE_REP
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
 import { isFeatureActive } from '#utils/feature-flags.js';
