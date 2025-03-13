@@ -6,7 +6,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 	// @ts-ignore
-} from '@pins/appeals.api/src/server/endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments'|'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'} AppealRequiredAction */
 

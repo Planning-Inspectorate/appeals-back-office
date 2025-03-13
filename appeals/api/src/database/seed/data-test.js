@@ -2,7 +2,6 @@
  * Test data used for development and testing
  */
 import { randomUUID } from 'node:crypto';
-import { AUDIT_TRAIL_SYSTEM_UUID } from '#endpoints/constants.js';
 import {
 	addressesList,
 	addressListForTrainers,
@@ -13,21 +12,22 @@ import {
 } from './data-samples.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { calculateTimetable } from '#utils/business-days.js';
+
+import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
+import { createAppealReference } from '#utils/appeal-reference.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { ODW_SYSTEM_ID, APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
+	AUDIT_TRAIL_SYSTEM_UUID,
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
-} from '#endpoints/constants.js';
-
-import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
-import { createAppealReference } from '#utils/appeal-reference.js';
-import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { randomBool } from './data-utilities.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+} from '@pins/appeals/constants/support.js';
 import { sub } from 'date-fns';
+
+import { randomBool } from './data-utilities.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 

@@ -10,7 +10,7 @@ import {
 	ERROR_NOT_FOUND,
 	LENGTH_250,
 	LENGTH_8
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';

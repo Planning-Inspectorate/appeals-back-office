@@ -6,7 +6,7 @@ import {
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_CANNOT_BE_EMPTY_STRING
-} from '../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { formatMyAppeals } from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
 

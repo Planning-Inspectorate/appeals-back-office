@@ -1,6 +1,9 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, FRONT_OFFICE_URL } from '../constants.js';
+import {
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	FRONT_OFFICE_URL
+} from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';

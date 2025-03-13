@@ -1,4 +1,4 @@
-import * as CONSTANTS from '#endpoints/constants.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
 import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.js';

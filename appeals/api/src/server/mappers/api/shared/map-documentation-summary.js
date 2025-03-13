@@ -6,7 +6,10 @@ import {
 	APPEAL_REPRESENTATION_TYPE,
 	APPEAL_REPRESENTATION_STATUS
 } from '@pins/appeals/constants/common.js';
-import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
+import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
 import isFPA from '#utils/is-fpa.js';
 import count from '#utils/count-array.js';
 

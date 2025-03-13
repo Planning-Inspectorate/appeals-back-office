@@ -9,7 +9,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 	// @ts-ignore
-} from '@pins/appeals.api/src/server/endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { sample } from 'lodash-es';
 
 export const documentFileInfo = {

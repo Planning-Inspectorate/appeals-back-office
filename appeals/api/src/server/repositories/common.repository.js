@@ -1,6 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
-import { DATABASE_ORDER_BY_ASC } from '#endpoints/constants.js';
+import { DATABASE_ORDER_BY_ASC } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.LookupTables} LookupTables */
 /** @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasons} IncompleteInvalidReasons */

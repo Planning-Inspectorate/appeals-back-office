@@ -2,7 +2,10 @@
 /** @typedef {import('@pins/appeals.api').Api.AppealRelationship} AppealRelationship */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
-import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED
+} from '@pins/appeals/constants/support.js';
 
 /**
  *

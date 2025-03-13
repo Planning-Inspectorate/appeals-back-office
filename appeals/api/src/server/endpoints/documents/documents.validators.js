@@ -11,7 +11,7 @@ import {
 	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE,
 	ERROR_MUST_BE_VALID_FILEINFO,
 	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import { getDocumentRedactionStatusIds } from './documents.service.js';

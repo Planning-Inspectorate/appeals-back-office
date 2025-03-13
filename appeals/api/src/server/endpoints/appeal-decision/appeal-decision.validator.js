@@ -8,7 +8,7 @@ import {
 	ERROR_MUST_BE_STRING,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_UUID
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 import validateDateParameter from '#common/validators/date-parameter.js';
 

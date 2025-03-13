@@ -2,7 +2,7 @@ import {
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_UNACCOMPANIED
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.SiteVisit} SiteVisit */

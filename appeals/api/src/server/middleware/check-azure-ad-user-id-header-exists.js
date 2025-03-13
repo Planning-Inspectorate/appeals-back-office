@@ -1,4 +1,4 @@
-import { ERROR_MUST_BE_SET_AS_HEADER } from '#endpoints/constants.js';
+import { ERROR_MUST_BE_SET_AS_HEADER } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

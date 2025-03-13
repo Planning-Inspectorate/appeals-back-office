@@ -14,7 +14,7 @@ import {
 	ERROR_MUST_BE_UUID,
 	ERROR_MUST_NOT_BE_IN_FUTURE,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 

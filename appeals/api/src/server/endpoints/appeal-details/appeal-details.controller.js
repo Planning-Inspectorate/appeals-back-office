@@ -1,4 +1,4 @@
-import { ERROR_FAILED_TO_SAVE_DATA } from '#endpoints/constants.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import logger from '#utils/logger.js';
 import { appealDetailService } from './appeal-details.service.js';
 import { contextEnum } from '#mappers/context-enum.js';

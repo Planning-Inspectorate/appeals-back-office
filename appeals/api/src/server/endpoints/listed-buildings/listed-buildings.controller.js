@@ -7,7 +7,7 @@ import {
 	AUDIT_TRAIL_LISTED_BUILDING_UPDATED,
 	AUDIT_TRAIL_LISTED_BUILDING_REMOVED,
 	ERROR_NOT_FOUND
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import * as listedBuildingRepository from '#repositories/listed-buildings.repository.js';
 /**

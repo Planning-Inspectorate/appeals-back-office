@@ -10,7 +10,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
 	VALIDATION_OUTCOME_COMPLETE
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('#db-client').AppealType} AppealType */

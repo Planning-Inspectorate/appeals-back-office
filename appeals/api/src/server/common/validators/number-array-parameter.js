@@ -2,7 +2,7 @@ import { body } from 'express-validator';
 import {
 	ERROR_MUST_BE_ARRAY_OF_NUMBERS,
 	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

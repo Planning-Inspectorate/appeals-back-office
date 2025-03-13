@@ -1,5 +1,8 @@
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { DOCUMENT_STATUS_NOT_RECEIVED, DOCUMENT_STATUS_RECEIVED } from '#endpoints/constants.js';
+import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */

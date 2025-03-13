@@ -1,4 +1,4 @@
-import { ERROR_INVALID_EMAIL } from '#endpoints/constants.js';
+import { ERROR_INVALID_EMAIL } from '@pins/appeals/constants/support.js';
 import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

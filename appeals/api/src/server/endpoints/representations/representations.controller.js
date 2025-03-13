@@ -4,7 +4,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import representationRepository from '#repositories/representation.repository.js';
-import * as CONSTANTS from '#endpoints/constants.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import * as representationService from './representations.service.js';
 import { formatRepresentation } from './representations.formatter.js';
 import {
@@ -13,7 +13,7 @@ import {
 	ERROR_NOT_FOUND,
 	ERROR_REP_ONLY_STATEMENT_INCOMPLETE,
 	ERROR_REP_PUBLISH_USING_ENDPOINT
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { Prisma } from '#utils/db-client/index.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';

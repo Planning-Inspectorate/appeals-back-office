@@ -17,7 +17,7 @@ import {
 	LENGTH_8,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED
-} from '../../constants.js';
+} from '@pins/appeals/constants/support.js';
 import {
 	lpaQuestionnaireIncompleteReasons,
 	lpaQuestionnaireValidationOutcomes,

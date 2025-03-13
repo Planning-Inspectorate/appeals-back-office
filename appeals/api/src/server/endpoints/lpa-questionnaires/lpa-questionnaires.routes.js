@@ -12,7 +12,7 @@ import {
 	getLPAQuestionnaireValidator,
 	patchLPAQuestionnaireValidator
 } from './lpa-questionnaires.validators.js';
-import { ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME } from '../constants.js';
+import { ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 
 const router = createRouter();
 

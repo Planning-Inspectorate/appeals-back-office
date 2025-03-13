@@ -1,5 +1,5 @@
 import { publishInvalidDecision } from './invalid-appeal-decision.service.js';
-import { ERROR_INVALID_APPEAL_STATE } from '#endpoints/constants.js';
+import { ERROR_INVALID_APPEAL_STATE } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('express').Request} Request */

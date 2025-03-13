@@ -4,7 +4,7 @@ import {
 	ERROR_ONLY_FOR_INVALID_VALIDATION_OUTCOME,
 	LENGTH_1,
 	LENGTH_10
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import { body } from 'express-validator';
 

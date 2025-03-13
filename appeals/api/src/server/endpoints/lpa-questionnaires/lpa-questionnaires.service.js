@@ -8,7 +8,7 @@ import {
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
-} from '../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '#utils/date-formatter.js';

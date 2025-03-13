@@ -8,7 +8,7 @@ import { add, sub } from 'date-fns';
 import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_NOT_BE_IN_FUTURE
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import config from '#config/config.js';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';

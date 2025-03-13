@@ -5,7 +5,7 @@ import {
 	ERROR_GOV_NOTIFY_CONNECTIVITY,
 	ERROR_GOV_NOTIFY_API_KEY_NOT_SET,
 	NODE_ENV_PRODUCTION
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from './string-token-replacement.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.NotifyTemplate} NotifyTemplate */

@@ -5,7 +5,7 @@ import {
 	AUDIT_TRAIL_SYSTEM_UUID,
 	USER_TYPE_CASE_OFFICER,
 	USER_TYPE_INSPECTOR
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import appealRepository from '#repositories/appeal.repository.js';

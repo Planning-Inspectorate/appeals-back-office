@@ -4,7 +4,7 @@ import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME
-} from '../constants.js';
+} from '@pins/appeals/constants/support.js';
 import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';

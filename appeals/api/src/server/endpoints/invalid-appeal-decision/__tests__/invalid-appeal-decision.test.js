@@ -6,7 +6,7 @@ import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { ERROR_CANNOT_BE_EMPTY_STRING } from '#endpoints/constants.js';
+import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

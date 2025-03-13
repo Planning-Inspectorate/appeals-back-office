@@ -6,13 +6,13 @@ import {
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
 	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { canLinkAppeals } from './link-appeals.service.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_LINKING_APPEALS
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 

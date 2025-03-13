@@ -4,7 +4,10 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
 import { linkedAppealRequest, linkedAppealLegacyRequest } from '#tests/linked-appeals/mocks.js';
-import { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } from '#endpoints/constants.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED
+} from '@pins/appeals/constants/support.js';
 import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 

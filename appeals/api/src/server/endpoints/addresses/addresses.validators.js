@@ -5,7 +5,7 @@ import {
 	validateStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
-import { LENGTH_8, LENGTH_250 } from '#endpoints/constants.js';
+import { LENGTH_8, LENGTH_250 } from '@pins/appeals/constants/support.js';
 
 const getAddressValidator = composeMiddleware(
 	validateIdParameter('appealId'),

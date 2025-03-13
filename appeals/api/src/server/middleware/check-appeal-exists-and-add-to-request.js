@@ -1,4 +1,4 @@
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
 

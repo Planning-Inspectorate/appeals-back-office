@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ERROR_NOT_FOUND } from '#endpoints/constants.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { request } from '#tests/../app-test.js';
 import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';

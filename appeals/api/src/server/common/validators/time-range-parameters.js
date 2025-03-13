@@ -1,4 +1,4 @@
-import { ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME } from '#endpoints/constants.js';
+import { ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME } from '@pins/appeals/constants/support.js';
 import { compareDesc, parseISO } from 'date-fns';
 import { body } from 'express-validator';
 

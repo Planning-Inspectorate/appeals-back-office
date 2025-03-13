@@ -9,7 +9,7 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '../../state/transition-state.js';

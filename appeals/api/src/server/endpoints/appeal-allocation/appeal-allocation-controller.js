@@ -2,7 +2,7 @@ import config from '#config/config.js';
 import appealAllocationRepository from '#repositories/appeal-allocation.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED } from '#endpoints/constants.js';
+import { AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

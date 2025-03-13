@@ -10,7 +10,7 @@ import {
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_REP_IMPORT_MSG
-} from '#endpoints/constants.js';
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
 
