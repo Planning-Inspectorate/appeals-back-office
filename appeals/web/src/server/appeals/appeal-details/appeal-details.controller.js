@@ -40,10 +40,15 @@ export const viewAppealDetails = async (request, response) => {
 		]);
 	}
 
+	// Remove redundant slash at the end of the url if it exists to prevent a double slash when creating links
+	const currentUrl = request.originalUrl.endsWith('/')
+		? request.originalUrl.slice(0, -1)
+		: request.originalUrl;
+
 	const mappedPageContent = await appealDetailsPage(
 		currentAppeal,
 		appealCaseNotes,
-		request.originalUrl,
+		currentUrl,
 		session,
 		request,
 		appellantFinalComments,
