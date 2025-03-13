@@ -4,7 +4,7 @@ import {
 	postDeleteDocument,
 	postDocumentDetails,
 	postDocumentUpload,
-	postUploadDocumentsCheckAndConfirm,
+	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
 	renderChangeDocumentFileName,
 	renderDeleteDocument,
@@ -15,7 +15,7 @@ import {
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import logger from '#lib/logger.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -226,26 +226,34 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAddDocumentVersionCheckAndConfirm = async (request, response) => {
-	const { currentAppeal, currentFolder } = request;
+	const {
+		currentAppeal,
+		currentFolder,
+		currentRepresentation,
+		session: { fileUploadInfo },
+		params: { folderId, documentId }
+	} = request;
 	const baseUrl = request.baseUrl;
+	const uploadInfo = fileUploadInfo.files[0];
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
 	try {
-		await postUploadDocumentsCheckAndConfirm({
+		await postUploadDocumentVersionCheckAndConfirm({
 			request,
-			response,
-			nextPageUrl: baseUrl,
-			successCallback: () => {
-				addNotificationBannerToSession({
-					session: request.session,
-					bannerDefinitionKey: 'documentAdded',
-					appealId: currentAppeal.appealId
-				});
-			}
+			response
 		});
+
+		await patchRepresentationAttachments(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentRepresentation.id,
+			[uploadInfo.GUID]
+		);
+
+		return response.redirect(`${baseUrl}/${folderId}/${documentId}`);
 	} catch (error) {
 		logger.error(
 			error,

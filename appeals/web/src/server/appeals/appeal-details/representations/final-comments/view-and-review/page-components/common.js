@@ -30,9 +30,10 @@ export function generateCommentsSummaryList(appealId, comment) {
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
-	const filteredAttachments = comment.attachments?.filter(
-		(attachment) => !attachment.documentVersion.document.isDeleted
-	);
+	const filteredAttachments = comment.attachments?.filter((attachment) => {
+		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
+		return latestVersionId === attachment.version && !isDeleted;
+	});
 
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
