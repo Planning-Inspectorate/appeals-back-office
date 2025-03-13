@@ -34,10 +34,10 @@ export const mapAppellantCase = (data) => {
 		statusPlanningObligation: casedata?.statusPlanningObligation ?? null,
 		// @ts-ignore
 		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
+		inquiryHowManyWitnesses: casedata?.inquiryHowManyWitnesses,
 
 		//TODO:
 
 		designAccessStatementProvided: null
-		//inquiryHowManyWitnesses: null,
 	};
 };
