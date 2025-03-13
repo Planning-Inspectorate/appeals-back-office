@@ -9,10 +9,10 @@ export const mapReasonForNeighbourVisits = ({
 	booleanWithDetailsSummaryListItem({
 		id: 'neighbouring-site-access',
 		text: 'Inspector needs neighbouring site access',
-		value:
-			(lpaQuestionnaireData.reasonForNeighbourVisits &&
-				lpaQuestionnaireData.reasonForNeighbourVisits?.length > 0) ||
-			false,
+		value: !!(
+			lpaQuestionnaireData.reasonForNeighbourVisits &&
+			lpaQuestionnaireData.reasonForNeighbourVisits?.length > 0
+		),
 		valueDetails: lpaQuestionnaireData.reasonForNeighbourVisits,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/neighbouring-site-access/change`,
