@@ -15,9 +15,10 @@ import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
  * @returns {PageComponent}
  * */
 export function baseSummaryList(appealId, lpaStatement, { isReview }) {
-	const filteredAttachments = lpaStatement.attachments?.filter(
-		(attachment) => !attachment.documentVersion.document.isDeleted
-	);
+	const filteredAttachments = lpaStatement.attachments?.filter((attachment) => {
+		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
+		return latestVersionId === attachment.version && !isDeleted;
+	});
 
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
