@@ -19,7 +19,6 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => {
 				filteredAttachments.map(
 					(a) => `<a class="govuk-link" target="_blank" href="${mapDocumentDownloadUrl(
 						appealDetails.appealId,
-						a.documentVersion,
 						a.documentId,
 						a.documentVersion.document.name
 					)}">
@@ -88,11 +87,10 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => {
 
 /**
  * @param {Number} appealId
- * @param {string} documentVersion
  * @param {string} documentId
  * @param {string} documentName
  * @returns {string}
  */
-const mapDocumentDownloadUrl = (appealId, documentVersion, documentId, documentName) => {
-	return `/documents/${appealId}/download/${documentId}/${documentVersion}/${documentName}`;
+const mapDocumentDownloadUrl = (appealId, documentId, documentName) => {
+	return `/documents/${appealId}/download/${documentId}/${documentName}`;
 };
