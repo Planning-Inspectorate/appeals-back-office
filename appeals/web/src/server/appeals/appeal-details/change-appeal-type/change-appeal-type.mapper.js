@@ -7,7 +7,7 @@ import { getAppealTypesFromId } from './change-appeal-type.service.js';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
- * @typedef {import('./change-appeal-type.types.js').AppealType} AppealType
+ * @typedef {import('#appeals/appeals.types.js').AppealType} AppealType
  * @typedef {import('../../appeals.types.js').SelectItemParameter} SelectItemParameter
  * @typedef {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} ChangeAppealTypeRequest
  */

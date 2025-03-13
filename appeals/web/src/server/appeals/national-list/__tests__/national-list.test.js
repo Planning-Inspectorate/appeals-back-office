@@ -3,7 +3,8 @@ import nock from 'nock';
 import supertest from 'supertest';
 import {
 	activeDirectoryUsersData,
-	appealsNationalList
+	appealsNationalList,
+	appealTypesData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
@@ -47,6 +48,9 @@ const caseOfficers = activeDirectoryUsersData.map(({ id }, index) => ({
 describe('national-list', () => {
 	beforeEach(() => {
 		installMockApi();
+
+		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
+
 		// @ts-ignore
 		usersService.getUserById = jest
 			.fn()
@@ -285,6 +289,39 @@ describe('national-list', () => {
 				'<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>'
 			);
 			expect(headerNavigationHtml).toContain('href="/auth/signout">Sign out</a>');
+		});
+
+		it('should render national list - appeal type filter applied', async () => {
+			nock('http://test/')
+				.get('/appeals?pageNumber=1&pageSize=30&appealTypeId=75')
+				.reply(200, {
+					itemCount: 1,
+					items: [appealsNationalList.items[0]],
+					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
+					page: 1,
+					pageCount: 0,
+					pageSize: 30
+				});
+
+			const response = await request.get(`${baseUrl}?appealTypeFilter=75`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('1 result (filters applied)</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal type</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="appeal-type-filter" name="appealTypeFilter"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="75" selected');
+			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
 		});
 	});
 });

@@ -29,6 +29,7 @@ export const lpaNotificationMethods = lookupListData;
 export const lpaDesignatedSites = lookupListData;
 export const lpas = lookupListData;
 export const planningObligationStatuses = lookupListData;
+export const appealTypes = lookupListData;
 export const procedureTypes = lookupListData;
 export const scheduleTypes = lookupListData;
 export const siteVisitTypes = lookupListData;

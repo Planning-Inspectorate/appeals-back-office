@@ -2,7 +2,7 @@ import logger from '#lib/logger.js';
 import config from '#environment/config.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { nationalListPage } from './national-list.mapper.js';
-import { getAppeals } from './national-list.service.js';
+import { getAppeals, getAppealTypes } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
 
@@ -37,6 +37,7 @@ export const viewNationalList = async (request, response) => {
 	const caseOfficerFilter = query.caseOfficerFilter && String(query.caseOfficerFilter);
 	const inspectorFilter = query.inspectorFilter && String(query.inspectorFilter);
 	const greenBeltFilter = query.greenBeltFilter && String(query.greenBeltFilter);
+	const appealTypeFilter = query.appealTypeFilter && String(query.appealTypeFilter);
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
 
@@ -44,6 +45,8 @@ export const viewNationalList = async (request, response) => {
 		searchTerm = '';
 		searchTermError = 'Search query must be between 2 and 8 characters';
 	}
+
+	const appealTypes = await getAppealTypes(request.apiClient);
 
 	const urlWithoutQuery = originalUrl.split('?')[0];
 	const paginationParameters = getPaginationParametersFromQuery(query);
@@ -56,6 +59,7 @@ export const viewNationalList = async (request, response) => {
 		caseOfficerFilter,
 		inspectorFilter,
 		greenBeltFilter,
+		appealTypeFilter,
 		paginationParameters.pageNumber,
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));
@@ -78,6 +82,7 @@ export const viewNationalList = async (request, response) => {
 	const mappedPageContent = nationalListPage(
 		users,
 		appeals,
+		appealTypes,
 		urlWithoutQuery,
 		searchTerm,
 		searchTermError,
@@ -86,6 +91,7 @@ export const viewNationalList = async (request, response) => {
 		localPlanningAuthorityFilter,
 		caseOfficerFilter,
 		inspectorFilter,
+		appealTypeFilter,
 		greenBeltFilter
 	);
 
