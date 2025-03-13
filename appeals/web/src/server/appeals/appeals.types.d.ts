@@ -36,6 +36,13 @@ export interface RepresentationTypesAwaitingReview {
 	lpaStatement: boolean;
 }
 
+export interface AppealType {
+	id: number;
+	type: string;
+	shorthand: string;
+	key: string;
+}
+
 declare global {
 	namespace Express {
 		interface Request {

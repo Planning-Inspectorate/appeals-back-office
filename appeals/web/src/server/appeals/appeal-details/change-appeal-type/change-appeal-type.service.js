@@ -2,7 +2,7 @@
  *
  * @param {import('got').Got} apiClient
  * @param {number|string} appealId
- * @returns {Promise<import('./change-appeal-type.types.js').AppealType[]>}
+ * @returns {Promise<import('#appeals/appeals.types.js').AppealType[]>}
  */
 export function getAppealTypesFromId(apiClient, appealId) {
 	return apiClient.get(`appeals/${appealId}/appeal-types`).json();

@@ -3,10 +3,3 @@ export interface ChangeAppealTypeRequest {
 	resubmit?: boolean;
 	appealTypeFinalDate?: Date | null;
 }
-
-export interface AppealType {
-	id: number;
-	type: string;
-	shorthand: string;
-	key: string;
-}

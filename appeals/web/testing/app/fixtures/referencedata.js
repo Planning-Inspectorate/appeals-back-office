@@ -1415,14 +1415,14 @@ export const appealTypesData = [
 		id: 75,
 		type: 'Planning appeal',
 		shorthand: 'FPA',
-		key: 'A',
+		key: 'D',
 		enabled: false
 	},
 	{
 		id: 76,
 		type: 'Enforcement notice appeal',
 		shorthand: 'X1',
-		key: 'C',
+		key: 'W',
 		enabled: false
 	}
 ];

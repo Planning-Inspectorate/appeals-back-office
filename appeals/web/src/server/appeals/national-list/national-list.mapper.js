@@ -9,10 +9,11 @@ import { mapStatusText } from '#lib/appeal-status.js';
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-
+/** @typedef {import('#appeals/appeals.types.js').AppealType} AppealType */
 /**
  * @param {{azureAdUserId: string, id: number, name: string}[]} users
  * @param {AppealList|void} appeals
+ * @param {AppealType[]} appealTypes
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
  * @param {string|undefined} searchTermError
@@ -21,6 +22,7 @@ import { mapStatusText } from '#lib/appeal-status.js';
  * @param {string|undefined} localPlanningAuthorityFilter
  * @param {string|undefined} caseOfficerFilter
  * @param {string|undefined} inspectorFilter
+ * @param {string|undefined} appealTypeFilter
  * @param {string|undefined} greenBeltFilter
  * @returns {PageContent}
  */
@@ -28,6 +30,7 @@ import { mapStatusText } from '#lib/appeal-status.js';
 export function nationalListPage(
 	users,
 	appeals,
+	appealTypes,
 	urlWithoutQuery,
 	searchTerm,
 	searchTermError,
@@ -36,10 +39,12 @@ export function nationalListPage(
 	localPlanningAuthorityFilter,
 	caseOfficerFilter,
 	inspectorFilter,
+	appealTypeFilter,
 	greenBeltFilter
 ) {
 	const filtersApplied =
 		greenBeltFilter ||
+		appealTypeFilter ||
 		[
 			appealStatusFilter,
 			inspectorStatusFilter,
@@ -94,6 +99,21 @@ export function nationalListPage(
 		value: inspector?.id,
 		selected: inspectorFilter === String(inspector?.id)
 	}));
+
+	const appealTypeFilterItemsArray = [
+		{
+			text: 'All',
+			value: 'all',
+			selected: appealTypeFilter === 'all'
+		},
+		...appealTypes
+			.filter(({ key }) => key === 'D' || key === 'W')
+			.map(({ type, id }) => ({
+				text: type,
+				value: id.toString(),
+				selected: appealTypeFilter === id.toString()
+			}))
+	];
 
 	let searchResultsHeader = '';
 
@@ -232,6 +252,20 @@ export function nationalListPage(
 						type: 'html',
 						parameters: {
 							html: `<a class="govuk-link" href="${clearFilterUrl}" data-cy="filter-clear">Clear filters</a></div>`
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							name: 'appealTypeFilter',
+							id: 'appeal-type-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Appeal type'
+							},
+							value: 'all',
+							items: appealTypeFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-appeal' }
 						}
 					},
 					{

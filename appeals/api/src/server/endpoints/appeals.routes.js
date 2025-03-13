@@ -15,6 +15,7 @@ import { knowledgeOfOtherLandownersRoutes } from './knowledge-of-other-landowner
 import { lpaNotificationMethodsRoutes } from './lpa-notification-methods/lpa-notification-methods.routes.js';
 import { lpaDesignatedSitesRoutes } from './lpa-designated-sites/lpa-designated-sites.routes.js';
 import { lpaQuestionnaireValidationOutcomesRoutes } from './lpa-questionnaire-validation-outcomes/lpa-questionnaire-validation-outcomes.routes.js';
+import { appealTypeRoutes } from './appeal-types/appeal-types.routes.js';
 import { procedureTypesRoutes } from './procedure-types/procedure-types.routes.js';
 import { siteVisitTypesRoutes } from './site-visit-types/site-visit-types.routes.js';
 import { appellantCaseValidationOutcomesRoutes } from './appellant-case-validation-outcomes/appellant-case-validation-outcomes.routes.js';
@@ -59,6 +60,7 @@ router.use(lpaNotificationMethodsRoutes);
 router.use(lpaDesignatedSitesRoutes);
 router.use(lpaQuestionnaireIncompleteReasonsRoutes);
 router.use(lpaQuestionnaireValidationOutcomesRoutes);
+router.use(appealTypeRoutes);
 router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
