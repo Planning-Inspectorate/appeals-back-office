@@ -6,18 +6,26 @@ To run a local emulator, there are a number of required steps. In order to succe
 
 2. Once the certificate is created, it needs to be accessible by docker, in order to start the Azurite emulator with https.
    The following command will create a docker container running the emulator, mapping a local folder containing the certificate (in the example below, the command is run from the folder containing the certificate `certificate.pem`, which is mapped from a local folder (`./` in the example below) and accessible from the docker container locally in the `/workspace` folder):
+   Default (see below for windows specific):
 
 ```shell
 docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 -v ./:/workspace --name pins_azurite -d mcr.microsoft.com/azure-storage/azurite azurite --silent --blobHost 0.0.0.0 --cert /workspace/certificate.pem --key /workspace/certificate-key.pem --oauth basic --skipApiVersionCheck
 ```
 
+Windows:
+
+```powershell
+docker run -p 10000:10000 -p 10001:10001 -p 10002:10002 -v .\:/workspace --name pins_azurite -d mcr.microsoft.com/azure-storage/azurite azurite --silent --blobHost 0.0.0.0 --cert /workspace/certificate.pem --key /workspace/certificate-key.pem --oauth basic --skipApiVersionCheck
+```
+
 3. Once the emulator is running, it can be accessed by a client such as [Microsoft Azure Storage Explorer](https://azure.microsoft.com/en-gb/products/storage/storage-explorer). The self-signed certificate will not be trusted by default, so it can be added through the `Microsoft Azure Storage Explorer` edit menu.
+4. Add the certificate by going into Edit>SSL Certificates>Import Certificates
 
-4. Once the client is up and running, you should be able to connect to the emulator by adding a new storage account which uses a generic emulator connection, but ensuring that `Use HTTPS` is ticked. Please name this new account `pins_azurite`. You should now have a new account `pins_azurite (Key)` under `Storage Accounts`.
+5. Once the client is up and running, you should be able to connect to the emulator by adding a new storage account (right-click storage account) which uses a generic emulator connection, but ensuring that `Use HTTPS` is ticked. Please name this new account `pins_azurite`. You should now have a new account `pins_azurite (Key)` under `Storage Accounts`.
 
-5. Once the new connection is created, please create (under `Blob containers`) a new container named `document-service-uploads` (this is where all the files will be stored).
+6. Once the new connection is created, please create (under `Blob containers`) a new container named `document-service-uploads` (this is where all the files will be stored).
 
-6. Ensure CORS is properly configured on the blob container. In `Microsoft Azure Storage Explorer`, in the sidebar, expand `Storage Accounts > pins_azurite (Key)`, right click on `Blob Containers` and select `Configure CORS settings`. Add a new rule named `*` (or edit if already present), with the following settings:
+7. Ensure CORS is properly configured on the blob container. In `Microsoft Azure Storage Explorer`, in the sidebar, expand `Storage Accounts > pins_azurite (Key)`, right click on `Blob Containers` and select `Configure CORS settings`. Add a new rule named `*` (or edit if already present), with the following settings:
 
 ```shell
 Allowed Origins: *
