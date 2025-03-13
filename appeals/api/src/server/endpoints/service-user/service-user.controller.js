@@ -2,8 +2,10 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import {
 	AUDIT_TRAIL_SERVICE_USER_REMOVED,
 	AUDIT_TRAIL_SERVICE_USER_UPDATED,
+	AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { SERVICE_USER_TYPE } from 'pins-data-model';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
@@ -73,7 +75,8 @@ export const updateServiceUserById = async (req, res) => {
  * @returns {Promise<Response>}
  * */
 export async function updateServiceUserAddress(request, response) {
-	const { serviceUserId } = request.params;
+	const { serviceUserId, appealId } = request.params;
+	const userType = request.body?.userType || SERVICE_USER_TYPE.INTERESTED_PARTY;
 
 	const { addressLine1, addressLine2, county, country, postcode, town } = request.body;
 
@@ -91,6 +94,19 @@ export async function updateServiceUserAddress(request, response) {
 	if (!result) {
 		return response.status(404).end();
 	}
+
+	await createAuditTrail({
+		appealId: parseInt(appealId),
+		azureAdUserId: request.get('azureAdUserId'),
+		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED, [userType])
+	});
+
+	await broadcasters.broadcastServiceUser(
+		result.id,
+		EventType.Update,
+		userType,
+		request.appeal.reference
+	);
 
 	return response.send(result);
 }
