@@ -28,7 +28,17 @@ export const broadcastServiceUser = async (userId, updateType, roleName, caseRef
 		return false;
 	}
 
-	const msg = mapServiceUserEntity(user, roleName, caseReference);
+	let userAddress;
+	if (user.addressId) {
+		userAddress = await databaseConnector.address.findUnique({
+			where: { id: user.addressId }
+		});
+		if (!userAddress) {
+			userAddress = undefined;
+		}
+	}
+
+	const msg = mapServiceUserEntity(user, userAddress, roleName, caseReference);
 
 	if (msg) {
 		const validationResult = await validateFromSchema(schemas.events.serviceUser, msg);
