@@ -72,7 +72,8 @@ export const mapAppellantCaseIn = (command) => {
 			jurisdiction: casedata.jurisdiction,
 			numberOfResidencesNetChange: casedata.numberOfResidencesNetChange,
 			siteGridReferenceEasting: casedata.siteGridReferenceEasting,
-			siteGridReferenceNorthing: casedata.siteGridReferenceNorthing
+			siteGridReferenceNorthing: casedata.siteGridReferenceNorthing,
+			inquiryHowManyWitnesses: casedata.inquiryHowManyWitnesses
 		})
 	};
 
