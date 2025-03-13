@@ -592,7 +592,8 @@ export const spec = {
 			validation: {
 				outcome: 'Incomplete',
 				incompleteReasons: ['Documents or information are missing', 'Policies are missing', 'Other']
-			}
+			},
+			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site'
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',
