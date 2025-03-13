@@ -19,7 +19,7 @@ import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('../../openapi-types').UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
+/** @typedef {import('@pins/appeals.api').Api.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
 
 /**
  * @param {UpdateDocumentsRequest} documents
