@@ -386,7 +386,8 @@ const getAppealsWithCompletedEvents = () =>
 		where: {
 			appealStatus: {
 				some: {
-					status: APPEAL_CASE_STATUS.AWAITING_EVENT
+					status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+					valid: true
 				}
 			},
 			siteVisit: {
