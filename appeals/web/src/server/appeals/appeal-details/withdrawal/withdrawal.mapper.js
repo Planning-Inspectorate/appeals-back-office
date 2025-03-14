@@ -1,7 +1,11 @@
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { mapNotificationBannersFromSession, createNotificationBanner } from '#lib/mappers/index.js';
+import {
+	mapNotificationBannersFromSession,
+	createNotificationBanner,
+	sortNotificationBanners
+} from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import {
@@ -82,7 +86,7 @@ export function manageWithdrawalRequestFolderPage(
 		preHeading: 'Manage folder',
 		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: [
-			...notificationBanners,
+			...sortNotificationBanners(notificationBanners),
 			...errorSummaryPageComponents,
 			{
 				type: 'table',
