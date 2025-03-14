@@ -8560,6 +8560,10 @@
 								}
 							}
 						}
+					},
+					"reasonForNeighbourVisits": {
+						"type": "string",
+						"example": "The inspector needs to access the neighbouring site"
 					}
 				},
 				"xml": {
