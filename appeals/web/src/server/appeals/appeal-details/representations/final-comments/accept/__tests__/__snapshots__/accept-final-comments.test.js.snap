@@ -17,7 +17,6 @@ exports[`final-comments GET / should render the accept appellant final comments 
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
