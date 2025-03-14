@@ -183,7 +183,7 @@ export async function updateRepresentation(request, response) {
 					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_INVALID`
 				];
 			} else {
-				stringTokenReplacement(
+				return stringTokenReplacement(
 					// @ts-ignore
 					CONSTANTS[
 						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
