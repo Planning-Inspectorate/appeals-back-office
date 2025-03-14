@@ -19,6 +19,10 @@ parameters:
     displayName: Deploy Function - Appeals Document Processing
     type: boolean
     default: true
+  - name: deployFunctionAppealsScheduledJobs
+    displayName: Deploy Function - Appeals Scheduled Jobs
+    type: boolean
+    default: true
   - name: schemaMigration
     displayName: Run Database Migration
     type: boolean
@@ -173,7 +177,18 @@ extends:
                   appName: pins-func-appeals-bo-doc-processing-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
                   workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
-          - name: Release Appeals API
+          - name: Deploy Function - Appeals Scheduled Jobs
+            condition: eq(${{ parameters.deployFunctionAppealsScheduledJobs }}, 'true')
+            steps:
+              - download: build
+                artifact: function-appeals-scheduled-jobs
+                displayName: Download function-appeals-scheduled-jobs
+              - template: ../steps/function_app_deploy.yml
+                parameters:
+                  appName: pins-func-appeals-bo-scheduled-jobs-$(ENVIRONMENT)
+                  resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-scheduled-jobs
+					- name: Release Appeals API
             displayName: Slot swap on API Release
             condition: and(succeeded(), eq(${{ parameters.slotDeployment }}, true), eq(${{ parameters.deployAppealsAPI }}, true))
             dependsOn:
