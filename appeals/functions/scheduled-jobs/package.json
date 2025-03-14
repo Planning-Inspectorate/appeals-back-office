@@ -1,7 +1,7 @@
 {
-  "name": "@pins/functions-bo-appeals-document-processing",
+  "name": "@pins/functions-bo-appeals-scheduled-jobs",
   "version": "1.0.0",
-  "description": "Azure Function to handle processing of documents, such as AV scans and move across storage",
+  "description": "Azure Function to handle time-based events",
   "scripts": {
     "start": "func start"
   },
