@@ -412,6 +412,7 @@
  * @property {string} [titleId] The id for the banner title, and the aria-labelledby attribute in the banner. Defaults to govuk-notification-banner-title.
  * @property {boolean} [disabledAutoFocus] If you set type to success, or role to alert, JavaScript moves the keyboard focus to the notification banner when the page loads. To disable this behaviour, set disableAutoFocus to true.
  * @property {string} [classes] The classes that you want to add to the notification banner.
+ * @property {string} [attributes] Attributes to add to the notification banner.
  */
 
 /**

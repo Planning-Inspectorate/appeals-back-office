@@ -1,5 +1,8 @@
 // @ts-nocheck
-import { mapNotificationBannersFromSession } from '../notification-banners.mapper.js';
+import {
+	mapNotificationBannersFromSession,
+	sortNotificationBanners
+} from '../notification-banners.mapper.js';
 import { jest } from '@jest/globals';
 
 describe('buildNotificationBanners', () => {
@@ -104,7 +107,10 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'Document added'
+					text: 'Document added',
+					attributes: {
+						'data-index': 0
+					}
 				}
 			}
 		]);
@@ -129,7 +135,10 @@ describe('buildNotificationBanners', () => {
 					titleText: 'Success',
 					titleHeadingLevel: 3,
 					type: 'success',
-					text: 'custom text content'
+					text: 'custom text content',
+					attributes: {
+						'data-index': 0
+					}
 				}
 			}
 		]);
@@ -155,9 +164,68 @@ describe('buildNotificationBanners', () => {
 					titleHeadingLevel: 3,
 					type: 'success',
 					text: 'Document added',
-					html: '<p>custom text content</p>'
+					html: '<p>custom text content</p>',
+					attributes: {
+						'data-index': 0
+					}
 				}
 			}
+		]);
+	});
+});
+
+describe('sortNotificationBanners', () => {
+	const successBannerOne = {
+		type: 'notification-banner',
+		parameters: {
+			titleText: 'First success banner',
+			type: 'success'
+		}
+	};
+	const successBannerTwo = {
+		type: 'notification-banner',
+		parameters: {
+			titleText: 'Second success banner',
+			type: 'success'
+		}
+	};
+	const importantBannerOne = {
+		type: 'notification-banner',
+		parameters: {
+			titleText: 'First important banner',
+			type: 'important'
+		}
+	};
+	const importantBannerTwo = {
+		type: 'notification-banner',
+		parameters: {
+			titleText: 'Second important banner',
+			type: 'important'
+		}
+	};
+
+	it('should sort success banners before (above) important banners', () => {
+		expect(
+			sortNotificationBanners([
+				successBannerOne,
+				importantBannerOne,
+				successBannerTwo,
+				importantBannerTwo
+			])
+		).toEqual([successBannerOne, successBannerTwo, importantBannerOne, importantBannerTwo]);
+	});
+
+	it('should not change the relative ordering of success banners', () => {
+		expect(sortNotificationBanners([successBannerTwo, successBannerOne])).toEqual([
+			successBannerTwo,
+			successBannerOne
+		]);
+	});
+
+	it('should not change the relative ordering of important banners', () => {
+		expect(sortNotificationBanners([importantBannerTwo, importantBannerOne])).toEqual([
+			importantBannerTwo,
+			importantBannerOne
 		]);
 	});
 });

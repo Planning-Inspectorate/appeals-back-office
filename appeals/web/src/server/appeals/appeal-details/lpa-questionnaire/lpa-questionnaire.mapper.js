@@ -5,7 +5,8 @@ import {
 	inputInstructionIsRadiosInputInstruction,
 	yesNoInput,
 	createNotificationBanner,
-	mapNotificationBannersFromSession
+	mapNotificationBannersFromSession,
+	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
@@ -502,7 +503,7 @@ function mapLPAQuestionnaireNotificationBanners(
 	const banners = mapNotificationBannersFromSession(session, 'lpaQuestionnaire', appealId);
 
 	if (getDocumentsForVirusStatus(lpaqData, 'not_scanned').length > 0) {
-		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
+		banners.push(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
 	}
 
 	if (validationOutcome === 'incomplete') {
@@ -556,7 +557,7 @@ function mapLPAQuestionnaireNotificationBanners(
 			});
 		}
 
-		banners.unshift(
+		banners.push(
 			createNotificationBanner({
 				bannerDefinitionKey: 'lpaQuestionnaireNotValid',
 				titleText: `LPA Questionnaire is ${String(validationOutcome)}`,
@@ -565,7 +566,7 @@ function mapLPAQuestionnaireNotificationBanners(
 		);
 	}
 
-	return banners;
+	return sortNotificationBanners(banners);
 }
 
 /**

@@ -486,6 +486,50 @@ describe('LPA Questionnaire review', () => {
 				'In, near or likely to effect designated sites changed'
 			);
 		});
+
+		describe('banner ordering', () => {
+			it('should render success banners before (above) important banners', async () => {
+				const appealId = appealData.appealId.toString();
+				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome);
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				await request
+					.post(
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/green-belt/change/lpa`
+					)
+					.send({
+						greenBeltRadio: 'yes'
+					});
+
+				const response = await request.get(
+					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const firstBannerHtml = parseHtml(response.text, {
+					rootElement: `.govuk-notification-banner[data-index='0']`,
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(firstBannerHtml).toContain(
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+				);
+
+				const secondBannerHtml = parseHtml(response.text, {
+					rootElement: `.govuk-notification-banner[data-index='1']`,
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(secondBannerHtml).toContain(
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > LPA Questionnaire is incomplete</h3>'
+				);
+			});
+		});
 	});
 
 	describe('GET /', () => {

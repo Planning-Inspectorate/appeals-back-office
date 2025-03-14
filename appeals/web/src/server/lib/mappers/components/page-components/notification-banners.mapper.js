@@ -478,7 +478,7 @@ export function mapNotificationBannersFromSession(session, servicePage, appealId
 			!displayedBannerKeys.includes(bannerData.key)
 	);
 
-	return notificationBanners;
+	return sortNotificationBanners(notificationBanners);
 }
 
 /**
@@ -531,4 +531,25 @@ export function mapRequiredActionToNotificationBannerKey(requiredAction) {
 	}
 
 	return appealActionRequiredToNotificationBannerMapping[requiredAction];
+}
+
+/**
+ * @param {PageComponent[]} bannerComponents
+ * @returns {PageComponent[]}
+ */
+export function sortNotificationBanners(bannerComponents) {
+	const sortedBanners = bannerComponents.sort((a, b) => {
+		if (a.parameters.type === 'success' && b.parameters.type === 'important') {
+			return -1;
+		} else if (a.parameters.type === 'important' && b.parameters.type === 'success') {
+			return 1;
+		}
+		return 0;
+	});
+
+	sortedBanners.forEach(
+		(bannerComponent, index) => (bannerComponent.parameters.attributes = { 'data-index': index })
+	);
+
+	return sortedBanners;
 }
