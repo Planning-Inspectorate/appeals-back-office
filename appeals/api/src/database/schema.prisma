@@ -284,7 +284,6 @@ model AppellantCase {
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
-  inquiryHowManyWitnesses                  Int?
 }
 
 /// AppellantCaseValidationOutcome model
