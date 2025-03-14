@@ -8,7 +8,7 @@
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_REPRESENTATION_TYPE } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { mapDocumentIn } from './document.mapper.js';
-import { mapServiceUserWithAddressIn } from './service-user.mapper.js';
+import { mapServiceUserIn } from './service-user.mapper.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 
 /**
@@ -21,7 +21,7 @@ export const mapRepresentationIn = (submission) => {
 
 	let serviceUser;
 	if (newUser !== null) {
-		serviceUser = mapServiceUserWithAddressIn(newUser);
+		serviceUser = mapServiceUserIn(newUser, true);
 	}
 
 	const attachments = documents.map((doc) => mapDocumentIn(doc, 'representation'));
