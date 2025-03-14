@@ -1,6 +1,7 @@
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -38,7 +39,12 @@ export function generateCommentsSummaryList(appealId, comment) {
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
 				filteredAttachments.map(
-					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+					(a) =>
+						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+							a.documentVersion.document.caseId,
+							a.documentVersion.document.guid,
+							a.documentVersion.document.name
+						)}" target="_blank">${a.documentVersion.document.name}</a>`
 				)
 		  )
 		: null;

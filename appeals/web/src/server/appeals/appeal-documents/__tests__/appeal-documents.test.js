@@ -6,7 +6,7 @@ import {
 	appellantCaseDataNotValidated,
 	documentFileVersionsInfo
 } from '#testing/app/fixtures/referencedata.js';
-import { mapRedactionStatusKeyToName } from '../appeal-documents.mapper.js';
+import { mapDocumentDownloadUrl, mapRedactionStatusKeyToName } from '../appeal-documents.mapper.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -331,7 +331,6 @@ describe('appeal-documents', () => {
 			const result = mapRedactionStatusKeyToName('123');
 			expect(result).toBe('');
 		});
-
 	});
 });
 
@@ -348,3 +347,30 @@ const processAttrs = (/** @type {NamedNodeMap | undefined} */ attrs) => {
 
 	return items;
 };
+
+describe('mapDocumentDownloadUrl', () => {
+	it('should return the correct URL when documentVersion is provided', () => {
+		const result = mapDocumentDownloadUrl(1, '2', 'document.pdf', 3);
+		expect(result).toBe('/documents/1/download/2/3/document.pdf');
+	});
+
+	it('should return the correct URL when documentVersion is not provided', () => {
+		const result = mapDocumentDownloadUrl(1, '2', 'document.pdf');
+		expect(result).toBe('/documents/1/download/2/document.pdf');
+	});
+
+	it('should handle appealId as a string', () => {
+		const result = mapDocumentDownloadUrl('1', '2', 'document.pdf', 4);
+		expect(result).toBe('/documents/1/download/2/4/document.pdf');
+	});
+
+	it('should handle special characters in the filename safely', () => {
+		const result = mapDocumentDownloadUrl(1, '2', 'docu ment.pdf');
+		expect(result).toBe('/documents/1/download/2/docu ment.pdf');
+	});
+
+	it('should handle missing filename gracefully', () => {
+		const result = mapDocumentDownloadUrl(1, '2', '');
+		expect(result).toBe('/documents/1/download/2/');
+	});
+});

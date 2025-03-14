@@ -1,3 +1,4 @@
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
@@ -66,7 +67,12 @@ export function generateCommentSummaryList(
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
 				filteredAttachments.map(
-					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+					(a) =>
+						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+							a.documentVersion.document.caseId,
+							a.documentVersion.document.guid,
+							a.documentVersion.document.name
+						)}" target="_blank">${a.documentVersion.document.name}</a>`
 				)
 		  )
 		: null;
