@@ -16,7 +16,9 @@ exports[`final-comments GET / should render the accept appellant final comments 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/"> Change</a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
@@ -52,7 +54,7 @@ exports[`final-comments GET / should render the accept lpa final comments page w
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
