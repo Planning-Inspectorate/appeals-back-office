@@ -5,9 +5,10 @@
  * @param {Appeal} appealDetails
  * @param {Representation} comment
  * @param {string} finalCommentsType
+ * @param {string|null} attachmentsList
  * @returns {PageComponent}
  */
-export const summaryList = (appealDetails, comment, finalCommentsType) => ({
+export const summaryList = (appealDetails, comment, finalCommentsType, attachmentsList) => ({
 	type: 'summary-list',
 	wrapperHtml: {
 		opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
@@ -32,7 +33,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => ({
 			},
 			{
 				key: { text: 'Supporting documents' },
-				value: { text: '' },
+				value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 				...(comment.attachments?.length > 0
 					? {
 							actions: {
