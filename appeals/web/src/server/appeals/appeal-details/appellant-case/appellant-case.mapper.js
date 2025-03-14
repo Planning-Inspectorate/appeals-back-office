@@ -15,7 +15,8 @@ import {
 	userHasPermission,
 	removeSummaryListActions,
 	mapNotificationBannersFromSession,
-	createNotificationBanner
+	createNotificationBanner,
+	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -454,7 +455,7 @@ export function mapAppellantCaseNotificationBanners(
 	if (
 		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
 	) {
-		banners.unshift(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
+		banners.push(createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' }));
 	}
 
 	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
@@ -508,7 +509,7 @@ export function mapAppellantCaseNotificationBanners(
 			});
 		}
 
-		banners.unshift(
+		banners.push(
 			createNotificationBanner({
 				bannerDefinitionKey: 'appellantCaseNotValid',
 				titleText: `Appeal is ${String(validationOutcome)}`,
@@ -517,7 +518,7 @@ export function mapAppellantCaseNotificationBanners(
 		);
 	}
 
-	return banners;
+	return sortNotificationBanners(banners);
 }
 
 /**

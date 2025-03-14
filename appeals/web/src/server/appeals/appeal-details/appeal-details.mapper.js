@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
@@ -49,10 +49,13 @@ export async function appealDetailsPage(
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
 
 	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails);
+	const notificationBanners = sortNotificationBanners([
+		...statusDependentNotifications,
+		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
+	]);
 
 	const pageComponents = [
-		...statusDependentNotifications,
-		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId),
+		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		generateCaseSummary(mappedData),
 		...caseDownload,

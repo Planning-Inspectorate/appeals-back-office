@@ -211,436 +211,485 @@ describe('appellant-case', () => {
 			});
 		}
 
-		it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
-			const appealId = appealData.appealId.toString();
-			nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
-				planningApplicationReference: '12345/A/67890'
-			});
-
-			const validData = {
-				planningApplicationReference: '12345/A/67890'
-			};
-
-			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/lpa-reference/change`)
-				.send(validData);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: '.govuk-notification-banner'
-			}).innerHTML;
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
-		});
-
-		it('should render a "Application decision date updated" notification banner when the application decision date is updated', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseId = appealData.appellantCaseId;
-			const validData = {
-				'application-decision-date-day': '11',
-				'application-decision-date-month': '06',
-				'application-decision-date-year': '2021'
-			};
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, { ...validData });
-
-			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change`)
-				.send(validData);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Application decision date changed');
-		});
-
-		it('should render a "Green belt status updated" notification banner when the green belt response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseId = appealData.appellantCaseId;
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			const validData = {
-				greenBeltRadio: 'yes'
-			};
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/green-belt/change/appellant`).send(validData);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Green belt status updated');
-		});
-
-		it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
-			const appealId = appealData.appealId;
-			const appellantCaseId = appealData.appellantCaseId;
-			const validData = {
-				safetyRisksRadio: 'yes',
-				safetyRisksDetails: 'Details'
-			};
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					...validData
+		describe('notification banners', () => {
+			it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
+				const appealId = appealData.appealId.toString();
+				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					planningApplicationReference: '12345/A/67890'
 				});
 
-			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/safety-risks/change/appellant`)
-				.send(validData);
+				const validData = {
+					planningApplicationReference: '12345/A/67890'
+				};
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/lpa-reference/change`)
+					.send(validData);
 
-			const element = parseHtml(response.text, { rootElement: notificationBannerElement });
-			expect(element.innerHTML).toMatchSnapshot();
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain(
-				'Site health and safety risks (appellant answer) updated</p>'
-			);
-		});
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
+			});
 
-		it('should render a "Site area updated" success notification banner when the site area is updated', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseId = appealData.appellantCaseId.toString();
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					siteAreaSquareMetres: '31.5'
+			it('should render a "Application decision date updated" notification banner when the application decision date is updated', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					'application-decision-date-day': '11',
+					'application-decision-date-month': '06',
+					'application-decision-date-year': '2021'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, { ...validData });
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/application-decision-date/change`)
+					.send(validData);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Application decision date changed');
+			});
+
+			it('should render a "Green belt status updated" notification banner when the green belt response is changed', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseId = appealData.appellantCaseId;
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+				const validData = {
+					greenBeltRadio: 'yes'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {});
+
+				await request.post(`${appellantCaseUrl}/green-belt/change/appellant`).send(validData);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Green belt status updated');
+			});
+
+			it('should render a "Site health and safety risks updated" success notification banner when the planning application reference is updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					safetyRisksRadio: 'yes',
+					safetyRisksDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/safety-risks/change/appellant`)
+					.send(validData);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const element = parseHtml(response.text, { rootElement: notificationBannerElement });
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain(
+					'Site health and safety risks (appellant answer) updated</p>'
+				);
+			});
+
+			it('should render a "Site area updated" success notification banner when the site area is updated', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseId = appealData.appellantCaseId.toString();
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						siteAreaSquareMetres: '31.5'
+					});
+
+				const validData = {
+					siteArea: '31.5'
+				};
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/site-area/change`)
+					.send(validData);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const element = parseHtml(response.text, { rootElement: notificationBannerElement });
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Site area updated</p>');
+			});
+
+			it('should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated', async () => {
+				const appealId = appealData.appealId;
+				const appellantCaseId = appealData.appellantCaseId;
+				const validData = {
+					inspectorAccessRadio: 'yes',
+					inspectorAccessDetails: 'Details'
+				};
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {
+						...validData
+					});
+
+				await request
+					.post(`${baseUrl}/${appealId}/appellant-case/inspector-access/change/appellant`)
+					.send(validData);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated</p>');
+			});
+
+			it('should render a success notification banner when a service user was updated', async () => {
+				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+					serviceUserId: 1
+				});
+				const validData = {
+					firstName: 'Jessica',
+					lastName: 'Jones',
+					organisationName: 'Jones Inc',
+					phoneNumber: '01234 567 890',
+					emailAddress: 'jones@mail.com'
+				};
+				await request.post(`${baseUrl}/1/appellant-case/service-user/change/agent`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1/appellant-case`);
+
+				const element = parseHtml(caseDetailsResponse.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Agent details updated</p>');
+			});
+
+			it('should render a "Site updated" notification when the site address has been updated', async () => {
+				const appealId = appealData.appealId.toString();
+				nock('http://test/').patch(`/appeals/${appealId}/addresses/1`).reply(200, {
+					addressLine1: '1 Grove Cottage',
+					county: 'Devon',
+					postcode: 'NR35 2ND',
+					town: 'Woodton'
+				});
+				nock('http://test/')
+					.get(`/appeals/${appealData.appealId}/appellant-case`)
+					.reply(200, appealData);
+
+				await request.post(`${baseUrl}/${appealId}/appellant-case/site-address/change/1`).send({
+					addressLine1: '1 Grove Cottage',
+					county: 'Devon',
+					postCode: 'NR35 2ND',
+					town: 'Woodton'
 				});
 
-			const validData = {
-				siteArea: '31.5'
-			};
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
-			await request.post(`${baseUrl}/${appealId}/appellant-case/site-area/change`).send(validData);
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
 
-			const element = parseHtml(response.text, { rootElement: notificationBannerElement });
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Site address updated</p>');
+			});
 
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+			it('should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid"', async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataInvalidOutcome);
 
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Site area updated</p>');
-		});
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 
-		it('should render a "Inspector access (appellant) updated" success notification banner when the inspector access (appellant) is updated', async () => {
-			const appealId = appealData.appealId;
-			const appellantCaseId = appealData.appellantCaseId;
-			const validData = {
-				inspectorAccessRadio: 'yes',
-				inspectorAccessDetails: 'Details'
-			};
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
 
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, {
-					...validData
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is invalid</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'<details class="govuk-details" data-module="govuk-details">'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Incorrect name and/or missing documents</span>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Appellant name is not the same on the application form and appeal form</li>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Attachments and/or appendices have not been included to the full statement of case</span>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
+			});
+
+			it('should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete"', async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataIncompleteOutcome);
+
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'<details class="govuk-details" data-module="govuk-details">'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Incorrect name and/or missing documents</span>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Appellant name is not the same on the application form and appeal form</li>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain(
+					'Attachments and/or appendices have not been included to the full statement of case</span>'
+				);
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
+			});
+
+			it('should not render an "Appeal is incomplete" notification banner when the appellant case has been reviewed with an outcome of "incomplete" and then re-reviewed with an outcome of "valid"', async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataIncompleteOutcome);
+
+				const incompleteOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const unprettifiedNotificationBannerHTML = parseHtml(incompleteOutcomeResponse.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataValidOutcome);
+
+				const validOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+
+				const unprettifiedHTML = parseHtml(validOutcomeResponse.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHTML).not.toContain('Appeal is incomplete</h3>');
+			});
+
+			it('should render a "Planning obligation status updated" notification banner when the planning obligation status is changed', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+					.reply(200, {});
+
+				await request.post(`${appellantCaseUrl}/planning-obligation/status/change`).send({
+					planningObligationStatusRadio: 'finalised'
 				});
 
-			await request
-				.post(`${baseUrl}/${appealId}/appellant-case/inspector-access/change/appellant`)
-				.send(validData);
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Inspector access (appellant) updated</p>');
-		});
-
-		it('should render a success notification banner when a service user was updated', async () => {
-			nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
-				serviceUserId: 1
-			});
-			const validData = {
-				firstName: 'Jessica',
-				lastName: 'Jones',
-				organisationName: 'Jones Inc',
-				phoneNumber: '01234 567 890',
-				emailAddress: 'jones@mail.com'
-			};
-			await request.post(`${baseUrl}/1/appellant-case/service-user/change/agent`).send(validData);
-
-			const caseDetailsResponse = await request.get(`${baseUrl}/1/appellant-case`);
-
-			const element = parseHtml(caseDetailsResponse.text);
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Agent details updated</p>');
-		});
-
-		it('should render a "Site updated" notification when the site address has been updated', async () => {
-			const appealId = appealData.appealId.toString();
-			nock('http://test/').patch(`/appeals/${appealId}/addresses/1`).reply(200, {
-				addressLine1: '1 Grove Cottage',
-				county: 'Devon',
-				postcode: 'NR35 2ND',
-				town: 'Woodton'
-			});
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/appellant-case`)
-				.reply(200, appealData);
-
-			await request.post(`${baseUrl}/${appealId}/appellant-case/site-address/change/1`).send({
-				addressLine1: '1 Grove Cottage',
-				county: 'Devon',
-				postCode: 'NR35 2ND',
-				town: 'Woodton'
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Planning obligation status updated');
 			});
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			it('should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+					.reply(200, {});
 
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+				await request.post(`${appellantCaseUrl}/agricultural-holding/change`).send({
+					partOfAgriculturalHoldingRadio: 'yes'
+				});
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Site address updated</p>');
-		});
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
 
-		it('should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid"', async () => {
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataInvalidOutcome);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const notificationBannerHTML = parseHtml(response.text, {
-				rootElement: '.govuk-notification-banner'
-			}).innerHTML;
-
-			expect(notificationBannerHTML).toMatchSnapshot();
-
-			const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
-				rootElement: '.govuk-notification-banner',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is invalid</h3>');
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'<details class="govuk-details" data-module="govuk-details">'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Incorrect name and/or missing documents</span>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Appellant name is not the same on the application form and appeal form</li>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Attachments and/or appendices have not been included to the full statement of case</span>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
-			expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
-		});
-
-		it('should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete"', async () => {
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataIncompleteOutcome);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const notificationBannerHTML = parseHtml(response.text, {
-				rootElement: '.govuk-notification-banner'
-			}).innerHTML;
-
-			expect(notificationBannerHTML).toMatchSnapshot();
-
-			const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
-				rootElement: '.govuk-notification-banner',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'<details class="govuk-details" data-module="govuk-details">'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
-			expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Incorrect name and/or missing documents</span>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Appellant name is not the same on the application form and appeal form</li>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain(
-				'Attachments and/or appendices have not been included to the full statement of case</span>'
-			);
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
-			expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
-			expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
-		});
-
-		it('should not render an "Appeal is incomplete" notification banner when the appellant case has been reviewed with an outcome of "incomplete" and then re-reviewed with an outcome of "valid"', async () => {
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataIncompleteOutcome);
-
-			const incompleteOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const unprettifiedNotificationBannerHTML = parseHtml(incompleteOutcomeResponse.text, {
-				rootElement: '.govuk-notification-banner',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
-
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataValidOutcome);
-
-			const validOutcomeResponse = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-
-			const unprettifiedHTML = parseHtml(validOutcomeResponse.text, {
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedHTML).not.toContain('Appeal is incomplete</h3>');
-		});
-
-		it('should render a "Planning obligation status updated" notification banner when the planning obligation status is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
-
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
-
-			await request.post(`${appellantCaseUrl}/planning-obligation/status/change`).send({
-				planningObligationStatusRadio: 'finalised'
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Part of agricultural holding updated');
 			});
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+			it('should render a "Tenant of agricultural holding updated" notification banner when the tenant of agricultural holding response is changed', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Planning obligation status updated');
-		});
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+					.reply(200, {});
 
-		it('should render a "Part of agricultural holding updated" notification banner when the part of agricultural holding response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+				await request.post(`${appellantCaseUrl}/agricultural-holding/tenant/change`).send({
+					tenantOfAgriculturalHoldingRadio: 'yes'
+				});
 
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
 
-			await request.post(`${appellantCaseUrl}/agricultural-holding/change`).send({
-				partOfAgriculturalHoldingRadio: 'yes'
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Tenant of agricultural holding updated');
 			});
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+			it('should render an "Other tenants of agricultural holding updated" notification banner when the other tenants of agricultural holding response is changed', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Part of agricultural holding updated');
-		});
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+					.reply(200, {});
 
-		it('should render a "Tenant of agricultural holding updated" notification banner when the tenant of agricultural holding response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+				await request.post(`${appellantCaseUrl}/agricultural-holding/other-tenants/change`).send({
+					otherTenantsOfAgriculturalHoldingRadio: 'yes'
+				});
 
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+				const notificationBannerElementHTML = parseHtml(response.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
 
-			await request.post(`${appellantCaseUrl}/agricultural-holding/tenant/change`).send({
-				tenantOfAgriculturalHoldingRadio: 'yes'
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain(
+					'Other tenants of agricultural holding updated'
+				);
 			});
 
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
+			it('should render success banners before (above) important banners', async () => {
+				const appealId = appealData.appealId.toString();
+				const appellantCaseId = appealData.appellantCaseId;
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Tenant of agricultural holding updated');
-		});
+				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataIncompleteOutcome);
 
-		it('should render an "Other tenants of agricultural holding updated" notification banner when the other tenants of agricultural holding response is changed', async () => {
-			const appealId = appealData.appealId.toString();
-			const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+					.reply(200, {});
 
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
-				.reply(200, {});
+				await request.post(`${appellantCaseUrl}/green-belt/change/appellant`).send({
+					greenBeltRadio: 'yes'
+				});
 
-			await request.post(`${appellantCaseUrl}/agricultural-holding/other-tenants/change`).send({
-				otherTenantsOfAgriculturalHoldingRadio: 'yes'
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataIncompleteOutcome);
+
+				const response = await request.get(`${baseUrl}/${appealId}${appellantCasePagePath}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const firstBannerHtml = parseHtml(response.text, {
+					rootElement: `.govuk-notification-banner[data-index='0']`,
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(firstBannerHtml).toContain(
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+				);
+
+				const secondBannerHtml = parseHtml(response.text, {
+					rootElement: `.govuk-notification-banner[data-index='1']`,
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(secondBannerHtml).toContain(
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Appeal is incomplete</h3>'
+				);
 			});
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-			const notificationBannerElementHTML = parseHtml(response.text, {
-				rootElement: notificationBannerElement
-			}).innerHTML;
-
-			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain(
-				'Other tenants of agricultural holding updated'
-			);
 		});
 
 		describe('show more', () => {
