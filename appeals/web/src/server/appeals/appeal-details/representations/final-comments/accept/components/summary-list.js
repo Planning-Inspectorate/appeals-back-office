@@ -17,14 +17,8 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => {
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
 				filteredAttachments.map(
-					(a) => `<a class="govuk-link" target="_blank" href="${mapDocumentDownloadUrl(
-						appealDetails.appealId,
-						a.documentVersion,
-						a.documentId,
-						a.documentVersion.document.name
-					)}">
-						${a.documentVersion.document.name}
-					</a>`
+					(a) => `<a class="govuk-link" target="_blank" href="#">
+						${a.documentVersion.document.name}</a>`
 				)
 		  )
 		: null;
@@ -84,15 +78,4 @@ export const summaryList = (appealDetails, comment, finalCommentsType) => {
 			]
 		}
 	};
-};
-
-/**
- * @param {Number} appealId
- * @param {string} documentVersion
- * @param {string} documentId
- * @param {string} documentName
- * @returns {string}
- */
-const mapDocumentDownloadUrl = (appealId, documentVersion, documentId, documentName) => {
-	return `/documents/${appealId}/download/${documentId}/${documentVersion}/${documentName}`;
 };
