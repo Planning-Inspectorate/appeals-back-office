@@ -9,7 +9,8 @@ import {
 	finalCommentsForReview,
 	interestedPartyCommentForReview,
 	activeDirectoryUsersData,
-	documentFileVersionsInfoChecked
+	documentFileVersionsInfoChecked,
+	finalCommentsForReviewWithAttachments
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -34,13 +35,8 @@ describe('final-comments', () => {
 			});
 
 		nock('http://test/')
-			.get('/appeals/2/document-folders')
-			.query({ path: 'representation/representationAttachments' })
-			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
-
-		nock('http://test/')
 			.get('/appeals/2/reps?type=lpa_final_comment')
-			.reply(200, finalCommentsForReview)
+			.reply(200, finalCommentsForReviewWithAttachments)
 			.persist();
 
 		nock('http://test/')

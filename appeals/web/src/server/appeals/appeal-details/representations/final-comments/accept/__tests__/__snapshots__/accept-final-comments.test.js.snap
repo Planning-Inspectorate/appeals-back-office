@@ -15,8 +15,16 @@ exports[`final-comments GET / should render the accept appellant final comments 
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/manage-documents/135568"> Change</a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
@@ -51,8 +59,16 @@ exports[`final-comments GET / should render the accept lpa final comments page w
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ul class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568"> Change</a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>

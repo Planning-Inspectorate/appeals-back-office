@@ -1,7 +1,7 @@
 /* eslint-disable jest/expect-expect */
 import {
 	appealDataFullPlanning,
-	finalCommentsForReview
+	finalCommentsForReviewWithAttachments
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -44,7 +44,7 @@ describe('final-comments', () => {
 			it(`should render the accept ${finalCommentsType.type} final comments page with the expected content`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
-					.reply(200, finalCommentsForReview)
+					.reply(200, finalCommentsForReviewWithAttachments)
 					.persist();
 
 				const response = await request.get(
@@ -87,12 +87,12 @@ describe('final-comments', () => {
 			it(`should call the patch rep status endpoint and redirect to the case details page`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
-					.reply(200, finalCommentsForReview)
+					.reply(200, finalCommentsForReviewWithAttachments)
 					.persist();
 
 				const mockedPatchFinalCommentStatusEndpoint = nock('http://test/')
 					.patch(`/appeals/2/reps/3670`)
-					.reply(200, finalCommentsForReview.items[0])
+					.reply(200, finalCommentsForReviewWithAttachments.items[0])
 					.persist();
 
 				const response = await request

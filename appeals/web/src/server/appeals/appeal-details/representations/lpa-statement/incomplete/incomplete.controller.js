@@ -18,6 +18,7 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { representationIncomplete } from '../../representations.service.js';
 import { mapRejectionReasonPayload } from '../../representations.mapper.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -110,7 +111,12 @@ export const renderCheckYourAnswers = async (
 		currentRepresentation.attachments.length > 0
 			? buildHtmUnorderedList(
 					currentRepresentation.attachments.map(
-						(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+						(a) =>
+							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+								a.documentVersion.document.caseId,
+								a.documentVersion.document.guid,
+								a.documentVersion.document.name
+							)}" target="_blank">${a.documentVersion.document.name}</a>`
 					)
 			  )
 			: null;

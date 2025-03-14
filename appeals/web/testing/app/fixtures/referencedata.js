@@ -3172,6 +3172,49 @@ export const finalCommentsForReview = {
 	pageSize: 30
 };
 
+export const finalCommentsForReviewWithAttachments = {
+	itemCount: 1,
+	items: [
+		{
+			id: 3670,
+			origin: 'citizen',
+			author: 'Lee Thornton',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting final comments review',
+			redactedRepresentation: '',
+			created: '2024-10-09T17:23:24.406Z',
+			notes: '',
+			representationType: 'lpa_final_comment',
+			siteVisitRequested: false,
+			attachments: [
+				{
+					documentVersion: {
+						document: {
+							caseId: '4881',
+							folderId: 135568,
+							guid: 'ed52cdc1-3cc2-462a-8623-c1ae256969d6',
+							name: 'blank copy 5.pdf',
+							isDeleted: false
+						}
+					}
+				}
+			],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const appellantFinalCommentsAwaitingReview = {
 	itemCount: 1,
 	items: [
