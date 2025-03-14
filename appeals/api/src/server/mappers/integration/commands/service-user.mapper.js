@@ -5,7 +5,7 @@ import { mapAddressIn } from './address.mapper.js';
  * @param {*} data
  * @returns {import('#db-client').Prisma.ServiceUserCreateInput|undefined}
  */
-export const mapServiceUserIn = (data) => {
+export const mapServiceUserIn = (data, createAddress = false) => {
 	if (data) {
 		const serviceUser = {
 			organisationName: data.organisation,
@@ -19,21 +19,24 @@ export const mapServiceUserIn = (data) => {
 			faxNumber: data.faxNumber
 		};
 
-		return serviceUser;
+		const address =
+			createAddress && hasAddressData(data) ? { create: mapAddressIn(data) } : undefined;
+
+		return { ...serviceUser, address };
 	}
 };
 
 /**
  *
  * @param {*} data
- * @returns {import('#db-client').Prisma.ServiceUserCreateInput|undefined}
+ * @returns {boolean}
  */
-export const mapServiceUserWithAddressIn = (data) => {
-	if (data) {
-		const serviceUser = mapServiceUserIn(data);
-		return {
-			...serviceUser,
-			address: { create: mapAddressIn(data) }
-		};
-	}
-};
+function hasAddressData(data) {
+	return (
+		data.addressLine1 ||
+		data.addressLine2 ||
+		data.addressCounty ||
+		data.addressPostcode ||
+		data.addressTown
+	);
+}
