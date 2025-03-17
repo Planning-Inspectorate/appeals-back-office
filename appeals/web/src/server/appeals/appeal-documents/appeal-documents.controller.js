@@ -548,16 +548,33 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 			)
 		};
 
-		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+		try {
+			await createNewDocument(
+				request.apiClient,
+				currentAppeal.appealId,
+				addDocumentsRequestPayload
+			);
 
-		delete request.session.fileUploadInfo;
+			delete request.session.fileUploadInfo;
 
-		if (successCallback) {
-			successCallback(request);
-		}
+			if (successCallback) {
+				successCallback(request);
+			}
 
-		if (nextPageUrl) {
-			return response.redirect(nextPageUrl);
+			if (nextPageUrl) {
+				return response.redirect(nextPageUrl);
+			}
+		} catch (error) {
+			logger.error(
+				error,
+				error instanceof Error
+					? error.message
+					: 'An error occurred while attempting to submit a document.'
+			);
+
+			return response.redirect(
+				`/appeals-service/error?errorType=fileTypesDoNotMatch&backUrl=${request.originalUrl}`
+			);
 		}
 	} catch (error) {
 		logger.error(
