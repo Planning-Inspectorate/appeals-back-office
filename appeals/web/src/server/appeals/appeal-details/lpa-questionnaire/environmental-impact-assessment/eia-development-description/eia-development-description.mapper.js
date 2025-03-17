@@ -3,8 +3,8 @@ import { radiosInput } from '#lib/mappers/index.js';
 import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from 'pins-data-model';
 
 /**
- * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
+ * @typedef {import('../../../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('../../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
  */
 
 export const eiaDescriptions = {

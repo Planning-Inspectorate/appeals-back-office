@@ -1,7 +1,7 @@
 import logger from '#lib/logger.js';
 import { changeEiaDevelopmentDescriptionPage } from './eia-development-description.mapper.js';
 import { changeEiaDevelopmentDescription } from './eia-development-description.service.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**

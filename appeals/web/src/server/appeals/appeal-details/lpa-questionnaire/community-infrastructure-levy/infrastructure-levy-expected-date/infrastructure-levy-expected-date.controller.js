@@ -1,16 +1,16 @@
-import { convertFromYesNoNullToBooleanOrNull } from '#lib/boolean-formatter.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import * as mapper from './has-community-infrastructure-levy.mapper.js';
-import * as service from './has-community-infrastructure-levy.service.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
+import * as mapper from './infrastructure-levy-expected-date.mapper.js';
+import * as service from './infrastructure-levy-expected-date.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeHasCommunityInfrastructureLevy = async (request, response) => {
+const renderChangeInfrastructureLevyExpectedDate = async (request, response) => {
 	try {
 		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
 		const origin = originalUrl.split('/').slice(0, -2).join('/');
@@ -20,10 +20,11 @@ const renderChangeHasCommunityInfrastructureLevy = async (request, response) => 
 			currentAppeal.lpaQuestionnaireId
 		);
 
-		const mappedPageContents = mapper.changeHasCommunityInfrastructureLevy(
+		const mappedPageContents = mapper.changeInfrastructureLevyExpectedDate(
 			currentAppeal,
-			convertFromYesNoNullToBooleanOrNull(session.hasCommunityInfrastructureLevy) ??
-				lpaQuestionnaireData.hasInfrastructureLevy,
+			dayMonthYearHourMinuteToISOString(session.infrastructureLevyExpectedDate) ||
+				lpaQuestionnaireData.infrastructureLevyExpectedDate ||
+				null,
 			origin
 		);
 
@@ -42,13 +43,13 @@ const renderChangeHasCommunityInfrastructureLevy = async (request, response) => 
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeHasCommunityInfrastructureLevy = renderChangeHasCommunityInfrastructureLevy;
+export const getChangeInfrastructureLevyExpectedDate = renderChangeInfrastructureLevyExpectedDate;
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeHasCommunityInfrastructureLevy = async (request, response) => {
+export const postChangeInfrastructureLevyExpectedDate = async (request, response) => {
 	try {
 		const {
 			apiClient,
@@ -59,10 +60,15 @@ export const postChangeHasCommunityInfrastructureLevy = async (request, response
 		} = request;
 
 		if (errors) {
-			return renderChangeHasCommunityInfrastructureLevy(request, response);
+			return renderChangeInfrastructureLevyExpectedDate(request, response);
 		}
 
-		session.hasCommunityInfrastructureLevy = request.body['hasCommunityInfrastructureLevyRadio'];
+		/** @type {import('#lib/dates.js').DayMonthYearHourMinute} */
+		session.infrastructureLevyExpectedDate = {
+			day: request.body['levy-expected-date-day'],
+			month: request.body['levy-expected-date-month'],
+			year: request.body['levy-expected-date-year']
+		};
 
 		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -2).join('/');
@@ -73,21 +79,21 @@ export const postChangeHasCommunityInfrastructureLevy = async (request, response
 			});
 		}
 
-		await service.changeHasCommunityInfrastructureLevy(
+		await service.changeInfrastructureLevyExpectedDate(
 			apiClient,
 			appealId,
 			currentAppeal.lpaQuestionnaireId,
-			session.hasCommunityInfrastructureLevy
+			session.infrastructureLevyExpectedDate
 		);
 
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Community infrastructure levy status changed'
+			text: 'Expected levy adoption date changed'
 		});
 
-		delete request.session.hasCommunityInfrastructureLevy;
+		delete request.session.infrastructureLevyExpectedDate;
 
 		if (!origin.startsWith('/')) {
 			throw new Error('unexpected originalUrl');
@@ -98,7 +104,7 @@ export const postChangeHasCommunityInfrastructureLevy = async (request, response
 		logger.error(error);
 	}
 
-	delete request.session.hasCommunityInfrastructureLevy;
+	delete request.session.infrastructureLevyExpectedDate;
 
 	return response.status(500).render('app/500.njk');
 };
