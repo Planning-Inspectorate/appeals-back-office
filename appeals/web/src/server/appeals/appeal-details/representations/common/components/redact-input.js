@@ -8,9 +8,10 @@ import { wrapComponents, buttonComponent } from '#lib/mappers/index.js';
  * @param {Representation} params.representation
  * @param {string} [params.labelText]
  * @param {import('express-session').Session & Record<string, string>} [params.session]
+ * @param {string} [params.redactedRepresentation]
  * @returns {PageComponent[]}
  */
-export const redactInput = ({ representation, labelText, session }) => [
+export const redactInput = ({ representation, labelText, session, redactedRepresentation }) => [
 	textareaInput({
 		name: 'redactedRepresentation',
 		id: 'redact-textarea',
@@ -18,6 +19,7 @@ export const redactInput = ({ representation, labelText, session }) => [
 		labelText: labelText || 'Redacted representation',
 		labelClasses: 'govuk-label--s',
 		value:
+			redactedRepresentation ||
 			session?.redactedRepresentation ||
 			representation.redactedRepresentation ||
 			representation.originalRepresentation
