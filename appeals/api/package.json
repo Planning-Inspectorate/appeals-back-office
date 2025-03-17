@@ -86,7 +86,7 @@
     "nodemon": "^2.0.18",
     "prisma": "4.16.1",
     "rimraf": "^3.0.2",
-    "supertest": "6.2.3",
+    "supertest": "7.0.0",
     "swagger-autogen": "^2.21.4",
     "swagger-typescript-api": "^13.0.5"
   },
