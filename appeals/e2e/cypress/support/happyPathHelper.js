@@ -135,24 +135,28 @@ export const happyPathHelper = {
 
 	addThirdPartyComment(caseRef, state) {
 		cy.addRepresentation(caseRef, 'interestedPartyComment', null).then((caseRef) => {
+			cy.reload();
 			caseDetailsPage.reviewIpComments(state);
 		});
 	},
 
 	addLpaStatement(caseRef) {
 		cy.addRepresentation(caseRef, 'lpaStatement', null).then((caseRef) => {
+			cy.reload();
 			caseDetailsPage.reviewLpaStatement();
 		});
 	},
 
 	addLpaFinalComment(caseRef) {
 		cy.addRepresentation(caseRef, 'lpaFinalComment', null).then((caseRef) => {
+			cy.reload();
 			caseDetailsPage.reviewFinalComment('LPA');
 		});
 	},
 
 	addAppellantFinalComment(caseRef, serviceUserId) {
 		cy.addRepresentation(caseRef, 'appellantFinalComment', serviceUserId).then((caseRef) => {
+			cy.reload();
 			caseDetailsPage.reviewFinalComment('appellant');
 		});
 	},
@@ -169,7 +173,9 @@ export const happyPathHelper = {
 		// 	'Site visit scheduled',
 		// 	'Appeal reference ' + caseRef
 		// );
-		cy.simulateSiteVisit(caseRef).then((caseRef) => {});
+		cy.simulateSiteVisit(caseRef).then((caseRef) => {
+			cy.reload();
+		});
 	},
 
 	setupSiteVisitFromBanner(caseRef) {

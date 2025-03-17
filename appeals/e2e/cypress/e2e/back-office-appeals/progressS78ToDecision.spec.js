@@ -13,12 +13,12 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Progress S78 to final comments', () => {
+describe('Progress S78 to decision', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it(`Final comments from 1 approved comment and LPA statement`, { tags: tag.smoke }, () => {
+	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
 		let todaysDate = new Date();
 
 		cy.createCase({
@@ -41,9 +41,11 @@ describe('Progress S78 to final comments', () => {
 			caseDetailsPage.clickBackLink();
 			happyPathHelper.addThirdPartyComment(caseRef, false);
 			caseDetailsPage.clickBackLink();
+
 			happyPathHelper.addLpaStatement(caseRef);
 			cy.simulateStatementsDeadlineElapsed(caseRef);
 			cy.reload();
+
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAppealStatus('Final comments'.toUpperCase());
@@ -56,9 +58,25 @@ describe('Progress S78 to final comments', () => {
 			cy.simulateFinalCommentsDeadlineElapsed(caseRef);
 			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
-			//TODO: should work after fixing share notifications to LPA and appellant
-			//caseDetailsPage.clickButtonByText('Share final comments');
-			//caseDetailsPage.checkAppealStatus('Final comments'.toUpperCase());
+			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.checkAppealStatus('Site visit ready to set up'.toUpperCase());
+
+			happyPathHelper.setupSiteVisitFromBanner(caseRef);
+			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+				cy.reload();
+			});
+			caseDetailsPage.clickIssueDecision(caseRef);
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.document);
+			caseDetailsPage.clickButtonByText('Continue');
+			dateTimeSection.enterDecisionLetterDate(new Date());
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectCheckbox();
+			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.checkStatusOfCase('Complete', 0);
+			caseDetailsPage.checkDecisionOutcome('Allowed');
+			caseDetailsPage.viewDecisionLetter('View decision letter');
 		});
 	});
 });
