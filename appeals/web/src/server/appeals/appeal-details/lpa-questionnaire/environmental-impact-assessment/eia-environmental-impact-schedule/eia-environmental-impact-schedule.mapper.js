@@ -4,8 +4,8 @@ import { APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE } from 'pins-data-model';
 import { snakeCaseToSpaceSeparated, capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
- * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
+ * @typedef {import('../../../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('../../lpa-questionnaire.service.js').LpaQuestionnaire} LpaQuestionnaire
  */
 
 /**

@@ -2,7 +2,7 @@ import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
 import * as mapper from './infrastructure-levy-adopted-date.mapper.js';
 import * as service from './infrastructure-levy-adopted-date.service.js';
 

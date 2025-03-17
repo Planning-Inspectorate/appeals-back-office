@@ -2,7 +2,7 @@ import { convertFromYesNoNullToBooleanOrNull } from '#lib/boolean-formatter.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
 import * as mapper from './is-infrastructure-levy-formally-adopted.mapper.js';
 import * as service from './is-infrastructure-levy-formally-adopted.service.js';
 
