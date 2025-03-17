@@ -11,7 +11,7 @@ import { redactInput } from '../../../representations/common/components/redact-i
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {import('express-session').Session & Record<string, string>} [session]
+ * @param {import('express-session').Session & Record<string, string> & { redactLPAStatement?: { redactedRepresentation: string, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} [session]
  * @returns {PageContent}
  */
 export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
@@ -36,7 +36,12 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 						classes: 'govuk-!-margin-top-2'
 					}
 				},
-				...redactInput({ representation: lpaStatement, labelText: 'Redacted statement', session }),
+				...redactInput({
+					representation: lpaStatement,
+					labelText: 'Redacted statement',
+					session,
+					redactedRepresentation: session?.redactLPAStatement?.redactedRepresentation
+				}),
 				buttonComponent(
 					'Continue',
 					{ type: 'submit' },
