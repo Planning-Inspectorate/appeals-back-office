@@ -56,9 +56,16 @@ export function allocationCheckPage(appealDetails, sessionData) {
  * @param {Representation} lpaStatement
  * @param {string[]} allocationLevels
  * @param {Record<string, string>} sessionData
+ * @param {'valid' | 'redact'} flowRoute
  * @returns {PageContent}
  * */
-export function allocationLevelPage(appealDetails, lpaStatement, allocationLevels, sessionData) {
+export function allocationLevelPage(
+	appealDetails,
+	lpaStatement,
+	allocationLevels,
+	sessionData,
+	flowRoute
+) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
@@ -72,7 +79,9 @@ export function allocationLevelPage(appealDetails, lpaStatement, allocationLevel
 
 	return {
 		title: 'Allocation level',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${
+			sessionData.forcedAllocation ? '' : `${flowRoute}/allocation-check`
+		}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',
 		submitButtonText: 'Continue',
