@@ -24,7 +24,7 @@ describe('neighbouring-site-access', () => {
 			];
 
 			for (const testCase of testCases) {
-				it(`should render a row for "Inspector needs neighbouring site access" with a value of "${testCase.expectedContent.join(
+				it(`should render a row for "Might the inspector need to enter a neighbour’s land or property?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if reasonForNeighbourVisits is "${testCase.value}"`, async () => {
 					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
@@ -41,7 +41,9 @@ describe('neighbouring-site-access', () => {
 						rootElement: '.lpa-neighbouring-site-access .govuk-summary-list__key',
 						skipPrettyPrint: true
 					});
-					expect(rowKeyElement.innerHTML).toContain('Inspector needs neighbouring site access');
+					expect(rowKeyElement.innerHTML).toContain(
+						'Might the inspector need to enter a neighbour’s land or property?'
+					);
 
 					const rowValueElement = parseHtml(response.text, {
 						rootElement: '.lpa-neighbouring-site-access .govuk-summary-list__value',
@@ -54,7 +56,7 @@ describe('neighbouring-site-access', () => {
 				});
 			}
 
-			it('should render a row for "Inspector needs neighbouring site access" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
+			it('should render a row for "Might the inspector need to enter a neighbour’s land or property?" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
@@ -98,7 +100,7 @@ describe('neighbouring-site-access', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether inspector needs neighbouring site access</h1>'
+					'Might the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes"'
@@ -131,7 +133,7 @@ describe('neighbouring-site-access', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether inspector needs neighbouring site access</h1>'
+					'Might the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
@@ -170,7 +172,7 @@ describe('neighbouring-site-access', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Change whether inspector needs neighbouring site access</h1>'
+					'Might the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
@@ -185,9 +187,7 @@ describe('neighbouring-site-access', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHtml).toContain(
-					'Enter inspector needs neighbouring site access details</a>'
-				);
+				expect(unprettifiedErrorSummaryHtml).toContain('Enter the reason</a>');
 			});
 
 			it('should re-render the change neighbouring site access page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
@@ -215,7 +215,7 @@ describe('neighbouring-site-access', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Change whether inspector needs neighbouring site access</h1>'
+					'Might the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
