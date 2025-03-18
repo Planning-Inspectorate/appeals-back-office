@@ -232,7 +232,7 @@ describe('neighbouring-site-access', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain(
-					'Inspector needs neighbouring site access details must be 1000 characters or less</a>'
+					'>Reason must be 1000 characters or less</a>'
 				);
 			});
 
