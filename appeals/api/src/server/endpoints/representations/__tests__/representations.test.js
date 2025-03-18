@@ -234,7 +234,7 @@ describe('/appeals/:id/reps', () => {
 
 			// eslint-disable-next-line no-undef
 			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.commentRejected.lpa.id,
+				config.govNotify.template.finalCommentRejected.lpa.id,
 				householdAppeal.lpa.email,
 				{
 					emailReplyToId: null,
