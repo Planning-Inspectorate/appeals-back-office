@@ -65,7 +65,8 @@ export async function renderAllocationLevel(request, response) {
 		currentAppeal,
 		currentRepresentation,
 		allocationLevels,
-		session.acceptLPAStatement
+		session.acceptLPAStatement,
+		'valid'
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

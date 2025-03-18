@@ -71,7 +71,7 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
- * @param {SessionWithAuth & { redactLPAStatement?: { redactedRepresentation: string, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} session
+ * @param {SessionWithAuth & { redactLPAStatement?: { redactedRepresentation: string, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } }} session
  * @returns {PageContent}
  */
 export function redactConfirmPage(appealDetails, lpaStatement, specialismData, session) {
@@ -162,6 +162,23 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 							]
 						}
 					},
+					...(sessionData?.forcedAllocation
+						? [
+								{
+									key: { text: 'Do you need to update the allocation level and specialisms?' },
+									value: { text: updatingAllocation ? 'Yes' : 'No' },
+									actions: {
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+												visuallyHiddenText: 'allocation level and specialisms'
+											}
+										]
+									}
+								}
+						  ]
+						: []),
 					...(updatingAllocation
 						? [
 								{
