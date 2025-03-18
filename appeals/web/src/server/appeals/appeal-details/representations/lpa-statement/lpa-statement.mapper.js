@@ -4,6 +4,7 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -23,7 +24,12 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 	const attachmentsList = filteredAttachments?.length
 		? buildHtmUnorderedList(
 				filteredAttachments.map(
-					(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+					(a) =>
+						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+							a.documentVersion.document.caseId,
+							a.documentVersion.document.guid,
+							a.documentVersion.document.name
+						)}" target="_blank">${a.documentVersion.document.name}</a>`
 				)
 		  )
 		: null;

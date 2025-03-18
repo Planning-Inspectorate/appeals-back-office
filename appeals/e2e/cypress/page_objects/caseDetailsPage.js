@@ -44,7 +44,7 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'view-lpa-statement'
+		reviewLpaStatement: 'review-lpa-statement'
 	};
 
 	fixturesPath = 'cypress/fixtures/';

@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('../../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/index.js';

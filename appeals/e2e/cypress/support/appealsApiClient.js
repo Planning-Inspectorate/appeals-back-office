@@ -19,6 +19,11 @@ export const appealsApiClient = {
 			const submission = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
 			const { casedata, users, documents } = submission;
 
+			console.log({
+				...casedata,
+				...requestBody
+			});
+
 			const url = baseUrl + apiPaths.caseSubmission;
 			const response = await fetch(url, {
 				method: 'POST',

@@ -8,6 +8,7 @@ import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -159,7 +160,12 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 				{
 					html: buildHtmUnorderedList(
 						comment.attachments.map(
-							(a) => `<a class="govuk-link" href="#">${a.documentVersion.document.name}</a>`
+							(a) =>
+								`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+									a.documentVersion.document.caseId,
+									a.documentVersion.document.guid,
+									a.documentVersion.document.name
+								)}" target="_blank">${a.documentVersion.document.name}</a>`
 						)
 					)
 				}

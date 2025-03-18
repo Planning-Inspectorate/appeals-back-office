@@ -107,28 +107,41 @@ export const postCheckYourAnswers = async (request, response) => {
 			);
 		}
 
-		await createNewDocument(apiClient, appealId, {
-			blobStorageHost:
-				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-			blobStorageContainer: config.blobStorageDefaultContainer,
-			documents: [
-				{
-					caseId: appealId,
-					documentName: document.name,
-					documentType: document.documentType,
-					mimeType: document.mimeType,
-					documentSize: document.size,
-					stage: document.stage,
-					folderId: folderId,
-					GUID: document.GUID,
-					receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
-					redactionStatusId,
-					blobStoragePath: document.blobStoreUrl
-				}
-			]
-		});
+		try {
+			await createNewDocument(apiClient, appealId, {
+				blobStorageHost:
+					config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+				blobStorageContainer: config.blobStorageDefaultContainer,
+				documents: [
+					{
+						caseId: appealId,
+						documentName: document.name,
+						documentType: document.documentType,
+						mimeType: document.mimeType,
+						documentSize: document.size,
+						stage: document.stage,
+						folderId: folderId,
+						GUID: document.GUID,
+						receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
+						redactionStatusId,
+						blobStoragePath: document.blobStoreUrl
+					}
+				]
+			});
 
-		await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+		} catch (error) {
+			logger.error(
+				error,
+				error instanceof Error
+					? error.message
+					: 'An error occurred while attempting to submit a document.'
+			);
+
+			return response.redirect(
+				`/appeals-service/error?errorType=fileTypesDoNotMatch&backUrl=${request.originalUrl}`
+			);
+		}
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

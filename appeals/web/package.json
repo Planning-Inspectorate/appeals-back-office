@@ -39,7 +39,7 @@
     "applicationinsights": "^2.9.1",
     "archiver": "^7.0.1",
     "body-parser": "1.20.3",
-    "classnames": "^2.3.1",
+    "classnames": "^2.5.1",
     "compression": "1.7.4",
     "connect-redis": "^7.1.0",
     "cookie-parser": "1.4.6",
@@ -55,7 +55,7 @@
     "form-data": "4.0.0",
     "got": "^12.5.2",
     "govuk-frontend": "4.9.0",
-    "helmet": "5.0.2",
+    "helmet": "8.0.0",
     "humps": "^2.0.1",
     "joi": "^17.7.0",
     "kleur": "4.1.4",
@@ -72,7 +72,7 @@
     "regenerator-runtime": "^0.13.10",
     "response-time": "2.3.2",
     "serve-static": "1.16.2",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
@@ -124,7 +124,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.51.0",
     "signale": "1.4.0",
-    "supertest": "^6.2.3",
+    "supertest": "^7.0.0",
     "terser": "^5.13.1"
   },
   "imports": {

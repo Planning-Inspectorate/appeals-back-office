@@ -1366,6 +1366,57 @@ describe('appeal-details', () => {
 					});
 				}
 			});
+
+			describe('banner ordering', () => {
+				it('should render success banners before (above) important banners', async () => {
+					const appealId = 2;
+					const appealInValidationStatus = {
+						...appealData,
+						appealId,
+						appealStatus: 'validation',
+						documentationSummary: {
+							...appealData.documentationSummary,
+							appellantCase: {
+								...appealData.documentationSummary.appellantCase,
+								dueDate: futureDate,
+								status: 'received'
+							}
+						}
+					};
+
+					nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealInValidationStatus);
+					nock('http://test/')
+						.patch(`/appeals/${appealId}`)
+						.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+					await request.post(`${baseUrl}/${appealId}/assign-user/case-officer/1/confirm`).send({
+						confirm: 'yes'
+					});
+
+					nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealInValidationStatus);
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const firstBannerHtml = parseHtml(response.text, {
+						rootElement: `.govuk-notification-banner[data-index='0']`,
+						skipPrettyPrint: true
+					}).innerHTML;
+					expect(firstBannerHtml).toContain(
+						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+					);
+
+					const secondBannerHtml = parseHtml(response.text, {
+						rootElement: `.govuk-notification-banner[data-index='1']`,
+						skipPrettyPrint: true
+					}).innerHTML;
+					expect(secondBannerHtml).toContain(
+						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Important</h3>'
+					);
+				});
+			});
 		});
 		describe('Case notes', () => {
 			it('should render the case note details', async () => {

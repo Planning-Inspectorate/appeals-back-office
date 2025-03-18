@@ -275,20 +275,37 @@ export async function postIPComment(request, response) {
 			request.session.fileUploadInfo
 		);
 
-		await createNewDocument(request.apiClient, currentAppeal.appealId, addDocumentsRequestPayload);
+		try {
+			await createNewDocument(
+				request.apiClient,
+				currentAppeal.appealId,
+				addDocumentsRequestPayload
+			);
 
-		await postRepresentationComment(request.apiClient, currentAppeal.appealId, payload);
+			await postRepresentationComment(request.apiClient, currentAppeal.appealId, payload);
 
-		delete request.session.addIpComment;
-		delete request.session.fileUploadInfo;
+			delete request.session.addIpComment;
+			delete request.session.fileUploadInfo;
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'interestedPartyCommentAdded',
-			appealId: currentAppeal.appealId
-		});
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'interestedPartyCommentAdded',
+				appealId: currentAppeal.appealId
+			});
 
-		redirectToIPComments(request, response);
+			redirectToIPComments(request, response);
+		} catch (error) {
+			logger.error(
+				error,
+				error instanceof Error
+					? error.message
+					: 'An error occurred while attempting to submit a document.'
+			);
+
+			return response.redirect(
+				`/appeals-service/error?errorType=fileTypesDoNotMatch&backUrl=${request.originalUrl}`
+			);
+		}
 	} catch (error) {
 		logger.error(
 			error,

@@ -4,7 +4,7 @@ import {
 	mapEiaEnvironmentalImpactScheduleRadioValueForService
 } from './eia-environmental-impact-schedule.mapper.js';
 import { changeEiaEnvironmentalImpactSchedule } from './eia-environmental-impact-schedule.service.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**

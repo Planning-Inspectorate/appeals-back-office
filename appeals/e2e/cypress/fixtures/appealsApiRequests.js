@@ -43,7 +43,7 @@ const appealsApiRequests = {
 			appellantProcedurePreference: null,
 			appellantProcedurePreferenceDetails: 'eiusmod ex exercitation',
 			appellantProcedurePreferenceDuration: 1,
-			inquiryHowManyWitnesses: 1,
+			appellantProcedurePreferenceWitnessCount: 5,
 			planningObligation: false,
 			statusPlanningObligation: 'proident aute'
 		},
