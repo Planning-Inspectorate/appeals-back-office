@@ -96,9 +96,9 @@ module "app_api" {
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID                          = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_lpa_id
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
     GOV_NOTIFY_VALID_APPELLANT_CASE_ID                                         = var.apps_config.integrations.notify_template_ids.valid_appellant_case_id
-    GOV_NOTIFY_COMMENT_REJECTED                                                = var.apps_config.integrations.notify_template_ids.comment_rejected_id
-    GOV_NOTIFY_COMMENT_REJECTED_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.comment_rejected_appellant_id
-    GOV_NOTIFY_COMMENT_REJECTED_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.comment_rejected_lpa_id
+    GOV_NOTIFY_IP_COMMENT_REJECTED_ID                                          = var.apps_config.integrations.notify_template_ids.ip_comment_rejected_id
+    GOV_NOTIFY_FINAL_COMMENT_REJECTED_APPELLANT_ID                             = var.apps_config.integrations.notify_template_ids.final_comment_rejected_appellant_id
+    GOV_NOTIFY_FINAL_COMMENT_REJECTED_LPA_ID                                   = var.apps_config.integrations.notify_template_ids.final_comment_rejected_lpa_id
     GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED                              = var.apps_config.integrations.notify_template_ids.comment_rejected_deadline_extended_id
     GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE                                        = var.apps_config.integrations.notify_template_ids.lpa_statement_incomplete_id
     GOV_NOTIFY_APPELLANT_FINAL_COMMENTS_DONE                                   = var.apps_config.integrations.notify_template_ids.appellant_final_comments_done_id
