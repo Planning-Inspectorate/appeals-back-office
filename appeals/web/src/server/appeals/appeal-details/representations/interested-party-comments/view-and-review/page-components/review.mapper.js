@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
-import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
+import { generateCommentSummaryList } from './common.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -17,7 +17,6 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment, {
 		isReviewPage: true
 	});
-	const withdrawLink = generateWithdrawLink();
 
 	/** @type {PageComponent} */
 	const siteVisitRequestCheckbox = {
@@ -85,8 +84,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 			...mapNotificationBannersFromSession(session, 'reviewIpComment', appealDetails.appealId),
 			commentSummaryList,
 			siteVisitRequestCheckbox,
-			commentValidityRadioButtons,
-			withdrawLink
+			commentValidityRadioButtons
 		]
 	};
 

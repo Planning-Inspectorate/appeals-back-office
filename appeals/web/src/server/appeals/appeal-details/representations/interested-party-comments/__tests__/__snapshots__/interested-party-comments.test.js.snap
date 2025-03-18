@@ -117,8 +117,6 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
-            </p>
         </div>
     </div>
 </main>"
@@ -241,8 +239,6 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
-            </p>
         </div>
     </div>
 </main>"
@@ -365,8 +361,6 @@ exports[`interested-party-comments GET /interested-party-comments with data shou
                     </table>
                 </div>
             </div>
-            <p class="govuk-body"><a href="#" class="govuk-link">Withdrawn interested party comments</a>
-            </p>
         </div>
     </div>
 </main>"
