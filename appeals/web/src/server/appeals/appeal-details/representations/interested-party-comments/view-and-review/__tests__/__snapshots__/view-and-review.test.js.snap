@@ -507,8 +507,6 @@ exports[`interested-party-comments GET /view-comment with data should render vie
             </dl>
         </div>
     </div>
-    <div class="govuk-!-margin-bottom-3"><a class="govuk-link" href="#">Withdraw comment</a>
-    </div>
 </main>"
 `;
 
