@@ -250,15 +250,20 @@ const { value, error } = schema.validate({
 			validAppellantCase: {
 				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
 			},
-			commentRejected: {
+			finalCommentRejected: {
 				appellant: {
 					id:
-						environment.GOV_NOTIFY_COMMENT_REJECTED_APPELLANT_ID ||
-						'mock-comment-rejected-appellant-id'
+						environment.GOV_NOTIFY_FINAL_COMMENT_REJECTED_APPELLANT_ID ||
+						'mock-final-comment-rejected-appellant-id'
 				},
 				lpa: {
-					id: environment.GOV_NOTIFY_COMMENT_REJECTED_LPA_ID || 'mock-comment-rejected-lpa-id'
+					id:
+						environment.GOV_NOTIFY_FINAL_COMMENT_REJECTED_LPA_ID ||
+						'mock-final-comment-rejected-lpa-id'
 				}
+			},
+			ipCommentRejected: {
+				id: environment.GOV_NOTIFY_IP_COMMENT_REJECTED_ID || 'mock-ip-comment-rejected-appellant-id'
 			},
 			commentRejectedDeadlineExtended: {
 				id:
