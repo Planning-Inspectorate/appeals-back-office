@@ -17,3 +17,13 @@ export const dateIsAfterDate = (date, afterDate) => {
 export const dateIsPastOrToday = (date, afterDate) => {
 	return afterDate.getTime() >= date.getTime();
 };
+
+/**
+ *
+ * @param {Date} date
+ * @param {Date} afterDate
+ * @returns {boolean}
+ */
+export const dateIsPast = (date, afterDate) => {
+	return afterDate.getTime() > date.getTime();
+};
