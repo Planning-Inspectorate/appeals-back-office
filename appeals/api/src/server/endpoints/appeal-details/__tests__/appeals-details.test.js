@@ -158,9 +158,9 @@ const s78AppealDto = {
 			receivedAt: fullPlanningAppeal.caseCreatedDate.toISOString()
 		},
 		appellantFinalComments: {
-			receivedAt: null,
-			representationStatus: null,
-			status: 'not_received'
+			receivedAt: '2024-11-27T15:08:55.704Z',
+			representationStatus: 'awaiting_review',
+			status: 'received'
 		},
 		lpaQuestionnaire: {
 			dueDate: fullPlanningAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString(),
@@ -176,9 +176,9 @@ const s78AppealDto = {
 			}
 		},
 		lpaFinalComments: {
-			receivedAt: null,
-			representationStatus: null,
-			status: 'not_received'
+			receivedAt: '2024-11-27T15:08:55.711Z',
+			representationStatus: 'awaiting_review',
+			status: 'received'
 		},
 		lpaStatement: {
 			status: 'not_received',
