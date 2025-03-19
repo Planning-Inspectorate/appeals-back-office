@@ -22,7 +22,8 @@ describe('Change start date', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.changeStartDate(caseRef);
-			caseDetailsPage.verifyChangeStartDate();
+			const date = new Date();
+			caseDetailsPage.verifyDateChanges('start-date', date);
 		});
 	});
 });

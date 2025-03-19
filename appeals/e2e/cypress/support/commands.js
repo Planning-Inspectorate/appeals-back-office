@@ -165,3 +165,12 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 		Cypress.Cookies.preserveOnce(cookie.name);
 	});
 });
+
+Cypress.Commands.add('populateTimetable', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const timetable = await appealsApiClient.setAppealTimetables(appealId);
+		return timetable;
+	});
+});
