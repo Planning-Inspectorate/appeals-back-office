@@ -89,9 +89,10 @@ export class CaseDetailsPage extends Page {
 		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
-		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate),
+		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate), // refactor this
 		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
-		getAppealStartDate: () => cy.get('.appeal-start-date > .govuk-summary-list__value'),
+		getTimetableDate: (timeTableRow) =>
+			cy.get(`.appeal-${timeTableRow} > .govuk-summary-list__value`),
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
@@ -132,7 +133,8 @@ export class CaseDetailsPage extends Page {
 		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner),
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
-		caseStatusTag: () => cy.get('.govuk-tag')
+		caseStatusTag: () => cy.get('.govuk-tag'),
+		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -394,6 +396,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.siteVisitBanner(caseRef).click();
 	}
 
+	clickTimetableChangeLink(row) {
+		this.elements.timeTableRowChangeLink(row).click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
@@ -489,11 +495,10 @@ export class CaseDetailsPage extends Page {
 				);
 		});
 	}
-	verifyChangeStartDate() {
-		const dateToday = new Date();
-		const formattedDate = dateTimeSection.formatDate(dateToday);
+	verifyDateChanges(timeTableRow, date) {
+		const formattedDate = dateTimeSection.formatDate(date);
 		this.elements
-			.getAppealStartDate()
+			.getTimetableDate(timeTableRow)
 			.invoke('text')
 			.then((dateText) => {
 				expect(dateText.trim()).to.equal(formattedDate);
@@ -559,5 +564,14 @@ export class CaseDetailsPage extends Page {
 		this.selectRadioButtonByValue('Accept final comment');
 		this.clickButtonByText('Continue');
 		this.clickButtonByText(`Accept ${type} final comment`);
+	}
+
+	checkTimetableDueDateIsDisplayed(row) {
+		this.elements.getTimetableDate(row).should('be.visible');
+	}
+
+	changeTimetableDate(date) {
+		dateTimeSection.enterDate(date);
+		this.clickButtonByText('Confirm');
 	}
 }
