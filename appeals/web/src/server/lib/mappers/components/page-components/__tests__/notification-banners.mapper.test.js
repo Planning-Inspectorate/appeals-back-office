@@ -172,6 +172,33 @@ describe('buildNotificationBanners', () => {
 			}
 		]);
 	});
+
+	it('should return a notification banner for interestedPartyCommentsRedactionSuccess', () => {
+		session.notificationBanners = {
+			[appealId]: [
+				{
+					key: 'interestedPartyCommentsRedactionSuccess'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'ipComments', appealId);
+
+		expect(result).toEqual([
+			{
+				type: 'notification-banner',
+				parameters: {
+					titleText: 'Success',
+					titleHeadingLevel: 3,
+					type: 'success',
+					text: 'Comment redacted and accepted',
+					attributes: {
+						'data-index': 0
+					}
+				}
+			}
+		]);
+	});
 });
 
 describe('sortNotificationBanners', () => {
