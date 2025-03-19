@@ -4,6 +4,7 @@ import { request } from '#tests/../app-test.js';
 import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
+import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -513,13 +514,20 @@ describe('/appeals/:id/reps', () => {
 });
 
 describe('/appeals/:id/reps/publish', () => {
+	let mockAppeal;
+	beforeEach(() => {
+		mockAppeal = cloneDeep({
+			...appealS78,
+			representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
+		});
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	describe('publish LPA statements', () => {
-		let mockAppeal;
 		beforeEach(() => {
-			mockAppeal = {
-				...appealS78,
-				representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
-			};
 			mockAppeal.appealStatus[0].status = 'statements';
 		});
 
@@ -538,21 +546,6 @@ describe('/appeals/:id/reps/publish', () => {
 
 		test('400 if any ip comments or any lpa statements are awaiting review', async () => {
 			mockAppeal.representations = appealS78.representations;
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
-
-			const response = await request
-				.post('/appeals/1/reps/publish')
-				.query({ type: 'lpa_statement' })
-				.set('azureAdUserId', '732652365');
-
-			console.log(response.body);
-			expect(response.status).toEqual(400);
-		});
-
-		test('400 if no representations are valid', async () => {
-			mockAppeal.representations = mockAppeal.representations.filter(
-				(rep) => rep.status !== 'valid'
-			);
 			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
 
 			const response = await request
@@ -597,13 +590,6 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('send notify comments and statements', async () => {
-			const [appealStatusItem] = mockAppeal.appealStatus;
-			mockAppeal.appealTimetable = {
-				...mockAppeal.appealTimetable,
-				finalCommentsDueDate: new Date('2025-02-19')
-			};
-			mockAppeal.appealStatus = [{ ...appealStatusItem, status: 'statements' }];
-
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -619,7 +605,7 @@ describe('/appeals/:id/reps/publish', () => {
 			const expectedEmailPayload = {
 				lpa_reference: mockAppeal.applicationReference,
 				appeal_reference_number: mockAppeal.reference,
-				final_comments_deadline: '19 February 2025',
+				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
 			};
 
@@ -635,6 +621,8 @@ describe('/appeals/:id/reps/publish', () => {
 				.post('/appeals/1/reps/publish')
 				.query({ type: 'statements' })
 				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
 
 			// eslint-disable-next-line no-undef
 			expect(mockSendEmail).toHaveBeenCalledTimes(2);
@@ -660,7 +648,116 @@ describe('/appeals/:id/reps/publish', () => {
 					reference: null
 				}
 			);
+		});
+	});
+
+	describe('publish final comments', () => {
+		beforeEach(() => {
+			mockAppeal.appealStatus[0].status = 'final_comments';
+		});
+
+		test('409 if case is not in FINAL_COMMENTS state', async () => {
+			mockAppeal.appealStatus[0].status = 'lpa_questionnaire';
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(409);
+		});
+
+		test('400 if any appellant final comments or any lpa final comments are awaiting review', async () => {
+			mockAppeal.representations = appealS78.representations;
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('400 if the deadline for final comments has not passed', async () => {
+			mockAppeal.appealTimetable = {
+				...mockAppeal.appealTimetable,
+				finalCommentsDueDate: new Date('3025-01-01')
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('send notify lpa and appellant final comments', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockAppeal.applicationReference,
+				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '',
+				site_address: expectedSiteAddress
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'lpa_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+
 			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				1,
+				config.govNotify.template.finalCommentsDone.lpa.id,
+				mockAppeal.lpa.email,
+				{
+					emailReplyToId: null,
+					personalisation: expectedEmailPayload,
+					reference: null
+				}
+			);
+			// eslint-disable-next-line no-undef
+			expect(mockSendEmail).toHaveBeenNthCalledWith(
+				2,
+				config.govNotify.template.finalCommentsDone.appellant.id,
+				mockAppeal.appellant.email,
+				{
+					emailReplyToId: null,
+					personalisation: expectedEmailPayload,
+					reference: null
+				}
+			);
 		});
 	});
 });

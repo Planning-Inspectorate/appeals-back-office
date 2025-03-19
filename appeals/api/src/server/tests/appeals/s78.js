@@ -529,7 +529,7 @@ export default {
 		{
 			id: 4486,
 			appealId: 2377,
-			representationType: 'final_comment',
+			representationType: 'appellant_final_comment',
 			dateCreated: new Date('2024-11-27T15:08:55.704Z'),
 			dateLastUpdated: new Date('2024-11-27T15:08:55.704Z'),
 			originalRepresentation: 'Final comment from appellant',
@@ -546,7 +546,7 @@ export default {
 		{
 			id: 4487,
 			appealId: 2377,
-			representationType: 'final_comment',
+			representationType: 'lpa_final_comment',
 			dateCreated: new Date('2024-11-27T15:08:55.711Z'),
 			dateLastUpdated: new Date('2024-11-27T15:08:55.711Z'),
 			originalRepresentation: 'Final comment from LPA',
