@@ -291,7 +291,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Cross-team correspondence documents uploaded</p>
+        <p class="govuk-notification-banner__heading">Cross-team correspondence added</p>
     </div>
 </div>"
 `;
@@ -395,7 +395,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">LPA costs application documents uploaded</p>
+        <p class="govuk-notification-banner__heading">LPA costs application added</p>
     </div>
 </div>"
 `;
@@ -408,7 +408,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Appellant costs application documents uploaded</p>
+        <p class="govuk-notification-banner__heading">Appellant costs application added</p>
     </div>
 </div>"
 `;
@@ -421,7 +421,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector correspondence documents uploaded</p>
+        <p class="govuk-notification-banner__heading">Inspector correspondence added</p>
     </div>
 </div>"
 `;
