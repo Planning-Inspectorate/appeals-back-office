@@ -11,7 +11,7 @@ import { ensureArray } from '#lib/array-utilities.js';
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
- * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} session
+ * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } }} session
  * @returns {PageContent}
  * */
 export const confirmPage = (appealDetails, lpaStatement, specialismData, session) => {
@@ -98,19 +98,23 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 							]
 						}
 					},
-					{
-						key: { text: 'Do you need to update the allocation level and specialisms?' },
-						value: { text: updatingAllocation ? 'Yes' : 'No' },
-						actions: {
-							items: [
+					...(sessionData?.forcedAllocation
+						? [
 								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
-									visuallyHiddenText: 'allocation level and specialisms'
+									key: { text: 'Do you need to update the allocation level and specialisms?' },
+									value: { text: updatingAllocation ? 'Yes' : 'No' },
+									actions: {
+										items: [
+											{
+												text: 'Change',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+												visuallyHiddenText: 'allocation level and specialisms'
+											}
+										]
+									}
 								}
-							]
-						}
-					},
+						  ]
+						: []),
 					...(updatingAllocation
 						? [
 								{

@@ -1753,6 +1753,7 @@ export interface SingleLPAQuestionnaireResponse {
 		/** @example ["Documents or information are missing","Policies are missing","Other"] */
 		incompleteReasons?: string[];
 	};
+	reasonForNeighbourVisits?: string;
 }
 
 export interface UpdateAppellantCaseRequest {

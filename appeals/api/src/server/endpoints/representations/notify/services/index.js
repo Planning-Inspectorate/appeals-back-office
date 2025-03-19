@@ -42,7 +42,7 @@ export const ipCommentRejection = async ({
 
 	const templateId = extendedDeadline
 		? config.govNotify.template.commentRejectedDeadlineExtended
-		: config.govNotify.template.commentRejected.appellant;
+		: config.govNotify.template.ipCommentRejected;
 
 	try {
 		await notifyClient.sendEmail(templateId, recipientEmail, {
@@ -60,7 +60,7 @@ export const ipCommentRejection = async ({
 
 /** @type {Service} */
 export const appellantFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
-	const templateId = config.govNotify.template.commentRejected.appellant;
+	const templateId = config.govNotify.template.finalCommentRejected.appellant;
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 
@@ -84,7 +84,7 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 
 /** @type {Service} */
 export const lpaFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
-	const templateId = config.govNotify.template.commentRejected.lpa;
+	const templateId = config.govNotify.template.finalCommentRejected.lpa;
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 

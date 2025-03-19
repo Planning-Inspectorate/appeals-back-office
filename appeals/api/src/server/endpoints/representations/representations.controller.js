@@ -140,31 +140,39 @@ export const addRedactedRepresentation = async (req, res) => {
 export async function updateRepresentation(request, response) {
 	const {
 		params: { appealId, repId },
-		body: { status, allowResubmit, redactedRepresentation }
+		body: { allowResubmit, redactedRepresentation }
 	} = request;
 
-	const rep = await representationService.getRepresentation(parseInt(repId));
-	if (!rep) {
+	const existingRep = await representationService.getRepresentation(parseInt(repId));
+	if (!existingRep) {
 		return response.status(404).send({ errors: { repId: ERROR_NOT_FOUND } });
 	}
 
+	const status =
+		existingRep.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+			? existingRep.status
+			: request.body.status;
+
 	if (
 		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
-		rep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		existingRep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
 
-	if (status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
+	if (
+		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED &&
+		existingRep.status !== APPEAL_REPRESENTATION_STATUS.PUBLISHED
+	) {
 		return response.status(400).send({ errors: { status: ERROR_REP_PUBLISH_USING_ENDPOINT } });
 	}
 
 	const updatedRep = await representationService.updateRepresentation(
 		parseInt(repId),
-		request.body
+		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ? { ...request.body, status } : request.body
 	);
 
-	if (status !== rep.status) {
+	if (status !== existingRep.status) {
 		const details = (() => {
 			if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation) {
 				// @ts-ignore
@@ -200,12 +208,14 @@ export async function updateRepresentation(request, response) {
 		});
 	}
 
-	await notifyOnStatusChange(request, {
-		notifyClient: request.notifyClient,
-		appeal: request.appeal,
-		representation: { ...updatedRep, status: rep.status },
-		allowResubmit
-	});
+	if (existingRep.status !== APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
+		await notifyOnStatusChange(request, {
+			notifyClient: request.notifyClient,
+			appeal: request.appeal,
+			representation: { ...updatedRep, status: existingRep.status },
+			allowResubmit
+		});
+	}
 
 	await broadcasters.broadcastRepresentation(updatedRep.id, EventType.Update);
 	return response.send(formatRepresentation(updatedRep));

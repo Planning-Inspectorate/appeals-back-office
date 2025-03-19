@@ -26,7 +26,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('404 when appealId not found', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await request.get('/appeals/99999/reps/1').set('azureAdUserId', '732652365');
@@ -40,7 +39,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('405 when repId NaN', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
@@ -54,9 +52,7 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('404 when repId not found', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(null);
 
 			const response = await request
@@ -74,7 +70,6 @@ describe('/appeals/:id/reps', () => {
 
 	describe('PATCH representations', () => {
 		test('400 when invalid representation status', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
@@ -91,7 +86,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('400 when invalid type of representation status', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
@@ -108,7 +102,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('400 when invalid type of representation redaction', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
@@ -149,11 +142,8 @@ describe('/appeals/:id/reps', () => {
 				]
 			};
 
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
-			// @ts-ignore
 			databaseConnector.representation.update.mockResolvedValue({
 				...mockRepresentation,
 				status: 'valid',
@@ -209,11 +199,8 @@ describe('/appeals/:id/reps', () => {
 				]
 			};
 
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
-			// @ts-ignore
 			databaseConnector.representation.update.mockResolvedValue({
 				...mockRepresentation,
 				status: 'invalid'
@@ -234,7 +221,7 @@ describe('/appeals/:id/reps', () => {
 
 			// eslint-disable-next-line no-undef
 			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.commentRejected.lpa.id,
+				config.govNotify.template.finalCommentRejected.lpa.id,
 				householdAppeal.lpa.email,
 				{
 					emailReplyToId: null,
@@ -380,9 +367,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('404 when repId is not found', async () => {
 			// Mocking database responses
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(null);
 
 			const response = await request
@@ -398,7 +383,6 @@ describe('/appeals/:id/reps', () => {
 
 		test('404 when appealId is not found', async () => {
 			// Mocking database responses
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await request
@@ -443,7 +427,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('404 when representation is not found', async () => {
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockResolvedValue(null);
 
 			const response = await request
@@ -509,7 +492,6 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('500 when database operation fails', async () => {
-			// @ts-ignore
 			databaseConnector.representation.findUnique.mockRejectedValue(
 				new Error('Internal Server Error')
 			);
@@ -532,9 +514,18 @@ describe('/appeals/:id/reps', () => {
 
 describe('/appeals/:id/reps/publish', () => {
 	describe('publish LPA statements', () => {
+		let mockAppeal;
+		beforeEach(() => {
+			mockAppeal = {
+				...appealS78,
+				representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
+			};
+			mockAppeal.appealStatus[0].status = 'statements';
+		});
+
 		test('409 if case is not in STATEMENTS state', async () => {
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(appealS78);
+			mockAppeal.appealStatus[0].status = 'lpa_questionnaire';
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -545,14 +536,73 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(response.status).toEqual(409);
 		});
 
-		test('send notify comments and statements', async () => {
-			// @ts-ignore
-			const [appealStatusItem] = appealS78.appealStatus;
-			const mockAppeal = {
-				...appealS78,
-				appealTimetable: { ...appealS78.appealTimetable, finalCommentsDueDate: '2025-02-19' },
-				appealStatus: [{ ...appealStatusItem, status: 'statements' }]
+		test('400 if any ip comments or any lpa statements are awaiting review', async () => {
+			mockAppeal.representations = appealS78.representations;
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'lpa_statement' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('400 if no representations are valid', async () => {
+			mockAppeal.representations = mockAppeal.representations.filter(
+				(rep) => rep.status !== 'valid'
+			);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'lpa_statement' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('400 if the deadline for ip comments has not passed', async () => {
+			mockAppeal.appealTimetable = {
+				...mockAppeal.appealTimetable,
+				ipCommentsDueDate: new Date('3025-01-01')
 			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'lpa_statement' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('400 if the deadline for lpa statements has not passed', async () => {
+			mockAppeal.appealTimetable = {
+				...mockAppeal.appealTimetable,
+				lpaStatementDueDate: new Date('3025-01-01')
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'lpa_statement' })
+				.set('azureAdUserId', '732652365');
+
+			console.log(response.body);
+			expect(response.status).toEqual(400);
+		});
+
+		test('send notify comments and statements', async () => {
+			const [appealStatusItem] = mockAppeal.appealStatus;
+			mockAppeal.appealTimetable = {
+				...mockAppeal.appealTimetable,
+				finalCommentsDueDate: new Date('2025-02-19')
+			};
+			mockAppeal.appealStatus = [{ ...appealStatusItem, status: 'statements' }];
 
 			const expectedSiteAddress = [
 				'addressLine1',
