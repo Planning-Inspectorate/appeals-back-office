@@ -34,7 +34,7 @@ import {
 	dateISOStringToDisplayDate,
 	calculateIncompleteDueDate
 } from '#lib/dates.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -689,6 +689,167 @@ describe('appellant-case', () => {
 				expect(secondBannerHtml).toContain(
 					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Appeal is incomplete</h3>'
 				);
+			});
+
+			describe('Document added success banners', () => {
+				const appealId = 2;
+				const folderId = 1;
+				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+				const testCases = [
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT}`,
+						label: 'Appeal statement'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM}`,
+						label: 'Application form'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER}`,
+						label: 'Application decision letter'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION}`,
+						label: 'Agreement to change description evidence'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
+						label: 'Appellant withdrawal request'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`,
+						label: 'Additional documents'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT}`,
+						label: 'Design and access statement'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`,
+						label: 'Plans, drawings and list of plans'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS}`,
+						label: 'New plans or drawings'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION}`,
+						label: 'Planning obligation'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE}`,
+						label: 'Ownership certificate and/or land declaration'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS}`,
+						label: 'Other new supporting documents'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT}`,
+						label: 'Environmental assessment'
+					}
+				];
+
+				beforeEach(() => {
+					nock.cleanAll();
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId
+						})
+						.persist();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/appellant-cases/0`)
+						.reply(200, appellantCaseDataNotValidated);
+					nock('http://test/')
+						.get('/appeals/document-redaction-statuses')
+						.reply(200, documentRedactionStatuses)
+						.persist();
+					nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
+				});
+
+				for (const testCase of testCases) {
+					it(`should render a "${testCase.label} added" success banner when uploading a document in the "${testCase.folderPath}" folder to the appellant case`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/document-folders/1`)
+							.reply(200, {
+								caseId: appealId,
+								documents: [],
+								folderId: folderId,
+								path: testCase.folderPath
+							})
+							.persist();
+
+						const addDocumentsResponse = await request
+							.post(`${appellantCaseUrl}/add-documents/${folderId}`)
+							.send({
+								'upload-info': fileUploadInfo
+							});
+
+						expect(addDocumentsResponse.statusCode).toBe(302);
+
+						const postCheckAndConfirmResponse = await request
+							.post(`${appellantCaseUrl}/add-documents/${folderId}/check-your-answers`)
+							.send({});
+
+						expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+						expect(postCheckAndConfirmResponse.text).toBe(
+							`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case`
+						);
+
+						const appellantCaseResponse = await request.get(`${appellantCaseUrl}`);
+
+						expect(appellantCaseResponse.statusCode).toBe(200);
+
+						const notificationBannerElementHTML = parseHtml(appellantCaseResponse.text, {
+							rootElement: notificationBannerElement
+						}).innerHTML;
+
+						expect(notificationBannerElementHTML).toContain('Success</h3>');
+						expect(notificationBannerElementHTML).toContain(`${testCase.label} added`);
+					});
+				}
+
+				it('should render a fallback "Documents added" success banner when uploading a document in an unhandled folder to the appellant case', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/document-folders/1`)
+						.reply(200, {
+							caseId: appealId,
+							documents: [],
+							folderId: folderId,
+							path: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/unhandledFolderPath`
+						})
+						.persist();
+
+					const addDocumentsResponse = await request
+						.post(`${appellantCaseUrl}/add-documents/${folderId}`)
+						.send({
+							'upload-info': fileUploadInfo
+						});
+
+					expect(addDocumentsResponse.statusCode).toBe(302);
+
+					const postCheckAndConfirmResponse = await request
+						.post(`${appellantCaseUrl}/add-documents/${folderId}/check-your-answers`)
+						.send({});
+
+					expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+					expect(postCheckAndConfirmResponse.text).toBe(
+						`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case`
+					);
+
+					const appellantCaseResponse = await request.get(`${appellantCaseUrl}`);
+
+					expect(appellantCaseResponse.statusCode).toBe(200);
+
+					const notificationBannerElementHTML = parseHtml(appellantCaseResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+
+					expect(notificationBannerElementHTML).toContain('Success</h3>');
+					expect(notificationBannerElementHTML).toContain(`Documents added`);
+				});
 			});
 		});
 
@@ -4539,7 +4700,9 @@ describe('appellant-case', () => {
 			});
 
 			expect(unprettifiedElement.innerHTML).toContain('Success</h3>');
-			expect(unprettifiedElement.innerHTML).toContain('Document added</p>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence added</p>'
+			);
 		});
 	});
 

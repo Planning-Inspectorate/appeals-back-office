@@ -594,9 +594,7 @@ describe('appeal-details', () => {
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain(
-					'Appellant costs application documents uploaded</p>'
-				);
+				expect(notificationBannerElementHTML).toContain('Appellant costs application added</p>');
 			});
 
 			it('should render a success notification banner when a new version of an appellant costs document was uploaded', async () => {
@@ -693,9 +691,7 @@ describe('appeal-details', () => {
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain(
-					'LPA costs application documents uploaded</p>'
-				);
+				expect(notificationBannerElementHTML).toContain('LPA costs application added</p>');
 			});
 
 			it('should render a success notification banner when a new version of an LPA costs document was uploaded', async () => {
@@ -995,9 +991,7 @@ describe('appeal-details', () => {
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain(
-					'Cross-team correspondence documents uploaded</p>'
-				);
+				expect(notificationBannerElementHTML).toContain('Cross-team correspondence added</p>');
 			});
 
 			it('should render a success notification banner when an inspector correspondence document was uploaded', async () => {
@@ -1036,9 +1030,7 @@ describe('appeal-details', () => {
 
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain(
-					'Inspector correspondence documents uploaded</p>'
-				);
+				expect(notificationBannerElementHTML).toContain('Inspector correspondence added</p>');
 			});
 
 			it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {

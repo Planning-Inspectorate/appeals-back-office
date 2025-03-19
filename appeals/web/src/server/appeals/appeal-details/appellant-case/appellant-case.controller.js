@@ -28,6 +28,7 @@ import {
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /**
  *
@@ -343,7 +344,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAddDocumentsCheckAndConfirm = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404');
@@ -358,7 +359,8 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				addNotificationBannerToSession({
 					session: request.session,
 					bannerDefinitionKey: 'documentAdded',
-					appealId: currentAppeal.appealId
+					appealId: currentAppeal.appealId,
+					text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Documents'} added`
 				});
 			}
 		});

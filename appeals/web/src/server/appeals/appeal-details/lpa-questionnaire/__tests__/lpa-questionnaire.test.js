@@ -34,7 +34,12 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep } from 'lodash-es';
 import { addDays } from 'date-fns';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_CASE_STATUS } from 'pins-data-model';
+import {
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE
+} from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -528,6 +533,204 @@ describe('LPA Questionnaire review', () => {
 				expect(secondBannerHtml).toContain(
 					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > LPA Questionnaire is incomplete</h3>'
 				);
+			});
+		});
+
+		describe('Document added success banners', () => {
+			const appealId = 2;
+			const lpaQuestionnaireId = 2;
+			const folderId = 1;
+			const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
+			const testCases = [
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`,
+					label: 'Who was notified about the application'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`,
+					label: 'Site notice'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`,
+					label: 'Letter or email notification'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`,
+					label: 'Press advert notification'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.CONSERVATION_MAP}`,
+					label: 'Conservation area map and guidance'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS}`,
+					label: 'Representations from other parties documents'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT}`,
+					label: 'Planning officer&#39;s report'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`,
+					label: 'Plans, drawings and list of plans'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES}`,
+					label: 'Relevant policies from statutory development plan'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN}`,
+					label: 'Plan showing extent of TPO'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT}`,
+					label: 'Definitive map and statement extract'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY}`,
+					label: 'Community infrastructure levy'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING}`,
+					label: 'Supplementary planning documents'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EMERGING_PLAN}`,
+					label: 'Emerging plan relevant to appeal'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES}`,
+					label: 'Consultation responses or standing advice'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`,
+					label: 'Environmental statement'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION}`,
+					label: 'Screening opinion documents'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`,
+					label: 'Screening direction documents'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE}`,
+					label: 'Additional documents'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES}`,
+					label: 'Other relevant policies'
+				},
+				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION}`,
+					label: 'Appeal notification letter'
+				}
+			];
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId
+					})
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {
+						...lpaQuestionnaireData,
+						appealId,
+						lpaQuestionnaireId
+					});
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
+			});
+
+			for (const testCase of testCases) {
+				it(`should render a "${testCase.label} added" success banner when uploading a document in the "${testCase.folderPath}" folder to the lpa questionnaire`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/document-folders/1`)
+						.reply(200, {
+							caseId: appealId,
+							documents: [],
+							folderId: folderId,
+							path: testCase.folderPath
+						})
+						.persist();
+
+					const addDocumentsResponse = await request
+						.post(`${lpaQuestionnaireUrl}/add-documents/${folderId}`)
+						.send({
+							'upload-info': fileUploadInfo
+						});
+
+					expect(addDocumentsResponse.statusCode).toBe(302);
+
+					const postCheckAndConfirmResponse = await request
+						.post(`${lpaQuestionnaireUrl}/add-documents/${folderId}/check-your-answers`)
+						.send({});
+
+					expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+					expect(postCheckAndConfirmResponse.text).toBe(
+						`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+					);
+
+					const lpaQuestionnaireResponse = await request.get(`${lpaQuestionnaireUrl}`);
+
+					expect(lpaQuestionnaireResponse.statusCode).toBe(200);
+
+					const notificationBannerElementHTML = parseHtml(lpaQuestionnaireResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+
+					expect(notificationBannerElementHTML).toContain('Success</h3>');
+					expect(notificationBannerElementHTML).toContain(`${testCase.label} added`);
+				});
+			}
+
+			it('should render a fallback "Documents added" success banner when uploading a document in an unhandled folder to the lpa questionnaire', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}/document-folders/1`)
+					.reply(200, {
+						caseId: appealId,
+						documents: [],
+						folderId: folderId,
+						path: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/unhandledFolderPath`
+					})
+					.persist();
+
+				const addDocumentsResponse = await request
+					.post(`${lpaQuestionnaireUrl}/add-documents/${folderId}`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${lpaQuestionnaireUrl}/add-documents/${folderId}/check-your-answers`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+				);
+
+				const lpaQuestionnaireResponse = await request.get(`${lpaQuestionnaireUrl}`);
+
+				expect(lpaQuestionnaireResponse.statusCode).toBe(200);
+
+				const notificationBannerElementHTML = parseHtml(lpaQuestionnaireResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain(`Documents added`);
 			});
 		});
 	});
@@ -3016,7 +3219,9 @@ describe('LPA Questionnaire review', () => {
 			});
 
 			expect(unprettifiedElement.innerHTML).toContain('Success</h3>');
-			expect(unprettifiedElement.innerHTML).toContain('Document added</p>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence added</p>'
+			);
 		});
 	});
 
