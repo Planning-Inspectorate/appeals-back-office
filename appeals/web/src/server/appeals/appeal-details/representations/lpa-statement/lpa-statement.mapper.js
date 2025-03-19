@@ -152,6 +152,8 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 		isReview: true
 	});
 
+	const { status } = session.lpaStatement?.[appealDetails.appealId] ?? {};
+
 	/** @type {PageComponent} */
 	const lpaStatementValidityRadioButtons = {
 		type: 'radios',
@@ -169,7 +171,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 				{
 					value: COMMENT_STATUS.VALID,
 					text: 'Accept statement',
-					checked: session.lpaStatement?.status === COMMENT_STATUS.VALID
+					checked: status === COMMENT_STATUS.VALID
 				},
 				{
 					value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
@@ -179,7 +181,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 				{
 					value: COMMENT_STATUS.INCOMPLETE,
 					text: 'Statement incomplete',
-					checked: session.lpaStatement?.status === COMMENT_STATUS.INCOMPLETE
+					checked: status === COMMENT_STATUS.INCOMPLETE
 				}
 			]
 		}

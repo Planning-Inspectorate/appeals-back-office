@@ -43,7 +43,9 @@ export const postReviewLpaStatement = async (request, response) => {
 	const {
 		errors,
 		params: { appealId },
-		body: { status }
+		body: { status },
+		currentAppeal,
+		session
 	} = request;
 
 	if (errors) {
@@ -52,6 +54,15 @@ export const postReviewLpaStatement = async (request, response) => {
 
 	switch (status) {
 		case COMMENT_STATUS.VALID:
+			if (
+				!currentAppeal.allocationDetails?.level ||
+				!currentAppeal.allocationDetails?.specialisms?.length
+			) {
+				session.acceptLPAStatement.forcedAllocation = true;
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
+				);
+			}
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
 			);

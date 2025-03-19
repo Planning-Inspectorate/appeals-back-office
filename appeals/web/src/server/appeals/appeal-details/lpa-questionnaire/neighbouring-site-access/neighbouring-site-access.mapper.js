@@ -18,10 +18,10 @@ export function changeNeighbouringSiteAccessPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change whether inspector needs neighbouring site access',
+		title: 'Might the inspector need to enter a neighbour’s land or property?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change whether inspector needs neighbouring site access',
+		heading: 'Might the inspector need to enter a neighbour’s land or property?',
 		pageComponents: [
 			yesNoInput({
 				name: 'neighbouringSiteAccessRadio',
@@ -29,7 +29,7 @@ export function changeNeighbouringSiteAccessPage(
 				yesConditional: {
 					id: 'neighbouring-site-access-details',
 					name: 'neighbouringSiteAccess',
-					hint: 'Inspector needs neighbouring site access details',
+					hint: 'Enter the reason',
 					details: sessionDetailsValue || existingValue || ''
 				}
 			})

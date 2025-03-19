@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
-import { generateCommentSummaryList, generateWithdrawLink } from './common.js';
+import { generateCommentSummaryList } from './common.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
@@ -16,7 +16,6 @@ import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js'
 export function viewInterestedPartyCommentPage(appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment);
-	const withdrawLink = generateWithdrawLink();
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
 		'viewIpComment',
@@ -40,7 +39,7 @@ export function viewInterestedPartyCommentPage(appealDetails, comment, session) 
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments${backLinkHash}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'View comment',
-		pageComponents: [...notificationBanners, commentSummaryList, withdrawLink]
+		pageComponents: [...notificationBanners, commentSummaryList]
 	};
 
 	preRenderPageComponents(pageContent.pageComponents);

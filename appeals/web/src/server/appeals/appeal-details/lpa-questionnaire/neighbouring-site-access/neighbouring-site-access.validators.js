@@ -5,7 +5,7 @@ export const validateNeighbouringSiteAccessTextArea = createTextareaConditionalV
 	'neighbouringSiteAccess',
 	'neighbouringSiteAccessRadio',
 	'yes',
-	'Enter inspector needs neighbouring site access details',
+	'Enter the reason',
 	textInputCharacterLimits.defaultTextareaLength,
-	`Inspector needs neighbouring site access details must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
+	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );
