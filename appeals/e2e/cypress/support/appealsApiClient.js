@@ -169,23 +169,6 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
-	async getAppealDetails(reference) {
-		try {
-			const url = `${baseUrl}appeals/${reference}`;
-			const response = await fetch(url, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				}
-			});
-
-			const result = await response.json();
-			return result;
-		} catch {
-			return false;
-		}
-	},
 	async setAppealTimetables(appealId) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}/appeal-timetables`;

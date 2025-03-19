@@ -33,7 +33,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			caseDetailsPage.clickAccordionByText('Timetable');
 		});
 	});
-	it(`should change LPA questionnaire due date`, { tags: tag.smoke }, () => {
+	it(`should change LPA questionnaire due date`, () => {
 		const lpaQuestionaire = 'lpa-questionnaire-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(lpaQuestionaire);
 		caseDetailsPage.clickTimetableChangeLink(lpaQuestionaire);
@@ -44,7 +44,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 	});
 
-	it(`should change LPA statement due date`, { tags: tag.smoke }, () => {
+	it(`should change LPA statement due date`, () => {
 		const lpaStatement = 'lpa-statement-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(lpaStatement);
 		caseDetailsPage.clickTimetableChangeLink(lpaStatement);
@@ -55,7 +55,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 	});
 
-	it(`should change Interested party comments due date`, { tags: tag.smoke }, () => {
+	it(`should change Interested party comments due date`, () => {
 		const interestedParty = 'ip-comments-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
 		caseDetailsPage.clickTimetableChangeLink(interestedParty);
@@ -66,7 +66,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 	});
 
-	it(`should change appellant final comments due date`, { tags: tag.smoke }, () => {
+	it(`should change final comments due date`, () => {
 		const interestedParty = 'final-comments-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
 		caseDetailsPage.clickTimetableChangeLink(interestedParty);
@@ -77,7 +77,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 	});
 
-	it(`should not accept current date`, { tags: tag.smoke }, () => {
+	it(`should not accept current date`, () => {
 		caseDetailsPage.checkTimetableDueDateIsDisplayed('lpa-questionnaire-due-date');
 		caseDetailsPage.clickTimetableChangeLink('lpa-questionnaire-due-date');
 		let currentDate = new Date();
