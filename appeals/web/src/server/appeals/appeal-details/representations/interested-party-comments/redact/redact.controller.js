@@ -63,7 +63,5 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 		appealId
 	});
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/view`
-	);
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
 };
