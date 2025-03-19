@@ -33,7 +33,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			caseDetailsPage.clickAccordionByText('Timetable');
 		});
 	});
-	it.only(`should change LPA questionnaire due date`, { tags: tag.smoke }, () => {
+	it(`should change LPA questionnaire due date`, { tags: tag.smoke }, () => {
 		const lpaQuestionaire = 'lpa-questionnaire-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(lpaQuestionaire);
 		caseDetailsPage.clickTimetableChangeLink(lpaQuestionaire);
@@ -57,6 +57,17 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 
 	it(`should change Interested party comments due date`, { tags: tag.smoke }, () => {
 		const interestedParty = 'ip-comments-due-date';
+		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
+		caseDetailsPage.clickTimetableChangeLink(interestedParty);
+		let futureDate = new Date();
+		futureDate.setFullYear(futureDate.getFullYear() + 1);
+		caseDetailsPage.changeTimetableDate(futureDate);
+		caseDetailsPage.verifyDateChanges(interestedParty, futureDate);
+		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+	});
+
+	it(`should change appellant final comments due date`, { tags: tag.smoke }, () => {
+		const interestedParty = 'final-comments-due-date';
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
 		caseDetailsPage.clickTimetableChangeLink(interestedParty);
 		let futureDate = new Date();
