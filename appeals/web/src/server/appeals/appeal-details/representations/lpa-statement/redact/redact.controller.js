@@ -36,8 +36,20 @@ export async function renderConfirm(request, response) {
  * */
 export function postRedact(request, response) {
 	const {
-		params: { appealId }
+		params: { appealId },
+		currentAppeal,
+		session
 	} = request;
+
+	if (
+		!currentAppeal.allocationDetails?.level ||
+		!currentAppeal.allocationDetails?.specialisms?.length
+	) {
+		session.acceptLPAStatement.forcedAllocation = true;
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/allocation-level`
+		);
+	}
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/allocation-check`
@@ -100,7 +112,8 @@ export async function renderAllocationLevel(request, response) {
 		currentAppeal,
 		currentRepresentation,
 		allocationLevels,
-		session.redactLPAStatement
+		session.redactLPAStatement,
+		'redact'
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

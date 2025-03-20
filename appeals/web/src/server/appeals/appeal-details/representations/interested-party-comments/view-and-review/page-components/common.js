@@ -1,25 +1,10 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
-
-/**
- * Generates the withdraw link component.
- * @returns {PageComponent} The withdraw link component.
- */
-export function generateWithdrawLink() {
-	return wrapComponents(
-		[simpleHtmlComponent('a', { class: 'govuk-link', href: '#' }, 'Withdraw comment')],
-		{
-			opening: '<div class="govuk-!-margin-bottom-3">',
-			closing: '</div>'
-		}
-	);
-}
 
 /**
  * @param {Representation} comment - The comment object.

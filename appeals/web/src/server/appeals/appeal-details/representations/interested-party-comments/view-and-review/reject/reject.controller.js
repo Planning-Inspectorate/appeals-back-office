@@ -1,5 +1,5 @@
 import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
-import { renderSelectRejectionReasons } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
+import { mapRejectionReasonOptionsToCheckboxItemParameters } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
 import { getRepresentationRejectionReasonOptions } from '#appeals/appeal-details/representations/representations.service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -12,10 +12,33 @@ import { updateRejectionReasons } from '#appeals/appeal-details/representations/
 import { rejectInterestedPartyComment } from './reject.service.js';
 import { prepareRejectionReasons } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
-export const renderSelectReason = renderSelectRejectionReasons(
-	rejectInterestedPartyCommentPage,
-	'rejectIpComment'
-);
+/** @type {import('express').Handler} */
+export async function renderSelectReason(request, response) {
+	const { currentAppeal, currentRepresentation, apiClient, session, errors } = request;
+
+	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+		apiClient,
+		currentRepresentation.representationType
+	);
+
+	const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
+		currentRepresentation,
+		rejectionReasons,
+		session,
+		'rejectIpComment',
+		errors?.['']
+			? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
+			: undefined
+	);
+
+	const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentRepresentation);
+
+	return response.status(200).render('appeals/appeal/reject-representation.njk', {
+		errors,
+		pageContent,
+		rejectionReasons: mappedRejectionReasons
+	});
+}
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

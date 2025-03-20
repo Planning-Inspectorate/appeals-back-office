@@ -1,6 +1,5 @@
+import { get } from 'lodash-es';
 import { ensureArray } from '#lib/array-utilities.js';
-import logger from '#lib/logger.js';
-import { getRepresentationRejectionReasonOptions } from '../representations.service.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -10,11 +9,11 @@ import { getRepresentationRejectionReasonOptions } from '../representations.serv
  * @param {Representation} comment
  * @param {RepresentationRejectionReason[]} rejectionReasonOptions
  * @param {import('@pins/express').Session} session
- * @param {string} sessionKey
+ * @param {string | string[]} sessionKey
  * @param {{ optionId: number, message: string }} [error]
  * @returns {import('#appeals/appeals.types.js').CheckboxItemParameter[]}
  */
-function mapRejectionReasonOptionsToCheckboxItemParameters(
+export function mapRejectionReasonOptionsToCheckboxItemParameters(
 	comment,
 	rejectionReasonOptions,
 	session,
@@ -25,7 +24,7 @@ function mapRejectionReasonOptionsToCheckboxItemParameters(
 	const rejectionReasonMap = new Map(rejectionReasons.map((reason) => [reason.id, reason]));
 
 	const selectedReasons = (() => {
-		const value = session[sessionKey]?.rejectionReason;
+		const value = get(session, sessionKey)?.rejectionReason;
 		if (!value) {
 			return [];
 		}
@@ -38,8 +37,9 @@ function mapRejectionReasonOptionsToCheckboxItemParameters(
 		const id = reason.id.toString();
 
 		const selectedTextItems = (() => {
-			const value = session[sessionKey]?.[`rejectionReason-${reason.id}`];
-			if (!value || session[sessionKey]?.commentId !== comment.id) {
+			const sessionContent = get(session, sessionKey);
+			const value = sessionContent?.[`rejectionReason-${reason.id}`];
+			if (!value || sessionContent?.commentId !== comment.id) {
 				return null;
 			}
 
@@ -57,41 +57,3 @@ function mapRejectionReasonOptionsToCheckboxItemParameters(
 		};
 	});
 }
-
-/**
- * @param {(appealDetails: Appeal, comment: Representation) => PageContent} contentMapper
- * @param {string} sessionKey
- * @returns {import('express').Handler}
- */
-export const renderSelectRejectionReasons =
-	(contentMapper, sessionKey) => async (request, response) => {
-		const { currentAppeal, currentRepresentation, apiClient, session, errors } = request;
-
-		try {
-			const rejectionReasons = await getRepresentationRejectionReasonOptions(
-				apiClient,
-				currentRepresentation.representationType
-			);
-
-			const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
-				currentRepresentation,
-				rejectionReasons,
-				session,
-				sessionKey,
-				errors?.['']
-					? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-					: undefined
-			);
-
-			const pageContent = contentMapper(currentAppeal, currentRepresentation);
-
-			return response.status(200).render('appeals/appeal/reject-representation.njk', {
-				errors,
-				pageContent,
-				rejectionReasons: mappedRejectionReasons
-			});
-		} catch (error) {
-			logger.error(error);
-			return response.status(500).render('app/500.njk');
-		}
-	};

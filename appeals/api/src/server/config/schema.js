@@ -186,13 +186,16 @@ export default joi
 						validAppellantCase: joi.object({
 							id: joi.string().required()
 						}),
-						commentRejected: joi.object({
+						finalCommentRejected: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()
 							}),
 							lpa: joi.object({
 								id: joi.string().required()
 							})
+						}),
+						ipCommentRejected: joi.object({
+							id: joi.string().required()
 						}),
 						commentRejectedDeadlineExtended: joi.object({
 							id: joi.string().required()

@@ -18,6 +18,7 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import logger from '#lib/logger.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -195,6 +196,7 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
 export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 	const {
 		currentAppeal,
+		currentFolder,
 		session,
 		params: { correspondenceCategory }
 	} = request;
@@ -213,7 +215,7 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					session,
 					bannerDefinitionKey: 'internalCorrespondenceDocumentAdded',
 					appealId: currentAppeal.appealId,
-					text: `${capitalize(correspondenceCategory)} correspondence documents uploaded`
+					text: `${mapFolderNameToDisplayLabel(currentFolder.path)} added`
 				});
 			}
 		});

@@ -29,6 +29,7 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -465,7 +466,8 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				addNotificationBannerToSession({
 					session: request.session,
 					bannerDefinitionKey: 'documentAdded',
-					appealId: currentAppeal.appealId
+					appealId: currentAppeal.appealId,
+					text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Documents'} added`
 				});
 			}
 		});

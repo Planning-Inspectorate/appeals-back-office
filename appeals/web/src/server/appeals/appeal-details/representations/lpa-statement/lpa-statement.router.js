@@ -14,9 +14,17 @@ const router = Router({ mergeParams: true });
 router
 	.route('/')
 	.get(renderReviewLpaStatement)
-	.post(validateStatus, saveBodyToSession('lpaStatement'), postReviewLpaStatement);
+	.post(
+		validateStatus,
+		saveBodyToSession('lpaStatement', { scopeToAppeal: true }),
+		postReviewLpaStatement
+	);
 
-router.use('/incomplete', saveBodyToSession('lpaStatement'), incompleteRouter);
+router.use(
+	'/incomplete',
+	saveBodyToSession('lpaStatement', { scopeToAppeal: true }),
+	incompleteRouter
+);
 
 router.use('/valid', validRouter);
 
