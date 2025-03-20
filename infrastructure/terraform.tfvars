@@ -38,3 +38,5 @@ tooling_config = {
   network_rg              = "pins-rg-shared-tooling-uks"
   subscription_id         = "edb1ff78-90da-4901-a497-7e79f966f8e2"
 }
+
+beta_feedback_url = "https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
