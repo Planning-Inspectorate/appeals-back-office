@@ -249,14 +249,20 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			return null;
 		}
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			if (appeal.appealTimetable?.appellantStatementDueDate) {
-				return new Date(appeal.appealTimetable?.appellantStatementDueDate);
+			if (appeal.appealTimetable?.lpaStatementDueDate && appeal.appealTimetable?.ipCommentsDueDate) {
+				 const lpaDate = new Date(appeal.appealTimetable.lpaStatementDueDate);
+		     const ipDate = new Date(appeal.appealTimetable.ipCommentsDueDate);
+
+				 return lpaDate < ipDate ? lpaDate : ipDate;
 			}
 			if (appeal.appealTimetable?.lpaStatementDueDate) {
 				return new Date(appeal.appealTimetable?.lpaStatementDueDate);
 			}
 			if (appeal.appealTimetable?.ipCommentsDueDate) {
 				return new Date(appeal.appealTimetable?.ipCommentsDueDate);
+			}
+			if (appeal.appealTimetable?.appellantStatementDueDate) {
+				return new Date(appeal.appealTimetable?.appellantStatementDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
