@@ -45,35 +45,82 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 		},
 		parameters: {
 			rows: [
-				{
-					key: { text: 'Statement' },
-					value: {
-						html: '',
-						pageComponents: [
+				...(lpaStatement.redactedRepresentation
+					? [
 							{
-								type: 'show-more',
-								parameters: {
-									text: lpaStatement.redactedRepresentation || lpaStatement.originalRepresentation,
-									labelText: 'Statement'
+								key: { text: 'Original statement' },
+								value: {
+									html: '',
+									pageComponents: [
+										{
+											type: 'show-more',
+											parameters: {
+												text: lpaStatement.originalRepresentation,
+												labelText: 'Original statement'
+											}
+										}
+									]
+								}
+							},
+							{
+								key: { text: 'Redacted statement' },
+								value: {
+									html: '',
+									pageComponents: [
+										{
+											type: 'show-more',
+											parameters: {
+												text: lpaStatement.redactedRepresentation,
+												labelText: 'Redacted statement'
+											}
+										}
+									]
+								},
+								actions: {
+									items: [
+										...(isReview
+											? []
+											: [
+													{
+														text: 'Redact',
+														href: `/appeals-service/appeal-details/${appealId}/lpa-statement/redact`,
+														visuallyHiddenText: 'statement'
+													}
+											  ])
+									]
 								}
 							}
-						]
-					},
-					actions: {
-						items: [
-							...(isReview
-								? []
-								: [
+					  ]
+					: [
+							{
+								key: { text: 'Statement' },
+								value: {
+									html: '',
+									pageComponents: [
 										{
-											text: 'Redact',
-											href: `/appeals-service/appeal-details/${appealId}/lpa-statement/redact`,
-											visuallyHiddenText: 'redact statement'
+											type: 'show-more',
+											parameters: {
+												text: lpaStatement.originalRepresentation,
+												labelText: 'Statement'
+											}
 										}
-								  ])
-						]
-					},
-					classes: 'govuk-summary-list__row--no-actions'
-				},
+									]
+								},
+								actions: {
+									items: [
+										...(isReview
+											? []
+											: [
+													{
+														text: 'Redact',
+														href: `/appeals-service/appeal-details/${appealId}/lpa-statement/redact`,
+														visuallyHiddenText: 'statement'
+													}
+											  ])
+									]
+								}
+							}
+					  ]),
 				{
 					key: { text: 'Supporting documents' },
 					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
