@@ -40,6 +40,70 @@ const DEFAULT_OPTIONS = {
 	toggleButtonTextExpanded: 'Close'
 };
 
+const initialiseHtmlNoRowSelector = async (
+	/** @type {ShowMoreComponentInstance} */ componentInstance
+) => {
+	const ellipsisSpan = createEllipsisSpan();
+
+	const contentSpan = document.createElement('span');
+	contentSpan.className = CLASSES.content;
+	contentSpan.innerHTML = getPreviewTextFromHtmlText(
+		componentInstance,
+		componentInstance.elements.root.innerHTML
+	);
+
+	componentInstance.elements.root.innerHTML = '';
+	componentInstance.elements.root.appendChild(contentSpan);
+	componentInstance.elements.root.appendChild(ellipsisSpan);
+};
+
+/**
+ * Creates a substring of the specified length while maintaining HTML tags.
+ * @param {string} htmlString - The input string containing HTML tags.
+ * @param {number} length - The desired length of the substring.
+ * @returns {string} - The substring with HTML tags maintained.
+ */
+const substringWithTags = (htmlString, length) => {
+	let count = 0;
+	let inTag = false;
+	let result = '';
+
+	for (let i = 0; i < htmlString.length; i++) {
+		if (htmlString[i] === '<') {
+			inTag = true;
+		} else if (htmlString[i] === '>') {
+			inTag = false;
+		} else if (!inTag) {
+			count++;
+		}
+
+		result += htmlString[i];
+
+		if (count === length) {
+			break;
+		}
+	}
+
+	// Add any remaining tags to close properly
+	if (inTag) {
+		let i = 0;
+		while (htmlString[i] !== '>') {
+			result += htmlString[i];
+			i++;
+		}
+		result += '>';
+	}
+
+	return result;
+};
+
+const getPreviewTextFromHtmlText = (
+	/** @type {ShowMoreComponentInstance} */ componentInstance,
+	/** @type {string} */ htmlText
+) => {
+	return substringWithTags(htmlText, componentInstance.options.maximumCharactersBeforeHiding);
+};
+
 const isHtmlMode = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
 	return componentInstance.elements.root.getAttribute(ATTRIBUTES.mode) === 'html';
 };
@@ -53,6 +117,12 @@ const getPreviewTextFromFullText = (
 
 const htmlModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
 	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
+
+	if (!rowSelector) {
+		initialiseHtmlNoRowSelector(componentInstance);
+		return;
+	}
+
 	const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
 
 	Array.from(rows)?.forEach((row, index) => {
@@ -141,11 +211,7 @@ const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ compo
 		componentInstance.elements.root.innerText
 	);
 
-	const ellipsisSpan = document.createElement('span');
-
-	ellipsisSpan.className = CLASSES.ellipsis;
-	ellipsisSpan.setAttribute('aria-hidden', 'true');
-	ellipsisSpan.textContent = '…';
+	const ellipsisSpan = createEllipsisSpan();
 
 	componentInstance.elements.root.innerHTML = '';
 	componentInstance.elements.root.appendChild(contentSpan);
@@ -237,6 +303,15 @@ const initialiseShowMore = () => {
 		};
 		await initialiseComponentInstance(componentInstance);
 	});
+};
+
+const createEllipsisSpan = () => {
+	const ellipsisSpan = document.createElement('span');
+	ellipsisSpan.className = CLASSES.ellipsis;
+	ellipsisSpan.setAttribute('aria-hidden', 'true');
+	ellipsisSpan.textContent = '…';
+
+	return ellipsisSpan;
 };
 
 export default initialiseShowMore;
