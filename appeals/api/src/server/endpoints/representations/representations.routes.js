@@ -52,7 +52,7 @@ router.get(
 		required: true,
 		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 	}
-  #swagger.parameters['types'] = {
+  #swagger.parameters['type'] = {
     in: 'query',
     required: false,
     example: 'lpa_statement'
