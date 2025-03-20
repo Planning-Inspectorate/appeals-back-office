@@ -80,6 +80,9 @@ module "app_web" {
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
+
+    # external URLs
+    BETA_FEEDBACK_URL = var.beta_feedback_url
   }
 
   providers = {
