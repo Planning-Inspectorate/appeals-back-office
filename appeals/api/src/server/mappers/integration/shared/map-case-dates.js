@@ -1,5 +1,6 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { mapDate, findStatusDate } from '#utils/mapping/map-dates.js';
+import { isCaseInvalid } from '#utils/case-invalid.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealStatus} AppealStatus */
@@ -13,6 +14,11 @@ import { mapDate, findStatusDate } from '#utils/mapping/map-dates.js';
 export const mapCaseDates = (data) => {
 	const { appeal } = data;
 
+	const appellantCaseValidationDate = isCaseInvalid(appeal.appealStatus)
+		? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
+		: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+		  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+
 	const lpaqValidationDate =
 		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) ??
 		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT);
@@ -25,7 +31,7 @@ export const mapCaseDates = (data) => {
 		caseCreatedDate: mapDate(appeal.caseCreatedDate),
 		caseUpdatedDate: mapDate(appeal.caseUpdatedDate),
 		caseValidDate: mapDate(appeal.caseValidDate),
-		caseValidationDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START),
+		caseValidationDate: appellantCaseValidationDate,
 		caseExtensionDate: mapDate(appeal.caseExtensionDate),
 		caseStartedDate: mapDate(appeal.caseStartedDate),
 		casePublishedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START),
