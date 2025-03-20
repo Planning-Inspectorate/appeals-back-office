@@ -7,7 +7,10 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
+import {
+	addInvisibleSpacesAfterRedactionCharacters,
+	highlightRedactedSections
+} from '#lib/redaction-string-formatter.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /**
@@ -152,7 +155,12 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 								text: comment.redactedRepresentation
 									? addInvisibleSpacesAfterRedactionCharacters(comment.redactedRepresentation)
 									: comment.originalRepresentation,
-								labelText: 'Read more'
+								html: comment.redactedRepresentation
+									? highlightRedactedSections(
+											comment.redactedRepresentation,
+											comment.originalRepresentation
+									  )
+									: comment.originalRepresentation
 							}
 						}
 					]
