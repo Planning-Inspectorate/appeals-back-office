@@ -77,7 +77,7 @@ const htmlModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ compone
 	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
 
 	rowSelector
-		? hideRows(componentInstance, rowSelector)
+		? toggleRows(componentInstance, rowSelector)
 		: htmlModeToggleExpandedNoRowSelector(componentInstance);
 };
 
@@ -168,7 +168,7 @@ const initialiseHtmlMode = (/** @type {ShowMoreComponentInstance} */ componentIn
 	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
 
 	rowSelector
-		? hideRows(componentInstance, rowSelector)
+		? toggleRows(componentInstance, rowSelector)
 		: initialiseHtmlModeNoRowSelector(componentInstance);
 };
 
@@ -296,7 +296,7 @@ const createEllipsisSpan = () => {
  * @param {String} rowSelector
  * @returns {void}
  */
-const hideRows = (componentInstance, rowSelector) => {
+const toggleRows = (componentInstance, rowSelector) => {
 	const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
 
 	Array.from(rows)?.forEach((row, index) => {
