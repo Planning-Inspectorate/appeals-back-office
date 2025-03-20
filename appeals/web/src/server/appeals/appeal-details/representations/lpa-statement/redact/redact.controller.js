@@ -45,7 +45,7 @@ export function postRedact(request, response) {
 		!currentAppeal.allocationDetails?.level ||
 		!currentAppeal.allocationDetails?.specialisms?.length
 	) {
-		session.acceptLPAStatement.forcedAllocation = true;
+		session.redactLPAStatement.forcedAllocation = true;
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/allocation-level`
 		);
