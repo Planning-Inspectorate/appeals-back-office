@@ -3749,7 +3749,7 @@
 						}
 					},
 					{
-						"name": "types",
+						"name": "type",
 						"in": "query",
 						"required": false,
 						"example": "lpa_statement",
