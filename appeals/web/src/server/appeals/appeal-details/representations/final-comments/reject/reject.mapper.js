@@ -5,8 +5,7 @@ import {
 	rejectionReasonHtml,
 	prepareRejectionReasons
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
@@ -51,19 +50,7 @@ export const confirmRejectFinalCommentPage = (
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const attachmentsList =
-		comment.attachments.length > 0
-			? buildHtmUnorderedList(
-					comment.attachments.map(
-						(a) =>
-							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-								a.documentVersion.document.caseId,
-								a.documentVersion.document.guid,
-								a.documentVersion.document.name
-							)}" target="_blank">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
+	const attachmentsList = getAttachmentList(comment);
 
 	const rejectionReasons = prepareRejectionReasons(
 		session.rejectFinalComments,
