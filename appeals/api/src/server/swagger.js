@@ -347,6 +347,7 @@ export const spec = {
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',
+			lpaEmailAddress: 'lpa@example.com',
 			lpaQuestionnaireId: null,
 			planningApplicationReference: '52279/APP/1/151419',
 			procedureType: 'Written',

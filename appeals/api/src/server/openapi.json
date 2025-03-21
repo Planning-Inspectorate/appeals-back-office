@@ -7071,6 +7071,10 @@
 						"type": "string",
 						"example": "Some Borough Council"
 					},
+					"lpaEmailAddress": {
+						"type": "string",
+						"example": "lpa@example.com"
+					},
 					"lpaQuestionnaireId": {},
 					"planningApplicationReference": {
 						"type": "string",

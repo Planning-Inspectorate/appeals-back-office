@@ -30,6 +30,7 @@ import { mapIssueDeterminationDate } from './submappers/issue-determination-date
 import { mapLeadOrChild } from './submappers/lead-or-child.mapper.js';
 import { mapLinkedAppeals } from './submappers/linked-appeals.mapper.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.mapper.js';
+import { mapLpaContactDetails } from './submappers/lpa-contact-details.mapper.js';
 import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper.js';
 import { mapLpaInspectorAccess } from './submappers/lpa-inspector-access.mapper.js';
 import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
@@ -58,6 +59,7 @@ export const submaps = {
 	decision: mapDecision,
 	siteAddress: mapSiteAddress,
 	localPlanningAuthority: mapLocalPlanningAuthority,
+	lpaContactDetails: mapLpaContactDetails,
 	appealStatus: mapAppealStatus,
 	lpaInspectorAccess: mapLpaInspectorAccess,
 	appellantInspectorAccess: mapAppellantInspectorAccess,
