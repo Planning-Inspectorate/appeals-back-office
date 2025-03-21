@@ -54,6 +54,9 @@ export const postReviewLpaStatement = async (request, response) => {
 
 	switch (status) {
 		case COMMENT_STATUS.VALID:
+			if (!('acceptLPAStatement' in session)) {
+				session.acceptLPAStatement = {};
+			}
 			if (
 				!currentAppeal.allocationDetails?.level ||
 				!currentAppeal.allocationDetails?.specialisms?.length

@@ -7,8 +7,10 @@ import {
 	documentFolderInfo,
 	documentRedactionStatuses,
 	finalCommentsForReview,
+	lpaStatementAwaitingReview,
 	interestedPartyCommentForReview,
-	activeDirectoryUsersData
+	activeDirectoryUsersData,
+	getAppealRepsResponse
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -39,7 +41,7 @@ describe('lpa-statements', () => {
 
 		nock('http://test/')
 			.get('/appeals/2/reps?type=lpa_statement')
-			.reply(200, finalCommentsForReview)
+			.reply(200, finalCommentsForReview) // TODO: this should be LPA statement data, not final comment data
 			.persist();
 
 		nock('http://test/')
@@ -49,9 +51,264 @@ describe('lpa-statements', () => {
 
 	afterEach(teardown);
 
+	describe('GET /', () => {
+		const appealId = 3;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+		});
+
+		it('should render the review LPA statement page with the expected content if the statement is awaiting review', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [lpaStatementAwaitingReview]
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/lpa-statement`);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Review LPA statement</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Review decision</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('name="status" type="radio" value="valid">');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="valid_requires_redaction">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="incomplete">'
+			);
+		});
+
+		it('should render the review LPA statement page with the expected content if the statement is incomplete', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...lpaStatementAwaitingReview,
+							status: 'incomplete'
+						}
+					]
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/lpa-statement`);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Review LPA statement</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Review decision</legend>');
+			expect(unprettifiedElement.innerHTML).toContain('name="status" type="radio" value="valid">');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="valid_requires_redaction">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="incomplete">'
+			);
+		});
+
+		it('should render the view LPA statement page with the expected content if the statement is neither awaiting review nor incomplete', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...lpaStatementAwaitingReview,
+							status: 'valid'
+						}
+					]
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/lpa-statement`);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('>LPA statement</h1>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Review decision</legend>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="status" type="radio" value="valid">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="status" type="radio" value="valid_requires_redaction">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="status" type="radio" value="incomplete">'
+			);
+		});
+	});
+
+	describe('POST /', () => {
+		const appealId = 3;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [lpaStatementAwaitingReview]
+				});
+		});
+
+		it('should re-render the review page with the expected error message if a review status was not selected', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text, { rootElement: '.govuk-error-summary' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Select your review decision</a>');
+		});
+
+		it('should redirect to the allocation level page, if "valid" status was selected and the appeal has no allocation level', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements',
+					allocationDetails: {
+						...appealDataFullPlanning.allocationDetails,
+						level: null
+					}
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({
+				status: 'valid'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
+			);
+		});
+
+		it('should redirect to the allocation level page, if "valid" status was selected and the appeal has no allocation specialisms', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements',
+					allocationDetails: {
+						...appealDataFullPlanning.allocationDetails,
+						specialisms: []
+					}
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({
+				status: 'valid'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
+			);
+		});
+
+		it('should redirect to the allocation check page, if "valid" status was selected and the appeal has both an allocation level and allocation specialisms', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({
+				status: 'valid'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
+			);
+		});
+
+		it('should redirect to the incomplete reasons page if "incomplete" status was selected', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({
+				status: 'incomplete'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/3/lpa-statement/incomplete/reasons'
+			);
+		});
+
+		it('should redirect to the redact statement page if "redact and accept" status was selected', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({
+				status: 'valid_requires_redaction'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/3/lpa-statement/redact'
+			);
+		});
+	});
+
+	// TODO: A2-2696: tests for other screens/routes in the feature
+
 	describe('GET /manage-documents/:folderId/', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not ip comment data
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -62,7 +319,7 @@ describe('lpa-statements', () => {
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=lpa_final_comment')
-				.reply(200, finalCommentsForReview);
+				.reply(200, finalCommentsForReview); // TODO: this should be LPA statement data, not final comment data
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
@@ -114,7 +371,7 @@ describe('lpa-statements', () => {
 				.get('/appeals/2/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not final comment data
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -180,7 +437,7 @@ describe('lpa-statements', () => {
 					appealStatus: 'statements'
 				});
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not final comment data
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -222,7 +479,7 @@ describe('lpa-statements', () => {
 				.get('/appeals/2/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
-			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be using LPA statement data, not ip comment data
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -281,11 +538,11 @@ describe('lpa-statements', () => {
 
 		describe('GET /add-document', () => {
 			beforeEach(() => {
-				nock('http://test/').get('/appeals/2/reps').reply(200, interestedPartyCommentForReview);
+				nock('http://test/').get('/appeals/2/reps').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not final comment data
 
 				nock('http://test/')
 					.get('/appeals/3619/reps?type=lpa_statement')
-					.reply(200, finalCommentsForReview);
+					.reply(200, lpaStatementAwaitingReview);
 			});
 
 			it('should render the add document details page', async () => {
