@@ -5,10 +5,17 @@
  * @param {Appeal} appealDetails
  * @param {Representation} comment
  * @param {string} finalCommentsType
+ * @param {string|null} attachmentsList
  * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageComponent}
  */
-export const summaryList = (appealDetails, comment, finalCommentsType, session) => ({
+export const summaryList = (
+	appealDetails,
+	comment,
+	finalCommentsType,
+	attachmentsList,
+	session
+) => ({
 	type: 'summary-list',
 	wrapperHtml: {
 		opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
@@ -57,7 +64,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, session) 
 			},
 			{
 				key: { text: 'Supporting documents' },
-				value: { text: '' } // TODO: blocked by A2-1765 (need a way to add documents for testing)
+				value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
 			},
 			{
 				key: { text: 'Review decision' },
