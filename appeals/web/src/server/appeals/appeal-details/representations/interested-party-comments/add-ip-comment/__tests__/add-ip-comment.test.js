@@ -375,6 +375,10 @@ describe('add-ip-comment', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-10-30'));
+
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
 			);
