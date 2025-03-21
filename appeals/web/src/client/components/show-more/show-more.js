@@ -44,6 +44,13 @@ const isHtmlMode = (/** @type {ShowMoreComponentInstance} */ componentInstance) 
 	return componentInstance.elements.root.getAttribute(ATTRIBUTES.mode) === 'html';
 };
 
+const getPreviewTextFromHtmlText = (
+	/** @type {ShowMoreComponentInstance} */ componentInstance,
+	/** @type {string} */ htmlText
+) => {
+	return substringWithTags(htmlText, componentInstance.options.maximumCharactersBeforeHiding);
+};
+
 const getPreviewTextFromFullText = (
 	/** @type {ShowMoreComponentInstance} */ componentInstance,
 	/** @type {string} */ fullText
@@ -51,17 +58,27 @@ const getPreviewTextFromFullText = (
 	return fullText.substring(0, componentInstance.options.maximumCharactersBeforeHiding);
 };
 
+const htmlModeToggleExpandedNoRowSelector = (
+	/** @type {ShowMoreComponentInstance} */ componentInstance
+) => {
+	componentInstance.elements.root.querySelector(`.${CLASSES.ellipsis}`).style.display =
+		componentInstance.state.expanded ? 'none' : '';
+	const content = componentInstance.elements.root.querySelector(`.${CLASSES.content}`);
+
+	content.innerHTML = componentInstance.state.expanded
+		? `${componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText)} `
+		: getPreviewTextFromHtmlText(
+				componentInstance,
+				componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText)
+		  );
+};
+
 const htmlModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
 	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
-	const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
 
-	Array.from(rows)?.forEach((row, index) => {
-		row.style.display =
-			!componentInstance.state.expanded &&
-			index >= componentInstance.options.maximumRowsBeforeHiding
-				? 'none'
-				: '';
-	});
+	rowSelector
+		? toggleRows(componentInstance, rowSelector)
+		: htmlModeToggleExpandedNoRowSelector(componentInstance);
 };
 
 const textModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
@@ -126,6 +143,35 @@ const awaitInnerText = async (componentInstance, depth = 0) => {
 	return awaitInnerText(componentInstance, depth + 1);
 };
 
+const initialiseHtmlModeNoRowSelector = (
+	/** @type {ShowMoreComponentInstance} */ componentInstance
+) => {
+	componentInstance.elements.root.setAttribute(
+		ATTRIBUTES.fullText,
+		componentInstance.elements.root.innerHTML
+	);
+	const ellipsisSpan = createEllipsisSpan();
+
+	const contentSpan = document.createElement('span');
+	contentSpan.className = CLASSES.content;
+	contentSpan.innerHTML = getPreviewTextFromHtmlText(
+		componentInstance,
+		componentInstance.elements.root.innerHTML
+	);
+
+	componentInstance.elements.root.innerHTML = '';
+	componentInstance.elements.root.appendChild(contentSpan);
+	componentInstance.elements.root.appendChild(ellipsisSpan);
+};
+
+const initialiseHtmlMode = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
+	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
+
+	rowSelector
+		? toggleRows(componentInstance, rowSelector)
+		: initialiseHtmlModeNoRowSelector(componentInstance);
+};
+
 const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
 	await awaitInnerText(componentInstance);
 
@@ -141,11 +187,7 @@ const initialiseTextMode = async (/** @type {ShowMoreComponentInstance} */ compo
 		componentInstance.elements.root.innerText
 	);
 
-	const ellipsisSpan = document.createElement('span');
-
-	ellipsisSpan.className = CLASSES.ellipsis;
-	ellipsisSpan.setAttribute('aria-hidden', 'true');
-	ellipsisSpan.textContent = '…';
+	const ellipsisSpan = createEllipsisSpan();
 
 	componentInstance.elements.root.innerHTML = '';
 	componentInstance.elements.root.appendChild(contentSpan);
@@ -192,7 +234,7 @@ const initialiseComponentInstance = async (
 	}
 
 	if (isHtmlMode(componentInstance)) {
-		htmlModeToggleExpanded(componentInstance);
+		initialiseHtmlMode(componentInstance);
 	} else {
 		await initialiseTextMode(componentInstance);
 	}
@@ -237,6 +279,73 @@ const initialiseShowMore = () => {
 		};
 		await initialiseComponentInstance(componentInstance);
 	});
+};
+
+const createEllipsisSpan = () => {
+	const ellipsisSpan = document.createElement('span');
+	ellipsisSpan.className = CLASSES.ellipsis;
+	ellipsisSpan.setAttribute('aria-hidden', 'true');
+	ellipsisSpan.textContent = '…';
+
+	return ellipsisSpan;
+};
+
+/**
+ *
+ * @param {ShowMoreComponentInstance} componentInstance
+ * @param {String} rowSelector
+ * @returns {void}
+ */
+const toggleRows = (componentInstance, rowSelector) => {
+	const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
+
+	Array.from(rows)?.forEach((row, index) => {
+		row.style.display =
+			!componentInstance.state.expanded &&
+			index >= componentInstance.options.maximumRowsBeforeHiding
+				? 'none'
+				: '';
+	});
+};
+
+/**
+ * Creates a substring of the specified length while maintaining HTML tags.
+ * @param {string} htmlString - The input string containing HTML tags.
+ * @param {number} length - The desired length of the substring.
+ * @returns {string} - The substring with HTML tags maintained.
+ */
+const substringWithTags = (htmlString, length) => {
+	let count = 0;
+	let inTag = false;
+	let result = '';
+
+	for (let i = 0; i < htmlString.length; i++) {
+		if (htmlString[i] === '<') {
+			inTag = true;
+		} else if (htmlString[i] === '>') {
+			inTag = false;
+		} else if (!inTag) {
+			count++;
+		}
+
+		result += htmlString[i];
+
+		if (count === length) {
+			break;
+		}
+	}
+
+	// Add any remaining tags to close properly
+	if (inTag) {
+		let i = 0;
+		while (htmlString[i] !== '>') {
+			result += htmlString[i];
+			i++;
+		}
+		result += '>';
+	}
+
+	return result;
 };
 
 export default initialiseShowMore;
