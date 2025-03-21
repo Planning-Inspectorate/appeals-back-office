@@ -232,3 +232,8 @@ variable "waf_rate_limits" {
     threshold           = number
   })
 }
+
+variable "beta_feedback_url" {
+  description = "URL for beta feedback form"
+  type        = string
+}
