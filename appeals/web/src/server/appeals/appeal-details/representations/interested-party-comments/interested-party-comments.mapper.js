@@ -154,7 +154,8 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 											comment.redactedRepresentation,
 											comment.originalRepresentation
 									  )
-									: comment.originalRepresentation
+									: comment.originalRepresentation,
+								labelText: 'Read more'
 							}
 						}
 					]
