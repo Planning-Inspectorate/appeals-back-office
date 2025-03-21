@@ -30,7 +30,9 @@ describe('infrastructure-levy-adopted-date', () => {
 
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-			expect(unprettifiedInnerHtml).toContain('Change levy adoption date</h1>');
+			expect(unprettifiedInnerHtml).toContain(
+				'When was the community infrastructure levy formally adopted?</h1>'
+			);
 			expect(unprettifiedInnerHtml).toContain(
 				'name="levy-adopted-date-day" type="text" inputmode="numeric">'
 			);
@@ -98,7 +100,9 @@ describe('infrastructure-levy-adopted-date', () => {
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 				expect(elementInnerHtml).toMatchSnapshot();
-				expect(elementInnerHtml).toContain('Change levy adoption date</h1>');
+				expect(elementInnerHtml).toContain(
+					'When was the community infrastructure levy formally adopted?</h1>'
+				);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -139,7 +143,9 @@ describe('infrastructure-levy-adopted-date', () => {
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 				expect(elementInnerHtml).toMatchSnapshot();
-				expect(elementInnerHtml).toContain('Change levy adoption date</h1>');
+				expect(elementInnerHtml).toContain(
+					'When was the community infrastructure levy formally adopted?</h1>'
+				);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -179,7 +185,9 @@ describe('infrastructure-levy-adopted-date', () => {
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 				expect(elementInnerHtml).toMatchSnapshot();
-				expect(elementInnerHtml).toContain('Change levy adoption date</h1>');
+				expect(elementInnerHtml).toContain(
+					'When was the community infrastructure levy formally adopted?'
+				);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',

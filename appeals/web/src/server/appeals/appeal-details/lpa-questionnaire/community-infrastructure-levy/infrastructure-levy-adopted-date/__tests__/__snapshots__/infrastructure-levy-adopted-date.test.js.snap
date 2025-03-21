@@ -14,7 +14,7 @@ exports[`infrastructure-levy-adopted-date GET /change should render the infrastr
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -83,7 +83,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -154,7 +154,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -225,7 +225,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -296,7 +296,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -365,7 +365,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -436,7 +436,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -507,7 +507,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -578,7 +578,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -647,7 +647,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -718,7 +718,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
@@ -789,7 +789,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change levy adoption date</h1>
+                                    <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">

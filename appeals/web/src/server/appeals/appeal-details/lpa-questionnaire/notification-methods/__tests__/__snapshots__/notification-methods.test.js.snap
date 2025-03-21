@@ -14,7 +14,7 @@ exports[`notification-methods GET /change should render the change notification 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change notification methods</h1>
+                                    <h1 class="govuk-fieldset__heading"> How did you notify relevant parties about the application?</h1>
                                 </legend>
                                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">

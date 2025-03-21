@@ -4,7 +4,7 @@ import { documentInstruction } from '../common.js';
 export const mapConsultationResponses = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'consultation-responses',
-		text: 'Consultation responses or standing advice',
+		text: 'Consultation responses and standing advice',
 		folderInfo: lpaQuestionnaireData.documents.consultationResponses,
 		cypressDataName: 'consultation-responses',
 		lpaQuestionnaireData,

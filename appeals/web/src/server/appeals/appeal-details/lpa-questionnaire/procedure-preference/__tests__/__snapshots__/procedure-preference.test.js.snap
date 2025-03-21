@@ -14,7 +14,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> Which procedure do you think is most appropriate for this appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -59,7 +59,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> Which procedure do you think is most appropriate for this appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -104,7 +104,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> Which procedure do you think is most appropriate for this appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -149,7 +149,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> Which procedure do you think is most appropriate for this appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -192,7 +192,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details"> Change reason for preference</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details"> Why would you prefer this procedure?</label></h1>
                             <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
                             rows="5">Example procedure preference details text</textarea>
                         </div>
@@ -218,7 +218,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details"> Change reason for preference</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details"> Why would you prefer this procedure?</label></h1>
                             <textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea"
                             rows="5"></textarea>
                         </div>
@@ -236,7 +236,7 @@ exports[`procedure-preference GET /duration/change should render the change expe
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -277,7 +277,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -318,7 +318,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -359,7 +359,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -400,7 +400,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -441,7 +441,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change expected length of procedure</h1>
+            <h1 class="govuk-heading-l">How many days would you expect the inquiry to last?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

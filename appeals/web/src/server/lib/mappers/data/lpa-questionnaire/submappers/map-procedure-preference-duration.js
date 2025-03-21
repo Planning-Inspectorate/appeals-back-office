@@ -4,7 +4,7 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapProcedurePreferenceDuration = ({ lpaQuestionnaireData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'procedure-preference-duration',
-		text: 'Expected length of procedure',
+		text: 'How many days would you expect the inquiry to last?',
 		editable: true,
 		value:
 			'lpaProcedurePreferenceDuration' in lpaQuestionnaireData &&

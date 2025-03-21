@@ -15,17 +15,15 @@ export function changeEiaColumnTwoThresholdPage(appealData, existingValue) {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change whether meets or exceeds column 2 threshold criteria`,
+		title: 'Does the development meet or exceed the threshold or criteria in column 2?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaColumnTwoThreshold',
 				value: existingValue,
-				legendText: 'Change whether meets or exceeds column 2 threshold criteria',
-				legendIsPageHeading: true,
-				customYesLabel: 'Meets or exceeds',
-				customNoLabel: 'Does not meet or exceed'
+				legendText: 'Does the development meet or exceed the threshold or criteria in column 2?',
+				legendIsPageHeading: true
 			})
 		]
 	};
@@ -42,17 +40,16 @@ export function changeEiaRequiresEnvironmentalStatementPage(appealData, existing
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change opinion that environmental statement needed`,
+		title: 'Did your screening opinion say the development needed an environmental statement?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaRequiresEnvironmentalStatement',
 				value: existingValue,
-				legendText: 'Change opinion that environmental statement needed',
-				legendIsPageHeading: true,
-				customYesLabel: 'Needed',
-				customNoLabel: 'Not needed'
+				legendText:
+					'Did your screening opinion say the development needed an environmental statement?',
+				legendIsPageHeading: true
 			})
 		]
 	};
@@ -77,14 +74,14 @@ export function changeEiaSensitiveAreaDetailsPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change whether in, partly in, or likely to affect a sensitive area',
+		title: 'Is the development in, partly in, or likely to affect a sensitive area?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change whether in, partly in, or likely to affect a sensitive area',
+		heading: 'Is the development in, partly in, or likely to affect a sensitive area?',
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaSensitiveAreaDetailsRadio',
-				value: sessionRadioValue === 'yes' || !!existingValue,
+				value: sessionRadioValue === 'yes' || Boolean(existingValue),
 				yesConditional: {
 					id: 'eia-sensitive-area-details',
 					name: 'eiaSensitiveAreaDetails',
@@ -115,14 +112,14 @@ export function changeEiaConsultedBodiesDetailsPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change consulted relevant statutory consultees',
+		title: 'Did you consult all the relevant statutory consultees about the development?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change consulted relevant statutory consultees',
+		heading: 'Did you consult all the relevant statutory consultees about the development?',
 		pageComponents: [
 			yesNoInput({
 				name: 'eiaConsultedBodiesDetailsRadio',
-				value: sessionRadioValue === 'yes' || !!existingValue,
+				value: sessionRadioValue === 'yes' || Boolean(existingValue),
 				yesConditional: {
 					id: 'eia-consulted-bodies-details',
 					name: 'eiaConsultedBodiesDetails',

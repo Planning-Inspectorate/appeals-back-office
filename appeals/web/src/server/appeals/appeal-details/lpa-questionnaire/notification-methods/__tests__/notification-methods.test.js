@@ -37,7 +37,9 @@ describe('notification-methods', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change notification methods</h1>');
+			expect(elementInnerHtml).toContain(
+				'How did you notify relevant parties about the application?</h1>'
+			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 

@@ -27,7 +27,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 				closing: ''
 			},
 			parameters: {
-				html: `<form method="POST">`
+				html: '<form method="POST">'
 			}
 		},
 		{
@@ -36,7 +36,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 				id: 'add-other-appeals-reference',
 				name: 'addOtherAppealsReference',
 				label: {
-					text: 'What is the appeal reference?',
+					text: 'Enter the appeal reference number',
 					classes: 'govuk-label--l',
 					isPageHeading: true
 				},

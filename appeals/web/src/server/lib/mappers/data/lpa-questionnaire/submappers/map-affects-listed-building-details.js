@@ -12,37 +12,33 @@ export const mapAffectsListedBuildingDetails = ({
 	display: {
 		summaryListItem: {
 			key: {
-				text: 'Affected listed buildings'
+				text: 'Does the development affect the setting of listed buildings?'
 			},
-			value: lpaQuestionnaireData.listedBuildingDetails?.filter(
-				(lb) => lb.listEntry && lb.affectsListedBuilding === true
-			)?.length
+			value: lpaQuestionnaireData.listedBuildingDetails?.some(
+				(lb) => lb.listEntry && lb.affectsListedBuilding
+			)
 				? {
 						html: displayPageFormatter.formatListOfListedBuildingNumbers(
-							lpaQuestionnaireData.listedBuildingDetails.filter(
-								(lb) => lb.affectsListedBuilding === true
-							) || []
+							lpaQuestionnaireData.listedBuildingDetails.filter((lb) => lb.affectsListedBuilding) ||
+								[]
 						)
 				  }
-				: {
-						text: 'No affected listed buildings'
-				  },
+				: { text: 'No' },
 			actions: {
 				items: [
-					...(lpaQuestionnaireData.listedBuildingDetails &&
-					lpaQuestionnaireData.listedBuildingDetails.length > 0
+					...(lpaQuestionnaireData.listedBuildingDetails?.length
 						? [
 								mapActionComponent(permissionNames.updateCase, session, {
-									text: 'Manage',
+									text: 'Change',
 									href: `${currentRoute}/affected-listed-buildings/manage`,
-									visuallyHiddenText: 'Affected listed building',
+									visuallyHiddenText: 'affected listed building',
 									attributes: { 'lpaQuestionnaireData-cy': 'manage-affected-listed-building' }
 								})
 						  ]
 						: []),
 					mapActionComponent(permissionNames.updateCase, session, {
 						text: 'Add',
-						visuallyHiddenText: 'Affected listed building',
+						visuallyHiddenText: 'affected listed building',
 						href: `${currentRoute}/affected-listed-buildings/add`,
 						attributes: { 'lpaQuestionnaireData-cy': 'add-affected-listed-building' }
 					})

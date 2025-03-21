@@ -29,7 +29,7 @@ describe('affects-scheduled-monument', () => {
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
-			expect(mainInnerHtml).toContain('Change whether scheduled monument affected</h1>');
+			expect(mainInnerHtml).toContain('Would the development affect a scheduled monument?</h1>');
 		});
 
 		it('should render a back link to LPAQ page on the affectsScheduledMonument change page when accessed from LPAQ page', async () => {

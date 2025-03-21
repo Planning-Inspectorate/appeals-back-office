@@ -318,27 +318,33 @@ export const getAddDocuments = async (request, response) => {
 	}
 
 	const documentType = currentFolder.path.split('/')[1];
-	let pageHeadingTextOverride;
 
-	switch (documentType) {
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`:
-			pageHeadingTextOverride = 'Upload notification documents';
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
-			pageHeadingTextOverride = 'Upload site notice';
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
-			pageHeadingTextOverride = 'Upload letter or email notification';
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
-			pageHeadingTextOverride = 'Upload press advert notification';
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES}`:
-			pageHeadingTextOverride = 'Upload any other relevant policies';
-			break;
-		default:
-			break;
-	}
+	const pageHeadingTextOverride = {
+		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED]: 'Upload who you notified about the application',
+		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE]: 'Upload the site notice',
+		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS]: 'Upload letter or email notification',
+		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT]: 'Upload press advertisement',
+		[APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES]: 'Upload any other relevant policies',
+		[APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN]: 'Upload a plan showing the extent of the order',
+		[APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT]:
+			'Upload the definitive map and statement extract',
+		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION]: 'Upload the screening direction',
+		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION]:
+			'Upload your screening opinion and any correspondence',
+		[APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT]:
+			'Environmental statement and supporting information',
+		[APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES]:
+			'Upload the consultation responses and standing advice',
+		[APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS]:
+			'Upload the representations from members of the public or other parties',
+		[APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS]: 'Upload the plans, drawings and list of plans',
+		[APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT]:
+			'Upload the planning officer’s report or what your decision notice would have said',
+		[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
+			'Upload relevant policies from your statutory development plan',
+		[APPEAL_DOCUMENT_TYPE.EMERGING_PLAN]: 'Upload the emerging plan and supporting information',
+		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents'
+	}[documentType];
 
 	await renderDocumentUpload({
 		request,

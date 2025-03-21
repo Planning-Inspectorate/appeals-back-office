@@ -8,7 +8,7 @@ export const mapIsGypsyOrTravellerSite = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'is-gypsy-or-traveller-site',
-		text: 'Affects Gypsy or Traveller communities',
+		text: 'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
 		value: lpaQuestionnaireData.isGypsyOrTravellerSite,
 		defaultText: '',
 		addCyAttribute: true,

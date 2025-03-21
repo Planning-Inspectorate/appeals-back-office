@@ -27,7 +27,7 @@ describe('has-protected-species', () => {
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
-			expect(mainInnerHtml).toContain('Change whether protected species affected</h1>');
+			expect(mainInnerHtml).toContain('Would the development affect a protected species?</h1>');
 		});
 
 		it('should render a back link to LPAQ page on the hasProtectedSpecies change page when accessed from LPAQ page', async () => {

@@ -8,11 +8,8 @@ export const mapEiaConsultedBodiesDetails = ({
 }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'eia-consulted-bodies-details',
-		text: 'Consulted relevant statutory consultees',
-		value:
-			(lpaQuestionnaireData.consultedBodiesDetails &&
-				lpaQuestionnaireData.consultedBodiesDetails?.length > 0) ||
-			false,
+		text: 'Did you consult all the relevant statutory consultees about the development?',
+		value: (lpaQuestionnaireData.consultedBodiesDetails?.length ?? 0) > 0,
 		valueDetails: lpaQuestionnaireData.consultedBodiesDetails,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/environmental-impact-assessment/consulted-bodies-details/change`,

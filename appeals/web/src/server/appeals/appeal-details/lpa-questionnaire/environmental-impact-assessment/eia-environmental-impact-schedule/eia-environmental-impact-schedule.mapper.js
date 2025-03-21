@@ -17,13 +17,13 @@ export function changeEiaEnvironmentalImpactSchedulePage(appealData, existingVal
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change development category`,
+		title: 'What is the development category?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			radiosInput({
 				name: 'eiaEnvironmentalImpactSchedule',
-				legendText: 'Change development category',
+				legendText: 'What is the development category?',
 				legendIsPageHeading: true,
 				items: [
 					...Object.values(APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE).map((schedule) => ({

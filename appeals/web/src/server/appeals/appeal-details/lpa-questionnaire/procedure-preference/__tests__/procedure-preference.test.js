@@ -29,7 +29,7 @@ describe('procedure-preference', () => {
 		const testCases = [
 			{
 				fieldName: 'lpaProcedurePreference',
-				labelText: 'Procedure preference',
+				labelText: 'Which procedure do you think is most appropriate for this appeal?',
 				defaultValueText: 'Not applicable',
 				validData: [
 					{
@@ -40,7 +40,7 @@ describe('procedure-preference', () => {
 			},
 			{
 				fieldName: 'lpaProcedurePreferenceDetails',
-				labelText: 'Reason for preference',
+				labelText: 'Why would you prefer this procedure?',
 				defaultValueText: 'Not applicable',
 				validData: [
 					{
@@ -51,7 +51,7 @@ describe('procedure-preference', () => {
 			},
 			{
 				fieldName: 'lpaProcedurePreferenceDuration',
-				labelText: 'Expected length of procedure',
+				labelText: 'How many days would you expect the inquiry to last?',
 				defaultValueText: 'Not applicable',
 				validData: [
 					{
@@ -141,7 +141,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change procedure preference</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which procedure do you think is most appropriate for this appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="procedurePreferenceRadio" type="radio" value="hearing">'
 			);
@@ -233,7 +235,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</label></h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this procedure?</label></h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<textarea class="govuk-textarea" id="procedure-preference-details" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
 			);
@@ -335,7 +339,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change expected length of procedure</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="">'
 			);

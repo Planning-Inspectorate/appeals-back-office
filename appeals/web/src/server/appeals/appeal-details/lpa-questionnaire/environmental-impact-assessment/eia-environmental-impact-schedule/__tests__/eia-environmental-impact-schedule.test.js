@@ -26,7 +26,7 @@ describe('eia-environmental-impact-schedule', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change development category</h1>');
+			expect(elementInnerHtml).toContain('What is the development category?</h1>');
 
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
@@ -47,7 +47,7 @@ describe('eia-environmental-impact-schedule', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change development category</h1>');
+			expect(elementInnerHtml).toContain('What is the development category?</h1>');
 
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 

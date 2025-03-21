@@ -8,7 +8,7 @@ export const mapAffectsScheduledMonument = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'affects-scheduled-monument',
-		text: 'Affects scheduled monument',
+		text: 'Would the development affect a scheduled monument?',
 		value: lpaQuestionnaireData.affectsScheduledMonument,
 		defaultText: '',
 		addCyAttribute: true,

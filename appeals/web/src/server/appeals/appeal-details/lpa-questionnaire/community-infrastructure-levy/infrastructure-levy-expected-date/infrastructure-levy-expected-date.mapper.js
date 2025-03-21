@@ -23,7 +23,7 @@ export const changeInfrastructureLevyExpectedDate = (appealData, existingValue, 
 			dateInput({
 				name: 'infrastructureLevyExpectedDate',
 				namePrefix: 'levy-expected-date',
-				legendText: 'Change expected levy adoption date',
+				legendText: 'When do you expect to formally adopt the community infrastructure levy?',
 				legendIsPageHeading: true,
 				value: dateISOStringToDayMonthYearHourMinute(existingValue)
 			})

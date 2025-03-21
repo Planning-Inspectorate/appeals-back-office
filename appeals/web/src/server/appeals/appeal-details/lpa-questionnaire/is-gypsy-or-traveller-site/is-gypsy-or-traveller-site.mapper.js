@@ -22,10 +22,8 @@ export const changeIsGypsyOrTravellerSite = (appealData, data, origin) => {
 			yesNoInput({
 				name: 'isGypsyOrTravellerSiteRadio',
 				value: data,
-				legendText: 'Change whether Gypsy or Traveller communities affected',
-				legendIsPageHeading: true,
-				customYesLabel: 'Affected',
-				customNoLabel: 'Not affected'
+				legendText: 'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
+				legendIsPageHeading: true
 			})
 		]
 	};

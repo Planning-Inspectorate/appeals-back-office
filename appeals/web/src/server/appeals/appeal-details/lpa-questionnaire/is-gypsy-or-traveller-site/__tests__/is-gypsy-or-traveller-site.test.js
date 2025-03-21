@@ -30,7 +30,7 @@ describe('is-gypsy-or-traveller-site', () => {
 
 			expect(mainInnerHtml).toMatchSnapshot();
 			expect(mainInnerHtml).toContain(
-				'Change whether Gypsy or Traveller communities affected</h1>'
+				'Does the development relate to anyone claiming to be a Gypsy or Traveller?</h1>'
 			);
 		});
 

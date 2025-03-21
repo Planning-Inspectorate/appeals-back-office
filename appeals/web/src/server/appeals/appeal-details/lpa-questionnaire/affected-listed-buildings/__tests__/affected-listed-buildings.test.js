@@ -138,7 +138,7 @@ describe('affected-listed-buildings', () => {
 			);
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toContain('Manage affected listed buildings</h1>');
+			expect(elementInnerHtml).toContain('Add affected listed buildings</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 			expect(unprettifiedElement).toContain('Listed buildings</caption>');

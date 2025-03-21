@@ -15,14 +15,14 @@ export const changeAffectsScheduledMonument = (appealData, data, origin) => {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Affects scheduled monument`,
+		title: 'Would the development affect a scheduled monument?',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'affectsScheduledMonumentRadio',
 				value: data,
-				legendText: 'Change whether scheduled monument affected',
+				legendText: 'Would the development affect a scheduled monument?',
 				legendIsPageHeading: true,
 				customYesLabel: 'Affected',
 				customNoLabel: 'Not affected'

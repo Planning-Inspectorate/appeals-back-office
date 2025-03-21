@@ -26,10 +26,10 @@ export function addNeighbouringSitePage(appealData, source, origin, currentAddre
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add neighbouring site',
+		title: 'Tell us the address of the neighbour’s land or property',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Add neighbouring site ${getFormattedSource(source)}`,
+		heading: 'Tell us the address of the neighbour’s land or property',
 		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
 
@@ -330,18 +330,4 @@ export function changeNeighbouringSiteCheckAndConfirmPage(
 	};
 
 	return pageContent;
-}
-
-/**
- *
- * @param {Source} source
- * @returns
- */
-function getFormattedSource(source) {
-	const formattedSource = {
-		lpa: '(LPA)',
-		'back-office': '(Inspector/third party)'
-	};
-
-	return formattedSource[source];
 }

@@ -20,15 +20,17 @@ export const changeNotificationMethodsPage = (
 	backLinkUrl
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const currentValues = storedSessionData
-		? storedSessionData
-		: lpaqData.lpaNotificationMethods?.map((notificationMethod) => ({
-				id: notificationMethods.find((method) => method.name === notificationMethod.name)?.id
-		  })) || [];
+
+	const currentValues =
+		storedSessionData ??
+		(lpaqData.lpaNotificationMethods?.map((notificationMethod) => ({
+			id: notificationMethods.find((method) => method.name === notificationMethod.name)?.id
+		})) ||
+			[]);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change notification methods`,
+		title: 'How did you notify relevant parties about the application?',
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -39,7 +41,7 @@ export const changeNotificationMethodsPage = (
 					id: 'notification-methods-checkboxes',
 					fieldset: {
 						legend: {
-							text: 'Change notification methods',
+							text: 'How did you notify relevant parties about the application?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}

@@ -14,18 +14,18 @@ exports[`is-gypsy-or-traveller-site GET /change should render the greenBelt chan
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change whether Gypsy or Traveller communities affected</h1>
+                                    <h1 class="govuk-fieldset__heading"> Does the development relate to anyone claiming to be a Gypsy or Traveller?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-gypsy-or-traveller-site-radio"
                                         name="isGypsyOrTravellerSiteRadio" type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio">Affected</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-gypsy-or-traveller-site-radio-2"
                                         name="isGypsyOrTravellerSiteRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio-2">Not affected</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-gypsy-or-traveller-site-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>

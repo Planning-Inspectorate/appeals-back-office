@@ -26,7 +26,7 @@ describe('eia-development-description', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change description of development</h1>');
+			expect(elementInnerHtml).toContain('Description of development</h1>');
 
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 

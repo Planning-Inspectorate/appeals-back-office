@@ -91,7 +91,7 @@ describe('documents and folders', () => {
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN,
-				label: 'Plan showing extent of TPO'
+				label: 'Tree Preservation Order'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT,

@@ -8,7 +8,7 @@ export const mapEiaRequiresEnvironmentalStatement = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'eia-requires-environmental-statement',
-		text: 'Screening opinion says environmental statement needed',
+		text: 'Did your screening opinion say the development needed an environmental statement?',
 		value: lpaQuestionnaireData.eiaRequiresEnvironmentalStatement,
 		defaultText: '',
 		addCyAttribute: true,

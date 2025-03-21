@@ -4,7 +4,7 @@ import { booleanSummaryListItem } from '#lib/mappers/index.js';
 export const mapHasProtectedSpecies = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>
 	booleanSummaryListItem({
 		id: 'has-protected-species',
-		text: 'Affects protected species',
+		text: 'Would the development affect a protected species?',
 		value: lpaQuestionnaireData.hasProtectedSpecies,
 		defaultText: '',
 		addCyAttribute: true,

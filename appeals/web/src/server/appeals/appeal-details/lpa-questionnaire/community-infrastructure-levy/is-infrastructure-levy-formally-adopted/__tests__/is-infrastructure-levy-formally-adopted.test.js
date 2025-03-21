@@ -34,18 +34,20 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change whether levy formally adopted</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the community infrastructure levy formally adopted?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Yes</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> Not formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> No</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -67,18 +69,20 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change whether levy formally adopted</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the community infrastructure levy formally adopted?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Yes</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> Not formally adopted</label>'
+				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> No</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -102,7 +106,9 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change whether levy formally adopted</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the community infrastructure levy formally adopted?</h1>'
+			);
 
 			const errorSummaryElement = parseHtml(response.text, {
 				skipPrettyPrint: true,
