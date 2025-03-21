@@ -524,8 +524,8 @@ exports[`personal-list GET / should render the first page of the personal list w
 `;
 
 exports[`personal-list GET / should render the header with navigation containing links to the personal list (with active modifier class), national list, and sign out route 1`] = `
-"<header class="govuk-header" id="pins-applications-header" role="banner"
-data-module="govuk-header">
+"<header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+role="banner" data-module="govuk-header">
     <div class="govuk-width-container">
         <div class="pins-row">
             <div class="pins-column--left">
