@@ -38,8 +38,11 @@ export function postRedact(request, response) {
 	const {
 		params: { appealId },
 		currentAppeal,
+		currentRepresentation,
 		session
 	} = request;
+
+	session.redactLPAStatement.lpaStatementId = currentRepresentation.id;
 
 	if (
 		!currentAppeal.allocationDetails?.level ||
