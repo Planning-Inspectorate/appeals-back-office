@@ -92,8 +92,6 @@ export const confirmAcceptFinalCommentPage = (appealDetails, representation, fin
 			  )
 			: null;
 
-	console.log(`[accept.mapper.js] attachmentsList: ${attachmentsList}`);
-
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		summaryList(appealDetails, representation, finalCommentsType, attachmentsList)

@@ -4,6 +4,8 @@ import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappe
 import { redactInput } from '#appeals/appeal-details/representations/common/components/redact-input.js';
 import { summaryList } from './components/summary-list.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -95,8 +97,24 @@ export const confirmRedactFinalCommentPage = (
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	const attachmentsList =
+		comment.attachments.length > 0
+			? buildHtmUnorderedList(
+					comment.attachments.map(
+						(a) =>
+							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+								a.documentVersion.document.caseId,
+								a.documentVersion.document.guid,
+								a.documentVersion.document.name
+							)}" target="_blank">${a.documentVersion.document.name}</a>`
+					)
+			  )
+			: null;
+
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryList(appealDetails, comment, finalCommentsType, session)];
+	const pageComponents = [
+		summaryList(appealDetails, comment, finalCommentsType, attachmentsList, session)
+	];
 
 	preRenderPageComponents(pageComponents);
 
