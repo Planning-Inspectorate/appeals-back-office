@@ -12,7 +12,7 @@ export const getCaseContacts = (mappedData) => ({
 			mappedData.appeal.appellant.display.summaryListItem,
 			mappedData.appeal.agent.display.summaryListItem,
 			removeSummaryListActions({
-				...mappedData.appeal.localPlanningAuthority.display.summaryListItem,
+				...mappedData.appeal.lpaContactDetails.display.summaryListItem,
 				key: {
 					text: 'LPA'
 				}

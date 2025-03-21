@@ -99,6 +99,7 @@ interface SingleAppealDetailsResponse {
 	linkedAppeals: LinkedAppeal[];
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
+	lpaEmailAddress?: string;
 	lpaQuestionnaireId?: number | null;
 	neighbouringSites: NeighbouringSite[];
 	planningApplicationReference: string;

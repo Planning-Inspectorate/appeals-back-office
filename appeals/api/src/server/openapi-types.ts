@@ -1096,6 +1096,8 @@ export interface SingleAppealResponse {
 	isChildAppeal?: boolean;
 	/** @example "Some Borough Council" */
 	localPlanningDepartment?: string;
+	/** @example "lpa@example.com" */
+	lpaEmailAddress?: string;
 	lpaQuestionnaireId?: any;
 	/** @example "52279/APP/1/151419" */
 	planningApplicationReference?: string;
