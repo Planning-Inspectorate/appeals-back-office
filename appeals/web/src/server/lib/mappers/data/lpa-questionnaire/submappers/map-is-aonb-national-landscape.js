@@ -8,7 +8,7 @@ export const mapIsAonbNationalLandscape = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'is-aonb-national-landscape',
-		text: 'In area of outstanding natural beauty',
+		text: 'Is the site in an area of outstanding natural beauty?',
 		value: lpaQuestionnaireData.isAonbNationalLandscape,
 		defaultText: '',
 		addCyAttribute: true,

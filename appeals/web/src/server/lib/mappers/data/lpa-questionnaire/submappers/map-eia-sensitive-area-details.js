@@ -8,7 +8,7 @@ export const mapEiaSensitiveAreaDetails = ({
 }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'eia-sensitive-area-details',
-		text: 'In, partly in, or likely to affect a sensitive area',
+		text: 'Is the development in, partly in, or likely to affect a sensitive area?',
 		value:
 			(lpaQuestionnaireData.eiaSensitiveAreaDetails &&
 				lpaQuestionnaireData.eiaSensitiveAreaDetails?.length > 0) ||

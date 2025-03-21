@@ -29,7 +29,7 @@ export const changeCorrectAppealTypePage = (
 			yesNoInput({
 				name: 'correctAppealTypeRadio',
 				value: currentRadioValue,
-				legendText: 'Is the appeal type correct (LPA response)?',
+				legendText: `Is ${appealData.appealType} the correct type of appeal?`,
 				legendIsPageHeading: true
 			})
 		]

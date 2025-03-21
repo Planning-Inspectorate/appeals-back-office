@@ -12,37 +12,36 @@ export const mapChangedListedBuildingDetails = ({
 	display: {
 		summaryListItem: {
 			key: {
-				text: 'Changed listed buildings'
+				text: 'Does the development change a listed building?'
 			},
-			value: lpaQuestionnaireData.listedBuildingDetails?.filter(
-				(lb) => lb.listEntry && lb.affectsListedBuilding === false
-			)?.length
+			value: lpaQuestionnaireData.listedBuildingDetails?.some(
+				(lb) => lb.listEntry && !lb.affectsListedBuilding
+			)
 				? {
 						html: displayPageFormatter.formatListOfListedBuildingNumbers(
 							lpaQuestionnaireData.listedBuildingDetails.filter(
-								(lb) => lb.affectsListedBuilding === false
+								(lb) => !lb.affectsListedBuilding
 							) || []
 						)
 				  }
 				: {
-						text: 'No Changed listed buildings'
+						text: 'No'
 				  },
 			actions: {
 				items: [
-					...(lpaQuestionnaireData.listedBuildingDetails &&
-					lpaQuestionnaireData.listedBuildingDetails.length > 0
+					...(lpaQuestionnaireData.listedBuildingDetails?.length
 						? [
 								mapActionComponent(permissionNames.updateCase, session, {
-									text: 'Manage',
+									text: 'Change',
 									href: `${currentRoute}/changed-listed-buildings/manage`,
-									visuallyHiddenText: 'Changed listed building',
+									visuallyHiddenText: 'changed listed building',
 									attributes: { 'lpaQuestionnaireData-cy': 'manage--listed-building' }
 								})
 						  ]
 						: []),
 					mapActionComponent(permissionNames.updateCase, session, {
 						text: 'Add',
-						visuallyHiddenText: 'Changed listed building',
+						visuallyHiddenText: 'changed listed building',
 						href: `${currentRoute}/changed-listed-buildings/add`,
 						attributes: { 'lpaQuestionnaireData-cy': 'add-changed-listed-building' }
 					})

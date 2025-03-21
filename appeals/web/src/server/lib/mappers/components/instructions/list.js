@@ -6,18 +6,10 @@
  * @param {string} options.link
  * @param {boolean} options.editable
  * @param {string} [options.classes]
- * @param {boolean} [options.returnPlainTextForSingleItem]
+ * @param {string} [options.prefaceText]
  * @returns {Instructions}
  */
-export function listSummaryListItem({
-	id,
-	text,
-	value,
-	link,
-	editable,
-	classes,
-	returnPlainTextForSingleItem = true
-}) {
+export function listSummaryListItem({ id, text, value, link, editable, classes, prefaceText }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
 	if (editable) {
@@ -35,12 +27,11 @@ export function listSummaryListItem({
 			summaryListItem: {
 				key: { text },
 				value: {
-					html:
-						returnPlainTextForSingleItem && value.length === 1
-							? value[0]
-							: `<ul class="pins-summary-list-sublist">${value
-									.map((item) => `<li>${item}</li>`)
-									.join('')}</ul>`
+					html: `${
+						prefaceText ? prefaceText + '\n' : ''
+					}<ul class="pins-summary-list-sublist">${value
+						.map((item) => `<li>${item}</li>`)
+						.join('')}</ul>`
 				},
 				actions: { items: actions },
 				classes

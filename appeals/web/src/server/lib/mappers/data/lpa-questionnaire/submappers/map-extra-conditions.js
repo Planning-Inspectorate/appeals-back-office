@@ -4,7 +4,7 @@ import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 export const mapExtraConditions = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'extra-conditions',
-		text: 'Extra conditions',
+		text: 'Are there any new conditions?',
 		value: lpaQuestionnaireData.hasExtraConditions,
 		valueDetails: lpaQuestionnaireData.extraConditions,
 		defaultText: '',

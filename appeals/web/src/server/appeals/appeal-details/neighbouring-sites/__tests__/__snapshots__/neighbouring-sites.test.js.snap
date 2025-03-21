@@ -4,7 +4,7 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -55,7 +55,7 @@ exports[`neighbouring-sites GET /add should render getAllNeighbouringSite page f
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (LPA)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -328,7 +328,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -396,7 +396,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -464,7 +464,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -531,7 +531,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -598,7 +598,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -665,7 +665,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -732,7 +732,7 @@ exports[`neighbouring-sites POST /add should re-render getAllNeighbouringSite pa
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Add neighbouring site (Inspector/third party)</h1>
+            <h1 class="govuk-heading-l">Tell us the address of the neighbour’s land or property</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

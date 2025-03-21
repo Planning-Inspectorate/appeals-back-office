@@ -31,7 +31,7 @@ export const mapOtherAppeals = ({ appealDetails, currentRoute, session }) => {
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Appeals near the site'
+					text: 'Are there any other ongoing appeals next to, or close to the site?'
 				},
 				value: {
 					html:

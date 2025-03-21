@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Does not meet or exceed" radio option checked if eiaColumnTwoThreshold is false 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "No" radio option checked if eiaColumnTwoThreshold is false 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -14,18 +14,18 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change whether meets or exceeds column 2 threshold criteria</h1>
+                                    <h1 class="govuk-fieldset__heading"> Does the development meet or exceed the threshold or criteria in column 2?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold" name="eiaColumnTwoThreshold"
                                         type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold">Meets or exceeds</label>
+                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold-2" name="eiaColumnTwoThreshold"
                                         type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2">Does not meet or exceed</label>
+                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -40,7 +40,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 </main>"
 `;
 
-exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Meets or exceeds" radio option checked if eiaColumnTwoThreshold is true 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Yes" radio option checked if eiaColumnTwoThreshold is true 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -54,18 +54,18 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change whether meets or exceeds column 2 threshold criteria</h1>
+                                    <h1 class="govuk-fieldset__heading"> Does the development meet or exceed the threshold or criteria in column 2?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold" name="eiaColumnTwoThreshold"
                                         type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold">Meets or exceeds</label>
+                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold-2" name="eiaColumnTwoThreshold"
                                         type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2">Does not meet or exceed</label>
+                                        <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -84,7 +84,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change consulted relevant statutory consultees</h1>
+            <h1 class="govuk-heading-l">Did you consult all the relevant statutory consultees about the development?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -128,7 +128,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change consulted relevant statutory consultees</h1>
+            <h1 class="govuk-heading-l">Did you consult all the relevant statutory consultees about the development?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -168,7 +168,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 </main>"
 `;
 
-exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Needed" radio option checked if eiaRequiresEnvironmentalStatement is true 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "No" radio option checked if eiaRequiresEnvironmentalStatement is false 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -182,18 +182,18 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change opinion that environmental statement needed</h1>
+                                    <h1 class="govuk-fieldset__heading"> Did your screening opinion say the development needed an environmental statement?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement">Needed</label>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement-2"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2">Not needed</label>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -208,7 +208,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 </main>"
 `;
 
-exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Not needed" radio option checked if eiaRequiresEnvironmentalStatement is false 1`] = `
+exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Yes" radio option checked if eiaRequiresEnvironmentalStatement is true 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -222,18 +222,18 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change opinion that environmental statement needed</h1>
+                                    <h1 class="govuk-fieldset__heading"> Did your screening opinion say the development needed an environmental statement?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement">Needed</label>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement-2"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
-                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2">Not needed</label>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -252,7 +252,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change whether in, partly in, or likely to affect a sensitive area</h1>
+            <h1 class="govuk-heading-l">Is the development in, partly in, or likely to affect a sensitive area?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -296,7 +296,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change whether in, partly in, or likely to affect a sensitive area</h1>
+            <h1 class="govuk-heading-l">Is the development in, partly in, or likely to affect a sensitive area?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

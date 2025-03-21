@@ -26,13 +26,13 @@ export const changeProcedurePreferencePage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change procedure preference`,
+		title: 'Which procedure do you think is most appropriate for this appeal?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			radiosInput({
 				name: 'procedurePreferenceRadio',
-				legendText: 'Change procedure preference',
+				legendText: 'Which procedure do you think is most appropriate for this appeal?',
 				legendIsPageHeading: true,
 				items: [
 					{
@@ -79,14 +79,14 @@ export const changeProcedurePreferenceDetailsPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change reason for preference`,
+		title: 'Why would you prefer this procedure?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			textareaInput({
 				name: 'procedurePreferenceDetailsTextarea',
 				id: 'procedure-preference-details',
-				labelText: 'Change reason for preference',
+				labelText: 'Why would you prefer this procedure?',
 				labelIsPageHeading: true,
 				value: procedurePreferenceDetails || ''
 			})
@@ -117,10 +117,10 @@ export const changeProcedurePreferenceDurationPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change expected length of procedure`,
+		title: 'How many days would you expect the inquiry to last?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${lpaQuestionnaireData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change expected length of procedure`,
+		heading: 'How many days would you expect the inquiry to last?',
 		pageComponents: [
 			textInput({
 				name: 'procedurePreferenceDurationInput',

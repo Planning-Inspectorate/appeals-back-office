@@ -580,7 +580,7 @@ describe('LPA Questionnaire review', () => {
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN}`,
-					label: 'Plan showing extent of TPO'
+					label: 'Tree Preservation Order'
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT}`,
@@ -1004,38 +1004,11 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHtml).toContain(
-					'<dt class="govuk-summary-list__key"> In, near or likely to affect designated sites</dt>'
+					'<dt class="govuk-summary-list__key"> Is the development in, near or likely to affect any designated sites?</dt>'
 				);
 			});
 
-			it('should render a designated sites row with a "Change" action link to the designated sites change page', async () => {
-				nock('http://test/')
-					.get('/appeals/2')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
-					.reply(200, {
-						...lpaQuestionnaireDataNotValidated,
-						lpaQuestionnaireId: 1,
-						designatedSiteNames
-					});
-
-				const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
-
-				const unprettifiedHtml = parseHtml(response.text, {
-					rootElement: '#constraints-summary',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(unprettifiedHtml).toContain(
-					'href="/appeals-service/appeal-details/2/lpa-questionnaire/1/in-near-or-likely-to-affect-designated-sites/change" data-cy="change-in-near-or-likely-to-affect-designated-sites">Change<span class="govuk-visually-hidden"> In, near or likely to affect designated sites (1. Constraints, designations and other issues)</span></a>'
-				);
-			});
-
-			it('should render a designated sites row with the expected value of "Not applicable" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
+			it('should render a designated sites row with the expected value of "Not provided" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
 				nock('http://test/')
 					.get('/appeals/2')
 					.reply(200, {
@@ -1058,7 +1031,7 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"> Not applicable</dd>'
+					'<dd class="govuk-summary-list__value"> Not provided</dd>'
 				);
 			});
 
@@ -1084,9 +1057,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"> SSSI (site of special scientific interest)</dd>'
-				);
+				expect(unprettifiedHtml).toContain('<li>SSSI (site of special scientific interest)</li>');
 			});
 
 			it('should render a designated sites row with the expected values contained in a list if LPAQ designatedSiteNames array contains multiple designated site items', async () => {
@@ -1112,7 +1083,7 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"><ul class="pins-summary-list-sublist"><li>SSSI (site of special scientific interest)</li><li>Other: test custom designation</li></ul></dd>'
+					'<dd class="govuk-summary-list__value"> Yes<ul class="pins-summary-list-sublist"><li>SSSI (site of special scientific interest)</li><li>Other: test custom designation</li></ul></dd>'
 				);
 			});
 
@@ -1138,9 +1109,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"> Other: test custom designation</dd>'
-				);
+				expect(unprettifiedHtml).toContain('<li>Other: test custom designation</li>');
 			});
 		});
 	});

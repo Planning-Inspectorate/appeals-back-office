@@ -14,7 +14,7 @@ exports[`extra-conditions GET /change should render the change extra conditions 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change extra conditions</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -76,7 +76,7 @@ exports[`extra-conditions POST /change should re-render the change extra conditi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change extra conditions</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -138,7 +138,7 @@ exports[`extra-conditions should re-render the change extra conditions page with
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change extra conditions</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

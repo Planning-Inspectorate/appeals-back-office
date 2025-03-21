@@ -8,7 +8,7 @@ export const mapIsInfrastructureLevyFormallyAdopted = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'is-infrastructure-levy-formally-adopted',
-		text: 'Levy formally adopted',
+		text: 'Is the community infrastructure levy formally adopted?',
 		value: lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted,
 		defaultText: '',
 		addCyAttribute: true,

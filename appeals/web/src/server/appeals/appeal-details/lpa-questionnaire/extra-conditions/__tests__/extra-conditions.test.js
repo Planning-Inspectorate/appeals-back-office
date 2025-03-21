@@ -30,7 +30,7 @@ describe('extra-conditions', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change extra conditions</h1>');
+			expect(elementInnerHtml).toContain('Are there any new conditions?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -94,7 +94,7 @@ describe('extra-conditions', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change extra conditions</h1>');
+			expect(elementInnerHtml).toContain('Are there any new conditions?</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

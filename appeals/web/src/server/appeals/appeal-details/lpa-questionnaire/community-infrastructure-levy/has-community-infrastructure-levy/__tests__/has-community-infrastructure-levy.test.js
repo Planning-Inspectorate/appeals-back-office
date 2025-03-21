@@ -17,7 +17,7 @@ describe('has-community-infrastructure-levy', () => {
 	afterEach(teardown);
 
 	describe('GET /has-community-infrastructure-levy/change', () => {
-		it('should render the change community infrastructure levy status page with "Has infrastructure levy" radio option checked if hasInfrastructureLevy is true', async () => {
+		it('should render the change community infrastructure levy status page with "Yes" radio option checked if hasInfrastructureLevy is true', async () => {
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/${appealData.lpaQuestionnaireId}`)
 				.reply(200, {
@@ -35,19 +35,19 @@ describe('has-community-infrastructure-levy', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Change community infrastructure levy status</h1>'
+				'Do you have a community infrastructure levy?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Has infrastructure levy</label>'
+				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Yes</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2"> Does not have infrastructure levy</label>'
+				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2"> No</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -70,19 +70,19 @@ describe('has-community-infrastructure-levy', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Change community infrastructure levy status</h1>'
+				'Do you have a community infrastructure levy?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Has infrastructure levy</label>'
+				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Yes</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2"> Does not have infrastructure levy</label>'
+				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2"> No</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -107,7 +107,7 @@ describe('has-community-infrastructure-levy', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Change community infrastructure levy status</h1>'
+				'Do you have a community infrastructure levy?</h1>'
 			);
 
 			const errorSummaryElement = parseHtml(response.text, {

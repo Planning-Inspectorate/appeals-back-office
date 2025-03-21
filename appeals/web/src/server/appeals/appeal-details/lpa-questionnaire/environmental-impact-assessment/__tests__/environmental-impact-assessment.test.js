@@ -36,7 +36,9 @@ describe('environmental-impact-assessment', () => {
 						rootElement: '.lpa-eia-column-two-threshold .govuk-summary-list__key',
 						skipPrettyPrint: true
 					});
-					expect(rowKeyElement.innerHTML).toContain('Meets or exceeds column 2 threshold criteria');
+					expect(rowKeyElement.innerHTML).toContain(
+						'Does the development meet or exceed the threshold or criteria in column 2?'
+					);
 
 					const rowValueElement = parseHtml(response.text, {
 						rootElement: '.lpa-eia-column-two-threshold .govuk-summary-list__value',
@@ -54,7 +56,7 @@ describe('environmental-impact-assessment', () => {
 			];
 
 			for (const testCase of testCases) {
-				it(`should render a row for "Screening opinion says environmental statement needed" with a value of "${testCase.expectedContent}" if eiaRequiresEnvironmentalStatement is ${testCase.value}`, async () => {
+				it(`should render a row for "Did your screening opinion say the development needed an environmental statement?" with a value of "${testCase.expectedContent}" if eiaRequiresEnvironmentalStatement is ${testCase.value}`, async () => {
 					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
@@ -70,7 +72,7 @@ describe('environmental-impact-assessment', () => {
 						skipPrettyPrint: true
 					});
 					expect(rowKeyElement.innerHTML).toContain(
-						'Screening opinion says environmental statement needed'
+						'Did your screening opinion say the development needed an environmental statement?'
 					);
 
 					const rowValueElement = parseHtml(response.text, {
@@ -110,7 +112,7 @@ describe('environmental-impact-assessment', () => {
 						skipPrettyPrint: true
 					});
 					expect(rowKeyElement.innerHTML).toContain(
-						'In, partly in, or likely to affect a sensitive area'
+						'Is the development in, partly in, or likely to affect a sensitive area?'
 					);
 
 					const rowValueElement = parseHtml(response.text, {
@@ -153,7 +155,7 @@ describe('environmental-impact-assessment', () => {
 			];
 
 			for (const testCase of testCases) {
-				it(`should render a row for "Consulted relevant statutory consultees" with a value of "${testCase.expectedContent.join(
+				it(`should render a row for "Did you consult all the relevant statutory consultees about the development?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if eiaConsultedBodiesDetails is "${testCase.value}"`, async () => {
 					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
@@ -170,7 +172,9 @@ describe('environmental-impact-assessment', () => {
 						rootElement: '.lpa-eia-consulted-bodies-details .govuk-summary-list__key',
 						skipPrettyPrint: true
 					});
-					expect(rowKeyElement.innerHTML).toContain('Consulted relevant statutory consultees');
+					expect(rowKeyElement.innerHTML).toContain(
+						'Did you consult all the relevant statutory consultees about the development?'
+					);
 
 					const rowValueElement = parseHtml(response.text, {
 						rootElement: '.lpa-eia-consulted-bodies-details .govuk-summary-list__value',
@@ -183,7 +187,7 @@ describe('environmental-impact-assessment', () => {
 				});
 			}
 
-			it('should render a row for "Consulted relevant statutory consultees" with the value wrapped in a "show more" component, if eiaConsultedBodiesDetails is more than 300 characters in length', async () => {
+			it('should render a row for "Did you consult all the relevant statutory consultees about the development?" with the value wrapped in a "show more" component, if eiaConsultedBodiesDetails is more than 300 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
@@ -208,7 +212,7 @@ describe('environmental-impact-assessment', () => {
 		afterEach(teardown);
 
 		describe('GET /environmental-impact-assessment/column-two-threshold/change', () => {
-			it('should render the change eia column two threshold page with "Meets or exceeds" radio option checked if eiaColumnTwoThreshold is true', async () => {
+			it('should render the change eia column two threshold page with "Yes" radio option checked if eiaColumnTwoThreshold is true', async () => {
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -226,24 +230,24 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether meets or exceeds column 2 threshold criteria</h1>'
+					'Does the development meet or exceed the threshold or criteria in column 2?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="yes" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Yes</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="no">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> Does not meet or exceed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> No</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 
-			it('should render the change eia column two threshold page with "Does not meet or exceed" radio option checked if eiaColumnTwoThreshold is false', async () => {
+			it('should render the change eia column two threshold page with "No" radio option checked if eiaColumnTwoThreshold is false', async () => {
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -261,19 +265,19 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether meets or exceeds column 2 threshold criteria</h1>'
+					'Does the development meet or exceed the threshold or criteria in column 2?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="yes">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Yes</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaColumnTwoThreshold" type="radio" value="no" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> Does not meet or exceed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> No</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
@@ -306,7 +310,7 @@ describe('environmental-impact-assessment', () => {
 		});
 
 		describe('GET /environmental-impact-assessment/requires-environmental-statement/change', () => {
-			it('should render the change eia requires environmental statement page with "Needed" radio option checked if eiaRequiresEnvironmentalStatement is true', async () => {
+			it('should render the change eia requires environmental statement page with "Yes" radio option checked if eiaRequiresEnvironmentalStatement is true', async () => {
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -324,24 +328,24 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change opinion that environmental statement needed</h1>'
+					'Did your screening opinion say the development needed an environmental statement?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Yes</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> Not needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> No</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 
-			it('should render the change eia requires environmental statement page with "Not needed" radio option checked if eiaRequiresEnvironmentalStatement is false', async () => {
+			it('should render the change eia requires environmental statement page with "No" radio option checked if eiaRequiresEnvironmentalStatement is false', async () => {
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -359,19 +363,19 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change opinion that environmental statement needed</h1>'
+					'Did your screening opinion say the development needed an environmental statement?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Yes</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> Not needed</label>'
+					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> No</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
@@ -423,7 +427,7 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether in, partly in, or likely to affect a sensitive area</h1>'
+					'Is the development in, partly in, or likely to affect a sensitive area?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes"'
@@ -456,7 +460,7 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change whether in, partly in, or likely to affect a sensitive area</h1>'
+					'Is the development in, partly in, or likely to affect a sensitive area?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes" checked'
@@ -495,7 +499,7 @@ describe('environmental-impact-assessment', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Change whether in, partly in, or likely to affect a sensitive area</h1>'
+					'Is the development in, partly in, or likely to affect a sensitive area?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes" checked'
@@ -540,7 +544,7 @@ describe('environmental-impact-assessment', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Change whether in, partly in, or likely to affect a sensitive area</h1>'
+					'Is the development in, partly in, or likely to affect a sensitive area?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes" checked'
@@ -624,7 +628,7 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change consulted relevant statutory consultees</h1>'
+					'Did you consult all the relevant statutory consultees about the development?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes"'
@@ -657,7 +661,7 @@ describe('environmental-impact-assessment', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Change consulted relevant statutory consultees</h1>'
+					'Did you consult all the relevant statutory consultees about the development?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked'
@@ -695,7 +699,9 @@ describe('environmental-impact-assessment', () => {
 
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-				expect(elementInnerHtml).toContain('Change consulted relevant statutory consultees</h1>');
+				expect(elementInnerHtml).toContain(
+					'Did you consult all the relevant statutory consultees about the development?</h1>'
+				);
 				expect(elementInnerHtml).toContain(
 					'name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked'
 				);
@@ -738,7 +744,9 @@ describe('environmental-impact-assessment', () => {
 
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-				expect(elementInnerHtml).toContain('Change consulted relevant statutory consultees</h1>');
+				expect(elementInnerHtml).toContain(
+					'Did you consult all the relevant statutory consultees about the development?'
+				);
 				expect(elementInnerHtml).toContain(
 					'name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked'
 				);

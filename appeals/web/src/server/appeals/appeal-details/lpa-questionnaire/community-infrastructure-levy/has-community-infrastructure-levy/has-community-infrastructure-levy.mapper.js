@@ -22,10 +22,8 @@ export const changeHasCommunityInfrastructureLevy = (appealData, existingValue, 
 			yesNoInput({
 				name: 'hasCommunityInfrastructureLevyRadio',
 				value: existingValue,
-				legendText: 'Change community infrastructure levy status',
-				legendIsPageHeading: true,
-				customYesLabel: 'Has infrastructure levy',
-				customNoLabel: 'Does not have infrastructure levy'
+				legendText: 'Do you have a community infrastructure levy?',
+				legendIsPageHeading: true
 			})
 		]
 	};

@@ -37,26 +37,26 @@ describe('other-appeals', () => {
 	afterEach(teardown);
 
 	describe('GET /other-appeals/add', () => {
-		it('should render the "What is the appeal reference?" page', async () => {
+		it('should render the "Enter the appeal reference number" page', async () => {
 			const response = await request.get(`${baseUrl}/1/other-appeals/add`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
 			expect(element.innerHTML).toContain('name="addOtherAppealsReference" type="text" value="">');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
 	describe('POST /other-appeals/add', () => {
-		it('should re-render the "What is the appeal reference?" page with error "Enter an appeal reference", if no appeal reference was provided', async () => {
+		it('should re-render the "Enter the appeal reference number" page with error "Enter an appeal reference", if no appeal reference was provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
 				.send({ addOtherAppealsReference: '' });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -67,14 +67,14 @@ describe('other-appeals', () => {
 			expect(errorSummaryHtml).toContain('Enter an appeal reference</a>');
 		});
 
-		it('should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits', async () => {
+		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is less than 7 digits', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
 				.send({ addOtherAppealsReference: '123456' });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -85,14 +85,14 @@ describe('other-appeals', () => {
 			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
 		});
 
-		it('should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits', async () => {
+		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is greater than 7 digits', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
 				.send({ addOtherAppealsReference: '12345678' });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -103,7 +103,7 @@ describe('other-appeals', () => {
 			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
 		});
 
-		it('should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
+		it('should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}`)
 				.reply(404);
@@ -113,7 +113,7 @@ describe('other-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

@@ -4,7 +4,7 @@ import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 export const mapLpaHealthAndSafety = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'health-and-safety',
-		text: 'Potential safety risks',
+		text: 'Are there any potential safety risks?',
 		value: lpaQuestionnaireData.healthAndSafety?.hasIssues,
 		valueDetails: lpaQuestionnaireData.healthAndSafety?.details,
 		defaultText: 'No answer provided',

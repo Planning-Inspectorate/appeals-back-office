@@ -100,7 +100,7 @@ export function manageChangedListedBuildingPage(appealData, lpaQuestionnaireData
 		title: 'Manage changed listed buildings',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Changed listed buildings',
+		heading: 'Does the development change a listed building?',
 		pageComponents: [
 			{
 				type: 'table',

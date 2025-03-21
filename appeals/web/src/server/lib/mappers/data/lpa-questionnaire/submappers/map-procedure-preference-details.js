@@ -8,7 +8,7 @@ export const mapProcedurePreferenceDetails = ({
 }) =>
 	textSummaryListItem({
 		id: 'procedure-preference-details',
-		text: 'Reason for preference',
+		text: 'Why would you prefer this procedure?',
 		value: lpaQuestionnaireData.lpaProcedurePreferenceDetails || 'Not applicable',
 		link: `${currentRoute}/procedure-preference/details/change`,
 		editable: userHasUpdateCase,

@@ -9,7 +9,7 @@ export const mapEiaEnvironmentalImpactSchedule = ({
 }) =>
 	textSummaryListItem({
 		id: 'eia-environmental-impact-schedule',
-		text: 'Schedule 1 or 2 development',
+		text: 'What is the development category?',
 		value: capitalizeFirstLetter(
 			snakeCaseToSpaceSeparated(lpaQuestionnaireData.eiaEnvironmentalImpactSchedule || 'Other')
 		),

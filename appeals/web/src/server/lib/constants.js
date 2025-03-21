@@ -27,7 +27,7 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = {
 	[APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT]: `Planning officer's report`,
 	[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
 		'Relevant policies from statutory development plan',
-	[APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN]: 'Plan showing extent of TPO',
+	[APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN]: 'Tree Preservation Order',
 	[APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT]: 'Definitive map and statement extract',
 	[APPEAL_DOCUMENT_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY]: 'Community infrastructure levy',
 	[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Supplementary planning documents',

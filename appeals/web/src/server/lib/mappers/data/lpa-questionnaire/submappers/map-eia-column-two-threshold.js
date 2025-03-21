@@ -8,7 +8,7 @@ export const mapEiaColumnTwoThreshold = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'eia-column-two-threshold',
-		text: 'Meets or exceeds column 2 threshold criteria',
+		text: 'Does the development meet or exceed the threshold or criteria in column 2?',
 		value: lpaQuestionnaireData.eiaColumnTwoThreshold,
 		defaultText: '',
 		addCyAttribute: true,

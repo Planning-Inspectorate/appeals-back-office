@@ -95,10 +95,10 @@ export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireDat
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Manage affected listed buildings',
+		title: 'Add affected listed buildings',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Manage affected listed buildings',
+		heading: 'Add affected listed buildings',
 		pageComponents: [
 			{
 				type: 'table',
@@ -237,10 +237,10 @@ export function changeAffectedListedBuildingPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change affected listed building`,
+		title: 'Change affected listed building',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change affected listed building`,
+		heading: 'Change affected listed building',
 		pageComponents: [
 			{
 				type: 'input',

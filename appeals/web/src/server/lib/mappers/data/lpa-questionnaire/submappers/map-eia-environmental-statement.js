@@ -4,7 +4,7 @@ import { documentInstruction } from '../common.js';
 export const mapEiaEnvironmentalStatement = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'eia-environmental-statement',
-		text: 'Environmental statement',
+		text: 'Environmental statement and supporting information',
 		folderInfo: lpaQuestionnaireData.documents.eiaEnvironmentalStatement,
 		cypressDataName: 'eia-environmental-statement',
 		lpaQuestionnaireData,

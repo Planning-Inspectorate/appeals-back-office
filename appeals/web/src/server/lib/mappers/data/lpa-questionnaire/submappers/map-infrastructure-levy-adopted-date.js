@@ -8,7 +8,7 @@ export const mapInfrastructureLevyAdoptedDate = ({
 }) =>
 	dateSummaryListItem({
 		id: 'infrastructure-levy-adopted-date',
-		text: 'Levy adoption date',
+		text: 'When was the community infrastructure levy formally adopted?',
 		value: lpaQuestionnaireData.infrastructureLevyAdoptedDate,
 		defaultText: 'Not applicable',
 		addCyAttribute: true,

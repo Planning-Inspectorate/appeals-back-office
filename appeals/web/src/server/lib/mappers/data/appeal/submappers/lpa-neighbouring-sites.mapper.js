@@ -10,7 +10,7 @@ export const mapLpaNeighbouringSites = ({
 	display: {
 		summaryListItem: {
 			key: {
-				text: 'Neighbouring sites (LPA)'
+				text: 'Address of the neighbour’s land or property'
 			},
 			value: {
 				html:

@@ -15,7 +15,6 @@ import { yesNoInput } from '#lib/mappers/index.js';
 export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl, source) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const sourceKey = source === 'lpa' ? 'lpaQuestionnaire' : 'appellantCase';
-	const formattedSource = source === 'lpa' ? 'LPA' : source;
 
 	const currentRadioValue =
 		storedSessionData?.radio ?? appealData.healthAndSafety[sourceKey].hasIssues ?? '';
@@ -24,19 +23,19 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the site health and safety risks (${formattedSource} answer)`,
+		title: 'Are there any potential safety risks?',
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'safetyRisksRadio',
 				value: currentRadioValue,
-				legendText: `Change the site health and safety risks (${formattedSource} answer)`,
+				legendText: 'Are there any potential safety risks?',
 				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'safety-risks-details',
 					name: 'safetyRisksDetails',
-					hint: `Health and safety risks (${formattedSource} details)`,
+					hint: 'Add details of the potential risk and what the inspector might need',
 					details: currentDetailsValue
 				}
 			})

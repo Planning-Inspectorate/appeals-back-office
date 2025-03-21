@@ -26,10 +26,8 @@ export const changeIsInfrastructureLevyFormallyAdopted = (
 			yesNoInput({
 				name: 'isInfrastructureLevyFormallyAdoptedRadio',
 				value: existingValue,
-				legendText: 'Change whether levy formally adopted',
-				legendIsPageHeading: true,
-				customYesLabel: 'Formally adopted',
-				customNoLabel: 'Not formally adopted'
+				legendText: 'Is the community infrastructure levy formally adopted?',
+				legendIsPageHeading: true
 			})
 		]
 	};

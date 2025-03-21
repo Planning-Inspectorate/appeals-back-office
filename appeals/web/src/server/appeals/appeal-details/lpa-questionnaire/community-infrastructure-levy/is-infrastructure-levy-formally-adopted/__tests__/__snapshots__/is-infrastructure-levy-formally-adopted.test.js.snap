@@ -14,19 +14,19 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change whether levy formally adopted</h1>
+                                    <h1 class="govuk-fieldset__heading"> Is the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes"
                                         checked>
-                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio">Formally adopted</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio-2"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2">Not formally adopted</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -55,19 +55,19 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change whether levy formally adopted</h1>
+                                    <h1 class="govuk-fieldset__heading"> Is the community infrastructure levy formally adopted?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio">Formally adopted</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio-2"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no"
                                         checked>
-                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2">Not formally adopted</label>
+                                        <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>

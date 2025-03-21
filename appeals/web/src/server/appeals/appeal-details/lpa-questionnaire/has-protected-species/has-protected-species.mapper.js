@@ -15,17 +15,15 @@ export const changeHasProtectedSpecies = (appealData, data, origin) => {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Protected species`,
+		title: 'Protected species',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'protectedSpeciesRadio',
 				value: data,
-				legendText: 'Change whether protected species affected',
-				legendIsPageHeading: true,
-				customYesLabel: 'Affected',
-				customNoLabel: 'Not affected'
+				legendText: 'Would the development affect a protected species?',
+				legendIsPageHeading: true
 			})
 		]
 	};

@@ -20,7 +20,9 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
+			expect(elementInnerHtml).toContain(
+				'Might the inspector need access to the appellant’s land or property?</h1>'
+			);
 		});
 
 		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appeals details', async () => {
@@ -32,7 +34,9 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)</h1>');
+			expect(elementInnerHtml).toContain(
+				'Might the inspector need access to the appellant’s land or property?</h1>'
+			);
 		});
 
 		it('should render changeInspectorAccess page for the lpa answer when source is lpa from lpa questionnaire', async () => {
@@ -45,7 +49,9 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
+			expect(elementInnerHtml).toContain(
+				'Might the inspector need access to the appellant’s land or property?</h1>'
+			);
 		});
 
 		it('should render changeInspectorAccess page for the appellant answer when source is appellant from appellant case', async () => {
@@ -58,7 +64,9 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (appellant answer)</h1>');
+			expect(elementInnerHtml).toContain(
+				'Might the inspector need access to the appellant’s land or property?</h1>'
+			);
 		});
 	});
 
@@ -79,7 +87,9 @@ describe('inspector-access', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the inspector access (LPA answer)</h1>');
+			expect(elementInnerHtml).toContain(
+				'Might the inspector need access to the appellant’s land or property?</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

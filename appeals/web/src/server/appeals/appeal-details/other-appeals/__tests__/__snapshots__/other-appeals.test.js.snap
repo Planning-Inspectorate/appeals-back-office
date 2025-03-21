@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`other-appeals GET /other-appeals/add should render the "What is the appeal reference?" page 1`] = `
+exports[`other-appeals GET /other-appeals/add should render the "Enter the appeal reference number" page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
@@ -10,7 +10,7 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
         <div class="govuk-grid-column-full">
             <form method="POST">
                 <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
                     name="addOtherAppealsReference" type="text" value="">
                 </div>
@@ -210,7 +210,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Manage relat
 </main>"
 `;
 
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid 1`] = `
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -235,7 +235,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full">
             <form method="POST">
                 <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
                     name="addOtherAppealsReference" type="text" value="7654321">
                 </div>
@@ -247,7 +247,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 </main>"
 `;
 
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter an appeal reference", if no appeal reference was provided 1`] = `
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with error "Enter an appeal reference", if no appeal reference was provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -272,7 +272,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full">
             <form method="POST">
                 <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
                     name="addOtherAppealsReference" type="text" value="">
                 </div>
@@ -284,7 +284,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 </main>"
 `;
 
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -309,7 +309,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full">
             <form method="POST">
                 <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
                     name="addOtherAppealsReference" type="text" value="12345678">
                 </div>
@@ -321,7 +321,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 </main>"
 `;
 
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -346,7 +346,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
         <div class="govuk-grid-column-full">
             <form method="POST">
                 <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
                     name="addOtherAppealsReference" type="text" value="123456">
                 </div>

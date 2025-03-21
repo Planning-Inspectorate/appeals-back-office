@@ -14,7 +14,7 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change development category</h1>
+                                    <h1 class="govuk-fieldset__heading"> What is the development category?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -60,7 +60,7 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change development category</h1>
+                                    <h1 class="govuk-fieldset__heading"> What is the development category?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

@@ -20,9 +20,7 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
-			);
+			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -45,9 +43,7 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)</h1>'
-			);
+			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -73,9 +69,7 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
-			);
+			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -101,9 +95,7 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)</h1>'
-			);
+			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -137,9 +129,7 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
-			);
+			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

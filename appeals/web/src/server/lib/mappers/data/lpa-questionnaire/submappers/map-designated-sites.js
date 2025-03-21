@@ -8,12 +8,17 @@ export const mapInNearOrLikelyToAffectDesignatedSites = ({
 }) =>
 	listSummaryListItem({
 		id: 'in-near-or-likely-to-affect-designated-sites',
-		text: 'In, near or likely to affect designated sites',
-		value: lpaQuestionnaireData?.designatedSiteNames?.length
-			? lpaQuestionnaireData?.designatedSiteNames?.map((designatedSite) =>
-					designatedSite.key === 'custom' ? `Other: ${designatedSite.name}` : designatedSite.name
-			  )
-			: ['Not applicable'],
+		text: 'Is the development in, near or likely to affect any designated sites?',
+		value: (() => {
+			if (!lpaQuestionnaireData?.designatedSiteNames?.length) {
+				return [];
+			}
+
+			return lpaQuestionnaireData.designatedSiteNames.map((site) =>
+				site.key === 'custom' ? `Other: ${site.name}` : site.name
+			);
+		})(),
+		prefaceText: lpaQuestionnaireData?.designatedSiteNames?.length ? 'Yes' : 'No',
 		link: `${currentRoute}/in-near-or-likely-to-affect-designated-sites/change`,
 		editable: userHasUpdateCase
 	});

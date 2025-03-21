@@ -9,7 +9,7 @@ export const mapEiaDevelopmentDescription = ({
 }) =>
 	textSummaryListItem({
 		id: 'eia-development-description',
-		text: 'Development description',
+		text: 'Description of development',
 		value: lpaQuestionnaireData.eiaDevelopmentDescription
 			? eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
 			: '',

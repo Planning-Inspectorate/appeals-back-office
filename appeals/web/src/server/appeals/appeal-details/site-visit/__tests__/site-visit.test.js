@@ -48,7 +48,9 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Potential safety risks (appellant answer)</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Neighbouring sites (LPA)</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Address of the neighbour’s land or property</dt>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Neighbouring sites (inspector and/or third party request)</dt>'
 			);
@@ -642,7 +644,9 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Potential safety risks (appellant answer)</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Neighbouring sites (LPA)</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Address of the neighbour’s land or property</dt>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Neighbouring sites (inspector and/or third party request)</dt>'
 			);

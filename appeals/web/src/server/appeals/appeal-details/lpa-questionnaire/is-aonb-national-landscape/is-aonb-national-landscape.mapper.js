@@ -22,10 +22,8 @@ export const changeIsAonbNationalLandscape = (appealData, data, origin) => {
 			yesNoInput({
 				name: 'isAonbNationalLandscapeRadio',
 				value: data,
-				legendText: 'Change whether in area of outstanding natural beauty',
-				legendIsPageHeading: true,
-				customYesLabel: 'In area',
-				customNoLabel: 'Not in area'
+				legendText: 'Is the site in an area of outstanding natural beauty?',
+				legendIsPageHeading: true
 			})
 		]
 	};

@@ -22,14 +22,14 @@ export const changeExtraConditionsPage = (appealData, lpaqData, storedSessionDat
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change extra conditions`,
+		title: 'Are there any new conditions?',
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'extraConditionsRadio',
 				value: currentRadioValue,
-				legendText: 'Change extra conditions',
+				legendText: 'Are there any new conditions?',
 				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'extra-conditions-details',

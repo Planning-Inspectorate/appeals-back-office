@@ -4,7 +4,7 @@ import { documentInstruction } from '../common.js';
 export const mapPressAdvert = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'press-advert',
-		text: 'Press advert notification',
+		text: 'Press advertisement',
 		folderInfo: lpaQuestionnaireData.documents.whoNotifiedPressAdvert,
 		cypressDataName: 'press-advert-notification',
 		lpaQuestionnaireData,
