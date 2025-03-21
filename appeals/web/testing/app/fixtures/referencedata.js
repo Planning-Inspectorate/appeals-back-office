@@ -267,6 +267,7 @@ export const appealData = {
 	isChildAppeal: false,
 	linkedAppeals: [],
 	localPlanningDepartment: 'Wiltshire Council',
+	lpaEmailAddress: 'wilt@lpa-email.gov.uk',
 	lpaQuestionnaireId: 1,
 	withdrawal: {
 		withdrawalFolder: {
