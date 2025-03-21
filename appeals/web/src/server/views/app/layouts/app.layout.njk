@@ -26,6 +26,9 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {% block feedbackBanner %}
+    {% include '../includes/beta-feedback-banner.njk' %}
+  {% endblock%}
   {% block backLink %}
 		{% if backLinkUrl and backLinkText %}
       {{ govukBackLink({ text: backLinkText, href: backLinkUrl }) }}
