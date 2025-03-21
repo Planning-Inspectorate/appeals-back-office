@@ -11,11 +11,15 @@ import { redactInput } from '../../../representations/common/components/redact-i
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
- * @param {import('express-session').Session & Record<string, string> & { redactLPAStatement?: { redactedRepresentation: string, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} [session]
+ * @param {import('express-session').Session & Record<string, string> & { redactLPAStatement?: { redactedRepresentation: string, lpaStatementId: number, allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[] } }} [session]
  * @returns {PageContent}
  */
 export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	if (session && session.redactLPAStatement?.lpaStatementId !== lpaStatement.id) {
+		delete session.redactLPAStatement;
+	}
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
