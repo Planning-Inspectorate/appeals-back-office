@@ -163,7 +163,7 @@ describe('appeal-details', () => {
 					rootElement: notificationBannerElement
 				}).innerHTML;
 				const statusTagElementHTML = parseHtml(response.text, {
-					rootElement: '.govuk-tag'
+					rootElement: '.govuk-tag--grey'
 				}).innerHTML;
 				const insetTextElementHTML = parseHtml(response.text, {
 					rootElement: '.govuk-inset-text'

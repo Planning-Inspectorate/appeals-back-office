@@ -5673,8 +5673,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
 `;
 
 exports[`appeal-details GET /:appealId should render the header with navigation containing links to the personal list, national list, and sign out route, without any active modifier classes 1`] = `
-"<header class="govuk-header" id="pins-applications-header" role="banner"
-data-module="govuk-header">
+"<header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+role="banner" data-module="govuk-header">
     <div class="govuk-width-container">
         <div class="pins-row">
             <div class="pins-column--left">
@@ -8038,7 +8038,8 @@ exports[`appeal-details should not render a back button 1`] = `
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
-    <header     class="govuk-header" id="pins-applications-header" role="banner" data-module="govuk-header">
+    <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+    role="banner" data-module="govuk-header">
         <div class="govuk-width-container">
             <div class="pins-row">
                 <div class="pins-column--left">
@@ -8063,6 +8064,12 @@ exports[`appeal-details should not render a back button 1`] = `
         </div>
         </header>
         <div class="govuk-width-container govuk-width-container">
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong>
+                    <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
+                        class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
+                </p>
+            </div>
             <main class="govuk-main-wrapper " id="main-content" role="main">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
