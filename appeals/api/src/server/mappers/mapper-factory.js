@@ -154,6 +154,7 @@ function createDataLayout(caseMap, mappingRequest) {
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.siteAccessRequired ?? null) }
 				},
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
+				lpaEmailAddress: appeal.lpa?.email,
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}

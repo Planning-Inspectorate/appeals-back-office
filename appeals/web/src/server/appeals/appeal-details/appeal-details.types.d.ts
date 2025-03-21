@@ -379,6 +379,7 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 }
 
 export interface WebAppeal extends SingleAppealDetailsResponse {
+	lpaEmailAddress?: string;
 	appealTimetable: WebAppealTimetable | null;
 	siteAddress?: Address;
 	createdAt: string | null;
