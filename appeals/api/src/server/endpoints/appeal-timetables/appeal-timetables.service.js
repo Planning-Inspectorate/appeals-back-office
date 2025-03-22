@@ -117,6 +117,8 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 				local_planning_authority: appeal.lpa?.name || '',
 				due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
 				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
+				lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
+				ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
 				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
 			};
 
