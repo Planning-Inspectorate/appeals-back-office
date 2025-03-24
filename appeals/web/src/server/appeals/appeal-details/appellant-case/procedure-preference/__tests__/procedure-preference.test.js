@@ -314,7 +314,7 @@ describe('procedure-preference', () => {
 				'Change expected length of procedure</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text">'
+				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -429,7 +429,7 @@ describe('procedure-preference', () => {
 				'Change expected number of witnesses</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text">'
+				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

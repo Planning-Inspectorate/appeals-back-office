@@ -29,7 +29,7 @@ describe('assign-user', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Find a case officer</h1>');
 			expect(element.innerHTML).toContain('Search by name or email address</label>');
-			expect(element.innerHTML).toContain('name="searchTerm" type="text">');
+			expect(element.innerHTML).toContain('name="searchTerm" type="text" value="">');
 			expect(element.innerHTML).toContain('Search</button>');
 		});
 	});
@@ -133,7 +133,7 @@ describe('assign-user', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Find an inspector</h1>');
 			expect(element.innerHTML).toContain('Search by name or email address</label>');
-			expect(element.innerHTML).toContain('name="searchTerm" type="text">');
+			expect(element.innerHTML).toContain('name="searchTerm" type="text" value="">');
 			expect(element.innerHTML).toContain('Search</button>');
 		});
 	});

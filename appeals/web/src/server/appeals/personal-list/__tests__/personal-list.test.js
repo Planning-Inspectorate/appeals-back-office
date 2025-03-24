@@ -49,14 +49,14 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Due by</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<nav class="govuk-pagination" role="navigation" aria-label="results"'
+				'<nav class="govuk-pagination" aria-label="Pagination">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'aria-label="Page 1" aria-current="page"> 1</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 2"> 2</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<span class="govuk-pagination__link-title">Next</span>'
+				'<span class="govuk-pagination__link-title"> Next'
 			);
 		});
 
@@ -88,10 +88,10 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Due by</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<nav class="govuk-pagination" role="navigation" aria-label="results"'
+				'<nav class="govuk-pagination" aria-label="Pagination">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<span class="govuk-pagination__link-title">Previous</span>'
+				'<span class="govuk-pagination__link-title"> Previous'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 1"> 1</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -129,10 +129,10 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Due by</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<nav class="govuk-pagination" role="navigation" aria-label="results"'
+				'<nav class="govuk-pagination" aria-label="Pagination">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<span class="govuk-pagination__link-title">Previous</span>'
+				'<span class="govuk-pagination__link-title"> Previous'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 1"> 1</a>');
 			expect(unprettifiedElement.innerHTML).toContain(

@@ -460,7 +460,7 @@ describe('final-comments', () => {
 				'Are you sure you want to remove this version?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="delete-file-answer" type="radio" value="yes">'

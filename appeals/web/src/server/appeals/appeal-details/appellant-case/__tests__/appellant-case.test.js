@@ -466,9 +466,7 @@ describe('appellant-case', () => {
 				}).innerHTML;
 
 				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is invalid</h3>');
-				expect(unprettifiedNotificationBannerHTML).toContain(
-					'<details class="govuk-details" data-module="govuk-details">'
-				);
+				expect(unprettifiedNotificationBannerHTML).toContain('<details class="govuk-details">');
 				expect(unprettifiedNotificationBannerHTML).toContain(
 					'Incorrect name and/or missing documents</span>'
 				);
@@ -505,9 +503,7 @@ describe('appellant-case', () => {
 				}).innerHTML;
 
 				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
-				expect(unprettifiedNotificationBannerHTML).toContain(
-					'<details class="govuk-details" data-module="govuk-details">'
-				);
+				expect(unprettifiedNotificationBannerHTML).toContain('<details class="govuk-details">');
 				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
 				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
 				expect(unprettifiedNotificationBannerHTML).toContain(
@@ -679,7 +675,7 @@ describe('appellant-case', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 				expect(firstBannerHtml).toContain(
-					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>'
 				);
 
 				const secondBannerHtml = parseHtml(response.text, {
@@ -687,7 +683,7 @@ describe('appellant-case', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 				expect(secondBannerHtml).toContain(
-					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Appeal is incomplete</h3>'
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>'
 				);
 			});
 
@@ -4602,14 +4598,14 @@ describe('appellant-case', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
@@ -4763,14 +4759,14 @@ describe('appellant-case', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+				`href="/appeals-service/appeal-details/1/appellant-case/add-document-details/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
@@ -5164,7 +5160,7 @@ describe('appellant-case', () => {
 				'Are you sure you want to remove this version?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="delete-file-answer" type="radio" value="yes">'
@@ -5202,7 +5198,7 @@ describe('appellant-case', () => {
 				'name="delete-file-answer" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
 		});
 	});
