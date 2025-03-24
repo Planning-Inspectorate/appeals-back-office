@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`affected-listed-buildings GET /add should render the add affected listed building page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Add affected listed building</h1>
@@ -15,7 +15,7 @@ exports[`affected-listed-buildings GET /add should render the add affected liste
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
                             <input class="govuk-input" id="affectedListedBuilding"
-                            name="affectedListedBuilding" type="text">
+                            name="affectedListedBuilding" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -28,7 +28,7 @@ exports[`affected-listed-buildings GET /add should render the add affected liste
 `;
 
 exports[`affected-listed-buildings GET /add/check-and-confirm should render the add affected listed building check and confirm page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answer</h1>
@@ -41,7 +41,7 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
                     <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         class="govuk-link" target="_blank">12345</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add"> Change<span class="govuk-visually-hidden"> listed building number</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add">Change<span class="govuk-visually-hidden"> listed building number</span></a>
                     </dd>
                 </div>
             </dl>
@@ -59,7 +59,7 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
 `;
 
 exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answer</h1>
@@ -72,7 +72,7 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confi
                     <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         class="govuk-link" target="_blank">12345</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1"> Change<span class="govuk-visually-hidden"> affected listed building</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1">Change<span class="govuk-visually-hidden"> affected listed building</span></a>
                     </dd>
                 </div>
             </dl>
@@ -90,7 +90,7 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confi
 `;
 
 exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -119,7 +119,7 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="affectedListedBuilding">Listed building number</label>
                             <input class="govuk-input" id="affectedListedBuilding"
-                            name="affectedListedBuilding" type="text">
+                            name="affectedListedBuilding" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -132,7 +132,7 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
 `;
 
 exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

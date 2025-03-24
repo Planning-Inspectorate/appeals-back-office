@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`infrastructure-levy-adopted-date GET /change should render the infrastructure levy adopted date change page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -55,7 +55,7 @@ exports[`infrastructure-levy-adopted-date GET /change should render the infrastr
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page if day is not valid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -124,7 +124,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page if day is not valid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -195,7 +195,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page if day is not valid 3`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -266,7 +266,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page if day is not valid 4`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -337,7 +337,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date month is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -406,7 +406,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date month is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -477,7 +477,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date month is invalid 3`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -548,7 +548,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date month is invalid 4`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -619,7 +619,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date year is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -688,7 +688,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date year is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -759,7 +759,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
 `;
 
 exports[`infrastructure-levy-adopted-date POST /change should re-render the levy adoption date change page with an error message if the provided date year is invalid 3`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

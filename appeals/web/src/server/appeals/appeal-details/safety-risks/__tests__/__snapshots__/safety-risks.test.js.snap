@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from LPA questionnaire 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -49,7 +49,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 `;
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the LPA answer when source is LPA from appeals details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -97,7 +97,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 `;
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appeals details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -144,7 +144,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 `;
 
 exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess page for the appellant answer when source is appellant from appellant case 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -191,7 +191,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
 `;
 
 exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAccess page with an error when isRequired is "yes" but details is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -253,7 +253,7 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
 `;
 
 exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAccess page with an error when safetyRisksDetails exceeds 1000 characters 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

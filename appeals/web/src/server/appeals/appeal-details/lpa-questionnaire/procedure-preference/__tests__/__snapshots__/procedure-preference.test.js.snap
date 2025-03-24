@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`procedure-preference GET /change should render the change procedure preference page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -46,7 +46,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 `;
 
 exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "hearing" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -91,7 +91,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 `;
 
 exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "inquiry" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -136,7 +136,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 `;
 
 exports[`procedure-preference GET /change should render the change procedure preference page with the expected content if lpaProcedurePreference is "written" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -181,7 +181,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
 `;
 
 exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the expected content if lpaProcedurePreferenceDetails is populated in the LPA questionnaire data 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -207,7 +207,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
 `;
 
 exports[`procedure-preference GET /details/change should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea unpopulated if lpaProcedurePreferenceDetails is not populated in the LPA questionnaire data 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -233,7 +233,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
 `;
 
 exports[`procedure-preference GET /duration/change should render the change expected length of procedure page with "procedurePreferenceDurationInput" text input unpopulated if lpaProcedurePreferenceDuration is not populated in the LPA questionnaire data 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change expected length of procedure</h1>
@@ -246,7 +246,7 @@ exports[`procedure-preference GET /duration/change should render the change expe
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -259,7 +259,7 @@ exports[`procedure-preference GET /duration/change should render the change expe
 `;
 
 exports[`procedure-preference POST /details/change should re-render the change reason for preference page with the expected error message if "procedurePreferenceDetailsTextarea" textarea contains more than 1000 characters 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -287,7 +287,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -300,7 +300,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
 `;
 
 exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -328,7 +328,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -341,7 +341,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
 `;
 
 exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is greater than 99 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -369,7 +369,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -382,7 +382,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
 `;
 
 exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is less than 0 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -410,7 +410,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -423,7 +423,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
 `;
 
 exports[`procedure-preference POST /duration/change should re-render the change expected length of procedure page with the expected error message if "procedurePreferenceDurationInput" text input is non-numeric 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -451,7 +451,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

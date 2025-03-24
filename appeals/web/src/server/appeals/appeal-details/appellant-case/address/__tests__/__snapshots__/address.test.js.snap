@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`site-address GET /add should render updateSiteAddress page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change site address</h1>
@@ -20,12 +20,12 @@ exports[`site-address GET /add should render updateSiteAddress page 1`] = `
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="town">Town or city</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="town" name="town" type="text">
+                            id="town" name="town" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
@@ -38,7 +38,8 @@ exports[`site-address GET /add should render updateSiteAddress page 1`] = `
                             id="post-code" name="postCode" type="text" value="SW4 0HY">
                         </div>
                         <div class="govuk-form-group">
-                            <input class="govuk-input" id="operation-type" name="operationType" type="hidden">
+                            <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                            value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
