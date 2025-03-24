@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`representations GET /share should contain link to interested-party-comments#valid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Share IP comments and statements</h1>
@@ -12,14 +12,14 @@ exports[`representations GET /share should contain link to interested-party-comm
             <div class="govuk-inset-text">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=/share#valid"
                 class="govuk-link">1 interested party comments</a> with the relevant parties.</div>
             <div             class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Do not confirm
-                    until you have reviewed all of the supporting documents and redacted any
-                    sensitive information.</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not confirm until
+                    you have reviewed all of the supporting documents and redacted any sensitive
+                    information.</strong>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
                 <form method="post" novalidate="novalidate">
-                    <button class="govuk-button" data-module="govuk-button">Confirm</button>
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                 </form>
             </div>
         </div>

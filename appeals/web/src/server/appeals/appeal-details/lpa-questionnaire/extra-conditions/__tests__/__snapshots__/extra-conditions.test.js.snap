@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extra-conditions GET /change should render the change extra conditions page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -48,7 +48,7 @@ exports[`extra-conditions GET /change should render the change extra conditions 
 `;
 
 exports[`extra-conditions POST /change should re-render the change extra conditions page with an error when isRequired is "yes" but details is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -110,7 +110,7 @@ exports[`extra-conditions POST /change should re-render the change extra conditi
 `;
 
 exports[`extra-conditions should re-render the change extra conditions page with an error when details exceeds 1000 characters 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

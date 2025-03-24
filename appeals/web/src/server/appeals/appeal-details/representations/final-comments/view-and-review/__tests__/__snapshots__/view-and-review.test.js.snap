@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`final-comments GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render a document upload page with a file upload component 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
     </div>
@@ -50,7 +50,7 @@ exports[`final-comments GET /lpa-questionnaire/1/add-documents/:folderId/:docume
 `;
 
 exports[`final-comments GET /manage-documents/:folderId/ should render a 404 error page if the folderId is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -68,7 +68,7 @@ exports[`final-comments GET /manage-documents/:folderId/ should render a 404 err
 `;
 
 exports[`final-comments GET /manage-documents/:folderId/ should render manage folder page with the provided comment details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Supporting documents</h1>
@@ -124,7 +124,7 @@ exports[`final-comments GET /manage-documents/:folderId/ should render manage fo
 `;
 
 exports[`final-comments GET /manage-documents/:folderId/:documentId should render a 404 error page if the folderId is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Page not found</h1>
@@ -142,7 +142,7 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
 `;
 
 exports[`final-comments GET /manage-documents/:folderId/:documentId should render manage document page with the provided comment details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
             <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
@@ -172,7 +172,7 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-name/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -180,12 +180,12 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date submitted</dt>
                     <dd class="govuk-summary-list__value">1 February 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-details/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
                     <dd class="govuk-summary-list__value">Redacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-details/1/1"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/change-document-details/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
                     </dd>
                 </div>
             </dl>
@@ -195,8 +195,7 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
         <div class="govuk-grid-column-full">
             <h2>Document versions</h2>
             <p class="govuk-body">View and remove versions of this document</p>
-            <details class="govuk-details"
-            data-module="govuk-details">
+            <details class="govuk-details">
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
@@ -236,7 +235,7 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId should rende
 `;
 
 exports[`final-comments GET /manage-documents/:folderId/:documentId/:versionId/delete should render the delete document page with the expected content when there is a single document version 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
             <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
@@ -253,8 +252,8 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId/:versionId/d
                 </div>
             </dl>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the
-                    only version of a document will delete the document from the case</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version
+                    of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
                 <div class="govuk-form-group">
@@ -280,7 +279,7 @@ exports[`final-comments GET /manage-documents/:folderId/:documentId/:versionId/d
 `;
 
 exports[`final-comments GET /review-comments with data should render review LPA final comments page with the provided comments details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review LPA final comments</h1>
@@ -293,7 +292,7 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact"> Redact<span class="govuk-visually-hidden"> final comments</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -306,9 +305,9 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568"> Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568">Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
                             </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                             </li>
                         </ul>
                     </dd>
@@ -341,7 +340,7 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -349,7 +348,7 @@ exports[`final-comments GET /review-comments with data should render review LPA 
 `;
 
 exports[`final-comments GET /review-comments with data should render review appellant final comments page with the provided comments details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review appellant final comments</h1>
@@ -362,12 +361,12 @@ exports[`final-comments GET /review-comments with data should render review appe
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact"> Redact<span class="govuk-visually-hidden"> final comments</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
             </dl>
@@ -398,7 +397,7 @@ exports[`final-comments GET /review-comments with data should render review appe
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -406,7 +405,7 @@ exports[`final-comments GET /review-comments with data should render review appe
 `;
 
 exports[`final-comments GET /review-comments with redacted comment should render the redacted comment summary list row value inside a show-more component, if there is a redacted version of the comment 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Review appellant final comments</h1>
@@ -419,7 +418,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact"> Redact<span class="govuk-visually-hidden"> final comments</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Redacted comment</dt>
@@ -429,7 +428,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
             </dl>
@@ -460,7 +459,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -468,7 +467,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
 `;
 
 exports[`final-comments GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
@@ -480,8 +479,8 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
                     <div class="govuk-form-group">
-                        <input class="govuk-input" id="" name="items[0][documentId]" type="hidden"
-                        value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                        <input class="govuk-input" id="items[0][documentId]" name="items[0][documentId]"
+                        type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
                     </div>
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset" role="group">
@@ -546,7 +545,7 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
 `;
 
 exports[`final-comments GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
@@ -558,7 +557,8 @@ exports[`final-comments GET change-document-name/:folderId/:documentId should re
                 <div class="govuk-form-group">
                     <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
                     <div class="govuk-form-group">
-                        <input class="govuk-input" id="" name="documentId" type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                        <input class="govuk-input" id="documentId" name="documentId" type="hidden"
+                        value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
                     </div>
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
@@ -574,7 +574,7 @@ exports[`final-comments GET change-document-name/:folderId/:documentId should re
 `;
 
 exports[`final-comments POST /review-comments with data should render review LPA final comments page with error if no option is selected 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -602,7 +602,7 @@ exports[`final-comments POST /review-comments with data should render review LPA
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact"> Redact<span class="govuk-visually-hidden"> final comments</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -615,9 +615,9 @@ exports[`final-comments POST /review-comments with data should render review LPA
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568"> Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568">Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
                             </li>
-                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document"> Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                             </li>
                         </ul>
                     </dd>
@@ -650,7 +650,7 @@ exports[`final-comments POST /review-comments with data should render review LPA
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -658,7 +658,7 @@ exports[`final-comments POST /review-comments with data should render review LPA
 `;
 
 exports[`final-comments should render the delete document page with the expected content should render a document upload page with a file upload component 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
             <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
@@ -675,8 +675,8 @@ exports[`final-comments should render the delete document page with the expected
                 </div>
             </dl>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the
-                    only version of a document will delete the document from the case</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version
+                    of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
                 <div class="govuk-form-group">

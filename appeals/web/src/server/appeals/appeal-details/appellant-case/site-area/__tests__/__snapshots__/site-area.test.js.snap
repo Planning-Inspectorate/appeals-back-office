@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`change-site-area GET /change should render changeSiteArea page when loaded from appellant case 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change the site area</h1>
@@ -31,7 +31,7 @@ exports[`change-site-area GET /change should render changeSiteArea page when loa
 `;
 
 exports[`change-site-area POST /change should re-render changeSiteArea page with an error when siteArea is empty 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -61,7 +61,7 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
                             <label class="govuk-label" for="site-area">Site area in square metres</label>
                             <div class="govuk-input__wrapper">
                                 <input class="govuk-input govuk-input--width-10" id="site-area" name="siteArea"
-                                type="text">
+                                type="text" value="">
                                 <div class="govuk-input__suffix" aria-hidden="true">m²</div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
 `;
 
 exports[`change-site-area POST /change should re-render changeSiteArea page with an error when siteArea is not a number or decimal 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

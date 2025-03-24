@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`development-description GET /change should render the development description change page when accessed from the appellant case page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change development description</h1>
@@ -12,13 +12,11 @@ exports[`development-description GET /change should render the development descr
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-character-count" data-module="govuk-character-count"
+                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                         data-maxlength="1000">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="development-description">Enter the original description of the development</label>
-                                <textarea class="govuk-textarea govuk-js-character-count"
-                                id="development-description" name="developmentDescription" rows="5" aria-describedby="development-description-info"></textarea>
-                            </div>
+                            <label class="govuk-label" for="development-description">Enter the original description of the development</label>
+                            <textarea class="govuk-textarea govuk-js-character-count"
+                            id="development-description" name="developmentDescription" rows="5" aria-describedby="development-description-info"></textarea>
                             <div id="development-description-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"

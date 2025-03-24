@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Does not meet or exceed" radio option checked if eiaColumnTwoThreshold is false 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -41,7 +41,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "Meets or exceeds" radio option checked if eiaColumnTwoThreshold is true 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -81,7 +81,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/consulted-bodies-details/change should render the change consulted bodies details page with "No" radio option checked, and no text populated in the textarea, if eiaConsultedBodiesDetails is null 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change consulted relevant statutory consultees</h1>
@@ -125,7 +125,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/consulted-bodies-details/change should render the change consulted bodies details page with "Yes" radio option checked, and "test consulted bodies details" populated in the textarea, if eiaConsultedBodiesDetails is "test consulted bodies details" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change consulted relevant statutory consultees</h1>
@@ -169,7 +169,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Needed" radio option checked if eiaRequiresEnvironmentalStatement is true 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -209,7 +209,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/requires-environmental-statement/change should render the change eia requires environmental statement page with "Not needed" radio option checked if eiaRequiresEnvironmentalStatement is false 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -249,7 +249,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/sensitive-area-details/change should render the change sensitive area details page with "No" radio option checked, and no text populated in the textarea, if eiaSensitiveAreaDetails is null 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change whether in, partly in, or likely to affect a sensitive area</h1>
@@ -293,7 +293,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
 `;
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/sensitive-area-details/change should render the change sensitive area details page with "Yes" radio option checked, and "test sensitive area details" populated in the textarea, if eiaSensitiveAreaDetails is "test sensitive area details" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Change whether in, partly in, or likely to affect a sensitive area</h1>

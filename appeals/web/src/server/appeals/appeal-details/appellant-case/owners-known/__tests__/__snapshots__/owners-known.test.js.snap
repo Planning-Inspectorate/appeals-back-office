@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`owners-known GET /change should render the change owners known page with "No" radio option checked if knowsOtherLandowners is "No" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -51,7 +51,7 @@ exports[`owners-known GET /change should render the change owners known page wit
 `;
 
 exports[`owners-known GET /change should render the change owners known page with "Some" radio option checked if knowsOtherLandowners is "Some" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -101,7 +101,7 @@ exports[`owners-known GET /change should render the change owners known page wit
 `;
 
 exports[`owners-known GET /change should render the change owners known page with "Yes" radio option checked if knowsOtherLandowners is "Yes" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -151,7 +151,7 @@ exports[`owners-known GET /change should render the change owners known page wit
 `;
 
 exports[`owners-known GET /change should render the change owners known page with "not applicable" radio option checked if knowsOtherLandowners is null 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/ should render the manage documents page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -119,7 +119,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
 `;
 
 exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/:documentId should render the manage documents page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
             <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
@@ -149,7 +149,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
                         <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
                         </div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/change-document-name/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"> Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/change-document-name/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
@@ -162,8 +162,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
         <div class="govuk-grid-column-full">
             <h2>Document versions</h2>
             <p class="govuk-body">View and remove versions of this document</p>
-            <details class="govuk-details"
-            data-module="govuk-details">
+            <details class="govuk-details">
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
@@ -203,7 +202,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
 `;
 
 exports[`environmental-assessment GET /environmental-assessment/manage-documents/:folderId/:documentId/:versionId/delete should render the delete document version page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
             <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Are you sure you want to remove this version?</h1>
@@ -220,8 +219,8 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
                 </div>
             </dl>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the
-                    only version of a document will delete the document from the case</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version
+                    of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
                 <div class="govuk-form-group">
@@ -247,7 +246,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
 `;
 
 exports[`environmental-assessment GET /environmental-assessment/upload-documents/:folderId should render the upload documents page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
     </div>
@@ -296,7 +295,7 @@ exports[`environmental-assessment GET /environmental-assessment/upload-documents
 `;
 
 exports[`environmental-assessment GET /environmental-assessment/upload-documents/:folderId/:documentId should render the upload documents page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
     </div>
@@ -345,7 +344,7 @@ exports[`environmental-assessment GET /environmental-assessment/upload-documents
 `;
 
 exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId should eventually redirect to case details page displaying the success banner 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
@@ -359,7 +358,7 @@ exports[`environmental-assessment POST /environmental-assessment/upload-document
                     <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
                         target="_blank">test-document.txt</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
                     </dd>
                 </div>
             </dl>
@@ -390,7 +389,7 @@ data-index="0">
 `;
 
 exports[`environmental-assessment POST /environmental-assessment/upload-documents/:folderId/:documentId should eventually redirect to case details page displaying the success banner 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check your answers</h1>
@@ -404,7 +403,7 @@ exports[`environmental-assessment POST /environmental-assessment/upload-document
                     <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2"
                         target="_blank">test-document.txt</a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>
                     </dd>
                 </div>
             </dl>
