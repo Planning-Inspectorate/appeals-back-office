@@ -523,7 +523,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 				expect(firstBannerHtml).toContain(
-					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>'
 				);
 
 				const secondBannerHtml = parseHtml(response.text, {
@@ -531,7 +531,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 				expect(secondBannerHtml).toContain(
-					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > LPA Questionnaire is incomplete</h3>'
+					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> LPA Questionnaire is incomplete</h3>'
 				);
 			});
 		});
@@ -1031,7 +1031,7 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHtml).toContain(
-					'href="/appeals-service/appeal-details/2/lpa-questionnaire/1/in-near-or-likely-to-affect-designated-sites/change" data-cy="change-in-near-or-likely-to-affect-designated-sites"> Change<span class="govuk-visually-hidden"> In, near or likely to affect designated sites</span></a>'
+					'href="/appeals-service/appeal-details/2/lpa-questionnaire/1/in-near-or-likely-to-affect-designated-sites/change" data-cy="change-in-near-or-likely-to-affect-designated-sites">Change<span class="govuk-visually-hidden"> In, near or likely to affect designated sites (1. Constraints, designations and other issues)</span></a>'
 				);
 			});
 
@@ -3125,7 +3125,7 @@ describe('LPA Questionnaire review', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -3134,10 +3134,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -3276,7 +3276,7 @@ describe('LPA Questionnaire review', () => {
 				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -3285,10 +3285,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-document-details/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
@@ -3655,7 +3655,7 @@ describe('LPA Questionnaire review', () => {
 				'Are you sure you want to remove this version?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="delete-file-answer" type="radio" value="yes">'
@@ -3691,7 +3691,7 @@ describe('LPA Questionnaire review', () => {
 				'name="delete-file-answer" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
 		});
 	});

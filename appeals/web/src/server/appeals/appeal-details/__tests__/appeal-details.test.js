@@ -1349,7 +1349,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedElementHtml).toContain('Success</h3>');
 						expect(unprettifiedElementHtml).toContain(
-							`<p class="govuk-notification-banner__heading">${testCase.successBannerHeading}</p>`
+							`<p class="govuk-notification-banner__heading"> ${testCase.successBannerHeading}</p>`
 						);
 						expect(unprettifiedElementHtml).not.toContain('Important</h3>');
 						expect(unprettifiedElementHtml).not.toContain(
@@ -1397,7 +1397,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).innerHTML;
 					expect(firstBannerHtml).toContain(
-						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Success</h3>'
+						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>'
 					);
 
 					const secondBannerHtml = parseHtml(response.text, {
@@ -1405,7 +1405,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).innerHTML;
 					expect(secondBannerHtml).toContain(
-						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title" > Important</h3>'
+						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>'
 					);
 				});
 			});
@@ -1930,10 +1930,10 @@ describe('appeal-details', () => {
 			});
 
 			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals"> Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal"> Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
+				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
 
@@ -2539,7 +2539,7 @@ describe('appeal-details', () => {
 						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
 					);
 					expect(unprettifiedHTML).toContain(
-						`href="/appeals-service/appeal-details/${appealId}/appeal-timetables/final-comments" data-cy="change-final-comments-due-date"> Change<span class="govuk-visually-hidden"> Final comments due</span></a>`
+						`href="/appeals-service/appeal-details/${appealId}/appeal-timetables/final-comments" data-cy="change-final-comments-due-date">Change<span class="govuk-visually-hidden"> Final comments due</span></a>`
 					);
 				});
 
@@ -2795,7 +2795,7 @@ describe('appeal-details', () => {
 				expect(rowHtml).toMatchSnapshot();
 				expect(rowHtml).toContain('Decision</dt>');
 				expect(rowHtml).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision"> Issue<span class="govuk-visually-hidden"> Decision</span></a>'
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a>'
 				);
 			});
 

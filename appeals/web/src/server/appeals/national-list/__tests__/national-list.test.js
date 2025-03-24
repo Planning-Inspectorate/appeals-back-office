@@ -156,7 +156,7 @@ describe('national-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<nav class="govuk-pagination" role="navigation" aria-label="results">'
+				'<nav class="govuk-pagination" aria-label="Pagination">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'aria-label="Page 1" aria-current="page"> 1</a>'
@@ -186,14 +186,14 @@ describe('national-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<nav class="govuk-pagination" role="navigation" aria-label="results">'
+				'<nav class="govuk-pagination" aria-label="Pagination">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'aria-label="Page 1" aria-current="page"> 1</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 2"> 2</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>'
+				'<li class="govuk-pagination__item govuk-pagination__item--ellipses"> &ctdot;</li>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 15"> 15</a>');
 		});

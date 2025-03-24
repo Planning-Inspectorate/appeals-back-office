@@ -1126,14 +1126,14 @@ describe('internal correspondence', () => {
 					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
@@ -1285,14 +1285,14 @@ describe('internal correspondence', () => {
 					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');

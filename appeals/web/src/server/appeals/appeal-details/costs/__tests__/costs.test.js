@@ -967,7 +967,7 @@ describe('costs', () => {
 							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
@@ -976,10 +976,10 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
@@ -1086,7 +1086,7 @@ describe('costs', () => {
 							'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1"> Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
 						expect(unprettifiedElement.innerHTML).toContain(
@@ -1095,10 +1095,10 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 						expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1"> Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
+							`<a class="govuk-link" href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt redaction status</span></a></dd>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 					});
