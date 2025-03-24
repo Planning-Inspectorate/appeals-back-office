@@ -86,7 +86,7 @@
     "@rollup/plugin-replace": "^5.0.5",
     "@rollup/plugin-virtual": "^3.0.2",
     "@testing-library/dom": "^8.19.0",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/user-event": "^14.4.3",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
