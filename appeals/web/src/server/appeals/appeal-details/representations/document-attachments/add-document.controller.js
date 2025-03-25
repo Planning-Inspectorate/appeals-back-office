@@ -2,17 +2,24 @@ import {
 	postDocumentUpload as postDocumentUploadHelper,
 	renderDocumentUpload as renderDocumentUploadHelper
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
-	const { currentAppeal, session } = request;
+	const { currentAppeal, session, query } = request;
+
 	const baseUrl = request.baseUrl;
+	const representationBaseUrl = request.baseUrl.replace('/add-document', '');
+
+	const backButtonUrl = query.backUrl
+		? constructUrl(String(query.backUrl), currentAppeal.appealId)
+		: representationBaseUrl;
 
 	return renderDocumentUploadHelper({
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl: `${baseUrl}/review`,
+		backButtonUrl,
 		nextPageUrl: `${baseUrl}/redaction-status`,
 		pageHeadingTextOverride: 'Upload supporting document',
 		allowMultipleFiles: false,
