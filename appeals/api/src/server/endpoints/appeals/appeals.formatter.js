@@ -146,6 +146,7 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),
+			representationStatus: lpaStatement?.status ?? null,
 			receivedAt: lpaStatement?.dateCreated
 		},
 		lpaFinalComments: {
@@ -249,11 +250,14 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			return null;
 		}
 		case APPEAL_CASE_STATUS.STATEMENTS: {
-			if (appeal.appealTimetable?.lpaStatementDueDate && appeal.appealTimetable?.ipCommentsDueDate) {
-				 const lpaDate = new Date(appeal.appealTimetable.lpaStatementDueDate);
-		     const ipDate = new Date(appeal.appealTimetable.ipCommentsDueDate);
+			if (
+				appeal.appealTimetable?.lpaStatementDueDate &&
+				appeal.appealTimetable?.ipCommentsDueDate
+			) {
+				const lpaDate = new Date(appeal.appealTimetable.lpaStatementDueDate);
+				const ipDate = new Date(appeal.appealTimetable.ipCommentsDueDate);
 
-				 return lpaDate < ipDate ? lpaDate : ipDate;
+				return lpaDate < ipDate ? lpaDate : ipDate;
 			}
 			if (appeal.appealTimetable?.lpaStatementDueDate) {
 				return new Date(appeal.appealTimetable?.lpaStatementDueDate);

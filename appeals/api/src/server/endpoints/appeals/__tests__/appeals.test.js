@@ -93,7 +93,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -152,7 +153,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -234,7 +236,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -344,7 +347,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -454,7 +458,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -564,7 +569,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -661,7 +667,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -760,7 +767,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -856,7 +864,8 @@ describe('appeals list routes', () => {
 									status: 'received'
 								},
 								lpaStatement: {
-									status: 'not_received'
+									status: 'not_received',
+									representationStatus: null
 								},
 								lpaFinalComments: {
 									receivedAt: null,
@@ -1096,7 +1105,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 						status: 'received'
 					},
 					lpaStatement: {
-						status: 'not_received'
+						status: 'not_received',
+						representationStatus: null
 					},
 					lpaFinalComments: {
 						receivedAt: null,
