@@ -8,9 +8,13 @@ export const mapFinalCommentDueDate = ({
 	appealDetails,
 	currentRoute,
 	userHasUpdateCasePermission
-}) =>
-	textSummaryListItem({
-		id: 'final-comments-due-date',
+}) => {
+	const id = 'final-comments-due-date';
+	if (!appealDetails.startedAt) {
+		return { id, display: {} };
+	}
+	return textSummaryListItem({
+		id,
 		text: 'Final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate),
 		link: `${currentRoute}/appeal-timetables/final-comments`,
@@ -19,3 +23,4 @@ export const mapFinalCommentDueDate = ({
 			!isStatePassed(appealDetails, APPEAL_CASE_STATUS.FINAL_COMMENTS),
 		classes: 'appeal-final-comments-due-date'
 	});
+};

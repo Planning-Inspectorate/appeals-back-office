@@ -3,30 +3,25 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
-	if (
-		appealDetails.startedAt &&
-		appealDetails.documentationSummary?.lpaQuestionnaire?.status === 'not_received'
-	) {
-		return textSummaryListItem({
-			id: 'start-case-date',
-			text: 'Start date',
-			value: dateISOStringToDisplayDate(appealDetails.startedAt, 'Not added'),
-			link: `${currentRoute}/start-case/change`,
-			editable: Boolean(appealDetails.validAt && userHasUpdateCasePermission),
-			classes: 'appeal-start-date',
-			actionText: 'Change'
-		});
+	const id = 'start-case-date';
+	if (!appealDetails.validAt) {
+		return { id, display: {} };
 	}
 
 	return textSummaryListItem({
-		id: 'start-case-date',
+		id,
 		text: 'Start date',
-		value: dateISOStringToDisplayDate(appealDetails.startedAt, 'Not added'),
-		link: `${currentRoute}/start-case/add`,
-		editable: Boolean(
-			appealDetails.validAt && !appealDetails.startedAt && userHasUpdateCasePermission
-		),
+		value: dateISOStringToDisplayDate(appealDetails.startedAt, 'Not started'),
+		link: appealDetails.startedAt
+			? `${currentRoute}/start-case/change`
+			: `${currentRoute}/start-case/add`,
+		editable: Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-start-date',
-		actionText: 'Add'
+		actionText:
+			appealDetails.documentationSummary.lpaQuestionnaire?.status !== 'not_received'
+				? ''
+				: appealDetails.startedAt
+				? 'Change'
+				: 'Start'
 	});
 };

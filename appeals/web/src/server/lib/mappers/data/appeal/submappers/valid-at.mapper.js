@@ -6,10 +6,16 @@ export const mapValidAt = ({ appealDetails, currentRoute, userHasUpdateCasePermi
 	textSummaryListItem({
 		id: 'valid-date',
 		text: 'Valid date',
-		value: dateISOStringToDisplayDate(appealDetails.validAt, 'Not added'),
-		link: `${currentRoute}/appellant-case/valid/date`,
-		editable: Boolean(
-			appealDetails.validAt && !appealDetails.startedAt && userHasUpdateCasePermission
-		),
+		value: dateISOStringToDisplayDate(appealDetails.validAt, 'Not validated'),
+		link: appealDetails.validAt
+			? `${currentRoute}/appellant-case/valid/date`
+			: `${currentRoute}/appellant-case`,
+		actionText:
+			!appealDetails.caseOfficer || appealDetails.startedAt
+				? ''
+				: appealDetails.validAt
+				? 'Change'
+				: 'Validate',
+		editable: Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-valid-date'
 	});

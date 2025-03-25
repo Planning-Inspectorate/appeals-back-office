@@ -6,9 +6,13 @@ export const mapIpCommentsDueDate = ({
 	appealDetails,
 	currentRoute,
 	userHasUpdateCasePermission
-}) =>
-	textSummaryListItem({
-		id: 'ip-comments-due-date',
+}) => {
+	const id = 'ip-comments-due-date';
+	if (!appealDetails.startedAt) {
+		return { id, display: {} };
+	}
+	return textSummaryListItem({
+		id,
 		text: 'Interested party comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate),
 		link: `${currentRoute}/appeal-timetables/ip-comments`,
@@ -18,3 +22,4 @@ export const mapIpCommentsDueDate = ({
 			Boolean(appealDetails.startedAt),
 		classes: 'appeal-ip-comments-due-date'
 	});
+};

@@ -16,6 +16,10 @@ export function dateAndTimeFormatter(date, startTime, endTime) {
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapSiteVisitDate = ({ appealDetails, currentRoute, session }) => {
+	const id = 'schedule-visit';
+	if (!appealDetails.startedAt) {
+		return { id, display: {} };
+	}
 	const hasVisit = Boolean(appealDetails.siteVisit?.visitDate);
 	const value =
 		(hasVisit &&
@@ -27,7 +31,7 @@ export const mapSiteVisitDate = ({ appealDetails, currentRoute, session }) => {
 		'Visit date not yet set';
 
 	return textSummaryListItem({
-		id: 'schedule-visit',
+		id,
 		text: 'Site visit',
 		value: { html: value },
 		link: `${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`,
