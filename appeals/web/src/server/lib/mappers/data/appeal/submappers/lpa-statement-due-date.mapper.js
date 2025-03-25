@@ -8,9 +8,13 @@ export const mapLpaStatementDueDate = ({
 	appealDetails,
 	currentRoute,
 	userHasUpdateCasePermission
-}) =>
-	textSummaryListItem({
-		id: 'lpa-statement-due-date',
+}) => {
+	const id = 'lpa-statement-due-date';
+	if (!appealDetails.startedAt) {
+		return { id, display: {} };
+	}
+	return textSummaryListItem({
+		id,
 		text: 'LPA statement due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate),
 		link: `${currentRoute}/appeal-timetables/lpa-statement`,
@@ -18,3 +22,4 @@ export const mapLpaStatementDueDate = ({
 			userHasUpdateCasePermission && !isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS),
 		classes: 'appeal-lpa-statement-due-date'
 	});
+};

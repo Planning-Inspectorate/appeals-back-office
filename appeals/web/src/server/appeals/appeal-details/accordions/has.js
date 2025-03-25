@@ -27,6 +27,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				{
 					type: 'summary-list',
 					parameters: {
+						classes: 'appeal-case-timetable',
 						rows: [
 							mappedData.appeal.validAt.display.summaryListItem,
 							mappedData.appeal.startedAt.display.summaryListItem,

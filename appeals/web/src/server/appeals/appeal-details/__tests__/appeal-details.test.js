@@ -1723,7 +1723,7 @@ describe('appeal-details', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Start date</dt><dd class="govuk-summary-list__value"> Not added</dd>'
+				'Valid date</dt><dd class="govuk-summary-list__value"> 23 May 2023</dd>'
 			);
 		});
 
@@ -2490,11 +2490,225 @@ describe('appeal-details', () => {
 		});
 
 		describe('Timetable', () => {
-			describe('Final comments', () => {
-				const appealId = 3;
+			const appealId = 3;
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+					.reply(200, {
+						statement: 0,
+						comment: 0,
+						lpa_final_comment: 0,
+						appellant_final_comment: 0
+					});
+			});
 
+			describe('Valid date', () => {
 				beforeEach(() => {
-					nock.cleanAll();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+						.reply(200, { items: [] });
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+						.reply(200, { items: [] });
+				});
+
+				it('should render a "Timetable" with only a Valid date row with no date and no action link', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							validAt: null,
+							startedAt: null,
+							appealId
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const validDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-valid-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(validDateRow).toContain(`<dt class="govuk-summary-list__key"> Valid date</dt>`);
+
+					expect(validDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> Not validated</dd>'
+					);
+
+					expect(validDateRow).toContain('data-cy="-valid-date"><span');
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable'
+					}).innerHTML;
+
+					expect(caseTimeTable).toMatchSnapshot();
+				});
+
+				it('should render a "Timetable" with only a Valid date row with no date and a validate action link', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							validAt: null,
+							startedAt: null,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const validDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-valid-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(validDateRow).toContain(`<dt class="govuk-summary-list__key"> Valid date</dt>`);
+
+					expect(validDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> Not validated</dd>'
+					);
+
+					expect(validDateRow).toContain('data-cy="validate-valid-date">Validate<span');
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable'
+					}).innerHTML;
+
+					expect(caseTimeTable).toMatchSnapshot();
+				});
+
+				it('should render a "Timetable" with a Valid date row and a Start date row including no date and start action link', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							startedAt: null,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const validDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-valid-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(validDateRow).toContain(`<dt class="govuk-summary-list__key"> Valid date</dt>`);
+
+					expect(validDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
+
+					expect(validDateRow).toContain('data-cy="change-valid-date">Change<span');
+
+					const startDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-start-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(startDateRow).toContain(`<dt class="govuk-summary-list__key"> Start date</dt>`);
+
+					expect(startDateRow).toContain('<dd class="govuk-summary-list__value"> Not started</dd>');
+
+					expect(startDateRow).toContain('data-cy="start-start-case-date">Start<span');
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable'
+					}).innerHTML;
+
+					expect(caseTimeTable).toMatchSnapshot();
+				});
+
+				it('should render a "Timetable" with all rows with the Start date row including a date and change action link', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const validDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-valid-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(validDateRow).toContain(`<dt class="govuk-summary-list__key"> Valid date</dt>`);
+
+					expect(validDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
+
+					expect(validDateRow).toContain('data-cy="-valid-date"><span');
+
+					const startDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-start-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(startDateRow).toContain(`<dt class="govuk-summary-list__key"> Start date</dt>`);
+
+					expect(startDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
+
+					expect(startDateRow).toContain('data-cy="change-start-case-date">Change<span');
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable'
+					}).innerHTML;
+
+					expect(caseTimeTable).toMatchSnapshot();
+				});
+				it('should render a "Timetable" with all rows with the Start date without an action link', async () => {
+					const testDocumentationSummary = {
+						...appealDataFullPlanning.documentationSummary,
+						lpaQuestionnaire: { status: 'received' }
+					};
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							documentationSummary: testDocumentationSummary,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const validDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-valid-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(validDateRow).toContain(`<dt class="govuk-summary-list__key"> Valid date</dt>`);
+
+					expect(validDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
+
+					expect(validDateRow).toContain('data-cy="-valid-date"><span');
+
+					const startDateRow = parseHtml(response.text, {
+						rootElement: `.appeal-start-date`,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(startDateRow).toContain(`<dt class="govuk-summary-list__key"> Start date</dt>`);
+
+					expect(startDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
+
+					expect(startDateRow).toContain('data-cy="-start-case-date"><span');
+
+					expect(response.text).toContain(`appeal-lpa-questionnaire-due-date`);
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable'
+					}).innerHTML;
+
+					expect(caseTimeTable).toMatchSnapshot();
+				});
+			});
+
+			describe('Final comments', () => {
+				beforeEach(() => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
@@ -2503,15 +2717,6 @@ describe('appeal-details', () => {
 							appealTimetable: {
 								finalCommentsDueDate: '2025-01-20T23:59:00.000Z'
 							}
-						});
-					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
-						.reply(200, {
-							statement: 0,
-							comment: 0,
-							lpa_final_comment: 0,
-							appellant_final_comment: 0
 						});
 				});
 
