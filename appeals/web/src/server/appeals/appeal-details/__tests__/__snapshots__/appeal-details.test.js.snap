@@ -629,17 +629,17 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1106,17 +1106,17 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1576,17 +1576,17 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -2046,17 +2046,17 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -2536,17 +2536,17 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3009,17 +3009,17 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3469,17 +3469,17 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3925,17 +3925,17 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -4384,17 +4384,17 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -4843,17 +4843,17 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -5318,17 +5318,17 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -5818,17 +5818,17 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                         data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -6302,17 +6302,17 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         </ul>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -6758,17 +6758,17 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7237,17 +7237,17 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         </ul>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                    <dd class="govuk-summary-list__value">
+                                <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                    <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-!-margin-0">
                                             <li>Level: A</li>
                                             <li>Historic heritage</li>
                                             <li>Architecture design</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                    </dd>
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                            data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                        </dd>
                                 </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7693,17 +7693,17 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                <dd class="govuk-summary-list__value">
+                            <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                <dd                                 class="govuk-summary-list__value">
                                     <ul class="govuk-!-margin-0">
                                         <li>Level: A</li>
                                         <li>Historic heritage</li>
                                         <li>Architecture design</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                </dd>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                        data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                    </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -8164,17 +8164,17 @@ exports[`appeal-details should not render a back button 1`] = `
                                                 data-cy="add-related-appeals"> Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                             </dd>
                                         </div>
-                                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
-                                            <dd class="govuk-summary-list__value">
+                                        <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level and specialisms</dt>
+                                            <dd                                             class="govuk-summary-list__value">
                                                 <ul class="govuk-!-margin-0">
                                                     <li>Level: A</li>
                                                     <li>Historic heritage</li>
                                                     <li>Architecture design</li>
                                                 </ul>
-                                            </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
-                                                data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level</span></a>
-                                            </dd>
+                                                </dd>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/allocation-details/allocation-level"
+                                                    data-cy="change-allocation-details"> Change<span class="govuk-visually-hidden"> Allocation level and specialisms</span></a>
+                                                </dd>
                                         </div>
                                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> LPA application reference</dt>
                                             <dd                                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
