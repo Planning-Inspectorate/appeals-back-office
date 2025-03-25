@@ -47,6 +47,12 @@ describe('mapStatusDependentNotifications', () => {
 				'<p class="govuk-notification-banner__heading">Appeal ready for validation</p>'
 		},
 		{
+			bannerKey: 'readyForValidation',
+			requiredAction: 'awaitingAppellantUpdate',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Appeal ready for validation</p>'
+		},
+		{
 			bannerKey: 'appellantFinalCommentsAwaitingReview',
 			requiredAction: 'reviewAppellantFinalComments',
 			expectedContainedHtml:
@@ -67,6 +73,12 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'readyForLpaQuestionnaireReview',
 			requiredAction: 'reviewLpaQuestionnaire',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p>'
+		},
+		{
+			bannerKey: 'readyForLpaQuestionnaireReview',
+			requiredAction: 'awaitingLpaUpdate',
 			expectedContainedHtml:
 				'<p class="govuk-notification-banner__heading">LPA questionnaire ready for review</p>'
 		},
