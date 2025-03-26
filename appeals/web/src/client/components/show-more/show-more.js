@@ -221,15 +221,32 @@ const initialiseOptions = (/** @type {ShowMoreComponentInstance} */ componentIns
 	};
 };
 
+const shouldInitialiseComponentInstance = (
+	/** @type {ShowMoreComponentInstance} */ componentInstance
+) => {
+	if (isHtmlMode(componentInstance)) {
+		const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
+		const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
+
+		if (rows.length <= componentInstance.options.maximumRowsBeforeHiding) {
+			return false;
+		}
+	} else if (
+		componentInstance.elements.root.innerText.length <=
+		componentInstance.options.maximumCharactersBeforeHiding
+	) {
+		return false;
+	}
+
+	return true;
+};
+
 const initialiseComponentInstance = async (
 	/** @type {ShowMoreComponentInstance} */ componentInstance
 ) => {
 	initialiseOptions(componentInstance);
 
-	if (
-		componentInstance.elements.root.innerText.length <=
-		componentInstance.options.maximumCharactersBeforeHiding
-	) {
+	if (!shouldInitialiseComponentInstance(componentInstance)) {
 		return;
 	}
 
