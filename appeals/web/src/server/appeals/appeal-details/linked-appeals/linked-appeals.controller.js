@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { HTTPError } from 'got';
 import {
 	postUnlinkRequest,
 	linkAppealToBackOfficeAppeal,
@@ -220,6 +221,12 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
+		if (error instanceof HTTPError && error.response.statusCode === 400) {
+			// @ts-ignore
+			request.errors = error.response.body.errors;
+			return renderAddLinkedAppealCheckAndConfirm(request, response);
+		}
+
 		logger.error(error);
 	}
 

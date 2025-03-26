@@ -8,7 +8,7 @@ export const mapAllocationDetails = ({
 }) =>
 	textSummaryListItem({
 		id: 'allocation-details',
-		text: 'Allocation level',
+		text: 'Allocation level and specialisms',
 		value: {
 			html: mapDetailsHtml(appealDetails.allocationDetails)
 		},
