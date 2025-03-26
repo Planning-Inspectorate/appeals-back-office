@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals';
 import {
+	allocationDetailsData,
 	appealDataFullPlanning,
 	costsFolderInfoAppellantApplication,
 	documentFileInfo,
@@ -301,6 +302,135 @@ describe('lpa-statements', () => {
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/3/lpa-statement/redact'
 			);
+		});
+		describe('check your answers page', () => {
+			const appealId = 3;
+
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+					.reply(200, {
+						...getAppealRepsResponse,
+						itemCount: 1,
+						items: [lpaStatementAwaitingReview]
+					})
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-levels')
+					.reply(200, allocationDetailsData.levels)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-specialisms')
+					.reply(200, allocationDetailsData.specialisms)
+					.persist();
+			});
+
+			it('should display "Do you need to update the allocation level and specialisms?" row and allocation-specialisms row if allocation and specialisms were previously set', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						appealStatus: 'statements',
+						allocationDetails: {
+							level: 'B',
+							band: 3,
+							specialisms: ['Specialism 3']
+						}
+					})
+					.persist();
+
+				await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({ status: 'valid' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+					.send({ allocationLevelAndSpecialisms: 'yes' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-level`)
+					.send({ allocationLevel: 'A' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`)
+					.send({ allocationSpecialisms: 1 });
+				const response = await request.get(`${baseUrl}/${appealId}/lpa-statement/valid/confirm`);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you need to update the allocation level and specialisms?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Allocation level</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Allocation specialisms</dt>');
+			});
+
+			it('should not display "Do you need to update the allocation level and specialisms?" row and should display allocation-specialisms row if allocation and specialisms were not previously set', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						appealStatus: 'statements',
+						allocationDetails: null
+					})
+					.persist();
+
+				await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({ status: 'valid' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+					.send({ allocationLevelAndSpecialisms: 'yes' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-level`)
+					.send({ allocationLevel: 'A' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`)
+					.send({ allocationSpecialisms: 1 });
+				const response = await request.get(`${baseUrl}/${appealId}/lpa-statement/valid/confirm`);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'Do you need to update the allocation level and specialisms?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Allocation level</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Allocation specialisms</dt>');
+			});
+
+			it('should display "Do you need to update the allocation level and specialisms?" row and should not display allocation-specialisms row if allocation and specialisms were previously set and asnwer to allocation check was "yes" at first, but later set to "no" at CYA', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						appealStatus: 'statements',
+						allocationDetails: {
+							level: 'B',
+							band: 3,
+							specialisms: ['Specialism 3']
+						}
+					})
+					.persist();
+
+				await request.post(`${baseUrl}/${appealId}/lpa-statement`).send({ status: 'valid' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+					.send({ allocationLevelAndSpecialisms: 'yes' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-level`)
+					.send({ allocationLevel: 'A' });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`)
+					.send({ allocationSpecialisms: 1 });
+				await request
+					.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+					.send({ allocationLevelAndSpecialisms: 'no' });
+				const response = await request.get(`${baseUrl}/${appealId}/lpa-statement/valid/confirm`);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you need to update the allocation level and specialisms?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Allocation level</dt>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Allocation specialisms</dt>');
+			});
 		});
 	});
 

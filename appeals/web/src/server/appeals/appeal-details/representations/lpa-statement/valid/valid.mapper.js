@@ -107,7 +107,8 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 						}
 					},
 					...(sessionData?.forcedAllocation
-						? [
+						? []
+						: [
 								{
 									key: { text: 'Do you need to update the allocation level and specialisms?' },
 									value: { text: updatingAllocation ? 'Yes' : 'No' },
@@ -121,9 +122,8 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 										]
 									}
 								}
-						  ]
-						: []),
-					...(updatingAllocation
+						  ]),
+					...(sessionData?.allocationLevel && specialisms.length
 						? [
 								{
 									key: { text: 'Allocation level' },
