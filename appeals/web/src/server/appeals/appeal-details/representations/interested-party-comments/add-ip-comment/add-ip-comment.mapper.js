@@ -9,7 +9,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, getTodaysISOString } from '#lib/dates.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
@@ -234,7 +234,7 @@ export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
 			value:
 				date.day && date.month && date.year
 					? date
-					: dateISOStringToDayMonthYearHourMinute(new Date().toISOString()),
+					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
 			legendText: 'When did the interested party submit the comment?',
 			legendIsPageHeading: true,
 			hint: 'For example, 27 3 2024'
