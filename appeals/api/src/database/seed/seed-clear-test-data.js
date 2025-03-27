@@ -175,6 +175,16 @@ const deleteAppealData = async (
 		}
 	);
 
+	const deleteLpaQuestionnaireDesignatedSites = databaseConnector.designatedSiteSelected.deleteMany(
+		{
+			where: {
+				lpaQuestionnaireId: {
+					in: lpaqIDs
+				}
+			}
+		}
+	);
+
 	const deleteStatuses = databaseConnector.appealStatus.deleteMany({
 		where: {
 			appealId: {
@@ -183,13 +193,9 @@ const deleteAppealData = async (
 		}
 	});
 
-	const deleteFolders = databaseConnector.folder.deleteMany({
-		where: {
-			caseId: {
-				in: appealIDs
-			}
-		}
-	});
+	const deleteFolders = databaseConnector.$executeRawUnsafe(
+		`delete from Folder where caseId IN (${appealIDs.join(',')})`
+	);
 
 	const deleteParentRelationships = databaseConnector.appealRelationship.deleteMany({
 		where: {
@@ -263,6 +269,24 @@ const deleteAppealData = async (
 		}
 	});
 
+	const deleteRepsInvalidIncomplete =
+		databaseConnector.representationRejectionReasonsSelected.deleteMany({
+			where: {
+				representationId: {
+					in: representationIDs
+				}
+			}
+		});
+
+	const deleteRepsInvalidIncompleteCustom =
+		databaseConnector.representationRejectionReasonText.deleteMany({
+			where: {
+				representationId: {
+					in: representationIDs
+				}
+			}
+		});
+
 	const deleteRepsAttachments = databaseConnector.representationAttachment.deleteMany({
 		where: {
 			representationId: {
@@ -309,6 +333,8 @@ const deleteAppealData = async (
 	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocumentAudits;
+	await deleteRepsInvalidIncomplete;
+	await deleteRepsInvalidIncompleteCustom;
 	await deleteRepsAttachments;
 	await deleteReps;
 	await deleteDocumentVersions;
@@ -325,6 +351,7 @@ const deleteAppealData = async (
 		deleteAppellantCasesInvalidCustomReasons,
 		deleteAppellantCasesIncompleteReasons,
 		deleteAppellantCasesInvalidReasons,
+		deleteLpaQuestionnaireDesignatedSites,
 		deleteLpaQuestionnairesIncompleteCustomReasons,
 		deleteLpaQuestionnairesIncompleteReasons,
 		deleteLpaQuestionnaireNotificationMethods,

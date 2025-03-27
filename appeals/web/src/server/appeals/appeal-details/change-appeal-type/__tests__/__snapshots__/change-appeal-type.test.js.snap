@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should render the add horizon reference page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -27,7 +27,7 @@ exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the appeal type page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -67,7 +67,7 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date should render the final date page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -89,7 +89,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -97,7 +97,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -105,7 +105,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -141,7 +141,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/check-transfer should render the check transfer page, with the appeal reference of the transferred appeal displayed in the summary, if the required data is present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Details of the transferred appeal</h1>
@@ -170,8 +170,8 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
                 </div>
             </dl>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
-                    the appellant to let them know the appeal type has been changed.</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You must email the appellant
+                    to let them know the appeal type has been changed.</strong>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -196,7 +196,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/resubmit should render the resubmit page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -236,7 +236,7 @@ exports[`change-appeal-type GET /change-appeal-type/resubmit should render the r
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -277,7 +277,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if no horizon reference was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -318,7 +318,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should render a custom error page stating that there is a problem with Horizon, if the transferred-appeal endpoint returns a 500 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with Horizon</h1>
@@ -335,7 +335,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-render the appeal type page with an error message if required field is missing 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -390,7 +390,7 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-render the check transfer page with an error message if the required data is present in the session, but the confirmation checkbox was not checked 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -434,8 +434,8 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-re
                 </div>
             </dl>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span> You must email
-                    the appellant to let them know the appeal type has been changed.</strong>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You must email the appellant
+                    to let them know the appeal type has been changed.</strong>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -460,7 +460,7 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-re
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
@@ -477,7 +477,7 @@ exports[`change-appeal-type POST /change-appeal-type/check-transfer should rende
 `;
 
 exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render the resubmit page with an error message if required field is missing 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -532,7 +532,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if an invalid date was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -604,7 +604,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if required field is missing 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -641,7 +641,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -649,7 +649,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -657,7 +657,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -676,7 +676,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if the provided date day is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -750,7 +750,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -822,7 +822,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if the provided date month is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -896,7 +896,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
 `;
 
 exports[`change-appeal-type should re-render the final date page with an error message if the provided date year is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

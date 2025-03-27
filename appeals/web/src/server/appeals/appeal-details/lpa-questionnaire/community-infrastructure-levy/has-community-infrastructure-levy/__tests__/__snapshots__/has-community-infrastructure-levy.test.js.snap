@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`has-community-infrastructure-levy GET /has-community-infrastructure-levy/change should render the change community infrastructure levy status page with "Does not have infrastructure levy" radio option checked if hasInfrastructureLevy is false 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -41,7 +41,7 @@ exports[`has-community-infrastructure-levy GET /has-community-infrastructure-lev
 `;
 
 exports[`has-community-infrastructure-levy GET /has-community-infrastructure-levy/change should render the change community infrastructure levy status page with "Has infrastructure levy" radio option checked if hasInfrastructureLevy is true 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

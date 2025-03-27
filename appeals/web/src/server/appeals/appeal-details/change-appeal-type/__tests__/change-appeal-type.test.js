@@ -155,13 +155,13 @@ describe('change-appeal-type', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="change-appeal-final-date-day" type="text" inputmode="numeric">'
+				'name="change-appeal-final-date-day" type="text" value="" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="change-appeal-final-date-month" type="text" inputmode="numeric">'
+				'name="change-appeal-final-date-month" type="text" value="" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="change-appeal-final-date-year" type="text" inputmode="numeric">'
+				'name="change-appeal-final-date-year" type="text" value="" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Confirming will ask the appellant to resubmit using the correct appeal type</div>'

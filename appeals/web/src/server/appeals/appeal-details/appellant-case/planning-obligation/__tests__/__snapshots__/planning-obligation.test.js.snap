@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Finalised" radio option checked if planningObligation.status is "finalised" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -46,7 +46,7 @@ exports[`planning-obligation GET /status/change should render the change plannin
 `;
 
 exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Not applicable" radio option checked if planningObligation.status is null 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -92,7 +92,7 @@ exports[`planning-obligation GET /status/change should render the change plannin
 `;
 
 exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Not yet started" radio option checked if planningObligation.status is "not_started" 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>

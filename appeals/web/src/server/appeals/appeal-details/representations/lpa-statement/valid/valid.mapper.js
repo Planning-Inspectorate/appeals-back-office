@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -33,10 +34,17 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 		lpaStatement.attachments.length > 0
 			? buildHtmUnorderedList(
 					lpaStatement.attachments.map(
-						(a) => `<a class="govuk-list" href="#">${a.documentVersion.document.name}</a>`
+						(a) =>
+							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+								a.documentVersion.document.caseId,
+								a.documentVersion.document.guid,
+								a.documentVersion.document.name
+							)}" target="_blank">${a.documentVersion.document.name}</a>`
 					)
 			  )
 			: null;
+
+	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -72,14 +80,14 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 									? [
 											{
 												text: 'Manage',
-												href: `#`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/valid/confirm`,
 												visuallyHiddenText: 'supporting documents'
 											}
 									  ]
 									: []),
 								{
 									text: 'Add',
-									href: `#`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/add-document?backUrl=/lpa-statement/valid/confirm`,
 									visuallyHiddenText: 'supporting documents'
 								}
 							]
@@ -99,7 +107,8 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 						}
 					},
 					...(sessionData?.forcedAllocation
-						? [
+						? []
+						: [
 								{
 									key: { text: 'Do you need to update the allocation level and specialisms?' },
 									value: { text: updatingAllocation ? 'Yes' : 'No' },
@@ -113,9 +122,8 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 										]
 									}
 								}
-						  ]
-						: []),
-					...(updatingAllocation
+						  ]),
+					...(sessionData?.allocationLevel && specialisms.length
 						? [
 								{
 									key: { text: 'Allocation level' },

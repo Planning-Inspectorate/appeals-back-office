@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -30,7 +30,7 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
                                 </div>
                             </fieldset>
                         </div>
-                        <button class="govuk-button" data-module="govuk-button">Continue</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -40,7 +40,7 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
 `;
 
 exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Interested party&#39;s address</h1>
@@ -54,27 +54,27 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
                             <input class="govuk-input" id="address-line-1" name="addressLine1"
-                            type="text">
+                            type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="town">Town or city</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="town" name="town" type="text">
+                            id="town" name="town" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text">
+                            id="county" name="county" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="post-code">Postcode</label>
                             <input class="govuk-input govuk-input govuk-input--width-10"
-                            id="post-code" name="postCode" type="text">
+                            id="post-code" name="postCode" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
@@ -91,7 +91,7 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
 `;
 
 exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Interested party&#39;s details</h1>
@@ -128,7 +128,7 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
 `;
 
 exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check details and add interested party comment</h1>
@@ -141,40 +141,40 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
                     <dd class="govuk-summary-list__value">
                         <br>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/ip-details"> Change <span class="govuk-visually-hidden">Contact details</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/ip-details">Change <span class="govuk-visually-hidden">Contact details</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address Provided</dt>
                     <dd class="govuk-summary-list__value">Yes</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/check-address"> Change <span class="govuk-visually-hidden">Address</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/check-address">Change <span class="govuk-visually-hidden">Address</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/ip-address"> Change <span class="govuk-visually-hidden">Address provided</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/ip-address">Change <span class="govuk-visually-hidden">Address provided</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
                     <dd class="govuk-summary-list__value"><a class="govuk-link" download href=""></a>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/upload"> Change <span class="govuk-visually-hidden">Comment</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/upload">Change <span class="govuk-visually-hidden">Comment</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
                     <dd class="govuk-summary-list__value">Unredacted</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status"> Change <span class="govuk-visually-hidden">Redaction Status</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status">Change <span class="govuk-visually-hidden">Redaction Status</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date submitted</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/date-submitted"> Change <span class="govuk-visually-hidden">Date submitted</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/add/date-submitted">Change <span class="govuk-visually-hidden">Date submitted</span></a>
                     </dd>
                 </div>
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button class="govuk-button" data-module="govuk-button">Add comment</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Add comment</button>
                     </form>
                 </div>
             </div>
@@ -184,7 +184,7 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
 `;
 
 exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -205,21 +205,21 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="date-day" name="day" type="text" inputmode="numeric">
+                                            id="date-day" name="day" type="text" value="30" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="date-month" name="month" type="text" inputmode="numeric">
+                                            id="date-month" name="month" type="text" value="10" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="date-year" name="year" type="text" inputmode="numeric">
+                                            id="date-year" name="year" type="text" value="2024" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>

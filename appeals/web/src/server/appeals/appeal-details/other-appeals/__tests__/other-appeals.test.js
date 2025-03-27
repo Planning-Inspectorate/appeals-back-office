@@ -43,7 +43,7 @@ describe('other-appeals', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('What is the appeal reference?</label></h1>');
-			expect(element.innerHTML).toContain('name="addOtherAppealsReference" type="text">');
+			expect(element.innerHTML).toContain('name="addOtherAppealsReference" type="text" value="">');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});

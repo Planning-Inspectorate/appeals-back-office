@@ -23,11 +23,11 @@ describe('neighbouring-sites', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
@@ -43,11 +43,11 @@ describe('neighbouring-sites', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text">');
-			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text">');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine1" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="addressLine2" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="town" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="county" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="postCode" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});

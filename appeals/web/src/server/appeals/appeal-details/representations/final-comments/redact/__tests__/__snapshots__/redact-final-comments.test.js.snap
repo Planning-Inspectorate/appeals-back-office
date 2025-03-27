@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`final-comments GET / should render the redact appellant final comments page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Redact appellant final comments</h1>
@@ -19,9 +19,9 @@ exports[`final-comments GET / should render the redact appellant final comments 
                 name="redactedRepresentation" rows="5" readonly="true">Awaiting final comments review</textarea>
             </div>
             <div class="govuk-button-group">
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
-                <button class="govuk-button govuk-button--secondary"
+                <button type="submit" class="govuk-button govuk-button--secondary"
                 data-module="govuk-button" id="undo-button">Undo all changes</button>
             </div>
             <div class="govuk-button-group">
@@ -33,7 +33,7 @@ exports[`final-comments GET / should render the redact appellant final comments 
 `;
 
 exports[`final-comments GET / should render the redact lpa final comments page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Redact LPA final comments</h1>
@@ -51,9 +51,9 @@ exports[`final-comments GET / should render the redact lpa final comments page w
                 name="redactedRepresentation" rows="5" readonly="true">Awaiting final comments review</textarea>
             </div>
             <div class="govuk-button-group">
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
-                <button class="govuk-button govuk-button--secondary"
+                <button type="submit" class="govuk-button govuk-button--secondary"
                 data-module="govuk-button" id="undo-button">Undo all changes</button>
             </div>
             <div class="govuk-button-group">

@@ -16,20 +16,29 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import logger from '#lib/logger.js';
 import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
-	const baseUrl = request.baseUrl;
-	const backLinkUrl = baseUrl.split('/').slice(0, -1).join('/');
+	const { currentAppeal, query } = request;
+	const manageFolderBaseUrl = request.baseUrl;
 
+	const representationBackLinkUrlSegments = manageFolderBaseUrl.split('/').slice(0, -1)
+	
+	const backLinkUrl = query.backUrl
+		? constructUrl(String(query.backUrl), currentAppeal.appealId)
+		: representationBackLinkUrlSegments[4] === 'interested-party-comments'
+			? representationBackLinkUrlSegments.toSpliced(representationBackLinkUrlSegments.length, 0, 'view').join('/')
+			: representationBackLinkUrlSegments.join('/')
+	
 	await renderManageFolder({
 		request,
 		response,
-		backLinkUrl: backLinkUrl,
-		viewAndEditUrl: `${baseUrl}/{{folderId}}/{{documentId}}`,
+		backLinkUrl,
+		viewAndEditUrl: `${manageFolderBaseUrl}/{{folderId}}/{{documentId}}`,
 		pageHeadingTextOverride: 'Supporting documents',
 		dateColumnLabelTextOverride: 'Date submitted'
 	});

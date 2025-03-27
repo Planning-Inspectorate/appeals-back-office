@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`other-appeals GET /other-appeals/add should render the "What is the appeal reference?" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
         </div>
@@ -12,7 +12,7 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
                 <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text">
+                    name="addOtherAppealsReference" type="text" value="">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -23,7 +23,7 @@ exports[`other-appeals GET /other-appeals/add should render the "What is the app
 `;
 
 exports[`other-appeals GET /other-appeals/confirm should render the "Related appeal details" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
             <h1 class="govuk-heading-l">Related appeal details</h1>
@@ -80,7 +80,7 @@ exports[`other-appeals GET /other-appeals/confirm should render the "Related app
                                 </div>
                             </div>
                         </div>
-                        <button class="govuk-button" data-module="govuk-button">Continue</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -90,7 +90,7 @@ exports[`other-appeals GET /other-appeals/confirm should render the "Related app
 `;
 
 exports[`other-appeals GET /other-appeals/manage should render the "Do you want to remove the relationship?" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -117,7 +117,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -125,7 +125,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
 `;
 
 exports[`other-appeals GET /other-appeals/manage should render the "Do you want to remove the relationship?" page with the error if the answer was not provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -167,7 +167,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -175,7 +175,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
 `;
 
 exports[`other-appeals GET /other-appeals/manage should render the "Manage related appeals" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Manage related appeals</h1>
@@ -211,7 +211,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Manage relat
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -248,7 +248,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter an appeal reference", if no appeal reference was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -274,7 +274,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
                 <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> What is the appeal reference?</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text">
+                    name="addOtherAppealsReference" type="text" value="">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -285,7 +285,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -322,7 +322,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -359,7 +359,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "What is the
 `;
 
 exports[`other-appeals POST /other-appeals/confirm should re-render the "Related appeal details" page with the error if the answer was not provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -431,7 +431,7 @@ exports[`other-appeals POST /other-appeals/confirm should re-render the "Related
                                 </div>
                             </div>
                         </div>
-                        <button class="govuk-button" data-module="govuk-button">Continue</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>

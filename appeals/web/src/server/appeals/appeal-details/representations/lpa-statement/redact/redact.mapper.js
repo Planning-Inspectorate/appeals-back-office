@@ -158,21 +158,9 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 							]
 						}
 					},
-					{
-						key: { text: 'Do you need to update the allocation level and specialisms?' },
-						value: { text: updatingAllocation ? 'Yes' : 'No' },
-						actions: {
-							items: [
-								{
-									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
-									visuallyHiddenText: 'allocation level and specialisms'
-								}
-							]
-						}
-					},
 					...(sessionData?.forcedAllocation
-						? [
+						? []
+						: [
 								{
 									key: { text: 'Do you need to update the allocation level and specialisms?' },
 									value: { text: updatingAllocation ? 'Yes' : 'No' },
@@ -186,9 +174,8 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 										]
 									}
 								}
-						  ]
-						: []),
-					...(updatingAllocation
+						  ]),
+					...(sessionData?.allocationLevel && specialisms.length
 						? [
 								{
 									key: { text: 'Allocation level' },

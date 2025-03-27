@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`final-comments GET / should render the accept appellant final comments page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check details and accept appellant final comments</h1>
@@ -23,12 +23,12 @@ exports[`final-comments GET / should render the accept appellant final comments 
                             </li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/manage-documents/135568"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/manage-documents/135568">Change</a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/">Change</a>
                     </dd>
                 </div>
             </dl>
@@ -37,7 +37,7 @@ exports[`final-comments GET / should render the accept appellant final comments 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <button class="govuk-button" data-module="govuk-button">Accept appellant final comments</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Accept appellant final comments</button>
             </form>
         </div>
     </div>
@@ -45,7 +45,7 @@ exports[`final-comments GET / should render the accept appellant final comments 
 `;
 
 exports[`final-comments GET / should render the accept lpa final comments page with the expected content 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check details and accept LPA final comments</h1>
@@ -67,12 +67,12 @@ exports[`final-comments GET / should render the accept lpa final comments page w
                             </li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568">Change</a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/"> Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/">Change</a>
                     </dd>
                 </div>
             </dl>
@@ -81,7 +81,7 @@ exports[`final-comments GET / should render the accept lpa final comments page w
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <button class="govuk-button" data-module="govuk-button">Accept LPA final comments</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Accept LPA final comments</button>
             </form>
         </div>
     </div>

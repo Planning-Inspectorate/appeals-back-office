@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`site-visit GET /site-visit/manage-visit should render the manage visit page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Manage site visit</h1>
@@ -12,7 +12,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -129,7 +129,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
 `;
 
 exports[`site-visit GET /site-visit/schedule-visit should render the schedule visit page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Schedule site visit</h1>
@@ -140,7 +140,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -337,7 +337,7 @@ exports[`site-visit GET /site-visit/visit-scheduled/:confirmationPageTypeToRende
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if an invalid visit date was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -363,7 +363,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -480,7 +480,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if provided date is not in the future 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -506,7 +506,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -623,7 +623,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date day is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -651,7 +651,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -768,7 +768,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date day is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -796,7 +796,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -913,7 +913,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date month is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -941,7 +941,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1058,7 +1058,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date month is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1086,7 +1086,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1203,7 +1203,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date year is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1231,7 +1231,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1348,7 +1348,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit date year is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1376,7 +1376,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1493,7 +1493,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit end time hour is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1519,7 +1519,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1636,7 +1636,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit end time minute is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1662,7 +1662,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1779,7 +1779,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit start time hour is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1807,7 +1807,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -1924,7 +1924,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit start time is not before end time 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -1950,7 +1950,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2067,7 +2067,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error message if visit start time minute is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2093,7 +2093,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2210,7 +2210,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/manage-visit should re-render the manage visit page with the expected error messages if required fields are not populated 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2242,7 +2242,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2307,21 +2307,21 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="visit-date-day" name="visit-date-day" type="text" inputmode="numeric">
+                                            id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="visit-date-month" name="visit-date-month" type="text" inputmode="numeric">
+                                            id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="visit-date-year" name="visit-date-year" type="text" inputmode="numeric">
+                                            id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -2359,7 +2359,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if an invalid visit date was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2385,7 +2385,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2502,7 +2502,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if provided date is not in the future 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2528,7 +2528,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2645,7 +2645,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date day is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2673,7 +2673,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2790,7 +2790,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date day is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2818,7 +2818,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -2935,7 +2935,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date month is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -2963,7 +2963,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3080,7 +3080,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date month is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3108,7 +3108,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3225,7 +3225,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date year is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3253,7 +3253,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3370,7 +3370,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit date year is invalid 2`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3398,7 +3398,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3515,7 +3515,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit end time hour is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3541,7 +3541,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3658,7 +3658,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit end time minute is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3684,7 +3684,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3801,7 +3801,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit start time hour is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3829,7 +3829,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -3946,7 +3946,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit start time is not before end time 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -3972,7 +3972,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4089,7 +4089,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit start time minute is invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -4115,7 +4115,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4232,7 +4232,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit type is accessRequired and end time is not populated but all other required fields are populated and valid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -4262,7 +4262,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4379,7 +4379,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit type is accessRequired and start time is not populated but all other required fields are populated and valid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -4407,7 +4407,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4524,7 +4524,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit type is accompanied and start time is not populated 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -4552,7 +4552,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4669,7 +4669,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
 `;
 
 exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error messages if required fields are not populated 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -4701,7 +4701,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <details class="govuk-details" data-module="govuk-details">
+                        <details class="govuk-details">
                             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Site information</span>
                             </summary>
                             <div class="govuk-details__text">
@@ -4766,21 +4766,21 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="visit-date-day" name="visit-date-day" type="text" inputmode="numeric">
+                                            id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="visit-date-month" name="visit-date-month" type="text" inputmode="numeric">
+                                            id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="visit-date-year" name="visit-date-year" type="text" inputmode="numeric">
+                                            id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>

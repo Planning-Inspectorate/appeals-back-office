@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Allocation Details should render "Check answers" Page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Check answers</h1>
@@ -12,7 +12,7 @@ exports[`Allocation Details should render "Check answers" Page 1`] = `
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Level</dt>
                     <dd class="govuk-summary-list__value">A</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level"> Change<span class="govuk-visually-hidden"> level</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-level">Change<span class="govuk-visually-hidden"> level</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Specialism</dt>
@@ -23,7 +23,7 @@ exports[`Allocation Details should render "Check answers" Page 1`] = `
                             <li>Specialism 3</li>
                         </ul>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-specialism"> Change<span class="govuk-visually-hidden"> specialism</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/allocation-details/allocation-specialism">Change<span class="govuk-visually-hidden"> specialism</span></a>
                     </dd>
                 </div>
             </dl>
@@ -36,7 +36,7 @@ exports[`Allocation Details should render "Check answers" Page 1`] = `
 `;
 
 exports[`Allocation Details should render "Select allocation specialism" Page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Allocation specialisms</h1>
@@ -65,7 +65,7 @@ exports[`Allocation Details should render "Select allocation specialism" Page 1`
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -73,7 +73,7 @@ exports[`Allocation Details should render "Select allocation specialism" Page 1`
 `;
 
 exports[`Allocation Details should render "Select allocation specialism" with error (no answer provided) 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -117,7 +117,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
                         </div>
                     </div>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -125,7 +125,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
 `;
 
 exports[`Allocation Details should render "Select the allocation level" Page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
@@ -152,7 +152,7 @@ exports[`Allocation Details should render "Select the allocation level" Page 1`]
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>
@@ -160,7 +160,7 @@ exports[`Allocation Details should render "Select the allocation level" Page 1`]
 `;
 
 exports[`Allocation Details should render "Select the allocation level" with error (no answer provided) 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -202,7 +202,7 @@ exports[`Allocation Details should render "Select the allocation level" with err
                         </div>
                     </fieldset>
                 </div>
-                <button class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
         </div>
     </div>

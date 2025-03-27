@@ -337,7 +337,7 @@ describe('procedure-preference', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change expected length of procedure</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text">'
+				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
