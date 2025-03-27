@@ -26,14 +26,16 @@ export const getManageFolder = async (request, response) => {
 	const { currentAppeal, query } = request;
 	const manageFolderBaseUrl = request.baseUrl;
 
-	const representationBackLinkUrlSegments = manageFolderBaseUrl.split('/').slice(0, -1)
-	
+	const representationBackLinkUrlSegments = manageFolderBaseUrl.split('/').slice(0, -1);
+
 	const backLinkUrl = query.backUrl
 		? constructUrl(String(query.backUrl), currentAppeal.appealId)
-		: representationBackLinkUrlSegments[4] === 'interested-party-comments'
-			? representationBackLinkUrlSegments.toSpliced(representationBackLinkUrlSegments.length, 0, 'view').join('/')
-			: representationBackLinkUrlSegments.join('/')
-	
+		: representationBackLinkUrlSegments.includes('interested-party-comments')
+		? representationBackLinkUrlSegments
+				.toSpliced(representationBackLinkUrlSegments.length, 0, 'view')
+				.join('/')
+		: representationBackLinkUrlSegments.join('/');
+
 	await renderManageFolder({
 		request,
 		response,
