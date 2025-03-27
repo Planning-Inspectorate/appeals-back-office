@@ -101,6 +101,7 @@
     "#common/*": "./src/server/common/*",
     "#config/*": "./src/server/config/*",
     "#state/*": "./src/server/state/*",
-    "#mappers/*": "./src/server/mappers/*"
+    "#mappers/*": "./src/server/mappers/*",
+    "#notify/*": "./src/server/notify/*"
   }
 }

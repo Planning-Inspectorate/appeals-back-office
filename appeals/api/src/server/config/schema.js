@@ -35,6 +35,9 @@ export default joi
 				}),
 				template: joi
 					.object({
+						generic: joi.object({
+							id: joi.string().required()
+						}),
 						appealConfirmed: joi.object({
 							id: joi.string().required()
 						}),
