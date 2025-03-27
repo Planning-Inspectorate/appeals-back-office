@@ -12,6 +12,7 @@ import {
 	FRONT_OFFICE_URL
 } from '@pins/appeals/constants/support.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
+import notifySend from '#notify/notify-send.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -37,18 +38,25 @@ export const ipCommentRejection = async ({
 	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
 	const recipientEmail = representation.represented?.email;
 	if (recipientEmail) {
-		const templateId = extendedDeadline
-			? config.govNotify.template.commentRejectedDeadlineExtended
-			: config.govNotify.template.ipCommentRejected;
+		const templateName = extendedDeadline
+			? 'ip-comment-rejected-extended-deadline'
+			: 'ip-comment-rejected';
 
 		try {
-			await notifyClient.sendEmail(templateId, recipientEmail, {
+			const personalisation = {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference || '',
 				site_address: siteAddress,
 				url: FRONT_OFFICE_URL,
 				reasons,
 				deadline_date: extendedDeadline
+			};
+			await notifySend({
+				templateName,
+				subjectTemplate: 'We have rejected your comment: ((appeal_reference_number))',
+				notifyClient,
+				recipientEmail,
+				personalisation
 			});
 		} catch (error) {
 			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
