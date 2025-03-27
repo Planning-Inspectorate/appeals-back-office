@@ -97,7 +97,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -147,7 +147,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

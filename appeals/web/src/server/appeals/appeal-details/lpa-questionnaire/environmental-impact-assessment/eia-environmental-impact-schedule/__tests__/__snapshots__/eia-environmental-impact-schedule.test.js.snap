@@ -30,7 +30,7 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
                                     <div class="govuk-radios__divider">or</div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule-4"
-                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked>
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule-4">Other</label>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@ exports[`eia-environmental-impact-schedule GET /change should render the develop
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eiaEnvironmentalImpactSchedule"
-                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked>
+                                        name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eiaEnvironmentalImpactSchedule">Schedule 1</label>
                                     </div>
                                     <div class="govuk-radios__item">

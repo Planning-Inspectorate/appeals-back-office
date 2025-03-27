@@ -138,15 +138,15 @@ describe('procedure-preference', () => {
 		const testCases = [
 			{
 				value: 'hearing',
-				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="hearing" checked>'
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="hearing" checked=null>'
 			},
 			{
 				value: 'inquiry',
-				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="inquiry" checked>'
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="inquiry" checked=null>'
 			},
 			{
 				value: 'written',
-				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="written" checked>'
+				expectedHtml: 'name="procedurePreferenceRadio" type="radio" value="written" checked=null>'
 			}
 		];
 

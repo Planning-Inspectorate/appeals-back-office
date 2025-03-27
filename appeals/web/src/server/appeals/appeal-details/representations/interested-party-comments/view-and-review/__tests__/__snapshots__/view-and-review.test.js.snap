@@ -357,7 +357,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
@@ -430,7 +430,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
@@ -571,7 +571,7 @@ exports[`interested-party-comments GET change-document-details/:folderId/:docume
                                 <div class="govuk-radios__divider">Or</div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
-                                    type="radio" value="no redaction required" checked>
+                                    type="radio" value="no redaction required" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
                                 </div>
                             </div>

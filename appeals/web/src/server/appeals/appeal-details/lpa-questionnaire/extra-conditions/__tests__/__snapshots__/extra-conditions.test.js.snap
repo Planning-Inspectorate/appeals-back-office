@@ -19,7 +19,7 @@ exports[`extra-conditions GET /change should render the change extra conditions 
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="extra-conditions-radio" name="extraConditionsRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-extra-conditions-radio">
+                                        type="radio" value="yes" checked=null data-aria-controls="conditional-extra-conditions-radio">
                                         <label class="govuk-label govuk-radios__label" for="extra-conditions-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-extra-conditions-radio">
@@ -81,7 +81,7 @@ exports[`extra-conditions POST /change should re-render the change extra conditi
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="extra-conditions-radio" name="extraConditionsRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-extra-conditions-radio">
+                                        type="radio" value="yes" checked=null data-aria-controls="conditional-extra-conditions-radio">
                                         <label class="govuk-label govuk-radios__label" for="extra-conditions-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-extra-conditions-radio">
@@ -143,7 +143,7 @@ exports[`extra-conditions should re-render the change extra conditions page with
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="extra-conditions-radio" name="extraConditionsRadio"
-                                        type="radio" value="yes" checked data-aria-controls="conditional-extra-conditions-radio">
+                                        type="radio" value="yes" checked=null data-aria-controls="conditional-extra-conditions-radio">
                                         <label class="govuk-label govuk-radios__label" for="extra-conditions-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-extra-conditions-radio">

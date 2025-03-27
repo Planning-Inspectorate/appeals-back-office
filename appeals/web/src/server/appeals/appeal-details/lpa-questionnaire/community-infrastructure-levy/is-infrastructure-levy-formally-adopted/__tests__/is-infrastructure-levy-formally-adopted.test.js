@@ -36,7 +36,7 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change whether levy formally adopted</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes" checked>'
+				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
@@ -75,7 +75,7 @@ describe('is-infrastructure-levy-formally-adopted', () => {
 				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio"> Formally adopted</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no" checked>'
+				'name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2"> Not formally adopted</label>'

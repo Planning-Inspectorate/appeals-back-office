@@ -29,7 +29,7 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="neighbouring-site-access-radio-2"
-                                    name="neighbouringSiteAccessRadio" type="radio" value="no" checked>
+                                    name="neighbouringSiteAccessRadio" type="radio" value="no" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio-2">No</label>
                                 </div>
                             </div>
@@ -60,7 +60,8 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
                             <div class="govuk-radios" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="neighbouring-site-access-radio"
-                                    name="neighbouringSiteAccessRadio" type="radio" value="yes" checked data-aria-controls="conditional-neighbouring-site-access-radio">
+                                    name="neighbouringSiteAccessRadio" type="radio" value="yes" checked=null
+                                    data-aria-controls="conditional-neighbouring-site-access-radio">
                                     <label class="govuk-label govuk-radios__label" for="neighbouring-site-access-radio">Yes</label>
                                 </div>
                                 <div class="govuk-radios__conditional" id="conditional-neighbouring-site-access-radio">

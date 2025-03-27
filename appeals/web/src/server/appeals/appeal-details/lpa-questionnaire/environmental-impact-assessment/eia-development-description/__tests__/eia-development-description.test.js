@@ -31,7 +31,7 @@ describe('eia-development-description', () => {
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 			expect(unprettifiedInnerHtml).toContain(
-				'name="eiaDevelopmentDescription" type="radio" value="agriculture-aquaculture" checked>'
+				'name="eiaDevelopmentDescription" type="radio" value="agriculture-aquaculture" checked=null>'
 			);
 		});
 	});

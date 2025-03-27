@@ -144,7 +144,7 @@ describe('add-ip-comment', () => {
 
 			expect(
 				pageHtml.querySelector('input[type="radio"][value="no"]').getAttribute('checked')
-			).toEqual('');
+			).toEqual('null');
 			expect(
 				pageHtml.querySelector('input[type="radio"][value="yes"]').getAttribute('checked')
 			).toBeUndefined();

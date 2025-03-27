@@ -72,7 +72,7 @@ describe('in-near-or-likely-to-affect-designated-sites', () => {
 			);
 			expect(unprettifiedHtml).toContain('class="govuk-checkboxes__divider">or</div>');
 			expect(unprettifiedHtml).toContain(
-				'name="inNearOrLikelyToAffectDesignatedSitesCheckboxes" type="checkbox" value="none" checked data-behaviour="exclusive"'
+				'name="inNearOrLikelyToAffectDesignatedSitesCheckboxes" type="checkbox" value="none" checked=null data-behaviour="exclusive"'
 			);
 			expect(unprettifiedHtml).toContain(
 				'for="inNearOrLikelyToAffectDesignatedSitesCheckboxes-8"> No, it is not in, near or likely to affect any designated sites</label>'
@@ -97,7 +97,7 @@ describe('in-near-or-likely-to-affect-designated-sites', () => {
 
 			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-			expect(unprettifiedHtml).toContain('type="checkbox" value="SSSI" checked>');
+			expect(unprettifiedHtml).toContain('type="checkbox" value="SSSI" checked=null>');
 		});
 
 		it('should render the change in, near or likely to affect designated sites page with the "Other" checkbox checked, and the corresponding custom designatedSite text populated in the conditional text input, if there is an existing custom designatedSiteNames item in the LPA questionnaire', async () => {
@@ -137,7 +137,7 @@ describe('in-near-or-likely-to-affect-designated-sites', () => {
 			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 			expect(unprettifiedHtml).toContain(
-				'type="checkbox" value="none" checked data-behaviour="exclusive">'
+				'type="checkbox" value="none" checked=null data-behaviour="exclusive">'
 			);
 		});
 	});

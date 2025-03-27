@@ -38,7 +38,7 @@ describe('has-community-infrastructure-levy', () => {
 				'Change community infrastructure levy status</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked>'
+				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Has infrastructure levy</label>'
@@ -79,7 +79,7 @@ describe('has-community-infrastructure-levy', () => {
 				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio"> Has infrastructure levy</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked>'
+				'name="hasCommunityInfrastructureLevyRadio" type="radio" value="no" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<label class="govuk-label govuk-radios__label" for="has-community-infrastructure-levy-radio-2"> Does not have infrastructure levy</label>'

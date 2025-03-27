@@ -28,7 +28,7 @@ exports[`final-comments GET /lpa-questionnaire/1/add-documents/:folderId/:docume
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -317,7 +317,7 @@ exports[`final-comments GET /review-comments with data should render review LPA 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
@@ -374,7 +374,7 @@ exports[`final-comments GET /review-comments with data should render review appe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
@@ -436,7 +436,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
@@ -530,7 +530,7 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
                                 <div class="govuk-radios__divider">Or</div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
-                                    type="radio" value="no redaction required" checked>
+                                    type="radio" value="no redaction required" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
                                 </div>
                             </div>
@@ -627,7 +627,7 @@ exports[`final-comments POST /review-comments with data should render review LPA
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>

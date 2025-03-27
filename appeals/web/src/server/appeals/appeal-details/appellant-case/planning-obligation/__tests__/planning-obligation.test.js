@@ -36,7 +36,7 @@ describe('planning-obligation', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change planning obligation status</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="planningObligationStatusRadio" type="radio" value="not_started" checked>'
+				'name="planningObligationStatusRadio" type="radio" value="not_started" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="planningObligationStatusRadio" type="radio" value="finalised">'
@@ -72,7 +72,7 @@ describe('planning-obligation', () => {
 				'name="planningObligationStatusRadio" type="radio" value="not_started">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="planningObligationStatusRadio" type="radio" value="finalised" checked>'
+				'name="planningObligationStatusRadio" type="radio" value="finalised" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="planningObligationStatusRadio" type="radio" value="not-applicable">'
@@ -108,7 +108,7 @@ describe('planning-obligation', () => {
 				'name="planningObligationStatusRadio" type="radio" value="finalised">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="planningObligationStatusRadio" type="radio" value="not-applicable" checked>'
+				'name="planningObligationStatusRadio" type="radio" value="not-applicable" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

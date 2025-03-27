@@ -31,7 +31,7 @@ describe('eia-environmental-impact-schedule', () => {
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 			expect(unprettifiedInnerHtml).toContain(
-				'name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked>'
+				'name="eiaEnvironmentalImpactSchedule" type="radio" value="schedule-1" checked=null>'
 			);
 		});
 
@@ -52,7 +52,7 @@ describe('eia-environmental-impact-schedule', () => {
 			const unprettifiedInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 			expect(unprettifiedInnerHtml).toContain(
-				'name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked>'
+				'name="eiaEnvironmentalImpactSchedule" type="radio" value="other" checked=null>'
 			);
 		});
 	});

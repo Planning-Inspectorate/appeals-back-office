@@ -401,7 +401,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
-                                <option value="75" selected>Planning appeal</option>
+                                <option value="75" selected=null>Planning appeal</option>
                                 <option value="76">Enforcement notice appeal</option>
                             </select>
                         </div>
@@ -702,7 +702,7 @@ exports[`national-list GET / should render national list - no search term - filt
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
                                 <option value="ready_to_start">Ready to start</option>
-                                <option value="lpa_questionnaire" selected>LPA questionnaire</option>
+                                <option value="lpa_questionnaire" selected=null>LPA questionnaire</option>
                                 <option value="issue_determination">Issue decision</option>
                                 <option value="complete">Complete</option>
                             </select>
@@ -848,7 +848,7 @@ exports[`national-list GET / should render national list - search term - filter 
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
                                 <option value="ready_to_start">Ready to start</option>
-                                <option value="lpa_questionnaire" selected>LPA questionnaire</option>
+                                <option value="lpa_questionnaire" selected=null>LPA questionnaire</option>
                                 <option value="issue_determination">Issue decision</option>
                                 <option value="complete">Complete</option>
                             </select>

@@ -19,12 +19,12 @@ exports[`notification-methods GET /change should render the change notification 
                                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
                                         <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes"
-                                        name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked>
+                                        name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked=null>
                                         <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes">A site notice</label>
                                     </div>
                                     <div class="govuk-checkboxes__item">
                                         <input class="govuk-checkboxes__input" id="notificationMethodsCheckboxes-2"
-                                        name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked>
+                                        name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked=null>
                                         <label class="govuk-label govuk-checkboxes__label" for="notificationMethodsCheckboxes-2">Letter/email to interested parties</label>
                                     </div>
                                     <div class="govuk-checkboxes__item">

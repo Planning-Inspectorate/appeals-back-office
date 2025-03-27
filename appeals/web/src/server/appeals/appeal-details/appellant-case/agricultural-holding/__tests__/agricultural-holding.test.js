@@ -34,7 +34,7 @@ describe('agricultural-holding', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change part of agricultural holding</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
+				'name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="partOfAgriculturalHoldingRadio" type="radio" value="yes">'
@@ -65,7 +65,7 @@ describe('agricultural-holding', () => {
 				'name="partOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked>'
+				'name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -118,7 +118,7 @@ describe('agricultural-holding', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change tenant of agricultural holding</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
+				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes">'
@@ -151,7 +151,7 @@ describe('agricultural-holding', () => {
 				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked>'
+				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -206,7 +206,7 @@ describe('agricultural-holding', () => {
 				'Change other tenants of agricultural holding</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
+				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes">'
@@ -241,7 +241,7 @@ describe('agricultural-holding', () => {
 				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes" checked>'
+				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

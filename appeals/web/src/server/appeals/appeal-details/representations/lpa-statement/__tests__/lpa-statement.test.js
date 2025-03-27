@@ -661,7 +661,7 @@ describe('lpa-statements', () => {
 				'name="items[0][redactionStatus]" type="radio" value="unredacted">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="items[0][redactionStatus]" type="radio" value="no redaction required" checked>'
+				'name="items[0][redactionStatus]" type="radio" value="no redaction required" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});

@@ -34,7 +34,7 @@ describe('owners-known', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change owners known</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="ownersKnownRadio" type="radio" value="No" checked>'
+				'name="ownersKnownRadio" type="radio" value="No" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="Yes">'
@@ -71,7 +71,7 @@ describe('owners-known', () => {
 				'name="ownersKnownRadio" type="radio" value="No">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="ownersKnownRadio" type="radio" value="Yes" checked>'
+				'name="ownersKnownRadio" type="radio" value="Yes" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="Some">'
@@ -108,7 +108,7 @@ describe('owners-known', () => {
 				'name="ownersKnownRadio" type="radio" value="Yes">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="ownersKnownRadio" type="radio" value="Some" checked>'
+				'name="ownersKnownRadio" type="radio" value="Some" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="not-applicable">'
@@ -145,7 +145,7 @@ describe('owners-known', () => {
 				'name="ownersKnownRadio" type="radio" value="Some">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="ownersKnownRadio" type="radio" value="not-applicable" checked>'
+				'name="ownersKnownRadio" type="radio" value="not-applicable" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

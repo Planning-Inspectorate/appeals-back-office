@@ -42,10 +42,10 @@ describe('notification-methods', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked>'
+				'name="notificationMethodsCheckboxes" type="checkbox" value="9029" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked>'
+				'name="notificationMethodsCheckboxes" type="checkbox" value="9030" checked=null>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="notificationMethodsCheckboxes" type="checkbox" value="9031">'
