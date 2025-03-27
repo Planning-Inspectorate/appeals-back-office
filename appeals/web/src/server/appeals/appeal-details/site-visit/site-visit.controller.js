@@ -6,7 +6,8 @@ import {
 	stringIsSiteVisitConfirmationPageType,
 	siteVisitBookedPage,
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
-	getSiteVisitSuccessBannerTypeAndChangeType
+	getSiteVisitSuccessBannerTypeAndChangeType,
+	setPreviousVisitTypeIfChanged
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import usersService from '#appeals/appeal-users/users-service.js';
@@ -196,6 +197,11 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 					visitType,
 					inspector?.name || ''
 				);
+
+			setPreviousVisitTypeIfChanged(
+				mappedUpdateOrCreateSiteVisitParameters,
+				appealDetails.siteVisit?.visitType
+			);
 
 			if (appealDetails.siteVisit?.siteVisitId) {
 				const successBannerAndChangeType = getSiteVisitSuccessBannerTypeAndChangeType(

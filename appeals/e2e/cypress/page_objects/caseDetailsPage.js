@@ -549,11 +549,18 @@ export class CaseDetailsPage extends Page {
 		}
 	}
 
-	reviewLpaStatement() {
+	reviewLpaStatement(isAllocationPageExist = true) {
 		this.elements.lpaStatementReviewLink().click();
 		this.selectRadioButtonByValue('Accept statement');
 		this.clickButtonByText('Continue');
-		this.selectRadioButtonByValue('No');
+		if (isAllocationPageExist) {
+			this.selectRadioButtonByValue('A');
+			this.clickButtonByText('Continue');
+			this.selectCheckbox();
+		}
+		else {
+			this.selectRadioButtonByValue('No');
+		}
 		this.clickButtonByText('Continue');
 		this.clickButtonByText('Confirm');
 	}

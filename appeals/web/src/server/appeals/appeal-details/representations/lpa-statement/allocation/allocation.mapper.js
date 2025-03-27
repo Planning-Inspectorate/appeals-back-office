@@ -80,7 +80,7 @@ export function allocationLevelPage(
 	return {
 		title: 'Allocation level',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${
-			sessionData.forcedAllocation ? '' : `${flowRoute}/allocation-check`
+			sessionData?.forcedAllocation ? '' : `${flowRoute}/allocation-check`
 		}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',

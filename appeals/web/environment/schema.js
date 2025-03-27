@@ -25,6 +25,7 @@ export default baseSchema
 		authDisabledUserId: joi.string().optional(),
 		authDisabledGroupIds: joi.array().optional(),
 		authRedirectPath: joi.string(),
+		betaFeedbackUrl: joi.string(),
 		blobStorageUrl: joi.string(),
 		blobEmulatorSasUrl: joi.string().when('useBlobEmulator', { not: 'true', then: joi.optional() }),
 		blobStorageDefaultContainer: joi.string(),

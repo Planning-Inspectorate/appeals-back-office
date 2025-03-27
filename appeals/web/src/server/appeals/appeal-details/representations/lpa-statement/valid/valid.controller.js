@@ -34,11 +34,17 @@ export function postAllocationCheck(request, response) {
 	const {
 		errors,
 		params: { appealId },
-		body
+		body,
+		session
 	} = request;
 
 	if (errors) {
 		return renderAllocationCheck(request, response);
+	}
+
+	if (session.acceptLPAStatement && body.allocationLevelAndSpecialisms === 'no') {
+		delete session.acceptLPAStatement.allocationLevel;
+		delete session.acceptLPAStatement.allocationSpecialisms;
 	}
 
 	return response.redirect(

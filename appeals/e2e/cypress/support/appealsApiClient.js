@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { appealsApiRequests, documentsApiRequest } from '../fixtures/appealsApiRequests';
-import { apiPaths } from './apiPaths.js';
+import {appealsApiRequests, documentsApiRequest} from '../fixtures/appealsApiRequests';
+import {apiPaths} from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
 
@@ -180,8 +180,25 @@ export const appealsApiClient = {
 				}
 			});
 
-			const result = await response.json();
-			return result;
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+	async getBusinessDate(date, days = 7) {
+		try {
+			const url = `${baseUrl}appeals/add-business-days`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					"inputDate": date,
+					"numDays": days
+				})
+			});
+			return await response.json();
 		} catch {
 			return false;
 		}

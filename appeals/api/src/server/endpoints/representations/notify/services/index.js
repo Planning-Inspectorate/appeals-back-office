@@ -35,26 +35,24 @@ export const ipCommentRejection = async ({
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	if (!recipientEmail) {
-		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
-	}
+	const recipientEmail = representation.represented?.email;
+	if (recipientEmail) {
+		const templateId = extendedDeadline
+			? config.govNotify.template.commentRejectedDeadlineExtended
+			: config.govNotify.template.ipCommentRejected;
 
-	const templateId = extendedDeadline
-		? config.govNotify.template.commentRejectedDeadlineExtended
-		: config.govNotify.template.ipCommentRejected;
-
-	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
-			reasons,
-			deadline_date: extendedDeadline
-		});
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		try {
+			await notifyClient.sendEmail(templateId, recipientEmail, {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				url: FRONT_OFFICE_URL,
+				reasons,
+				deadline_date: extendedDeadline
+			});
+		} catch (error) {
+			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		}
 	}
 };
 

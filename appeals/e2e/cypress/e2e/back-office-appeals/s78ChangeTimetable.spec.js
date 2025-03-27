@@ -2,86 +2,82 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { urlPaths } from '../../support/urlPaths.js';
-import { tag } from '../../support/tag';
-import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { Before } from '@badeball/cypress-cucumber-preprocessor';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
-const listCasesPage = new ListCasesPage();
-const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-let setthus;
-
 describe('S78 - Case officer update pre populated timetable dates', () => {
+	const timetableItems = {
+		lpaQuestionnaire: 'lpa-questionnaire-due-date',
+		lpaStatement: 'lpa-statement-due-date',
+		interestedParty: 'ip-comments-due-date',
+		finalComments: 'final-comments-due-date'
+	} ;
+
+	const futureDate = { years: 1, days: 10 };
+
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 
-		cy.createCase({
-			caseType: 'W'
-		}).then((caseRef) => {
+		cy.createCase({ caseType: 'W' }).then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.checkAppealStatus('Validation'.toUpperCase());
+			caseDetailsPage.checkAppealStatus('VALIDATION');
 			happyPathHelper.reviewAppellantCase(caseRef);
-			caseDetailsPage.checkAppealStatus('Ready to start'.toUpperCase());
+			caseDetailsPage.checkAppealStatus('READY TO START');
 			happyPathHelper.startCase(caseRef);
 			cy.populateTimetable(caseRef);
 			caseDetailsPage.clickAccordionByText('Timetable');
 		});
 	});
-	it(`should change LPA questionnaire due date`, () => {
-		const lpaQuestionaire = 'lpa-questionnaire-due-date';
-		caseDetailsPage.checkTimetableDueDateIsDisplayed(lpaQuestionaire);
-		caseDetailsPage.clickTimetableChangeLink(lpaQuestionaire);
-		let futureDate = new Date();
-		futureDate.setFullYear(futureDate.getFullYear() + 1);
-		caseDetailsPage.changeTimetableDate(futureDate);
-		caseDetailsPage.verifyDateChanges(lpaQuestionaire, futureDate);
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+
+	const verifyDateChange = (timetableItem) => {
+		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItem);
+		caseDetailsPage.clickTimetableChangeLink(timetableItem);
+
+		cy.getBusinessActualDate(
+			new Date(new Date().getFullYear() + futureDate.years, 0, 1),
+			futureDate.days
+		).then((date) => {
+			caseDetailsPage.changeTimetableDate(date);
+			caseDetailsPage.verifyDateChanges(timetableItem, date);
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+		});
+	};
+
+	it('should change LPA questionnaire due date', () => {
+		verifyDateChange(timetableItems.lpaQuestionnaire);
 	});
 
-	it(`should change LPA statement due date`, () => {
-		const lpaStatement = 'lpa-statement-due-date';
-		caseDetailsPage.checkTimetableDueDateIsDisplayed(lpaStatement);
-		caseDetailsPage.clickTimetableChangeLink(lpaStatement);
-		let futureDate = new Date();
-		futureDate.setFullYear(futureDate.getFullYear() + 1);
-		caseDetailsPage.changeTimetableDate(futureDate);
-		caseDetailsPage.verifyDateChanges(lpaStatement, futureDate);
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+	it('should change LPA statement due date', () => {
+		verifyDateChange(timetableItems.lpaStatement);
 	});
 
-	it(`should change Interested party comments due date`, () => {
-		const interestedParty = 'ip-comments-due-date';
-		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
-		caseDetailsPage.clickTimetableChangeLink(interestedParty);
-		let futureDate = new Date();
-		futureDate.setFullYear(futureDate.getFullYear() + 1);
-		caseDetailsPage.changeTimetableDate(futureDate);
-		caseDetailsPage.verifyDateChanges(interestedParty, futureDate);
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+	it('should change interested party comments due date', () => {
+		verifyDateChange(timetableItems.interestedParty);
 	});
 
-	it(`should change final comments due date`, () => {
-		const interestedParty = 'final-comments-due-date';
-		caseDetailsPage.checkTimetableDueDateIsDisplayed(interestedParty);
-		caseDetailsPage.clickTimetableChangeLink(interestedParty);
-		let futureDate = new Date();
-		futureDate.setFullYear(futureDate.getFullYear() + 1);
-		caseDetailsPage.changeTimetableDate(futureDate);
-		caseDetailsPage.verifyDateChanges(interestedParty, futureDate);
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+	it('should change final comments due date', () => {
+		verifyDateChange(timetableItems.finalComments);
 	});
 
-	it(`should not accept current date`, () => {
-		caseDetailsPage.checkTimetableDueDateIsDisplayed('lpa-questionnaire-due-date');
-		caseDetailsPage.clickTimetableChangeLink('lpa-questionnaire-due-date');
-		let currentDate = new Date();
-		caseDetailsPage.changeTimetableDate(currentDate);
+	it('should not accept current date', () => {
+		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItems.lpaQuestionnaire);
+		caseDetailsPage.clickTimetableChangeLink(timetableItems.lpaQuestionnaire);
+
+		caseDetailsPage.changeTimetableDate(new Date());
 		caseDetailsPage.checkErrorMessageDisplays('Date must be in the future');
+	});
+
+	it('should not accept non business date', () => {
+		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItems.interestedParty);
+		caseDetailsPage.clickTimetableChangeLink(timetableItems.interestedParty);
+
+		const nextYear = new Date().getFullYear() + 1;
+		const nonBusinessDate = new Date(nextYear, 0, 1);
+
+		caseDetailsPage.changeTimetableDate(nonBusinessDate);
+		caseDetailsPage.checkErrorMessageDisplays('Date must be a business day');
 	});
 });

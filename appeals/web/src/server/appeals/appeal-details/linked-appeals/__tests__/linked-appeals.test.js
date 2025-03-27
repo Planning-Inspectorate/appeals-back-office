@@ -966,6 +966,73 @@ describe('linked-appeals', () => {
 			expect(errorSummaryHtml).toContain('Choose an option</a>');
 		});
 
+		it('should re-render the check and confirm page with the expected error message if the API endpoint returns a 400 (validation) error', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealData,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference,
+					isParentAppeal: false,
+					isChildAppeal: false,
+					linkedAppeals: []
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppealSummaryBackOffice);
+			nock('http://test/')
+				.post('/appeals/1/link-appeal')
+				.reply(400, {
+					errors: {
+						body: 'The appeals cannot be linked as the lead or child are already linked to other appeals.'
+					}
+				});
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({
+					'appeal-reference': testValidLinkableAppealReference
+				});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`)
+				.send({
+					confirmation: 'lead'
+				});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toContain('Details of the appeal you&#39;re linking to</h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'The appeals cannot be linked as the lead or child are already linked to other appeals.</a>'
+			);
+		});
+
 		it('should redirect back to the add linked appeal reference page if the "cancel" radio option was selected', async () => {
 			nock.cleanAll();
 			nock('http://test/')

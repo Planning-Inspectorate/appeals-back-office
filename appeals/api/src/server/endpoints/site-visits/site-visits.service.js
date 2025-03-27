@@ -210,7 +210,6 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
  */
 const fetchVisitNotificationTemplateIds = (visitType, previousVisitType, siteVisitChangeType) => {
 	switch (siteVisitChangeType) {
-		case 'all':
 		case 'unchanged':
 			return {};
 
@@ -231,6 +230,7 @@ const fetchVisitNotificationTemplateIds = (visitType, previousVisitType, siteVis
 			}
 			return {};
 
+		case 'all':
 		case 'visit-type': {
 			const transitionKey = toCamelCase(`${previousVisitType} To ${visitType}`);
 			return config.govNotify.template.siteVisitChange[transitionKey] || {};

@@ -563,5 +563,23 @@ export function getSiteVisitSuccessBannerTypeAndChangeType(
 		bannerTypeAndChangeType.changeType = 'unchanged';
 	}
 
+	if (visitTypeChanged) {
+		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
+	}
+
 	return bannerTypeAndChangeType;
+}
+
+/**
+ * @param {import('./site-visit.service.js').UpdateOrCreateSiteVisitParameters} updateOrCreateSiteVisitParameters
+ * @param {ApiVisitType | undefined} oldApiVisitType
+ */
+export function setPreviousVisitTypeIfChanged(updateOrCreateSiteVisitParameters, oldApiVisitType) {
+	if (
+		oldApiVisitType &&
+		updateOrCreateSiteVisitParameters.apiVisitType &&
+		oldApiVisitType.toLowerCase() !== updateOrCreateSiteVisitParameters.apiVisitType.toLowerCase()
+	) {
+		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
+	}
 }

@@ -1273,7 +1273,7 @@ describe('site visit routes', () => {
 				);
 			});
 
-			test('updates an Accompanied site visit to Unaccompanied and changing time and date, does not send notify emails', async () => {
+			test('updates an Accompanied site visit to Unaccompanied and changing time and date, sends notify emails', async () => {
 				const { siteVisit } = householdAppeal;
 				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
@@ -1327,7 +1327,45 @@ describe('site visit routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).not.toHaveBeenCalled();
+				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.appellant.id,
+					'test@136s7.com',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '02:00',
+							end_time: '04:00',
+							inspector_name: '',
+							lpa_reference: '48269/APP/2021/1482',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
+
+				// eslint-disable-next-line no-undef
+				expect(mockSendEmail).toHaveBeenCalledWith(
+					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.lpa.id,
+					'maid@lpa-email.gov.uk',
+					{
+						emailReplyToId: null,
+						personalisation: {
+							appeal_reference_number: '1345264',
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							start_time: '02:00',
+							end_time: '04:00',
+							inspector_name: '',
+							lpa_reference: '48269/APP/2021/1482',
+							visit_date: '31 March 2022'
+						},
+						reference: null
+					}
+				);
 			});
 
 			test('updates an Access required site visit to changing time and date, sends notify emails to Appellant', async () => {
@@ -2517,7 +2555,10 @@ describe('site visit routes', () => {
 
 		test('returns templates for all transition types with all', () => {
 			const result = fetchVisitNotificationTemplateIds('Accompanied', 'Unaccompanied', 'all');
-			expect(result).toEqual({});
+			expect(result).toEqual({
+				appellant: { id: 'mock-site-visit-change-unaccompanied-to-accompanied-appellant-id' },
+				lpa: { id: 'mock-site-visit-change-unaccompanied-to-accompanied-lpa-id' }
+			});
 		});
 
 		test('returns appellant template ID for Access Required visit date/time change', () => {
