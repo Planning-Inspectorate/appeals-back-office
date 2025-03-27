@@ -229,7 +229,7 @@ describe('environmental-impact-assessment', () => {
 					'Change whether meets or exceeds column 2 threshold criteria</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="eiaColumnTwoThreshold" type="radio" value="yes" checked>'
+					'name="eiaColumnTwoThreshold" type="radio" value="yes" checked=null>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
@@ -270,7 +270,7 @@ describe('environmental-impact-assessment', () => {
 					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold"> Meets or exceeds</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="eiaColumnTwoThreshold" type="radio" value="no" checked>'
+					'name="eiaColumnTwoThreshold" type="radio" value="no" checked=null>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2"> Does not meet or exceed</label>'
@@ -327,7 +327,7 @@ describe('environmental-impact-assessment', () => {
 					'Change opinion that environmental statement needed</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>'
+					'name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked=null>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
@@ -368,7 +368,7 @@ describe('environmental-impact-assessment', () => {
 					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement"> Needed</label>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>'
+					'name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked=null>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2"> Not needed</label>'
