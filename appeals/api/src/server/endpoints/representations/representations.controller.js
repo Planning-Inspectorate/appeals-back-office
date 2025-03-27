@@ -190,6 +190,14 @@ export async function updateRepresentation(request, response) {
 				return CONSTANTS[
 					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_INVALID`
 				];
+			} else if (status === APPEAL_REPRESENTATION_STATUS.VALID) {
+				return stringTokenReplacement(
+					// @ts-ignore
+					CONSTANTS[
+						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_VALID`
+					],
+					[status]
+				);
 			} else {
 				return stringTokenReplacement(
 					// @ts-ignore
