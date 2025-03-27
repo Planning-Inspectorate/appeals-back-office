@@ -28,38 +28,6 @@ export function generateHASComponents(
 	/**
 	 * @type {PageComponent}
 	 */
-	const appellantCaseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'govuk-summary-list--no-border',
-			rows: [
-				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-								key: {
-									text: 'LPA'
-								}
-							}
-					  ]
-					: [])
-			]
-		}
-	};
-
-	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
-	);
-	/**
-	 * @type {PageComponent}
-	 */
 	const appellantSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -163,12 +131,7 @@ export function generateHASComponents(
 					text: '4. Appeal details'
 				}
 			},
-			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.costsDocument.display.summaryListItem
-			]
+			rows: [removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem)]
 		}
 	};
 
@@ -221,7 +184,7 @@ export function generateHASComponents(
 						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
-										text: 'Manage',
+										text: 'Change',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
@@ -264,7 +227,6 @@ export function generateHASComponents(
 	};
 
 	return [
-		appellantCaseSummary,
 		appellantSummary,
 		appealSiteSummary,
 		applicationSummary,
