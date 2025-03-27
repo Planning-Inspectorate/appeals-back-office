@@ -182,7 +182,7 @@ export async function updateRepresentation(request, response) {
 					)}_REDACTED_AND_ACCEPTED`
 				];
 			} else if (
-				status === APPEAL_REPRESENTATION_STATUS.invalid &&
+				status === APPEAL_REPRESENTATION_STATUS.INVALID &&
 				(updatedRep.representationType === 'appellantFinalComment' ||
 					updatedRep.representationType === 'lpaFinalComment')
 			) {
@@ -191,13 +191,9 @@ export async function updateRepresentation(request, response) {
 					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_INVALID`
 				];
 			} else if (status === APPEAL_REPRESENTATION_STATUS.VALID) {
-				return stringTokenReplacement(
-					// @ts-ignore
-					CONSTANTS[
-						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_VALID`
-					],
-					[status]
-				);
+				return CONSTANTS[
+					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_VALID`
+				];
 			} else {
 				return stringTokenReplacement(
 					// @ts-ignore
