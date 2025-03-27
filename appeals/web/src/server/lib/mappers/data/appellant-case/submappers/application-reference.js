@@ -4,7 +4,7 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapApplicationReference = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'application-reference',
-		text: 'LPA application reference',
+		text: 'What is the application reference number?',
 		value: appellantCaseData.planningApplicationReference,
 		link: `${currentRoute}/lpa-reference/change`,
 		editable: userHasUpdateCase

@@ -16,7 +16,6 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const sourceKey = source === 'lpa' ? 'lpaQuestionnaire' : 'appellantCase';
-	const formattedSource = source === 'lpa' ? 'LPA' : source;
 
 	const currentRadioValue =
 		storedSessionData?.radio ?? appealData.inspectorAccess[sourceKey].isRequired ?? '';
@@ -25,19 +24,19 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the inspector access (${formattedSource} answer)`,
+		title: `Will an inspector need to access your land or property?`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'inspectorAccessRadio',
 				value: currentRadioValue,
-				legendText: `Change the inspector access (${formattedSource} answer)`,
+				legendText: `Will an inspector need to access your land or property?`,
 				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'inspector-access-details',
 					name: 'inspectorAccessDetails',
-					hint: `Inspector access (${formattedSource} details)`,
+					hint: `Enter reason`,
 					details: currentDetailsValue
 				}
 			})

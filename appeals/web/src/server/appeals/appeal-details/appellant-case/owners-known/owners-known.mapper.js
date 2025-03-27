@@ -21,7 +21,7 @@ export const changeOwnersKnownPage = (appealData, appellantCaseData, storedSessi
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change owners known`,
+		title: `Does the appellant know who owns the land involved in the appeal?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -32,25 +32,25 @@ export const changeOwnersKnownPage = (appealData, appellantCaseData, storedSessi
 					idPrefix: 'owners-known-radio',
 					fieldset: {
 						legend: {
-							text: 'Change owners known',
+							text: 'Does the appellant know who owns the land involved in the appeal?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
 					items: [
 						{
-							value: APPEAL_KNOWS_OTHER_OWNERS.NO,
-							text: 'No',
-							checked: knowsOtherLandowners === APPEAL_KNOWS_OTHER_OWNERS.NO
-						},
-						{
 							value: APPEAL_KNOWS_OTHER_OWNERS.YES,
 							text: 'Yes',
 							checked: knowsOtherLandowners === APPEAL_KNOWS_OTHER_OWNERS.YES
 						},
 						{
+							value: APPEAL_KNOWS_OTHER_OWNERS.NO,
+							text: 'No',
+							checked: knowsOtherLandowners === APPEAL_KNOWS_OTHER_OWNERS.NO
+						},
+						{
 							value: APPEAL_KNOWS_OTHER_OWNERS.SOME,
-							text: 'Some',
+							text: 'Some of the land',
 							checked: knowsOtherLandowners === APPEAL_KNOWS_OTHER_OWNERS.SOME
 						},
 						{

@@ -22,7 +22,7 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change the site ownership`,
+		title: `Does the appellant own all of the land involved in the appeal?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -33,7 +33,7 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 					idPrefix: 'site-ownership-radio',
 					fieldset: {
 						legend: {
-							text: 'Change the site ownership',
+							text: 'Does the appellant own all of the land involved in the appeal?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
@@ -41,17 +41,17 @@ export const changeSiteOwnershipPage = (appealData, appellantCaseData, storedSes
 					items: [
 						{
 							value: 'fully',
-							text: 'Fully owned by appellant',
+							text: 'Owns all of the land',
 							checked: isFullyOwned
 						},
 						{
 							value: 'partially',
-							text: 'Partially owned by appellant',
+							text: 'Owns some of the land',
 							checked: isPartiallyOwned
 						},
 						{
 							value: 'none',
-							text: 'Not owned by appellant',
+							text: 'Does not own any of the land',
 							checked: !isFullyOwned && !isPartiallyOwned
 						}
 					]

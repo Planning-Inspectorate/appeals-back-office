@@ -21,7 +21,7 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change procedure preference`,
+		title: `How would you prefer us to decide your appeal?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -32,7 +32,7 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 					idPrefix: 'procedure-preference-radio',
 					fieldset: {
 						legend: {
-							text: 'Change procedure preference',
+							text: 'How would you prefer us to decide your appeal?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
@@ -83,7 +83,7 @@ export const changeProcedurePreferenceDetailsPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change reason for preference`,
+		title: `Why would you prefer this appeal procedure?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -93,7 +93,7 @@ export const changeProcedurePreferenceDetailsPage = (
 					name: 'procedurePreferenceDetailsTextarea',
 					id: 'procedure-preference-details-textarea',
 					label: {
-						text: 'Change reason for preference',
+						text: 'Why would you prefer this appeal procedure?',
 						classes: 'govuk-label--l',
 						isPageHeading: true
 					},
@@ -128,7 +128,7 @@ export const changeProcedurePreferenceDurationPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change expected length of procedure`,
+		title: `How many days would you expect the inquiry to last?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -138,7 +138,7 @@ export const changeProcedurePreferenceDurationPage = (
 					name: 'procedurePreferenceDurationInput',
 					id: 'procedure-preference-duration',
 					label: {
-						text: 'Change expected length of procedure',
+						text: 'How many days would you expect the inquiry to last?',
 						classes: 'govuk-label--l',
 						isPageHeading: true
 					},
@@ -174,7 +174,7 @@ export const changeInquiryNumberOfWitnessesPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change expected number of witnesses`,
+		title: `How many witnesses would you expect to give evidence at the inquiry?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -184,7 +184,7 @@ export const changeInquiryNumberOfWitnessesPage = (
 					name: 'inquiryNumberOfWitnessesInput',
 					id: 'inquiry-number-of-witnesses',
 					label: {
-						text: 'Change expected number of witnesses',
+						text: 'How many witnesses would you expect to give evidence at the inquiry?',
 						classes: 'govuk-label--l',
 						isPageHeading: true
 					},
