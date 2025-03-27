@@ -263,9 +263,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -528,9 +528,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -832,9 +832,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1110,9 +1110,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1459,9 +1459,9 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1473,7 +1473,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
@@ -1811,9 +1811,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -2049,9 +2049,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -2153,8 +2153,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2202,8 +2202,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2255,8 +2255,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2308,8 +2308,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2380,8 +2380,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2430,7 +2430,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2479,7 +2479,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2532,7 +2532,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2585,7 +2585,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2657,7 +2657,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -4424,9 +4424,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg" data-cy="document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d" target="_blank" class="govuk-link">ph1.jpeg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg" data-cy="document-a78446aa-167a-4bef-89b7-18bcb0da11c1" target="_blank" class="govuk-link">ph0.jpeg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -4576,7 +4576,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -4750,7 +4750,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -4924,7 +4924,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -5098,7 +5098,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -5127,7 +5127,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                        type="checkbox" value="2027" checked data-aria-controls="conditional-incomplete-reason-3">
+                        type="checkbox" value="2027" checked=null data-aria-controls="conditional-incomplete-reason-3">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is incorrect or incomplete</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
@@ -5271,7 +5271,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -5300,7 +5300,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                        type="checkbox" value="2027" checked data-aria-controls="conditional-incomplete-reason-3">
+                        type="checkbox" value="2027" checked=null data-aria-controls="conditional-incomplete-reason-3">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is incorrect or incomplete</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
@@ -5444,7 +5444,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2026" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                             of case</label>
                     </div>
@@ -5473,7 +5473,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                        type="checkbox" value="2027" checked data-aria-controls="conditional-incomplete-reason-3">
+                        type="checkbox" value="2027" checked=null data-aria-controls="conditional-incomplete-reason-3">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is incorrect or incomplete</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
@@ -6474,7 +6474,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -6575,7 +6575,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -6676,7 +6676,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -6777,7 +6777,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -6809,7 +6809,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
-                        type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
+                        type="checkbox" value="24" checked=null data-aria-controls="conditional-invalid-reason-4">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">
@@ -6877,7 +6877,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -6909,7 +6909,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
-                        type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
+                        type="checkbox" value="24" checked=null data-aria-controls="conditional-invalid-reason-4">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">
@@ -6977,7 +6977,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
-                        type="checkbox" value="22" checked data-aria-controls="conditional-invalid-reason-2">
+                        type="checkbox" value="22" checked=null data-aria-controls="conditional-invalid-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
@@ -7009,7 +7009,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
-                        type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
+                        type="checkbox" value="24" checked=null data-aria-controls="conditional-invalid-reason-4">
                         <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">

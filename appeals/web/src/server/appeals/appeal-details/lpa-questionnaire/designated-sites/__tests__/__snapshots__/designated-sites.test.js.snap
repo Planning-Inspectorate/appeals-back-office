@@ -63,7 +63,7 @@ exports[`in-near-or-likely-to-affect-designated-sites GET /in-near-or-likely-to-
                                     <div class="govuk-checkboxes__item">
                                         <input class="govuk-checkboxes__input" id="inNearOrLikelyToAffectDesignatedSitesCheckboxes-8"
                                         name="inNearOrLikelyToAffectDesignatedSitesCheckboxes" type="checkbox"
-                                        value="none" checked data-behaviour="exclusive">
+                                        value="none" checked=null data-behaviour="exclusive">
                                         <label class="govuk-label govuk-checkboxes__label" for="inNearOrLikelyToAffectDesignatedSitesCheckboxes-8">No, it is not in, near or likely to affect any designated sites</label>
                                     </div>
                                 </div>

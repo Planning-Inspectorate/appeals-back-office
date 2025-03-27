@@ -24,7 +24,7 @@ exports[`agricultural-holding GET /change should render the change part of agric
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="part-of-agricultural-holding-radio-2"
-                                        name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="part-of-agricultural-holding-radio-2">No</label>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@ exports[`agricultural-holding GET /change should render the change part of agric
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="part-of-agricultural-holding-radio"
-                                        name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
+                                        name="partOfAgriculturalHoldingRadio" type="radio" value="yes" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="part-of-agricultural-holding-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -104,7 +104,7 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="other-tenants-of-agricultural-holding-radio-2"
-                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="other-tenants-of-agricultural-holding-radio-2">No</label>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="other-tenants-of-agricultural-holding-radio"
                                         name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="yes"
-                                        checked>
+                                        checked=null>
                                         <label class="govuk-label govuk-radios__label" for="other-tenants-of-agricultural-holding-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -185,7 +185,7 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="tenant-of-agricultural-holding-radio-2"
-                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked>
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="tenant-of-agricultural-holding-radio-2">No</label>
                                     </div>
                                 </div>
@@ -220,7 +220,7 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="tenant-of-agricultural-holding-radio"
-                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked>
+                                        name="tenantOfAgriculturalHoldingRadio" type="radio" value="yes" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="tenant-of-agricultural-holding-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">

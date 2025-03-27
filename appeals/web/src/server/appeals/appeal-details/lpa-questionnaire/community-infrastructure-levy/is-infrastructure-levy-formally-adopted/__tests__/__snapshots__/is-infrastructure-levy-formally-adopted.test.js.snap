@@ -20,7 +20,7 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="yes"
-                                        checked>
+                                        checked=null>
                                         <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio">Formally adopted</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -66,7 +66,7 @@ exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-for
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="is-infrastructure-levy-formally-adopted-radio-2"
                                         name="isInfrastructureLevyFormallyAdoptedRadio" type="radio" value="no"
-                                        checked>
+                                        checked=null>
                                         <label class="govuk-label govuk-radios__label" for="is-infrastructure-levy-formally-adopted-radio-2">Not formally adopted</label>
                                     </div>
                                 </div>

@@ -24,7 +24,7 @@ exports[`withdrawal GET /redaction-status should render the redaction status pag
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -72,7 +72,7 @@ exports[`withdrawal GET /start should render the withdrawal request upload page 
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -302,7 +302,7 @@ exports[`withdrawal POST /redaction-status should re-render the redaction status
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
+                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
                                     </div>
                                     <div class="govuk-radios__item">

@@ -425,7 +425,7 @@ exports[`lpa-statements GET change-document-details/:folderId/:documentId should
                                 <div class="govuk-radios__divider">Or</div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
-                                    type="radio" value="no redaction required" checked>
+                                    type="radio" value="no redaction required" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
                                 </div>
                             </div>

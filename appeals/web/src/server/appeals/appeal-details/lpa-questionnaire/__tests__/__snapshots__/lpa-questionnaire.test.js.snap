@@ -36,10 +36,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
                                     </li>
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123457'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123457"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
@@ -315,11 +315,11 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph0.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph0.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph1.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph1.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/undefined/ph2.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph2.jpg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -331,7 +331,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">What is the outcome of your review?</legend>
@@ -403,10 +403,10 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
                                     </li>
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123457'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123457"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
@@ -682,11 +682,11 @@ exports[`LPA Questionnaire review GET / should render the LPA Questionnaire page
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph0.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph0.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph1.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph1.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/undefined/ph2.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph2.jpg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -794,10 +794,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
                                     </li>
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123457'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123457"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
@@ -1075,11 +1075,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph0.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph0.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph1.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph1.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/undefined/ph2.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph2.jpg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1143,10 +1143,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
                                     </li>
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123457'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123457"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
@@ -1424,11 +1424,11 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph0.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph0.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph1.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph1.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/undefined/ph2.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph2.jpg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1514,7 +1514,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -1541,7 +1541,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
@@ -1584,7 +1584,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                        type="checkbox" value="3" checked data-aria-controls="conditional-incomplete-reason-3">
+                        type="checkbox" value="3" checked=null data-aria-controls="conditional-incomplete-reason-3">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">
@@ -1766,8 +1766,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -1815,8 +1815,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -1868,8 +1868,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -1940,8 +1940,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple=null><span class="govuk-body pins-file-upload__dropzone-text">Drag and drop files here or</span>
+                                <button                                 type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -1990,7 +1990,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2039,7 +2039,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2092,7 +2092,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2164,7 +2164,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <button type="button" class="pins-file-upload__button govuk-button">Select files</button>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -3560,10 +3560,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed buildings</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123456'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 6">123456</a>
                                     </li>
-                                    <li><a href='https://historicengland.org.uk/listing/the-list/list-entry/123457'
+                                    <li><a href="https://historicengland.org.uk/listing/the-list/list-entry/123457"
                                         class="govuk-link" aria-label="Listed building number 1 2 3 4 5 7">123457</a>
                                     </li>
                                 </ul>
@@ -3839,11 +3839,11 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph0.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph0.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href="/documents/1/download/undefined/ph1.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph1.jpg</a></span>
                                     </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href="/documents/1/download/undefined/ph2.jpg" data-cy="document-undefined" target="_blank" class="govuk-link">ph2.jpg</a></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -3886,7 +3886,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4063,7 +4063,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4240,7 +4240,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4417,7 +4417,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4444,7 +4444,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
@@ -4593,7 +4593,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4620,7 +4620,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
@@ -4769,7 +4769,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4796,7 +4796,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
@@ -4929,7 +4929,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                        type="checkbox" value="1" checked data-aria-controls="conditional-incomplete-reason">
+                        type="checkbox" value="1" checked=null data-aria-controls="conditional-incomplete-reason">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Documents or information are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason">
@@ -4956,7 +4956,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                        type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
+                        type="checkbox" value="2" checked=null data-aria-controls="conditional-incomplete-reason-2">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Policies are missing</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-2">
@@ -4999,7 +4999,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     </div>
                     <div class="govuk-checkboxes__item">
                         <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                        type="checkbox" value="3" checked data-aria-controls="conditional-incomplete-reason-3">
+                        type="checkbox" value="3" checked=null data-aria-controls="conditional-incomplete-reason-3">
                         <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">Other</label>
                     </div>
                     <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-3">

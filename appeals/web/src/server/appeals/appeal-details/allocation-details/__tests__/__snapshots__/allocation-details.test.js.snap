@@ -29,7 +29,7 @@ exports[`Allocation Details should render "Check answers" Page 1`] = `
             </dl>
         </div>
     </div>
-    <form action="" method="POST" novalidate>
+    <form action="" method="POST" novalidate=null>
         <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
     </form>
 </main>"
@@ -45,7 +45,7 @@ exports[`Allocation Details should render "Select allocation specialism" Page 1`
     <div class="govuk-hint">Select all that apply</div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes govuk-checkboxes--medium" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
@@ -97,7 +97,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
     <div class="govuk-hint">Select all that apply</div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes govuk-checkboxes--medium" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
@@ -132,7 +132,7 @@ exports[`Allocation Details should render "Select the allocation level" Page 1`]
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -182,7 +182,7 @@ exports[`Allocation Details should render "Select the allocation level" with err
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
+            <form action="" method="POST" novalidate=null>
                 <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

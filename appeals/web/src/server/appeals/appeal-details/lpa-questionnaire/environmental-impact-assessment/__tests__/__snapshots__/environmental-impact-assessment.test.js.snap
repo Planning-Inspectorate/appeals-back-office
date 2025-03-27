@@ -24,7 +24,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold-2" name="eiaColumnTwoThreshold"
-                                        type="radio" value="no" checked>
+                                        type="radio" value="no" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold-2">Does not meet or exceed</label>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-column-two-threshold" name="eiaColumnTwoThreshold"
-                                        type="radio" value="yes" checked>
+                                        type="radio" value="yes" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eia-column-two-threshold">Meets or exceeds</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -109,7 +109,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eia-consulted-bodies-details-radio-2"
-                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="no" checked>
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="no" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="eia-consulted-bodies-details-radio-2">No</label>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                             <div class="govuk-radios" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eia-consulted-bodies-details-radio"
-                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked
+                                    name="eiaConsultedBodiesDetailsRadio" type="radio" value="yes" checked=null
                                     data-aria-controls="conditional-eia-consulted-bodies-details-radio">
                                     <label class="govuk-label govuk-radios__label" for="eia-consulted-bodies-details-radio">Yes</label>
                                 </div>
@@ -187,7 +187,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="yes" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement">Needed</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -232,7 +232,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-requires-environmental-statement-2"
-                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked>
+                                        name="eiaRequiresEnvironmentalStatement" type="radio" value="no" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eia-requires-environmental-statement-2">Not needed</label>
                                     </div>
                                 </div>
@@ -277,7 +277,7 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                                 </div>
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eia-sensitive-area-details-radio-2"
-                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="no" checked>
+                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="no" checked=null>
                                     <label class="govuk-label govuk-radios__label" for="eia-sensitive-area-details-radio-2">No</label>
                                 </div>
                             </div>
@@ -308,7 +308,8 @@ exports[`environmental-impact-assessment change pages GET /environmental-impact-
                             <div class="govuk-radios" data-module="govuk-radios">
                                 <div class="govuk-radios__item">
                                     <input class="govuk-radios__input" id="eia-sensitive-area-details-radio"
-                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes" checked data-aria-controls="conditional-eia-sensitive-area-details-radio">
+                                    name="eiaSensitiveAreaDetailsRadio" type="radio" value="yes" checked=null
+                                    data-aria-controls="conditional-eia-sensitive-area-details-radio">
                                     <label class="govuk-label govuk-radios__label" for="eia-sensitive-area-details-radio">Yes</label>
                                 </div>
                                 <div class="govuk-radios__conditional" id="conditional-eia-sensitive-area-details-radio">

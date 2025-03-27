@@ -64,7 +64,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
-                                        type="radio" value="hearing" checked>
+                                        type="radio" value="hearing" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -114,7 +114,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
-                                        type="radio" value="inquiry" checked>
+                                        type="radio" value="inquiry" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -164,7 +164,7 @@ exports[`procedure-preference GET /change should render the change procedure pre
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
-                                        type="radio" value="written" checked>
+                                        type="radio" value="written" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
                                     </div>
                                 </div>

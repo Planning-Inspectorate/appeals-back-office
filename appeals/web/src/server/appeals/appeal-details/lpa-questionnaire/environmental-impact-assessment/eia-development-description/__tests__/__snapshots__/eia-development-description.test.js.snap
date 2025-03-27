@@ -19,7 +19,7 @@ exports[`eia-development-description GET /change should render the development d
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eiaDevelopmentDescription" name="eiaDevelopmentDescription"
-                                        type="radio" value="agriculture-aquaculture" checked>
+                                        type="radio" value="agriculture-aquaculture" checked=null>
                                         <label class="govuk-label govuk-radios__label" for="eiaDevelopmentDescription">Agriculture and aquaculture</label>
                                     </div>
                                     <div class="govuk-radios__item">
