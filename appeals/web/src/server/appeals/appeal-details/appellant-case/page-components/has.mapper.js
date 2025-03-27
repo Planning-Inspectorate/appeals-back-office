@@ -175,6 +175,33 @@ export function generateHASComponents(
 	/**
 	 * @type {PageComponent}
 	 */
+	const uploadedDocuments = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'uploaded-documents'
+			},
+			card: {
+				title: {
+					text: '5. Upload documents'
+				}
+			},
+			rows: [
+				mappedAppellantCaseData.applicationForm.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+				mappedAppellantCaseData.appealStatement.display.summaryListItem,
+				mappedAppellantCaseData.costsDocument.display.summaryListItem
+			]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
 	const additionalDocumentsSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -242,6 +269,7 @@ export function generateHASComponents(
 		appealSiteSummary,
 		applicationSummary,
 		appealSummary,
+		uploadedDocuments,
 		additionalDocumentsSummary
 	];
 }

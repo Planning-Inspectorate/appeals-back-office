@@ -4,7 +4,7 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapLocalPlanningAuthority = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'local-planning-authority',
-		text: 'Local planning authority (LPA)',
+		text: 'Which local planning authority (LPA) do you want to appeal against?',
 		value: appellantCaseData.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
 		editable: userHasUpdateCase

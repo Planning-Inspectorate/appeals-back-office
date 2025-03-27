@@ -36,7 +36,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 				id: 'add-other-appeals-reference',
 				name: 'addOtherAppealsReference',
 				label: {
-					text: 'What is the appeal reference?',
+					text: 'Enter the appeal reference number',
 					classes: 'govuk-label--l',
 					isPageHeading: true
 				},
@@ -300,10 +300,10 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Manage related appeals - ${shortAppealReference}`,
+		title: `Manage linked appeals - ${shortAppealReference}`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Manage related appeals',
+		heading: 'Manage linked appeals',
 		pageComponents
 	};
 

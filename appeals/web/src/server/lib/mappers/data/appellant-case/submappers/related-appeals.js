@@ -5,10 +5,19 @@ import { displayComponentGivenPermission } from '#lib/mappers/utils/permissions.
 export const mapRelatedAppeals = ({ currentRoute, userHasUpdateCase, appealDetails }) => {
 	const actionItems = [];
 
+	actionItems.push(
+		displayComponentGivenPermission(userHasUpdateCase, {
+			text: 'Add',
+			href: `${currentRoute}/other-appeals/add`,
+			visuallyHiddenText: 'Are there other appeals linked to your development?',
+			attributes: { 'data-cy': 'add-related-appeals' }
+		})
+	);
+
 	if (appealDetails.otherAppeals.length) {
 		actionItems.push(
 			displayComponentGivenPermission(userHasUpdateCase, {
-				text: 'Manage',
+				text: 'Change',
 				href: `${currentRoute}/other-appeals/manage`,
 				visuallyHiddenText: 'Related appeals',
 				attributes: { 'data-cy': 'manage-related-appeals' }
@@ -16,24 +25,15 @@ export const mapRelatedAppeals = ({ currentRoute, userHasUpdateCase, appealDetai
 		);
 	}
 
-	actionItems.push(
-		displayComponentGivenPermission(userHasUpdateCase, {
-			text: 'Add',
-			href: `${currentRoute}/other-appeals/add`,
-			visuallyHiddenText: 'Related appeals',
-			attributes: { 'data-cy': 'add-related-appeals' }
-		})
-	);
-
 	return {
 		id: 'related-appeals',
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Related appeals'
+					text: 'Are there other appeals linked to your development?'
 				},
 				value: {
-					html: formatListOfRelatedAppeals(appealDetails.otherAppeals) || 'No related appeals'
+					html: formatListOfRelatedAppeals(appealDetails.otherAppeals)
 				},
 				actions: {
 					items: actionItems
