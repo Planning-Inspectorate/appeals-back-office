@@ -24,13 +24,16 @@ import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageFolder = async (request, response) => {
 	const { currentAppeal, query } = request;
-
 	const manageFolderBaseUrl = request.baseUrl;
-	const representationBackLinkUrl = manageFolderBaseUrl.split('/').slice(0, -1).join('/');
+
+	const representationBackLinkUrlSegments = manageFolderBaseUrl.split('/').slice(0, -1)
+	
 	const backLinkUrl = query.backUrl
 		? constructUrl(String(query.backUrl), currentAppeal.appealId)
-		: representationBackLinkUrl;
-
+		: representationBackLinkUrlSegments[4] === 'interested-party-comments'
+			? representationBackLinkUrlSegments.toSpliced(representationBackLinkUrlSegments.length, 0, 'view').join('/')
+			: representationBackLinkUrlSegments.join('/')
+	
 	await renderManageFolder({
 		request,
 		response,
