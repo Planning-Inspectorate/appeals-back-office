@@ -3198,6 +3198,17 @@ export const finalCommentsForReviewWithAttachments = {
 							isDeleted: false
 						}
 					}
+				},
+				{
+					documentVersion: {
+						document: {
+							caseId: '4881',
+							folderId: 135568,
+							guid: 'ceb49369-01d4-479b-84f5-50136e7ceb6f',
+							name: 'deleted_file.pdf',
+							isDeleted: true
+						}
+					}
 				}
 			],
 			represented: {

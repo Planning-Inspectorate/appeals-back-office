@@ -4,9 +4,14 @@ import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-build
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 export const getAttachmentList = (/** @type {Representation} */ representation) => {
-	return representation.attachments.length > 0
+	const filteredAttachments = representation.attachments?.filter((attachment) => {
+		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
+		return latestVersionId === attachment.version && !isDeleted;
+	});
+
+	return filteredAttachments.length > 0
 		? buildHtmUnorderedList(
-				representation.attachments.map(
+				filteredAttachments.map(
 					(a) =>
 						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
 							a.documentVersion.document.caseId,
