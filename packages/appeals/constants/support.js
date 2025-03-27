@@ -21,16 +21,19 @@ export const AUDIT_TRAIL_REP_LPA_STATEMENT_REDACTED_AND_ACCEPTED =
 export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_UPDATED =
 	'Appellant statement status updated to {replacement0}';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_UPDATED = 'Comment status updated to {replacement0}';
-export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_UPDATED =
-	'LPA final comment status updated to {replacement0}';
-export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_UPDATED =
-	'Appellant final comment status updated to {replacement0}';
+
+export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_VALID = 'LPA final comments accepted';
+export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_VALID =
+	'Appellant final comments accepted';
 export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_INVALID = 'LPA final comments rejected';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_INVALID = 'Appellant final comments rejected';
 export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
-	'LPA final comment redacted and accepted';
+	'LPA final comments redacted and accepted';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_REDACTED_AND_ACCEPTED =
-	'Appellant final comment redacted and accepted';
+	'Appellant final comments redacted and accepted';
+export const AUDIT_TRAIL_REP_LPA_FINAL_COMMENT_STATUS_UPDATED = 'LPA final comments {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_UPDATED =
+	'Appellant final comments {replacement0}';
 
 export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
