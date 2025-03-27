@@ -710,10 +710,43 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
 			return 'Separate ownership certificate and agricultural land declaration';
 		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
-			return 'application decision letter';
+			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
 		default:
 			return;
+	}
+}
+
+/**
+ * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
+ * @returns {string | undefined}
+ */
+export function getPageHeadingTextOverrideForAddDocuments(folder) {
+	switch (folder.path.split('/')[1]) {
+		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
+			return 'Upload the decision letter from the local planning authority';
+		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
+			return 'Upload plans, drawings and list of plans';
+		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
+			return 'Upload your application form';
+		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
+			return 'Upload evidence of your agreement to change the description of development';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
+			return 'Upload your appeal statement';
+		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:
+			return 'Upload your planning obligation';
+		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
+			return 'Upload your separate ownership certificate and agricultural land declaration';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION:
+			return 'Upload your application for an award of appeal costs';
+		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
+			return 'Upload your design and access statement';
+		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
+			return 'Upload your new plans or drawings';
+		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
+			return 'Upload your other new supporting documents';
+		default:
+			break;
 	}
 }

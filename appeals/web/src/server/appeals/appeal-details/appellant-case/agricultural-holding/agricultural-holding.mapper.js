@@ -68,7 +68,7 @@ export const changeTenantOfAgriculturalHoldingPage = (
 		pageComponents: [
 			yesNoInput({
 				name: 'tenantOfAgriculturalHoldingRadio',
-				value: tenantOfAgriculturalHolding,
+				value: tenantOfAgriculturalHolding ?? 'Not answered',
 				legendText: 'Are you a tenant of the agricultural holding?',
 				legendIsPageHeading: true
 			})

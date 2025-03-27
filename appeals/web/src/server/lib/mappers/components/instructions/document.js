@@ -33,7 +33,7 @@ export function documentSummaryListItem({
 	if (editable) {
 		if (documents.length) {
 			actions.push({
-				text: 'Manage',
+				text: 'Change',
 				visuallyHiddenText: text,
 				href: manageUrl,
 				attributes: { 'data-cy': `manage-${cypressDataName}` }
