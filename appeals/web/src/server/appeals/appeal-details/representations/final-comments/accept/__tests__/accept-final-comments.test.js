@@ -70,6 +70,9 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain('Original final comments</dt>');
 				expect(unprettifiedHTML).toContain('Awaiting final comments review</div>');
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
+				expect(unprettifiedHTML).toContain(
+					`href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf" target="_blank">blank copy 5.pdf</a>`
+				);
 				expect(unprettifiedHTML).toContain('Review decisions</dt>');
 				expect(unprettifiedHTML).toContain('Accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(

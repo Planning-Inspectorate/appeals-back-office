@@ -80,6 +80,7 @@ module "app_web" {
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_HEARING = var.apps_config.featureFlags.featureFlagS78Hearing
 
     # external URLs
     BETA_FEEDBACK_URL = var.beta_feedback_url

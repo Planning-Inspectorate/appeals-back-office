@@ -3,8 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { redactInput } from '#appeals/appeal-details/representations/common/components/redact-input.js';
 import { summaryList } from './components/summary-list.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -78,21 +77,7 @@ export const acceptFinalCommentPage = (
 export const confirmAcceptFinalCommentPage = (appealDetails, representation, finalCommentsType) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const attachmentsList =
-		representation.attachments.length > 0
-			? buildHtmUnorderedList(
-					representation.attachments.map(
-						(a) =>
-							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-								a.documentVersion.document.caseId,
-								a.documentVersion.document.guid,
-								a.documentVersion.document.name
-							)}" target="_blank">${a.documentVersion.document.name}</a>`
-					)
-			  )
-			: null;
-
-	console.log(`[accept.mapper.js] attachmentsList: ${attachmentsList}`);
+	const attachmentsList = getAttachmentList(representation);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [

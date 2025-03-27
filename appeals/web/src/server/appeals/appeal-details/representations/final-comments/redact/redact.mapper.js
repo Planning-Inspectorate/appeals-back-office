@@ -4,6 +4,7 @@ import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappe
 import { redactInput } from '#appeals/appeal-details/representations/common/components/redact-input.js';
 import { summaryList } from './components/summary-list.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -95,8 +96,12 @@ export const confirmRedactFinalCommentPage = (
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	const attachmentsList = getAttachmentList(comment);
+
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryList(appealDetails, comment, finalCommentsType, session)];
+	const pageComponents = [
+		summaryList(appealDetails, comment, finalCommentsType, attachmentsList, session)
+	];
 
 	preRenderPageComponents(pageComponents);
 

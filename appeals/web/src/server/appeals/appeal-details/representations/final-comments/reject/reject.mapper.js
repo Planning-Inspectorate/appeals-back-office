@@ -5,6 +5,7 @@ import {
 	rejectionReasonHtml,
 	prepareRejectionReasons
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
@@ -49,6 +50,8 @@ export const confirmRejectFinalCommentPage = (
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	const attachmentsList = getAttachmentList(comment);
+
 	const rejectionReasons = prepareRejectionReasons(
 		session.rejectFinalComments,
 		session.rejectFinalComments.rejectionReason,
@@ -82,7 +85,7 @@ export const confirmRejectFinalCommentPage = (
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: { text: '' } // TODO: blocked by A2-1765 (need a way to add documents for testing)
+						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
 					},
 					{
 						key: { text: 'Review decision' },
