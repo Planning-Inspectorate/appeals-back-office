@@ -14,7 +14,7 @@ exports[`application-submission-date GET /change should render the applicationSu
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -84,7 +84,7 @@ exports[`application-submission-date POST /change should re-render application s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -156,7 +156,7 @@ exports[`application-submission-date POST /change should re-render application s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -228,7 +228,7 @@ exports[`application-submission-date POST /change should re-render application s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -300,7 +300,7 @@ exports[`application-submission-date POST /change should re-render application s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -370,7 +370,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -442,7 +442,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -514,7 +514,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -586,7 +586,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -656,7 +656,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -728,7 +728,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -800,7 +800,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">
@@ -870,7 +870,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-submission-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change date application submitted</h1>
+                                    <h1 class="govuk-fieldset__heading"> What date did you submit your application?</h1>
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                                 <div class="govuk-date-input" id="application-submission-date">

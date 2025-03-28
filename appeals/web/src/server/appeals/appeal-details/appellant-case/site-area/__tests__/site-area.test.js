@@ -25,7 +25,7 @@ describe('change-site-area', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site area</h1>');
+			expect(elementInnerHtml).toContain('What is the area of the appeal site?</h1>');
 			expect(elementInnerHtml).toContain('Continue</button>');
 		});
 	});
@@ -50,7 +50,7 @@ describe('change-site-area', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site area</h1>');
+			expect(elementInnerHtml).toContain('What is the area of the appeal site?</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -80,7 +80,7 @@ describe('change-site-area', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site area</h1>');
+			expect(elementInnerHtml).toContain('What is the area of the appeal site?</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

@@ -21,7 +21,7 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
+				'Are there any health and safety issues on the appeal site?</h1>'
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -46,7 +46,7 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)</h1>'
+				'Are there any health and safety issues on the appeal site?</h1>'
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -74,7 +74,7 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
+				'Are there any health and safety issues on the appeal site?</h1>'
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -102,7 +102,7 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (appellant answer)</h1>'
+				'Are there any health and safety issues on the appeal site?</h1>'
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -138,7 +138,7 @@ describe('safety-risks', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Change the site health and safety risks (LPA answer)</h1>'
+				'Are there any health and safety issues on the appeal site?</h1>'
 			);
 
 			const errorSummaryHtml = parseHtml(response.text, {
