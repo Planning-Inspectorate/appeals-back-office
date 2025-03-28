@@ -234,12 +234,11 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 		}
 	};
 
-	const pageComponents = [
+	const prePageComponents = [
 		...mapNotificationBannersFromSession(session, 'lpaStatement', appealDetails.appealId),
-		lpaStatementSummaryList,
-		lpaStatementValidityRadioButtons
+		lpaStatementSummaryList
 	];
-	preRenderPageComponents(pageComponents);
+	preRenderPageComponents(prePageComponents);
 
 	const pageContent = {
 		title: 'Review LPA statement',
@@ -248,7 +247,8 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 		heading: 'Review LPA statement',
 		submitButtonText: 'Continue',
 		formWrapperColumnClass: 'govuk-grid-column-two-thirds',
-		pageComponents
+		prePageComponents,
+		pageComponents: [lpaStatementValidityRadioButtons]
 	};
 
 	return pageContent;
