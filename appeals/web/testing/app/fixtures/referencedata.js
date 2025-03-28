@@ -161,7 +161,8 @@ export const appealData = {
 	stateList: [],
 	appealTimetable: {
 		appealTimetableId: 1053,
-		lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z'
+		lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z',
+		finalCommentsDueDate: '2023-10-12T01:00:00.000Z'
 	},
 	appealType: 'Householder',
 	appellantCaseId: 0,
