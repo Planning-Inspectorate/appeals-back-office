@@ -14,9 +14,10 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) =>
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,
 			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus
 		),
-		receivedText: dateISOStringToDisplayDate(
-			appealDetails?.documentationSummary?.lpaFinalComments?.receivedAt
-		),
+		receivedText:
+			dateISOStringToDisplayDate(
+				appealDetails?.documentationSummary?.lpaFinalComments?.receivedAt
+			) || 'Not applicable',
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,

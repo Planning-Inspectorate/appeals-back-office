@@ -59,7 +59,7 @@ export function mapRepresentationDocumentSummaryActionLink(
  */
 export function mapRepresentationDocumentSummaryStatus(documentationStatus, representationStatus) {
 	if (documentationStatus !== 'received' || !representationStatus) {
-		return 'Not received';
+		return 'No final comments';
 	}
 
 	switch (representationStatus) {

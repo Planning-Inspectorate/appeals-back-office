@@ -2398,7 +2398,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Not received</td><td class="govuk-table__cell"></td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Not applicable</td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
 						);
 					});
 
