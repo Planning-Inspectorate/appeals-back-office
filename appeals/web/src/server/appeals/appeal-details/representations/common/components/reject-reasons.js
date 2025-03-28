@@ -1,5 +1,5 @@
 import { ensureArray } from '#lib/array-utilities.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
@@ -62,5 +62,8 @@ export const buildRejectionReasons = (reasonOptions, reasons, reasonsText) => {
  * @returns {string}
  */
 export const rejectionReasonHtml = (reasons) => {
-	return buildHtmUnorderedList(reasons, 0, 'govuk-list govuk-!-margin-top-0 govuk-list--bullet');
+	return buildHtmlList({
+		...(reasons ? { items: reasons } : {}),
+		listClasses: 'govuk-list govuk-!-margin-top-0 govuk-list--bullet'
+	});
 };
