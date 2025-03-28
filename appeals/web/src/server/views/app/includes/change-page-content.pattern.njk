@@ -1,19 +1,34 @@
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<form method="POST" novalidate="novalidate">
+{%- if pageContent.prePageComponents and pageContent.prePageComponents | length -%}
+<div class="govuk-grid-row">
+	<div class="{{ pageContent.prePageWrapperColumnClass if pageContent.prePageWrapperColumnClass else 'govuk-grid-column-full' }}">
+	{%- for component in pageContent.prePageComponents -%}
+		{%- include "../../appeals/components/page-component.njk" -%}
+	{%- endfor -%}
+	</div>
+</div>
+{%- endif -%}
+<div class="govuk-grid-row">
+	<div class="{{ pageContent.formWrapperColumnClass if pageContent.formWrapperColumnClass else 'govuk-grid-column-full' }}">
+		<form method="POST" novalidate="novalidate">
+			{%- if pageContent.pageComponents and pageContent.pageComponents | length -%}
 				{%- for component in pageContent.pageComponents -%}
 					{%- include "../../appeals/components/page-component.njk" -%}
 				{%- endfor -%}
-				{{ govukButton({
-					text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
-					type: "submit",
-					preventDoubleClick: true
-				}) }}
-				{%- if pageContent.postPageComponents -%}
-					{%- for component in pageContent.postPageComponents -%}
-						{%- include "../../appeals/components/page-component.njk" -%}
-					{%- endfor -%}
-				{%- endif -%}
-			</form>
-		</div>
+			{%- endif -%}
+			{{ govukButton({
+				text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
+				type: "submit",
+				preventDoubleClick: true
+			}) }}
+		</form>
 	</div>
+</div>
+{%- if pageContent.postPageComponents and pageContent.postPageComponents | length -%}
+<div class="govuk-grid-row">
+	<div class="{{ pageContent.postPageWrapperColumnClass if pageContent.postPageWrapperColumnClass else 'govuk-grid-column-full' }}">
+	{%- for component in pageContent.postPageComponents -%}
+		{%- include "../../appeals/components/page-component.njk" -%}
+	{%- endfor -%}
+	</div>
+</div>
+{%- endif -%}
