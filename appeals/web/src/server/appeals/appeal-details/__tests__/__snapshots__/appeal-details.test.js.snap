@@ -567,7 +567,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         <dd         class="govuk-summary-list__value"></dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
-        <dd class="govuk-summary-list__value"></dd>
+        <dd class="govuk-summary-list__value">12 October 2023</dd>
         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/final-comments"
             data-cy="change-final-comments-due-date">Change<span class="govuk-visually-hidden"> Final comments due</span></a>
         </dd>
@@ -622,7 +622,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         <dd         class="govuk-summary-list__value"></dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
-        <dd class="govuk-summary-list__value"></dd>
+        <dd class="govuk-summary-list__value">12 October 2023</dd>
         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/final-comments"
             data-cy="change-final-comments-due-date">Change<span class="govuk-visually-hidden"> Final comments due</span></a>
         </dd>
