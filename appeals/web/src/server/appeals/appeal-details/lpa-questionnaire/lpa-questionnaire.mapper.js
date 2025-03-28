@@ -18,7 +18,7 @@ import {
 } from '#lib/dates.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -516,7 +516,10 @@ function mapLPAQuestionnaireNotificationBanners(
 				type: 'details',
 				parameters: {
 					summaryText: reason.name?.name,
-					html: buildHtmUnorderedList(reason.text || [], 0, listClasses)
+					html: buildHtmlList({
+						...(reason.text ? { items: reason.text } : {}),
+						listClasses
+					})
 				}
 			}));
 
@@ -529,11 +532,10 @@ function mapLPAQuestionnaireNotificationBanners(
 				type: 'details',
 				parameters: {
 					summaryText: 'Incorrect name and/or missing documents',
-					html: buildHtmUnorderedList(
-						reasonsWithoutText.map((reason) => reason.name.name),
-						0,
+					html: buildHtmlList({
+						items: reasonsWithoutText.map((reason) => reason.name.name),
 						listClasses
-					)
+					})
 				}
 			});
 		}

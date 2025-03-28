@@ -2,7 +2,7 @@ import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -95,9 +95,13 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 
 	const attachmentsList =
 		comment.attachments.length > 0
-			? buildHtmUnorderedList(
-					comment.attachments.map((a) => `<a href="#">${a.documentVersion.document.name}</a>`)
-			  )
+			? buildHtmlList({
+					items: comment.attachments.map(
+						(a) => `<a href="#">${a.documentVersion.document.name}</a>`
+					),
+					isOrderedList: true,
+					isNumberedList: comment.attachments.length > 1
+			  })
 			: null;
 
 	/** @type {PageComponent} */

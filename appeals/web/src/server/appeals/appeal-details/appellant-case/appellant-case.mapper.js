@@ -9,7 +9,7 @@ import {
 import { capitalize } from 'lodash-es';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
 	userHasPermission,
@@ -470,7 +470,10 @@ export function mapAppellantCaseNotificationBanners(
 				type: 'details',
 				parameters: {
 					summaryText: reason.name?.name,
-					html: buildHtmUnorderedList(reason.text || [], 0, listClasses)
+					html: buildHtmlList({
+						...(reason.text ? { items: reason.text } : {}),
+						listClasses
+					})
 				}
 			}));
 
@@ -481,11 +484,10 @@ export function mapAppellantCaseNotificationBanners(
 				type: 'details',
 				parameters: {
 					summaryText: 'Incorrect name and/or missing documents',
-					html: buildHtmUnorderedList(
-						reasonsWithoutText.map((reason) => reason.name.name),
-						0,
+					html: buildHtmlList({
+						items: reasonsWithoutText.map((reason) => reason.name.name),
 						listClasses
-					)
+					})
 				}
 			});
 		}
