@@ -1,18 +1,27 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
+import mockfs from 'mock-fs';
 import notifySend from '#notify/notify-send.js';
 import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL } from '@pins/appeals/constants/support.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
-jest.unstable_mockModule('fs', () => ({
-	readFileSync: jest.fn().mockReturnValue('Hello ((first_name)) ((last_name))')
-}));
+const templatesPath = path.join(__dirname, '../templates');
 
 describe('notify-send', () => {
 	let notifySendData;
 
 	beforeEach(() => {
+		mockfs({
+			[templatesPath]: {
+				'test-template.md': 'Hello ((first_name)) ((last_name))'
+			}
+		});
+
 		notifySendData = {
-			templateName: 'test',
+			templateName: 'test-template',
 			subjectTemplate: 'test',
 			notifyClient: {
 				sendEmail: jest.fn()
@@ -27,6 +36,7 @@ describe('notify-send', () => {
 
 	afterEach(() => {
 		jest.clearAllMocks();
+		mockfs.restore();
 	});
 
 	test('should throw the failed to send error when no parameters passed in', async () => {
@@ -36,6 +46,7 @@ describe('notify-send', () => {
 	});
 
 	test('should throw the failed to send error when the template expects missing personalisation parameters', async () => {
+		delete notifySendData.personalisation.first_name;
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
 			new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL)
 		);

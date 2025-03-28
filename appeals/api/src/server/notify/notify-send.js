@@ -28,6 +28,9 @@ const templateCache = {};
  * @returns {string}
  */
 function getTemplate(templateName) {
+	if (!templateName) {
+		throw new Error('Template name is required');
+	}
 	if (!templateCache[templateName]) {
 		const templatePath = path.join(__dirname, './templates', `${templateName}.md`);
 		templateCache[templateName] = fs.readFileSync(templatePath, { encoding: 'utf8' });
@@ -39,7 +42,7 @@ function getTemplate(templateName) {
  * @param {NotifySend} options
  * @returns {Promise<void>}
  */
-const notifySend = async (options) => {
+export default async function notifySend(options) {
 	const { templateName, subjectTemplate, notifyClient, recipientEmail, personalisation } = options;
 	const genericTemplate = config.govNotify.template.generic;
 	try {
@@ -56,15 +59,19 @@ const notifySend = async (options) => {
 			},
 			template
 		);
+		if (content.includes('((') && content.includes('))')) {
+			throw new Error('Missing personalisation parameters');
+		}
 		const subject = Object.keys(personalisation).reduce(
 			// @ts-ignore
 			(result, key) => result.replaceAll(`((${key}))`, personalisation[key]),
 			subjectTemplate
 		);
+		if (subject.includes('((') && subject.includes('))')) {
+			throw new Error('Missing personalisation parameters');
+		}
 		await notifyClient.sendEmail(genericTemplate, recipientEmail, { content, subject });
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
-};
-
-export default notifySend;
+}
