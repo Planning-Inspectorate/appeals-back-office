@@ -45,6 +45,9 @@ const { value, error } = schema.validate({
 			key: environment.GOV_NOTIFY_API_KEY
 		},
 		template: {
+			generic: {
+				id: environment.GOV_NOTIFY_APPEAL_GENERIC_ID || 'mock-appeal-generic-id'
+			},
 			appealConfirmed: {
 				id: environment.GOV_NOTIFY_APPEAL_CONFIRMED_ID || 'mock-appeal-confirmed-id'
 			},
