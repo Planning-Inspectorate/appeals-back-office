@@ -11,26 +11,38 @@
  */
 
 /**
- * @param {Array<string|string[]>|undefined} items
- * @param {number} [recursionDepth]
- * @param {string} listClasses
+ * @param {Object} params
+ * @param {(string|string[])[]} [params.items]
+ * @param {number} [params.recursionDepth]
+ * @param {string} [params.listClasses]
+ * @param {boolean} [params.isOrderedList]
+ * @param {boolean} [params.isNumberedList]
  * @returns {string}
  */
-export const buildHtmUnorderedList = (
-	items,
+export const buildHtmlList = ({
+	items = [],
 	recursionDepth = 0,
-	listClasses = 'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0'
-) => {
+	listClasses = 'govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0',
+	isOrderedList = false,
+	isNumberedList = false
+}) => {
 	if (!items?.length) {
 		return '';
 	}
+	const listTag = isOrderedList ? 'ol' : 'ul';
 	const listItems = items
 		.map(
 			(item) =>
-				`<li>${Array.isArray(item) ? buildHtmUnorderedList(item, recursionDepth + 1) : item}</li>`
+				`<li>${
+					Array.isArray(item)
+						? buildHtmlList({ items: item, recursionDepth: recursionDepth + 1 })
+						: item
+				}</li>`
 		)
 		.join('');
-	return `<ul class="${recursionDepth === 0 ? listClasses : ''}">${listItems}</ul>`;
+	return `<${listTag} class="${
+		recursionDepth === 0 ? `${listClasses}${isNumberedList ? ' govuk-list--number' : ''}` : ''
+	}">${listItems}</${listTag}>`;
 };
 
 /**

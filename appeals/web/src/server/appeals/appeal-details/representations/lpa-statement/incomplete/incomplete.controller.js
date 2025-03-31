@@ -7,7 +7,7 @@ import {
 	getRepresentationRejectionReasonOptions,
 	updateRejectionReasons
 } from '../../representations.service.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
@@ -137,16 +137,18 @@ export const renderCheckYourAnswers = async (
 
 	const attachmentsList =
 		currentRepresentation.attachments.length > 0
-			? buildHtmUnorderedList(
-					currentRepresentation.attachments.map(
+			? buildHtmlList({
+					items: currentRepresentation.attachments.map(
 						(a) =>
 							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								a.documentVersion.document.caseId,
 								a.documentVersion.document.guid,
 								a.documentVersion.document.name
 							)}" target="_blank">${a.documentVersion.document.name}</a>`
-					)
-			  )
+					),
+					isOrderedList: true,
+					isNumberedList: currentRepresentation.attachments.length > 1
+			  })
 			: null;
 
 	return renderCheckYourAnswersComponent(
