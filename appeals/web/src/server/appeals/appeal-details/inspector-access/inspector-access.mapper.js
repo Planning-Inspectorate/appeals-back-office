@@ -24,19 +24,19 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Might the inspector need access to the appellant’s land or property?',
+		title: `Will an inspector need to access your land or property?`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'inspectorAccessRadio',
 				value: currentRadioValue,
-				legendText: 'Might the inspector need access to the appellant’s land or property?',
+				legendText: `Will an inspector need to access your land or property?`,
 				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'inspector-access-details',
 					name: 'inspectorAccessDetails',
-					hint: 'Enter the reason',
+					hint: `Enter reason`,
 					details: currentDetailsValue
 				}
 			})
