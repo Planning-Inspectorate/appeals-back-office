@@ -21,7 +21,7 @@ describe('inspector-access', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Might the inspector need access to the appellant’s land or property?</h1>'
+				'Will an inspector need to access your land or property?</h1>'
 			);
 		});
 
@@ -35,7 +35,7 @@ describe('inspector-access', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Might the inspector need access to the appellant’s land or property?</h1>'
+				'Will an inspector need to access your land or property?</h1>'
 			);
 		});
 
@@ -50,7 +50,7 @@ describe('inspector-access', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Might the inspector need access to the appellant’s land or property?</h1>'
+				'Will an inspector need to access your land or property?</h1>'
 			);
 		});
 
@@ -65,7 +65,7 @@ describe('inspector-access', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Might the inspector need access to the appellant’s land or property?</h1>'
+				'Will an inspector need to access your land or property?</h1>'
 			);
 		});
 	});
@@ -88,7 +88,7 @@ describe('inspector-access', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'Might the inspector need access to the appellant’s land or property?</h1>'
+				'Will an inspector need to access your land or property?</h1>'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {

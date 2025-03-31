@@ -17,10 +17,10 @@ export function changeSiteAddressPage(appealData, backLinkUrl, sessionData, erro
 	const address = sessionData ?? appealData.appealSite;
 
 	return {
-		title: `What is the address of the appeal site?	`,
+		title: `What is the address of the appeal site?`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'What is the address of the appeal site?	',
+		heading: 'What is the address of the appeal site?',
 		pageComponents: addressInputs({ address, errors })
 	};
 }

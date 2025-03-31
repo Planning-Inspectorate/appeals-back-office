@@ -22,7 +22,7 @@ describe('site-address', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Change site address</h1>');
+			expect(element.innerHTML).toContain('What is the address of the appeal site?</h1>');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});

@@ -35,7 +35,7 @@ export const changePlanningObligationStatusPage = (
 					idPrefix: 'planning-obligation-status-radio',
 					fieldset: {
 						legend: {
-							text: 'What is the status of your planning obligation?d',
+							text: 'What is the status of your planning obligation?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
