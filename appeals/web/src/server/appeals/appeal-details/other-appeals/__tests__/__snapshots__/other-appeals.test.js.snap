@@ -1,51 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`other-appeals GET /other-appeals/add should render the "Enter the appeal reference number" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals GET /other-appeals/add should render the "What is the appeal reference?" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals GET /other-appeals/add should render the "Enter the appeal reference number" page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
@@ -220,43 +175,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
 `;
 
 exports[`other-appeals GET /other-appeals/manage should render the "Manage linked appeals" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Manage linked appeals</h1>
-        </div>
-    </div>
-    <h2 class="govuk-!-margin-top-6">Related appeals</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Appeal Reference</th>
-                <th scope="col" class="govuk-table__header">Appeal type</th>
-                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 2">2</a>
-                </td>
-                <td class="govuk-table__cell">Unknown</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="remove-appeal-2" href="/appeals-service/appeal-details/1/other-appeals/remove/2/100">Remove<span class="govuk-visually-hidden"> related appeal 2</span></a>
-                </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell"><a class="govuk-link" href="" aria-label="Appeal 3">3 (Horizon)</a>
-                </td>
-                <td class="govuk-table__cell">Unknown</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="remove-appeal-3" href="/appeals-service/appeal-details/1/other-appeals/remove/3/101">Remove<span class="govuk-visually-hidden"> related appeal 3</span></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</main>"
-`;
-
-exports[`other-appeals GET /other-appeals/manage should render the "Manage related appeals" page 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
             <h1 class="govuk-heading-l">Manage linked appeals</h1>
@@ -292,7 +211,7 @@ exports[`other-appeals GET /other-appeals/manage should render the "Manage relat
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -329,7 +248,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with error "Enter an appeal reference", if no appeal reference was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -355,7 +274,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
                 <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
                     <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text">
+                    name="addOtherAppealsReference" type="text" value="">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -366,7 +285,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -403,158 +322,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
 `;
 
 exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="123456">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Enter a valid appeal reference</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="7654321">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with error "Enter an appeal reference", if no appeal reference was provided 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Enter an appeal reference</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form method="POST">
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="12345678">
-                </div>
-                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
-                id="filters-submit">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`other-appeals POST /other-appeals/add should re-render the "What is the appeal reference?" page with the expected error, if the provided appeal reference is less than 7 digits 1`] = `
-"<main class="govuk-main-wrapper " id="main-content" role="main">
+"<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-error-summary" data-module="govuk-error-summary">

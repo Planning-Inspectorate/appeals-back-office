@@ -1008,7 +1008,7 @@ describe('LPA Questionnaire review', () => {
 				);
 			});
 
-			it('should render a designated sites row with the expected value of "Not provided" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
+			it('should render a designated sites row with the expected value of "No" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
 				nock('http://test/')
 					.get('/appeals/2')
 					.reply(200, {
@@ -1030,9 +1030,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"> Not provided</dd>'
-				);
+				expect(unprettifiedHtml).toContain('<dd class="govuk-summary-list__value"> No</dd>');
 			});
 
 			it('should render a designated sites row with the expected value as plaintext if LPAQ designatedSiteNames array contains a single designated site item', async () => {

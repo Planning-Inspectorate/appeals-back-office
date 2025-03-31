@@ -14,7 +14,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -25,9 +25,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                                     id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="safety-risks-details">Enter reason</label>
-                                            <textarea class="govuk-textarea" id="safety-risks-details"
-                                            name="safetyRisksDetails" rows="3"></textarea>
+                                            <label class="govuk-label" for="safety-risks-details">Add details of the potential risk and what the inspector might need</label>
+                                            <textarea                                             class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails"
+                                            rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -62,7 +62,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -73,9 +73,9 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                                     id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="safety-risks-details">Enter reason</label>
-                                            <textarea class="govuk-textarea" id="safety-risks-details"
-                                            name="safetyRisksDetails" rows="3"></textarea>
+                                            <label class="govuk-label" for="safety-risks-details">Add details of the potential risk and what the inspector might need</label>
+                                            <textarea                                             class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails"
+                                            rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -219,7 +219,7 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -229,9 +229,9 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="safety-risks-details">Enter reason</label>
-                                            <textarea class="govuk-textarea" id="safety-risks-details"
-                                            name="safetyRisksDetails" rows="3"></textarea>
+                                            <label class="govuk-label" for="safety-risks-details">Add details of the potential risk and what the inspector might need</label>
+                                            <textarea                                             class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails"
+                                            rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -281,7 +281,7 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -291,9 +291,9 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-safety-risks-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="safety-risks-details">Enter reason</label>
-                                            <textarea class="govuk-textarea" id="safety-risks-details"
-                                            name="safetyRisksDetails" rows="3">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
+                                            <label class="govuk-label" for="safety-risks-details">Add details of the potential risk and what the inspector might need</label>
+                                            <textarea                                             class="govuk-textarea" id="safety-risks-details" name="safetyRisksDetails"
+                                            rows="3">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
