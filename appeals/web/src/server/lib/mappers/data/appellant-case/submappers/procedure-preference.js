@@ -5,7 +5,7 @@ import { capitalize } from 'lodash-es';
 export const mapProcedurePreference = ({ appellantCaseData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'procedure-preference',
-		text: 'Procedure preference',
+		text: 'How would you prefer us to decide your appeal?',
 		editable: true,
 		value: capitalize(appellantCaseData.appellantProcedurePreference || 'Not answered'),
 		link: `${currentRoute}/procedure-preference/change`,

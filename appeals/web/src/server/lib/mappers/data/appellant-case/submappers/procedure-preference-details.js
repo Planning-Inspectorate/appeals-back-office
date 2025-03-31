@@ -8,8 +8,8 @@ export const mapProcedurePreferenceDetails = ({
 }) =>
 	textSummaryListItem({
 		id: 'procedure-preference-details',
-		text: 'Reason for preference',
-		value: appellantCaseData.appellantProcedurePreferenceDetails || 'Not applicable',
+		text: 'Why would you prefer this appeal procedure?',
+		value: appellantCaseData.appellantProcedurePreferenceDetails || 'Not answered',
 		link: `${currentRoute}/procedure-preference/details/change`,
 		editable: userHasUpdateCase,
 		withShowMore: true,

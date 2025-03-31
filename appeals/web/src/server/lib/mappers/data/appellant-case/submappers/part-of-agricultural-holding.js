@@ -8,9 +8,9 @@ export const mapPartOfAgriculturalHolding = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'part-of-agricultural-holding',
-		text: 'Part of agricultural holding',
+		text: 'Is the appeal site part of an agricultural holding?',
 		value: appellantCaseData.agriculturalHolding?.isPartOfAgriculturalHolding,
-		defaultText: '',
+		defaultText: 'No data',
 		link: `${currentRoute}/agricultural-holding/change`,
 		editable: userHasUpdateCase
 	});

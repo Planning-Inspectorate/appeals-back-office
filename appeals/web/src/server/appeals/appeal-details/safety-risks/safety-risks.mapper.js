@@ -23,19 +23,19 @@ export const changeSafetyRisksPage = (appealData, storedSessionData, backLinkUrl
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Are there any potential safety risks?',
+		title: `Are there any health and safety issues on the appeal site?`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'safetyRisksRadio',
 				value: currentRadioValue,
-				legendText: 'Are there any potential safety risks?',
+				legendText: `Are there any health and safety issues on the appeal site?`,
 				legendIsPageHeading: true,
 				yesConditional: {
 					id: 'safety-risks-details',
 					name: 'safetyRisksDetails',
-					hint: 'Add details of the potential risk and what the inspector might need',
+					hint: `Enter reason`,
 					details: currentDetailsValue
 				}
 			})
