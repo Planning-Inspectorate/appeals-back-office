@@ -20,7 +20,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -44,7 +44,7 @@ describe('service-user', () => {
 					const element = parseHtml(response.text);
 
 					expect(element.innerHTML).toMatchSnapshot();
-					expect(element.innerHTML).toContain('Update appellant details</h1>');
+					expect(element.innerHTML).toContain('Appellant&#39;s contact details</h1>');
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -64,8 +64,8 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).not.toContain('Update appellant details</h1>');
-				expect(element.innerHTML).not.toContain('Update agent details</h1>');
+				expect(element.innerHTML).not.toContain('Appellant&#39;s contact details</h1>');
+				expect(element.innerHTML).not.toContain('Agent&#39;s contact details</h1>');
 				expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
 			});
 		});
@@ -89,7 +89,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -116,7 +116,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -142,7 +142,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -169,7 +169,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -196,7 +196,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -222,7 +222,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -249,7 +249,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details</h1>');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -279,7 +279,7 @@ describe('service-user', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Update agent details</h1>');
+				expect(element.innerHTML).toContain('Agent&#39;s contact details');
 
 				const errorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',

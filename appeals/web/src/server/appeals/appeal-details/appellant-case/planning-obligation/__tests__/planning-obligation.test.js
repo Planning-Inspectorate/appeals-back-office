@@ -34,7 +34,9 @@ describe('planning-obligation', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change planning obligation status</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="planningObligationStatusRadio" type="radio" value="not_started" checked>'
 			);
@@ -67,7 +69,9 @@ describe('planning-obligation', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change planning obligation status</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="planningObligationStatusRadio" type="radio" value="not_started">'
 			);
@@ -100,7 +104,9 @@ describe('planning-obligation', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change planning obligation status</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="planningObligationStatusRadio" type="radio" value="not_started">'
 			);
