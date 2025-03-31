@@ -6,7 +6,10 @@ export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute })
 		id: 'inquiry-number-of-witnesses',
 		text: 'How many witnesses would you expect to give evidence at the inquiry?',
 		editable: true,
-		value: `${appellantCaseData.appellantProcedurePreferenceWitnessCount}` || 'Not answered',
+		value:
+			appellantCaseData?.appellantProcedurePreferenceWitnessCount != null
+				? `${appellantCaseData.appellantProcedurePreferenceWitnessCount}`
+				: 'Not answered',
 		link: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
 		cypressDataName: 'change-inquiry-number-of-witnesses'
 	});
