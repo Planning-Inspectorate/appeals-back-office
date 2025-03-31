@@ -1736,7 +1736,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many witnesses would you expect to give evidence at the inquiry?</dt>
-                            <dd                             class="govuk-summary-list__value">undefined</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/inquiry/witnesses/change"
                                     data-cy="change-inquiry-number-of-witnesses">Change<span class="govuk-visually-hidden"> How many witnesses would you expect to give evidence at the inquiry? (4. Appeal details)</span></a>
                                 </dd>
