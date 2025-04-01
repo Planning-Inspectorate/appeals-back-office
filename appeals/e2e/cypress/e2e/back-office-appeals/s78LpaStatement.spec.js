@@ -1,0 +1,87 @@
+﻿/// <reference types="cypress"/>
+
+import { users } from '../../fixtures/users';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
+
+const caseDetailsPage = new CaseDetailsPage();
+
+describe('S78 - LPA Statement', () => {
+	const statementPrefix = 'Hello, not about cheese but still a rep of some kind (LPA statement).';
+	const caseType = 'W';
+
+	const setupCaseToStatementsStage = (caseRef) => {
+		cy.addLpaqSubmissionToCase(caseRef);
+		happyPathHelper.assignCaseOfficer(caseRef);
+		cy.addAllocationLevelAndSpecialisms(caseRef);
+		caseDetailsPage.checkAppealStatus('Validation');
+
+		happyPathHelper.reviewAppellantCase(caseRef);
+		caseDetailsPage.checkAppealStatus('Ready to start');
+
+		happyPathHelper.startCase(caseRef);
+		caseDetailsPage.checkAppealStatus('LPA questionnaire');
+
+		happyPathHelper.reviewS78Lpaq(caseRef);
+		caseDetailsPage.checkAppealStatus('Statements');
+	};
+
+	beforeEach(() => {
+		cy.login(users.appeals.caseAdmin);
+	});
+
+	it('should show more/close functionality on check your answers page', () => {
+		const representation = Cypress._.repeat(statementPrefix, 5).substring(0, 301);
+		const isToggleDisplayed = true;
+
+		cy.createCase({ caseType: caseType }).then((caseRef) => {
+			setupCaseToStatementsStage(caseRef);
+			caseDetailsPage.acceptLpaStatement(caseRef, 'No', representation);
+			caseDetailsPage.verifyStatementIsDisplayed(representation, isToggleDisplayed);
+		});
+	});
+
+	it('should review decision before accepting LPA statement', () => {
+		const isToggleDisplayed = false;
+
+		cy.createCase({ caseType: caseType }).then((caseRef) => {
+			setupCaseToStatementsStage(caseRef);
+			caseDetailsPage.acceptLpaStatement(caseRef, 'No', statementPrefix);
+			caseDetailsPage.verifyStatementIsDisplayed(statementPrefix, isToggleDisplayed);
+		});
+		caseDetailsPage.clickLpaStatementChangeLink('Review decision');
+		caseDetailsPage.validateSectionHeader('Review LPA statement');
+	});
+
+	it('should update allocation level and specialisms', () => {
+		const isToggleDisplayed = false;
+
+		cy.createCase({ caseType: caseType }).then((caseRef) => {
+			setupCaseToStatementsStage(caseRef);
+			caseDetailsPage.acceptLpaStatement(caseRef, 'No', statementPrefix);
+			caseDetailsPage.verifyStatementIsDisplayed(statementPrefix, isToggleDisplayed);
+		});
+		caseDetailsPage.clickLpaStatementChangeLink(
+			'Do you need to update the allocation level and specialisms?'
+		);
+		caseDetailsPage.validateSectionHeader('Allocation level and specialisms');
+	});
+
+	it('should accept LPA statement', () => {
+		const representation = Cypress._.repeat(statementPrefix, 5).substring(0, 300);
+		const isToggleDisplayed = false;
+
+		cy.createCase({ caseType: caseType }).then((caseRef) => {
+			setupCaseToStatementsStage(caseRef);
+			caseDetailsPage.acceptLpaStatement(caseRef, 'No', representation);
+			caseDetailsPage.verifyStatementIsDisplayed(representation, isToggleDisplayed);
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.validateBannerMessage('Success', 'LPA statement accepted');
+			cy.getAppealDetails(caseRef).then((appealDetails) => {
+				const lpaStatement = appealDetails?.documentationSummary?.lpaStatement;
+				expect(lpaStatement.status).to.eq('received');
+				expect(lpaStatement.representationStatus).to.eq('valid');
+			});
+		});
+	});
+});

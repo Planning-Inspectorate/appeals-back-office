@@ -133,16 +133,21 @@ export class CaseDetailsPage extends Page {
 		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner),
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
-		caseStatusTag: () => cy.get('.govuk-tag'),
-		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`)
+		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-tag'),
+		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`),
+		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
+		showMoreContent: () => cy.get('.pins-show-more'),
+		lPAStatementTableChangeLink: (row) =>
+			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a')
 	};
 	/********************************************************
 	 ************************ Actions ************************
 	 *********************************************************/
 
 	checkAppealStatus(status) {
-		const appealStatus = this.elements.caseStatusTag().invoke('prop', 'innerText');
-		appealStatus.should('eq', status);
+		// const appealStatus = this.elements.caseStatusTag().invoke('prop', 'innerText');
+		// appealStatus.should('have.to', status);
+		this.elements.caseStatusTag().should('contain.text', status);
 	}
 	clickManageDocsCostDecision() {
 		this.elements.manageCostDecision().click();
@@ -400,6 +405,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.timeTableRowChangeLink(row).click();
 	}
 
+	clickLpaStatementChangeLink(row) {
+		this.elements.lPAStatementTableChangeLink(row).click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
@@ -557,8 +566,7 @@ export class CaseDetailsPage extends Page {
 			this.selectRadioButtonByValue('A');
 			this.clickButtonByText('Continue');
 			this.selectCheckbox();
-		}
-		else {
+		} else {
 			this.selectRadioButtonByValue('No');
 		}
 		this.clickButtonByText('Continue');
@@ -580,5 +588,27 @@ export class CaseDetailsPage extends Page {
 	changeTimetableDate(date) {
 		dateTimeSection.enterDate(date);
 		this.clickButtonByText('Confirm');
+	}
+
+	acceptLpaStatement(caseRef, updateAllocation, representation) {
+		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
+			cy.reload();
+		});
+		this.elements.lpaStatementReviewLink().click();
+		this.selectRadioButtonByValue('Accept statement');
+		this.clickButtonByText('Continue');
+		this.selectRadioButtonByValue(updateAllocation);
+		this.clickButtonByText('Continue');
+	}
+
+	verifyStatementIsDisplayed(statement, isToggleDisplayed) {
+		if (isToggleDisplayed) {
+			this.elements.showMoreToggle().contains('Read more').should('be.visible');
+			this.elements.showMoreToggle().click();
+			this.elements.showMoreToggle().contains('Close').should('be.visible');
+		} else {
+			this.elements.showMoreToggle().should('not.exist');
+		}
+		this.elements.showMoreContent().should('contain.text', statement);
 	}
 }
