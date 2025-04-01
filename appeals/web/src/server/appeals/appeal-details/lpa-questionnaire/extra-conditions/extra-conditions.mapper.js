@@ -34,7 +34,7 @@ export const changeExtraConditionsPage = (appealData, lpaqData, storedSessionDat
 				yesConditional: {
 					id: 'extra-conditions-details',
 					name: 'extraConditionsDetails',
-					hint: 'Extra conditions details',
+					hint: 'New conditions details',
 					details: currentDetailsValue
 				}
 			})
