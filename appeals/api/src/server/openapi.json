@@ -1334,6 +1334,88 @@
 				}
 			}
 		},
+		"/appeals/local-planning-authorities": {
+			"get": {
+				"tags": ["LPAs List"],
+				"description": "Gets list of LPAs",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Local Planning Authorities",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LPAs"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/LPAs"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/lpa": {
+			"get": {
+				"tags": ["LPA"],
+				"description": "Get LPA information for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Local Planning Authority",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LPA"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/LPA"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals": {
 			"get": {
 				"tags": ["Appeal Lists"],
@@ -9657,6 +9739,57 @@
 				},
 				"xml": {
 					"name": "RepRejectionReasonsUpdateRequest"
+				}
+			},
+			"LPA": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"example": 41
+					},
+					"name": {
+						"type": "string",
+						"example": "Bristol City Council"
+					},
+					"lpaCode": {
+						"type": "string",
+						"example": "BRIS"
+					},
+					"email": {
+						"type": "string",
+						"example": "bris@lpa-email.gov.uk"
+					}
+				},
+				"xml": {
+					"name": "LPA"
+				}
+			},
+			"LPAs": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number",
+							"example": 41
+						},
+						"name": {
+							"type": "string",
+							"example": "Bristol City Council"
+						},
+						"lpaCode": {
+							"type": "string",
+							"example": "BRIS"
+						},
+						"email": {
+							"type": "string",
+							"example": "bris@lpa-email.gov.uk"
+						}
+					}
+				},
+				"xml": {
+					"name": "LPAs"
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {
