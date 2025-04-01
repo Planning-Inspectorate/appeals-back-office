@@ -103,9 +103,7 @@ export function generateHASComponents(
 					mappedAppellantCaseData.applicationReference.display.summaryListItem
 				),
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem
