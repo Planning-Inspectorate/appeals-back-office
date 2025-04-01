@@ -17,7 +17,6 @@ const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
-const mockLpaFindUnique = jest.fn().mockResolvedValue(true);
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
@@ -106,6 +105,8 @@ const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
+const mockLpaFindMany = jest.fn().mockResolvedValue({});
+const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -409,12 +410,6 @@ class MockPrismaClient {
 		};
 	}
 
-	get lpa() {
-		return {
-			finUnique: mockLpaFindUnique
-		};
-	}
-
 	get inspectorDecision() {
 		return {
 			create: mockAppealDecision
@@ -449,6 +444,13 @@ class MockPrismaClient {
 		return {
 			findMany: mockRepresentationRejectionReasonFindMany,
 			deleteMany: mockRepresentationRejectionReasonFindMany
+		};
+	}
+
+	get lPA() {
+		return {
+			findMany: mockLpaFindMany,
+			findUnique: mockLpaFindUnique
 		};
 	}
 
