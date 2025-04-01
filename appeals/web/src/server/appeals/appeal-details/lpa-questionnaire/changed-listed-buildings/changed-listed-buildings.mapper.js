@@ -189,7 +189,7 @@ export function removeChangedListedBuildingPage(
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Confirm that you want to remove the changed listed building',
 		submitButtonText: 'Remove changed listed building',
-		pageComponents: [
+		prePageComponents: [
 			{
 				type: 'summary-list',
 				parameters: {

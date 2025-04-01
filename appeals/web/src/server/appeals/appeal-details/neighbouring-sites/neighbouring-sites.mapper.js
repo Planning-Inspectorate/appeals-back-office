@@ -220,7 +220,7 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 		backLinkUrl: `${origin}/neighbouring-sites/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove neighbouring site',
-		pageComponents: [
+		prePageComponents: [
 			{
 				type: 'summary-list',
 				parameters: {
@@ -236,7 +236,9 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 						}
 					]
 				}
-			},
+			}
+		],
+		pageComponents: [
 			yesNoInput({
 				name: 'remove-neighbouring-site',
 				legendText: 'Do you want to remove this site?'
