@@ -22,7 +22,7 @@ describe('extra-conditions', () => {
 	afterEach(teardown);
 
 	describe('GET /change', () => {
-		it('should render the change extra conditions page', async () => {
+		it('should render the change new conditions page', async () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/extra-conditions/change`
 			);
@@ -47,11 +47,11 @@ describe('extra-conditions', () => {
 		});
 	});
 
-	it('should re-render the change extra conditions page with an error when details exceeds 1000 characters', async () => {
+	it('should re-render the change new conditions page with an error when details exceeds 8000 characters', async () => {
 		const appealId = appealData.appealId.toString();
 		const invalidData = {
 			extraConditionsRadio: 'yes',
-			extraConditionsDetails: 'a'.repeat(1001) // Creates string of 1001 'a' characters
+			extraConditionsDetails: 'a'.repeat(8001) // Creates string of 8001 'a' characters
 		};
 
 		const response = await request
@@ -70,13 +70,11 @@ describe('extra-conditions', () => {
 
 		expect(elementInnerHtml).toMatchSnapshot();
 		expect(errorSummaryHtml).toContain('There is a problem</h2>');
-		expect(errorSummaryHtml).toContain(
-			'Extra conditions details must be 1000 characters or less</a>'
-		);
+		expect(errorSummaryHtml).toContain('New conditions must be 8000 characters or less</a>');
 	});
 
 	describe('POST /change', () => {
-		it('should re-render the change extra conditions page with an error when isRequired is "yes" but details is empty', async () => {
+		it('should re-render the change new conditions page with an error when isRequired is "yes" but details is empty', async () => {
 			const appealId = appealData.appealId.toString();
 
 			const invalidData = {
@@ -102,7 +100,7 @@ describe('extra-conditions', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter extra conditions details</a>');
+			expect(errorSummaryHtml).toContain('Enter new conditions details</a>');
 		});
 
 		it('should re-direct to the LPA questionnaire page when data is valid', async () => {
