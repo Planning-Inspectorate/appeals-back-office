@@ -259,8 +259,8 @@ export async function scheduleOrManageSiteVisitPage(
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `${titlePrefix} site visit`,
 		submitButtonText: 'Confirm',
+		prePageComponents: [siteInformationComponent],
 		pageComponents: [
-			siteInformationComponent,
 			selectVisitTypeComponent,
 			selectDateComponent,
 			selectTimeHtmlComponent,
@@ -270,8 +270,8 @@ export async function scheduleOrManageSiteVisitPage(
 		]
 	};
 
-	if (pageContent.pageComponents) {
-		preRenderPageComponents(pageContent.pageComponents);
+	if (pageContent.prePageComponents) {
+		preRenderPageComponents(pageContent.prePageComponents);
 	}
 
 	return pageContent;
