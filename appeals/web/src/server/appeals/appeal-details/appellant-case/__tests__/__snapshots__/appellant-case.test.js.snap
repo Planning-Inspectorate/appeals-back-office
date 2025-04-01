@@ -158,22 +158,10 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -429,22 +417,10 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -739,22 +715,10 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -1023,22 +987,10 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -1378,22 +1330,10 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -1975,22 +1915,10 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
@@ -4356,22 +4284,10 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (3. Application details)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/development-description/change"
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (3. Application details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
