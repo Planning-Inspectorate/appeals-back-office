@@ -5,7 +5,6 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { urlPaths } from '../../support/urlPaths.js';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
@@ -34,9 +33,6 @@ describe('Review LPAQ', () => {
 	});
 
 	it('incomplete LPAQ', { tags: tag.smoke }, () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate() + 28);
-
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -48,7 +44,9 @@ describe('Review LPAQ', () => {
 			caseDetailsPage.chooseCheckboxByText('Other documents or information are missing');
 			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDate(futureDate);
+			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
+				dateTimeSection.enterDate(futureDate);
+			});
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			const status = 'Incomplete';
@@ -58,9 +56,6 @@ describe('Review LPAQ', () => {
 	});
 
 	it('incomplete LPAQ add another', { tags: tag.smoke }, () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate() + 28);
-
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -74,7 +69,9 @@ describe('Review LPAQ', () => {
 			caseDetailsPage.clickAddAnother();
 			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 2);
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDate(futureDate);
+			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
+				dateTimeSection.enterDate(futureDate);
+			});
 			caseDetailsPage.clickButtonByText('Save and Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			const status = 'Incomplete';

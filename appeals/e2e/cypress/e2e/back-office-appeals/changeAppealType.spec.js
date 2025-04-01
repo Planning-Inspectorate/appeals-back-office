@@ -3,13 +3,10 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { urlPaths } from '../../support/urlPaths.js';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
-const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
@@ -33,9 +30,6 @@ describe('Change Appeal Type', () => {
 	});
 
 	it('Change appeal type and resubmit', () => {
-		let futureDate = new Date();
-		futureDate.setDate(futureDate.getDate() + 28);
-
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
@@ -44,7 +38,9 @@ describe('Change Appeal Type', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
+			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
+				dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
+			});
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkStatusOfCase('Closed', 0);
 		});
