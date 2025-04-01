@@ -29,13 +29,13 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.checkAppealStatus('Validation'.toUpperCase());
 
 			happyPathHelper.reviewAppellantCase(caseRef);
-			caseDetailsPage.checkAppealStatus('Ready to start'.toUpperCase());
+			caseDetailsPage.checkAppealStatus('Ready to start');
 
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.checkAppealStatus('LPA Questionnaire'.toUpperCase());
+			caseDetailsPage.checkAppealStatus('LPA questionnaire');
 
 			happyPathHelper.reviewS78Lpaq(caseRef);
-			caseDetailsPage.checkAppealStatus('Statements'.toUpperCase());
+			caseDetailsPage.checkAppealStatus('Statements');
 
 			happyPathHelper.addThirdPartyComment(caseRef, true);
 			caseDetailsPage.clickBackLink();
