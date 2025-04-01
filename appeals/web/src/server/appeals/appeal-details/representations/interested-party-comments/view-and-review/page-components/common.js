@@ -119,14 +119,15 @@ export function generateCommentSummaryList(
 				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
 			},
 			actions: {
-				items: commentIsDocument
-					? []
-					: [
-							{
-								text: 'Redact',
-								href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
-							}
-					  ]
+				items:
+					commentIsDocument || isReviewPage
+						? []
+						: [
+								{
+									text: 'Redact',
+									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
+								}
+						  ]
 			}
 		},
 		...(comment.redactedRepresentation

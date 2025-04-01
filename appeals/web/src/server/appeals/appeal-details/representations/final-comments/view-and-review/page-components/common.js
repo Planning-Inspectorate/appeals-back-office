@@ -70,7 +70,8 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items:
-					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+					comment.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 						? []
 						: [
 								{
