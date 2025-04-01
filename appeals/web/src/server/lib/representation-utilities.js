@@ -22,10 +22,13 @@ export function mapRepresentationDocumentSummaryActionLink(
 	representationStatus,
 	representationType
 ) {
+	console.log(`[representation-utilities.js] representationType: ${representationType}`);
+	console.log(`[representation-utilities.js] representationStatus: ${representationStatus}`);
+	console.log(`[representation-utilities.js] documentationStatus: ${documentationStatus}`);
+	console.log(`[representation-utilities.js] currentRoute: ${currentRoute}`);
 	if (documentationStatus !== 'received') {
 		return '';
 	}
-
 	const reviewRequired = [
 		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
 		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
@@ -35,7 +38,7 @@ export function mapRepresentationDocumentSummaryActionLink(
 	const visuallyHiddenTexts = {
 		'lpa-statement': 'LPA statement',
 		'appellant-final-comments': 'appellant final comments',
-		'lpa-final-comments': 'L P A final comments'
+		'lpa-final-comments': 'LPA final comments'
 	};
 
 	/** @type {Record<RepresentationType, string>} */
