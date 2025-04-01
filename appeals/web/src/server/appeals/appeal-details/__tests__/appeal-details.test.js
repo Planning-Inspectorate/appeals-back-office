@@ -2339,7 +2339,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
 						viewCyAttribute: 'view-lpa-final-comments',
-						actionLinkHiddenText: 'L P A final comments'
+						actionLinkHiddenText: 'LPA final comments'
 					}
 				];
 
