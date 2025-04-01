@@ -22,10 +22,6 @@ export function mapRepresentationDocumentSummaryActionLink(
 	representationStatus,
 	representationType
 ) {
-	console.log(`[representation-utilities.js] representationType: ${representationType}`);
-	console.log(`[representation-utilities.js] representationStatus: ${representationStatus}`);
-	console.log(`[representation-utilities.js] documentationStatus: ${documentationStatus}`);
-	console.log(`[representation-utilities.js] currentRoute: ${currentRoute}`);
 	if (documentationStatus !== 'received') {
 		return '';
 	}
