@@ -292,8 +292,6 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">
@@ -361,8 +359,6 @@ exports[`final-comments GET /review-comments with data should render review appe
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
@@ -417,8 +413,6 @@ exports[`final-comments GET /review-comments with redacted comment should render
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Redacted comment</dt>
@@ -601,8 +595,6 @@ exports[`final-comments POST /review-comments with data should render review LPA
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
