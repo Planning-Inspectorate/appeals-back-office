@@ -19,6 +19,7 @@ const { value, error } = schema.validate({
 	BO_BLOB_CONTAINER: environment.BO_BLOB_CONTAINER,
 	blobEmulatorSasUrl: environment.AZURE_BLOB_EMULATOR_SAS_HOST,
 	useBlobEmulator: environment.AZURE_BLOB_USE_EMULATOR || false,
+	useNotifyEmulator: environment.NOTIFY_SEND_MAIL_EMULATOR || false,
 	defaultApiVersion: environment.DEFAULT_API_VERSION || '1',
 	serviceBusOptions: {
 		hostname: environment.SERVICE_BUS_HOSTNAME

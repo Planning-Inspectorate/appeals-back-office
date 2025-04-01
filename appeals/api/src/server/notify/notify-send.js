@@ -7,6 +7,7 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { emulateSendEmail } from '#notify/emulate-notify.js';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -94,7 +95,11 @@ export default async function notifySend(options) {
 	const content = populateTemplate(getTemplate(`${templateName}.content`), personalisation);
 	const subject = populateTemplate(getTemplate(`${templateName}.subject`), personalisation);
 	try {
-		await notifyClient.sendEmail(genericTemplate, recipientEmail, { content, subject });
+		if (config.useNotifyEmulator) {
+			emulateSendEmail(templateName, recipientEmail, subject, content);
+		} else {
+			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
