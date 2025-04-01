@@ -39,6 +39,11 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 					},
 					items: [
 						{
+							value: 'written',
+							text: 'Written representations',
+							checked: procedurePreference === APPEAL_CASE_PROCEDURE.WRITTEN
+						},
+						{
 							value: 'hearing',
 							text: 'Hearing',
 							checked: procedurePreference === APPEAL_CASE_PROCEDURE.HEARING
@@ -47,11 +52,6 @@ export const changeProcedurePreferencePage = (appealData, appellantCaseData, sto
 							value: 'inquiry',
 							text: 'Inquiry',
 							checked: procedurePreference === APPEAL_CASE_PROCEDURE.INQUIRY
-						},
-						{
-							value: 'written',
-							text: 'Written',
-							checked: procedurePreference === APPEAL_CASE_PROCEDURE.WRITTEN
 						}
 					]
 				}

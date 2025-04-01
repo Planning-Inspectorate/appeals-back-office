@@ -7,7 +7,18 @@ export const mapProcedurePreference = ({ appellantCaseData, currentRoute }) =>
 		id: 'procedure-preference',
 		text: 'How would you prefer us to decide your appeal?',
 		editable: true,
-		value: capitalize(appellantCaseData.appellantProcedurePreference || 'Not answered'),
+		value: getProcedurePreference(appellantCaseData.appellantProcedurePreference),
 		link: `${currentRoute}/procedure-preference/change`,
 		cypressDataName: 'change-procedure-preference'
 	});
+
+/**
+ * @param {string?} procedurePreference
+ * @returns {string}
+ */
+const getProcedurePreference = (procedurePreference) => {
+	if (procedurePreference === 'written') {
+		return 'Written representation';
+	}
+	return capitalize(procedurePreference || 'Not answered');
+};
