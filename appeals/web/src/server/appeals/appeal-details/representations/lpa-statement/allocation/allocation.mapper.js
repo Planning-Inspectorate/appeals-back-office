@@ -31,7 +31,6 @@ export function allocationCheckPage(appealDetails, sessionData) {
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
-		...(appealDetails.allocationDetails ? [currentStatus] : []),
 		yesNoInput({
 			name: 'allocationLevelAndSpecialisms',
 			id: 'allocationLevelAndSpecialisms',
@@ -47,6 +46,7 @@ export function allocationCheckPage(appealDetails, sessionData) {
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level and specialisms',
 		submitButtonText: 'Continue',
+		prePageComponents: appealDetails.allocationDetails ? [currentStatus] : [],
 		pageComponents
 	};
 }

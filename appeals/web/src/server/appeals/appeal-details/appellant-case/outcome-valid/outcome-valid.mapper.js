@@ -75,7 +75,8 @@ export function updateValidDatePage(
 		backLinkText: 'Back',
 		heading: title,
 		submitButtonText: 'Confirm',
-		pageComponents: [validDateTextComponent, selectDateComponent, insetTextComponent]
+		prePageComponents: [validDateTextComponent],
+		pageComponents: [selectDateComponent, insetTextComponent]
 	};
 
 	return pageContent;
