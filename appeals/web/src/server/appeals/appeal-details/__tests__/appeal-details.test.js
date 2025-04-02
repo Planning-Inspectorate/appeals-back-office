@@ -2122,7 +2122,7 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toContain('Important</h3>');
 			expect(element.innerHTML).toContain('Appeal valid</p>');
 			expect(element.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/2/start-case/add">Start case</a>'
+				'href="/appeals-service/appeal-details/2/start-case/add?backUrl=/appeals-service/appeal-details/2">Start case</a>'
 			);
 		});
 
@@ -2339,7 +2339,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
 						viewCyAttribute: 'view-lpa-final-comments',
-						actionLinkHiddenText: 'L P A final comments'
+						actionLinkHiddenText: 'LPA final comments'
 					}
 				];
 
@@ -2398,7 +2398,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Not received</td><td class="govuk-table__cell"></td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Not applicable</td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
 						);
 					});
 

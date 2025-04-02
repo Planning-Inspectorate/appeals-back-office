@@ -14,9 +14,10 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) =>
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,
 			appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus
 		),
-		receivedText: dateISOStringToDisplayDate(
-			appealDetails?.documentationSummary?.appellantFinalComments?.receivedAt
-		),
+		receivedText:
+			dateISOStringToDisplayDate(
+				appealDetails?.documentationSummary?.appellantFinalComments?.receivedAt
+			) || 'Not applicable',
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,

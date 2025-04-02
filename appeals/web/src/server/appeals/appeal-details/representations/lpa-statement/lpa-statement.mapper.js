@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { buildHtmUnorderedList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
@@ -22,16 +22,18 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 	});
 
 	const attachmentsList = filteredAttachments?.length
-		? buildHtmUnorderedList(
-				filteredAttachments.map(
+		? buildHtmlList({
+				items: filteredAttachments.map(
 					(a) =>
 						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
 							a.documentVersion.document.caseId,
 							a.documentVersion.document.guid,
 							a.documentVersion.document.name
 						)}" target="_blank">${a.documentVersion.document.name}</a>`
-				)
-		  )
+				),
+				isOrderedList: true,
+				isNumberedList: filteredAttachments.length > 1
+		  })
 		: null;
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;

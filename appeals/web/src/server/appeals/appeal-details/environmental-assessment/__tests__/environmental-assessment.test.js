@@ -226,6 +226,10 @@ describe('environmental-assessment', () => {
 
 	describe('POST /environmental-assessment/manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		it('should render the delete document version page', async () => {
+			nock('http://test/')
+				.delete(`/appeals/${appealId}/documents/${documentId}/${version}`)
+				.reply(200);
+
 			const response = await request
 				.post(
 					`${baseUrl}/${appealId}/environmental-assessment/manage-documents/${folderId}/${documentId}/${version}/delete`
