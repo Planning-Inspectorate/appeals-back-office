@@ -1,0 +1,30 @@
+{
+	"name": "@pins/pdf-service-api",
+	"version": "1.0.0",
+	"engines": {
+		"node": ">=22.0.0 <= 22.14.0",
+		"npm": ">=10.0.0 <11.0.0"
+	},
+	"main": "src/main.js",
+	"scripts": {
+		"lint": "eslint ./",
+		"start": "node ./",
+		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
+		"test": "jest --coverage --verbose",
+		"test:watch": "jest --watchAll --runInBand"
+	},
+	"dependencies": {
+		"applicationinsights": "*",
+		"body-parser": "*",
+		"cors": "*",
+		"express": "*",
+		"multer": "*",
+		"pino": "*",
+		"puppeteer-core": "*"
+	},
+	"devDependencies": {
+		"jest": "*",
+		"jest-junit": "*",
+		"nodemon": "*"
+	}
+}
