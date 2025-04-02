@@ -135,21 +135,28 @@ export const renderCheckYourAnswers = async (
 		reasonOptions
 	);
 
-	const attachmentsList =
-		currentRepresentation.attachments.length > 0
-			? buildHtmlList({
-					items: currentRepresentation.attachments.map(
-						(a) =>
-							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-								a.documentVersion.document.caseId,
-								a.documentVersion.document.guid,
-								a.documentVersion.document.name
-							)}" target="_blank">${a.documentVersion.document.name}</a>`
-					),
-					isOrderedList: true,
-					isNumberedList: currentRepresentation.attachments.length > 1
-			  })
-			: null;
+	const filteredAttachments = currentRepresentation.attachments?.filter((attachment) => {
+		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
+		return latestVersionId === attachment.version && !isDeleted;
+	});
+
+	const attachmentsList = filteredAttachments?.length
+		? buildHtmlList({
+				items: filteredAttachments.map(
+					(a) =>
+						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+							a.documentVersion.document.caseId,
+							a.documentVersion.document.guid,
+							a.documentVersion.document.name
+						)}" target="_blank">${a.documentVersion.document.name}</a>`
+				),
+				isOrderedList: true,
+				isNumberedList: filteredAttachments.length > 1
+		  })
+		: null;
+
+	const folderId =
+		currentRepresentation.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -176,12 +183,12 @@ export const renderCheckYourAnswers = async (
 					html: attachmentsList?.length ? attachmentsList : undefined,
 					actions: {
 						Manage: {
-							href: `#`,
+							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/manage-documents/${folderId}/?backUrl=/lpa-statement/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'
 						},
 
 						Add: {
-							href: `#`,
+							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/add-document/?backUrl=/lpa-statement/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'
 						}
 					}
