@@ -34,7 +34,7 @@ describe('started-at.mapper', () => {
 								attributes: {
 									'data-cy': 'start-start-case-date'
 								},
-								href: '/test/start-case/add',
+								href: '/test/start-case/add?backUrl=/test',
 								text: 'Start',
 								visuallyHiddenText: 'Start date'
 							}

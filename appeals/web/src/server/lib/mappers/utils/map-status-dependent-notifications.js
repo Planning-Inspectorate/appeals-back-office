@@ -13,9 +13,10 @@ import { getRequiredActionsForAppeal } from './required-actions.js';
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {string} currentRoute
  * @returns {PageComponent[]}
  */
-export function mapStatusDependentNotifications(appealDetails) {
+export function mapStatusDependentNotifications(appealDetails, currentRoute) {
 	const requiredActions = getRequiredActionsForAppeal(appealDetails);
 
 	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
@@ -24,16 +25,17 @@ export function mapStatusDependentNotifications(appealDetails) {
 		.filter(/** @returns {item is NotificationBannerDefinitionKey} */ (item) => item !== undefined);
 
 	return bannerKeys
-		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails))
+		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails, currentRoute))
 		.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined);
 }
 
 /**
  * @param {NotificationBannerDefinitionKey} bannerDefinitionKey
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
- * @returns
+ * @param {string} currentRoute
+ * @returns {PageComponent|undefined}
  */
-function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails) {
+function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, currentRoute) {
 	switch (bannerDefinitionKey) {
 		case 'appealAwaitingTransfer':
 			return createNotificationBanner({
@@ -111,7 +113,8 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails) 
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${generateStartTimetableUrl(
-					appealDetails.appealId
+					appealDetails.appealId,
+					currentRoute
 				)}">Start case</a></p>`
 			});
 		case 'updateLpaStatement':

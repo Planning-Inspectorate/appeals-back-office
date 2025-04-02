@@ -22,3 +22,5 @@ export const isFeatureActive = (featureFlagName = null) => {
 
 	return config.featureFlags[featureFlagName];
 };
+
+export default { isFeatureActive };

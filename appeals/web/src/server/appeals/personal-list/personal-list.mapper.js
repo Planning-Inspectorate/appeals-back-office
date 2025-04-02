@@ -21,6 +21,7 @@ import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions
  * @param {string} urlWithoutQuery
  * @param {string|undefined} appealStatusFilter
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} currentRoute
  * @returns {PageContent}
  */
 
@@ -28,7 +29,8 @@ export function personalListPage(
 	appealsAssignedToCurrentUser,
 	urlWithoutQuery,
 	appealStatusFilter,
-	session
+	session,
+	currentRoute
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
@@ -166,7 +168,7 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: mapActionLinksForAppeal(appeal, isCaseOfficer)
+						html: mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute)
 					},
 					{
 						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
@@ -238,13 +240,15 @@ export function personalListPage(
  * @param {boolean} isCaseOfficer
  * @param {number} appealId
  * @param {number|null|undefined} lpaQuestionnaireId
+ * @param {string} currentRoute
  * @returns {string}
  */
 function mapRequiredActionToPersonalListActionHtml(
 	action,
 	isCaseOfficer,
 	appealId,
-	lpaQuestionnaireId
+	lpaQuestionnaireId,
+	currentRoute
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -316,7 +320,7 @@ function mapRequiredActionToPersonalListActionHtml(
 		}
 		case 'startAppeal': {
 			return isCaseOfficer
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=${currentRoute}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Start case';
 		}
 		case 'updateLpaStatement': {
@@ -330,10 +334,11 @@ function mapRequiredActionToPersonalListActionHtml(
 
 /**
  * @param {PersonalListAppeal} appeal
- * @param {boolean} [isCaseOfficer]
+ * @param {boolean} isCaseOfficer
+ * @param {string} currentRoute
  * @returns {string}
  */
-export function mapActionLinksForAppeal(appeal, isCaseOfficer = false) {
+export function mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute) {
 	const requiredActions = getRequiredActionsForAppeal({
 		...appeal,
 		appealTimetable: appeal.appealTimetable || {}
@@ -351,7 +356,8 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer = false) {
 				action,
 				isCaseOfficer,
 				appealId,
-				lpaQuestionnaireId
+				lpaQuestionnaireId,
+				currentRoute
 			);
 		})
 		.join('<br>');

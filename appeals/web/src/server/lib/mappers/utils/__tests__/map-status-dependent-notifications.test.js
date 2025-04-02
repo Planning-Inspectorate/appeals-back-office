@@ -114,7 +114,8 @@ describe('mapStatusDependentNotifications', () => {
 	for (const testCase of testCases) {
 		it(`should return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction}"`, async () => {
 			const result = mapStatusDependentNotifications(
-				appealDataToGetRequiredActions[testCase.requiredAction]
+				appealDataToGetRequiredActions[testCase.requiredAction],
+				`/appeals-service/appeal-details/${mockAppealData.appealId}`
 			);
 
 			expect(Array.isArray(result)).toBe(true);

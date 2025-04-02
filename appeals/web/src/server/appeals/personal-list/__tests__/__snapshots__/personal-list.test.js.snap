@@ -84,7 +84,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28512" aria-label="Appeal 6 0 2 8 5 1 2">6028512</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add?backUrl=/appeals-service/personal-list?pageNumber=1&pageSize=30">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
                         </td>
                         <td class="govuk-table__cell">9 March 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -211,7 +211,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28512" aria-label="Appeal 6 0 2 8 5 1 2">6028512</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add?backUrl=/appeals-service/personal-list?pageNumber=1&pageSize=30">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
                         </td>
                         <td class="govuk-table__cell">9 March 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -353,7 +353,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28512" aria-label="Appeal 6 0 2 8 5 1 2">6028512</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add?backUrl=/appeals-service/personal-list?pageNumber=1&pageSize=30">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
                         </td>
                         <td class="govuk-table__cell">9 March 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>
@@ -480,7 +480,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28512" aria-label="Appeal 6 0 2 8 5 1 2">6028512</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28512/start-case/add?backUrl=/appeals-service/personal-list?pageNumber=1&pageSize=5">Start case<span class="govuk-visually-hidden"> for appeal 28512</span></a>
                         </td>
                         <td class="govuk-table__cell">9 March 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--turquoise single-line">Ready to start</strong>

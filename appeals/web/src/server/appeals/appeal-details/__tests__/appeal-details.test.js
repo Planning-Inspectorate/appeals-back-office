@@ -2122,7 +2122,7 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toContain('Important</h3>');
 			expect(element.innerHTML).toContain('Appeal valid</p>');
 			expect(element.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/2/start-case/add">Start case</a>'
+				'href="/appeals-service/appeal-details/2/start-case/add?backUrl=/appeals-service/appeal-details/2">Start case</a>'
 			);
 		});
 
