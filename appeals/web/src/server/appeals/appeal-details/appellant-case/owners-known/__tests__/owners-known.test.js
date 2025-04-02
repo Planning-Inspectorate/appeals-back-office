@@ -32,7 +32,9 @@ describe('owners-known', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change owners known</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="No" checked>'
 			);
@@ -66,7 +68,9 @@ describe('owners-known', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change owners known</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="No">'
 			);
@@ -100,7 +104,9 @@ describe('owners-known', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change owners known</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="No">'
 			);
@@ -134,7 +140,9 @@ describe('owners-known', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change owners known</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ownersKnownRadio" type="radio" value="No">'
 			);

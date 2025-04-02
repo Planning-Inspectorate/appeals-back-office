@@ -9,8 +9,8 @@ export const mapApplicationDecisionDate = ({
 }) =>
 	textSummaryListItem({
 		id: 'application-decision-date',
-		text: 'Application decision date',
-		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate),
+		text: 'What’s the date on the decision letter from the local planning authority?​',
+		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate, 'No data'),
 		link: `${currentRoute}/application-decision-date/change`,
 		editable: userHasUpdateCase
 	});

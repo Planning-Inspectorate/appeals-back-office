@@ -16,7 +16,7 @@ export const mapChangedDevelopmentDescriptionDocument = ({
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'changed-development-description.document',
-		text: 'Agreement to change description evidence',
+		text: 'Agreement to change the description of development',
 		folderInfo: appellantCaseData.documents.changedDescription,
 		cypressDataName: 'agreement-to-change-description-evidence'
 	});

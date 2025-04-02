@@ -30,7 +30,7 @@ describe('green-belt', () => {
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
-			expect(mainInnerHtml).toContain('Is the site in a green belt?</h1>');
+			expect(mainInnerHtml).toContain('Is the appeal site in a green belt?</h1>');
 		});
 
 		it('should render a back link to LPAQ page on the greenBelt change page when accessed from LPAQ page', async () => {
@@ -58,7 +58,7 @@ describe('green-belt', () => {
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
-			expect(mainInnerHtml).toContain('Is the site in a green belt?</h1>');
+			expect(mainInnerHtml).toContain('Is the appeal site in a green belt?</h1>');
 		});
 
 		it('should render a back link to appellant case page on the greenBelt change page when accessed from Appellant Case page', async () => {

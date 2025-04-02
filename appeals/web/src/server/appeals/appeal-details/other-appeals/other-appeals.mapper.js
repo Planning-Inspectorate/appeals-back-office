@@ -300,10 +300,10 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Manage related appeals - ${shortAppealReference}`,
+		title: `Manage linked appeals - ${shortAppealReference}`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Manage related appeals',
+		heading: 'Manage linked appeals',
 		pageComponents
 	};
 

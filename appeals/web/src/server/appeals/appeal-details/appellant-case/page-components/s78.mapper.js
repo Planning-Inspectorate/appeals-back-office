@@ -60,7 +60,6 @@ export function generateS78Components(
 					mappedAppellantCaseData.partOfAgriculturalHolding.display.summaryListItem,
 					mappedAppellantCaseData.tenantOfAgriculturalHolding.display.summaryListItem,
 					mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 					mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 				]
@@ -103,14 +102,10 @@ export function generateS78Components(
 						mappedAppellantCaseData.applicationReference.display.summaryListItem
 					),
 					mappedAppellantCaseData.applicationDate.display.summaryListItem,
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecision.display.summaryListItem
+					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+					mappedAppellantCaseData.applicationDecision.display.summaryListItem,
+					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
 				]
 			}
 		};
@@ -147,19 +142,57 @@ export function generateS78Components(
 					mappedAppellantCaseData.procedurePreference.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDetails.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDuration.display.summaryListItem,
-					mappedAppellantCaseData.inquiryNumberOfWitnesses.display.summaryListItem,
+					mappedAppellantCaseData.inquiryNumberOfWitnesses.display.summaryListItem
+				]
+			}
+		};
+
+		pageComponents[appealSummaryComponentIndex] = appealSummary;
+	}
+
+	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'uploaded-documents'
+	);
+
+	if (uploadedDocumentsComponentIndex !== -1) {
+		/**
+		 * @type {PageComponent}
+		 */
+		const uploadedDocuments = {
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				attributes: {
+					id: 'uploaded-documents'
+				},
+				card: {
+					title: {
+						text: '5. Upload documents'
+					}
+				},
+				rows: [
+					mappedAppellantCaseData.applicationForm.display.summaryListItem,
+					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
-					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
+					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
+					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
+					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
 					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
 					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
 				]
 			}
 		};
 
-		pageComponents[appealSummaryComponentIndex] = appealSummary;
+		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
 	}
 
 	return pageComponents;

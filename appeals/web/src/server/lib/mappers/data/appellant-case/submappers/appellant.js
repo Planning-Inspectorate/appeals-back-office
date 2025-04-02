@@ -5,11 +5,11 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'appellant',
-		text: 'Appellant',
+		text: "Appellant's contact details",
 		value: {
 			html: appealDetails.appellant
 				? formatServiceUserAsHtmlList(appealDetails.appellant)
-				: 'No appellant'
+				: 'No data'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
 		editable: userHasUpdateCase,
