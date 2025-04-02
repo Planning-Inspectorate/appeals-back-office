@@ -15,6 +15,7 @@
 			"#common/*": ["./src/server/common/*"],
 			"#config/*": ["./src/server/config/*"],
 			"#state/*": ["./src/server/state/*"],
+			"#notify/*": ["./src/server/notify/*"],
 			"#mappers/*": ["./src/server/mappers/*"]
 		}
 	}
