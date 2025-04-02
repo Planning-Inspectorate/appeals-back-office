@@ -15,7 +15,7 @@ export const generateCaseSummary = (mappedData) => {
 		parameters: {
 			rows: [
 				removeSummaryListActions(mappedData.appeal.siteAddress.display.summaryListItem),
-				removeSummaryListActions(mappedData.appeal.localPlanningAuthority.display.summaryListItem)
+				mappedData.appeal.localPlanningAuthority.display.summaryListItem
 			].filter(isDefined),
 			classes: 'govuk-summary-list--no-border'
 		}

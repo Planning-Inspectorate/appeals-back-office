@@ -411,3 +411,10 @@ export interface WebServiceUser {
 	phoneNumber?: string | null;
 	addressId?: number | null;
 }
+
+export type Lpa = {
+	id: number;
+	name: string;
+	lpaCode: string;
+	email: string | null;
+};
