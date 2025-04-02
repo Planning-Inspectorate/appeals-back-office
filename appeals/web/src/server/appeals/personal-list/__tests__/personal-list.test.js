@@ -380,7 +380,7 @@ describe('personal-list', () => {
 				name: 'Start case',
 				requiredAction: 'startAppeal',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=/appeals-service/personal-list">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
 					nonCaseOfficer: 'Start case'
 				}
 			},
@@ -397,7 +397,8 @@ describe('personal-list', () => {
 			it(`should return the expected "${testCase.name}" action link HTML when getRequiredActionsForAppeal returns "${testCase.requiredAction}" and "isCaseOfficer" is true`, async () => {
 				const result = mapActionLinksForAppeal(
 					appealDataToGetRequiredActions[testCase.requiredAction],
-					true
+					true,
+					baseUrl
 				);
 
 				expect(result).toBe(testCase.expectedHtml.caseOfficer);
@@ -407,7 +408,8 @@ describe('personal-list', () => {
 				it(`should return the expected "${testCase.name}" action link HTML when getRequiredActionsForAppeal returns "${testCase.requiredAction}" and "isCaseOfficer" is false`, async () => {
 					const result = mapActionLinksForAppeal(
 						appealDataToGetRequiredActions[testCase.requiredAction],
-						false
+						false,
+						baseUrl
 					);
 
 					expect(result).toBe(testCase.expectedHtml.nonCaseOfficer);
@@ -421,7 +423,8 @@ describe('personal-list', () => {
 					...baseAppealDataToGetRequiredActions,
 					appealId: undefined
 				},
-				true
+				true,
+				baseUrl
 			);
 
 			expect(result).toBe('');
@@ -433,7 +436,8 @@ describe('personal-list', () => {
 					...baseAppealDataToGetRequiredActions,
 					lpaQuestionnaireId: null
 				},
-				true
+				true,
+				baseUrl
 			);
 
 			expect(resultForNull).toBe('');
@@ -443,7 +447,8 @@ describe('personal-list', () => {
 					...baseAppealDataToGetRequiredActions,
 					lpaQuestionnaireId: undefined
 				},
-				true
+				true,
+				baseUrl
 			);
 
 			expect(resultForUndefined).toBe('');
