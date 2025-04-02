@@ -14,4 +14,6 @@ router
 	.get(asyncHandler(controller.getChangeDate))
 	.post(asyncHandler(controller.postChangeDate));
 
+router.route('/select-procedure').get(asyncHandler(controller.getSelectProcedure));
+
 export default router;

@@ -428,8 +428,11 @@ export function generateIssueDecisionUrl(appealId) {
 
 /**
  * @param {string|number} appealId
+ * @param {string} [backUrl]
  * @returns {string}
  */
-export function generateStartTimetableUrl(appealId) {
-	return `/appeals-service/appeal-details/${appealId}/start-case/add`;
+export function generateStartTimetableUrl(appealId, backUrl) {
+	return `/appeals-service/appeal-details/${appealId}/start-case/add${
+		backUrl ? `?backUrl=${backUrl}` : ''
+	}`;
 }

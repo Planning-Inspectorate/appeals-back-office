@@ -34,7 +34,8 @@ export const viewPersonalList = async (request, response) => {
 		assignedAppeals,
 		urlWithoutQuery,
 		appealStatusFilter,
-		request.session
+		request.session,
+		originalUrl
 	);
 
 	const pagination = mapPagination(

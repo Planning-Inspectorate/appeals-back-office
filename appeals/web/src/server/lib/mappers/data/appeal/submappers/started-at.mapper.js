@@ -14,7 +14,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		value: dateISOStringToDisplayDate(appealDetails.startedAt, 'Not started'),
 		link: appealDetails.startedAt
 			? `${currentRoute}/start-case/change`
-			: `${currentRoute}/start-case/add`,
+			: `${currentRoute}/start-case/add?backUrl=${currentRoute}`,
 		editable: Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-start-date',
 		actionText:
