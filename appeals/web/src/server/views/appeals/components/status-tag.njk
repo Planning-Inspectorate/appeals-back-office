@@ -36,5 +36,5 @@
 		{%- case 'awaiting_transfer' -%}
 			{%- set statusTagColor = 'red' -%}
 	{%- endswitch -%}
-	<strong class="govuk-tag govuk-tag--{{ statusTagColor }} {{ ' ' + classes if classes }}">{{ statusLabel | appealStatusToStatusTag }}</strong>
+	<strong class="govuk-tag govuk-tag--{{ statusTagColor }} {{classes if classes }}">{{ statusLabel | appealStatusToStatusTag }}</strong>
 {%- endmacro -%}
