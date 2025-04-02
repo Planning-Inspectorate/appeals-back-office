@@ -363,7 +363,7 @@ exports[`final-comments GET /review-comments with data should render review appe
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__value">No documents</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
@@ -425,7 +425,7 @@ exports[`final-comments GET /review-comments with redacted comment should render
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__value">No documents</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
