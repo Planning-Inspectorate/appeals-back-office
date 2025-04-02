@@ -12,5 +12,6 @@ export const mapLocalPlanningAuthority = ({
 		value: appealDetails.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
 		editable: userHasUpdateCasePermission,
+		actionText: 'Change',
 		classes: 'appeal-local-planning-authority'
 	});
