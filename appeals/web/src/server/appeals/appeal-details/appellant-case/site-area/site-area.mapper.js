@@ -16,10 +16,10 @@ export const changeSiteAreaPage = (appealData, appellantCaseData, storedSessionD
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change the site area',
+		title: 'What is the area of the appeal site?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change the site area',
+		heading: 'What is the area of the appeal site?',
 		pageComponents: [
 			{
 				type: 'input',

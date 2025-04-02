@@ -14,7 +14,7 @@ exports[`application-outcome GET /change should render the applicationOutcome ch
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change application decision outcome</h1>
+                                    <h1 class="govuk-fieldset__heading"> Was your application granted or refused?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -74,7 +74,7 @@ exports[`application-outcome POST /change should re-render applicationOutcome ch
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change application decision outcome</h1>
+                                    <h1 class="govuk-fieldset__heading"> Was your application granted or refused?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

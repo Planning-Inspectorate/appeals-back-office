@@ -15,14 +15,14 @@ export const changeApplicationOutcomePage = (appealData, appellantCaseData, stor
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change application decision outcome',
+		title: 'Was your application granted or refused?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			radiosInput({
 				name: 'applicationOutcome',
 				idPrefix: 'application-outcome',
-				legendText: 'Change application decision outcome',
+				legendText: 'Was your application granted or refused?',
 				legendIsPageHeading: true,
 				items: [
 					{

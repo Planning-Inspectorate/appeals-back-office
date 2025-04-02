@@ -9,7 +9,7 @@ export const mapStatusPlanningObligation = ({
 }) =>
 	textSummaryListItem({
 		id: 'planning-obligation-status',
-		text: 'Planning obligation status',
+		text: 'What is the status of your planning obligation?',
 		value: formatPlanningObligationStatus(appellantCaseData.planningObligation?.status),
 		link: `${currentRoute}/planning-obligation/status/change`,
 		editable: userHasUpdateCase

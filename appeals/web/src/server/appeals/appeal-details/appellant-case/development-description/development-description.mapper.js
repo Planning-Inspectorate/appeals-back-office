@@ -18,10 +18,10 @@ export const changeDevelopmentDescriptionPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change development description`,
+		title: `Enter the description of development that you submitted in your application`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Change development description`,
+		heading: `Enter the description of development that you submitted in your application`,
 		pageComponents: [
 			{
 				type: 'character-count',

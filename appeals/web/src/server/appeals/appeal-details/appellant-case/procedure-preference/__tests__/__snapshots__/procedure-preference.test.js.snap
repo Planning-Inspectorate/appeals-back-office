@@ -14,23 +14,23 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> How would you prefer us to decide your appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
-                                        type="radio" value="hearing">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
-                                        type="radio" value="inquiry">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Hearing</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
-                                        type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Inquiry</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -59,23 +59,23 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> How would you prefer us to decide your appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
-                                        type="radio" value="hearing" checked>
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
-                                        type="radio" value="inquiry">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                        type="radio" value="hearing" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Hearing</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
-                                        type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Inquiry</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -104,23 +104,23 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> How would you prefer us to decide your appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
-                                        type="radio" value="hearing">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
-                                        type="radio" value="inquiry" checked>
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Hearing</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
-                                        type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                        type="radio" value="inquiry" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Inquiry</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -149,23 +149,23 @@ exports[`procedure-preference GET /change should render the change procedure pre
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change procedure preference</h1>
+                                    <h1 class="govuk-fieldset__heading"> How would you prefer us to decide your appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio" name="procedurePreferenceRadio"
-                                        type="radio" value="hearing">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Hearing</label>
+                                        type="radio" value="written" checked>
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-2" name="procedurePreferenceRadio"
-                                        type="radio" value="inquiry">
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Inquiry</label>
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-2">Hearing</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="procedure-preference-radio-3" name="procedurePreferenceRadio"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Written</label>
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="procedure-preference-radio-3">Inquiry</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -192,7 +192,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Change reason for preference</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Why would you prefer this appeal procedure?</label></h1>
                             <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
                             name="procedurePreferenceDetailsTextarea" rows="5">Example procedure preference details text</textarea>
                         </div>
@@ -218,7 +218,7 @@ exports[`procedure-preference GET /details/change should render the change reaso
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Change reason for preference</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-details-textarea"> Why would you prefer this appeal procedure?</label></h1>
                             <textarea class="govuk-textarea" id="procedure-preference-details-textarea"
                             name="procedurePreferenceDetailsTextarea" rows="5"></textarea>
                         </div>
@@ -244,9 +244,9 @@ exports[`procedure-preference GET /duration/change should render the change expe
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -270,9 +270,9 @@ exports[`procedure-preference GET /inquiry/witnesses/change should render the ch
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -311,9 +311,9 @@ exports[`procedure-preference POST /details/change should re-render the change r
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -352,9 +352,9 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -393,9 +393,9 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -434,9 +434,9 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -475,9 +475,9 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> Change expected length of procedure</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="">
+                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -516,9 +516,9 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -557,9 +557,9 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -598,9 +598,9 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -639,9 +639,9 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> Change expected number of witnesses</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

@@ -12,7 +12,7 @@ export const mapCostsDocument = ({ appellantCaseData, appealDetails, userHasUpda
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'costs-appellant',
-		text: 'Costs application',
+		text: 'Application for an award of appeal costs',
 		folderInfo: appealDetails.costs.appellantApplicationFolder,
 		cypressDataName: 'costs-document'
 	});
