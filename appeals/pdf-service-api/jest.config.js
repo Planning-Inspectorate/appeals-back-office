@@ -13,5 +13,7 @@ module.exports = {
 			functions: 49,
 			lines: 95
 		}
-	}
+	},
+	workerThreads: true,
+	workerIdleMemoryLimit: '500MB'
 };
