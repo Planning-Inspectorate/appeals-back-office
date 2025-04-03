@@ -337,25 +337,6 @@ export const appealData = {
 	}
 };
 
-export const publishedAppealData = {
-	...appealData,
-	appealId: 2,
-	appellantCaseId: 2,
-	appealReference: 'APP/Q9999/D/21/SHAREDTEST',
-	appealStatus: 'statements',
-	documentationSummary: {
-		...appealData.documentationSummary,
-		ipComments: {
-			counts: {
-				published: 2,
-				awaiting_review: 0,
-				valid: 0,
-				invalid: 0
-			}
-		}
-	}
-};
-
 export const appealDataFullPlanning = {
 	...appealData,
 	appealType: 'Planning appeal'
@@ -3148,55 +3129,6 @@ export const interestedPartyCommentForReview = {
 			postCode: ''
 		}
 	}
-};
-
-export const interestedPartyCommentsPublished = {
-	itemCount: 2, // Example: 2 published comments
-	items: [
-		{
-			id: 5001,
-			origin: 'citizen',
-			author: 'Alice Wonderland',
-			status: 'published',
-			originalRepresentation: 'Comment 1',
-			redactedRepresentation: '',
-			created: '2025-04-01T09:15:00.000Z',
-			notes: 'Some internal notes if applicable',
-			attachments: [],
-			represented: {
-				id: 3838,
-				name: 'Lee Thornton',
-				email: 'test1@example.com',
-				address: {
-					addressLine1: '',
-					postCode: ''
-				}
-			}
-		},
-		{
-			id: 5002,
-			origin: 'organisation',
-			author: 'Cheshire Cat Council',
-			status: 'published',
-			originalRepresentation: 'Comment 2',
-			redactedRepresentation: null,
-			created: '2025-04-02T14:05:30.000Z',
-			notes: '',
-			attachments: [],
-			represented: {
-				id: 3838,
-				name: 'Lee Thornton',
-				email: 'test1@example.com',
-				address: {
-					addressLine1: '',
-					postCode: ''
-				}
-			}
-		}
-	],
-	page: 1,
-	pageCount: 1, // Assuming all items fit on one page for this mock
-	pageSize: 25 // Example page size (should match service default or query)
 };
 
 export const finalCommentsTypes = [
