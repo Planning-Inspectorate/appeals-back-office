@@ -176,7 +176,7 @@ describe('personal-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/28535" aria-label="Appeal 6 0 2 8 5 3 5">6028535</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Lead</strong>'
+				'href="/appeals-service/appeal-details/28535" aria-label="Appeal 6 0 2 8 5 3 5">6028535</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Lead</strong>'
 			);
 		});
 
@@ -194,7 +194,7 @@ describe('personal-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/28524" aria-label="Appeal 6 0 2 8 5 2 4">6028524</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>'
+				'href="/appeals-service/appeal-details/28524" aria-label="Appeal 6 0 2 8 5 2 4">6028524</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Child</strong>'
 			);
 		});
 
