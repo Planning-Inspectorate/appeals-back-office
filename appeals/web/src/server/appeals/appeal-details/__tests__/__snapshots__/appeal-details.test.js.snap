@@ -179,7 +179,7 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 2`] = `"<strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Transferred</strong>"`;
+exports[`appeal-details GET /:appealId Notification banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 2`] = `"<strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Transferred</strong>"`;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 3`] = `
 "<div class="govuk-inset-text govuk-!-margin-top-0">
@@ -631,9 +631,9 @@ exports[`appeal-details GET /:appealId should not render action links to the man
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -1049,13 +1049,13 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green single-line govuk-!-margin-bottom-4">Complete</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Complete</strong>
         </div>
     </div>
     <div class="govuk-inset-text">
         <p>Appeal completed: 25 December 2023</p>
         <p>Decision: Dismissed</p>
-        <p><span class="govuk-body">View decision letter</span><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+        <p><span class="govuk-body">View decision letter</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
         </p>
     </div>
     <div class="govuk-grid-row">
@@ -1449,9 +1449,9 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4">Child</strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Child</strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -1849,9 +1849,9 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4">Lead</strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Lead</strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -2681,7 +2681,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--yellow single-line govuk-!-margin-bottom-4">LPA questionnaire</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-4">LPA questionnaire</strong>
         </div>
     </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
@@ -3093,7 +3093,7 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
     </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
@@ -4290,9 +4290,9 @@ exports[`appeal-details GET /:appealId should render the case reference for each
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -4723,9 +4723,9 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -5128,9 +5128,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
@@ -5938,9 +5938,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-bottom-4">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
         </div>
-    </div><strong class="govuk-tag govuk-tag--grey single-line govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
+    </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
