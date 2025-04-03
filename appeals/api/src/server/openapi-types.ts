@@ -1033,6 +1033,16 @@ export interface SingleAppealResponse {
 			/** @example "internal/inspectorCorrespondence" */
 			path?: string;
 		};
+		mainParty?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2122 */
+			folderId?: number;
+			/** @example "internal/mainPartyCorrespondence" */
+			path?: string;
+		};
 	};
 	/** @example [] */
 	neighbouringSites?: any[];
@@ -1755,6 +1765,7 @@ export interface SingleLPAQuestionnaireResponse {
 		/** @example ["Documents or information are missing","Policies are missing","Other"] */
 		incompleteReasons?: string[];
 	};
+	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
 }
 

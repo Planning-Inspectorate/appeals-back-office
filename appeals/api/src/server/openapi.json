@@ -6935,6 +6935,28 @@
 										"example": "internal/inspectorCorrespondence"
 									}
 								}
+							},
+							"mainParty": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2122
+									},
+									"path": {
+										"type": "string",
+										"example": "internal/mainPartyCorrespondence"
+									}
+								}
 							}
 						}
 					},
