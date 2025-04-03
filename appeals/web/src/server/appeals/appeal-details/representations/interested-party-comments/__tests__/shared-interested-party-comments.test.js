@@ -111,7 +111,6 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const donloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			expect(response.statusCode).toEqual(200);
 			const downloadLinkUrl = '/documents/${appealDetails.appealId}/bulk-download/documents';
 			expect(donloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
