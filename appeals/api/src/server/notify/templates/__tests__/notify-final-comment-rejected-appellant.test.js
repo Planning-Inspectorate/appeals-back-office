@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('ip-comment-rejected-deadline-extended.md', () => {
+describe('final-comment-rejected-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'ip-comment-rejected-deadline-extended',
+			templateName: 'final-comment-rejected-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -20,7 +20,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 		};
 
 		const expectedContent = [
-			'We have rejected your comment.',
+			'We have rejected your final comments.',
 			'',
 			'# Appeal details',
 			'',
@@ -28,9 +28,9 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'## Why we rejected your comment',
+			'# Why we rejected your final comments',
 			'',
-			'We rejected your comment because:',
+			'We rejected your final comments because:',
 			'',
 			'- Reason one',
 			'- Reason two',
@@ -38,7 +38,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
+			'You can send different final comments to caseofficers@planninginspectorate.gov.uk. The case officer will decide whether to accept any new final comments.',
 			'',
 			'The Planning Inspectorate'
 		].join('\n');
@@ -52,7 +52,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have rejected your comment: ABC45678'
+				subject: 'We have rejected your final comments: ABC45678'
 			}
 		);
 	});

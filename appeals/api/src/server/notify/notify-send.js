@@ -4,10 +4,12 @@ import { fileURLToPath } from 'url';
 import config from '#config/config.js';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { emulateSendEmail } from '#notify/emulate-notify.js';
+import logger from '#utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -20,7 +22,7 @@ const __dirname = path.dirname(__filename); // get the name of the directory
  * @typedef {object} NotifySend
  * @property {string} templateName
  * @property {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @property {string} recipientEmail
+ * @property {string | null | undefined} recipientEmail
  * @property {Personalisation} personalisation
  */
 
@@ -37,7 +39,7 @@ const templateCache = {};
  */
 function getTemplate(templateName) {
 	if (!templateCache[templateName]) {
-		const templatePath = path.join(__dirname, './templates', `${templateName}.md`);
+		const templatePath = path.join(__dirname, 'templates', `${templateName}.md`);
 		try {
 			templateCache[templateName] = fs.readFileSync(templatePath, { encoding: 'utf8' }).trim();
 		} catch {
@@ -82,7 +84,7 @@ function populateTemplate(template, personalisation) {
  * @param {NotifySend} options
  * @returns {Promise<void>}
  */
-export default async function notifySend(options) {
+export const notifySend = async (options) => {
 	const { templateName, notifyClient, recipientEmail, personalisation } = options;
 	if (!templateName) {
 		throw new Error(
@@ -90,6 +92,9 @@ export default async function notifySend(options) {
 				'a missing template name'
 			])
 		);
+	}
+	if (!recipientEmail) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 	const genericTemplate = config.govNotify.template.generic;
 	const content = populateTemplate(getTemplate(`${templateName}.content`), personalisation);
@@ -101,6 +106,7 @@ export default async function notifySend(options) {
 			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
 		}
 	} catch (error) {
+		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 	}
-}
+};

@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('ip-comment-rejected-deadline-extended.md', () => {
+describe('lpaq-incomplete.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'ip-comment-rejected-deadline-extended',
+			templateName: 'lpaq-incomplete',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -14,31 +14,31 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				deadline_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				due_date: '22 June 2099',
+				reasons: [
+					'Documents or information are missing: Policy is missing',
+					'Other: Addresses are incorrect or missing'
+				]
 			}
 		};
 
 		const expectedContent = [
-			'We have rejected your comment.',
-			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'## Why we rejected your comment',
+			'# Your questionnaire is incomplete',
 			'',
-			'We rejected your comment because:',
+			'We need more information before we can review your questionnaire about this appeal.',
 			'',
-			'- Reason one',
-			'- Reason two',
-			'- Reason three',
+			'# What we need',
 			'',
-			'# What happens next',
+			'Send the following to caseofficers@planninginspectorate.gov.uk by 22 June 2099:',
 			'',
-			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
+			'- Documents or information are missing: Policy is missing',
+			'- Other: Addresses are incorrect or missing',
 			'',
 			'The Planning Inspectorate'
 		].join('\n');
@@ -52,7 +52,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have rejected your comment: ABC45678'
+				subject: 'Complete your appeal questionnaire: ABC45678'
 			}
 		);
 	});

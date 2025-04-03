@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('ip-comment-rejected-deadline-extended.md', () => {
+describe('received-statement-and-ip-comments-lpa.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'ip-comment-rejected-deadline-extended',
+			templateName: 'received-statement-and-ip-comments-lpa',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -14,13 +14,14 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				deadline_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				final_comments_deadline: '01 January 2021'
 			}
 		};
 
 		const expectedContent = [
-			'We have rejected your comment.',
+			'We’ve received comments from interested parties.',
+			'',
+			'You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address).',
 			'',
 			'# Appeal details',
 			'',
@@ -28,19 +29,12 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'## Why we rejected your comment',
-			'',
-			'We rejected your comment because:',
-			'',
-			'- Reason one',
-			'- Reason two',
-			'- Reason three',
-			'',
 			'# What happens next',
 			'',
-			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
+			'You need to [submit your final comments](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address) by 01 January 2021.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);
@@ -52,7 +46,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have rejected your comment: ABC45678'
+				subject: 'Submit your final comments: ABC45678'
 			}
 		);
 	});
