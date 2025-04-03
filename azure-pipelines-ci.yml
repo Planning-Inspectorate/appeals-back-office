@@ -30,7 +30,7 @@ extends:
       - name: Run Linting & Tests
         variables:
         - name: test-script
-          ${{ if startsWith(variables['Build.SourceBranchName'], 'gh-readonly-queue') }}:
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
             value: npm run test
           ${{ else }}:
             value: npm run test:cov
