@@ -484,7 +484,8 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 		}),
 		...(summaryListDateLabelOverride && {
 			summaryListDateLabelOverride
-		})
+		}),
+		folderPath: currentFolder.path
 	});
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', {

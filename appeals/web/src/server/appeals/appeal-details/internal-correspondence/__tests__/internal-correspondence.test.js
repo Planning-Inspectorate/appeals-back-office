@@ -14,12 +14,13 @@ import {
 	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoChecked,
 	documentFileVersionsInfoVirusFound,
-	documentFolderInfo
+	documentFolderInfo,
+	folderInfoMainPartyCorrespondence
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, capitalize } from 'lodash-es';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -29,9 +30,57 @@ describe('internal correspondence', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
-	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
+	/**
+	 * Helper method to get the folder based on the correspondence category.
+	 * @param {string} correspondenceCategory
+	 * @returns {Object} The folder object for the given correspondence category.
+	 */
+	const getFolder = (correspondenceCategory) => {
+		const internalCorrespondenceCategory = () => {
+			switch (correspondenceCategory) {
+				case 'cross-team':
+					return 'crossTeam';
+				case 'main-party':
+					return 'mainParty';
+				default:
+					return correspondenceCategory;
+			}
+		};
+		// @ts-ignore
+		return appealData.internalCorrespondence[internalCorrespondenceCategory()];
+	};
 
+	/**
+	 * Helper method to get the title based on the correspondence category.
+	 * @param {string} correspondenceCategory
+	 * @returns {string}
+	 */
+	const convertToTitle = (correspondenceCategory) => {
+		switch (correspondenceCategory) {
+			case 'cross-team':
+				return 'Cross-team';
+			case 'main-party':
+				return 'Main party';
+			default:
+				return 'Inspector';
+		}
+	};
+
+	/**
+	 * @param {string} correspondenceCategory
+	 * @returns {string}
+	 */
+	const convertToTitleForChangePage = (correspondenceCategory) => {
+		let nameText = (correspondenceCategory.split('/')?.[1] || '')
+			.replace(/(?<!^)([A-Z])/g, ' $1')
+			.toLowerCase();
+		nameText = nameText.trim();
+		return capitalize(nameText);
+	};
+
+	const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
+
+	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -41,17 +90,18 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render the upload documents page (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 				);
 				const element = parseHtml(response.text);
@@ -61,8 +111,11 @@ describe('internal correspondence', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					`Upload ${correspondenceCategory} correspondence</h1>`
+					`Upload ${
+						correspondenceCategory === 'main-party' ? 'main party' : correspondenceCategory
+					} correspondence</h1>`
 				);
+
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<div class="govuk-grid-row pins-file-upload"'
 				);
@@ -72,8 +125,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -88,21 +139,22 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if upload-info is not present in the request body (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({});
@@ -121,6 +173,7 @@ describe('internal correspondence', () => {
 			it(`should render a 500 error page if request body upload-info is in an incorrect format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -141,6 +194,7 @@ describe('internal correspondence', () => {
 			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -149,6 +203,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 			});
@@ -156,8 +211,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -167,6 +220,10 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
@@ -174,14 +231,11 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render the upload document version page (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 				);
 				const element = parseHtml(response.text);
@@ -195,8 +249,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -211,6 +263,10 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -218,15 +274,12 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if upload-info is not present in the request body (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({});
@@ -245,6 +298,7 @@ describe('internal correspondence', () => {
 			it(`should render a 500 error page if request body upload-info is in an incorrect format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -265,6 +319,7 @@ describe('internal correspondence', () => {
 			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -273,6 +328,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 			});
@@ -280,8 +336,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -292,20 +346,21 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 
@@ -323,6 +378,7 @@ describe('internal correspondence', () => {
 			it(`should render the document details page with one item per uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -331,10 +387,12 @@ describe('internal correspondence', () => {
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 
@@ -342,9 +400,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitle(correspondenceCategory)} correspondence</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -354,6 +410,7 @@ describe('internal correspondence', () => {
 			it(`should render a back link to the upload document page (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -362,10 +419,12 @@ describe('internal correspondence', () => {
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 				);
 				const element = parseHtml(response.text, {
@@ -374,6 +433,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(element.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}"`
 				);
 			});
@@ -381,7 +441,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/add-document-details/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -401,6 +460,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
 					documents: [
@@ -413,14 +476,11 @@ describe('internal correspondence', () => {
 				});
 
 			for (const correspondenceCategory of correspondenceCategories) {
-				const folder =
-					// @ts-ignore
-					appealData.internalCorrespondence[
-						`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-					];
+				const folder = getFolder(correspondenceCategory);
 
 				addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -434,17 +494,14 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should re-render the document details page with the expected error message if the request body is in an incorrect format (${correspondenceCategory})`, async () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 					)
 					.send({});
@@ -453,9 +510,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -478,6 +533,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 						)
 						.send({
@@ -498,9 +554,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -524,6 +578,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 						)
 						.send({
@@ -544,9 +599,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -569,6 +622,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 						)
 						.send({
@@ -589,9 +643,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -607,6 +659,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 					)
 					.send({
@@ -627,9 +680,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -644,6 +695,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}`
 					)
 					.send({
@@ -662,6 +714,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}`
 				);
 			});
@@ -669,8 +722,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -681,20 +732,21 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 
@@ -712,6 +764,7 @@ describe('internal correspondence', () => {
 			it(`should render the document details page with one item per uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -720,10 +773,12 @@ describe('internal correspondence', () => {
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 
@@ -731,9 +786,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitle(correspondenceCategory)} correspondence</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -743,6 +796,7 @@ describe('internal correspondence', () => {
 			it(`should render a back link to the upload document version page (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -751,10 +805,12 @@ describe('internal correspondence', () => {
 
 				expect(addDocumentsResponse.statusCode).toBe(302);
 				expect(addDocumentsResponse.text).toContain(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 				);
 				const element = parseHtml(response.text, {
@@ -763,6 +819,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(element.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1"`
 				);
 			});
@@ -770,7 +827,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/add-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -790,6 +846,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
 					documents: [
@@ -802,14 +862,10 @@ describe('internal correspondence', () => {
 				});
 
 			for (const correspondenceCategory of correspondenceCategories) {
-				const folder =
-					// @ts-ignore
-					appealData.internalCorrespondence[
-						`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-					];
-
+				const folder = getFolder(correspondenceCategory);
 				addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -823,17 +879,14 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should re-render the document details page with the expected error message if the request body is in an incorrect format (${correspondenceCategory})`, async () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 					)
 					.send({});
@@ -842,9 +895,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -867,6 +918,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -887,9 +939,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -913,6 +963,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -933,9 +984,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -958,6 +1007,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -978,9 +1028,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-						} correspondence</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -996,6 +1044,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 					)
 					.send({
@@ -1016,9 +1065,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -1033,6 +1080,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1`
 					)
 					.send({
@@ -1051,6 +1099,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}/1`
 				);
 			});
@@ -1058,8 +1107,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1073,20 +1120,21 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}`
 				);
 
@@ -1104,6 +1152,7 @@ describe('internal correspondence', () => {
 			it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -1113,6 +1162,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}`
 				);
 
@@ -1120,12 +1170,17 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					correspondenceCategory === 'main-party'
+						? 'Check details and add main party correspondence</h1>'
+						: 'Check your answers</h1>'
+				);
 				expect(unprettifiedElement.innerHTML).toContain('File</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
@@ -1133,18 +1188,21 @@ describe('internal correspondence', () => {
 					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
-				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					correspondenceCategory === 'main-party'
+						? 'Add main party correspondence</button>'
+						: 'Confirm</button>'
+				);
 			});
 		}
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -1157,6 +1215,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
@@ -1166,15 +1228,12 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}`
 					)
 					.send({});
@@ -1194,6 +1253,7 @@ describe('internal correspondence', () => {
 				const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents').reply(200);
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}`
 					)
 					.send({
@@ -1204,6 +1264,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}`
 					)
 					.send({});
@@ -1216,8 +1277,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1231,6 +1290,10 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -1238,14 +1301,11 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 500 error page if fileUploadInfo is not present in the session (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}/1`
 				);
 
@@ -1263,6 +1323,7 @@ describe('internal correspondence', () => {
 			it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -1272,6 +1333,7 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}/1`
 				);
 
@@ -1279,12 +1341,18 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					correspondenceCategory === 'main-party'
+						? 'Check details and add main party correspondence</h1>'
+						: 'Check your answers</h1>'
+				);
+
 				expect(unprettifiedElement.innerHTML).toContain('File</dt>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
@@ -1292,18 +1360,21 @@ describe('internal correspondence', () => {
 					`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/add-document-details/${folder.folderId}/1">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
 				expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
-				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					correspondenceCategory === 'main-party'
+						? 'Add main party correspondence</button>'
+						: 'Confirm</button>'
+				);
 			});
 		}
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -1316,6 +1387,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
@@ -1326,15 +1401,12 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}/1`
 					)
 					.send({});
@@ -1356,6 +1428,7 @@ describe('internal correspondence', () => {
 					.reply(200);
 				const addDocumentsResponse = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}/1`
 					)
 					.send({
@@ -1366,6 +1439,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/check-your-answers/${folder.folderId}/1`
 					)
 					.send({});
@@ -1378,8 +1452,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
@@ -1392,6 +1464,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
@@ -1401,11 +1477,7 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 404 error page if the folderId is not valid (${correspondenceCategory})`, async () => {
 				const response = await request.get(
@@ -1419,6 +1491,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage folder page with one document item for each document present in the folder if the folderId is valid (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}`
 				);
 				const element = parseHtml(response.text);
@@ -1429,17 +1502,13 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
-					} correspondence documents</h1>`
+					`${convertToTitle(correspondenceCategory)} correspondence documents</h1>`
 				);
 			});
 		}
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
@@ -1459,15 +1528,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render a 404 error page if the folderId is not valid (${correspondenceCategory})`, async () => {
 				nock('http://test/')
@@ -1492,6 +1561,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/99`
 				);
 				const element = parseHtml(response.text);
@@ -1509,6 +1579,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 				const element = parseHtml(response.text);
@@ -1533,6 +1604,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfoNotChecked);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 				const element = parseHtml(response.text);
@@ -1557,6 +1629,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfoVirusFound);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 
@@ -1590,6 +1663,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfoChecked);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 				const element = parseHtml(response.text);
@@ -1614,8 +1688,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -1626,6 +1698,10 @@ describe('internal correspondence', () => {
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
@@ -1633,14 +1709,11 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render the change document details page with one set of fields for the document being changed (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 				);
 
@@ -1652,9 +1725,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-					} correspondence documents</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('ph0-documentFileInfo.jpeg</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -1682,6 +1753,7 @@ describe('internal correspondence', () => {
 
 			it(`should render a back link to the manage individual document page (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 				);
 
@@ -1691,6 +1763,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(unprettifiedElement.innerHTML).toContain(
+					// @ts-ignore
 					`href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1"`
 				);
 			});
@@ -1698,8 +1771,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1712,6 +1783,10 @@ describe('internal correspondence', () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
@@ -1732,15 +1807,12 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should re-render the change document details page with the expected error message if the request body is in an incorrect format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 					)
 					.send({});
@@ -1749,9 +1821,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-					} correspondence documents</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -1772,6 +1842,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -1792,9 +1863,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-						} correspondence documents</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -1816,6 +1885,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -1836,9 +1906,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-						} correspondence documents</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -1859,6 +1927,7 @@ describe('internal correspondence', () => {
 				for (const testCase of testCases) {
 					const response = await request
 						.post(
+							// @ts-ignore
 							`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 						)
 						.send({
@@ -1879,9 +1948,7 @@ describe('internal correspondence', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
-						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-						} correspondence documents</h1>`
+						`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 					);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -1895,6 +1962,7 @@ describe('internal correspondence', () => {
 			it(`should re-render the change document details page with the expected error message if receivedDate is not a valid date (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 					)
 					.send({
@@ -1915,9 +1983,7 @@ describe('internal correspondence', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
-					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
-					} correspondence documents</h1>`
+					`${convertToTitleForChangePage(correspondenceCategory)} correspondence documents</h1>`
 				);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -1930,6 +1996,7 @@ describe('internal correspondence', () => {
 			it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if complete and valid document details were provided (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-details/${folder.folderId}/1`
 					)
 					.send({
@@ -1948,6 +2015,7 @@ describe('internal correspondence', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
+					// @ts-ignore
 					`Found. Redirecting to /appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 			});
@@ -1958,19 +2026,15 @@ describe('internal correspondence', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
-
-		const correspondenceCategories = ['cross-team', 'inspector'];
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render the change document name page for the document being changed (${correspondenceCategory})`, async () => {
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`
 				);
 
@@ -1993,22 +2057,18 @@ describe('internal correspondence', () => {
 			nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
 			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
-
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided (${correspondenceCategory})`, async () => {
+				// @ts-ignore
 				const fullUrl = `/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`;
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/change-document-name/${folder.folderId}/1`
 					)
 					.send({ fileName: 'new-name', documentId: '1' });
@@ -2022,8 +2082,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -2036,15 +2094,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should render the delete document page with the expected content when there is a single document version (${correspondenceCategory})`, async () => {
 				nock('http://test/')
@@ -2052,6 +2110,7 @@ describe('internal correspondence', () => {
 					.reply(200, documentFileVersionsInfoChecked);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1/1/delete`
 				);
 
@@ -2096,6 +2155,7 @@ describe('internal correspondence', () => {
 					.reply(200, multipleVersionsDocument);
 
 				const response = await request.get(
+					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1/1/delete`
 				);
 
@@ -2125,8 +2185,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
-		const correspondenceCategories = ['cross-team', 'inspector'];
-
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -2138,6 +2196,10 @@ describe('internal correspondence', () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/11')
 				.reply(200, folderInfoInspectorCorrespondence)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/document-folders/22')
+				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').delete('/appeals/1/documents/1/1').reply(200, {
@@ -2153,11 +2215,7 @@ describe('internal correspondence', () => {
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
-			const folder =
-				// @ts-ignore
-				appealData.internalCorrespondence[
-					`${correspondenceCategory === 'cross-team' ? 'crossTeam' : correspondenceCategory}`
-				];
+			const folder = getFolder(correspondenceCategory);
 
 			it(`should re-render the delete document page with the expected error message if answer was not provided (${correspondenceCategory})`, async () => {
 				nock('http://test/')
@@ -2166,6 +2224,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1/1/delete`
 					)
 					.send({});
@@ -2194,6 +2253,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1/1/delete`
 					)
 					.send({
@@ -2203,6 +2263,7 @@ describe('internal correspondence', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toContain('Found. Redirecting to ');
 				expect(response.text).toContain(
+					// @ts-ignore
 					`/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1`
 				);
 			});
@@ -2214,6 +2275,7 @@ describe('internal correspondence', () => {
 
 				const response = await request
 					.post(
+						// @ts-ignore
 						`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}/1/1/delete`
 					)
 					.send({

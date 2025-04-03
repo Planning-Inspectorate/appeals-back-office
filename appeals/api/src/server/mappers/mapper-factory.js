@@ -265,6 +265,11 @@ function createFoldersLayout(folders, context) {
 						(f) =>
 							f.path ===
 							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
+					),
+					mainParty: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE}`
 					)
 				}
 			};

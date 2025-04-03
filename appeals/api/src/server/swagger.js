@@ -308,6 +308,12 @@ export const spec = {
 					documents: [],
 					folderId: 2122,
 					path: 'internal/inspectorCorrespondence'
+				},
+				mainParty: {
+					caseId: '118',
+					documents: [],
+					folderId: 2123,
+					path: 'internal/mainPartyCorrespondence'
 				}
 			},
 			neighbouringSites: [],

@@ -660,6 +660,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
  * @param {string} [params.titleTextOverride]
  * @param {string} [params.summaryListNameLabelOverride]
  * @param {string} [params.summaryListDateLabelOverride]
+ * @param {string} [params.folderPath]
  * @returns {PageContent}
  */
 export function addDocumentsCheckAndConfirmPage({
@@ -674,14 +675,26 @@ export function addDocumentsCheckAndConfirmPage({
 	documentFileName,
 	titleTextOverride,
 	summaryListNameLabelOverride,
-	summaryListDateLabelOverride
+	summaryListDateLabelOverride,
+	folderPath
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleTextOverride || 'Check your answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check your answers',
+		heading:
+			folderPath === 'internal/mainPartyCorrespondence'
+				? 'Check details and add main party correspondence'
+				: 'Check your answers',
+		submitButtonProperties: {
+			text:
+				folderPath === 'internal/mainPartyCorrespondence'
+					? 'Add main party correspondence'
+					: 'Confirm',
+			type: 'submit',
+			preventDoubleClick: true
+		},
 		pageComponents: []
 	};
 
