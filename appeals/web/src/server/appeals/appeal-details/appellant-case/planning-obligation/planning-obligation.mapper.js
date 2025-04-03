@@ -24,7 +24,7 @@ export const changePlanningObligationStatusPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change planning obligation status',
+		title: 'What is the status of your planning obligation?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -35,7 +35,7 @@ export const changePlanningObligationStatusPage = (
 					idPrefix: 'planning-obligation-status-radio',
 					fieldset: {
 						legend: {
-							text: 'Change planning obligation status',
+							text: 'What is the status of your planning obligation?',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
@@ -43,7 +43,7 @@ export const changePlanningObligationStatusPage = (
 					items: [
 						{
 							value: 'not_started',
-							text: 'Not yet started',
+							text: 'Not started yet',
 							checked: planningObligationStatus === 'not_started'
 						},
 						{

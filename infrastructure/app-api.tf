@@ -59,6 +59,7 @@ module "app_api" {
     ENABLE_TEST_ENDPOINTS = var.apps_config.integrations.enable_test_endpoints
 
     # notify templates
+    GOV_NOTIFY_APPEAL_GENERIC_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_generic_id
     GOV_NOTIFY_APPEAL_CONFIRMED_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_confirmed_id
     GOV_NOTIFY_APPEAL_INCOMPLETE_ID                                            = var.apps_config.integrations.notify_template_ids.appeal_incomplete_id
     GOV_NOTIFY_APPEAL_INVALID_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_invalid_id

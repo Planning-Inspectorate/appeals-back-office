@@ -15,7 +15,7 @@ const mapOwnersKnownLabelText = (knowsOtherLandowners) => {
 			return 'Some';
 		case null:
 		default:
-			return 'Not applicable';
+			return 'No data';
 	}
 };
 
@@ -23,7 +23,7 @@ const mapOwnersKnownLabelText = (knowsOtherLandowners) => {
 export const mapOwnersKnown = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'owners-known',
-		text: 'Owners known',
+		text: 'Does the appellant know who owns the land involved in the appeal?',
 		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
 		link: `${currentRoute}/owners-known/change`,
 		editable: userHasUpdateCase

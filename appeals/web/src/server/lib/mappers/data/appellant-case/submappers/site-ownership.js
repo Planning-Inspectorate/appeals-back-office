@@ -19,7 +19,7 @@ const siteOwnershipText = (ownsAllLand, ownsSomeLand) => {
 export const mapSiteOwnership = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'site-ownership',
-		text: 'Site ownership',
+		text: 'Does the appellant own all of the land involved in the appeal?',
 		value: siteOwnershipText(
 			appellantCaseData.siteOwnership.ownsAllLand,
 			appellantCaseData.siteOwnership.ownsSomeLand

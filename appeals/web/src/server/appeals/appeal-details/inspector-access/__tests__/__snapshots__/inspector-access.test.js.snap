@@ -14,7 +14,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Might the inspector need access to the appellant’s land or property?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Will an inspector need to access your land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -25,7 +25,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                                     id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="inspector-access-details">Enter the reason</label>
+                                            <label class="govuk-label" for="inspector-access-details">Enter reason</label>
                                             <textarea class="govuk-textarea" id="inspector-access-details"
                                             name="inspectorAccessDetails" rows="3"></textarea>
                                         </div>
@@ -62,7 +62,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Might the inspector need access to the appellant’s land or property?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Will an inspector need to access your land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -73,7 +73,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
                                     id="conditional-inspector-access-radio">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="inspector-access-details">Enter the reason</label>
+                                            <label class="govuk-label" for="inspector-access-details">Enter reason</label>
                                             <textarea class="govuk-textarea" id="inspector-access-details"
                                             name="inspectorAccessDetails" rows="3"></textarea>
                                         </div>

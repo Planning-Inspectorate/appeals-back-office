@@ -8,9 +8,9 @@ export const mapTenantOfAgriculturalHolding = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'tenant-of-agricultural-holding',
-		text: 'Tenant of agricultural holding',
+		text: 'Are you a tenant of the agricultural holding?',
 		value: appellantCaseData.agriculturalHolding?.isTenant,
-		defaultText: '',
+		defaultText: 'No data',
 		link: `${currentRoute}/agricultural-holding/tenant/change`,
 		editable: userHasUpdateCase
 	});

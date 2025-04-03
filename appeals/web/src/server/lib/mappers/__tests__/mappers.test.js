@@ -143,7 +143,6 @@ describe('pagination mapper', () => {
 
 describe('mapRepresentationDocumentSummaryActionLink', () => {
 	const baseRoute = '/appeals-service/appeal-details/4419';
-
 	describe('LPA Statement links', () => {
 		it('should return "Review" link for LPA statement when awaiting review', () => {
 			const link = mapRepresentationDocumentSummaryActionLink(
@@ -202,6 +201,67 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 			);
 			expect(link).toBe('');
 		});
+	});
+});
+
+describe('Final comments links', () => {
+	const baseRoute = '/appeals-service/appeal-details/4419';
+	it('should return "Review" link for appellant statement when awaiting review', () => {
+		const link = mapRepresentationDocumentSummaryActionLink(
+			baseRoute,
+			'received',
+			APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+			'appellant-final-comments'
+		);
+		expect(link).toBe(
+			`<a href="${baseRoute}/final-comments/appellant" data-cy="review-appellant-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+		);
+	});
+
+	it('should return "Review" link for LPA statement when awaiting review', () => {
+		const link = mapRepresentationDocumentSummaryActionLink(
+			baseRoute,
+			'received',
+			APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+			'lpa-final-comments'
+		);
+		expect(link).toBe(
+			`<a href="${baseRoute}/final-comments/lpa" data-cy="review-lpa-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA final comments</span></a>`
+		);
+	});
+
+	it('should return "View" link for appellant final comments when valid', () => {
+		const link = mapRepresentationDocumentSummaryActionLink(
+			baseRoute,
+			'received',
+			APPEAL_REPRESENTATION_STATUS.VALID,
+			'appellant-final-comments'
+		);
+		expect(link).toBe(
+			`<a href="${baseRoute}/final-comments/appellant" data-cy="view-appellant-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+		);
+	});
+
+	it('should return "View" link for LPA final comments when published', () => {
+		const link = mapRepresentationDocumentSummaryActionLink(
+			baseRoute,
+			'received',
+			APPEAL_REPRESENTATION_STATUS.PUBLISHED,
+			'lpa-final-comments'
+		);
+		expect(link).toBe(
+			`<a href="${baseRoute}/final-comments/lpa" data-cy="view-lpa-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> LPA final comments</span></a>`
+		);
+	});
+
+	it('should return an empty string when (any) final comment is not received', () => {
+		const link = mapRepresentationDocumentSummaryActionLink(
+			baseRoute,
+			'not_received',
+			null,
+			'appellant-final-comments'
+		);
+		expect(link).toBe('');
 	});
 });
 

@@ -25,6 +25,7 @@ apps_config = {
     service_bus_broadcast_enabled = true
     enable_test_endpoints         = true
     notify_template_ids = {
+      appeal_generic_id                                               = "3fd5fc42-d77f-42c2-984a-cf9b89e4c415"
       appeal_confirmed_id                                             = "783f94cc-1d6d-4153-8ad7-9070e449a57c"
       appeal_incomplete_id                                            = "f9cbd646-be00-45e2-96fc-f47e585e5b5e"
       appeal_invalid_id                                               = "59c8337a-e854-4fc4-8c83-aa958b91bd99"

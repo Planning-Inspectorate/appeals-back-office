@@ -1592,7 +1592,7 @@ describe('appeal-details', () => {
 				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Related appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
@@ -2339,7 +2339,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
 						viewCyAttribute: 'view-lpa-final-comments',
-						actionLinkHiddenText: 'L P A final comments'
+						actionLinkHiddenText: 'LPA final comments'
 					}
 				];
 

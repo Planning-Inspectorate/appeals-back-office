@@ -12,6 +12,7 @@ export default joi
 		BO_BLOB_CONTAINER: joi.string(),
 		blobEmulatorSasUrl: joi.string().optional(),
 		useBlobEmulator: joi.boolean(),
+		useNotifyEmulator: joi.boolean(),
 		defaultApiVersion: joi.string(),
 		serviceBusOptions: joi.object({
 			hostname: joi.string().optional()
@@ -35,6 +36,9 @@ export default joi
 				}),
 				template: joi
 					.object({
+						generic: joi.object({
+							id: joi.string().required()
+						}),
 						appealConfirmed: joi.object({
 							id: joi.string().required()
 						}),

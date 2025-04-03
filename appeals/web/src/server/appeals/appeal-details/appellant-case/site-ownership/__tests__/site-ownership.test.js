@@ -22,7 +22,9 @@ describe('site-ownership', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the site ownership</h1>');
+			expect(elementInnerHtml).toContain(
+				'Does the appellant own all of the land involved in the appeal?</h1>'
+			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 

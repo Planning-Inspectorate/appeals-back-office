@@ -12,6 +12,6 @@ export const mapOwnershipCertificate = ({ appellantCaseData, userHasUpdateCase }
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'ownership-certificate',
-		text: 'Ownership certificate and/or land declaration',
+		text: 'Separate ownership certificate and agricultural land declaration',
 		folderInfo: appellantCaseData.documents.ownershipCertificate
 	});

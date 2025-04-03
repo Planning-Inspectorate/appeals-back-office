@@ -249,12 +249,12 @@ describe('other-appeals', () => {
 	});
 
 	describe('GET /other-appeals/manage', () => {
-		it('should render the "Manage related appeals" page', async () => {
+		it('should render the "Manage linked appeals" page', async () => {
 			const response = await request.get(`${baseUrl}/1/other-appeals/manage`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage related appeals</h1>');
+			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
 			expect(element.innerHTML).toContain('Related appeals</h2>');
 			expect(element.innerHTML).toContain('Appeal Reference</th>');
 			expect(element.innerHTML).toContain('Appeal type</th>');
@@ -303,7 +303,7 @@ describe('other-appeals', () => {
 			);
 		});
 
-		it('should redirect back to "Manage related appeals" page if the answer was provided (answer no)', async () => {
+		it('should redirect back to "Manage linked appeals" page if the answer was provided (answer no)', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/remove/2/1`)
 				.send({ removeAppealRelationship: 'no' });
@@ -311,7 +311,7 @@ describe('other-appeals', () => {
 			expect(response.statusCode).toBe(302);
 		});
 
-		it('should redirect back to "Manage related appeals" page if the answer was provided (answer yes)', async () => {
+		it('should redirect back to "Manage linked appeals" page if the answer was provided (answer yes)', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealDataWithOtherAppeals).persist();
 			nock('http://test/').delete('/appeals/1/unlink-appeal').reply(200, { success: true });
 
