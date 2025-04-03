@@ -1521,7 +1521,7 @@ describe('internal correspondence', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1545,7 +1545,7 @@ describe('internal correspondence', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1570,7 +1570,7 @@ describe('internal correspondence', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -1602,10 +1602,10 @@ describe('internal correspondence', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
