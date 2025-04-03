@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Interested Party Comments (Shared/Published View) GET /interested-party-comments when item count is 0 should render the shared interested party comments page with status 200 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
+            <h1 class="govuk-heading-l">Interested party comments</h1>
+        </div>
+    </div>
+    <p class="govuk-body"><a href="/documents/\${appealDetails.appealId}/bulk-download/documents"
+        class="govuk-link">Download all documents</a>
+    </p>
+    <h2>Shared IP comments</h2>
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body"></tbody>
+    </table>
+</main>"
+`;
+
 exports[`Interested Party Comments (Shared/Published View) GET /interested-party-comments with data should render the shared interested party comments page with status 200 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -35,30 +59,6 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
                 <td class="govuk-table__cell"></td>
             </tr>
         </tbody>
-    </table>
-</main>"
-`;
-
-exports[`Interested Party Comments (Shared/Published View) GET /interested-party-comments without data should render the shared interested party comments page with status 200 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
-        </div>
-    </div>
-    <p class="govuk-body"><a href="/documents/\${appealDetails.appealId}/bulk-download/documents"
-        class="govuk-link">Download all documents</a>
-    </p>
-    <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body"></tbody>
     </table>
 </main>"
 `;
