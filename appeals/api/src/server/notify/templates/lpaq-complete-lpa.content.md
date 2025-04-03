@@ -1,15 +1,12 @@
-We have rejected your comment.
-
 # Appeal details
 
 ^Appeal reference number: ((appeal_reference_number))
 Address: ((site_address))
 Planning application reference: ((lpa_reference))
 
-## Why we rejected your comment
+We have reviewed your questionnaire.
 
-We rejected your comment because:
-
-((reasons))
+You have submitted all the information we need.
 
 The Planning Inspectorate
+caseofficers@planninginspectorate.gov.uk

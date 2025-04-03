@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('ip-comment-rejected-deadline-extended.md', () => {
+describe('lpaq-complete-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'ip-comment-rejected-deadline-extended',
+			templateName: 'lpaq-complete-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -13,14 +13,14 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			personalisation: {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
-				lpa_reference: '12345XYZ',
-				deadline_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				lpa_reference: '12345XYZ'
 			}
 		};
 
 		const expectedContent = [
-			'We have rejected your comment.',
+			'We have received the local planning authority’s questionnaire.',
+			'',
+			'You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/).',
 			'',
 			'# Appeal details',
 			'',
@@ -28,19 +28,12 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'## Why we rejected your comment',
-			'',
-			'We rejected your comment because:',
-			'',
-			'- Reason one',
-			'- Reason two',
-			'- Reason three',
-			'',
 			'# What happens next',
 			'',
-			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
+			'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);
@@ -52,7 +45,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have rejected your comment: ABC45678'
+				subject: "View the local planning authority's questionnaire: ABC45678"
 			}
 		);
 	});
