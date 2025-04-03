@@ -241,6 +241,12 @@ export const appealData = {
 			folderId: 11,
 			path: 'internal/inspector',
 			documents: []
+		},
+		mainParty: {
+			caseId: '1',
+			folderId: 22,
+			path: 'internal/mainParty',
+			documents: []
 		}
 	},
 	healthAndSafety: {
@@ -2829,6 +2835,12 @@ export const folderInfoInspectorCorrespondence = {
 	...costsFolderInfoAppellantApplication,
 	folderId: 11,
 	path: 'internal/inspectorCorrespondence'
+};
+
+export const folderInfoMainPartyCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 22,
+	path: 'internal/mainPartyCorrespondence'
 };
 
 export const appealCostsDocumentItem = {

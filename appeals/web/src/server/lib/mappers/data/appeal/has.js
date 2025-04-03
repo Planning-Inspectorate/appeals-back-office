@@ -34,6 +34,7 @@ import { mapLpaContactDetails } from './submappers/lpa-contact-details.mapper.js
 import { mapLpaQuestionnaireDueDate } from './submappers/lpa-questionnaire-due-date.mapper.js';
 import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
+import { mapMainPartyCorrespondence } from './submappers/main-party-correspondence.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
@@ -100,5 +101,6 @@ export const submaps = {
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
 	appellantHealthAndSafety: mapAppellantHealthAndSafety,
-	lpaNeighbouringSites: mapLpaNeighbouringSites
+	lpaNeighbouringSites: mapLpaNeighbouringSites,
+	mainPartyCorrespondence: mapMainPartyCorrespondence
 };

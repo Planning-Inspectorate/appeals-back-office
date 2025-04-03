@@ -21,7 +21,8 @@ import {
 	activeDirectoryUsersData,
 	finalCommentsForReview,
 	appellantFinalCommentsAwaitingReview,
-	lpaFinalCommentsAwaitingReview
+	lpaFinalCommentsAwaitingReview,
+	folderInfoMainPartyCorrespondence
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
@@ -928,6 +929,45 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('Inspector correspondence added</p>');
+			});
+
+			it('should render a success notification banner when a main party correspondence document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/4')
+					.reply(200, folderInfoMainPartyCorrespondence)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/main-party/upload-documents/4`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/main-party/check-your-answers/4`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Main party correspondence added</p>');
 			});
 
 			it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {
