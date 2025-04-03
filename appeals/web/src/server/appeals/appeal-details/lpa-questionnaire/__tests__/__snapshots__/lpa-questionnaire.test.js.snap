@@ -785,7 +785,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -917,7 +917,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -979,7 +979,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1023,7 +1023,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
