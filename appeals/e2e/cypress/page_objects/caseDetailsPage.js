@@ -26,8 +26,10 @@ export class CaseDetailsPage extends Page {
 		addRelatedAppeals: 'add-related-appeals',
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
+		addMainPartyCorrespondence: 'add-main-party-correspondence',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
 		manageInspectorCorrespondence: 'manage-inspector-correspondence',
+		manageMainPartyCorrespondence: 'manage-main-party-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -557,8 +559,7 @@ export class CaseDetailsPage extends Page {
 			this.selectRadioButtonByValue('A');
 			this.clickButtonByText('Continue');
 			this.selectCheckbox();
-		}
-		else {
+		} else {
 			this.selectRadioButtonByValue('No');
 		}
 		this.clickButtonByText('Continue');
