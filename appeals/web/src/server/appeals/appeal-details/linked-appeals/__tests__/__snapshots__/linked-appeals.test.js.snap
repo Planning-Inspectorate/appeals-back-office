@@ -194,7 +194,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <h1 class="govuk-heading-l">Manage linked appeals</h1>
         </div>
     </div>
-    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
+    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey">Child</strong>
     </div>
     <h2 class="govuk-!-margin-top-6">Lead appeal of 351062</h2>
     <table class="govuk-table">
@@ -245,7 +245,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <h1 class="govuk-heading-l">Manage linked appeals</h1>
         </div>
     </div>
-    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey single-line">Lead</strong>
+    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey">Lead</strong>
     </div>
     <h2 class="govuk-!-margin-top-6">Child appeals of 351062</h2>
     <table class="govuk-table">
