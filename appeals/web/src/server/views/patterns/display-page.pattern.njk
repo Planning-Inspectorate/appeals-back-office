@@ -60,12 +60,16 @@
 					{{ govukButton({
 						text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue"
 					}) }}
-					{%- if pageContent.postPageComponents -%}
-						{%- for component in pageContent.postPageComponents -%}
-							{%- include "../appeals/components/page-component.njk" -%}
-						{%- endfor -%}
-					{%- endif -%}
 				</form>
+			</div>
+		</div>
+	{%- endif -%}
+	{%- if pageContent.postPageComponents -%}
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				{%- for component in pageContent.postPageComponents -%}
+					{%- include "../appeals/components/page-component.njk" -%}
+				{%- endfor -%}
 			</div>
 		</div>
 	{%- endif -%}

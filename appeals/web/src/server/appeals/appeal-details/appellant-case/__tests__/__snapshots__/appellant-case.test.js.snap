@@ -4110,9 +4110,13 @@ exports[`appellant-case GET /appellant-case/valid/date should render the valid d
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7131,9 +7135,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7200,9 +7208,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7269,9 +7281,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7336,9 +7352,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7405,9 +7425,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7474,9 +7498,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7543,9 +7571,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7612,9 +7644,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7681,9 +7717,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7748,9 +7788,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7815,9 +7859,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
@@ -7882,9 +7930,13 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
-                            valid.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
                                 <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
