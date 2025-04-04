@@ -56,6 +56,7 @@ export function mapLpasToSelectItemParameters(lpaList, currentLpa) {
 		.map((lpa) => ({
 			value: lpa.id.toString(),
 			text: lpa.name,
+			//todo a2-2605 confirm if existing LPA should be checked by default
 			checked: lpa.lpaCode == currentLpa.lpaCode
 		}));
 }

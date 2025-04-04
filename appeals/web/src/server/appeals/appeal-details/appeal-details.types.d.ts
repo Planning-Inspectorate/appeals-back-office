@@ -419,3 +419,7 @@ export type Lpa = {
 	lpaCode: string;
 	email: string | null;
 };
+
+export type LpaChangeRequest = {
+	newLpaId: number;
+};
