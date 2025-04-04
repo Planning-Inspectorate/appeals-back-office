@@ -5829,6 +5829,7 @@
 												"lpaProofOfEvidence",
 												"lpaStatement",
 												"lpaWitnessesEvidence",
+												"mainPartyCorrespondence",
 												"newPlansDrawings",
 												"originalApplicationForm",
 												"otherNewDocuments",
@@ -5988,6 +5989,7 @@
 													"lpaProofOfEvidence",
 													"lpaStatement",
 													"lpaWitnessesEvidence",
+													"mainPartyCorrespondence",
 													"newPlansDrawings",
 													"originalApplicationForm",
 													"otherNewDocuments",
@@ -10467,6 +10469,7 @@
 												"lpaProofOfEvidence",
 												"lpaStatement",
 												"lpaWitnessesEvidence",
+												"mainPartyCorrespondence",
 												"newPlansDrawings",
 												"originalApplicationForm",
 												"otherNewDocuments",
@@ -10626,6 +10629,7 @@
 													"lpaProofOfEvidence",
 													"lpaStatement",
 													"lpaWitnessesEvidence",
+													"mainPartyCorrespondence",
 													"newPlansDrawings",
 													"originalApplicationForm",
 													"otherNewDocuments",
@@ -10851,6 +10855,7 @@
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -11010,6 +11015,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -11241,6 +11247,7 @@
 									"lpaProofOfEvidence",
 									"lpaStatement",
 									"lpaWitnessesEvidence",
+									"mainPartyCorrespondence",
 									"newPlansDrawings",
 									"originalApplicationForm",
 									"otherNewDocuments",
@@ -11394,6 +11401,7 @@
 										"lpaProofOfEvidence",
 										"lpaStatement",
 										"lpaWitnessesEvidence",
+										"mainPartyCorrespondence",
 										"newPlansDrawings",
 										"originalApplicationForm",
 										"otherNewDocuments",
@@ -11548,6 +11556,7 @@
 							"lpaProofOfEvidence",
 							"lpaStatement",
 							"lpaWitnessesEvidence",
+							"mainPartyCorrespondence",
 							"newPlansDrawings",
 							"originalApplicationForm",
 							"otherNewDocuments",
@@ -12200,6 +12209,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -12359,6 +12369,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -12559,6 +12570,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -12718,6 +12730,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -12918,6 +12931,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13077,6 +13091,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13277,6 +13292,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13436,6 +13452,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13636,6 +13653,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13795,6 +13813,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13995,6 +14014,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14154,6 +14174,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -14354,6 +14375,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14513,6 +14535,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -14713,6 +14736,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14872,6 +14896,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15072,6 +15097,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15231,6 +15257,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15431,6 +15458,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15590,6 +15618,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15790,6 +15819,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15949,6 +15979,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -16149,6 +16180,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -16308,6 +16340,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -16870,6 +16903,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -17029,6 +17063,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17229,6 +17264,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -17388,6 +17424,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17588,6 +17625,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -17747,6 +17785,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17947,6 +17986,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18106,6 +18146,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -18306,6 +18347,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18465,6 +18507,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -18665,6 +18708,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18824,6 +18868,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -19024,6 +19069,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19183,6 +19229,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -19383,6 +19430,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19542,6 +19590,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -19742,6 +19791,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19901,6 +19951,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20101,6 +20152,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20260,6 +20312,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20460,6 +20513,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20619,6 +20673,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20819,6 +20874,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20978,6 +21034,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21178,6 +21235,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -21337,6 +21395,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21537,6 +21596,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -21696,6 +21756,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21896,6 +21957,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -22055,6 +22117,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22255,6 +22318,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -22414,6 +22478,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22614,6 +22679,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -22773,6 +22839,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22973,6 +23040,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23132,6 +23200,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -23332,6 +23401,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23491,6 +23561,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -23691,6 +23762,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23850,6 +23922,7 @@
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -24558,6 +24631,7 @@
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -24717,6 +24791,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -24939,6 +25014,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25098,6 +25174,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -25297,6 +25374,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25456,6 +25534,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -25655,6 +25734,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25814,6 +25894,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -26013,6 +26094,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26172,6 +26254,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -26371,6 +26454,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26530,6 +26614,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -26729,6 +26814,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26888,6 +26974,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27087,6 +27174,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27246,6 +27334,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27447,6 +27536,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27606,6 +27696,7 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27805,6 +27896,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27964,6 +28056,367 @@
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planningObligation",
+																"planningOfficerReport",
+																"plansDrawings",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											}
+										}
+									}
+								}
+							}
+						},
+						"mainParty": {
+							"type": "object",
+							"properties": {
+								"caseId": {
+									"type": "number"
+								},
+								"folderId": {
+									"type": "number"
+								},
+								"path": {
+									"type": "string"
+								},
+								"documents": {
+									"nullable": true,
+									"type": "array",
+									"items": {
+										"type": "object",
+										"required": ["id", "name"],
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"caseId": {
+												"type": "number"
+											},
+											"folderId": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"latestDocumentVersion": {
+												"type": "object",
+												"required": [
+													"id",
+													"version",
+													"virusCheckStatus",
+													"redactionStatus",
+													"documentURI"
+												],
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"version": {
+														"type": "number"
+													},
+													"fileName": {
+														"type": "string"
+													},
+													"originalFileName": {
+														"type": "string"
+													},
+													"size": {
+														"type": "number"
+													},
+													"mime": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"dateReceived": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"redactionStatus": {
+														"type": "string",
+														"enum": ["no_redaction_required", "not_redacted", "redacted"]
+													},
+													"virusCheckStatus": {
+														"type": "string",
+														"enum": ["affected", "not_scanned", "scanned"]
+													},
+													"documentType": {
+														"type": "string",
+														"enum": [
+															"appealNotification",
+															"appellantCaseCorrespondence",
+															"appellantCaseWithdrawalLetter",
+															"appellantCostsApplication",
+															"appellantCostsCorrespondence",
+															"appellantCostsWithdrawal",
+															"appellantFinalComment",
+															"appellantProofOfEvidence",
+															"appellantStatement",
+															"appellantWitnessesEvidence",
+															"applicationDecisionLetter",
+															"caseDecisionLetter",
+															"changedDescription",
+															"communityInfrastructureLevy",
+															"conservationMap",
+															"consultationResponses",
+															"costsDecisionLetter",
+															"crossTeamCorrespondence",
+															"definitiveMapStatement",
+															"designAccessStatement",
+															"developmentPlanPolicies",
+															"eiaEnvironmentalStatement",
+															"eiaScreeningDirection",
+															"eiaScreeningOpinion",
+															"emergingPlan",
+															"environmentalAssessment",
+															"inspectorCorrespondence",
+															"interestedPartyComment",
+															"lpaCaseCorrespondence",
+															"lpaCostsApplication",
+															"lpaCostsCorrespondence",
+															"lpaCostsWithdrawal",
+															"lpaFinalComment",
+															"lpaProofOfEvidence",
+															"lpaStatement",
+															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
+															"newPlansDrawings",
+															"originalApplicationForm",
+															"otherNewDocuments",
+															"otherPartyRepresentations",
+															"otherRelevantPolicies",
+															"ownershipCertificate",
+															"planningObligation",
+															"planningOfficerReport",
+															"plansDrawings",
+															"rule6ProofOfEvidence",
+															"rule6Statement",
+															"rule6WitnessesEvidence",
+															"statementCommonGround",
+															"supplementaryPlanning",
+															"treePreservationPlan",
+															"uncategorised",
+															"whoNotified",
+															"whoNotifiedLetterToNeighbours",
+															"whoNotifiedPressAdvert",
+															"whoNotifiedSiteNotice"
+														]
+													},
+													"stage": {
+														"type": "string",
+														"enum": [
+															"appeal-decision",
+															"appellant-case",
+															"costs",
+															"evidence",
+															"final-comments",
+															"internal",
+															"lpa-questionnaire",
+															"statements",
+															"third-party-comments",
+															"witnesses"
+														]
+													},
+													"documentURI": {
+														"type": "string"
+													},
+													"isLateEntry": {
+														"type": "boolean"
+													},
+													"isDeleted": {
+														"type": "boolean"
+													},
+													"versionAudit": {
+														"nullable": true,
+														"type": "array",
+														"items": {
+															"type": "object",
+															"required": ["loggedAt", "user", "action", "details"],
+															"properties": {
+																"loggedAt": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"user": {
+																	"type": "string",
+																	"format": "uuid"
+																},
+																"action": {
+																	"type": "string"
+																},
+																"details": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											},
+											"allVersions": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationMap",
+																"consultationResponses",
+																"costsDecisionLetter",
+																"crossTeamCorrespondence",
+																"definitiveMapStatement",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"environmentalAssessment",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsWithdrawal",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -28164,6 +28617,7 @@
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -28323,6 +28777,7 @@
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
