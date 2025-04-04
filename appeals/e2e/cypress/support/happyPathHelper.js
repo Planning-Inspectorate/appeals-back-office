@@ -64,6 +64,15 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
+	startS78Case(caseRef, procedureType) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+	},
+
 	changeStartDate(caseRef) {
 		caseDetailsPage.clickChangeStartDate();
 		caseDetailsPage.clickButtonByText('Confirm');
