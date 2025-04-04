@@ -2209,7 +2209,7 @@ export interface RepRejectionReasonsUpdateRequest {
 }
 
 export interface LPA {
-	/** @example 41 */
+	/** @example 1 */
 	id?: number;
 	/** @example "Bristol City Council" */
 	name?: string;
@@ -2220,7 +2220,7 @@ export interface LPA {
 }
 
 export type LPAs = {
-	/** @example 41 */
+	/** @example 1 */
 	id?: number;
 	/** @example "Bristol City Council" */
 	name?: string;
@@ -2229,6 +2229,11 @@ export type LPAs = {
 	/** @example "bris@lpa-email.gov.uk" */
 	email?: string;
 }[];
+
+export interface LPAChangeRequest {
+	/** @example 2 */
+	newLpaId?: number;
+}
 
 export interface SingleLinkableAppealSummaryResponse {
 	/**
