@@ -77,7 +77,11 @@ function populateTemplate(template, personalisation) {
 		const message = 'missing personalisation parameters: ' + content.match(/\((\w+)\)/g);
 		throw new Error(stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [message]));
 	}
-	return content;
+	// Make sure all white space at the end of each line is removed for the sake of Windows machines
+	return content
+		.split('\n')
+		.map((line) => line.trim())
+		.join('\n');
 }
 
 /**
