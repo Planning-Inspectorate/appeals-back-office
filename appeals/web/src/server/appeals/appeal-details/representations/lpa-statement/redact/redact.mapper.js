@@ -3,6 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
+import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -44,7 +45,8 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 					representation: lpaStatement,
 					labelText: 'Redacted statement',
 					session,
-					redactedRepresentation: session?.redactLPAStatement?.redactedRepresentation
+					redactedRepresentation: session?.redactLPAStatement?.redactedRepresentation,
+					buttonText: REVERT_BUTTON_TEXT.LPA_STATEMENT
 				}),
 				buttonComponent(
 					'Continue',
