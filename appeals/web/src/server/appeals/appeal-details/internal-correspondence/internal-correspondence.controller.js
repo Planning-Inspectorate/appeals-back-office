@@ -40,13 +40,17 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
+	let pageHeadingTextOverride = `Upload ${correspondenceCategory} correspondence`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Upload main party correspondence';
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
-		pageHeadingTextOverride: `Upload ${correspondenceCategory} correspondence`
+		pageHeadingTextOverride
 	});
 };
 
@@ -118,6 +122,10 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	let pageHeadingTextOverride = `${capitalize(correspondenceCategory)} correspondence`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Main party correspondence';
+
 	await renderDocumentDetails({
 		request,
 		response,
@@ -126,7 +134,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		}/internal-correspondence/${correspondenceCategory}/upload-documents/${
 			currentFolder?.folderId
 		}${documentId ? `/${documentId}` : ''}`,
-		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence`,
+		pageHeadingTextOverride,
 		documentId
 	});
 };
@@ -276,12 +284,16 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	let pageHeadingTextOverride = `${capitalize(correspondenceCategory)} correspondence documents`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Main party correspondence documents';
+
 	await renderManageFolder({
 		request,
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		viewAndEditUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence documents`
+		pageHeadingTextOverride
 	});
 };
 
