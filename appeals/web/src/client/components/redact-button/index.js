@@ -2,7 +2,8 @@ const SELECTORS = {
 	ORIGINAL_COMMENT_IDENTIFIER: '#original-comment',
 	REDACT_BUTTON_IDENTIFIER: '#redact-button',
 	UNDO_BUTTON_IDENTIFIER: '#undo-button',
-	TEXTAREA_IDENTIFIER: '#redact-textarea'
+	TEXTAREA_IDENTIFIER: '#redact-textarea',
+	REVERT_BUTTON: '#revert-button'
 };
 
 /**
@@ -29,13 +30,12 @@ const generateOnClick = (textarea) => (event) => {
 
 /**
  * @param {HTMLTextAreaElement} textarea
- * @param {string} originalComment
+ * @param {string} redactedText
  * @returns {HTMLButtonElement['onclick']}
  * */
-const undoAllChanges = (textarea, originalComment) => (event) => {
+const setAreaText = (textarea, redactedText) => (event) => {
 	event.preventDefault();
-
-	textarea.value = originalComment;
+	textarea.value = redactedText;
 };
 
 /**
@@ -60,7 +60,9 @@ export const initRedactButtons = () => {
 	const originalCommentText = document.querySelector(SELECTORS.ORIGINAL_COMMENT_IDENTIFIER);
 	const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
 	const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
+	const revertButton = document.querySelector(SELECTORS.REVERT_BUTTON);
 	const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
+	const redactedText = textarea?.textContent?.trim() || '';
 
 	if (
 		!(
@@ -68,8 +70,10 @@ export const initRedactButtons = () => {
 			redactButton &&
 			textarea &&
 			undoButton &&
+			revertButton &&
 			isHTMLDivElement(originalCommentText) &&
 			isHTMLButtonElement(redactButton) &&
+			isHTMLButtonElement(revertButton) &&
 			isHTMLButtonElement(undoButton) &&
 			isHTMLTextAreaElement(textarea)
 		)
@@ -78,5 +82,6 @@ export const initRedactButtons = () => {
 	}
 
 	redactButton.onclick = generateOnClick(textarea);
-	undoButton.onclick = undoAllChanges(textarea, originalCommentText.textContent?.trim() ?? '');
+	undoButton.onclick = setAreaText(textarea, redactedText);
+	revertButton.onclick = setAreaText(textarea, originalCommentText.textContent?.trim() ?? '');
 };
