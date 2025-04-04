@@ -12,6 +12,7 @@ declare global {
 			visitType: SiteVisitType;
 			validationOutcome: ValidationOutcome;
 			documentRedactionStatusIds: number[];
+			lpaIds: number[];
 		}
 	}
 }

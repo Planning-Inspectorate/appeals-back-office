@@ -20,6 +20,21 @@ const getLpa = async (req, res) => {
 	return res.send(result);
 };
 
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const changeLpa = async (req, res) => {
+	const { appeal } = req;
+	const { newLpaId } = req.body;
+
+	await lpaService.changeLpa(appeal, Number(newLpaId));
+
+	return res.send(true);
+};
+
 export const controller = {
-	getLpa
+	getLpa,
+	changeLpa
 };
