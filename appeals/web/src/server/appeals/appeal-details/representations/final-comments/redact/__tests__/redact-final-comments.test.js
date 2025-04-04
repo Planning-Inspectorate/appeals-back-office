@@ -1,4 +1,5 @@
 /* eslint-disable jest/expect-expect */
+import { findButtonText } from '#lib/revert-text.js';
 import {
 	appealDataFullPlanning,
 	finalCommentsForReview
@@ -73,7 +74,9 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain('Awaiting final comments review</textarea>');
 				expect(unprettifiedHTML).toContain('Redact selected text</button>');
-				expect(unprettifiedHTML).toContain('Undo all changes</button>');
+				const buttonText = findButtonText(finalCommentsType.type);
+				expect(unprettifiedHTML).toContain(`${buttonText}</button>`);
+				expect(unprettifiedHTML).toContain('Undo changes</button>');
 				expect(unprettifiedHTML).toContain('Continue</button>');
 			});
 		}
