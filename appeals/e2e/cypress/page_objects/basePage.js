@@ -132,7 +132,7 @@ export class Page {
 		cy.contains('label', value)
 			.invoke('attr', 'for')
 			.then((id) => {
-				cy.get(`${id}`).check();
+				cy.get(`#${id}`).check();
 			});
 	}
 

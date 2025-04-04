@@ -144,15 +144,6 @@ export class CaseDetailsPage extends Page {
 	 ************************ Actions ************************
 	 *********************************************************/
 
-	checkAppealStatus(status) {
-		this.elements
-			.caseStatusTag()
-			.invoke('prop', 'innerText')
-			.should((appealStatus) => {
-				expect(appealStatus.trim().toLowerCase()).to.eq(status.trim().toLowerCase());
-			});
-	}
-
 	clickManageDocsCostDecision() {
 		this.elements.manageCostDecision().click();
 	}
