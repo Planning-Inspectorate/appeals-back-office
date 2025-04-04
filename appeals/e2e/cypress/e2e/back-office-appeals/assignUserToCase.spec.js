@@ -59,13 +59,13 @@ describe('Assign user to case', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
 			caseDetailsPage.clickAssignCaseOfficer();
-			caseDetailsPage.searchForCaseOfficer('Rachel');
-			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
-			caseDetailsPage.clickChooseCaseOfficerResult(users.appeals.happyPath.email);
+			caseDetailsPage.searchForCaseOfficer('case');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
+			caseDetailsPage.clickChooseCaseOfficerResult(users.appeals.caseAdmin.email);
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
-			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.happyPath.email);
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});
 
@@ -74,13 +74,13 @@ describe('Assign user to case', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
 			caseDetailsPage.clickAssignInspector();
-			caseDetailsPage.searchForCaseOfficer('Rachel');
-			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.searchForCaseOfficer('case');
+			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Choose');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
-			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.happyPath.email);
+			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});
 
@@ -89,7 +89,7 @@ describe('Assign user to case', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
 			caseDetailsPage.clickAssignCaseOfficer();
-			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -105,7 +105,7 @@ describe('Assign user to case', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseRef);
 			caseDetailsPage.clickAssignInspector();
-			caseDetailsPage.chooseSummaryListValue(users.appeals.happyPath.email);
+			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
