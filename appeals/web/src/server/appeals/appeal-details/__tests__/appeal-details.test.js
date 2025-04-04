@@ -3219,7 +3219,7 @@ describe('appeal-details', () => {
 
 				expect(columnHtml).toMatchSnapshot();
 				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></li>'
+					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
 				);
 			});
 
@@ -3250,7 +3250,7 @@ describe('appeal-details', () => {
 
 				expect(columnHtml).toMatchSnapshot();
 				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></li>'
+					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red">Virus detected</strong></li>'
 				);
 			});
 

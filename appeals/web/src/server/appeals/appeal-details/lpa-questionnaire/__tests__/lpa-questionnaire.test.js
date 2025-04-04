@@ -2015,7 +2015,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2048,7 +2048,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2081,7 +2081,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2114,7 +2114,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2159,7 +2159,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2192,7 +2192,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2225,7 +2225,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2258,7 +2258,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2335,7 +2335,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2370,7 +2370,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2405,7 +2405,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2440,7 +2440,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
@@ -2513,7 +2513,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2548,7 +2548,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2583,7 +2583,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2618,7 +2618,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
