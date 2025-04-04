@@ -6,3 +6,7 @@ export const getLpaValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validationErrorHandler
 );
+export const postLpaValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validationErrorHandler
+);

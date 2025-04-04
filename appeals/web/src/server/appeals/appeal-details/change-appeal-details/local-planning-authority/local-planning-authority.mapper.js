@@ -54,7 +54,7 @@ export function mapLpasToSelectItemParameters(lpaList, currentLpa) {
 		.filter((lpa) => !['Q1111', 'Q9999'].includes(lpa.lpaCode))
 		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((lpa) => ({
-			value: lpa.lpaCode.toString(),
+			value: lpa.id.toString(),
 			text: lpa.name,
 			checked: lpa.lpaCode == currentLpa.lpaCode
 		}));
