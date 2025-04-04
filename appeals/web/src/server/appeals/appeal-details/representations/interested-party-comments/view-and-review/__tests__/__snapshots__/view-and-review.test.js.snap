@@ -344,8 +344,6 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
                     <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact">Redact</a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
@@ -417,8 +415,6 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
                     <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact">Redact</a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
