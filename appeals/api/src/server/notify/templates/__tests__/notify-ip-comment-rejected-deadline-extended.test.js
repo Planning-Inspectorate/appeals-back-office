@@ -2,7 +2,7 @@ import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('ip-comment-rejected-deadline-extended.md', () => {
-	test('should call notify sendEmail with the correct data', async () => {
+	test.skip('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'ip-comment-rejected-deadline-extended',

@@ -110,6 +110,11 @@ const startCase = async (
 			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 			const lpaEmail = appeal.lpa?.email || '';
 
+			//This is necessary to avoid duplication of the word "appeal" in the email display
+			// when emails are titled with "Planning appeal"
+			const { type } = appeal.appealType || {};
+			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
+
 			// Note that those properties not used within the specified template will be ignored
 			const commonEmailVariables = {
 				appeal_reference_number: appeal.reference,
@@ -118,7 +123,7 @@ const startCase = async (
 				start_date: formatDate(new Date(startDate || ''), false),
 				appellant_email_address: recipientEmail || '',
 				url: FRONT_OFFICE_URL,
-				appeal_type: appeal.appealType?.type || '',
+				appeal_type: appealType || '',
 				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
 				questionnaire_due_date: formatDate(
 					new Date(timetable.lpaQuestionnaireDueDate || ''),
