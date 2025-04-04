@@ -64,6 +64,15 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
+	startS78Case(caseRef, procedureType) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+	},
+
 	changeStartDate(caseRef) {
 		caseDetailsPage.clickChangeStartDate();
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -137,13 +146,14 @@ export const happyPathHelper = {
 		cy.addRepresentation(caseRef, 'interestedPartyComment', null).then((caseRef) => {
 			cy.reload();
 			caseDetailsPage.reviewIpComments(state);
+			cy.reload();
 		});
 	},
 
-	addLpaStatement(caseRef) {
+	addLpaStatement(caseRef, isAllocationPageExist = true) {
 		cy.addRepresentation(caseRef, 'lpaStatement', null).then((caseRef) => {
 			cy.reload();
-			caseDetailsPage.reviewLpaStatement();
+			caseDetailsPage.reviewLpaStatement(isAllocationPageExist);
 		});
 	},
 
@@ -185,10 +195,6 @@ export const happyPathHelper = {
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
-		// caseDetailsPage.validateConfirmationPanelMessage(
-		// 	'Site visit scheduled',
-		// 	'Appeal reference ' + caseRef
-		// ),
-		//caseDetailsPage.validateBannerMessage('Site visit has been arranged');
+		caseDetailsPage.validateBannerMessage('Success', 'Site visit scheduled');
 	}
 };
