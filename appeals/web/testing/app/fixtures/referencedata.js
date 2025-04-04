@@ -2811,6 +2811,12 @@ export const folderInfoInspectorCorrespondence = {
 	path: 'internal/inspectorCorrespondence'
 };
 
+export const folderInfoMainPartyCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 22,
+	path: 'internal/mainPartyCorrespondence'
+};
+
 export const appealCostsDocumentItem = {
 	guid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
 	name: '_821df3b2-08ea-4f56-b8e7-97c3502cd73a_test-doc-alternate.docx',
