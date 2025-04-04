@@ -31,7 +31,7 @@ describe('Progress S78 to decision', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-			happyPathHelper.startCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 			happyPathHelper.reviewS78Lpaq(caseRef);

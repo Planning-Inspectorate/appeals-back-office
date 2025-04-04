@@ -14,16 +14,16 @@ describe('S78 - LPA Statement', () => {
 		cy.addLpaqSubmissionToCase(caseRef);
 		happyPathHelper.assignCaseOfficer(caseRef);
 		cy.addAllocationLevelAndSpecialisms(caseRef);
-		caseDetailsPage.checkAppealStatus('Validation');
+		caseDetailsPage.checkStatusOfCase('Validation', 0);
 
 		happyPathHelper.reviewAppellantCase(caseRef);
-		caseDetailsPage.checkAppealStatus('Ready to start');
+		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-		happyPathHelper.startCase(caseRef);
-		caseDetailsPage.checkAppealStatus('LPA questionnaire');
+		happyPathHelper.startS78Case(caseRef, 'written');
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		happyPathHelper.reviewS78Lpaq(caseRef);
-		caseDetailsPage.checkAppealStatus('Statements');
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
 	};
 
 	beforeEach(() => {

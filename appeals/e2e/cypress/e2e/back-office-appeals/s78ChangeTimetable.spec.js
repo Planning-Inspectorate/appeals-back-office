@@ -23,10 +23,10 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({ caseType: 'W' }).then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.checkAppealStatus('Validation');
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseRef);
-			caseDetailsPage.checkAppealStatus('Ready to start');
-			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+			happyPathHelper.startS78Case(caseRef, 'written');
 			cy.populateTimetable(caseRef);
 			caseDetailsPage.clickAccordionByText('Timetable');
 		});
