@@ -30,7 +30,8 @@ const startAppeal = async (req, res) => {
 			startDate,
 			notifyClient,
 			siteAddress,
-			req.get('azureAdUserId') || ''
+			req.get('azureAdUserId') || '',
+			body.procedureType
 		);
 
 		if (result.success) {
