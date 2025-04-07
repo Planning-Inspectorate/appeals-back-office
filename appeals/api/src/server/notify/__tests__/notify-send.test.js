@@ -13,6 +13,7 @@ const __filename = fileURLToPath(import.meta.url); // get the resolved path to t
 const __dirname = path.dirname(__filename); // get the name of the directory
 
 const templatesPath = path.join(__dirname, '../', 'templates');
+const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('notify-send', () => {
 	let notifySendData;
@@ -36,7 +37,8 @@ describe('notify-send', () => {
 			recipientEmail: 'test@136s7.com',
 			personalisation: {
 				first_name: 'Joe',
-				last_name: 'Bloggs'
+				last_name: 'Bloggs',
+				appeal_reference_number: '123'
 			},
 			doNotMockNotifySend: true
 		};
@@ -95,6 +97,7 @@ describe('notify-send', () => {
 	});
 
 	test('should send a notification', async () => {
+		databaseConnector.appealNotification.createMany.mockResolvedValue([]);
 		await notifySend(notifySendData);
 
 		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(

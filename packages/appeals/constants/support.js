@@ -177,6 +177,7 @@ export const ERROR_GOV_NOTIFY_CONNECTIVITY =
 	'Gov notify connectivity. Error Code: {replacement0}, template ID: {replacement1}';
 export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
+export const ERROR_NOTIFICATION_PERSONALISATION = 'email personalisation is incorrect';
 export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
 export const ERROR_INVALID_APPEAL_TYPE_REP = `Representations not accepted on this appeal type`;
 export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_INCOMPLETE}, ${VALIDATION_OUTCOME_INVALID}, ${VALIDATION_OUTCOME_VALID}`;

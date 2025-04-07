@@ -4793,6 +4793,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/notifications": {
+			"get": {
+				"tags": ["Notifications"],
+				"description": "Retrieves a log of the emails sent for a single appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Returns the notification list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Notifications"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Notifications"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealReference}/site-visit-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
@@ -29095,6 +29143,44 @@
 					"designatedSiteNameCustom": {
 						"type": "string",
 						"nullable": true
+					}
+				}
+			},
+			"Notifications": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"required": [
+						"caseReference",
+						"recipient",
+						"template",
+						"subject",
+						"message",
+						"dateCreated",
+						"success"
+					],
+					"properties": {
+						"caseReference": {
+							"type": "string"
+						},
+						"recipient": {
+							"type": "string"
+						},
+						"template": {
+							"type": "string"
+						},
+						"subject": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						},
+						"dateCreated": {
+							"type": "string"
+						},
+						"success": {
+							"type": "boolean"
+						}
 					}
 				}
 			}
