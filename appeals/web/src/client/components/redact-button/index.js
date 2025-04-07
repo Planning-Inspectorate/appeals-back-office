@@ -1,4 +1,4 @@
-const SELECTORS = {
+export const SELECTORS = {
 	ORIGINAL_COMMENT_IDENTIFIER: '#original-comment',
 	REDACT_BUTTON_IDENTIFIER: '#redact-button',
 	UNDO_BUTTON_IDENTIFIER: '#undo-button',
@@ -10,7 +10,7 @@ const SELECTORS = {
  * @param {HTMLTextAreaElement} textarea
  * @returns {HTMLButtonElement['onclick']}
  */
-const generateOnClick = (textarea) => (event) => {
+export const generateOnClick = (textarea) => (event) => {
 	// Stop the form submitting
 	event.preventDefault();
 
@@ -33,7 +33,7 @@ const generateOnClick = (textarea) => (event) => {
  * @param {string} redactedText
  * @returns {HTMLButtonElement['onclick']}
  * */
-const setAreaText = (textarea, redactedText) => (event) => {
+export const setAreaText = (textarea, redactedText) => (event) => {
 	event.preventDefault();
 	textarea.value = redactedText;
 };
@@ -42,19 +42,18 @@ const setAreaText = (textarea, redactedText) => (event) => {
  * @param {Element} element
  * @returns {element is HTMLTextAreaElement}
  */
-const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElement;
-
+export const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElement;
 /**
  * @param {Element} element
  * @returns {element is HTMLButtonElement}
  */
-const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
+export const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
 
 /**
  * @param {Element} element
  * @returns {element is HTMLDivElement}
  * */
-const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
+export const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
 
 export const initRedactButtons = () => {
 	const originalCommentText = document.querySelector(SELECTORS.ORIGINAL_COMMENT_IDENTIFIER);
