@@ -25,7 +25,7 @@ describe('Change Appeal Type', () => {
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('This appeal is awaiting transfer');
-			caseDetailsPage.checkStatusOfCase('Awaiting transfer', 0);
+			caseDetailsPage.checkAppealStatus('Awaiting transfer');
 		});
 	});
 
@@ -42,7 +42,7 @@ describe('Change Appeal Type', () => {
 				dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
 			});
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkStatusOfCase('Closed', 0);
+			caseDetailsPage.checkAppealStatus('Closed');
 		});
 	});
 });

@@ -61,6 +61,8 @@ export const happyPathHelper = {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue('Written representations');
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 

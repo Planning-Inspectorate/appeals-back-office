@@ -39,7 +39,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.chooseCheckboxByIndex(0);
 			caseDetailsPage.clickButtonByText('Send Decision');
-			caseDetailsPage.checkStatusOfCase('Invalid', 0);
+			caseDetailsPage.checkAppealStatus('Invalid');
 		});
 	});
 });

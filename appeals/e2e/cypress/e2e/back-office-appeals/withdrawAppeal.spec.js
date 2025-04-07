@@ -42,7 +42,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
 
-			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
+			caseDetailsPage.checkAppealStatus('Withdrawn');
 		});
 	});
 
@@ -69,7 +69,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
 
-			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
+			caseDetailsPage.checkAppealStatus('Withdrawn');
 			caseDetailsPage.clickViewAppealWithdrawal();
 			caseDetailsPage.clickLinkByText('View');
 			cy.readFile(`${Cypress.config('downloadsFolder')}/${sampleFiles.document}`);

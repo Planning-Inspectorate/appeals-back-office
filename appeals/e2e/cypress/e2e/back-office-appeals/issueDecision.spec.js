@@ -45,7 +45,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectCheckbox();
 				caseDetailsPage.clickButtonByText('Send Decision');
-				caseDetailsPage.checkStatusOfCase('Complete', 0);
+				caseDetailsPage.checkAppealStatus('Complete');
 				caseDetailsPage.checkDecisionOutcome(issueDecision);
 				caseDetailsPage.viewDecisionLetter('View decision letter');
 			});

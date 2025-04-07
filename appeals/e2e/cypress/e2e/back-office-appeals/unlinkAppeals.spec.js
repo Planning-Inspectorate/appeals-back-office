@@ -26,7 +26,7 @@ describe('unlink appeals', () => {
 				caseDetailsPage.validateBannerMessage(
 					'This appeal is now a child appeal of ' + caseRefToLink
 				);
-				caseDetailsPage.checkStatusOfCase('Child', 1);
+				caseDetailsPage.checkAppealStatus('Lead');
 				caseDetailsPage.clickManageLinkedAppeals();
 				caseDetailsPage.clickLinkByText('Unlink');
 				caseDetailsPage.selectRadioButtonByValue('Yes');
@@ -52,7 +52,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.validateBannerMessage(
 						'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
 					);
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+					caseDetailsPage.checkAppealStatus('Lead');
 					caseDetailsPage.clickManageLinkedAppeals();
 					caseDetailsPage.clickLinkByText('Unlink');
 					caseDetailsPage.selectRadioButtonByValue('Yes');
@@ -81,7 +81,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.validateBannerMessage(
 						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
 					);
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+					caseDetailsPage.checkAppealStatus('Lead');
 					caseDetailsPage.clickAddLinkedAppeal();
 					caseDetailsPage.fillInput(caseRefToLinkAsSecondChild);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -92,7 +92,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.validateBannerMessage(
 						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
 					);
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+					caseDetailsPage.checkAppealStatus('Lead');
 					caseDetailsPage.clickManageLinkedAppeals();
 					caseDetailsPage.clickLinkByText('Unlink');
 					caseDetailsPage.selectRadioButtonByValue('Yes');

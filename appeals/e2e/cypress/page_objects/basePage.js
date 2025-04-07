@@ -190,10 +190,6 @@ export class Page {
 		this.basePageElements.radioButton().find('input').eq(indexNumber).check();
 	}
 
-	checkStatusOfCase(text, index = 0) {
-		this.basePageElements.status().eq(index).contains(text);
-	}
-
 	chooseSelectItemByIndex(optionNumber) {
 		this.basePageElements.selectElem().select(optionNumber);
 	}

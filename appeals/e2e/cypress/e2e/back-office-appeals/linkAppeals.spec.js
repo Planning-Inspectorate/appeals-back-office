@@ -28,7 +28,7 @@ describe('link appeals', () => {
 				caseDetailsPage.validateBannerMessage(
 					'This appeal is now a child appeal of ' + caseRefToLink
 				);
-				caseDetailsPage.checkStatusOfCase('Child', 1);
+				caseDetailsPage.checkAppealStatus('Child');
 			});
 		});
 	});
@@ -46,7 +46,7 @@ describe('link appeals', () => {
 				caseDetailsPage.validateBannerMessage(
 					'This appeal is now a child appeal of' + caseRefToLink
 				);
-				caseDetailsPage.checkStatusOfCase('Child', 1);
+				caseDetailsPage.checkAppealStatus('Child');
 				caseDetailsPage.clickLinkedAppeal(caseRefToLink);
 				caseDetailsPage.verifyAppealRefOnCaseDetails(caseRefToLink);
 			});
@@ -67,7 +67,7 @@ describe('link appeals', () => {
 					caseDetailsPage.validateBannerMessage(
 						'This appeal is now a child appeal of ' + caseRefToLinkAsChild
 					);
-					caseDetailsPage.checkStatusOfCase('Child', 1);
+					caseDetailsPage.checkAppealStatus('Child');
 					caseDetailsPage.clickAddLinkedAppeal();
 					caseDetailsPage.fillInput(unlinkedCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -91,7 +91,7 @@ describe('link appeals', () => {
 					caseDetailsPage.validateBannerMessage(
 						'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
 					);
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+					caseDetailsPage.checkAppealStatus('Lead');
 					caseDetailsPage.clickAddLinkedAppeal();
 					caseDetailsPage.fillInput(unlinkedCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -122,7 +122,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a lead appeal of ' + caseRefToLinkAsChild
 						);
-						caseDetailsPage.checkStatusOfCase('Child', 1);
+						caseDetailsPage.checkAppealStatus('Child');
 						happyPathHelper.assignCaseOfficer(caseRefToLinkAsSecondChild);
 						caseDetailsPage.clickAccordionByButton('Overview');
 						caseDetailsPage.clickAddLinkedAppeal();
@@ -135,7 +135,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a lead appeal of ' + caseRefToLinkAsSecondChild
 						);
-						caseDetailsPage.checkStatusOfCase('Child', 1);
+						caseDetailsPage.checkAppealStatus('Child');
 						caseDetailsPage.clickAddLinkedAppeal();
 						caseDetailsPage.fillInput(caseRefToLinkAsChild);
 						caseDetailsPage.clickButtonByText('Continue');
@@ -165,7 +165,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
 						);
-						caseDetailsPage.checkStatusOfCase('Lead', 1);
+						caseDetailsPage.checkAppealStatus('Lead');
 						happyPathHelper.assignCaseOfficer(caseRefToLinkAsSecondLead);
 						caseDetailsPage.clickAccordionByButton('Overview');
 						caseDetailsPage.clickAddLinkedAppeal();
@@ -178,7 +178,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
 						);
-						caseDetailsPage.checkStatusOfCase('Lead', 1);
+						caseDetailsPage.checkAppealStatus('Lead');
 						caseDetailsPage.clickAddLinkedAppeal();
 						caseDetailsPage.fillInput(caseRefToLinkAsLead);
 						caseDetailsPage.clickButtonByText('Continue');
@@ -206,7 +206,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a child appeal of ' + caseRefToLinkAsLead
 						);
-						caseDetailsPage.checkStatusOfCase('Child', 1);
+						caseDetailsPage.checkAppealStatus('Child');
 						happyPathHelper.assignCaseOfficer(caseRefToLinkAsSecondChild);
 						caseDetailsPage.clickAccordionByButton('Overview');
 						caseDetailsPage.clickAddLinkedAppeal();
@@ -219,7 +219,7 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage(
 							'This appeal is now a child appeal of ' + caseRefToLinkAsSecondLead
 						);
-						caseDetailsPage.checkStatusOfCase('Child', 1);
+						caseDetailsPage.checkAppealStatus('Child');
 						caseDetailsPage.clickAddLinkedAppeal();
 						caseDetailsPage.fillInput(caseRefToLinkAsChild);
 						caseDetailsPage.clickButtonByText('Continue');
@@ -245,7 +245,7 @@ describe('link appeals', () => {
 				caseDetailsPage.validateBannerMessage(
 					'This appeal is now a lead appeal of' + caseRefToLink
 				);
-				caseDetailsPage.checkStatusOfCase('Lead', 1);
+				caseDetailsPage.checkAppealStatus('Lead');
 				caseDetailsPage.clickAddLinkedAppeal();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -271,7 +271,7 @@ describe('link appeals', () => {
 			caseDetailsPage.validateBannerMessage(
 				'This appeal is now a lead appeal of' + horizonAppealId
 			);
-			caseDetailsPage.checkStatusOfCase('Lead', 1);
+			caseDetailsPage.checkAppealStatus('Lead');
 		});
 	});
 });

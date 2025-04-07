@@ -133,7 +133,7 @@ export class CaseDetailsPage extends Page {
 		siteVisitBanner: () => cy.getByData(this._cyDataSelectors.setupSiteVisitBanner),
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
-		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
+		caseStatusTag: () => cy.get('#main-content .govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
 		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`),
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
