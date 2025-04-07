@@ -150,6 +150,7 @@ class MockPrismaClient {
 			create: mockAddressCreate
 		};
 	}
+
 	get appeal() {
 		return {
 			findUnique: mockAppealFindUnique,
@@ -157,6 +158,13 @@ class MockPrismaClient {
 			findMany: mockAppealFindMany,
 			count: mockAppealCount,
 			create: mockAppealCreate
+		};
+	}
+
+	get appealNotification() {
+		return {
+			findUnique: mockAppealFindUnique,
+			createMany: mockAppealCreate
 		};
 	}
 
