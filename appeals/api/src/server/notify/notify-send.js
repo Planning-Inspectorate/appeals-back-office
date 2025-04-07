@@ -5,11 +5,13 @@ import config from '#config/config.js';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	ERROR_NO_RECIPIENT_EMAIL
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOTIFICATION_PERSONALISATION
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { emulateSendEmail } from '#notify/emulate-notify.js';
 import logger from '#utils/logger.js';
+import { createAppealNotifications } from '#repositories/appeal-notification.repository.js';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -133,6 +135,9 @@ export const notifySend = async (options) => {
 	if (!recipientEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
+	if (!personalisation || personalisation.appeal_reference_number === null) {
+		throw new Error(ERROR_NOTIFICATION_PERSONALISATION);
+	}
 	const genericTemplate = config.govNotify.template.generic;
 	const content = populateTemplate(getTemplate(`${templateName}.content`), personalisation);
 	const subject = populateTemplate(getTemplate(`${templateName}.subject`), personalisation);
@@ -142,6 +147,16 @@ export const notifySend = async (options) => {
 		} else {
 			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
 		}
+
+		await createAppealNotifications([
+			{
+				caseReference: String(personalisation.appeal_reference_number),
+				template: templateName,
+				subject,
+				recipient: recipientEmail,
+				message: content
+			}
+		]);
 	} catch (error) {
 		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);

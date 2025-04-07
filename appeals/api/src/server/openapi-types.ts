@@ -10830,3 +10830,13 @@ export interface LpaQuestionnaireUpdateRequest {
 	lpaCostsAppliedFor?: boolean | null;
 	designatedSiteNameCustom?: string | null;
 }
+
+export type Notifications = {
+	caseReference: string;
+	recipient: string;
+	template: string;
+	subject: string;
+	message: string;
+	dateCreated: string;
+	success: boolean;
+}[];
