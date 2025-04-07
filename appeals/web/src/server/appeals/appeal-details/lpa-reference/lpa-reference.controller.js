@@ -77,7 +77,7 @@ export const postChangeLpaReference = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: `LPA application reference updated`
+			text: `Appeal updated`
 		});
 
 		delete request.session.planningApplicationReference;
