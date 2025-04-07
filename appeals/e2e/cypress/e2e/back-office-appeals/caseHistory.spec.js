@@ -37,7 +37,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		}
 	);
 
-	it.only(
+	it(
 		'view case history after amending a document and updating the appellant case',
 		{ tags: tag.smoke },
 		() => {
@@ -46,7 +46,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.manageDocsAppellantCase(caseRef);
 				caseDetailsPage.clickChangeSiteOwnership();
-				caseDetailsPage.selectRadioButtonByValue('Partially owned by appellant');
+				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Site ownership updated');
 				caseDetailsPage.clickBackLink();

@@ -4,6 +4,9 @@
 import { users } from '../../fixtures/users';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+
+const caseDetailsPage = new CaseDetailsPage();
 
 describe('Start case', () => {
 	beforeEach(() => {
@@ -15,7 +18,10 @@ describe('Start case', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			// TODO Verify that the case has started
+			cy.getAppealDetails(caseRef).then((appealDetails) => {
+				const startedAt = appealDetails?.startedAt;
+				expect(startedAt).to.not.be.null;
+			});
 		});
 	});
 
@@ -25,8 +31,12 @@ describe('Start case', () => {
 		}).then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			// TODO Verify that the case has started
+			happyPathHelper.startS78Case(caseRef, 'written');
+			caseDetailsPage.validateBannerMessage('Success', 'Case started');
+			cy.getAppealDetails(caseRef).then((appealDetails) => {
+				const startedAt = appealDetails?.startedAt;
+				expect(startedAt).to.not.be.null;
+			});
 		});
 	});
 });
