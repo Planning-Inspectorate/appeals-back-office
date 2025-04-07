@@ -40,7 +40,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.verifyCheckYourAnswerDate('Request date', withdrawalDate);
 			caseDetailsPage.checkEmailRelevantParties();
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanel('Appeal withdrawn');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
 
 			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 		});
@@ -67,7 +67,7 @@ describe('Withdraw a Has appeal', () => {
 			caseDetailsPage.verifyCheckYourAnswerDate('Request date', withdrawalDate);
 			caseDetailsPage.checkEmailRelevantParties();
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanel('Appeal withdrawn');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
 
 			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 			caseDetailsPage.clickViewAppealWithdrawal();

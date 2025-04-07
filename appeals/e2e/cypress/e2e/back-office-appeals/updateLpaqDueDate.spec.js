@@ -35,7 +35,7 @@ describe('Update LPAQ Due date', () => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
 				dateTimeSection.enterDate(futureDate);
