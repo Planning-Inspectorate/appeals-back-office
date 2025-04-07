@@ -78,9 +78,9 @@ describe('internal correspondence', () => {
 		return capitalize(nameText);
 	};
 
-	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
+	const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
 
+	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -125,8 +125,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -213,8 +211,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -253,8 +249,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -342,8 +336,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId', () => {
-		const correspondenceCategories = ['main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -449,7 +441,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/add-document-details/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -731,8 +722,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -838,7 +827,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/add-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
 		/**
 		 * @type {import("superagent").Response}
 		 */
@@ -1119,8 +1107,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1217,8 +1203,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -1293,8 +1277,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1393,8 +1375,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
@@ -1472,8 +1452,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
@@ -1531,8 +1509,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			// @ts-ignore
 			usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
@@ -1712,8 +1688,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
@@ -1797,8 +1771,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(async () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -2057,8 +2029,6 @@ describe('internal correspondence', () => {
 			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
-
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
 		for (const correspondenceCategory of correspondenceCategories) {
 			const folder = getFolder(correspondenceCategory);
 
@@ -2090,9 +2060,6 @@ describe('internal correspondence', () => {
 			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
-
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		for (const correspondenceCategory of correspondenceCategories) {
 			const folder = getFolder(correspondenceCategory);
 
@@ -2115,8 +2082,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('GET /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -2220,8 +2185,6 @@ describe('internal correspondence', () => {
 	});
 
 	describe('POST /internal-correspondence/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete', () => {
-		const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
-
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
