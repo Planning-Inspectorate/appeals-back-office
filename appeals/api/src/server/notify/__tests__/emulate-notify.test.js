@@ -44,7 +44,7 @@ describe('emulate-notify.test', () => {
 			'<b>Subject:</b> We have rejected your comment: 6000437<br>',
 			'<hr><br>',
 			'We have rejected your comment.<br>',
-			'',
+			'<br>',
 			'<h1>Appeal details</h1>',
 			'<div style="margin-left: 0.25rem; border-left: 3px solid #999; padding: 0 0.75rem;">',
 			'Appeal reference number: 6000437<br>',
@@ -53,11 +53,11 @@ describe('emulate-notify.test', () => {
 			'</div>',
 			'<h2>Why we rejected your comment</h2>',
 			'We rejected your comment because:<br>',
-			'',
+			'<br>',
 			'<ul style="margin-left: 1.2rem; padding-left: 0;"><li> Includes inflammatory content</li>',
 			'<li> Duplicated or repeated comment</li>',
 			'<li> Not relevant to this appeal</li></ul>',
-			'',
+			'<br>',
 			'The Planning Inspectorate<br>'
 		].join('\n');
 

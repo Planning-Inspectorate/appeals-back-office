@@ -31,4 +31,17 @@ export const formatTime = (date) => {
 	return formatInTimeZone(new Date(date), DEFAULT_TIMEZONE, 'HH:mm');
 };
 
+/**
+ * Format the given date as yyyy-MM-dd HH:mm:ss:SSS string in Europe/London
+ *
+ * @param {Date | undefined} date
+ * @returns {string} formatted sortable date and time string,'yyyy-MM-dd HH:mm:ss:SSS string'
+ */
+export const formatSortableDateTime = (date) => {
+	if (!date) {
+		return '';
+	}
+	return formatInTimeZone(new Date(date), DEFAULT_TIMEZONE, 'yyyy-MM-dd HH:mm:ss:SSS');
+};
+
 export default formatDate;

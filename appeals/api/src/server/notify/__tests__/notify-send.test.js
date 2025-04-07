@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
 import mockFileSystem from 'mock-fs';
-import notifySend from '#notify/notify-send.js';
+import { notifySend } from '#notify/notify-send.js';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
@@ -12,7 +12,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
-const templatesPath = path.join(__dirname, '../templates');
+const templatesPath = path.join(__dirname, '../', 'templates');
 
 describe('notify-send', () => {
 	let notifySendData;
@@ -34,7 +34,8 @@ describe('notify-send', () => {
 			personalisation: {
 				first_name: 'Joe',
 				last_name: 'Bloggs'
-			}
+			},
+			doNotMockNotifySend: true
 		};
 	});
 
@@ -44,7 +45,7 @@ describe('notify-send', () => {
 	});
 
 	test('should throw the failed to populate error when no parameters passed in', async () => {
-		await expect(async () => await notifySend({})).rejects.toThrow(
+		await expect(async () => await notifySend({ doNotMockNotifySend: true })).rejects.toThrow(
 			new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 					'a missing template name'

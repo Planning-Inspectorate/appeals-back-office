@@ -31,9 +31,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-
 const { databaseConnector } = await import('#utils/database-connector.js');
-import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 describe('lpa questionnaires routes', () => {
@@ -237,7 +235,7 @@ describe('lpa questionnaires routes', () => {
 				).not.toHaveBeenCalled();
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
 			});
@@ -299,37 +297,29 @@ describe('lpa questionnaires routes', () => {
 					.join(', ');
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenNthCalledWith(
-					1,
-					config.govNotify.template.lpaqComplete.lpa.id,
-					householdAppeal.lpa.email,
-					{
-						emailReplyToId: null,
-						personalisation: {
-							lpa_reference: householdAppeal.applicationReference,
-							appeal_reference_number: householdAppeal.reference,
-							site_address: expectedSiteAddress
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: householdAppeal.applicationReference,
+						appeal_reference_number: householdAppeal.reference,
+						site_address: expectedSiteAddress
+					},
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'lpaq-complete-lpa'
+				});
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenNthCalledWith(
-					2,
-					config.govNotify.template.lpaqComplete.appellant.id,
-					householdAppeal.appellant.email,
-					{
-						emailReplyToId: null,
-						personalisation: {
-							lpa_reference: householdAppeal.applicationReference,
-							appeal_reference_number: householdAppeal.reference,
-							site_address: expectedSiteAddress
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: householdAppeal.applicationReference,
+						appeal_reference_number: householdAppeal.reference,
+						site_address: expectedSiteAddress
+					},
+					recipientEmail: householdAppeal.appellant.email,
+					templateName: 'lpaq-complete-appellant'
+				});
 
 				expect(response.status).toEqual(200);
 			});
@@ -970,26 +960,23 @@ describe('lpa questionnaires routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.lpaqIncomplete.id,
-					'maid@lpa-email.gov.uk',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							due_date: '22 June 2099',
-							reasons: [
-								'Documents or information are missing: Policy is missing',
-								'Other: Addresses are incorrect or missing'
-							]
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: householdAppeal.applicationReference,
+						appeal_reference_number: householdAppeal.reference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						due_date: '22 June 2099',
+						reasons: [
+							'Documents or information are missing: Policy is missing',
+							'Other: Addresses are incorrect or missing'
+						]
+					},
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'lpaq-incomplete'
+				});
 				expect(response.status).toEqual(200);
 			});
 
