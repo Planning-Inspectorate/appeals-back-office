@@ -68,6 +68,7 @@ module "app_web" {
     # sessions
     REDIS_CONNECTION_STRING = local.key_vault_refs["redis-connection-string"]
     SESSION_SECRET          = local.key_vault_refs["session-secret"]
+    SESSION_MAX_AGE         = var.apps_config.session_max_age
 
     # integration
     HORIZON_APPEAL_BASE_URL = var.apps_config.integrations.horizon_web_url

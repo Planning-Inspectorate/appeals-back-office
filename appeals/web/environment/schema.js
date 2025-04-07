@@ -52,7 +52,8 @@ export default baseSchema
 			.object({
 				// ...env means `.env` property of the parent object
 				redis: joi.string().when('...env', { not: 'production', then: joi.optional() }),
-				secret: joi.string().when('...env', { is: 'test', then: joi.optional() })
+				secret: joi.string().when('...env', { is: 'test', then: joi.optional() }),
+				maxAge: joi.number().optional()
 			})
 			.when('env', { is: 'test', then: joi.optional() }),
 		sslCertificateFile: joi.string().when('serverProtocol', { is: 'http', then: joi.optional() }),
