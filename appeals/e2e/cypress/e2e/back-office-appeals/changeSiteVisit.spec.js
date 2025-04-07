@@ -37,7 +37,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit type changed');
 			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
 		});
 	});
@@ -63,7 +63,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit type changed');
 			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
 		});
 	});
