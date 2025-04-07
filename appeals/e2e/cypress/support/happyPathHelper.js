@@ -112,14 +112,17 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Document updated');
 	},
 
-	uploadDocsLpaq(caseRef) {
+	uploadDocsLpaq(bannerMessage = 'Document added') {
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.clickAddNotifyingParties();
 		caseDetailsPage.uploadSampleFile(sampleFiles.document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document added');
+		caseDetailsPage.validateConfirmationPanelMessage(
+			'Success',
+			'Who was notified about the application added'
+		);
 	},
 
 	uploadDocVersionLpaq(caseRef) {
@@ -130,7 +133,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document updated');
+		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Document updated');
 	},
 
 	removeDocLpaq(caseRef) {
@@ -139,7 +142,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Remove current version');
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Document removed');
+		caseDetailsPage.validateBannerMessage('Success', 'Document removed');
 	},
 
 	addThirdPartyComment(caseRef, state) {

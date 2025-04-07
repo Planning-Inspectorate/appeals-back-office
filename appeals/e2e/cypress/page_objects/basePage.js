@@ -244,9 +244,8 @@ export class Page {
 	}
 
 	validateConfirmationPanelMessage(title, body) {
-		//TODO: Replace with check for success banner
-		// this.basePageElements.panelTitle(title);
-		// this.basePageElements.panelBody(body);
+		this.basePageElements.panelTitle().should('contain.text', title);
+		this.basePageElements.panelBody().should('contain.text', body);
 	}
 
 	validateBannerMessage(title, message) {
