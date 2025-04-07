@@ -296,6 +296,19 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a main party correspondence document was uploaded 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Main party correspondence added</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a new version of a costs decision document was uploaded 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -1112,7 +1125,8 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -1595,7 +1609,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -2065,7 +2080,8 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -2538,7 +2554,8 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -3031,7 +3048,8 @@ exports[`appeal-details GET /:appealId should render action links to the manage 
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -3511,7 +3529,8 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -3970,7 +3989,8 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -4435,7 +4455,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -4900,7 +4921,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -5365,7 +5387,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -5840,7 +5863,8 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -6343,7 +6367,8 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -6830,7 +6855,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -7289,7 +7315,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -7771,7 +7798,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                            data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                         </dd>
                                 </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -8213,7 +8241,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                        data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
@@ -8708,7 +8737,8 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Main party correspondence</dt>
                                             <dd                                             class="govuk-summary-list__value">No documents</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/main-party/upload-documents/22"
+                                                    data-cy="add-main-party-correspondence">Add<span class="govuk-visually-hidden"> Main party correspondence</span></a>
                                                 </dd>
                                         </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
