@@ -4,6 +4,7 @@ apps_config = {
   functions_service_plan_sku = "P0v3"
   node_environment           = "development"
   private_endpoint_enabled   = false
+  session_max_age            = 10800000
 
   auth = {
     client_id = "64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" # Appeals Back Office DEV

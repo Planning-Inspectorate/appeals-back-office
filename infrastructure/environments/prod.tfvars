@@ -4,6 +4,7 @@ apps_config = {
   functions_service_plan_sku = "P1v3"
   node_environment           = "production"
   private_endpoint_enabled   = true
+  session_max_age            = 10800000
 
   auth = {
     client_id = "ba49fd0e-11ad-48e2-8bfb-a203defb625f" # Appeals Back Office PROD
