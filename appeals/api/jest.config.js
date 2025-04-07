@@ -10,5 +10,7 @@ export default {
 			lines: 70,
 			statements: 70
 		}
-	}
+	},
+	workerThreads: true,
+	workerIdleMemoryLimit: '500MB'
 };

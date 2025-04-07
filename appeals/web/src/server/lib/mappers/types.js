@@ -334,9 +334,12 @@
  * @property {string} [skipButtonUrl]
  * @property {PageComponent[]} [pageComponents]
  * @property {boolean} [forceRenderSubmitButton]
+ * @property {PageComponent[]} [prePageComponents]
  * @property {PageComponent[]} [postPageComponents]
  * @property {string} [hint]
  * @property {string} [formWrapperColumnClass]
+ * @property {string} [prePageWrapperColumnClass]
+ * @property {string} [postPageWrapperColumnClass]
  */
 
 /**

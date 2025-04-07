@@ -3,7 +3,6 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { request } from '#tests/../app-test.js';
 import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
-import config from '#config/config.js';
 import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -200,6 +199,26 @@ describe('/appeals/:id/reps', () => {
 				]
 			};
 
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => householdAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: householdAppeal.applicationReference,
+				appeal_reference_number: householdAppeal.reference,
+				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+				url: 'https://www.gov.uk/appeal-planning-inspectorate',
+				site_address: expectedSiteAddress
+			};
+
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
 			databaseConnector.representation.update.mockResolvedValue({
@@ -218,24 +237,15 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(200);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.finalCommentRejected.lpa.id,
-				householdAppeal.lpa.email,
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: householdAppeal.lpa.email,
+				templateName: 'final-comment-rejected-lpa'
+			});
 		});
 	});
 
@@ -625,29 +635,23 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(response.status).toEqual(200);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				1,
-				config.govNotify.template.receivedStatementsAndIpComments.lpa.id,
-				mockAppeal.lpa.email,
-				{
-					emailReplyToId: null,
-					personalisation: expectedEmailPayload,
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				2,
-				config.govNotify.template.receivedStatementsAndIpComments.appellant.id,
-				mockAppeal.appellant.email,
-				{
-					emailReplyToId: null,
-					personalisation: expectedEmailPayload,
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
 		});
 	});
 
@@ -734,30 +738,26 @@ describe('/appeals/:id/reps/publish', () => {
 
 			expect(response.status).toEqual(200);
 
+			expect(response.status).toEqual(200);
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				1,
-				config.govNotify.template.finalCommentsDone.lpa.id,
-				mockAppeal.lpa.email,
-				{
-					emailReplyToId: null,
-					personalisation: expectedEmailPayload,
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'final-comments-done-lpa'
+			});
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				2,
-				config.govNotify.template.finalCommentsDone.appellant.id,
-				mockAppeal.appellant.email,
-				{
-					emailReplyToId: null,
-					personalisation: expectedEmailPayload,
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'final-comments-done-appellant'
+			});
 		});
 	});
 });

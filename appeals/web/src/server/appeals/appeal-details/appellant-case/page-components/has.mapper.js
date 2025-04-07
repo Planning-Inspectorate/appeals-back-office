@@ -28,38 +28,6 @@ export function generateHASComponents(
 	/**
 	 * @type {PageComponent}
 	 */
-	const appellantCaseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'govuk-summary-list--no-border',
-			rows: [
-				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-								key: {
-									text: 'LPA'
-								}
-							}
-					  ]
-					: [])
-			]
-		}
-	};
-
-	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
-	);
-	/**
-	 * @type {PageComponent}
-	 */
 	const appellantSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -135,9 +103,7 @@ export function generateHASComponents(
 					mappedAppellantCaseData.applicationReference.display.summaryListItem
 				),
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem
@@ -163,10 +129,32 @@ export function generateHASComponents(
 					text: '4. Appeal details'
 				}
 			},
+			rows: [removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem)]
+		}
+	};
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const uploadedDocuments = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'uploaded-documents'
+			},
+			card: {
+				title: {
+					text: '5. Upload documents'
+				}
+			},
 			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+				mappedAppellantCaseData.applicationForm.display.summaryListItem,
+				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 				mappedAppellantCaseData.costsDocument.display.summaryListItem
 			]
 		}
@@ -194,7 +182,7 @@ export function generateHASComponents(
 						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
-										text: 'Manage',
+										text: 'Change',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
@@ -237,11 +225,11 @@ export function generateHASComponents(
 	};
 
 	return [
-		appellantCaseSummary,
 		appellantSummary,
 		appealSiteSummary,
 		applicationSummary,
 		appealSummary,
+		uploadedDocuments,
 		additionalDocumentsSummary
 	];
 }

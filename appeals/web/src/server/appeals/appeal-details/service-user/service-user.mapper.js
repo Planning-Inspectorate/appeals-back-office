@@ -44,7 +44,7 @@ export const changeServiceUserPage = (
 		title: `Update ${userType} details`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Update ${userType} details`,
+		heading: `${capitalize(userType)}'s contact details`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -53,7 +53,7 @@ export const changeServiceUserPage = (
 					name: 'firstName',
 					type: 'text',
 					label: {
-						text: `${capitalize(userType)}'s first name`
+						text: `First name`
 					},
 					value: serviceUserDetails?.firstName ?? '',
 					errorMessage: errorFirstName(errors)
@@ -66,7 +66,7 @@ export const changeServiceUserPage = (
 					name: 'lastName',
 					type: 'text',
 					label: {
-						text: `${capitalize(userType)}'s last name`
+						text: `Last name`
 					},
 					value: serviceUserDetails?.lastName ?? '',
 					errorMessage: errorLastName(errors)
@@ -79,7 +79,7 @@ export const changeServiceUserPage = (
 					name: 'organisationName',
 					type: 'text',
 					label: {
-						text: `${capitalize(userType)}'s company or organisation name`
+						text: `Company or organisation name`
 					},
 					value: serviceUserDetails?.organisationName ?? '',
 					errorMessage: errorOrganisationNameAllowEmpty(errors)
@@ -92,7 +92,7 @@ export const changeServiceUserPage = (
 					name: 'emailAddress',
 					type: 'text',
 					label: {
-						text: `${capitalize(userType)}'s email address`
+						text: `Email address`
 					},
 					value: serviceUserDetails?.email ?? '',
 					errorMessage: errorEmailAllowEmpty(errors)
@@ -105,7 +105,7 @@ export const changeServiceUserPage = (
 					name: 'phoneNumber',
 					type: 'text',
 					label: {
-						text: `${capitalize(userType)}'s phone number`
+						text: `Phone number`
 					},
 					value: serviceUserDetails?.phoneNumber ?? '',
 					errorMessage: errorPhoneNumberAllowEmpty(errors)

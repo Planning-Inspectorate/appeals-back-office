@@ -105,7 +105,7 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 		return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
 	}
 
-	return '<span>No appeals</span>';
+	return '<span>No</span>';
 };
 
 /**
@@ -255,7 +255,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 		htmlProperty.pageComponents.push({
 			type: 'html',
 			parameters: {
-				html: 'Not provided'
+				html: 'No documents'
 			}
 		});
 		logger.debug('No documents in this folder');
@@ -420,7 +420,9 @@ export const formatPlanningObligationStatus = (planningObligationStatus) => {
 			return 'Not yet started';
 		case 'finalised': // TODO (A2-173): replace with data model constants once those are available
 			return 'Finalised';
-		default:
+		case 'not-applicable': // TODO (A2-173): replace with data model constants once those are available
 			return 'Not applicable';
+		default:
+			return 'Not answered';
 	}
 };

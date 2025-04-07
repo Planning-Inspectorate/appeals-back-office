@@ -9,6 +9,7 @@ const request = supertest(app);
 const appealId = appealData.appealId;
 const appellantCaseId = appealData.appellantCaseId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
+
 describe('application-decision-date', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
@@ -22,7 +23,9 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 		});
 	});
 
@@ -66,7 +69,9 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -94,7 +99,9 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -122,7 +129,9 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -150,7 +159,9 @@ describe('application-decision-date', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -177,7 +188,9 @@ describe('application-decision-date', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toContain('Change application decision date</h1>');
+			expect(elementInnerHtml).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</h1>'
+			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

@@ -6,7 +6,7 @@ export const mapApplicationDecision = ({ appellantCaseData, currentRoute, userHa
 	const value = (() => {
 		switch (appellantCaseData.applicationDecision) {
 			case APPEAL_APPLICATION_DECISION.NOT_RECEIVED:
-				return 'Not received';
+				return 'I have not received a decision';
 			case APPEAL_APPLICATION_DECISION.GRANTED:
 				return 'Granted with conditions';
 			case APPEAL_APPLICATION_DECISION.REFUSED:
@@ -18,7 +18,7 @@ export const mapApplicationDecision = ({ appellantCaseData, currentRoute, userHa
 
 	return textSummaryListItem({
 		id: 'application-decision',
-		text: 'Application decision outcome',
+		text: 'Was your application granted or refused?',
 		value,
 		link: `${currentRoute}/application-outcome/change`,
 		editable: userHasUpdateCase

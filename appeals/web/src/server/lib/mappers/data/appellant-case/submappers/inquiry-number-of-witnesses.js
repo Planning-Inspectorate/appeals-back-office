@@ -1,24 +1,15 @@
+import { textSummaryListItem } from '#lib/mappers/components/index.js';
+
 /** @type {import('../mapper.js').SubMapper} */
-export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute }) => ({
-	id: 'inquiry-number-of-witnesses',
-	display: {
-		summaryListItem: {
-			key: {
-				text: 'Expected number of witnesses'
-			},
-			value: {
-				text: appellantCaseData.appellantProcedurePreferenceWitnessCount || 'Not applicable'
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						visuallyHiddenText: 'expected number of witnesses',
-						href: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
-						attributes: { 'data-cy': 'change-inquiry-number-of-witnesses' }
-					}
-				]
-			}
-		}
-	}
-});
+export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute }) =>
+	textSummaryListItem({
+		id: 'inquiry-number-of-witnesses',
+		text: 'How many witnesses would you expect to give evidence at the inquiry?',
+		editable: true,
+		value:
+			appellantCaseData?.appellantProcedurePreferenceWitnessCount != null
+				? `${appellantCaseData.appellantProcedurePreferenceWitnessCount}`
+				: 'Not answered',
+		link: `${currentRoute}/procedure-preference/inquiry/witnesses/change`,
+		cypressDataName: 'change-inquiry-number-of-witnesses'
+	});

@@ -4,13 +4,13 @@ import { booleanWithDetailsSummaryListItem } from '#lib/mappers/components/index
 export const mapHealthAndSafetyIssues = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'appellant-case-health-and-safety',
-		text: 'Potential safety risks',
+		text: 'Are there any health and safety issues on the appeal site?',
 		value: appellantCaseData.healthAndSafety?.hasIssues,
 		valueDetails: appellantCaseData.healthAndSafety?.details,
-		defaultText: 'No answer provided',
+		defaultText: 'No data',
 		link: `${currentRoute}/safety-risks/change/appellant`,
 		editable: userHasUpdateCase,
 		addCyAttribute: true,
 		withShowMore: true,
-		showMoreLabelText: 'Potential safety risks details'
+		showMoreLabelText: 'Enter reason'
 	});

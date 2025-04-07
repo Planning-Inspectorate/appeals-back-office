@@ -12,8 +12,8 @@
   },
   "type": "module",
   "scripts": {
-    "test": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules npx jest --forceExit --coverage",
+    "test": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+    "test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --forceExit --logHeapUsage --ci --coverage",
     "test:watch": "npm run test -- --watch",
     "dev": "npm run prisma-generate && nodemon --experimental-json-modules -e js ./src/server.js",
     "start": "node ./src/server.js",
@@ -83,9 +83,10 @@
     "jest": "^29.4.2",
     "jest-environment-jsdom": "^29.3.1",
     "jest-mock-extended": "^3.0.1",
+    "mock-fs": "^5.5.0",
     "nodemon": "^2.0.18",
     "prisma": "4.16.1",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "supertest": "7.0.0",
     "swagger-autogen": "^2.21.4",
     "swagger-typescript-api": "^13.0.5"
@@ -101,6 +102,7 @@
     "#common/*": "./src/server/common/*",
     "#config/*": "./src/server/config/*",
     "#state/*": "./src/server/state/*",
-    "#mappers/*": "./src/server/mappers/*"
+    "#mappers/*": "./src/server/mappers/*",
+    "#notify/*": "./src/server/notify/*"
   }
 }
