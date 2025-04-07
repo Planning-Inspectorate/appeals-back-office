@@ -4,7 +4,7 @@ exports[`change-site-area GET /change should render changeSiteArea page when loa
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change the site area</h1>
+            <h1 class="govuk-heading-l">What is the area of the appeal site?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -49,7 +49,7 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change the site area</h1>
+            <h1 class="govuk-heading-l">What is the area of the appeal site?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -94,7 +94,7 @@ exports[`change-site-area POST /change should re-render changeSiteArea page with
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Change the site area</h1>
+            <h1 class="govuk-heading-l">What is the area of the appeal site?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

@@ -11,13 +11,13 @@ import {
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import config from '#config/config.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import formatDate from '#utils/date-formatter.js';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -233,14 +233,14 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			await notifyPublished(
 				appeal,
 				notifyClient,
-				config.govNotify.template.receivedStatementsAndIpComments.lpa,
+				'received-statement-and-ip-comments-lpa',
 				appeal.lpa?.email,
 				finalCommentsDueDate
 			);
 			await notifyPublished(
 				appeal,
 				notifyClient,
-				config.govNotify.template.receivedStatementsAndIpComments.appellant,
+				'received-statement-and-ip-comments-appellant',
 				appeal.agent?.email || appeal.appellant?.email,
 				finalCommentsDueDate
 			);
@@ -294,14 +294,14 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 /**
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {import('#endpoints/appeals.js').NotifyTemplate} template
+ * @param {string} templateName
  * @param {string | null} [recipientEmail]
  * @param {string} [finalCommentsDueDate]
  * */
 async function notifyPublished(
 	appeal,
 	notifyClient,
-	template,
+	templateName,
 	recipientEmail,
 	finalCommentsDueDate = ''
 ) {
@@ -313,7 +313,7 @@ async function notifyPublished(
 	}
 	if (!recipientEmail) {
 		throw new Error(
-			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: missing recipient email address for ${template.id} template`
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: missing recipient email address for template ${templateName}`
 		);
 	}
 
@@ -321,11 +321,16 @@ async function notifyPublished(
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
-	await notifyClient.sendEmail(template, recipientEmail, {
-		appeal_reference_number: appeal.reference,
-		site_address: siteAddress,
-		lpa_reference: lpaReference,
-		final_comments_deadline: finalCommentsDueDate
+	await notifySend({
+		notifyClient,
+		templateName,
+		recipientEmail,
+		personalisation: {
+			appeal_reference_number: appeal.reference,
+			site_address: siteAddress,
+			lpa_reference: lpaReference,
+			final_comments_deadline: finalCommentsDueDate
+		}
 	});
 }
 
@@ -339,12 +344,7 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
 	}
 
-	return notifyPublished(
-		appeal,
-		notifyClient,
-		config.govNotify.template.finalCommentsDone.lpa,
-		recipientEmail
-	);
+	return notifyPublished(appeal, notifyClient, 'final-comments-done-lpa', recipientEmail);
 }
 
 /**
@@ -359,10 +359,5 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
 		);
 	}
 
-	return notifyPublished(
-		appeal,
-		notifyClient,
-		config.govNotify.template.finalCommentsDone.appellant,
-		recipientEmail
-	);
+	return notifyPublished(appeal, notifyClient, 'final-comments-done-appellant', recipientEmail);
 }

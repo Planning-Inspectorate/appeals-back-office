@@ -6,12 +6,9 @@
  * code will the switching logic for you.
  */
 
-import config from '#config/config.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	FRONT_OFFICE_URL
-} from '@pins/appeals/constants/support.js';
+import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
+import { notifySend } from '#notify/notify-send.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -37,28 +34,30 @@ export const ipCommentRejection = async ({
 	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
 	const recipientEmail = representation.represented?.email;
 	if (recipientEmail) {
-		const templateId = extendedDeadline
-			? config.govNotify.template.commentRejectedDeadlineExtended
-			: config.govNotify.template.ipCommentRejected;
+		const templateName = extendedDeadline
+			? 'ip-comment-rejected-deadline-extended'
+			: 'ip-comment-rejected';
 
-		try {
-			await notifyClient.sendEmail(templateId, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				url: FRONT_OFFICE_URL,
-				reasons,
-				deadline_date: extendedDeadline
-			});
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-		}
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			url: FRONT_OFFICE_URL,
+			reasons,
+			deadline_date: extendedDeadline
+		};
+
+		await notifySend({
+			templateName,
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
 	}
 };
 
 /** @type {Service} */
 export const appellantFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
-	const templateId = config.govNotify.template.finalCommentRejected.appellant;
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 
@@ -67,22 +66,22 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
-	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, {
+	await notifySend({
+		templateName: 'final-comment-rejected-appellant',
+		notifyClient,
+		recipientEmail,
+		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			url: FRONT_OFFICE_URL,
 			reasons
-		});
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-	}
+		}
+	});
 };
 
 /** @type {Service} */
 export const lpaFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
-	const templateId = config.govNotify.template.finalCommentRejected.lpa;
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 
@@ -91,17 +90,18 @@ export const lpaFinalCommentRejection = async ({ notifyClient, appeal, represent
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
-	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, {
+	await notifySend({
+		templateName: 'final-comment-rejected-lpa',
+		notifyClient,
+		recipientEmail,
+		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			url: FRONT_OFFICE_URL,
 			reasons
-		});
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-	}
+		}
+	});
 };
 
 /** @type {Service} */
@@ -111,7 +111,6 @@ export const lpaStatementIncomplete = async ({
 	representation,
 	allowResubmit
 }) => {
-	const templateId = config.govNotify.template.statementIncomplete.lpa;
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
@@ -121,18 +120,17 @@ export const lpaStatementIncomplete = async ({
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
-	const vars = {
-		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || '',
-		site_address: siteAddress,
-		url: FRONT_OFFICE_URL,
-		deadline_date: extendedDeadline,
-		reasons
-	};
-
-	try {
-		await notifyClient.sendEmail(templateId, recipientEmail, vars);
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-	}
+	await notifySend({
+		templateName: 'lpa-statement-incomplete',
+		notifyClient,
+		recipientEmail,
+		personalisation: {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			url: FRONT_OFFICE_URL,
+			deadline_date: extendedDeadline,
+			reasons
+		}
+	});
 };

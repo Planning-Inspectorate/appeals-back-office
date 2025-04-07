@@ -15,14 +15,14 @@ export const changeGreenBeltPage = (appealData, data, origin) => {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Is the site in a green belt?`,
+		title: `Is the appeal site in a green belt?`,
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'greenBeltRadio',
 				value: data,
-				legendText: 'Is the site in a green belt?',
+				legendText: 'Is the appeal site in a green belt?',
 				legendIsPageHeading: true
 			})
 		]

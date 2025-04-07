@@ -6,8 +6,7 @@ import transitionState from '#state/transition-state.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_NOT_FOUND,
-	ERROR_NO_RECIPIENT_EMAIL,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -15,9 +14,8 @@ import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import config from '#config/config.js';
-import logger from '#utils/logger.js';
 import { EventType } from '@pins/event-client';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -115,19 +113,20 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected ?? []
 			);
 
-			try {
-				await notifyClient.sendEmail(config.govNotify.template.lpaqIncomplete, recipientEmail, {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: lpaReference || '',
-					site_address: siteAddress,
-					due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
-					reasons: incompleteReasonsList
-				});
-			} catch (error) {
-				if (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: lpaReference || '',
+				site_address: siteAddress,
+				due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
+				reasons: incompleteReasonsList
+			};
+
+			await notifySend({
+				templateName: 'lpaq-incomplete',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
 		}
 	}
 
@@ -141,17 +140,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
  * */
 function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
 	const email = appeal.lpa?.email;
-	if (!email) {
-		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-	}
-
-	return sendLpaqCompleteEmail(
-		notifyClient,
-		appeal,
-		siteAddress,
-		config.govNotify.template.lpaqComplete.lpa,
-		email
-	);
+	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpaq-complete-lpa', email);
 }
 
 /**
@@ -161,17 +150,7 @@ function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
  * */
 function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
-	if (!email) {
-		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-	}
-
-	return sendLpaqCompleteEmail(
-		notifyClient,
-		appeal,
-		siteAddress,
-		config.govNotify.template.lpaqComplete.appellant,
-		email
-	);
+	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpaq-complete-appellant', email);
 }
 
 /**
@@ -179,20 +158,28 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
  * @param {string} siteAddress
- * @param {import('#endpoints/appeals.js').NotifyTemplate} template
- * @param {string} recipientEmail
+ * @param {string} templateName
+ * @param {string | null | undefined} recipientEmail
  */
-async function sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, template, recipientEmail) {
-	try {
-		await notifyClient.sendEmail(template, recipientEmail, {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress
-		});
-	} catch (error) {
-		logger.error(error);
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-	}
+async function sendLpaqCompleteEmail(
+	notifyClient,
+	appeal,
+	siteAddress,
+	templateName,
+	recipientEmail
+) {
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress
+	};
+
+	await notifySend({
+		templateName,
+		notifyClient,
+		recipientEmail,
+		personalisation
+	});
 }
 
 export { checkLPAQuestionnaireExists, updateLPAQuestionnaireValidationOutcome };

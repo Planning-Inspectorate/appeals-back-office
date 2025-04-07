@@ -1,12 +1,35 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { startCasePage, changeDatePage } from './start-case.mapper.js';
+import { startCasePage, changeDatePage, selectProcedurePage } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import featureFlags from '#common/feature-flags.js';
+import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealType },
+		session
+	} = request;
+
+	if (
+		appealType === APPEAL_TYPE.S78 &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) &&
+		session.startCaseAppealProcedure?.[appealId]?.appealProcedure !== 'written'
+	) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
+				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
+			}`
+		);
+	}
+
+	if (session.startCaseAppealProcedure?.[appealId]) {
+		delete session.startCaseAppealProcedure?.[appealId];
+	}
+
 	renderStartDatePage(request, response);
 };
 
@@ -113,5 +136,46 @@ export const postChangeDate = async (request, response) => {
 		);
 
 		return response.render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getSelectProcedure = async (request, response) => {
+	renderSelectProcedure(request, response);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderSelectProcedure = async (request, response) => {
+	const { appealReference } = request.currentAppeal;
+
+	const mappedPageContent = selectProcedurePage(
+		appealReference,
+		request.query?.backUrl ? String(request.query?.backUrl) : '/'
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postSelectProcedure = async (request, response) => {
+	try {
+		const { appealId } = request.currentAppeal;
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}/start-case/add`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the select appeal procedure page'
+		);
+
+		return response.status(500).render('app/500.njk');
 	}
 };

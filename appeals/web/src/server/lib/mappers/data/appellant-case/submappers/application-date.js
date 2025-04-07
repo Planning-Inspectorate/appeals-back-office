@@ -5,7 +5,7 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapApplicationDate = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'application-date',
-		text: 'Application submitted',
+		text: 'What date did you submit your application?',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
 		link: `${currentRoute}/application-date/change`,
 		editable: userHasUpdateCase

@@ -14,23 +14,23 @@ exports[`site-ownership GET /change should render the siteOwnership change page 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change the site ownership</h1>
+                                    <h1 class="govuk-fieldset__heading"> Does the appellant own all of the land involved in the appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="site-ownership-radio" name="siteOwnershipRadio"
                                         type="radio" value="fully" checked>
-                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio">Fully owned by appellant</label>
+                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio">Owns all of the land</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="site-ownership-radio-2" name="siteOwnershipRadio"
                                         type="radio" value="partially">
-                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio-2">Partially owned by appellant</label>
+                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio-2">Owns some of the land</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="site-ownership-radio-3" name="siteOwnershipRadio"
                                         type="radio" value="none">
-                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio-3">Not owned by appellant</label>
+                                        <label class="govuk-label govuk-radios__label" for="site-ownership-radio-3">Does not own any of the land</label>
                                     </div>
                                 </div>
                             </fieldset>

@@ -8,7 +8,7 @@ export const mapRelatedAppeals = ({ currentRoute, userHasUpdateCase, appealDetai
 	if (appealDetails.otherAppeals.length) {
 		actionItems.push(
 			displayComponentGivenPermission(userHasUpdateCase, {
-				text: 'Manage',
+				text: 'Change',
 				href: `${currentRoute}/other-appeals/manage`,
 				visuallyHiddenText: 'Related appeals',
 				attributes: { 'data-cy': 'manage-related-appeals' }
@@ -20,7 +20,7 @@ export const mapRelatedAppeals = ({ currentRoute, userHasUpdateCase, appealDetai
 		displayComponentGivenPermission(userHasUpdateCase, {
 			text: 'Add',
 			href: `${currentRoute}/other-appeals/add`,
-			visuallyHiddenText: 'Related appeals',
+			visuallyHiddenText: 'Are there other appeals linked to your development?',
 			attributes: { 'data-cy': 'add-related-appeals' }
 		})
 	);
@@ -30,10 +30,10 @@ export const mapRelatedAppeals = ({ currentRoute, userHasUpdateCase, appealDetai
 		display: {
 			summaryListItem: {
 				key: {
-					text: 'Related appeals'
+					text: 'Are there other appeals linked to your development?'
 				},
 				value: {
-					html: formatListOfRelatedAppeals(appealDetails.otherAppeals) || 'No related appeals'
+					html: formatListOfRelatedAppeals(appealDetails.otherAppeals)
 				},
 				actions: {
 					items: actionItems

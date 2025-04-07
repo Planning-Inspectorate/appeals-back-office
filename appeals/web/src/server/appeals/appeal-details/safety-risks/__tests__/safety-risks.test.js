@@ -43,7 +43,9 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
+			expect(elementInnerHtml).toContain(
+				'Are there any health and safety issues on the appeal site?</h1>'
+			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -95,7 +97,9 @@ describe('safety-risks', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Are there any potential safety risks?</h1>');
+			expect(elementInnerHtml).toContain(
+				'Are there any health and safety issues on the appeal site?</h1>'
+			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 

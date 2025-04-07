@@ -23,7 +23,7 @@ describe('application-outcome', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision outcome</h1>');
+			expect(elementInnerHtml).toContain('Was your application granted or refused?</h1>');
 		});
 	});
 
@@ -63,7 +63,7 @@ describe('application-outcome', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change application decision outcome</h1>');
+			expect(elementInnerHtml).toContain('Was your application granted or refused?</h1>');
 			expect(elementInnerHtml).toContain('Select one of the options');
 		});
 	});

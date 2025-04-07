@@ -4,10 +4,10 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapSiteArea = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	textSummaryListItem({
 		id: 'site-area',
-		text: 'Site area (m²)',
+		text: 'What is the area of the appeal site?',
 		value: appellantCaseData.siteAreaSquareMetres
 			? `${appellantCaseData.siteAreaSquareMetres} m²`
-			: '',
+			: 'No data',
 		link: `${currentRoute}/site-area/change`,
 		editable: userHasUpdateCase
 	});
