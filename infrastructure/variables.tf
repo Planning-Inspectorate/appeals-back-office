@@ -52,6 +52,8 @@ variable "apps_config" {
       family   = string
       sku_name = string
     })
+
+    session_max_age = string
   })
 }
 
