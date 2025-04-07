@@ -204,15 +204,15 @@ export function dateWithdrawalRequestPage(
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		pageComponents: [
+		prePageComponents: [
 			{
 				type: 'hint',
 				parameters: {
 					text: 'This is the date on the withdrawal correspondence from the appellant'
 				}
-			},
-			selectDateComponent
-		]
+			}
+		],
+		pageComponents: [selectDateComponent]
 	};
 }
 
@@ -378,7 +378,8 @@ export function checkAndConfirmPage(appealData, session) {
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		submitButtonText: 'Confirm',
-		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
+		prePageComponents: [summaryListComponent, warningTextComponent],
+		pageComponents: [insetConfirmComponent]
 	};
 
 	if (pageContent.pageComponents) {

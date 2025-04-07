@@ -86,7 +86,7 @@
     "mock-fs": "^5.5.0",
     "nodemon": "^2.0.18",
     "prisma": "4.16.1",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "supertest": "7.0.0",
     "swagger-autogen": "^2.21.4",
     "swagger-typescript-api": "^13.0.5"
