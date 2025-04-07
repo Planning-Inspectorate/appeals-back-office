@@ -4,6 +4,7 @@ apps_config = {
   functions_service_plan_sku = "P1v3"
   node_environment           = "production"
   private_endpoint_enabled   = true
+  session_max_age            = 10800000
 
   auth = {
     client_id = "591f9564-095c-459a-b090-ce0f0a16ee09" # Appeals Back Office TEST
@@ -42,9 +43,6 @@ apps_config = {
       decision_is_allowed_split_dismissed_lpa_id                      = "09dbb936-bc1a-400b-a2f8-711078921bf5"
       decision_is_invalid_appellant_id                                = "bd117483-e7fe-4655-8f57-cf597ad57710"
       decision_is_invalid_lpa_id                                      = "a0cb542f-24d3-4b22-826b-1e012892f922"
-      lpaq_complete_id                                                = "c571ee53-69c8-400e-a4c0-44ded262a081"
-      lpaq_complete_appellant_id                                      = "13f29a07-019c-4237-b483-d930f8393aa1"
-      lpaq_incomplete_id                                              = "4701bc3c-2f24-4ed8-8841-14d93c3b9964"
       site_visit_change_accompanied_date_change_appellant_id          = "3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc"
       site_visit_change_accompanied_date_change_lpa_id                = "5d23f669-a1d2-4232-9171-10f956dfb400"
       site_visit_change_accompanied_to_access_required_appellant_id   = "f9bd99e7-f3f1-4836-a2dc-018dfdece854"
@@ -63,15 +61,6 @@ apps_config = {
       site_visit_schedule_accompanied_lpa_id                          = "03a6616e-3e0c-4f28-acd5-f4e873847457"
       site_visit_schedule_unaccompanied_appellant_id                  = "a33bb800-56d9-46a4-ba64-35d9d0263666"
       valid_appellant_case_id                                         = "3b4b74b4-b604-411b-9c98-5be2c6f3bdfd"
-      ip_comment_rejected_id                                          = "13924f23-8b50-4e2e-86f2-70b92360889b"
-      final_comment_rejected_appellant_id                             = "3165d99e-f628-4623-95e4-acdebf6d700c"
-      final_comment_rejected_lpa_id                                   = "ebb2d0e0-2146-43a5-a6f5-d45e9ee0ca3f"
-      comment_rejected_deadline_extended_id                           = "ccffeb37-c7e0-4c38-888c-6cf2755f6703"
-      lpa_statement_incomplete_id                                     = "471cfa29-ecd4-485a-8ead-dbc73285637a"
-      appellant_final_comments_done_id                                = "fc99e209-8b6a-4507-b026-880cbb1df031"
-      lpa_final_comments_done_id                                      = "ac0485a3-6d83-427b-a854-2576a769ec09"
-      received_statement_and_ip_comments_appellant_id                 = "c368f84b-01ad-4a78-9823-27ba4ce74351"
-      received_statement_and_ip_comments_lpa_id                       = "be3c6c21-f429-4ab3-87f9-d5e280650543"
     }
   }
 

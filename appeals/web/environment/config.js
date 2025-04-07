@@ -62,6 +62,7 @@ export function loadConfig() {
 		DISABLE_REDIS,
 		REDIS_CONNECTION_STRING,
 		SESSION_SECRET,
+		SESSION_MAX_AGE,
 		SSL_CERT_FILE,
 		SSL_KEY_FILE,
 		RETRY_MAX_ATTEMPTS,
@@ -98,7 +99,8 @@ export function loadConfig() {
 		disableRedis: DISABLE_REDIS || false,
 		session: {
 			redis: REDIS_CONNECTION_STRING,
-			secret: SESSION_SECRET
+			secret: SESSION_SECRET,
+			maxAge: SESSION_MAX_AGE
 		},
 		retry: {
 			maxAttempts: RETRY_MAX_ATTEMPTS,
