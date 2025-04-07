@@ -180,9 +180,9 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 
 	const pageComponents = [
 		simpleHtmlComponent(
-			'a',
-			{ href: `/documents/${appealDetails.appealId}/bulk-download/documents`, class: 'govuk-link' },
-			'Download all documents'
+			'p',
+			{ class: 'govuk-body' },
+			'<a href="/documents/${appealDetails.appealId}/bulk-download/documents" class="govuk-link">Download all documents</a>'
 		),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		table
