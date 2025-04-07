@@ -879,6 +879,11 @@ describe('appeal-details', () => {
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {
 				const appealId = appealData.appealId.toString();
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, { ...appealData, lpaQuestionnaireId: undefined })
+					.persist();
 				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 					planningApplicationReference: '12345/A/67890'
 				});
@@ -898,7 +903,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
+				expect(notificationBannerElementHTML).toContain('Appeal updated</p>');
 			});
 
 			it('should render a success notification banner when the inspector access was updated', async () => {

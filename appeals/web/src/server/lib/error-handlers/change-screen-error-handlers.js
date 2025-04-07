@@ -74,7 +74,7 @@ export const errorPhoneNumberAllowEmpty = (/** @type {Error}*/ errors) => {
 export const errorPlanningApplicationReference = (/** @type {Error}*/ errors) => {
 	return errors?.planningApplicationReference
 		? {
-				text: 'Enter the LPA application reference'
+				text: errors.planningApplicationReference.msg
 		  }
 		: undefined;
 };
