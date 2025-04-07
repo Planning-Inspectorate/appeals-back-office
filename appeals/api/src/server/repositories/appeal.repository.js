@@ -173,7 +173,8 @@ const updateAppealById = (
 		caseOfficer,
 		inspector,
 		agent,
-		applicationReference
+		applicationReference,
+		procedureTypeId
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -186,6 +187,7 @@ const updateAppealById = (
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
+			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
 			caseUpdatedDate: new Date()
 		},
 		include: {

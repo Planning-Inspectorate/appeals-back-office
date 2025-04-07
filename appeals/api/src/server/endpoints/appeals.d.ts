@@ -133,6 +133,7 @@ interface UpdateAppealRequest {
 	caseOfficer?: number | null;
 	inspector?: number | null;
 	agent?: number | null;
+	procedureTypeId?: number | null;
 }
 
 interface SingleAppellantCaseResponse {
