@@ -7,12 +7,13 @@ import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
+import { getCaseHearing } from './s78/case-hearing.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  *
- * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {SharedPageComponentProperties & AccordionPageComponent}
@@ -74,10 +75,13 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseManagement = getCaseManagement(mappedData);
 
+	const caseHearing = getCaseHearing(mappedData, appealDetails);
+
 	const accordionComponents = [
 		caseOverview,
 		siteDetails,
 		caseTimetable[0],
+		...(caseHearing ? caseHearing : []),
 		caseDocumentation,
 		caseContacts,
 		caseTeam,
@@ -113,6 +117,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					heading: { text: 'Timetable' },
 					content: { html: '', pageComponents: caseTimetable }
 				},
+				...(caseHearing
+					? [
+							{
+								heading: { text: 'Hearing' },
+								content: { html: '', pageComponents: caseHearing }
+							}
+					  ]
+					: []),
 				{
 					heading: { text: 'Documentation' },
 					content: { html: '', pageComponents: [caseDocumentation] }
