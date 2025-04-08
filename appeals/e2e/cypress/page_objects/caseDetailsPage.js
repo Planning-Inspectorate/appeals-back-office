@@ -26,8 +26,10 @@ export class CaseDetailsPage extends Page {
 		addRelatedAppeals: 'add-related-appeals',
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
+		addMainPartyCorrespondence: 'add-main-party-correspondence',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
 		manageInspectorCorrespondence: 'manage-inspector-correspondence',
+		manageMainPartyCorrespondence: 'manage-main-party-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -75,6 +77,8 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.addCrossTeamCorrespondence),
 		addInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.addInspectorCorrespondence),
+		addMainPartyCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.addMainPartyCorrespondence),
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
@@ -110,6 +114,8 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
 		manageInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence),
+		manageMainPartyCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.manageMainPartyCorrespondence),
 		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
 		manageCostDecision: () =>
 			cy
@@ -289,12 +295,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.addInspectorCorrespondence().click();
 	}
 
+	clickAddMainPartyCorrespondence() {
+		this.elements.addMainPartyCorrespondence().click();
+	}
+
 	clickManageInspectorCorrespondence() {
 		this.elements.manageInspectorCorrespondence().click();
 	}
 
 	clickManageCrossTeamCorrespondence() {
 		this.elements.manageCrossTeamCorrespondence().click();
+	}
+
+	clickManageMainPartyCorrespondence() {
+		this.elements.manageMainPartyCorrespondence().click();
 	}
 
 	clickChangeAppealType() {
