@@ -902,12 +902,6 @@ export const spec = {
 				}
 			]
 		},
-		LPA: {
-			id: 1,
-			name: 'Bristol City Council',
-			lpaCode: 'BRIS',
-			email: 'bris@lpa-email.gov.uk'
-		},
 		LPAs: [
 			{
 				id: 1,
