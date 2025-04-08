@@ -63,3 +63,10 @@ export const COMMENT_STATUS = Object.freeze({
 	VALID_REQUIRES_REDACTION: 'valid_requires_redaction',
 	INCOMPLETE: 'incomplete'
 });
+
+export const REVERT_BUTTON_TEXT = Object.freeze({
+	LPA_STATEMENT: 'Revert to original LPA statement',
+	LPA_FINAL_COMMENT: 'Revert to original LPA final comments',
+	APPELLANT_FINAL_COMMENT: 'Revert to original appellant final comments',
+	DEFAULT_TEXT: 'Revert to original comment'
+});
