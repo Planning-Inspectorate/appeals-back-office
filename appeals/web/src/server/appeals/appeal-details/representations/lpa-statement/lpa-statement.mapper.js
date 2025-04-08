@@ -4,6 +4,7 @@ import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -36,7 +37,11 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 		: null;
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
-
+	//check if the redacted statement is the same as the original - if it is the same onlyt show original statement
+	const shouldShowRedactedRow = checkRedactedText(
+		lpaStatement.originalRepresentation,
+		lpaStatement.redactedRepresentation
+	);
 	/** @type {PageComponent} */
 	const lpaStatementSummaryList = {
 		type: 'summary-list',
@@ -46,7 +51,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 		},
 		parameters: {
 			rows: [
-				...(lpaStatement.redactedRepresentation
+				...(lpaStatement.redactedRepresentation && shouldShowRedactedRow
 					? [
 							{
 								key: { text: 'Original statement' },
