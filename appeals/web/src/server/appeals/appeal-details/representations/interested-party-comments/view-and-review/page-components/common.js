@@ -2,6 +2,7 @@ import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documen
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -65,7 +66,10 @@ export function generateCommentSummaryList(
 		: null;
 
 	const { address, name, email } = comment.represented || {};
-
+	const redactMatching = checkRedactedText(
+		comment.originalRepresentation,
+		comment.redactedRepresentation
+	);
 	const rows = [
 		{
 			key: { text: 'Interested party' },
@@ -116,7 +120,9 @@ export function generateCommentSummaryList(
 			value: { html: dateISOStringToDisplayDate(comment.created) }
 		},
 		{
-			key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
+			key: {
+				text: comment.redactedRepresentation && redactMatching ? 'Original comment' : 'Comment'
+			},
 			value: {
 				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
 			},
@@ -132,7 +138,7 @@ export function generateCommentSummaryList(
 						  ]
 			}
 		},
-		...(comment.redactedRepresentation
+		...(comment.redactedRepresentation && redactMatching
 			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
 			: []),
 		{
