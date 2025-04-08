@@ -8,7 +8,7 @@ export const mapAgent = ({ appealDetails, currentRoute, userHasUpdateCasePermiss
 		id: 'agent',
 		text: 'Agent',
 		value: {
-			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No agent'
+			html: appealDetails.agent ? formatServiceUserAsHtmlList(appealDetails.agent) : 'No data'
 		},
 		link: `${currentRoute}/service-user/${actionText.toLowerCase()}/agent`,
 		editable: userHasUpdateCasePermission,
