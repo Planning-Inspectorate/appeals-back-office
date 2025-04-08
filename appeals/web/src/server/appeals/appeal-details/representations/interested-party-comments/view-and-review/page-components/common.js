@@ -128,7 +128,7 @@ export function generateCommentSummaryList(
 			},
 			actions: {
 				items:
-					commentIsDocument || isReviewPage
+					commentIsDocument || isReviewPage || redactMatching
 						? []
 						: [
 								{
@@ -139,7 +139,20 @@ export function generateCommentSummaryList(
 			}
 		},
 		...(comment.redactedRepresentation && redactMatching
-			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
+			? [
+					{
+						key: { text: 'Redacted comment' },
+						value: { text: comment.redactedRepresentation },
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
+								}
+							]
+						}
+					}
+			  ]
 			: []),
 		{
 			key: { text: 'Supporting documents' },
