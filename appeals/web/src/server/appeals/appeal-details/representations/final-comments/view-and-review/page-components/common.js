@@ -2,6 +2,7 @@ import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -52,10 +53,18 @@ export function generateCommentsSummaryList(appealId, comment) {
 		: null;
 
 	const commentTypePath = mapRepresentationTypeToPath(comment.representationType);
-
+	const redactedCommentDifferent = checkRedactedText(
+		comment.originalRepresentation,
+		comment.redactedRepresentation
+	);
 	const rows = [
 		{
-			key: { text: comment.redactedRepresentation ? 'Original final comments' : 'Final comments' },
+			key: {
+				text:
+					comment.redactedRepresentation && redactedCommentDifferent
+						? 'Original final comments'
+						: 'Final comments'
+			},
 			value: commentIsDocument
 				? { text: 'Added as a document' }
 				: {
@@ -84,7 +93,7 @@ export function generateCommentsSummaryList(appealId, comment) {
 						  ]
 			}
 		},
-		...(comment.redactedRepresentation
+		...(comment.redactedRepresentation && redactedCommentDifferent
 			? [
 					{
 						key: { text: 'Redacted comment' },
