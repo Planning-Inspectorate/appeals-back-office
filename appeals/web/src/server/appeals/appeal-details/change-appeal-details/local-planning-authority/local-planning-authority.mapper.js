@@ -9,10 +9,10 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  *
  * @param {Appeal} appealDetails
  * @param {LPA[]} lpaList
- * @param {LPA} currentLpa
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function changeLpaPage(appealDetails, lpaList, currentLpa) {
+export function changeLpaPage(appealDetails, lpaList, backLinkUrl) {
 	/** @type {PageComponent} */
 	const selectLpaRadiosComponent = {
 		type: 'radios',
@@ -26,7 +26,7 @@ export function changeLpaPage(appealDetails, lpaList, currentLpa) {
 					classes: 'govuk-fieldset__legend--l'
 				}
 			},
-			items: mapLpasToSelectItemParameters(lpaList, currentLpa)
+			items: mapLpasToSelectItemParameters(lpaList)
 		}
 	};
 
@@ -35,7 +35,7 @@ export function changeLpaPage(appealDetails, lpaList, currentLpa) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Local planning authority - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`, // will need to be dynamic
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [selectLpaRadiosComponent]
 	};
@@ -46,17 +46,14 @@ export function changeLpaPage(appealDetails, lpaList, currentLpa) {
 /**
  *
  * @param { LPA[] } lpaList
- * @param { LPA } currentLpa
- * @returns { {value: string, text: string, checked: boolean}[] }
+ * @returns { {value: string, text: string}[] }
  */
-export function mapLpasToSelectItemParameters(lpaList, currentLpa) {
+export function mapLpasToSelectItemParameters(lpaList) {
 	return lpaList
 		.filter((lpa) => !['Q1111', 'Q9999'].includes(lpa.lpaCode))
 		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((lpa) => ({
 			value: lpa.id.toString(),
-			text: lpa.name,
-			//todo a2-2605 confirm if existing LPA should be checked by default
-			checked: lpa.lpaCode == currentLpa.lpaCode
+			text: lpa.name
 		}));
 }

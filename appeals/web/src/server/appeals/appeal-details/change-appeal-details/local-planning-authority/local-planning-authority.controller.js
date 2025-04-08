@@ -1,11 +1,7 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { changeLpaPage } from './local-planning-authority.mapper.js';
-import {
-	getLpaFromAppealId,
-	getLpaList,
-	postChangeLpaRequest
-} from './local-planning-authority.service.js';
+import { getLpaList, postChangeLpaRequest } from './local-planning-authority.service.js';
 
 /**
  *
@@ -39,7 +35,9 @@ export const postChangeLpa = async (request, response) => {
 			appealId
 		});
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		const redirectUrl = generateBacklinkUrl(request.originalUrl);
+
+		return response.redirect(redirectUrl);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -54,12 +52,11 @@ export const postChangeLpa = async (request, response) => {
 const renderChangeLpa = async (request, response) => {
 	try {
 		const { currentAppeal, apiClient, errors } = request;
-		const { appealId } = currentAppeal;
 
 		const lpaList = await getLpaList(apiClient);
-		const currentLpa = await getLpaFromAppealId(apiClient, appealId);
+		const backlinkUrl = generateBacklinkUrl(request.originalUrl);
 
-		const mappedPageContent = changeLpaPage(currentAppeal, lpaList, currentLpa);
+		const mappedPageContent = changeLpaPage(currentAppeal, lpaList, backlinkUrl);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,
@@ -69,4 +66,13 @@ const renderChangeLpa = async (request, response) => {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ *
+ * @param {string} currentUrl
+ * @returns {string}
+ */
+const generateBacklinkUrl = (currentUrl) => {
+	return currentUrl.split('/').slice(0, -2).join('/');
 };
