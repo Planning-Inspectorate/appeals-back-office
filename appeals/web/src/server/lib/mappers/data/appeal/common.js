@@ -34,10 +34,10 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 					: '#'
 			}" target="_blank">${linkText}</a>`;
 		} else {
-			html = '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
+			html = '<strong class="govuk-tag govuk-tag--red">Virus detected</strong>';
 		}
 	} else {
-		html = '<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>';
+		html = '<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>';
 	}
 
 	return html;
