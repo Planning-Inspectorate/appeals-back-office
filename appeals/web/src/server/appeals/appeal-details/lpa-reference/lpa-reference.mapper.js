@@ -34,7 +34,7 @@ export const changeLpaReferencePage = (
 					name: 'planningApplicationReference',
 					type: 'text',
 					label: {
-						text: 'LPA application reference'
+						text: 'Planning application reference'
 					},
 					value: storedPlanningApplicationReference ?? appealData.planningApplicationReference,
 					errorMessage: errorPlanningApplicationReference(errors)
