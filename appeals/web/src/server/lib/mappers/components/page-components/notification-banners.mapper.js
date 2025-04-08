@@ -398,7 +398,7 @@ export const notificationBannerDefinitions = {
 	},
 	lpaChanged: {
 		type: 'success',
-		pages: ['appealDetails'],
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		text: 'LPA updated'
 	}
 };
