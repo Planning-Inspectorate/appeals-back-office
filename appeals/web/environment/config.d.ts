@@ -58,6 +58,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	session: {
 		redis: string;
 		secret: string;
+		maxAge: number;
 	};
 	sslCertificateFile: string;
 	sslCertificateKeyFile: string;

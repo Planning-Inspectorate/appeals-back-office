@@ -33,6 +33,12 @@ export const PROCEDURE_TYPE_MAP = Object.freeze({
 	inquiry: 'an inquiry'
 });
 
+export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
+	hearing: 1,
+	inquiry: 2,
+	written: 3
+});
+
 export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	LPA_STATEMENT: 'lpa_statement',
 	APPELLANT_STATEMENT: 'appellant_statement',

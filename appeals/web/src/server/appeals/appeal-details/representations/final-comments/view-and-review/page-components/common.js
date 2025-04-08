@@ -81,7 +81,9 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items:
-					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED || redactedCommentDifferent
+					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+					redactedCommentDifferent ||
+					comment.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 						? []
 						: [
 								{

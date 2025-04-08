@@ -30,6 +30,6 @@ export default session({
 	unset: 'destroy',
 	cookie: {
 		secure: config.isProduction,
-		maxAge: 86_400_000
+		maxAge: config.session?.maxAge || 86_400_000
 	}
 });

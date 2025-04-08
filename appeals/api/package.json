@@ -12,8 +12,8 @@
   },
   "type": "module",
   "scripts": {
-    "test": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules npx jest --forceExit --coverage",
+    "test": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+    "test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --forceExit --logHeapUsage --ci --coverage",
     "test:watch": "npm run test -- --watch",
     "dev": "npm run prisma-generate && nodemon --experimental-json-modules -e js ./src/server.js",
     "start": "node ./src/server.js",
@@ -62,7 +62,7 @@
     "morgan": "1.10.0",
     "nock": "^13.5.1",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.3.1",
+    "node-fetch": "^3.3.2",
     "notifications-node-client": "^8.2.1",
     "pino": "^8.1.0",
     "pino-http": "^8.1.0",
@@ -86,7 +86,7 @@
     "mock-fs": "^5.5.0",
     "nodemon": "^2.0.18",
     "prisma": "4.16.1",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "supertest": "7.0.0",
     "swagger-autogen": "^2.21.4",
     "swagger-typescript-api": "^13.0.5"

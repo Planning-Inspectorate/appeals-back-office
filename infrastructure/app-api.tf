@@ -76,9 +76,6 @@ module "app_api" {
     GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID                      = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_lpa_id
     GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID                                = var.apps_config.integrations.notify_template_ids.decision_is_invalid_appellant_id
     GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID                                      = var.apps_config.integrations.notify_template_ids.decision_is_invalid_lpa_id
-    GOV_NOTIFY_LPAQ_COMPLETE_ID                                                = var.apps_config.integrations.notify_template_ids.lpaq_complete_id
-    GOV_NOTIFY_LPAQ_COMPLETE_APPELLANT_ID                                      = var.apps_config.integrations.notify_template_ids.lpaq_complete_appellant_id
-    GOV_NOTIFY_LPAQ_INCOMPLETE_ID                                              = var.apps_config.integrations.notify_template_ids.lpaq_incomplete_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID          = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_appellant_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID                = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_lpa_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID   = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_access_required_appellant_id
@@ -97,15 +94,6 @@ module "app_api" {
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID                          = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_lpa_id
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
     GOV_NOTIFY_VALID_APPELLANT_CASE_ID                                         = var.apps_config.integrations.notify_template_ids.valid_appellant_case_id
-    GOV_NOTIFY_IP_COMMENT_REJECTED_ID                                          = var.apps_config.integrations.notify_template_ids.ip_comment_rejected_id
-    GOV_NOTIFY_FINAL_COMMENT_REJECTED_APPELLANT_ID                             = var.apps_config.integrations.notify_template_ids.final_comment_rejected_appellant_id
-    GOV_NOTIFY_FINAL_COMMENT_REJECTED_LPA_ID                                   = var.apps_config.integrations.notify_template_ids.final_comment_rejected_lpa_id
-    GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED                              = var.apps_config.integrations.notify_template_ids.comment_rejected_deadline_extended_id
-    GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE                                        = var.apps_config.integrations.notify_template_ids.lpa_statement_incomplete_id
-    GOV_NOTIFY_APPELLANT_FINAL_COMMENTS_DONE                                   = var.apps_config.integrations.notify_template_ids.appellant_final_comments_done_id
-    GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE                                         = var.apps_config.integrations.notify_template_ids.lpa_final_comments_done_id
-    GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_APPELLANT_ID                 = var.apps_config.integrations.notify_template_ids.received_statement_and_ip_comments_appellant_id
-    GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_LPA_ID                       = var.apps_config.integrations.notify_template_ids.received_statement_and_ip_comments_lpa_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written

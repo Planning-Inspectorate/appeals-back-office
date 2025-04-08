@@ -128,7 +128,7 @@ export function generateCommentSummaryList(
 			},
 			actions: {
 				items:
-					commentIsDocument || redactMatching
+					commentIsDocument || redactMatching || isReviewPage
 						? []
 						: [
 								{

@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import formatDate, { formatTime } from '#utils/date-formatter.js';
+import { formatSortableDateTime } from '#utils/date-formatter.js';
 
 /**
  * Emulate Notify for local dev testing
@@ -44,7 +44,7 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 			blockEnd = 0;
 			return line ? `</div>\n${line}<br>` : '</div>';
 		}
-		return line ? `${line}<br>` : '';
+		return line ? `${line}<br>` : '<br>';
 	});
 	// close blockquotes if required
 	if (blockEnd) {
@@ -63,7 +63,7 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
 
-	const fileName = `${templateName} ${formatDate(new Date())} ${formatTime(new Date())}.html`;
+	const fileName = `${formatSortableDateTime(new Date())} ${templateName}.html`;
 	const fullName = path.join(outputDir, fileName);
 	fs.writeFileSync(fullName, emailHtml);
 	return fullName;

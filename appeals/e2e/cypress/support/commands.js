@@ -1,6 +1,6 @@
 // @ts-nocheck
-import {BrowserAuthData} from '../fixtures/browser-auth-data';
-import {appealsApiClient} from './appealsApiClient';
+import { BrowserAuthData } from '../fixtures/browser-auth-data';
+import { appealsApiClient } from './appealsApiClient';
 
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
@@ -113,12 +113,14 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (reference) => {
 	});
 });
 
-Cypress.Commands.add('addRepresentation', (reference, type, serviceUserId) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.addRepresentation(reference, type, serviceUserId);
-		return;
-	});
-});
+Cypress.Commands.add(
+	'addRepresentation',
+	(reference, type, serviceUserId, representation = null) => {
+		return cy.wrap(null).then(async () => {
+			await appealsApiClient.addRepresentation(reference, type, serviceUserId, representation);
+		});
+	}
+);
 
 Cypress.Commands.add('loadAppealDetails', (reference) => {
 	return cy.wrap(null).then(async () => {
@@ -177,9 +179,26 @@ Cypress.Commands.add('populateTimetable', (reference) => {
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
 	return cy.wrap(null).then(() => {
 		const formattedDate = new Date(date).toISOString();
-		return appealsApiClient.getBusinessDate(formattedDate, days)
-			.then((result) => {
-				return new Date(result);
-			});
+		return appealsApiClient.getBusinessDate(formattedDate, days).then((result) => {
+			return new Date(result);
+		});
+	});
+});
+
+Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const specIds = await appealsApiClient.getSpecialisms();
+		const ids = specIds.map((item) => item.id);
+		return await appealsApiClient.updateAllocation(appealId, ids.slice(0, 3));
+	});
+});
+
+Cypress.Commands.add('getAppealDetails', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		return await appealsApiClient.getAppealDetails(appealId);
 	});
 });

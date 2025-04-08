@@ -187,7 +187,7 @@ export function removeAffectedListedBuildingPage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove affected listed building',
-		pageComponents: [
+		prePageComponents: [
 			{
 				type: 'summary-list',
 				parameters: {
@@ -203,7 +203,9 @@ export function removeAffectedListedBuildingPage(
 						}
 					]
 				}
-			},
+			}
+		],
+		pageComponents: [
 			yesNoInput({
 				name: 'removeAffectedListedBuilding',
 				legendText: 'Do you want to remove this listed building?'

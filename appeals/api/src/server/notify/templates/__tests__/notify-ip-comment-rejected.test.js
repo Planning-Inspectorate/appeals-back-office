@@ -1,11 +1,11 @@
-import notifySend from '#notify/notify-send.js';
+import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('ip-comment-rejected.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
+			doNotMockNotifySend: true,
 			templateName: 'ip-comment-rejected',
-			subjectTemplate: 'test',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -19,21 +19,25 @@ describe('ip-comment-rejected.md', () => {
 			}
 		};
 
-		const expectedContent = `We have rejected your comment.
-
-#Appeal details
-^Appeal reference number: ABC45678
-Address: 10, Test Street
-Planning application reference: 12345XYZ
-
-##Why we rejected your comment
-We rejected your comment because:
-
-- Reason one
-- Reason two
-- Reason three
-
-The Planning Inspectorate`;
+		const expectedContent = [
+			'We have rejected your comment.',
+			'',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'## Why we rejected your comment',
+			'',
+			'We rejected your comment because:',
+			'',
+			'- Reason one',
+			'- Reason two',
+			'- Reason three',
+			'',
+			'The Planning Inspectorate'
+		].join('\n');
 
 		await notifySend(notifySendData);
 

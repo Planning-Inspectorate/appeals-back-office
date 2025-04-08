@@ -2771,9 +2771,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-t
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
-                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
-                        </p>
                     </form>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -6379,9 +6383,13 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/environment-service-
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
-                        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
-                        </p>
                     </form>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                    </p>
                 </div>
             </div>
         </div>

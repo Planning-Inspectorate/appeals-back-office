@@ -163,32 +163,36 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                                <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
-                                    target="_blank">test-document.txt</a>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                                <dd class="govuk-summary-list__value">1 January 2024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                                <dd class="govuk-summary-list__value">Unredacted</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
-                                </dd>
-                            </div>
-                        </dl>
-                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong                             class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
-                                the relevant parties the appeal has been withdrawn and it is being closed.
-                                Any appointments for this case should be cancelled. Only limited changes
-                                can be made to the case once it is closed.</strong>
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
+                            <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                                target="_blank">test-document.txt</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
+                            </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
+                            <dd class="govuk-summary-list__value">1 January 2024</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                            <dd class="govuk-summary-list__value">Unredacted</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
+                            the relevant parties the appeal has been withdrawn and it is being closed.
+                            Any appointments for this case should be cancelled. Only limited changes
+                            can be made to the case once it is closed.</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">
@@ -219,9 +223,13 @@ exports[`withdrawal GET /withdrawal-request-date should render the withdrawal re
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <div class="govuk-hint">This is the date on the withdrawal correspondence from the appellant</div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-hint">This is the date on the withdrawal correspondence from the appellant</div>
-                        <div                         class="govuk-form-group">
+                        <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="withdrawal-request-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Enter date</legend>
                                 <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 11 2023</div>
@@ -252,13 +260,13 @@ exports[`withdrawal GET /withdrawal-request-date should render the withdrawal re
                                     </div>
                                 </div>
                             </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-                </form>
             </div>
         </div>
-    </div>
     </div>
 </main>"
 `;
@@ -366,32 +374,36 @@ exports[`withdrawal POST /withdrawal/check-your-answers should render the check 
         <div class="govuk-grid-column-two-thirds">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                                <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
-                                    target="_blank">test-document.txt</a>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                                <dd class="govuk-summary-list__value">1 January 2024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                                <dd class="govuk-summary-list__value">Unredacted</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
-                                </dd>
-                            </div>
-                        </dl>
-                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong                             class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
-                                the relevant parties the appeal has been withdrawn and it is being closed.
-                                Any appointments for this case should be cancelled. Only limited changes
-                                can be made to the case once it is closed.</strong>
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
+                            <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                                target="_blank">test-document.txt</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
+                            </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
+                            <dd class="govuk-summary-list__value">1 January 2024</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                            <dd class="govuk-summary-list__value">Unredacted</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
+                            the relevant parties the appeal has been withdrawn and it is being closed.
+                            Any appointments for this case should be cancelled. Only limited changes
+                            can be made to the case once it is closed.</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                 <div class="govuk-checkboxes__item">

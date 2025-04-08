@@ -1,11 +1,17 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { startCasePage, changeDatePage, selectProcedurePage } from './start-case.mapper.js';
+import {
+	startCasePage,
+	changeDatePage,
+	selectProcedurePage,
+	confirmProcedurePage
+} from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -17,7 +23,7 @@ export const getStartDate = async (request, response) => {
 	if (
 		appealType === APPEAL_TYPE.S78 &&
 		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) &&
-		session.startCaseAppealProcedure?.[appealId]?.appealProcedure !== 'written'
+		session.startCaseAppealProcedure?.[appealId]?.appealProcedure !== APPEAL_CASE_PROCEDURE.WRITTEN
 	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
@@ -150,30 +156,123 @@ export const getSelectProcedure = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderSelectProcedure = async (request, response) => {
-	const { appealReference } = request.currentAppeal;
+	const {
+		currentAppeal: { appealId, appealReference },
+		session,
+		errors
+	} = request;
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
-		request.query?.backUrl ? String(request.query?.backUrl) : '/'
+		request.query?.backUrl ? String(request.query?.backUrl) : '/',
+		session.startCaseAppealProcedure?.[appealId]
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContent
+		pageContent: mappedPageContent,
+		errors
 	});
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postSelectProcedure = async (request, response) => {
 	try {
-		const { appealId } = request.currentAppeal;
+		const {
+			currentAppeal: { appealId },
+			errors
+		} = request;
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}/start-case/add`);
+		if (errors) {
+			return renderSelectProcedure(request, response);
+		}
+
+		const { session } = request;
+
+		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
+		);
 	} catch (error) {
 		logger.error(
 			error,
 			error instanceof Error
 				? error.message
 				: 'Something went wrong when posting the select appeal procedure page'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getConfirmProcedure = async (request, response) => {
+	renderConfirmProcedure(request, response);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderConfirmProcedure = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference },
+		session,
+		errors
+	} = request;
+
+	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = confirmProcedurePage(
+		appealId,
+		appealReference,
+		session.startCaseAppealProcedure?.[appealId]?.appealProcedure
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postConfirmProcedure = async (request, response) => {
+	try {
+		const {
+			currentAppeal: { appealId }
+		} = request;
+
+		const { session } = request;
+
+		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		await startCaseService.setStartDate(
+			request.apiClient,
+			appealId,
+			getTodaysISOString(),
+			session.startCaseAppealProcedure?.[appealId]?.appealProcedure
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'caseStarted',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and start case page'
 		);
 
 		return response.status(500).render('app/500.njk');
