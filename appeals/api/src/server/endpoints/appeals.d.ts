@@ -407,7 +407,7 @@ interface UpdateLPAQuestionnaireValidationOutcomeParams {
 }
 
 interface TimetableDeadlineDate {
-	[key: string]: Date;
+	[key: string]: Date | null;
 }
 
 interface RelatedAppeal {

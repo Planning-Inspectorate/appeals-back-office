@@ -63,9 +63,17 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 		if (!appealType) {
 			throw new Error('Appeal type is required to start a case.');
 		}
+		let procedureType = null;
+
+		if (appealType.key === 'W') {
+			procedureType = appeal.procedureType?.key;
+			if (!procedureType) {
+				throw new Error('For S78 appeal types procedure type is required to start a case.');
+			}
+		}
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-		const timetable = await calculateTimetable(appealType.key, startedAt);
+		const timetable = await calculateTimetable(appealType.key, startedAt, procedureType);
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
 		/** @type {Record<string, string>} */
