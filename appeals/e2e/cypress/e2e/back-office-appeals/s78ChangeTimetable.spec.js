@@ -13,7 +13,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		lpaStatement: 'lpa-statement-due-date',
 		interestedParty: 'ip-comments-due-date',
 		finalComments: 'final-comments-due-date'
-	} ;
+	};
 
 	const futureDate = { years: 1, days: 10 };
 
@@ -23,10 +23,10 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({ caseType: 'W' }).then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.checkAppealStatus('VALIDATION');
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseRef);
-			caseDetailsPage.checkAppealStatus('READY TO START');
-			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+			happyPathHelper.startS78Case(caseRef, 'written');
 			cy.populateTimetable(caseRef);
 			caseDetailsPage.clickAccordionByText('Timetable');
 		});

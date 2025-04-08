@@ -31,10 +31,7 @@ describe('Schedule site visit', () => {
 				dateTimeSection.enterVisitStartTime('08', '00');
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
-				caseDetailsPage.validateConfirmationPanelMessage(
-					'Site visit scheduled',
-					'Appeal reference ' + caseRef
-				);
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
 				caseDetailsPage.validateAnswer('Visit Type', visitType);
 			});
 		});
@@ -52,10 +49,7 @@ describe('Schedule site visit', () => {
 				dateTimeSection.enterVisitStartTime('08', '00');
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
-				caseDetailsPage.validateConfirmationPanelMessage(
-					'Site visit scheduled',
-					'Appeal reference ' + caseRef
-				);
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
 				caseDetailsPage.validateAnswer('Visit type', visitType);
 			});
 		});

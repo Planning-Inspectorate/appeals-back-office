@@ -47,7 +47,7 @@ describe('Remove doc from upload page', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document updated');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Document updated');
 			happyPathHelper.removeDocLpaq();
 		});
 	});
@@ -60,7 +60,10 @@ describe('Remove doc from upload page', () => {
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.removeDocLpaq();
-			caseDetailsPage.checkAnswerNotifyingParties('Who was notified', 'Not provided');
+			caseDetailsPage.checkAnswerNotifyingParties(
+				'Who did you notify about this application?',
+				'No documents'
+			);
 		});
 	});
 });

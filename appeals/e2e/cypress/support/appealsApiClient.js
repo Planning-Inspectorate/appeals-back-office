@@ -1,6 +1,6 @@
 // @ts-nocheck
-import {appealsApiRequests, documentsApiRequest} from '../fixtures/appealsApiRequests';
-import {apiPaths} from './apiPaths.js';
+import { appealsApiRequests, documentsApiRequest } from '../fixtures/appealsApiRequests';
+import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
 
@@ -78,11 +78,14 @@ export const appealsApiClient = {
 			throw error;
 		}
 	},
-	async addRepresentation(reference, type, serviceUserId) {
+	async addRepresentation(reference, type, serviceUserId, representation) {
 		const submission = createApiSubmission(appealsApiRequests[type], type);
 		submission.caseReference = reference;
 		if (serviceUserId !== null) {
 			submission.serviceUserId = serviceUserId;
+		}
+		if (representation !== null) {
+			submission.representation = representation;
 		}
 		try {
 			const url = baseUrl + apiPaths.repSubmission;
@@ -95,8 +98,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(submission)
 			});
 
-			const result = await response.json();
-			return result;
+			return await response.json();
 		} catch {
 			return false;
 		}
@@ -112,12 +114,13 @@ export const appealsApiClient = {
 				}
 			});
 
-			const result = await response.json();
-			return result;
+			expect(response.status).eq(200);
+			return await response.json();
 		} catch {
 			return false;
 		}
 	},
+
 	async simulateStatementsElapsed(reference) {
 		try {
 			const url = `${baseUrl}appeals/${reference}/statements-elapsed`;
@@ -191,13 +194,71 @@ export const appealsApiClient = {
 			const response = await fetch(url, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					"inputDate": date,
-					"numDays": days
+					inputDate: date,
+					numDays: days
 				})
 			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+	async getSpecialisms() {
+		try {
+			const url = `${baseUrl}appeals/appeal-allocation-specialisms`;
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+	async updateAllocation(appealId, specialismsIds) {
+		try {
+			const requestBody = createApiSubmission(
+				appealsApiRequests['allocationLevelAndSpecialisms'],
+				null
+			);
+			requestBody.specialisms = specialismsIds;
+			const url = `${baseUrl}appeals/${appealId}/appeal-allocation`;
+			const response = await fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify({
+					level: 'A',
+					specialisms: specialismsIds
+				})
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+	async getAppealDetails(appealId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}`;
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
 			return await response.json();
 		} catch {
 			return false;
