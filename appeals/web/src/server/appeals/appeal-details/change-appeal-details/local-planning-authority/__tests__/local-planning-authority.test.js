@@ -35,13 +35,10 @@ const lpaList = [
 	}
 ];
 
-const lpa = lpaList[1];
-
 describe('change-appeal-details/local-planning-authority', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
-		nock('http://test/').get('/appeals/1/lpa').reply(200, lpa);
 	});
 	afterEach(teardown);
 
@@ -52,13 +49,14 @@ describe('change-appeal-details/local-planning-authority', () => {
 			);
 			const element = parseHtml(response.text);
 
+			expect(response.text).toContain(`<a href="${baseUrl}/1" class="govuk-back-link">Back</a>`);
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Local planning authority');
 			expect(element.innerHTML).not.toContain(lpaList[0].name);
 			expect(element.innerHTML).toContain(lpaList[1].name);
 			expect(element.innerHTML).toContain(lpaList[2].name);
 			expect(element.innerHTML).not.toContain(lpaList[3].name);
-			expect(element.innerHTML).toContain(`value="${lpa.id}" checked`);
+			expect(element.innerHTML).not.toContain(`checked`);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
@@ -71,12 +69,12 @@ describe('change-appeal-details/local-planning-authority', () => {
 		afterEach(() => {
 			nock.cleanAll();
 		});
-		it('should redirect to appeal details page when lpa field is populated and valid', async () => {
+		it('should redirect to correct url when lpa field is populated and valid', async () => {
 			const response = await request
 				.post(`${baseUrl}/1/change-appeal-details/local-planning-authority`)
 				.send({ localPlanningAuthority: 2 });
 
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
 			expect(response.statusCode).toBe(302);
 		});
 

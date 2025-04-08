@@ -37,6 +37,7 @@ import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/e
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import designatedSitesRouter from './designated-sites/designated-sites.router.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -208,6 +209,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	designatedSitesRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-appeal-details/local-planning-authority',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaRouter
 );
 
 router

@@ -977,12 +977,15 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -1401,12 +1404,15 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -1806,12 +1812,15 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -2214,12 +2223,15 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -3054,12 +3066,15 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -3477,12 +3492,15 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -3758,6 +3776,84 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                     <dd class="govuk-summary-list__value">23 May 2023</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
                                         data-cy="-valid-date"><span class="govuk-visually-hidden"> Valid date</span></a>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Contacts</span></h2>
+                    </div>
+                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Roger Simmons</li>
+                                        <li>test3@example.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
+                                    data-cy="change-appellant">Change<span class="govuk-visually-hidden"> Appellant</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Fiona Shell</li>
+                                        <li>test2@example.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"
+                                    data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Wiltshire Council</li>
+                                        <li>wilt@lpa-email.gov.uk</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Team</span></h2>
+                    </div>
+                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <p class="govuk-body">Not assigned</p>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                                    data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <p class="govuk-body">Not assigned</p>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/inspector"
+                                    data-cy="assign-inspector">Assign<span class="govuk-visually-hidden"> Inspector</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-8"> Case management</span></h2>
+                    </div>
+                    <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
+                                <dd                                 class="govuk-summary-list__value">No documents</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
+                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
                                     </dd>
                                 </div>
                                 <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
@@ -4296,12 +4392,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -4701,12 +4800,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -5168,12 +5270,15 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -5568,12 +5673,15 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -6006,12 +6114,15 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -6428,12 +6539,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -6830,12 +6944,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -7247,12 +7364,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                     </dd>
                                 </div>
-                                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                     <dd class="govuk-summary-list__value">
                                         <ul class="govuk-list">
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -7632,12 +7752,15 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                            <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                 <dd class="govuk-summary-list__value">
                                     <ul class="govuk-list">
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -8070,12 +8193,15 @@ exports[`appeal-details should not render a back button 1`] = `
                                                 data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
                                             </dd>
                                         </div>
-                                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
+                                        <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
                                             <dd class="govuk-summary-list__value">
                                                 <ul class="govuk-list">
                                                     <li>Wiltshire Council</li>
                                                     <li>wilt@lpa-email.gov.uk</li>
                                                 </ul>
+                                            </dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
+                                                data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                             </dd>
                                         </div>
                                     </dl>
