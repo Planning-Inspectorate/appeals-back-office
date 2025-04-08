@@ -224,8 +224,8 @@ const initialiseOptions = (/** @type {ShowMoreComponentInstance} */ componentIns
 const shouldInitialiseComponentInstance = (
 	/** @type {ShowMoreComponentInstance} */ componentInstance
 ) => {
-	if (isHtmlMode(componentInstance)) {
-		const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
+	const rowSelector = componentInstance.elements.root.getAttribute(ATTRIBUTES.contentRowSelector);
+	if (rowSelector != null && isHtmlMode(componentInstance)) {
 		const rows = componentInstance.elements.root.querySelectorAll(rowSelector);
 
 		if (rows.length <= componentInstance.options.maximumRowsBeforeHiding) {
