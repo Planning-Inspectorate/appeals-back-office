@@ -4,6 +4,7 @@ import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappe
 import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -99,7 +100,11 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 
 		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
-
+	//check if the redacted statement is the same as the original
+	const shouldShowRedactedRow = checkRedactedText(
+		lpaStatement.originalRepresentation,
+		session?.redactLPAStatement?.redactedRepresentation
+	);
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -111,7 +116,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 			parameters: {
 				rows: [
 					{
-						key: { text: 'Original statement' },
+						key: { text: shouldShowRedactedRow ? 'Original statement' : 'Statement' },
 						value: {
 							html: '',
 							pageComponents: [
@@ -124,29 +129,31 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 							]
 						}
 					},
-					{
-						key: { text: 'Redacted statement' },
-						value: {
-							html: '',
-							pageComponents: [
+					...(shouldShowRedactedRow
+						? [
 								{
-									type: 'show-more',
-									parameters: {
-										text: session?.redactLPAStatement?.redactedRepresentation
+									key: { text: 'Redacted statement' },
+									value: {
+										html: '',
+										pageComponents: [
+											{
+												type: 'show-more',
+												parameters: { text: session?.redactLPAStatement?.redactedRepresentation }
+											}
+										]
+									},
+									actions: {
+										items: [
+											{
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+												text: 'Change',
+												visuallyHiddenText: 'redacted statement'
+											}
+										]
 									}
 								}
-							]
-						},
-						actions: {
-							items: [
-								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
-									text: 'Change',
-									visuallyHiddenText: 'redacted statement'
-								}
-							]
-						}
-					},
+						  ]
+						: []),
 					{
 						key: { text: 'Review decision' },
 						value: { text: 'Redact and accept statement' },
