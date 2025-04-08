@@ -41,16 +41,13 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 	/** @type {PageComponent} */
 	const lpaStatementSummaryList = {
 		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
 		parameters: {
 			rows: [
 				...(lpaStatement.redactedRepresentation
 					? [
 							{
 								key: { text: 'Original statement' },
+								classes: 'govuk-summary-list__row--no-actions',
 								value: {
 									html: '',
 									pageComponents: [
@@ -66,6 +63,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 							},
 							{
 								key: { text: 'Redacted statement' },
+								classes: 'govuk-summary-list__row--no-actions',
 								value: {
 									html: '',
 									pageComponents: [
@@ -96,6 +94,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 					: [
 							{
 								key: { text: 'Statement' },
+								classes: 'govuk-summary-list__row--no-actions',
 								value: {
 									html: '',
 									pageComponents: [

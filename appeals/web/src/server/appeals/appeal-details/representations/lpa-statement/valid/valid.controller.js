@@ -154,7 +154,7 @@ export async function renderConfirm(request, response) {
 
 	const pageContent = confirmPage(currentAppeal, currentRepresentation, specialisms, session);
 
-	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
 		pageContent
 	});
