@@ -1,1 +1,0 @@
-ALTER TABLE LPAQuestionnaire ALTER COLUMN [newConditionDetails] NVARCHAR(MAX) NULL;
