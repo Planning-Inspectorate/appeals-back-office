@@ -9,6 +9,8 @@ import { mapLpaStatement } from './submappers/lpa-statement.mapper.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
 import { mapLPAFinalComments } from './submappers/lpa-final-comments.mapper.js';
 import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
+import { mapSetUpHearing } from './submappers/hearing-set-up-hearing.js';
+import { mapAddHearingEstimates } from './submappers/hearing-add-hearing-estimates.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -22,5 +24,7 @@ export const submaps = {
 	lpaStatement: mapLpaStatement,
 	appellantFinalComments: mapAppellantFinalComments,
 	lpaFinalComments: mapLPAFinalComments,
-	environmentalAssessment: mapEnvironmentalAssessment
+	environmentalAssessment: mapEnvironmentalAssessment,
+	setUpHearing: mapSetUpHearing,
+	addHearingEstimates: mapAddHearingEstimates
 };

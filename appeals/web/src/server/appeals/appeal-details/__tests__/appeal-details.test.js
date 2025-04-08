@@ -25,6 +25,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -2770,6 +2771,101 @@ describe('appeal-details', () => {
 						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
 					);
 				});
+			});
+		});
+
+		describe('Hearing', () => {
+			const appealId = 3;
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+					.reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+					.reply(200, lpaFinalCommentsAwaitingReview);
+			});
+
+			it('should not render the Hearing accordion for HAS cases', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
+			});
+
+			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.INQUIRY]) {
+				it(`should not render the Hearing accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+					expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
+				});
+			}
+
+			it('should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
+				);
+				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/add-estimates">Add hearing estimates</a>`
+				);
 			});
 		});
 
