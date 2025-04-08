@@ -18,7 +18,6 @@ export class Page {
 		backLink: '.govuk-back-link',
 		bannerHeader: '.govuk-notification-banner__heading',
 		bannerLink: '.govuk-notification-banner__link',
-		publish_bannerHeader: '#main-content > div > div > div > h1', // TODO Use specific data-cy selector
 		button: '.govuk-button',
 		body: '.govuk-body',
 		caption: '.govuk-caption-m',
@@ -44,7 +43,6 @@ export class Page {
 		tableBody: '.govuk-table__body',
 		tableCell: '.govuk-table__cell',
 		tableHeader: '.govuk-table__header',
-		publishtableHeader: '#main-content > div > div > div > div > p', // TODO Use specific data-cy selector
 		tableRow: '.govuk-table__row',
 		tab: '.govuk-tabs__tab',
 		tag: '#main-content .govuk-tag',
@@ -58,8 +56,7 @@ export class Page {
 		summaryErrorMessages: '.govuk-list.govuk-error-summary__list',
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
-		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
+		unpublish: 'a.govuk-button:nth-child(5)' // TODO Use specific data-cy selector
 	};
 
 	basePageElements = {
@@ -75,7 +72,6 @@ export class Page {
 		backLink: () => cy.get(this.selectors.backLink),
 		bannerHeader: () => cy.get(this.selectors.bannerHeader),
 		bannerLink: () => cy.get(this.selectors.bannerLink),
-		publishBannerHeader: () => cy.get(this.selectors.publish_bannerHeader),
 		button: () => cy.get(this.selectors.button),
 		buttonByLabelText: (buttonText) =>
 			cy.contains(this.selectors.button, buttonText, { matchCase: false }),
