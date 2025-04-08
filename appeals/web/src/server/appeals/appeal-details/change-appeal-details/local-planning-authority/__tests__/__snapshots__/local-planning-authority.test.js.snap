@@ -24,7 +24,7 @@ exports[`change-appeal-details/local-planning-authority GET change-appeal-detail
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="localPlanningAuthority-2" name="localPlanningAuthority"
-                                        type="radio" value="2" checked>
+                                        type="radio" value="2">
                                         <label class="govuk-label govuk-radios__label" for="localPlanningAuthority-2">Maidstone Borough Council</label>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@ exports[`change-appeal-details/local-planning-authority POST change-appeal-detai
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="localPlanningAuthority-2" name="localPlanningAuthority"
-                                        type="radio" value="2" checked>
+                                        type="radio" value="2">
                                         <label class="govuk-label govuk-radios__label" for="localPlanningAuthority-2">Maidstone Borough Council</label>
                                     </div>
                                 </div>

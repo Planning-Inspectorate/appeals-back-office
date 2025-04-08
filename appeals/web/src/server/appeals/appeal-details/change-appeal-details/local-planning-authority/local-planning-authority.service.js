@@ -9,15 +9,6 @@ export function getLpaList(apiClient) {
 /**
  * @param {import('got').Got} apiClient
  * @param {number|string} appealId
- * @returns {Promise <import('../../appeal-details.types.js').Lpa>}
- */
-export function getLpaFromAppealId(apiClient, appealId) {
-	return apiClient.get(`appeals/${appealId}/lpa`).json();
-}
-
-/**
- * @param {import('got').Got} apiClient
- * @param {number|string} appealId
  * @param {number|string} lpaId
  * @returns {Promise <import('../../appeal-details.types.js').LpaChangeRequest>}
  */

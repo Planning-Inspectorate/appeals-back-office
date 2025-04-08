@@ -95,9 +95,7 @@ export function generateS78Components(
 					}
 				},
 				rows: [
-					removeSummaryListActions(
-						mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					),
+					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 					removeSummaryListActions(
 						mappedAppellantCaseData.applicationReference.display.summaryListItem
 					),
