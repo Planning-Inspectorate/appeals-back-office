@@ -52,10 +52,6 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 	const pageComponents = [
 		{
 			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
 			parameters: {
 				rows: [
 					{
