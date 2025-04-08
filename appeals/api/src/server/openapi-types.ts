@@ -2208,17 +2208,6 @@ export interface RepRejectionReasonsUpdateRequest {
 	}[];
 }
 
-export interface LPA {
-	/** @example 1 */
-	id?: number;
-	/** @example "Bristol City Council" */
-	name?: string;
-	/** @example "BRIS" */
-	lpaCode?: string;
-	/** @example "bris@lpa-email.gov.uk" */
-	email?: string;
-}
-
 export type LPAs = {
 	/** @example 1 */
 	id?: number;
