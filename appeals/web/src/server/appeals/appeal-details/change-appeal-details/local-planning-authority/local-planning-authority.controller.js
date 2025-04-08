@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { changeLpaPage } from './local-planning-authority.mapper.js';
 import { getLpaList, postChangeLpaRequest } from './local-planning-authority.service.js';
 
@@ -19,12 +20,22 @@ export const getChangeLpa = async (request, response) => {
  */
 export const postChangeLpa = async (request, response) => {
 	try {
-		const { appealId } = request.params;
 		const { localPlanningAuthority } = request.body;
-		const { errors } = request;
+		const { errors, params } = request;
+
+		const appealId = Number(params.appealId);
 
 		if (errors) {
 			return renderChangeLpa(request, response);
+		}
+
+		const currentUrl = getOriginPathname(request);
+		const redirectUrl = generateBacklinkUrl(currentUrl);
+
+		if (!isInternalUrl(redirectUrl, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
 		}
 
 		await postChangeLpaRequest(request.apiClient, appealId, localPlanningAuthority);
@@ -34,8 +45,6 @@ export const postChangeLpa = async (request, response) => {
 			bannerDefinitionKey: 'lpaChanged',
 			appealId
 		});
-
-		const redirectUrl = generateBacklinkUrl(request.originalUrl);
 
 		return response.redirect(redirectUrl);
 	} catch (error) {
