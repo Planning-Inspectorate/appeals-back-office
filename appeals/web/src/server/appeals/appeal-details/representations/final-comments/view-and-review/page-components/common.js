@@ -81,7 +81,7 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items:
-					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED || redactedCommentDifferent ||
 					comment.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 						? []
 						: [
@@ -106,6 +106,15 @@ export function generateCommentsSummaryList(appealId, comment) {
 										text: comment.redactedRepresentation,
 										labelText: 'Read more'
 									}
+								}
+							]
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
+									visuallyHiddenText: 'final comments'
 								}
 							]
 						}
