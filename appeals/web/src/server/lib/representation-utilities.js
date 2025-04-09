@@ -52,13 +52,29 @@ export function mapRepresentationDocumentSummaryActionLink(
 }
 
 /**
+ *
  * @param {string|undefined} documentationStatus
  * @param {string|null|undefined} representationStatus
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
  * @returns {string}
  */
-export function mapRepresentationDocumentSummaryStatus(documentationStatus, representationStatus) {
-	if (documentationStatus !== 'received' || !representationStatus) {
+export function mapRepresentationDocumentSummaryStatus(
+	documentationStatus,
+	representationStatus,
+	representationType
+) {
+	let finalCommentRepresentationType =
+		representationType === 'appellant_final_comment' || representationType === 'lpa_final_comment';
+
+	if (
+		(documentationStatus !== 'received' || !representationStatus) &&
+		finalCommentRepresentationType
+	) {
 		return 'No final comments';
+	}
+
+	if (documentationStatus !== 'received' || !representationStatus) {
+		return 'Not received';
 	}
 
 	switch (representationStatus) {
