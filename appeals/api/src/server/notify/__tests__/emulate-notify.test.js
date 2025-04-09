@@ -50,7 +50,7 @@ describe('emulate-notify.test', () => {
 			'Appeal reference number: 6000437<br>',
 			'Address: 72 Clapham High St, Wandsworth, SW4 7UL<br>',
 			'Planning application reference: 35606/APP/1/549765<br>',
-			'</div>',
+			'</div><br>',
 			'<h2>Why we rejected your comment</h2>',
 			'We rejected your comment because:<br>',
 			'<br>',
