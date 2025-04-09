@@ -113,10 +113,6 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					content: { html: '', pageComponents: [caseOverview] }
 				},
 				{
-					heading: { text: 'Contacts' },
-					content: { html: '', pageComponents: [caseContacts] }
-				},
-				{
 					heading: { text: 'Site' },
 					content: { html: '', pageComponents: [siteDetails] }
 				},
@@ -131,6 +127,10 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				{
 					heading: { text: 'Costs' },
 					content: { html: '', pageComponents: [caseCosts] }
+				},
+				{
+					heading: { text: 'Contacts' },
+					content: { html: '', pageComponents: [caseContacts] }
 				},
 				{
 					heading: { text: 'Team' },
