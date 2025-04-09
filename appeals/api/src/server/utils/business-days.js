@@ -186,7 +186,8 @@ const setTimeInTimeZone = (date, hours, minutes) => {
  */
 const calculateTimetable = async (appealType, startedAt, appealProcedureType = null) => {
 	if (startedAt) {
-		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
+		const startDate =
+			startedAt !== null ? setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE) : startedAt;
 
 		// @ts-ignore
 		const appealTimetableConfig =
@@ -199,7 +200,10 @@ const calculateTimetable = async (appealType, startedAt, appealProcedureType = n
 
 			return Object.fromEntries(
 				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
-					if (fieldName === 'hearingDate' || fieldName === 'planningObligationDueDate') {
+					if (
+						daysFromStartDate === undefined &&
+						(fieldName === 'hearingDate' || fieldName === 'planningObligationDueDate')
+					) {
 						return [fieldName, null];
 					}
 					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);

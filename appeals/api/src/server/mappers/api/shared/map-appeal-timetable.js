@@ -38,11 +38,15 @@ export const mapAppealTimetable = (data) => {
 				finalCommentsDueDate:
 					(appeal.appealTimetable.finalCommentsDueDate &&
 						appeal.appealTimetable.finalCommentsDueDate.toISOString()) ||
-					null,
+					null
+			}),
+			...(appeal.procedureType?.key === 'written' && {
 				s106ObligationDueDate:
 					(appeal.appealTimetable.s106ObligationDueDate &&
 						appeal.appealTimetable.s106ObligationDueDate.toISOString()) ||
-					null,
+					null
+			}),
+			...(appeal.procedureType?.key === 'hearing' && {
 				hearingDate:
 					(appeal.appealTimetable.hearingDate &&
 						appeal.appealTimetable.hearingDate.toISOString()) ||
