@@ -124,7 +124,7 @@ export async function scheduleOrManageSiteVisitPage(
 							mappedData.appeal.appellantHealthAndSafety.display.summaryListItem,
 							mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
 							mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
-						].map((row) => removeSummaryListActions(row))
+						].map(removeSummaryListActions)
 					}
 				}
 			]
