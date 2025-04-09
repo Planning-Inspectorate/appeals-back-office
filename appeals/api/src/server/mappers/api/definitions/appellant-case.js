@@ -1,7 +1,7 @@
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { Folder } from './folders-documents.js';
 import { AppealSummary } from './appeal-summary.js';
-import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from 'pins-data-model';
+import { APPEAL_DEVELOPMENT_TYPE } from 'pins-data-model';
 
 const updateableFields = {
 	applicationDate: {
@@ -96,7 +96,7 @@ const updateableFields = {
 	developmentType: {
 		type: 'string',
 		nullable: true,
-		enum: [...Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION)]
+		enum: [...Object.values(APPEAL_DEVELOPMENT_TYPE)]
 	}
 };
 
