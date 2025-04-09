@@ -22,7 +22,7 @@ import addDocumentRouter from '#appeals/appeal-details/representations/document-
 const router = createRouter({ mergeParams: true });
 
 // Redirects to review to correct back link within shared addDocumentRouter and manageDocumentsRouter
-router.get('/', redirectIfCommentIsUnreviewed);
+router.get('/', redirectIfCommentIsUnreviewed, redirectIfCommentIsReviewed);
 router.get('/add-document/review', redirectIfCommentIsUnreviewed);
 
 router.use('/reject', rejectRouter);
