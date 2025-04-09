@@ -1,4 +1,7 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 /**
  * @param {string} representationStatus
  * @returns {boolean}
@@ -63,18 +66,13 @@ export function mapRepresentationDocumentSummaryStatus(
 	representationStatus,
 	representationType
 ) {
-	let finalCommentRepresentationType =
-		representationType === 'appellant_final_comment' || representationType === 'lpa_final_comment';
-
-	if (
-		(documentationStatus !== 'received' || !representationStatus) &&
-		finalCommentRepresentationType
-	) {
-		return 'No final comments';
-	}
-
 	if (documentationStatus !== 'received' || !representationStatus) {
-		return 'Not received';
+		let representationRowText =
+			representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT ||
+			representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+				? 'No final comments'
+				: 'Not received';
+		return representationRowText;
 	}
 
 	switch (representationStatus) {
