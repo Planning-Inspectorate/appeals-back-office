@@ -8,7 +8,7 @@ export const mapCostsAppellantApplication = ({
 }) =>
 	costsFolderTableItem({
 		id: 'costs-appellant-application',
-		text: 'Appellant application',
+		text: 'Appellant costs application',
 		link: `${currentRoute}/costs/appellant/application`,
 		folderInfo: appealDetails?.costs?.appellantApplicationFolder,
 		editable: userHasUpdateCasePermission

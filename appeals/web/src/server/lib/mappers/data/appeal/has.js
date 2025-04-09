@@ -12,12 +12,7 @@ import { mapCaseOfficer } from './submappers/case-officer.mapper.js';
 import { mapCaseProcedure } from './submappers/case-procedure.mapper.js';
 import { mapCompleteDate } from './submappers/complete-date.mapper.js';
 import { mapCostsAppellantApplication } from './submappers/costs-appellant-application.mapper.js';
-import { mapCostsAppellantCorrespondence } from './submappers/costs-appellant-correspondence.mapper.js';
-import { mapCostsAppellantWithdrawal } from './submappers/costs-appellant-withdrawal.mapper.js';
 import { mapCostsDecision } from './submappers/costs-decision.mapper.js';
-import { mapCostsLpaApplication } from './submappers/costs-lpa-application.mapper.js';
-import { mapCostsLpaCorrespondence } from './submappers/costs-lpa-correspondence.mapper.js';
-import { mapCostsLpaWithdrawal } from './submappers/costs-lpa-withdrawal.mapper.js';
 import { mapCrossTeamCorrespondence } from './submappers/cross-team-correspondence.mapper.js';
 import { mapDecision } from './submappers/decision.mapper.js';
 import { mapDownloadCaseFiles } from './submappers/case-files-download.mapper.js';
@@ -85,11 +80,6 @@ export const submaps = {
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	appealDecision: mapAppealDecision,
 	costsAppellantApplication: mapCostsAppellantApplication,
-	costsAppellantWithdrawal: mapCostsAppellantWithdrawal,
-	costsAppellantCorrespondence: mapCostsAppellantCorrespondence,
-	costsLpaApplication: mapCostsLpaApplication,
-	costsLpaWithdrawal: mapCostsLpaWithdrawal,
-	costsLpaCorrespondence: mapCostsLpaCorrespondence,
 	costsDecision: mapCostsDecision,
 	issueDeterminationDate: mapIssueDeterminationDate,
 	completeDate: mapCompleteDate,
