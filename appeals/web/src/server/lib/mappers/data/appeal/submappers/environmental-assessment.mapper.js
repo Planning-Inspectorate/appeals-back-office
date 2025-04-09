@@ -4,22 +4,24 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 /** @type {import('../mapper.js').SubMapper} */
 export const mapEnvironmentalAssessment = (data) => {
 	const { currentRoute, appealDetails } = data;
-	const id = 'environmental-assessment';
 	const { eiaScreeningRequired, environmentalAssessment } = appealDetails;
+
+	const id = 'environmental-assessment';
+
 	if (!eiaScreeningRequired || !environmentalAssessment) {
 		return { id, display: {} };
 	}
-	const link = `${currentRoute}/${id}`;
+
 	const documents = environmentalAssessment.documents.filter(
 		(doc) => !doc.latestDocumentVersion?.isDeleted
 	);
-	const text = 'Environmental assessment';
 
 	const latestReceivedDocument = documents.reduce(
 		(latestReceivedDocument, currentDocument) => {
 			if (!latestReceivedDocument) {
 				return currentDocument;
 			}
+
 			return latestReceivedDocument?.latestDocumentVersion?.dateReceived >
 				currentDocument.latestDocumentVersion?.dateReceived
 				? latestReceivedDocument
@@ -27,6 +29,8 @@ export const mapEnvironmentalAssessment = (data) => {
 		},
 		{ latestDocumentVersion: { dateReceived: '' } }
 	);
+
+	const text = 'Environmental services team review';
 
 	return documentationFolderTableItem({
 		id,
@@ -41,7 +45,7 @@ export const mapEnvironmentalAssessment = (data) => {
 			id,
 			text,
 			hasDocuments: !!documents.length,
-			link,
+			link: `${currentRoute}/${id}`,
 			editable: true,
 			folderId: environmentalAssessment.folderId
 		})

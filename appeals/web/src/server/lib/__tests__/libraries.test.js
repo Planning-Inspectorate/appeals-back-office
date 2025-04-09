@@ -35,7 +35,6 @@ import httpMocks from 'node-mocks-http';
 import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
-import { mapRepresentationDocumentSummaryStatus } from '#lib/representation-utilities.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1574,26 +1573,5 @@ describe('safeRedirect', () => {
 		safeRedirect(request, response, url);
 
 		expect(response._getRedirectUrl()).toBe('/');
-	});
-});
-
-describe('mapRepresentationDocumentSummaryStatus', () => {
-	it('Should return "No final comments" if no final comments were received', () => {
-		expect(mapRepresentationDocumentSummaryStatus('not_received', null)).toBe('No final comments');
-	});
-	it('Should return "Accepted" if final comment was accepted', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'valid')).toBe('Accepted');
-	});
-	it('Should return "Rejected" if final comment was rejected', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'invalid')).toBe('Rejected');
-	});
-	it('Should return "Shared" if final comment was shared', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'published')).toBe('Shared');
-	});
-	it('Should return "Incomplete" if final comment is incomplete', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'incomplete')).toBe('Incomplete');
-	});
-	it('Should return "Received" if final comment is received', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'default')).toBe('Received');
 	});
 });
