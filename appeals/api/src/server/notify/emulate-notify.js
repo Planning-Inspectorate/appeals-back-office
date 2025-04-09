@@ -42,7 +42,7 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 		}
 		if (blockEnd && blockEnd <= index) {
 			blockEnd = 0;
-			return line ? `</div>\n${line}<br>` : '</div>';
+			return line ? `</div>\n${line}<br>` : '</div><br>';
 		}
 		return line ? `${line}<br>` : '<br>';
 	});
