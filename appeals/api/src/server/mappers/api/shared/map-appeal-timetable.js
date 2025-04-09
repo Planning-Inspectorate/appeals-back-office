@@ -42,6 +42,14 @@ export const mapAppealTimetable = (data) => {
 				s106ObligationDueDate:
 					(appeal.appealTimetable.s106ObligationDueDate &&
 						appeal.appealTimetable.s106ObligationDueDate.toISOString()) ||
+					null,
+				hearingDate:
+					(appeal.appealTimetable.hearingDate &&
+						appeal.appealTimetable.hearingDate.toISOString()) ||
+					null,
+				planningObligationDueDate:
+					(appeal.appealTimetable.planningObligationDueDate &&
+						appeal.appealTimetable.planningObligationDueDate.toISOString()) ||
 					null
 			})
 		};
