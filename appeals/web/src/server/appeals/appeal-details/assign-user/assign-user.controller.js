@@ -29,24 +29,24 @@ const renderAssignUser = async (
 
 	const appealDetails = request.currentAppeal;
 
-	if (appealDetails) {
-		const mappedPageContent = await assignUserPage(
-			appealDetails,
-			isInspector,
-			Array.isArray(usersMatchingSearchTerm),
-			searchTerm,
-			usersMatchingSearchTerm || [],
-			appealDetails[isInspector ? 'inspector' : 'caseOfficer'],
-			request.session
-		);
-
-		return response.status(200).render('appeals/appeal/assign-user.njk', {
-			pageContent: mappedPageContent,
-			errors
-		});
+	if (!appealDetails) {
+		return response.status(404).render('app/404.njk');
 	}
 
-	return response.status(404).render('app/404.njk');
+	const mappedPageContent = await assignUserPage(
+		appealDetails,
+		isInspector,
+		Array.isArray(usersMatchingSearchTerm),
+		searchTerm,
+		usersMatchingSearchTerm || [],
+		appealDetails[isInspector ? 'inspector' : 'caseOfficer'],
+		request.session
+	);
+
+	return response.status(200).render('appeals/appeal/assign-user.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
 };
 
 /**
