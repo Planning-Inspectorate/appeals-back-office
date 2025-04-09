@@ -11,7 +11,8 @@ import {
 	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
 	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,
 	APPEAL_LPA_PROCEDURE_PREFERENCE,
-	APPEAL_APPELLANT_PROCEDURE_PREFERENCE
+	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_DEVELOPMENT_TYPE
 } from 'pins-data-model';
 import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
 
@@ -321,7 +322,8 @@ export const appellantCaseList = {
 		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 		appellantProcedurePreferenceWitnessCount: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
-		applicationDate: sub(new Date(), { weeks: 6 })
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE)
 	}
 };
 
