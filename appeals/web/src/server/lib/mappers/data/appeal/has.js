@@ -6,8 +6,6 @@ import { mapAppealStatus } from './submappers/appeal-status.mapper.js';
 import { mapAppealType } from './submappers/appeal-type.mapper.js';
 import { mapAppealWithdrawal } from './submappers/appeal-withdrawal.mapper.js';
 import { mapAppellantCase } from './submappers/appellant-case.mapper.js';
-import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
-import { mapAppellantInspectorAccess } from './submappers/appellant-inspector-access.mapper.js';
 import { mapAppellant } from './submappers/appellant.mapper.js';
 import { mapCaseHistory } from './submappers/case-history.mapper.js';
 import { mapCaseOfficer } from './submappers/case-officer.mapper.js';
@@ -31,18 +29,24 @@ import { mapLeadOrChild } from './submappers/lead-or-child.mapper.js';
 import { mapLinkedAppeals } from './submappers/linked-appeals.mapper.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.mapper.js';
 import { mapLpaContactDetails } from './submappers/lpa-contact-details.mapper.js';
-import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper.js';
-import { mapLpaInspectorAccess } from './submappers/lpa-inspector-access.mapper.js';
-import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
 import { mapLpaQuestionnaireDueDate } from './submappers/lpa-questionnaire-due-date.mapper.js';
 import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
-import { mapSiteVisitDate } from './submappers/site-visit-date.mapper.js';
+import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
+import { mapSiteVisit } from './submappers/site-visit.mapper.js';
+import {
+	mapSiteVisitDate,
+	mapSiteVisitStartTime,
+	mapSiteVisitEndTime
+} from './submappers/site-visit-datetime.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
+import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper.js';
+import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
+import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -61,17 +65,16 @@ export const submaps = {
 	localPlanningAuthority: mapLocalPlanningAuthority,
 	lpaContactDetails: mapLpaContactDetails,
 	appealStatus: mapAppealStatus,
-	lpaInspectorAccess: mapLpaInspectorAccess,
-	appellantInspectorAccess: mapAppellantInspectorAccess,
-	lpaNeighbouringSites: mapLpaNeighbouringSites,
 	inspectorNeighbouringSites: mapInspectorNeighbouringSites,
-	lpaHealthAndSafety: mapLpaHealthAndSafety,
-	appellantHealthAndSafety: mapAppellantHealthAndSafety,
 	visitType: mapVisitType,
 	validAt: mapValidAt,
 	startedAt: mapStartedAt,
 	lpaQuestionnaireDueDate: mapLpaQuestionnaireDueDate,
+	siteVisitTimetable: mapSiteVisitTimetable,
+	siteVisit: mapSiteVisit,
 	siteVisitDate: mapSiteVisitDate,
+	siteVisitStartTime: mapSiteVisitStartTime,
+	siteVisitEndTime: mapSiteVisitEndTime,
 	caseOfficer: mapCaseOfficer,
 	inspector: mapInspector,
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,
@@ -90,5 +93,8 @@ export const submaps = {
 	costsDecision: mapCostsDecision,
 	issueDeterminationDate: mapIssueDeterminationDate,
 	completeDate: mapCompleteDate,
-	downloadCaseFiles: mapDownloadCaseFiles
+	downloadCaseFiles: mapDownloadCaseFiles,
+	lpaHealthAndSafety: mapLpaHealthAndSafety,
+	appellantHealthAndSafety: mapAppellantHealthAndSafety,
+	lpaNeighbouringSites: mapLpaNeighbouringSites
 };

@@ -1,20 +1,25 @@
 import { isDefined } from '#lib/ts-utilities.js';
 
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
+
 /**
  * @param {{appeal: MappedInstructions}} mappedData
+ * @param {WebAppeal} appealDetails
  * @returns {PageComponent}
  */
-export const getSiteDetails = (mappedData) => ({
+export const getSiteDetails = (mappedData, appealDetails) => ({
 	type: 'summary-list',
 	parameters: {
 		rows: [
-			mappedData.appeal.lpaInspectorAccess.display.summaryListItem,
-			mappedData.appeal.appellantInspectorAccess.display.summaryListItem,
-			mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
-			mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem,
-			mappedData.appeal.lpaHealthAndSafety.display.summaryListItem,
-			mappedData.appeal.appellantHealthAndSafety.display.summaryListItem,
-			mappedData.appeal.visitType.display.summaryListItem
+			...(appealDetails.siteVisit
+				? [
+						mappedData.appeal.visitType.display.summaryListItem,
+						mappedData.appeal.siteVisitDate.display.summaryListItem,
+						mappedData.appeal.siteVisitStartTime.display.summaryListItem,
+						mappedData.appeal.siteVisitEndTime.display.summaryListItem
+				  ]
+				: [mappedData.appeal.siteVisit.display.summaryListItem]),
+			mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
 		].filter(isDefined)
 	}
 });

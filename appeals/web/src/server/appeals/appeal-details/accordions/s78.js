@@ -20,7 +20,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData);
+	const siteDetails = getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
@@ -36,7 +36,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
 					mappedData.appeal.finalCommentDueDate.display.summaryListItem,
 					mappedData.appeal.s106ObligationDueDate.display.summaryListItem,
-					mappedData.appeal.siteVisitDate.display.summaryListItem
+					mappedData.appeal.siteVisitTimetable.display.summaryListItem
 				].filter(isDefined)
 			}
 		}
