@@ -533,6 +533,7 @@ interface DocumentationSummaryEntry {
 	receivedAt?: Date | string | undefined | null;
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
+	isRedacted?: boolean;
 }
 
 interface FolderInfo {
