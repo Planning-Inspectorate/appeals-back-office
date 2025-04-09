@@ -214,6 +214,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	developmentType?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {

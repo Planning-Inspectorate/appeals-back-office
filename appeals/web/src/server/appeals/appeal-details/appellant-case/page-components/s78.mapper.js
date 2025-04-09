@@ -105,7 +105,8 @@ export function generateS78Components(
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
+					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+					mappedAppellantCaseData.developmentType.display.summaryListItem
 				]
 			}
 		};
