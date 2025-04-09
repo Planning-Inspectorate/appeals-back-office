@@ -32,6 +32,36 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 const templateCache = {};
 
 /**
+ * Template variable names must:
+ * - Be within double brackets (( ... ))
+ * - Start with a lowercase letter
+ * - Only contain lowercase letters, digits, underscores
+ * - Underscore is allowed, but not at the start or end and no double underscores
+ *
+ * @param {string} template
+ */
+function validateTemplate(template) {
+	const regex = /\(\((.*?)\)\)/g; // capture everything inside ((...))
+
+	const allMatches = [...template.matchAll(regex)].map((match) => match[1]);
+
+	// Define the valid pattern
+	const validPattern = /^[a-z](?!.*__)[a-z0-9_]*[a-z0-9]$/;
+
+	// Filter to get only invalid matches
+	const invalidMatches = allMatches.filter((match) => !validPattern.test(match));
+	if (invalidMatches.length > 0) {
+		throw new Error(
+			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+				`the following corrupt parameter definitions in the template: ((${invalidMatches.join(
+					')), (('
+				)}))`
+			])
+		);
+	}
+}
+
+/**
  * Retrieves template held in cache or from the file if not retrieved before
  *
  * @param {string} templateName
@@ -40,8 +70,9 @@ const templateCache = {};
 function getTemplate(templateName) {
 	if (!templateCache[templateName]) {
 		const templatePath = path.join(__dirname, 'templates', `${templateName}.md`);
+		let template;
 		try {
-			templateCache[templateName] = fs.readFileSync(templatePath, { encoding: 'utf8' }).trim();
+			template = fs.readFileSync(templatePath, { encoding: 'utf8' }).trim();
 		} catch {
 			throw new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
@@ -49,6 +80,8 @@ function getTemplate(templateName) {
 				])
 			);
 		}
+		validateTemplate(template);
+		templateCache[templateName] = template;
 	}
 	return templateCache[templateName];
 }
@@ -74,7 +107,7 @@ function populateTemplate(template, personalisation) {
 		template
 	);
 	if (content.includes('((') && content.includes('))')) {
-		const message = 'missing personalisation parameters: ' + content.match(/\((\w+)\)/g);
+		const message = 'missing personalisation parameters: ' + content.match(/\(\((.*)\)\)/g);
 		throw new Error(stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [message]));
 	}
 	// Make sure all white space at the end of each line is removed for the sake of Windows machines
