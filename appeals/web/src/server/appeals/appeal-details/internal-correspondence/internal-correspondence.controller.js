@@ -32,8 +32,8 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	if (correspondenceCategory !== 'cross-team' && correspondenceCategory !== 'inspector') {
-		return response.status(500).render('app/500.njk');
+	if (!['cross-team', 'inspector', 'appellant'].includes(correspondenceCategory)) {
+		return response.status(400).render('app/500.njk');
 	}
 
 	await renderDocumentUpload({
