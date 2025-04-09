@@ -368,12 +368,13 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 	receivedAt: string | undefined | null;
 	representationStatus: string | undefined | null;
 	counts?: Record<string, number>;
+	isRedacted?: boolean;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {
 	appellantCase?: WebDocumentationSummaryEntry;
 	lpaQuestionnaire?: WebDocumentationSummaryEntry;
-	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate' | 'receivedAt'>;
+	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate'>;
 	appellantFinalComments?: WebDocumentationSummaryEntry;
 	lpaFinalComments?: WebDocumentationSummaryEntry;
 }
