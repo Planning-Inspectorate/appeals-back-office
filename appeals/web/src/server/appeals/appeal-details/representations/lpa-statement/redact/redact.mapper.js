@@ -3,6 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
+import { getAttachmentList } from '../../common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -98,6 +99,10 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
 
+	const attachmentsList = getAttachmentList(lpaStatement);
+
+	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
+
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -141,6 +146,28 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 									text: 'Change',
 									visuallyHiddenText: 'redacted statement'
+								}
+							]
+						}
+					},
+					{
+						key: { text: 'Supporting documents' },
+						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+						actions: {
+							items: [
+								...(lpaStatement.attachments?.length > 0
+									? [
+											{
+												text: 'Manage',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/redact/confirm`,
+												visuallyHiddenText: 'supporting documents'
+											}
+									  ]
+									: []),
+								{
+									text: 'Add',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/add-document?backUrl=/lpa-statement/redact/confirm`,
+									visuallyHiddenText: 'supporting documents'
 								}
 							]
 						}
