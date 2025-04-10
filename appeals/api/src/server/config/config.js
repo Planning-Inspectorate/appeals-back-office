@@ -111,18 +111,6 @@ const { value, error } = schema.validate({
 					}
 				}
 			},
-			decisionIsAllowedSplitDismissed: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID ||
-						'mock-decision-is-allowed-split-dismissed-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID ||
-						'mock-decision-is-allowed-split-dismissed-lpa-id'
-				}
-			},
 			decisionIsInvalidAppellant: {
 				id:
 					environment.GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID ||
