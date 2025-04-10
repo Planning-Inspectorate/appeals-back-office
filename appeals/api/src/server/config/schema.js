@@ -39,15 +39,6 @@ export default joi
 						generic: joi.object({
 							id: joi.string().required()
 						}),
-						appealConfirmed: joi.object({
-							id: joi.string().required()
-						}),
-						appealIncomplete: joi.object({
-							id: joi.string().required()
-						}),
-						appealInvalid: joi.object({
-							id: joi.string().required()
-						}),
 						appealWithdrawn: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()
