@@ -9,7 +9,6 @@ import {
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import {
-	folderPathToFolderNameText,
 	getDocumentsForVirusStatus,
 	mapDocumentDownloadUrl,
 	mapFolderDocumentInformationHtmlProperty,
@@ -34,15 +33,13 @@ import {
  * @param {FolderInfo} folder
  * @param {string} withdrawalRequestDate
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
 export function manageWithdrawalRequestFolderPage(
 	backLinkUrl,
 	folder,
 	withdrawalRequestDate,
-	request,
-	pageHeadingTextOverride
+	request
 ) {
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
@@ -84,7 +81,7 @@ export function manageWithdrawalRequestFolderPage(
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Manage folder',
-		heading: pageHeadingTextOverride || `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: 'Appeal withdrawal request',
 		pageComponents: [
 			...sortNotificationBanners(notificationBanners),
 			...errorSummaryPageComponents,

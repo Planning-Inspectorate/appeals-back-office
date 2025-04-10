@@ -473,7 +473,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					session: request.session,
 					bannerDefinitionKey: 'documentAdded',
 					appealId: currentAppeal.appealId,
-					text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Documents'} added`
+					text: `${
+						mapFolderNameToDisplayLabel({ folderPath: currentFolder?.path, capitalise: true }) ||
+						'Documents'
+					} added`
 				});
 			}
 		});

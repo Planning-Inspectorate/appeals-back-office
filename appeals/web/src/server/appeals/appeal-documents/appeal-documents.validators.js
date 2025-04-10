@@ -2,7 +2,7 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { createDateInputFieldsValidator } from '#lib/validators/date-input.validator.js';
 import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
-import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 export const validateDocumentNameBodyFormat = createValidator(
 	body()
@@ -32,9 +32,10 @@ export const validateDocumentName = createValidator(
 			);
 			if (hasDuplicate) {
 				return Promise.reject(
-					`File name already exists within ${folderPathToFolderNameText(
-						req.currentFolder.path
-					)} documents`
+					`File name already exists within ${mapFolderNameToDisplayLabel({
+						folderPath: req.currentFolder.path,
+						removeTrailingDocumentsString: true
+					})} documents`
 				);
 			}
 			return true;

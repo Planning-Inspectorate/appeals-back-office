@@ -36,8 +36,7 @@ export const getViewWithdrawalDocumentFolder = async (request, response) => {
 		`/appeals-service/appeal-details/${request.params.appealId}`,
 		currentAppeal.withdrawal?.withdrawalFolder,
 		currentAppeal.withdrawal?.withdrawalRequestDate,
-		request,
-		'Appeal withdrawal request'
+		request
 	);
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {

@@ -1653,7 +1653,7 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 					} correspondence documents</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain('ph0-documentFileInfo.jpeg</h2>');
@@ -1750,7 +1750,7 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 					} correspondence documents</h1>`
 				);
 
@@ -1793,7 +1793,7 @@ describe('internal correspondence', () => {
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 						} correspondence documents</h1>`
 					);
 
@@ -1837,7 +1837,7 @@ describe('internal correspondence', () => {
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 						} correspondence documents</h1>`
 					);
 
@@ -1880,7 +1880,7 @@ describe('internal correspondence', () => {
 					expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${
-							correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+							correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 						} correspondence documents</h1>`
 					);
 
@@ -1916,7 +1916,7 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${
-						correspondenceCategory === 'cross-team' ? 'Cross team' : 'Inspector'
+						correspondenceCategory === 'cross-team' ? 'Cross-team' : 'Inspector'
 					} correspondence documents</h1>`
 				);
 
