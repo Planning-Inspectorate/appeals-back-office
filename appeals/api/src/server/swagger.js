@@ -901,6 +901,17 @@ export const spec = {
 					text: ['Illegible or Incomplete Documentation', 'Previously Decided or Duplicate Appeal']
 				}
 			]
+		},
+		LPAs: [
+			{
+				id: 1,
+				name: 'Bristol City Council',
+				lpaCode: 'BRIS',
+				email: 'bris@lpa-email.gov.uk'
+			}
+		],
+		LPAChangeRequest: {
+			newLpaId: 2
 		}
 	},
 	'@definitions': {

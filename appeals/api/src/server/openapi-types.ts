@@ -1755,6 +1755,7 @@ export interface SingleLPAQuestionnaireResponse {
 		/** @example ["Documents or information are missing","Policies are missing","Other"] */
 		incompleteReasons?: string[];
 	};
+	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
 }
 
@@ -2205,6 +2206,22 @@ export interface RepRejectionReasonsUpdateRequest {
 		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
 		text?: string[];
 	}[];
+}
+
+export type LPAs = {
+	/** @example 1 */
+	id?: number;
+	/** @example "Bristol City Council" */
+	name?: string;
+	/** @example "BRIS" */
+	lpaCode?: string;
+	/** @example "bris@lpa-email.gov.uk" */
+	email?: string;
+}[];
+
+export interface LPAChangeRequest {
+	/** @example 2 */
+	newLpaId?: number;
 }
 
 export interface SingleLinkableAppealSummaryResponse {

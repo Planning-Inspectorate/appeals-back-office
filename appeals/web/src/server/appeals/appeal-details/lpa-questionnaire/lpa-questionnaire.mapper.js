@@ -68,6 +68,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		mappedLpaqDetails
 	);
 
+	const lpaText = 'LPA';
+
 	/**
 	 * @type {PageComponent}
 	 */
@@ -88,7 +90,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 							{
 								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
 								key: {
-									text: 'LPA'
+									text: lpaText
 								}
 							}
 					  ]
@@ -97,7 +99,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		}
 	};
 	caseSummary.parameters.rows = caseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
+		(/** @type {SummaryListRowProperties} */ row) =>
+			row.key.text === lpaText ? row : removeSummaryListActions(row)
 	);
 
 	/**
