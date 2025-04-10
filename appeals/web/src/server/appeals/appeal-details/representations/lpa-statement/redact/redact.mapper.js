@@ -3,8 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getAttachmentList } from '../../common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -100,21 +99,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
 
-	const attachmentsList =
-		lpaStatement.attachments.length > 0
-			? buildHtmlList({
-					items: lpaStatement.attachments.map(
-						(a) =>
-							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-								a.documentVersion.document.caseId,
-								a.documentVersion.document.guid,
-								a.documentVersion.document.name
-							)}" target="_blank">${a.documentVersion.document.name}</a>`
-					),
-					isOrderedList: true,
-					isNumberedList: lpaStatement.attachments.length > 1
-			  })
-			: null;
+	const attachmentsList = getAttachmentList(lpaStatement);
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
