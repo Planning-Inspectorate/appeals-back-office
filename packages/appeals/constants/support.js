@@ -141,6 +141,8 @@ export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';
 export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was removed';
 
+export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
+
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';

@@ -8,6 +8,15 @@ import { databaseConnector } from '#utils/database-connector.js';
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
+ * Get LPA by ID
+ * @param {number} id
+ * @returns {PrismaPromise<LPA|null>}
+ */
+const getLpaById = (id) => {
+	return databaseConnector.lPA.findUnique({ where: { id } });
+};
+
+/**
  * Updates LPA code by appeal ID
  * @param {Appeal} appeal
  * @param {number} newLpaId
@@ -24,5 +33,6 @@ const updateLpaByAppealId = (appeal, newLpaId) => {
 };
 
 export default {
+	getLpaById,
 	updateLpaByAppealId
 };
