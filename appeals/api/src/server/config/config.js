@@ -49,15 +49,6 @@ const { value, error } = schema.validate({
 			generic: {
 				id: environment.GOV_NOTIFY_APPEAL_GENERIC_ID || 'mock-appeal-generic-id'
 			},
-			appealConfirmed: {
-				id: environment.GOV_NOTIFY_APPEAL_CONFIRMED_ID || 'mock-appeal-confirmed-id'
-			},
-			appealIncomplete: {
-				id: environment.GOV_NOTIFY_APPEAL_INCOMPLETE_ID || 'mock-appeal-incomplete-id'
-			},
-			appealInvalid: {
-				id: environment.GOV_NOTIFY_APPEAL_INVALID_ID || 'mock-appeal-invalid-id'
-			},
 			appealWithdrawn: {
 				appellant: {
 					id:

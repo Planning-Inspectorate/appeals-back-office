@@ -61,9 +61,6 @@ module "app_api" {
 
     # notify templates
     GOV_NOTIFY_APPEAL_GENERIC_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_generic_id
-    GOV_NOTIFY_APPEAL_CONFIRMED_ID                                             = var.apps_config.integrations.notify_template_ids.appeal_confirmed_id
-    GOV_NOTIFY_APPEAL_INCOMPLETE_ID                                            = var.apps_config.integrations.notify_template_ids.appeal_incomplete_id
-    GOV_NOTIFY_APPEAL_INVALID_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_invalid_id
     GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID                           = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_appellant_id
     GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID                                 = var.apps_config.integrations.notify_template_ids.appeal_start_date_change_lpa_id
     GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID                                  = var.apps_config.integrations.notify_template_ids.appeal_type_changed_non_has_id
