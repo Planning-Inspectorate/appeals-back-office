@@ -4,7 +4,6 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
-import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
 
@@ -112,39 +111,33 @@ describe('invalid appeal decision routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				1,
-				config.govNotify.template.decisionIsInvalidAppellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: correctAppealState.reference,
-						lpa_reference: correctAppealState.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						reasons: 'Invalid reason'
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: correctAppealState.reference,
+					lpa_reference: correctAppealState.applicationReference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					reasons: 'Invalid reason'
+				},
+				recipientEmail: 'test@136s7.com',
+				templateName: 'decision-is-invalid-appellant'
+			});
+
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenNthCalledWith(
-				2,
-				config.govNotify.template.decisionIsInvalidLPA.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: correctAppealState.reference,
-						lpa_reference: correctAppealState.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						reasons: 'Invalid reason'
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: correctAppealState.reference,
+					lpa_reference: correctAppealState.applicationReference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					reasons: 'Invalid reason'
+				},
+				recipientEmail: 'test@136s7.com',
+				templateName: 'decision-is-invalid-lpa'
+			});
 			expect(response.status).toEqual(201);
 		});
 	});
