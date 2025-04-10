@@ -960,21 +960,18 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealConfirmed.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: '48269/APP/2021/1482',
+						appeal_reference_number: '1345264',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'appeal_confirmed'
+				});
 
 				expect(response.status).toEqual(200);
 			});
