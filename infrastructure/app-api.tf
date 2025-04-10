@@ -72,10 +72,6 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_LPA_ID                              = var.apps_config.integrations.notify_template_ids.appeal_valid_start_case_s78_lpa_id
     GOV_NOTIFY_APPEAL_WITHDRAWN_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_appellant_id
     GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_lpa_id
-    GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID                = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_appellant_id
-    GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID                      = var.apps_config.integrations.notify_template_ids.decision_is_allowed_split_dismissed_lpa_id
-    GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID                                = var.apps_config.integrations.notify_template_ids.decision_is_invalid_appellant_id
-    GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID                                      = var.apps_config.integrations.notify_template_ids.decision_is_invalid_lpa_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID          = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_appellant_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID                = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_lpa_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID   = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_access_required_appellant_id

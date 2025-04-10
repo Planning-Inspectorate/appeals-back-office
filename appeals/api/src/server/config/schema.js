@@ -85,14 +85,6 @@ export default joi
 								})
 							}
 						}),
-						decisionIsAllowedSplitDismissed: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
 						decisionIsInvalidAppellant: joi.object({
 							id: joi.string()
 						}),
