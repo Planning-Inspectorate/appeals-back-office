@@ -115,7 +115,7 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 
 /**
  * @param {Appeal} appeal
- * @param {string | undefined} backUrl
+ * @param {string} [backUrl]
  * @returns {PageContent}
  * */
 export function statementAndCommentsSharePage(appeal, backUrl) {
@@ -215,7 +215,7 @@ export function finalCommentsSharePage(appeal, backUrl) {
 		: 'Do not progress the case if you are awaiting any late final comments.';
 	const submitButtonText = hasItemsToShare ? 'Share final comments' : 'Progress case';
 
-	const backLinkUrl = constructUrl(backUrl, appeal.appealId);
+	const backLinkUrl = backUrl || `/appeals-service/appeal-details/${appeal.appealId}`; //constructUrl(backUrl, appeal.appealId);
 
 	/** @type {PageContent} */
 	const pageContent = {

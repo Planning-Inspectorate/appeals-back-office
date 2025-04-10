@@ -7,16 +7,17 @@ import {
 	mapRequiredActionToNotificationBannerKey
 } from '#lib/mappers/index.js';
 import { getRequiredActionsForAppeal } from './required-actions.js';
+import { addBackLinkQueryToUrl } from '#lib/back-link-url.js';
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
 
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageComponent[]}
  */
-export function mapStatusDependentNotifications(appealDetails, currentRoute) {
+export function mapStatusDependentNotifications(appealDetails, request) {
 	const requiredActions = getRequiredActionsForAppeal(appealDetails);
 
 	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
@@ -25,17 +26,17 @@ export function mapStatusDependentNotifications(appealDetails, currentRoute) {
 		.filter(/** @returns {item is NotificationBannerDefinitionKey} */ (item) => item !== undefined);
 
 	return bannerKeys
-		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails, currentRoute))
+		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails, request))
 		.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined);
 }
 
 /**
  * @param {NotificationBannerDefinitionKey} bannerDefinitionKey
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageComponent|undefined}
  */
-function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, currentRoute) {
+function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
 	switch (bannerDefinitionKey) {
 		case 'appealAwaitingTransfer':
 			return createNotificationBanner({
@@ -62,7 +63,10 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		case 'progressFromFinalComments':
 			return createNotificationBanner({
 				bannerDefinitionKey,
-				html: `<a href="/appeals-service/appeal-details/${appealDetails.appealId}/share" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`
 			});
 		case 'progressFromStatements':
 			return createNotificationBanner({
@@ -114,7 +118,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${generateStartTimetableUrl(
 					appealDetails.appealId,
-					currentRoute
+					request.originalUrl
 				)}">Start case</a></p>`
 			});
 		case 'updateLpaStatement':
