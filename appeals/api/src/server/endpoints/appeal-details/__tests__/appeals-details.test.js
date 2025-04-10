@@ -160,7 +160,9 @@ const s78AppealDto = {
 		},
 		appellantFinalComments: {
 			receivedAt: '2024-11-27T15:08:55.704Z',
-			representationStatus: 'awaiting_review',
+			counts: {
+				awaiting_review: 1
+			},
 			status: 'received'
 		},
 		lpaQuestionnaire: {
@@ -173,18 +175,23 @@ const s78AppealDto = {
 			counts: {
 				awaiting_review: 5,
 				valid: 4,
-				published: 0
-			}
+				invalid: 1
+			},
+			isRedacted: false,
+			receivedAt: '2024-11-27T15:08:55.670Z'
 		},
 		lpaFinalComments: {
 			receivedAt: '2024-11-27T15:08:55.711Z',
-			representationStatus: 'awaiting_review',
+			counts: {
+				awaiting_review: 1
+			},
 			status: 'received'
 		},
 		lpaStatement: {
 			status: 'not_received',
 			receivedAt: null,
-			representationStatus: null
+			representationStatus: null,
+			isRedacted: false
 		}
 	},
 	healthAndSafety: {
