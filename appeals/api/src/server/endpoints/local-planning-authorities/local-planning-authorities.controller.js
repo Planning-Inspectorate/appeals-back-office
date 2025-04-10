@@ -11,8 +11,9 @@ import { lpaService } from './local-planning-authorities.service.js';
 const changeLpa = async (req, res) => {
 	const { appeal } = req;
 	const { newLpaId } = req.body;
+	const azureAdUserId = req.get('azureAdUserId');
 
-	await lpaService.changeLpa(appeal, Number(newLpaId));
+	await lpaService.changeLpa(appeal, Number(newLpaId), azureAdUserId);
 
 	return res.send(true);
 };

@@ -3,6 +3,8 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { AUDIT_TRAIL_LPA_UPDATED } from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -45,6 +47,13 @@ describe('local-planning-authorities', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			// @ts-ignore
 			databaseConnector.lPA.findMany.mockResolvedValue([validLPA, newLPA]);
+			// @ts-ignore
+			databaseConnector.lPA.findUnique.mockResolvedValue(newLPA);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/lpa`)
@@ -62,7 +71,14 @@ describe('local-planning-authorities', () => {
 					id: householdAppeal.id
 				}
 			});
-
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_LPA_UPDATED, [newLPA.name]),
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
 			expect(response.status).toEqual(200);
 		});
 
