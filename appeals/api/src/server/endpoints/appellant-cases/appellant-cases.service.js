@@ -99,7 +99,7 @@ const updateAppellantCaseValidationOutcome = async (
 			site_address: siteAddress
 		};
 		await notifySend({
-			templateName: 'appeal_confirmed',
+			templateName: 'appeal-confirmed',
 			notifyClient,
 			recipientEmail,
 			personalisation
@@ -147,19 +147,18 @@ const updateAppellantCaseValidationOutcome = async (
 			const invalidReasonsList = getFormattedReasons(
 				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
 			);
-
-			try {
-				await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					reasons: invalidReasonsList
-				});
-			} catch (error) {
-				if (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: siteAddress,
+				reasons: invalidReasonsList
+			};
+			await notifySend({
+				templateName: 'appeal-invalid',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
 		}
 	}
 };
