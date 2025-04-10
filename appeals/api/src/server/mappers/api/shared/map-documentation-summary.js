@@ -1,4 +1,4 @@
-import { countBy } from 'lodash-es';
+import { countBy, maxBy } from 'lodash-es';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus
@@ -41,6 +41,8 @@ export const mapDocumentationSummary = (data) => {
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 		) ?? [];
 
+	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
+
 	return {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
@@ -59,6 +61,7 @@ export const mapDocumentationSummary = (data) => {
 		...(isFPA(appeal.appealType?.key || '') && {
 			ipComments: {
 				status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: mostRecentIpComment?.dateCreated.toISOString() ?? null,
 				counts: countBy(ipComments, 'status'),
 				isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
 			},
