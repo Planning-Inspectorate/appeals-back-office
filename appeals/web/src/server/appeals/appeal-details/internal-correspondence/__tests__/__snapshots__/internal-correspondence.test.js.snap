@@ -72,7 +72,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Cross team correspondence documents</h1>
+            <h1 class="govuk-heading-l">Cross-team correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -228,7 +228,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -257,7 +257,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1608,9 +1608,9 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/internal-correspondence/cross-team/add-document-details/10/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="10"
-            data-document-type="newSupportingDocuments" data-document-stage="internal"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
+            data-document-type="otherNewDocuments" data-document-stage="internal" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
@@ -1657,9 +1657,9 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/internal-correspondence/inspector/add-document-details/11/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="11"
-            data-document-type="newSupportingDocuments" data-document-stage="internal"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
+            data-document-type="otherNewDocuments" data-document-stage="internal" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0Il0=">
