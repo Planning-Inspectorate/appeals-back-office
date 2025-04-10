@@ -19,6 +19,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -282,7 +283,9 @@ function mapAddDocumentsPageHeading(folderPath, documentId) {
 		return 'Upload an updated document';
 	}
 
-	return 'Upload documents';
+	const label = mapFolderNameToDisplayLabel({ folderPath, removeTrailingDocumentsString: true });
+
+	return label ? `Upload ${label} documents` : 'Upload documents';
 }
 
 /**
@@ -296,10 +299,17 @@ function mapAddDocumentDetailsPageHeading(folderPath, documentId) {
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return isExistingDocument ? 'Updated additional document' : 'Additional documents';
 	} else if (isExistingDocument) {
-		return `Updated ${folderPathToFolderNameText(folderPath, false)} document`;
+		return `Updated ${mapFolderNameToDisplayLabel({
+			folderPath,
+			removeTrailingDocumentsString: true
+		})} document`;
 	}
 
-	return `${folderPathToFolderNameText(folderPath)} documents`;
+	return `${mapFolderNameToDisplayLabel({
+		folderPath,
+		capitalise: true,
+		removeTrailingDocumentsString: true
+	})} documents`;
 }
 
 /**
@@ -311,7 +321,11 @@ function mapManageFolderPageHeading(folderPath) {
 		return 'Additional documents';
 	}
 
-	return `${folderPathToFolderNameText(folderPath)} documents`;
+	return `${mapFolderNameToDisplayLabel({
+		folderPath,
+		capitalise: true,
+		removeTrailingDocumentsString: true
+	})} documents`;
 }
 
 /**
@@ -1801,24 +1815,6 @@ export const mapRedactionStatusIdToName = (redactionStatuses, redactionStatusId)
 };
 
 /**
- *
- * @param {string} folderPath
- * @param {boolean} [capitalizeFirstLetter]
- * @returns {string}
- */
-export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = true) => {
-	let nameText = (folderPath.split('/')?.[1] || '').replace(/(?<!^)([A-Z])/g, ' $1').toLowerCase();
-
-	if (nameText.endsWith('documents')) {
-		nameText = nameText.slice(0, -9);
-	}
-
-	nameText = nameText.trim();
-
-	return capitalizeFirstLetter ? capitalize(nameText) : nameText;
-};
-
-/**
  * @typedef {Object} MappedDocumentRow
  * @property {(string[] | string | HtmlLink[] | HtmlLink)} value
  * @property {ActionItemProperties[]} actions
@@ -1842,7 +1838,11 @@ export function changeDocumentFileNamePage(backLinkUrl, folder, file) {
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Change document details',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: `${mapFolderNameToDisplayLabel({
+			folderPath: folder.path,
+			capitalise: true,
+			removeTrailingDocumentsString: true
+		})} documents`,
 		pageComponents: mapDocumentNameItemToDocumentNamePageComponents(
 			file.latestDocumentVersion,
 			file.name
@@ -1867,7 +1867,11 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Change document details',
-		heading: `${folderPathToFolderNameText(folder.path)} documents`,
+		heading: `${mapFolderNameToDisplayLabel({
+			folderPath: folder.path,
+			capitalise: true,
+			removeTrailingDocumentsString: true
+		})} documents`,
 		pageComponents: mapDocumentDetailsItemToDocumentDetailsPageComponents(
 			file.latestDocumentVersion,
 			redactionStatuses,

@@ -897,6 +897,8 @@ export const postChangeDocumentDetails = async ({
 			errors
 		} = request;
 
+		console.log('SHIT');
+
 		if (errors) {
 			return await renderChangeDocumentDetails({ request, response, backButtonUrl });
 		}
