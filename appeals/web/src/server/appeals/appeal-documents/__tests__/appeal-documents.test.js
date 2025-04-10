@@ -17,7 +17,7 @@ const validFolderId = 1;
 const invalidFolderId = 2;
 const documentId = '0e4ce48f-2d67-4659-9082-e80a15182386';
 const validFolders = [
-	{ folderId: validFolderId, path: 'appellantCase/newSupportingDocuments', caseId: validAppealId }
+	{ folderId: validFolderId, path: 'appellantCase/otherNewDocuments', caseId: validAppealId }
 ];
 
 const getControllerEndpoint = (
@@ -97,7 +97,9 @@ describe('appeal-documents', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload your other new supporting documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('<form method="POST"');
 			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
@@ -219,7 +221,7 @@ describe('appeal-documents', () => {
 		// const folder = { document: { documents: [fileInfo], name: validDocumentName }};
 		const folder = {
 			folderId: validFolderId,
-			path: 'appellantCase/newSupportingDocuments',
+			path: 'appellantCase/otherNewDocuments',
 			caseId: validAppealId,
 			documents: [fileInfo],
 			name: documentName
@@ -307,7 +309,7 @@ describe('appeal-documents', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 
-			expect(element).toContain('File name already exists within New supporting documents');
+			expect(element).toContain('File name already exists within other new supporting documents');
 		});
 	});
 

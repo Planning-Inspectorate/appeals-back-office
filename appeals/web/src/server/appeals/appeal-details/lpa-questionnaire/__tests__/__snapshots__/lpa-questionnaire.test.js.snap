@@ -2266,7 +2266,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload documents</h1>
+            <h1 class="govuk-heading-l">Upload agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2283,7 +2283,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
                         <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
-                            <h2 class="pins-file-upload__container-title">Upload documents</h2>
+                            <h2 class="pins-file-upload__container-title">Upload agreement to change description evidence documents</h2>
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
@@ -2870,7 +2870,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3786,7 +3786,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

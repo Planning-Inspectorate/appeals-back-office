@@ -1,153 +1,154 @@
 // @ts-nocheck
 import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 describe('documents and folders', () => {
 	describe('mapFolderNameToDisplayLabel', () => {
 		const testCases = [
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT,
-				label: 'Appeal statement'
+				label: 'appeal statement'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM,
-				label: 'Application form'
+				label: 'application form'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER,
-				label: 'Application decision letter'
+				label: 'application decision letter'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION,
-				label: 'Agreement to change description evidence'
+				label: 'agreement to change description evidence'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER,
-				label: 'Appellant withdrawal request'
+				label: 'appellant withdrawal request'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE,
-				label: 'Additional documents'
+				label: 'additional documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT,
-				label: 'Design and access statement'
+				label: 'design and access statement'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS,
-				label: 'Plans, drawings and list of plans'
+				label: 'plans, drawings and list of plans'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS,
-				label: 'New plans or drawings'
+				label: 'new plans or drawings'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION,
-				label: 'Planning obligation'
+				label: 'planning obligation'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE,
-				label: 'Ownership certificate and/or land declaration'
+				label: 'ownership certificate and/or land declaration'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS,
-				label: 'Other new supporting documents'
+				label: 'other new supporting documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT,
-				label: 'Environmental assessment'
+				label: 'environmental assessment'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED,
-				label: 'Who was notified about the application'
+				label: 'who was notified about the application'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE,
-				label: 'Site notice'
+				label: 'site notice'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS,
-				label: 'Letter or email notification'
+				label: 'letter or email notification'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT,
-				label: 'Press advert notification'
+				label: 'press advert notification'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CONSERVATION_MAP,
-				label: 'Conservation area map and guidance'
+				label: 'conservation area map and guidance'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS,
-				label: 'Representations from other parties documents'
+				label: 'representations from other parties documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT,
-				label: `Planning officer's report`
+				label: `planning officer's report`
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES,
-				label: 'Relevant policies from statutory development plan'
+				label: 'relevant policies from statutory development plan'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN,
-				label: 'Tree Preservation Order'
+				label: 'tree preservation order'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT,
-				label: 'Definitive map and statement extract'
+				label: 'definitive map and statement extract'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
-				label: 'Community infrastructure levy'
+				label: 'community infrastructure levy'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING,
-				label: 'Supplementary planning documents'
+				label: 'supplementary planning documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.EMERGING_PLAN,
-				label: 'Emerging plan relevant to appeal'
+				label: 'emerging plan relevant to appeal'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES,
-				label: 'Consultation responses or standing advice'
+				label: 'consultation responses or standing advice'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT,
-				label: 'Environmental statement'
+				label: 'environmental statement'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION,
-				label: 'Screening opinion documents'
+				label: 'screening opinion documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION,
-				label: 'Screening direction documents'
+				label: 'screening direction documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE,
-				label: 'Additional documents'
+				label: 'additional documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES,
-				label: 'Other relevant policies'
+				label: 'other relevant policies'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
-				label: 'Appeal notification letter'
+				label: 'appeal notification letter'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION,
-				label: 'Appellant costs application'
+				label: 'appellant costs application'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL,
-				label: 'Appellant costs withdrawal'
+				label: 'appellant costs withdrawal'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
-				label: 'Appellant costs correspondence'
+				label: 'appellant costs correspondence'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION,
@@ -163,7 +164,7 @@ describe('documents and folders', () => {
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER,
-				label: 'Appellant costs decision'
+				label: 'appellant costs decision'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER,
@@ -171,41 +172,64 @@ describe('documents and folders', () => {
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE,
-				label: 'Cross-team correspondence'
+				label: 'cross-team correspondence'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE,
-				label: 'Inspector correspondence'
+				label: 'inspector correspondence'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
-				label: 'Documents'
+				label: 'documents'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER,
-				label: 'Decision letter'
+				label: 'decision letter'
 			}
 		];
 
 		for (const testCase of testCases) {
 			it(`should return "${testCase.label}" if folderPath document type fragment is "${testCase.documentType}"`, () => {
-				expect(mapFolderNameToDisplayLabel(`caseStage/${testCase.documentType}`)).toBe(
-					testCase.label
-				);
+				expect(
+					mapFolderNameToDisplayLabel({ folderPath: `caseStage/${testCase.documentType}` })
+				).toBe(testCase.label);
+			});
+			it(`should return "${capitalizeFirstLetter(
+				testCase.label
+			)}" if folderPath document type fragment is "${
+				testCase.documentType
+			}" and the capitalise parameter is passed with a value of true`, () => {
+				expect(
+					mapFolderNameToDisplayLabel({
+						folderPath: `caseStage/${testCase.documentType}`,
+						capitalise: true
+					})
+				).toBe(capitalizeFirstLetter(testCase.label));
 			});
 		}
 
 		it('should return undefined if folderPath is falsy', () => {
-			expect(mapFolderNameToDisplayLabel(``)).toBe(undefined);
-			expect(mapFolderNameToDisplayLabel()).toBe(undefined);
+			expect(mapFolderNameToDisplayLabel({ folderPath: `` })).toBe(undefined);
+			expect(mapFolderNameToDisplayLabel({})).toBe(undefined);
 		});
 
 		it('should return undefined if folderPath does not contain "/"', () => {
-			expect(mapFolderNameToDisplayLabel('invalidFolderPath')).toBe(undefined);
+			expect(mapFolderNameToDisplayLabel({ folderPath: 'invalidFolderPath' })).toBe(undefined);
 		});
 
 		it('should return undefined if an entry matching the document type fragment of the folder path is not present in DOCUMENT_FOLDER_DISPLAY_LABELS', () => {
-			expect(mapFolderNameToDisplayLabel('caseStage/unhandledDocumentType')).toBe(undefined);
+			expect(mapFolderNameToDisplayLabel({ folderPath: 'caseStage/unhandledDocumentType' })).toBe(
+				undefined
+			);
+		});
+
+		it('should return the constant string with the trailing word "documents" removed, if the constant string ends with the word "documents"', async () => {
+			expect(
+				mapFolderNameToDisplayLabel({
+					folderPath: `caseStage/${APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS}`,
+					removeTrailingDocumentsString: true
+				})
+			).toBe('other new supporting');
 		});
 	});
 });

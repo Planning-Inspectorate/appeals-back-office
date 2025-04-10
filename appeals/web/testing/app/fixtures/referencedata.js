@@ -919,9 +919,9 @@ export const appellantCaseDataNotValidatedWithDocuments = {
 	...appellantCaseDataNotValidated,
 	documents: {
 		...appellantCaseDataNotValidated.documents,
-		newSupportingDocuments: {
+		otherNewDocuments: {
 			folderId: 1,
-			path: 'appellant_case/newSupportingDocuments',
+			path: 'appellant_case/otherNewDocuments',
 			documents: []
 		},
 		appealStatement: {
@@ -1707,7 +1707,7 @@ export const documentFileVersionsInfo = {
 	latestDocumentVersion: {
 		documentId: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 		version: 1,
-		documentType: 'newSupportingDocuments',
+		documentType: 'otherNewDocuments',
 		originalFilename: 'test-pdf-documentFileVersionsInfo.pdf',
 		fileName: 'test-pdf-documentFileVersionsInfo.pdf',
 		mime: 'application/pdf',
@@ -1732,7 +1732,7 @@ export const documentFileVersionsInfo = {
 		{
 			documentId: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 			version: 1,
-			documentType: 'newSupportingDocuments',
+			documentType: 'otherNewDocuments',
 			originalFilename: 'test-pdf-documentFileVersionsInfo.pdf',
 			fileName: 'test-pdf-documentFileVersionsInfo.pdf',
 			mime: 'application/pdf',

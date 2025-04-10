@@ -236,7 +236,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					session,
 					bannerDefinitionKey: 'internalCorrespondenceDocumentAdded',
 					appealId: currentAppeal.appealId,
-					text: `${mapFolderNameToDisplayLabel(currentFolder.path)} added`
+					text: `${mapFolderNameToDisplayLabel({
+						folderPath: currentFolder.path,
+						capitalise: true
+					})} added`
 				});
 			}
 		});

@@ -106,7 +106,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Cross team correspondence documents</h1>
+            <h1 class="govuk-heading-l">Cross-team correspondence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -340,7 +340,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -369,7 +369,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -398,7 +398,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
