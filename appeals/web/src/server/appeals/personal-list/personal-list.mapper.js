@@ -9,6 +9,7 @@ import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
+import { addBackLinkQueryToUrl } from '#lib/back-link-url.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
@@ -21,7 +22,7 @@ import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions
  * @param {string} urlWithoutQuery
  * @param {string|undefined} appealStatusFilter
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageContent}
  */
 
@@ -30,7 +31,7 @@ export function personalListPage(
 	urlWithoutQuery,
 	appealStatusFilter,
 	session,
-	currentRoute
+	request
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
@@ -168,7 +169,7 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute)
+						html: mapActionLinksForAppeal(appeal, isCaseOfficer, request)
 					},
 					{
 						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
@@ -240,7 +241,7 @@ export function personalListPage(
  * @param {boolean} isCaseOfficer
  * @param {number} appealId
  * @param {number|null|undefined} lpaQuestionnaireId
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -248,7 +249,7 @@ function mapRequiredActionToPersonalListActionHtml(
 	isCaseOfficer,
 	appealId,
 	lpaQuestionnaireId,
-	currentRoute
+	request
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -284,7 +285,11 @@ function mapRequiredActionToPersonalListActionHtml(
 			return 'LPA questionnaire overdue';
 		}
 		case 'progressFromFinalComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress case</a>`;
+			// return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress case</a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress case</a>`;
 		}
 		case 'progressFromStatements': {
 			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
@@ -320,7 +325,7 @@ function mapRequiredActionToPersonalListActionHtml(
 		}
 		case 'startAppeal': {
 			return isCaseOfficer
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=${currentRoute}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=${request.originalUrl}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Start case';
 		}
 		case 'updateLpaStatement': {
@@ -335,10 +340,10 @@ function mapRequiredActionToPersonalListActionHtml(
 /**
  * @param {PersonalListAppeal} appeal
  * @param {boolean} isCaseOfficer
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string}
  */
-export function mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute) {
+export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 	const requiredActions = getRequiredActionsForAppeal({
 		...appeal,
 		appealTimetable: appeal.appealTimetable || {}
@@ -357,7 +362,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute) {
 				isCaseOfficer,
 				appealId,
 				lpaQuestionnaireId,
-				currentRoute
+				request
 			);
 		})
 		.join('<br>');
