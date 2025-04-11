@@ -59,36 +59,12 @@ const { value, error } = schema.validate({
 					id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID || 'mock-appeal-withdrawn-lpa-id'
 				}
 			},
-			appealStartDateChange: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID ||
-						'mock-appeal-start-date-change-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID ||
-						'mock-appeal-start-date-change-lpa-id'
-				}
-			},
 			appealTypeChangedNonHas: {
 				id:
 					environment.GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID ||
 					'mock-appeal-type-changed-non-has-id'
 			},
 			appealValidStartCase: {
-				has: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID ||
-							'mock-appeal-valid-start-case-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID ||
-							'mock-appeal-valid-start-case-lpa-id'
-					}
-				},
 				s78: {
 					appellant: {
 						id:

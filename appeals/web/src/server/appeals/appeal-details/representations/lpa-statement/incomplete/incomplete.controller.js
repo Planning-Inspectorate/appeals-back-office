@@ -256,7 +256,7 @@ export const postCheckYourAnswers = async (request, response) => {
 	);
 
 	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
-		allowResubmit: session.lpaStatement.setNewDate
+		allowResubmit: session.lpaStatement[appealId].setNewDate
 	});
 
 	addNotificationBannerToSession({
