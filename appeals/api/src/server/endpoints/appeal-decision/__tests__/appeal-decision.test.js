@@ -17,7 +17,6 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
-import config from '#config/config.js';
 
 describe('appeal decision routes', () => {
 	beforeEach(() => {
@@ -176,41 +175,35 @@ describe('appeal decision routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.decisionIsAllowedSplitDismissed.appellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.any(Object),
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					url: FRONT_OFFICE_URL,
+					decision_date: formatDate(utcDate, false)
+				},
+				recipientEmail: 'test@136s7.com'
+			});
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.decisionIsAllowedSplitDismissed.lpa.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					url: FRONT_OFFICE_URL,
+					decision_date: formatDate(utcDate, false)
+				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: 'test@136s7.com'
+			});
 
 			expect(response.status).toEqual(201);
 		});
