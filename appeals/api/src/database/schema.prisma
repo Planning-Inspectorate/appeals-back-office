@@ -59,6 +59,14 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
+
+  @@index([addressId])
+  @@index([appealTypeId])
+  @@index([procedureTypeId])
+  @@index([lpaId])
+  @@index([caseOfficerUserId])
+  @@index([inspectorUserId])
+  @@index([applicationReference])
 }
 
 /// AppealRelationship model
@@ -78,6 +86,9 @@ model AppealRelationship {
   externalAppealType String?
   externalId         String?
   linkingDate        DateTime @default(now())
+
+  @@index([parentId])
+  @@index([childId])
 }
 
 /// AppealType model
@@ -122,6 +133,8 @@ model AppealStatus {
   appealId            Int
   subStateMachineName String?
   compoundStateName   String?
+
+  @@index([appealId])
 }
 
 /// AppealAllocation model
@@ -284,6 +297,8 @@ model AppellantCase {
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
+
+  @@index([appealId])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -429,6 +444,9 @@ model LPAQuestionnaire {
   siteNoticesSentDate                 DateTime?
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
+
+  @@index([appealId])
+  @@index([isGreenBelt])
 }
 
 /// LPAQuestionnaireValidationOutcome model
@@ -568,6 +586,7 @@ model Folder {
   documents Document[]
 
   @@unique([caseId, path])
+  @@index([path])
 }
 
 /// Document model
@@ -590,6 +609,7 @@ model Document {
 
   @@unique([name, folderId])
   @@unique([guid, latestVersionId])
+  @@index([caseId, folderId])
 }
 
 /// DocumentVersion model
@@ -632,6 +652,9 @@ model DocumentVersion {
 
   @@id([documentGuid, version])
   @@index([documentGuid], map: "documentGuid")
+  @@index([documentURI])
+  @@index([documentType])
+  @@index([stage])
 }
 
 /// DocumentVersionAvScan model
@@ -680,6 +703,8 @@ model AuditTrail {
   appeal   Appeal                @relation(fields: [appealId], references: [id])
   user     User                  @relation(fields: [userId], references: [id])
   doc      DocumentVersionAudit? @relation("auditTrails")
+
+  @@index([appealId])
 }
 
 /// Representation model
@@ -706,6 +731,8 @@ model Representation {
   siteVisitRequested                     Boolean                                  @default(false)
   source                                 String                                   @default("citizen")
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
+
+  @@index([appealId])
 }
 
 /// Representation model
@@ -718,6 +745,7 @@ model RepresentationAttachment {
   representationId Int
 
   @@id([documentGuid, version])
+  @@index([representationId])
 }
 
 /// RepresentationRejectionReason model
@@ -765,4 +793,6 @@ model CaseNote {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   archived  Boolean  @default(false)
+
+  @@index([caseId])
 }
