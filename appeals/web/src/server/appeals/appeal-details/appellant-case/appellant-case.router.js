@@ -10,6 +10,7 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import {
+	clearUncommittedFilesFromSession,
 	validateCaseDocumentId,
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
@@ -156,7 +157,7 @@ router.use(
 
 router
 	.route('/')
-	.get(validateAppeal, asyncHandler(controller.getAppellantCase))
+	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),

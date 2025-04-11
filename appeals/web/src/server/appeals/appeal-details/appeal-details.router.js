@@ -34,6 +34,7 @@ import finalCommentsRouter from './representations/final-comments/final-comments
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import representationsRouter from './representations/representations.router.js';
+import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 
 const router = createRouter();
 
@@ -41,6 +42,7 @@ router
 	.route('/:appealId')
 	.get(
 		validateAppeal,
+		clearUncommittedFilesFromSession,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
