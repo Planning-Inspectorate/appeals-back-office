@@ -70,7 +70,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Start case');
 	},
 
 	changeStartDate(caseRef) {
