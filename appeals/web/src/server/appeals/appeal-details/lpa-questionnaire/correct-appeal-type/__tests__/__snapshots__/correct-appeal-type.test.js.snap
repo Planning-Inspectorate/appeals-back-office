@@ -14,7 +14,7 @@ exports[`correct-appeal-type GET /change should render the correctAppealType cha
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Is Householder the correct type of appeal?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Is householder the correct type of appeal?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
