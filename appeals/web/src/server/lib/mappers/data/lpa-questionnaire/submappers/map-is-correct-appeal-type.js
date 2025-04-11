@@ -9,7 +9,7 @@ export const mapIsCorrectAppealType = ({
 }) =>
 	booleanSummaryListItem({
 		id: 'is-correct-appeal-type',
-		text: `Is ${appealDetails.appealType} the correct type of appeal?`,
+		text: `Is ${appealDetails.appealType?.toLowerCase()} the correct type of appeal?`,
 		value: lpaQuestionnaireData.isCorrectAppealType,
 		defaultText: '',
 		addCyAttribute: true,
