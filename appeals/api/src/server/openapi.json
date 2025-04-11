@@ -10228,6 +10228,10 @@
 							"counts": {
 								"type": "object",
 								"nullable": true
+							},
+							"isRedacted": {
+								"type": "boolean",
+								"nullable": true
 							}
 						}
 					},
@@ -10253,6 +10257,10 @@
 							},
 							"counts": {
 								"type": "object",
+								"nullable": true
+							},
+							"isRedacted": {
+								"type": "boolean",
 								"nullable": true
 							}
 						}
@@ -10280,6 +10288,10 @@
 							"counts": {
 								"type": "object",
 								"nullable": true
+							},
+							"isRedacted": {
+								"type": "boolean",
+								"nullable": true
 							}
 						}
 					},
@@ -10305,6 +10317,10 @@
 							},
 							"counts": {
 								"type": "object",
+								"nullable": true
+							},
+							"isRedacted": {
+								"type": "boolean",
 								"nullable": true
 							}
 						}

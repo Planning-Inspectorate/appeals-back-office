@@ -13,7 +13,7 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
+                            <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
                             <input class="govuk-input" id="planning-application-reference"
                             name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                         </div>
@@ -40,7 +40,7 @@ exports[`change-lpa-reference GET /change should render changeLpaReference page 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
+                            <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
                             <input class="govuk-input" id="planning-application-reference"
                             name="planningApplicationReference" type="text" value="48269/APP/2021/1482">
                         </div>
@@ -82,7 +82,7 @@ exports[`change-lpa-reference POST /change should re-render changeLpaReference p
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="planning-application-reference">LPA application reference</label>
+                            <label class="govuk-label" for="planning-application-reference">Planning application reference</label>
                             <p id="planning-application-reference-error"
                             class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the LPA application
                                 reference</p>

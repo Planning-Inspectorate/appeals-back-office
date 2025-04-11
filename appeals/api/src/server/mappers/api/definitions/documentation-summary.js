@@ -19,6 +19,10 @@ const commonDocumentationSummaryProperties = {
 	counts: {
 		type: 'object',
 		nullable: true
+	},
+	isRedacted: {
+		type: 'boolean',
+		nullable: true
 	}
 };
 

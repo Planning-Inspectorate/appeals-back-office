@@ -9,7 +9,7 @@ export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		value: {
 			html: appealDetails.appellant
 				? formatServiceUserAsHtmlList(appealDetails.appellant)
-				: 'No appellant'
+				: 'No data'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
 		editable: userHasUpdateCasePermission,
