@@ -1,5 +1,6 @@
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	mapRepresentationDocumentSummaryStatus,
 	mapRepresentationDocumentSummaryActionLink
@@ -12,7 +13,8 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) =>
 		text: 'LPA final comments',
 		statusText: mapRepresentationDocumentSummaryStatus(
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,
-			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus
+			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
+			APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 		),
 		receivedText:
 			dateISOStringToDisplayDate(

@@ -1578,22 +1578,44 @@ describe('safeRedirect', () => {
 });
 
 describe('mapRepresentationDocumentSummaryStatus', () => {
-	it('Should return "No final comments" if no final comments were received', () => {
-		expect(mapRepresentationDocumentSummaryStatus('not_received', null)).toBe('No final comments');
+	it('Should return "No final comments" if an appellant final comment was not received', () => {
+		expect(
+			mapRepresentationDocumentSummaryStatus('not_received', null, 'appellant_final_comment')
+		).toBe('No final comments');
 	});
-	it('Should return "Accepted" if final comment was accepted', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'valid')).toBe('Accepted');
+	it('Should return "No final comments" if an lpa final comment was not received', () => {
+		expect(mapRepresentationDocumentSummaryStatus('not_received', null, 'lpa_final_comment')).toBe(
+			'No final comments'
+		);
 	});
-	it('Should return "Rejected" if final comment was rejected', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'invalid')).toBe('Rejected');
+	it('Should return "Not received" if an lpa statement was not received', () => {
+		expect(mapRepresentationDocumentSummaryStatus('not_received', null, 'lpa_statement')).toBe(
+			'Not received'
+		);
 	});
-	it('Should return "Shared" if final comment was shared', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'published')).toBe('Shared');
+	it('Should return "Accepted" if representation was accepted', () => {
+		expect(mapRepresentationDocumentSummaryStatus('received', 'valid', 'lpa_statement')).toBe(
+			'Accepted'
+		);
 	});
-	it('Should return "Incomplete" if final comment is incomplete', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'incomplete')).toBe('Incomplete');
+	it('Should return "Rejected" if representation  was rejected', () => {
+		expect(mapRepresentationDocumentSummaryStatus('received', 'invalid', 'lpa_statement')).toBe(
+			'Rejected'
+		);
 	});
-	it('Should return "Received" if final comment is received', () => {
-		expect(mapRepresentationDocumentSummaryStatus('received', 'default')).toBe('Received');
+	it('Should return "Shared" if representation  was shared', () => {
+		expect(mapRepresentationDocumentSummaryStatus('received', 'published', 'lpa_statement')).toBe(
+			'Shared'
+		);
+	});
+	it('Should return "Incomplete" if representation  is incomplete', () => {
+		expect(mapRepresentationDocumentSummaryStatus('received', 'incomplete', 'lpa_statement')).toBe(
+			'Incomplete'
+		);
+	});
+	it('Should return "Received" if representation is received', () => {
+		expect(mapRepresentationDocumentSummaryStatus('received', 'default', 'lpa_statement')).toBe(
+			'Received'
+		);
 	});
 });
