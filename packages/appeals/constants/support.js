@@ -277,7 +277,7 @@ export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.js
 export const FRONT_OFFICE_URL = 'https://www.gov.uk/appeal-planning-inspectorate';
 
 export const CONFIG_APPEAL_TIMETABLE = {
-	W: {
+	W_written: {
 		lpaQuestionnaireDueDate: {
 			daysFromStartDate: 5
 		},
@@ -295,6 +295,29 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		},
 		s106ObligationDueDate: {
 			daysFromStartDate: 35
+		}
+	},
+	W_hearing: {
+		lpaQuestionnaireDueDate: {
+			daysFromStartDate: 5
+		},
+		ipCommentsDueDate: {
+			daysFromStartDate: 25
+		},
+		appellantStatementDueDate: {
+			daysFromStartDate: 25
+		},
+		lpaStatementDueDate: {
+			daysFromStartDate: 25
+		},
+		finalCommentsDueDate: {
+			daysFromStartDate: 35
+		},
+		planningObligationDueDate: {
+			daysFromStartDate: undefined
+		},
+		hearingDate: {
+			daysFromStartDate: undefined
 		}
 	},
 	D: {
