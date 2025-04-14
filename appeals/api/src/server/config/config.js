@@ -64,20 +64,7 @@ const { value, error } = schema.validate({
 					environment.GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID ||
 					'mock-appeal-type-changed-non-has-id'
 			},
-			appealValidStartCase: {
-				s78: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_APPELLANT_ID ||
-							'mock-appeal-valid-start-case-s78-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_LPA_ID ||
-							'mock-appeal-valid-start-case-s78-lpa-id'
-					}
-				}
-			},
+
 			decisionIsAllowedSplitDismissed: {
 				appellant: {
 					id:
