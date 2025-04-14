@@ -50,16 +50,7 @@ export default joi
 						appealTypeChangedNonHas: joi.object({
 							id: joi.string().required()
 						}),
-						appealValidStartCase: joi.object({
-							s78: {
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}
-						}),
+
 						decisionIsAllowedSplitDismissed: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()

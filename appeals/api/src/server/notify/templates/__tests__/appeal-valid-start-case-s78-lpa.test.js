@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-valid-start-case-lpa.md', () => {
+describe('appeal-valid-start-case-s78-lpa.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-lpa',
+			templateName: 'appeal-valid-start-case-s78-lpa',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -33,14 +33,12 @@ describe('appeal-valid-start-case-lpa.md', () => {
 			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
-			'',
 			'Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 			'Local planning authority: 48269/APP/2021/1482',
 			'Start date: 01 January 2025',
 			'',
 			'# Next steps',
-			'',
 			'Submit your questionnaire and other documents, including your appeal notification letter and a list of those notified by 01 January 2025.',
 			'',
 			'The Planning Inspectorate',
