@@ -10,7 +10,6 @@ import {
 import addDocumentRouter from '../document-attachments/add-document.router.js';
 import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
 import acceptFinalCommentsRouter from './accept/accept.router.js';
-// import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -18,7 +17,6 @@ router.use(
 	'/:finalCommentsType',
 	validateAppeal,
 	withSingularRepresentation,
-	// clearUncommittedFilesFromSession,
 	viewAndReviewFinalCommentsRouter
 );
 
