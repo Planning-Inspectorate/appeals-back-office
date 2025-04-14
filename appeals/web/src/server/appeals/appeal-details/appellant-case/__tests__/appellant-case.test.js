@@ -32,7 +32,8 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	calculateIncompleteDueDate
+	calculateIncompleteDueDate,
+	oneMonthBefore
 } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
@@ -1828,7 +1829,7 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the update due date page with pre-populated date values if there is no existing due date and applicationDecisionDate is set', async () => {
-			const decisionDate = '2024-10-12T11:44:21.173Z';
+			const decisionDate = oneMonthBefore(new Date()).toISOString();
 			const expectedDate = calculateIncompleteDueDate(decisionDate, 'Planning appeal');
 			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
 
