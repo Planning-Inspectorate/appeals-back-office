@@ -20,7 +20,7 @@
 		"@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
 		"@cypress/grep": "^4.1.0",
 		"@cypress/webpack-preprocessor": "^5.16.1",
-		"@faker-js/faker": "^7.6.0",
+		"@faker-js/faker": "^9.7.0",
 		"cypress": "^13.6.4",
 		"dotenv": "^16.0.3",
 		"eslint-plugin-cypress": "^2.12.1",
