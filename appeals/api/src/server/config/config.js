@@ -59,12 +59,6 @@ const { value, error } = schema.validate({
 					id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID || 'mock-appeal-withdrawn-lpa-id'
 				}
 			},
-			appealTypeChangedNonHas: {
-				id:
-					environment.GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID ||
-					'mock-appeal-type-changed-non-has-id'
-			},
-
 			decisionIsAllowedSplitDismissed: {
 				appellant: {
 					id:

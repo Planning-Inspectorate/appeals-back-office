@@ -47,10 +47,6 @@ export default joi
 								id: joi.string().required()
 							})
 						}),
-						appealTypeChangedNonHas: joi.object({
-							id: joi.string().required()
-						}),
-
 						decisionIsAllowedSplitDismissed: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()
