@@ -736,7 +736,7 @@ describe('LPA Questionnaire review', () => {
 	});
 
 	describe('GET /', () => {
-		it('should render the LPA Questionnaire page with the expected content', async () => {
+		it('should render the Householder LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -754,6 +754,37 @@ describe('LPA Questionnaire review', () => {
 			);
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
+		it('should render the S78 LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('2. Environmental impact assessment</h2>');
+			expect(element.innerHTML).toContain('3. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain('4. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'5. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('6. Site access</h2>');
+			expect(element.innerHTML).toContain('7. Appeal process</h2>');
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
@@ -1008,7 +1039,7 @@ describe('LPA Questionnaire review', () => {
 				);
 			});
 
-			it('should render a designated sites row with the expected value of "Not provided" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
+			it('should render a designated sites row with the expected value of "No" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
 				nock('http://test/')
 					.get('/appeals/2')
 					.reply(200, {
@@ -1030,9 +1061,7 @@ describe('LPA Questionnaire review', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHtml).toContain(
-					'<dd class="govuk-summary-list__value"> Not provided</dd>'
-				);
+				expect(unprettifiedHtml).toContain('<dd class="govuk-summary-list__value"> No</dd>');
 			});
 
 			it('should render a designated sites row with the expected value as plaintext if LPAQ designatedSiteNames array contains a single designated site item', async () => {

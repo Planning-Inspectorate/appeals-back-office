@@ -168,6 +168,10 @@ describe('start-case', () => {
 
 			expect(response.statusCode).toBe(200);
 
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
 			const unprettifiedElement = parseHtml(response.text, {
 				rootElement: 'body',
 				skipPrettyPrint: true
@@ -226,6 +230,225 @@ describe('start-case', () => {
 				'name="appealProcedure" type="radio" value="inquiry">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const selectProcedurePostResponse = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'hearing'
+				});
+
+			expect(selectProcedurePostResponse.statusCode).toBe(302);
+			expect(selectProcedurePostResponse.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written">');
+			expect(unprettifiedHtml).toContain(
+				'name="appealProcedure" type="radio" value="hearing" checked>'
+			);
+			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
+		});
+	});
+
+	describe('POST /start-case/select-procedure', () => {
+		it('should re-render the select procedure page with the expected error message if no radio option was selected', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({});
+
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Select an appeal procedure</a>');
+		});
+
+		it('should redirect to the check and confirm page if a radio option was selected', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'hearing'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+		});
+	});
+
+	describe('GET /start-case/select-procedure/check-and-confirm', () => {
+		it('should render a 500 error page if an appeal procedure is not found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(500);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Sorry, there is a problem with the service</h1>');
+		});
+
+		it('should render the check details and start case page with the expected content if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const selectProcedurePostResponse = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'hearing'
+				});
+
+			expect(selectProcedurePostResponse.statusCode).toBe(302);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Check details and start case</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Hearing</dd>');
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/start-case/select-procedure" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+			);
+			expect(unprettifiedHtml).toContain(
+				'We’ll start the timetable now and send emails to the relevant parties.</p>'
+			);
+			expect(unprettifiedHtml).toContain('Start case</button>');
+		});
+	});
+
+	describe('POST /start-case/select-procedure/check-and-confirm', () => {
+		it('should render a 500 error page if an appeal procedure is not found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.post(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(500);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Sorry, there is a problem with the service</h1>');
+		});
+
+		it('should send a post request to the appeal timetables endpoint and redirect to the case details page if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const selectProcedurePostResponse = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'hearing'
+				});
+
+			expect(selectProcedurePostResponse.statusCode).toBe(302);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const mockAppealTimetablesEndpoint = nock('http://test/')
+				.post('/appeals/1/appeal-timetables')
+				.reply(200);
+
+			const response = await request.post(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(mockAppealTimetablesEndpoint.isDone()).toBe(true);
 		});
 	});
 });

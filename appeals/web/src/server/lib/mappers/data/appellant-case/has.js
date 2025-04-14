@@ -1,9 +1,5 @@
 import { mapAdditionalDocuments } from './submappers/additional-documents.js';
-import { mapInquiryNumberOfWitnesses } from './submappers/inquiry-number-of-witnesses.js';
 import { mapOwnersKnown } from './submappers/owners-known.js';
-import { mapProcedurePreferenceDuration } from './submappers/procedure-preference-duration.js';
-import { mapProcedurePreference } from './submappers/procedure-preference.js';
-import { mapRelatedAppeals } from './submappers/related-appeals.js';
 import { mapReviewOutcome } from './submappers/review-outcome.js';
 import { mapSiteOwnership } from './submappers/site-ownership.js';
 import { mapAppellant } from './submappers/appellant.js';
@@ -19,63 +15,35 @@ import { mapApplicationDecision } from './submappers/application-decision.js';
 import { mapChangedDevelopmentDescriptionDocument } from './submappers/changed-development-description-document.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.js';
 import { mapAppealType } from './submappers/appeal-type.js';
-import { mapAdvertisedAppeal } from './submappers/advertised-appeal.js';
 import { mapInspectorAccess } from './submappers/inspector-access.js';
 import { mapHealthAndSafetyIssues } from './submappers/health-and-safety-issues.js';
 import { mapApplicationForm } from './submappers/application-form.js';
-import { mapDesignAccessStatement } from './submappers/design-access-statement.js';
-import { mapNewPlansDrawings } from './submappers/new-plans-drawings.js';
-import { mapSupportingDocuments } from './submappers/supporting-documents.js';
-import { mapPlanningObligation } from './submappers/planning-obligation.js';
-import { mapOwnershipCertificate } from './submappers/ownership-certificate.js';
 import { mapDecisionLetter } from './submappers/decision-letter.js';
 import { mapAppealStatement } from './submappers/appeal-statement.js';
-import { mapOtherNewDocuments } from './submappers/other-new-documents.js';
-import { mapStatusPlanningObligation } from './submappers/status-planning-obligation.js';
-import { mapPartOfAgriculturalHolding } from './submappers/part-of-agricultural-holding.js';
-import { mapTenantOfAgriculturalHolding } from './submappers/tenant-of-agricultural-holding.js';
-import { mapOtherTenantsOfAgriculturalHolding } from './submappers/other-tenants-of-agricultural-holding.js';
 import { mapCostsDocument } from './submappers/costs-document.js';
-import { mapProcedurePreferenceDetails } from './submappers/procedure-preference-details.js';
 
 export const submaps = {
-	additionalDocuments: mapAdditionalDocuments,
-	inquiryNumberOfWitnesses: mapInquiryNumberOfWitnesses,
-	ownersKnown: mapOwnersKnown,
-	procedurePreferenceDuration: mapProcedurePreferenceDuration,
-	procedurePreference: mapProcedurePreference,
-	relatedAppeals: mapRelatedAppeals,
-	reviewOutcome: mapReviewOutcome,
-	siteOwnership: mapSiteOwnership,
 	appellant: mapAppellant,
 	agent: mapAgent,
-	applicationReference: mapApplicationReference,
 	siteAddress: mapSiteAddress,
 	siteArea: mapSiteArea,
 	inGreenBelt: mapInGreenBelt,
-	applicationDecisionDate: mapApplicationDecisionDate,
-	applicationDate: mapApplicationDate,
-	developmentDescription: mapDevelopmentDescription,
-	applicationDecision: mapApplicationDecision,
-	changedDevelopmentDescriptionDocument: mapChangedDevelopmentDescriptionDocument,
-	localPlanningAuthority: mapLocalPlanningAuthority,
-	appealType: mapAppealType,
-	advertisedAppeal: mapAdvertisedAppeal,
+	siteOwnership: mapSiteOwnership,
+	ownersKnown: mapOwnersKnown,
 	inspectorAccess: mapInspectorAccess,
 	healthAndSafetyIssues: mapHealthAndSafetyIssues,
+	localPlanningAuthority: mapLocalPlanningAuthority,
+	applicationReference: mapApplicationReference,
+	applicationDate: mapApplicationDate,
 	applicationForm: mapApplicationForm,
-	designAccessStatement: mapDesignAccessStatement,
-	newPlansDrawings: mapNewPlansDrawings,
-	supportingDocuments: mapSupportingDocuments,
-	planningObligation: mapPlanningObligation,
-	ownershipCertificate: mapOwnershipCertificate,
+	developmentDescription: mapDevelopmentDescription,
+	changedDevelopmentDescriptionDocument: mapChangedDevelopmentDescriptionDocument,
+	applicationDecisionDate: mapApplicationDecisionDate,
 	decisionLetter: mapDecisionLetter,
+	applicationDecision: mapApplicationDecision,
+	appealType: mapAppealType,
 	appealStatement: mapAppealStatement,
-	otherNewDocuments: mapOtherNewDocuments,
-	statusPlanningObligation: mapStatusPlanningObligation,
-	partOfAgriculturalHolding: mapPartOfAgriculturalHolding,
-	tenantOfAgriculturalHolding: mapTenantOfAgriculturalHolding,
-	otherTenantsOfAgriculturalHolding: mapOtherTenantsOfAgriculturalHolding,
 	costsDocument: mapCostsDocument,
-	procedurePreferenceDetails: mapProcedurePreferenceDetails
+	additionalDocuments: mapAdditionalDocuments,
+	reviewOutcome: mapReviewOutcome
 };

@@ -30,30 +30,30 @@ describe('procedure-preference', () => {
 			{
 				fieldName: 'appellantProcedurePreference',
 				validFieldValue: 'hearing',
-				labelText: 'Procedure preference',
+				labelText: 'How would you prefer us to decide your appeal?',
 				validValueText: 'Hearing',
 				defaultValueText: 'Not answered'
 			},
 			{
 				fieldName: 'appellantProcedurePreferenceDetails',
 				validFieldValue: 'Example reason for preference text',
-				labelText: 'Reason for preference',
+				labelText: 'Why would you prefer this appeal procedure?',
 				validValueText: 'Example reason for preference text',
-				defaultValueText: 'Not applicable'
+				defaultValueText: 'Not answered'
 			},
 			{
 				fieldName: 'appellantProcedurePreferenceDuration',
 				validFieldValue: 5,
-				labelText: 'Expected length of procedure',
+				labelText: 'How many days would you expect the inquiry to last?',
 				validValueText: '5 days',
-				defaultValueText: 'Not applicable'
+				defaultValueText: 'Not answered'
 			},
 			{
 				fieldName: 'appellantProcedurePreferenceWitnessCount',
 				validFieldValue: 3,
-				labelText: 'Expected number of witnesses',
+				labelText: 'How many witnesses would you expect to give evidence at the inquiry?',
 				validValueText: '3',
-				defaultValueText: 'Not applicable'
+				defaultValueText: 'Not answered'
 			}
 		];
 
@@ -122,7 +122,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change procedure preference</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="procedurePreferenceRadio" type="radio" value="hearing">'
 			);
@@ -212,7 +214,9 @@ describe('procedure-preference', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change reason for preference</label></h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</label></h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<textarea class="govuk-textarea" id="procedure-preference-details-textarea" name="procedurePreferenceDetailsTextarea" rows="5"></textarea>'
 			);
@@ -311,10 +315,10 @@ describe('procedure-preference', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Change expected length of procedure</label></h1>'
+				'How many days would you expect the inquiry to last?</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="">'
+				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="Not answered">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -426,10 +430,10 @@ describe('procedure-preference', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Change expected number of witnesses</label></h1>'
+				'How many witnesses would you expect to give evidence at the inquiry?</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="">'
+				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

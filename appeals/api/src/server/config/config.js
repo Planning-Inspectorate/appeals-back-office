@@ -19,6 +19,7 @@ const { value, error } = schema.validate({
 	BO_BLOB_CONTAINER: environment.BO_BLOB_CONTAINER,
 	blobEmulatorSasUrl: environment.AZURE_BLOB_EMULATOR_SAS_HOST,
 	useBlobEmulator: environment.AZURE_BLOB_USE_EMULATOR || false,
+	useNotifyEmulator: environment.NOTIFY_SEND_MAIL_EMULATOR || false,
 	defaultApiVersion: environment.DEFAULT_API_VERSION || '1',
 	serviceBusOptions: {
 		hostname: environment.SERVICE_BUS_HOSTNAME
@@ -45,6 +46,9 @@ const { value, error } = schema.validate({
 			key: environment.GOV_NOTIFY_API_KEY
 		},
 		template: {
+			generic: {
+				id: environment.GOV_NOTIFY_APPEAL_GENERIC_ID || 'mock-appeal-generic-id'
+			},
 			appealConfirmed: {
 				id: environment.GOV_NOTIFY_APPEAL_CONFIRMED_ID || 'mock-appeal-confirmed-id'
 			},
@@ -126,17 +130,6 @@ const { value, error } = schema.validate({
 			},
 			decisionIsInvalidLPA: {
 				id: environment.GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID || 'mock-decision-is-invalid-lpa-id'
-			},
-			lpaqComplete: {
-				appellant: {
-					id: environment.GOV_NOTIFY_LPAQ_COMPLETE_APPELLANT_ID || 'mock-lpaq-complete-appellant-id'
-				},
-				lpa: {
-					id: environment.GOV_NOTIFY_LPAQ_COMPLETE_ID || 'mock-lpaq-complete-id'
-				}
-			},
-			lpaqIncomplete: {
-				id: environment.GOV_NOTIFY_LPAQ_INCOMPLETE_ID || 'mock-lpaq-incomplete-id'
 			},
 			siteVisitChange: {
 				accompaniedDateChange: {
@@ -251,53 +244,6 @@ const { value, error } = schema.validate({
 			},
 			validAppellantCase: {
 				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
-			},
-			finalCommentRejected: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_FINAL_COMMENT_REJECTED_APPELLANT_ID ||
-						'mock-final-comment-rejected-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_FINAL_COMMENT_REJECTED_LPA_ID ||
-						'mock-final-comment-rejected-lpa-id'
-				}
-			},
-			ipCommentRejected: {
-				id: environment.GOV_NOTIFY_IP_COMMENT_REJECTED_ID || 'mock-ip-comment-rejected-appellant-id'
-			},
-			commentRejectedDeadlineExtended: {
-				id:
-					environment.GOV_NOTIFY_COMMENT_REJECTED_DEADLINE_EXTENDED ||
-					'mock-comment-rejected-extended-id'
-			},
-			statementIncomplete: {
-				lpa: {
-					id: environment.GOV_NOTIFY_LPA_STATEMENT_INCOMPLETE || 'mock-lpa-statement-incomplete'
-				}
-			},
-			finalCommentsDone: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPELLANT_FINAL_COMMENTS_DONE ||
-						'mock-appellant-final-comments-done-id'
-				},
-				lpa: {
-					id: environment.GOV_NOTIFY_LPA_FINAL_COMMENTS_DONE || 'mock-lpa-final-comments-done-id'
-				}
-			},
-			receivedStatementsAndIpComments: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_APPELLANT_ID ||
-						'mock-received-statement-and-ip-comments-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_RECEIVED_STATEMENT_AND_IP_COMMENTS_LPA_ID ||
-						'mock-received-statement-and-ip-comments-lpa-id'
-				}
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

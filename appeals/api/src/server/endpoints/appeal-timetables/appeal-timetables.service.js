@@ -19,7 +19,7 @@ import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import { PROCEDURE_TYPE_MAP, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
@@ -55,9 +55,17 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
+ * @param {string} [procedureType]
  * @returns
  */
-const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUserId) => {
+const startCase = async (
+	appeal,
+	startDate,
+	notifyClient,
+	siteAddress,
+	azureAdUserId,
+	procedureType
+) => {
 	try {
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -82,12 +90,15 @@ const startCase = async (appeal, startDate, notifyClient, siteAddress, azureAdUs
 			? config.govNotify.template.appealStartDateChange.lpa
 			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].lpa;
 
+		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
+
 		if (timetable) {
 			await Promise.all([
 				// @ts-ignore
 				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
 				appealRepository.updateAppealById(appeal.id, {
-					caseStartedDate: startDateWithTimeCorrection.toISOString()
+					caseStartedDate: startDateWithTimeCorrection.toISOString(),
+					...(procedureTypeId && { procedureTypeId })
 				})
 			]);
 

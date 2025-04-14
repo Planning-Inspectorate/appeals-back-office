@@ -101,6 +101,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h2>');
 		});
 
@@ -126,19 +127,33 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation status</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Part of agricultural holding</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Tenant of agricultural holding</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Other tenants</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Ownership certificate and/or land declaration</dt>'
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the appeal site part of an agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you a tenant of the agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Separate ownership certificate and agricultural land declaration</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Procedure preference</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Reason for preference</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Expected length of procedure</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Expected number of witnesses</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
 		});
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
@@ -905,7 +920,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspector access details" data-mode="text">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -965,7 +980,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details" data-mode="text">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="text">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -1023,7 +1038,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<div class="pins-show-more" data-label="Original Development description details" data-mode="text">${text301Characters}</div>`
+						`<div class="pins-show-more" data-label="Enter the description of development that you submitted in your application" data-mode="text">${text301Characters}</div>`
 					);
 				});
 			});
@@ -2847,7 +2862,9 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload evidence of your agreement to change the description of development</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);

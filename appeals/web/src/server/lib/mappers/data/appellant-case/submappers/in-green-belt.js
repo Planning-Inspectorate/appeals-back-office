@@ -4,9 +4,9 @@ import { booleanSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapInGreenBelt = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
 	booleanSummaryListItem({
 		id: 'green-belt',
-		text: 'In green belt',
+		text: 'Is the appeal site in a green belt?',
 		value: appellantCaseData.isGreenBelt,
-		defaultText: '',
+		defaultText: 'No data',
 		link: `${currentRoute}/green-belt/change/appellant`,
 		editable: userHasUpdateCase
 	});

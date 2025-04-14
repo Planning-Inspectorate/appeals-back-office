@@ -26,7 +26,9 @@ describe('development-description', () => {
 
 			expect(response.statusCode).toEqual(200);
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change development description</h1>');
+			expect(elementInnerHtml).toContain(
+				'Enter the description of development that you submitted in your application</h1>'
+			);
 			expect(elementInnerHtml).toContain('Enter the original description of the development');
 		});
 	});
@@ -69,7 +71,9 @@ describe('development-description', () => {
 			expect(appellantCaseDataCall.isDone()).toBe(true);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
-			expect(elementInnerHtml).toContain('Change development description</h1>');
+			expect(elementInnerHtml).toContain(
+				'Enter the description of development that you submitted in your application</h1>'
+			);
 			expect(elementInnerHtml).toContain('Enter the original description of the development');
 			expect(elementInnerHtml).toContain('Enter development description</a>');
 		});
@@ -95,7 +99,9 @@ describe('development-description', () => {
 			expect(appellantCaseDataCall.isDone()).toBe(true);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
-			expect(elementInnerHtml).toContain('Change development description</h1>');
+			expect(elementInnerHtml).toContain(
+				'Enter the description of development that you submitted in your application</h1>'
+			);
 			expect(elementInnerHtml).toContain('Enter the original description of the development');
 			expect(elementInnerHtml).toContain(
 				'Development description must be 1000 characters or less</a>'

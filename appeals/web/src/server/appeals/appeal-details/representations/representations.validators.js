@@ -1,6 +1,7 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
@@ -21,21 +22,15 @@ export function validateReadyToShare(request, response, next) {
 			break;
 		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
-			const { lpaFinalComments, appellantFinalComments } = currentAppeal.documentationSummary ?? {};
+			const dueDate = currentAppeal.appealTimetable?.finalCommentsDueDate;
+			const dueDatePassed =
+				dueDate && dateIsInThePast(dateISOStringToDayMonthYearHourMinute(dueDate));
 
-			const lpaValid =
-				lpaFinalComments?.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
-				lpaFinalComments?.status === 'not_received';
-			const appellantValid =
-				appellantFinalComments?.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
-				appellantFinalComments?.status === 'not_received';
-
-			if (
-				currentAppeal.appealStatus !== APPEAL_CASE_STATUS.FINAL_COMMENTS ||
-				!(lpaValid || appellantValid)
-			) {
+			if (currentAppeal.appealStatus !== APPEAL_CASE_STATUS.FINAL_COMMENTS || !dueDatePassed) {
 				return response.status(404).render('app/404.njk');
 			}
+
+			break;
 		}
 	}
 

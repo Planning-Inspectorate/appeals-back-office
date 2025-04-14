@@ -32,7 +32,9 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change part of agricultural holding</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the appeal site part of an agricultural holding?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="partOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
 			);
@@ -60,7 +62,9 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change part of agricultural holding</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the appeal site part of an agricultural holding?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="partOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);
@@ -116,7 +120,9 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change tenant of agricultural holding</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you a tenant of the agricultural holding?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
 			);
@@ -146,7 +152,9 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Change tenant of agricultural holding</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you a tenant of the agricultural holding?</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="tenantOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);
@@ -202,9 +210,7 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Change other tenants of agricultural holding</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no" checked>'
 			);
@@ -234,9 +240,7 @@ describe('agricultural-holding', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Change other tenants of agricultural holding</h1>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="otherTenantsOfAgriculturalHoldingRadio" type="radio" value="no">'
 			);

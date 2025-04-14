@@ -2,6 +2,7 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
+import { notifySend } from '#notify/notify-send.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
@@ -105,6 +106,15 @@ const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
+
+const mockNotifySend = jest.fn().mockImplementation(async (params) => {
+	const { doNotMockNotifySend = false, ...options } = params || {};
+	if (doNotMockNotifySend) {
+		return notifySend(options);
+	} else {
+		return Promise.resolve();
+	}
+});
 
 class MockPrismaClient {
 	get representation() {
@@ -482,6 +492,7 @@ const mockGotGet = jest.fn();
 const mockGotPost = jest.fn();
 const mockSendEmail = jest.fn();
 global.mockSendEmail = mockSendEmail;
+global.mockNotifySend = mockNotifySend;
 
 jest.unstable_mockModule('jsonwebtoken', () => ({
 	default: {
@@ -495,6 +506,10 @@ jest.unstable_mockModule('got', () => ({
 		get: mockGotGet,
 		post: mockGotPost
 	}
+}));
+
+jest.unstable_mockModule('#notify/notify-send.js', () => ({
+	notifySend: mockNotifySend
 }));
 
 jest.unstable_mockModule('notifications-node-client', () => ({

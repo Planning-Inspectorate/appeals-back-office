@@ -12,6 +12,7 @@ export default joi
 		BO_BLOB_CONTAINER: joi.string(),
 		blobEmulatorSasUrl: joi.string().optional(),
 		useBlobEmulator: joi.boolean(),
+		useNotifyEmulator: joi.boolean(),
 		defaultApiVersion: joi.string(),
 		serviceBusOptions: joi.object({
 			hostname: joi.string().optional()
@@ -35,6 +36,9 @@ export default joi
 				}),
 				template: joi
 					.object({
+						generic: joi.object({
+							id: joi.string().required()
+						}),
 						appealConfirmed: joi.object({
 							id: joi.string().required()
 						}),
@@ -94,17 +98,6 @@ export default joi
 						}),
 						decisionIsInvalidLPA: joi.object({
 							id: joi.string()
-						}),
-						lpaqComplete: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						lpaqIncomplete: joi.object({
-							id: joi.string().required()
 						}),
 						siteVisitChange: joi.object({
 							accompaniedDateChange: joi.object({
@@ -185,41 +178,6 @@ export default joi
 						}),
 						validAppellantCase: joi.object({
 							id: joi.string().required()
-						}),
-						finalCommentRejected: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						ipCommentRejected: joi.object({
-							id: joi.string().required()
-						}),
-						commentRejectedDeadlineExtended: joi.object({
-							id: joi.string().required()
-						}),
-						statementIncomplete: joi.object({
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						finalCommentsDone: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						receivedStatementsAndIpComments: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
 						})
 					})
 					.required(),

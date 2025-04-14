@@ -28,6 +28,12 @@ extends:
       - template: azure-pipelines-variables.yml@self
     validationJobs:
       - name: Run Linting & Tests
+        variables:
+        - name: test-script
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
+            value: npm run test
+          ${{ else }}:
+            value: npm run test:cov
         steps:
           - template: ../steps/node_script.yml
             parameters:
@@ -51,7 +57,7 @@ extends:
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
-              script: npm run test:cov
+              script: $(test-script)
               nodeVersion: 22
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)

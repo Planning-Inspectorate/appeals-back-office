@@ -14,13 +14,13 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change planning obligation status</h1>
+                                    <h1 class="govuk-fieldset__heading"> What is the status of your planning obligation?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio"
                                         name="planningObligationStatusRadio" type="radio" value="not_started">
-                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not started yet</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
@@ -59,13 +59,13 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change planning obligation status</h1>
+                                    <h1 class="govuk-fieldset__heading"> What is the status of your planning obligation?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio"
                                         name="planningObligationStatusRadio" type="radio" value="not_started">
-                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not started yet</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
@@ -105,13 +105,13 @@ exports[`planning-obligation GET /status/change should render the change plannin
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Change planning obligation status</h1>
+                                    <h1 class="govuk-fieldset__heading"> What is the status of your planning obligation?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio"
                                         name="planningObligationStatusRadio" type="radio" value="not_started" checked>
-                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not yet started</label>
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not started yet</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="planning-obligation-status-radio-2"

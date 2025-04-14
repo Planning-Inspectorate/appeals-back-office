@@ -5,7 +5,8 @@ import {
 	mapWebReviewOutcomeToApiReviewOutcome,
 	checkAndConfirmPage,
 	getValidationOutcomeFromAppellantCase,
-	getPageHeadingTextOverrideForFolder
+	getPageHeadingTextOverrideForFolder,
+	getPageHeadingTextOverrideForAddDocuments
 } from './appellant-case.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
@@ -27,7 +28,6 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /**
@@ -237,19 +237,7 @@ export const getAddDocuments = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const documentType = currentFolder.path.split('/')[1];
-	let pageHeadingTextOverride;
-
-	switch (documentType) {
-		case `${APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER}`:
-			pageHeadingTextOverride = 'Upload application decision letter';
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`:
-			pageHeadingTextOverride = 'Upload plans, drawings and list of plans';
-			break;
-		default:
-			break;
-	}
+	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(currentFolder);
 
 	await renderDocumentUpload({
 		request,

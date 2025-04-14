@@ -4,13 +4,20 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 export const mapProcedurePreferenceDuration = ({ appellantCaseData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'procedure-preference-duration',
-		text: 'Expected length of procedure',
+		text: 'How many days would you expect the inquiry to last?',
 		editable: true,
-		value:
-			'appellantProcedurePreferenceDuration' in appellantCaseData &&
-			appellantCaseData?.appellantProcedurePreferenceDuration !== null
-				? `${appellantCaseData.appellantProcedurePreferenceDuration} days`
-				: 'Not applicable',
+		value: getProcedurePreferenceDuration(appellantCaseData.appellantProcedurePreferenceDuration),
 		link: `${currentRoute}/procedure-preference/duration/change`,
 		cypressDataName: 'change-procedure-preference-duration'
 	});
+
+/**
+ * @param {number?} duration
+ * @returns {string}
+ */
+const getProcedurePreferenceDuration = (duration) => {
+	const singularOrPluralDays = duration !== 1 ? 'days' : 'day';
+	return duration !== null && duration !== undefined
+		? `${duration} ${singularOrPluralDays}`
+		: 'Not answered';
+};

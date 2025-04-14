@@ -10,7 +10,8 @@ export const paginationDefaultSettings = {
 export const textInputCharacterLimits = {
 	defaultAddressInputLength: 250,
 	defaultInputLength: 300,
-	defaultTextareaLength: 1000
+	defaultTextareaLength: 1000,
+	expandedTextareaLength: 8000
 };
 
 export const kilobyte = 1000;

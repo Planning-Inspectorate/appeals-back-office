@@ -25,14 +25,14 @@ export const changePartOfAgriculturalHoldingPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change part of agricultural holding`,
+		title: `Is the appeal site part of an agricultural holding?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'partOfAgriculturalHoldingRadio',
 				value: partOfAgriculturalHolding,
-				legendText: 'Change part of agricultural holding',
+				legendText: 'Is the appeal site part of an agricultural holding?',
 				legendIsPageHeading: true
 			})
 		]
@@ -62,14 +62,14 @@ export const changeTenantOfAgriculturalHoldingPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change tenant of agricultural holding`,
+		title: `Are you a tenant of the agricultural holding?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'tenantOfAgriculturalHoldingRadio',
-				value: tenantOfAgriculturalHolding,
-				legendText: 'Change tenant of agricultural holding',
+				value: tenantOfAgriculturalHolding ?? 'Not answered',
+				legendText: 'Are you a tenant of the agricultural holding?',
 				legendIsPageHeading: true
 			})
 		]
@@ -99,14 +99,14 @@ export const changeOtherTenantsOfAgriculturalHoldingPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Change other tenants of agricultural holding`,
+		title: `Are there any other tenants?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
 				name: 'otherTenantsOfAgriculturalHoldingRadio',
 				value: otherTenantsOfAgriculturalHolding,
-				legendText: 'Change other tenants of agricultural holding',
+				legendText: 'Are there any other tenants?',
 				legendIsPageHeading: true
 			})
 		]
