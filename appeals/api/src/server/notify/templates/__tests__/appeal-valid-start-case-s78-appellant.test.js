@@ -80,7 +80,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 		].join('\n');
 
 		await notifySend(notifySendData);
-		console.log(notifySendData.notifyClient.sendEmail.mock.calls);
 		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
 			{
 				id: 'mock-appeal-generic-id'

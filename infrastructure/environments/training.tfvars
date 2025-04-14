@@ -27,7 +27,6 @@ apps_config = {
     enable_test_endpoints         = false
     notify_template_ids = {
       appeal_generic_id                                               = "b29bbd23-6cf9-4173-b831-a915c79cf040"
-      appeal_type_changed_non_has_id                                  = "0792f620-b5ec-44e8-a757-cebf9f564175"
       appeal_withdrawn_appellant_id                                   = "e1ec7728-11c0-4032-9c9e-574ea553c15c"
       appeal_withdrawn_lpa_id                                         = "852d47e1-2e0b-48e8-96c0-f5ab5e0721ed"
       decision_is_allowed_split_dismissed_appellant_id                = "3bbe584f-810f-4f1c-9124-8695d5a94b60"
