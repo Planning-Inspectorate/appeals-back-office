@@ -1106,7 +1106,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 		htmlProperty.pageComponents.push({
 			type: 'html',
 			parameters: {
-				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>`
+				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>`
 			}
 		});
 	}
