@@ -179,7 +179,7 @@ export const renderCheckYourAnswers = async (
 					]
 				},
 				'Supporting documents': {
-					value: !attachmentsList?.length ? 'Not provided' : undefined,
+					value: !attachmentsList?.length ? 'No documents' : undefined,
 					html: attachmentsList?.length ? attachmentsList : undefined,
 					actions: {
 						Manage: {
