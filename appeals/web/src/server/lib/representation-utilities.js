@@ -12,7 +12,7 @@ export function isRepresentationReviewRequired(representationStatus) {
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
- * @param {string|null|undefined} representationStatus
+ * @param {string|Record<string, number>|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @returns {string} action link html
  */
@@ -25,10 +25,21 @@ export function mapRepresentationDocumentSummaryActionLink(
 	if (documentationStatus !== 'received') {
 		return '';
 	}
-	const reviewRequired = [
-		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-	].includes(representationStatus);
+
+	const reviewRequired = (() => {
+		if (typeof representationStatus === 'string') {
+			return [
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			].includes(representationStatus);
+		}
+
+		if (typeof representationStatus === 'object' && representationStatus !== null) {
+			return representationStatus[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0;
+		}
+
+		return false;
+	})();
 
 	/** @type {Record<RepresentationType, string>} */
 	const visuallyHiddenTexts = {

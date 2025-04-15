@@ -14,22 +14,21 @@ export const mapLpaQuestionnaire = ({ appealDetails, currentRoute }) => {
 			return 'Awaiting start date';
 		}
 
+		const afterDueDate =
+			appealDetails.appealTimetable?.lpaQuestionnaireDueDate &&
+			dateIsInThePast(
+				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaQuestionnaireDueDate)
+			);
+
 		switch (status?.toLowerCase()) {
 			case 'not_received':
-				return appealDetails.appealTimetable?.lpaQuestionnaireDueDate &&
-					dateIsInThePast(
-						dateISOStringToDayMonthYearHourMinute(
-							appealDetails.appealTimetable.lpaQuestionnaireDueDate
-						)
-					)
-					? 'Overdue'
-					: 'Awaiting questionnaire';
+				return afterDueDate ? 'Overdue' : 'Awaiting questionnaire';
 			case 'received':
 				return 'Ready to review';
 			case 'complete':
 				return 'Complete';
 			case 'incomplete':
-				return 'Incomplete';
+				return afterDueDate ? 'Overdue' : 'Incomplete';
 			case 'published':
 				return 'Shared';
 			default:
