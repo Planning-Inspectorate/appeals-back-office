@@ -21,7 +21,10 @@ describe('notify-send', () => {
 		mockFileSystem({
 			[templatesPath]: {
 				'test-template.subject.md': 'Subject for ((first_name)) ((last_name))',
-				'test-template.content.md': 'Content for ((first_name)) ((last_name))'
+				'test-template.content.md': 'Content for ((first_name)) ((last_name))',
+				'corrupt-template.subject.md': 'Subject for ((first_name)) ((last_name))',
+				'corrupt-template.content.md':
+					'Content for ((gaps in variable name)) text here ((this_one_is_ok)) ((Uppercase_variable_name)) other text here ((contains_special_characters_**)) ((10_started_with_numeric)) more text here ((_started_with_underscore))'
 			}
 		});
 
@@ -44,6 +47,25 @@ describe('notify-send', () => {
 		mockFileSystem.restore();
 	});
 
+	test('should throw the failed to populate error when the template is corrupt', async () => {
+		await expect(
+			async () => await notifySend({ ...notifySendData, templateName: 'corrupt-template' })
+		).rejects.toThrow(
+			new Error(
+				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+					'the following corrupt parameter definitions in the template: ' +
+						[
+							'((gaps in variable name))',
+							'((Uppercase_variable_name))',
+							'((contains_special_characters_**))',
+							'((10_started_with_numeric))',
+							'((_started_with_underscore))'
+						].join(', ')
+				])
+			)
+		);
+	});
+
 	test('should throw the failed to populate error when no parameters passed in', async () => {
 		await expect(async () => await notifySend({ doNotMockNotifySend: true })).rejects.toThrow(
 			new Error(
@@ -59,7 +81,7 @@ describe('notify-send', () => {
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
 			new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'missing personalisation parameters: (first_name)'
+					'missing personalisation parameters: ((first_name))'
 				])
 			)
 		);

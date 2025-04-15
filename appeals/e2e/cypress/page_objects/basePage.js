@@ -34,8 +34,8 @@ export class Page {
 		list: '.govuk-list',
 		mediumHeader: '.govuk-heading-m',
 		panel: '.govuk-panel',
-		panelBody: '.govuk-panel__body',
-		panelTitle: '.govuk-panel__title',
+		panelBody: '.govuk-notification-banner__heading',
+		panelTitle: '#govuk-notification-banner-title',
 		radio: '.govuk-radios__item',
 		rightCol: '.pins-column--right',
 		select: '.govuk-select',
@@ -47,9 +47,9 @@ export class Page {
 		publishtableHeader: '#main-content > div > div > div > div > p', // TODO Use specific data-cy selector
 		tableRow: '.govuk-table__row',
 		tab: '.govuk-tabs__tab',
-		tag: '.govuk-tag',
+		tag: '#main-content .govuk-tag',
 		textArea: '.govuk-textarea',
-		status: '.govuk-tag',
+		status: '#main-content .govuk-tag',
 		successBanner: '.govuk-notification-banner--success',
 		summaryCardActions: '.govuk-summary-card__actions',
 		summaryListActions: '.govuk-summary-list__actions',
@@ -244,9 +244,8 @@ export class Page {
 	}
 
 	validateConfirmationPanelMessage(title, body) {
-		//TODO: Replace with check for success banner
-		// this.basePageElements.panelTitle(title);
-		// this.basePageElements.panelBody(body);
+		this.basePageElements.panelTitle().should('contain.text', title);
+		this.basePageElements.panelBody().should('contain.text', body);
 	}
 
 	validateBannerMessage(title, message) {
@@ -338,5 +337,9 @@ export class Page {
 				.invoke('text')
 				.then((text) => expect(text.trim()).to.equal(answer));
 		});
+	}
+
+	validateSectionHeader(sectionHeader) {
+		this.basePageElements.sectionHeader().should('have.text', sectionHeader);
 	}
 }

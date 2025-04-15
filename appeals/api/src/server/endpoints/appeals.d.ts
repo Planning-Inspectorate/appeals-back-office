@@ -133,6 +133,7 @@ interface UpdateAppealRequest {
 	caseOfficer?: number | null;
 	inspector?: number | null;
 	agent?: number | null;
+	procedureTypeId?: number | null;
 }
 
 interface SingleAppellantCaseResponse {
@@ -213,6 +214,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	developmentType?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {

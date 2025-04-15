@@ -26,16 +26,16 @@ describe('Progress S78 to decision', () => {
 		}).then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.checkAppealStatus('Validation'.toUpperCase());
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
 
 			happyPathHelper.reviewAppellantCase(caseRef);
-			caseDetailsPage.checkAppealStatus('Ready to start'.toUpperCase());
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.checkAppealStatus('LPA Questionnaire'.toUpperCase());
+			happyPathHelper.startS78Case(caseRef, 'written');
+			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 			happyPathHelper.reviewS78Lpaq(caseRef);
-			caseDetailsPage.checkAppealStatus('Statements'.toUpperCase());
+			caseDetailsPage.checkStatusOfCase('Statements', 0);
 
 			happyPathHelper.addThirdPartyComment(caseRef, true);
 			caseDetailsPage.clickBackLink();
@@ -48,7 +48,7 @@ describe('Progress S78 to decision', () => {
 
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkAppealStatus('Final comments'.toUpperCase());
+			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 			happyPathHelper.addLpaFinalComment(caseRef);
 			cy.loadAppealDetails(caseRef).then((appealData) => {
@@ -59,7 +59,7 @@ describe('Progress S78 to decision', () => {
 			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');
-			caseDetailsPage.checkAppealStatus('Site visit ready to set up'.toUpperCase());
+			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseRef);
 			cy.simulateSiteVisit(caseRef).then((caseRef) => {

@@ -6,7 +6,6 @@ import {
 
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
@@ -16,12 +15,12 @@ import transitionState from '../../state/transition-state.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import config from '#config/config.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -92,17 +91,17 @@ const updateAppellantCaseValidationOutcome = async (
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.appealConfirmed, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				site_address: siteAddress,
-				lpa_reference: appeal.applicationReference
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
-		}
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress
+		};
+		await notifySend({
+			templateName: 'appeal-confirmed',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -121,19 +120,20 @@ const updateAppellantCaseValidationOutcome = async (
 			);
 
 			if (updatedDueDate) {
-				try {
-					await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
-						appeal_reference_number: appeal.reference,
-						lpa_reference: appeal.applicationReference,
-						site_address: siteAddress,
-						due_date: formatDate(new Date(updatedDueDate), false),
-						reasons: incompleteReasonsList
-					});
-				} catch (error) {
-					if (error) {
-						throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-					}
-				}
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: siteAddress,
+					due_date: formatDate(new Date(updatedDueDate), false),
+					reasons: incompleteReasonsList
+				};
+
+				await notifySend({
+					templateName: 'appeal-incomplete',
+					notifyClient,
+					recipientEmail,
+					personalisation
+				});
 			}
 		}
 
@@ -146,19 +146,18 @@ const updateAppellantCaseValidationOutcome = async (
 			const invalidReasonsList = getFormattedReasons(
 				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
 			);
-
-			try {
-				await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					reasons: invalidReasonsList
-				});
-			} catch (error) {
-				if (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: siteAddress,
+				reasons: invalidReasonsList
+			};
+			await notifySend({
+				templateName: 'appeal-invalid',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
 		}
 	}
 };
