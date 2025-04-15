@@ -17,10 +17,6 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 		}
 
 		if (status === 'not_received') {
-			return 'Awaiting final comments';
-		}
-
-		if (status === 'not_received') {
 			return appealDetails.appealTimetable?.finalCommentsDueDate &&
 				dateIsInThePast(
 					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.finalCommentsDueDate)
@@ -43,11 +39,16 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 			return isRedacted ? 'Redacted and accepted' : 'Accepted';
 		}
 
+		if (counts[APPEAL_REPRESENTATION_STATUS.INVALID] > 0) {
+			return 'Rejected';
+		}
+
 		return '';
 	})();
 
 	const receivedText = (() => {
-		const { status, counts } = appealDetails.documentationSummary?.lpaFinalComments ?? {};
+		const { status, counts, receivedAt } =
+			appealDetails.documentationSummary?.lpaFinalComments ?? {};
 
 		if (!appealDetails.startedAt) {
 			return 'Not applicable';
@@ -62,7 +63,7 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 			)}`;
 		}
 
-		return dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate);
+		return dateISOStringToDisplayDate(receivedAt);
 	})();
 
 	return documentationFolderTableItem({
@@ -73,7 +74,7 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,
-			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
+			appealDetails?.documentationSummary?.lpaFinalComments?.counts,
 			'lpa-final-comments'
 		)
 	});
