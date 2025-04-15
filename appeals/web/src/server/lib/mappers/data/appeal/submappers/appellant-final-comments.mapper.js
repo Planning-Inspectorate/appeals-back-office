@@ -47,7 +47,8 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 	})();
 
 	const receivedText = (() => {
-		const { status, counts } = appealDetails.documentationSummary?.appellantFinalComments ?? {};
+		const { status, counts, receivedAt } =
+			appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
 		if (!appealDetails.startedAt) {
 			return 'Not applicable';
@@ -62,7 +63,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 			)}`;
 		}
 
-		return dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate);
+		return dateISOStringToDisplayDate(receivedAt);
 	})();
 
 	return documentationFolderTableItem({
@@ -73,7 +74,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,
-			appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
+			appealDetails?.documentationSummary?.appellantFinalComments?.counts,
 			'appellant-final-comments'
 		)
 	});
