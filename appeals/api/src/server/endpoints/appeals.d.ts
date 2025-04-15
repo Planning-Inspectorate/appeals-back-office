@@ -71,6 +71,7 @@ interface SingleAppealDetailsResponse {
 	internalCorrespondence: {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
+		mainParty?: FolderInfo | null;
 	};
 	documentationSummary: DocumentationSummary;
 	healthAndSafety: {
@@ -114,10 +115,6 @@ interface SingleAppealDetailsResponse {
 	createdAt: string;
 	startedAt?: string | null;
 	validAt?: string | null;
-	internalCorrespondence: {
-		crossTeam?: FolderInfo | null;
-		inspector?: FolderInfo | null;
-	};
 	withdrawal: {
 		withdrawalFolder?: FolderInfo | null;
 		withdrawalRequestDate: Date | null;

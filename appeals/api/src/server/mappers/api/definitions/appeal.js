@@ -129,6 +129,12 @@ const appeal = {
 				properties: {
 					...Folder.properties
 				}
+			},
+			mainParty: {
+				type: 'object',
+				properties: {
+					...Folder.properties
+				}
 			}
 		},
 		environmentalAssessment: {
