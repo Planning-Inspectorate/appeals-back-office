@@ -2321,7 +2321,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2597,7 +2597,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -3220,7 +3220,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3236,7 +3236,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">2 March 2024</td>
@@ -3252,7 +3252,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3338,7 +3338,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3354,12 +3354,12 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">
                             <div>2 March 2024</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3374,7 +3374,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3394,7 +3394,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                         </td>
                         <td class="govuk-table__cell">
                             <div>3 April 2025</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3473,7 +3473,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3519,9 +3519,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                                     </div>
                                 </td>
                                 <td class="govuk-table__cell"></td>
@@ -3533,7 +3533,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3581,7 +3581,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3637,7 +3637,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3685,7 +3685,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3731,7 +3731,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3866,7 +3866,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3912,7 +3912,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3959,7 +3959,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -4005,7 +4005,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
