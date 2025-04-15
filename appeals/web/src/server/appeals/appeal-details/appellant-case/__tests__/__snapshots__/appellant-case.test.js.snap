@@ -2381,7 +2381,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
@@ -2430,7 +2430,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
@@ -2483,7 +2483,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
@@ -2536,7 +2536,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
@@ -2608,7 +2608,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
             data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
@@ -3189,7 +3189,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

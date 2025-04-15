@@ -3362,7 +3362,9 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3991,7 +3993,9 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Updated changed description document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Updated agreement to change description evidence document</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -4906,7 +4910,9 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
