@@ -33,6 +33,10 @@ import procedurePreferenceRouter from './procedure-preference/procedure-preferen
 
 const router = createRouter({ mergeParams: true });
 
+// New route for downloading the PDF of the appellant case. We would add a link to this
+// endpoint from the appellant case page.
+router.route('/pdf-download').get(validateAppeal, asyncHandler(controller.pdfDownload));
+
 router.use(
 	'/valid',
 	validateAppeal,

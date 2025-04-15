@@ -21,10 +21,13 @@ const resolvePath = (/** @type {string} */ relativePath) =>
 const require = createRequire(import.meta.url);
 
 /**
+ * For simplicity's sake I have just exported the function here. When we come to do this
+ * properly it should probably be extracted into a reusable module that can be referenced
+ * here and also from the module responsible for rendering HTML for PDF genertion.
  * @param {string} input filename to read for input
  * @returns {{ css: Buffer | string, map?: RawSourceMap | SourceMap }} CSS compiled object
  */
-function compileCSS(input) {
+export function compileCSS(input) {
 	// #1: Compile CSS with either engine.
 	// -----------------------------------
 	const compiledOptions = {

@@ -29,6 +29,8 @@ import {
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import fetch from 'node-fetch';	// allows us to pipe the PDF generator response back to the client
+import { compileCSS } from '../../../../../scripts/rollup/compile-css.js';
 
 /**
  *
@@ -263,6 +265,87 @@ export const postAddDocuments = async (request, response) => {
 		response,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/add-document-details/${currentFolder.folderId}`
 	});
+};
+
+/** 
+ * For the purpose of this spike I have just put the code into one big controller function,
+ * but when we come to implement this properly it should probably be extracted into a service
+ * which can be used in other sections of the application where PDF generation is required.
+ * @type {import('@pins/express').RequestHandler<Response>}
+ */
+export const pdfDownload = async (request, response) => {
+	// First we get the case details from the API and run them through the mapper,
+	// the same as we do when rendering the page normally.
+	const { currentAppeal } = request;
+	if (
+		currentAppeal &&
+		currentAppeal.appellantCaseId !== null &&
+		currentAppeal.appellantCaseId !== undefined
+	) {
+		const appellantCaseResponse = await appellantCaseService
+			.getAppellantCaseFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
+			)
+			.catch((error) => logger.error(error));
+
+		const mappedPageContent = await appellantCasePage(
+			appellantCaseResponse,
+			currentAppeal,
+			request.originalUrl,
+			request.session
+		);
+
+		try {
+			// Then we render the page as HTML using the Nunjucks template.
+			let html = await new Promise((resolve, reject) => {
+				response.render(
+					'patterns/display-page.pattern.njk',
+					{ pageContent: mappedPageContent, errors: undefined },
+					(err, result) => {
+						if (err) reject(err);
+						else resolve(result);
+					}
+				);
+			});
+
+			// Then we compile the CSS and inject it into the head of the HTML.
+			// This is a pretty hacky way of doing it but it demonstrates the
+			// general idea.
+			const css = await compileCSS('src/styles/main.scss').css;
+
+			html = html.replace('</head>', `<style>${css}</style></head>`);
+
+			// Then we send the HTML to the PDF generator API.
+			const url = 'http://localhost:3001/api/v1/generate';
+
+			const pdfBuffer = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ html })
+			});
+
+			// Then we set the response headers.
+			response.setHeader('Content-Type', 'application/pdf');
+			// If we want it to display a preview in the browser then we don't want the
+			// content-disposition header as that makes it behave like a download.
+			// response.setHeader('Content-Disposition', 'attachment; filename="document.pdf"');
+
+			// Then we pipe the PDF buffer to the response.
+			pdfBuffer.body?.pipe(response);
+			response.status(200);
+			return;
+		} catch (error) {
+			console.error('Error generating PDF:', error);
+			response.status(500).send('Error generating PDF');
+			return;
+		}
+	}
+
+	return response.status(404).render('app/404.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

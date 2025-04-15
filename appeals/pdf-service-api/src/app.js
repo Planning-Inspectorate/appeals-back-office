@@ -26,7 +26,7 @@ app
 			optionsSuccessStatus: 204
 		})
 	)
-	.use(bodyParser.json())
+	.use(bodyParser.json({ limit: '20mb' })) // When adding the CSS it was exceeding the default of 100kB
 	.use('/', routes)
 	.use((req, res) => {
 		res.status(404).json({
