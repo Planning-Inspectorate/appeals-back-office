@@ -42,7 +42,7 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 		}
 		if (blockEnd && blockEnd <= index) {
 			blockEnd = 0;
-			return line ? `</div>\n${line}<br>` : '</div>';
+			return line ? `</div>\n${line}<br>` : '</div><br>';
 		}
 		return line ? `${line}<br>` : '<br>';
 	});
@@ -63,8 +63,13 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
 
-	const fileName = `${formatSortableDateTime(new Date())} ${templateName}.html`;
-	const fullName = path.join(outputDir, fileName);
+	// Allow for both Linux (Mac) and Windows file systems
+	const fileName = `${formatSortableDateTime(new Date())} ${templateName}.html`.replaceAll(
+		':',
+		'_'
+	);
+
+	const fullName = path.join(process.cwd(), 'temp', fileName);
 	fs.writeFileSync(fullName, emailHtml);
 	return fullName;
 }
