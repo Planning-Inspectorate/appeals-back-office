@@ -104,7 +104,7 @@ export const showErrors = (error, uploadForm) => {
 
 	const errors =
 		error.details?.map((errorDetails) => ({
-			message: errorMessage(errorDetails.message || '', errorDetails.name),
+			message: errorMessage(errorDetails.message || '', errorDetails.name, errorDetails.metadata),
 			guid: errorDetails.guid
 		})) || [];
 

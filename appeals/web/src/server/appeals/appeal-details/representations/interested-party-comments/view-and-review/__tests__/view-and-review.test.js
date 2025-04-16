@@ -437,7 +437,7 @@ describe('interested-party-comments', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 

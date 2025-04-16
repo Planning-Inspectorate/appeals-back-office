@@ -235,7 +235,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
                     <div class="govuk-form-group">
                         <input class="govuk-input" id="documentId" name="documentId" type="hidden"
                         value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
@@ -243,7 +243,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
                         <input class="govuk-input" id="file-name" name="fileName"
-                        type="text" value="ph0-documentFileInfo.jpeg">
+                        type="text" value="ph0-documentFileInfo">
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -264,7 +264,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
                     <div class="govuk-form-group">
                         <input class="govuk-input" id="documentId" name="documentId" type="hidden"
                         value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
@@ -272,7 +272,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
                         <input class="govuk-input" id="file-name" name="fileName"
-                        type="text" value="ph0-documentFileInfo.jpeg">
+                        type="text" value="ph0-documentFileInfo">
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>

@@ -1549,7 +1549,7 @@ describe('costs', () => {
 
 						expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain('File name');
-						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 					});
 				}
 			}
@@ -1572,7 +1572,7 @@ describe('costs', () => {
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`
 							)
-							.send({ fileName: 'new-name.jpeg', documentId: '1' });
+							.send({ fileName: 'new-name', documentId: '1' });
 
 						expect(response.statusCode).toBe(302);
 						expect(response.text).toContain(

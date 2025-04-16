@@ -47,6 +47,7 @@ export interface FileUploadInfo {
 }
 
 export interface FileUploadError {
+	metadata?: Record<string, string>;
 	message: string;
 	guid: string;
 	name: string;
@@ -92,6 +93,7 @@ export interface StagedFileError {
 	name: string;
 	message: string;
 	guid: string;
+	metadata?: Record<string, string>;
 }
 
 export interface FileUploadParameters {

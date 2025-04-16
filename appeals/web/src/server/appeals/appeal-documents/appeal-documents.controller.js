@@ -706,6 +706,14 @@ export const renderChangeDocumentFileName = async ({ request, response, backButt
 };
 
 /**
+ * @param {string} fileName
+ * @returns {string | undefined}
+ */
+const getFileExtension = (fileName) => {
+	return fileName.split('.').pop();
+};
+
+/**
  * @param {Object} params
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
@@ -736,7 +744,12 @@ export const postChangeDocumentFileName = async ({
 			return response.status(500).render('app/500.njk');
 		}
 
-		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(body);
+		const fileDetails = {
+			...body,
+			fileName: `${body.fileName}.${getFileExtension(currentFile.name)}`
+		};
+
+		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(fileDetails);
 		const updateDocumentsResult = await updateDocument(apiClient, appealId, apiRequest);
 
 		if (updateDocumentsResult) {

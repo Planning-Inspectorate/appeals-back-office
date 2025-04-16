@@ -19,16 +19,17 @@ export const validateDocumentName = createValidator(
 		.notEmpty()
 		.withMessage('File name must be entered')
 		.bail()
-		// Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix
-		.matches('^[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$')
+		// Filename must only contain alphanumeric characters, underscores and hyphens
+		.matches('^[a-zA-Z0-9_-]+$')
 		.withMessage(
-			'File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
+			'File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
 		)
 		.bail()
 		.custom((value, { req }) => {
 			const hasDuplicate = req.currentFolder.documents.some(
 				(/** @type {import('@pins/appeals.api').Appeals.DocumentInfo} */ document) =>
-					document.name.toLowerCase() === value.toLowerCase() && document.id !== req.body.documentId
+					document.name.toLowerCase().substring(0, document.name.lastIndexOf('.')) ===
+						value.toLowerCase() && document.id !== req.body.documentId
 			);
 			if (hasDuplicate) {
 				return Promise.reject(
