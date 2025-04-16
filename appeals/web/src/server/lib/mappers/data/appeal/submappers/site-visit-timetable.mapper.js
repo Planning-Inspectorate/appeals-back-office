@@ -15,7 +15,7 @@ export function dateAndTimeFormatter(date, startTime, endTime) {
 }
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapSiteVisitDate = ({ appealDetails, currentRoute, session }) => {
+export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session }) => {
 	const id = 'schedule-visit';
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
