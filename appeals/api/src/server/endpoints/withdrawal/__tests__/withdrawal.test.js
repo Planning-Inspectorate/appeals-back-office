@@ -10,8 +10,8 @@ import {
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import config from '#config/config.js';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import { notifySend } from '#notify/notify-send.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -85,41 +85,159 @@ describe('appeal withdrawal routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.appellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					withdrawal_date: formatDate(utcDate, false)
+				},
+				recipientEmail: 'test@136s7.com',
+				templateName: 'appeal-withdrawn-appellant'
+			});
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.lpa.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					withdrawal_date: formatDate(utcDate, false)
+				},
+				recipientEmail: 'maid@lpa-email.gov.uk',
+				templateName: 'appeal-withdrawn-lpa'
+			});
 
 			expect(response.status).toEqual(200);
 		});
+	});
+
+	test('should call notify sendEmail for appeal-withdrawn-appellant with the correct data', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'appeal-withdrawn-appellant',
+			notifyClient: {
+				sendEmail: jest.fn()
+			},
+			recipientEmail: 'test@136s7.com',
+			personalisation: {
+				appeal_reference_number: '134526',
+				lpa_reference: '48269/APP/2021/1482',
+				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				withdrawal_date: '01 January 2025'
+			},
+			appeal: {
+				id: 'mock-appeal-generic-id',
+				reference: '134526'
+			},
+			startDate: new Date('2025-01-01')
+		};
+
+		const expectedContent = [
+			'# Appeal details',
+			'',
+			'^Appeal reference number: 134526',
+			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+			'Planning application reference: 48269/APP/2021/1482',
+			'',
+			'# Appeal withdrawn',
+			'',
+			'We have withdrawn this appeal following your request on 01 January 2025.',
+			'',
+			'# Next steps',
+			'',
+			'Your case will be closed.',
+			'',
+			'Any appointments made for this appeal will be cancelled.',
+			'',
+			'The planning department that refused your application has been informed.',
+			'',
+			'# Feedback',
+			'',
+			'We welcome your feedback on our appeals process. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Appeal withdrawn: 134526'
+			}
+		);
+	});
+
+	test('should call notify sendEmail for appeal-withdrawn-lpa with the correct data', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'appeal-withdrawn-lpa',
+			notifyClient: {
+				sendEmail: jest.fn()
+			},
+			recipientEmail: 'test@136s7.com',
+			personalisation: {
+				appeal_reference_number: '234567',
+				lpa_reference: '48269/APP/2021/1483',
+				site_address: '98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom',
+				withdrawal_date: '03 January 2025'
+			},
+			appeal: {
+				id: 'mock-appeal-generic-id',
+				reference: '234567'
+			},
+			startDate: new Date('2025-01-01')
+		};
+
+		const expectedContent = [
+			'# Appeal details',
+			'',
+			'^Appeal reference number: 234567',
+			'Address: 98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom',
+			'Planning application reference: 48269/APP/2021/1483',
+			'',
+			'# Appeal withdrawn',
+			'',
+			'This appeal has been withdrawn following a request from the appellant dated 03 January 2025.',
+			'',
+			'# Next steps',
+			'',
+			'The case will be closed.',
+			'',
+			'Any appointments made for this appeal will be cancelled.',
+			'',
+			'The appellant has been informed.',
+			'',
+			'# Feedback',
+			'',
+			'We welcome your feedback on our appeals process. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Appeal withdrawn: 234567'
+			}
+		);
 	});
 });
