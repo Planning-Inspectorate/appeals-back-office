@@ -1,6 +1,7 @@
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
@@ -20,7 +21,11 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData);
+	const siteDetails = getSiteDetails(mappedData, appealDetails);
+
+	const isStarted =
+		appealDetails.startedAt &&
+		dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDetails.startedAt));
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
@@ -31,12 +36,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				rows: [
 					mappedData.appeal.validAt.display.summaryListItem,
 					mappedData.appeal.startedAt.display.summaryListItem,
-					mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-					mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
-					mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
-					mappedData.appeal.finalCommentDueDate.display.summaryListItem,
-					mappedData.appeal.s106ObligationDueDate.display.summaryListItem,
-					mappedData.appeal.siteVisitDate.display.summaryListItem
+					...(isStarted
+						? [
+								mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
+								mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
+								mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
+								mappedData.appeal.finalCommentDueDate.display.summaryListItem
+						  ]
+						: [])
 				].filter(isDefined)
 			}
 		}
@@ -59,8 +66,8 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				mappedData.appeal.ipComments.display.tableItem,
 				mappedData.appeal.appellantFinalComments.display.tableItem,
 				mappedData.appeal.lpaFinalComments.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem,
-				mappedData.appeal.environmentalAssessment.display.tableItem
+				mappedData.appeal.environmentalAssessment.display.tableItem,
+				mappedData.appeal.appealDecision.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}

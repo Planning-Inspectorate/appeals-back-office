@@ -79,6 +79,7 @@ export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'A linked appeal was added';
 export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'A linked appeal was removed';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
+export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address was added';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';

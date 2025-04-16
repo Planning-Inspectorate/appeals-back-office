@@ -1,11 +1,4 @@
-import {
-	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
-	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
-	AUDIT_TRAIL_MODIFIED_APPEAL,
-	AUDIT_TRAIL_SYSTEM_UUID,
-	USER_TYPE_CASE_OFFICER,
-	USER_TYPE_INSPECTOR
-} from '@pins/appeals/constants/support.js';
+import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -19,6 +12,16 @@ import { getCache } from '#utils/cache-data.js';
 import { setCache } from '#utils/cache-data.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
+
+const {
+	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
+	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
+	AUDIT_TRAIL_MODIFIED_APPEAL,
+	AUDIT_TRAIL_SYSTEM_UUID,
+	USER_TYPE_CASE_OFFICER,
+	USER_TYPE_INSPECTOR
+} = SUPPORT_CONSTANTS;
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -132,13 +135,18 @@ const updateAppealDetails = async (
 	const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
 	await Promise.all(
-		updatedProperties.map((updatedProperty) =>
-			createAuditTrail({
+		updatedProperties.map((updatedProperty) => {
+			const constantKey = `AUDIT_TRAIL_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
+			const details =
+				SUPPORT_CONSTANTS[constantKey] ??
+				stringTokenReplacement(AUDIT_TRAIL_MODIFIED_APPEAL, [updatedProperty]);
+
+			return createAuditTrail({
 				appealId: appealId,
 				azureAdUserId: azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				details: stringTokenReplacement(AUDIT_TRAIL_MODIFIED_APPEAL, [updatedProperty])
-			})
-		)
+				details
+			});
+		})
 	);
 };
 

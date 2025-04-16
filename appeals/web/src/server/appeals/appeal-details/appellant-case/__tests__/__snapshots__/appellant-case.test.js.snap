@@ -55,7 +55,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -63,7 +63,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -149,7 +149,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -296,7 +296,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">LPA application reference updated</p>
+                    <p class="govuk-notification-banner__heading">Appeal updated</p>
                 </div>
             </div>
         </div>
@@ -314,7 +314,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -322,7 +322,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -408,8 +408,11 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
@@ -612,7 +615,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -620,7 +623,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -706,7 +709,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -884,7 +887,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -892,7 +895,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -978,7 +981,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1227,7 +1230,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1235,7 +1238,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1321,7 +1324,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1498,7 +1501,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1506,7 +1509,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1607,7 +1610,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1640,6 +1643,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
                                     data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
                                 </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-type/change"
+                                data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (3. Application details)</span></a>
+                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1812,7 +1821,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1820,7 +1829,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1906,7 +1915,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -4185,7 +4194,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -4193,7 +4202,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -4279,7 +4288,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>

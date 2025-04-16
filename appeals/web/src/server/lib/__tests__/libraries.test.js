@@ -35,7 +35,6 @@ import httpMocks from 'node-mocks-http';
 import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
-import { mapRepresentationDocumentSummaryStatus } from '#lib/representation-utilities.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1619,3 +1618,4 @@ describe('mapRepresentationDocumentSummaryStatus', () => {
 		);
 	});
 });
+
