@@ -4,6 +4,8 @@ import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappe
 import { ensureArray } from '#lib/array-utilities.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { getAttachmentList } from '../../common/document-attachment-list.js';
+import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -45,7 +47,8 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 					representation: lpaStatement,
 					labelText: 'Redacted statement',
 					session,
-					redactedRepresentation: session?.redactLPAStatement?.redactedRepresentation
+					redactedRepresentation: session?.redactLPAStatement?.redactedRepresentation,
+					buttonText: REVERT_BUTTON_TEXT.LPA_STATEMENT
 				}),
 				buttonComponent(
 					'Continue',
@@ -103,6 +106,11 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
+	//check if the redacted statement is the same as the original
+	const redactMatching = checkRedactedText(
+		lpaStatement.originalRepresentation,
+		session?.redactLPAStatement?.redactedRepresentation
+	);
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -114,7 +122,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 			parameters: {
 				rows: [
 					{
-						key: { text: 'Original statement' },
+						key: { text: redactMatching ? 'Original statement' : 'Statement' },
 						value: {
 							html: '',
 							pageComponents: [
@@ -127,25 +135,49 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 							]
 						}
 					},
-					{
-						key: { text: 'Redacted statement' },
-						value: {
-							html: '',
-							pageComponents: [
+					...(redactMatching
+						? [
 								{
-									type: 'show-more',
-									parameters: {
-										text: session?.redactLPAStatement?.redactedRepresentation
+									key: { text: 'Redacted statement' },
+									value: {
+										html: '',
+										pageComponents: [
+											{
+												type: 'show-more',
+												parameters: { text: session?.redactLPAStatement?.redactedRepresentation }
+											}
+										]
+									},
+									actions: {
+										items: [
+											{
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+												text: 'Change',
+												visuallyHiddenText: 'redacted statement'
+											}
+										]
 									}
 								}
-							]
-						},
+						  ]
+						: []),
+					{
+						key: { text: 'Supporting documents' },
+						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 						actions: {
 							items: [
+								...(lpaStatement.attachments?.length > 0
+									? [
+											{
+												text: 'Manage',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/redact/confirm`,
+												visuallyHiddenText: 'supporting documents'
+											}
+									  ]
+									: []),
 								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
-									text: 'Change',
-									visuallyHiddenText: 'redacted statement'
+									text: 'Add',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/add-document?backUrl=/lpa-statement/redact/confirm`,
+									visuallyHiddenText: 'supporting documents'
 								}
 							]
 						}
@@ -174,7 +206,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 					},
 					{
 						key: { text: 'Review decision' },
-						value: { text: 'Redact and accept statement' },
+						value: { text: redactMatching ? 'Redact and accept statement' : 'Accept statement' },
 						actions: {
 							items: [
 								{
@@ -244,12 +276,12 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 	preRenderPageComponents(pageComponents);
 
 	return {
-		title: 'Check details and accept statement',
+		title: redactMatching ? 'Check details and accept statement' : 'Accept statement',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Check details and accept statement',
+		heading: redactMatching ? 'Check details and accept statement' : 'Accept statement',
 		forceRenderSubmitButton: true,
-		submitButtonText: 'Redact and accept statement',
+		submitButtonText: redactMatching ? 'Redact and accept statement' : 'Accept statement',
 		pageComponents
 	};
 }
