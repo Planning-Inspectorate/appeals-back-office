@@ -42,12 +42,12 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 
 			//check link contents
 			expect(response.text).toContain('Download all documents');
-			const donloadLinkInnerHtml = parseHtml(response.text, {
+			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
 			expect(response.statusCode).toEqual(200);
 			const downloadLinkUrl = '/documents/2/bulk-download/documents';
-			expect(donloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
+			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
 			const tableRows = dom.querySelectorAll('.govuk-table__body tr');
@@ -108,11 +108,11 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 
 			//check link contents
 			expect(response.text).toContain('Download all documents');
-			const donloadLinkInnerHtml = parseHtml(response.text, {
+			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
 			const downloadLinkUrl = `/documents/2/bulk-download/documents`;
-			expect(donloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
+			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
 			const tableRows = dom.querySelectorAll('.govuk-table__body tr');
