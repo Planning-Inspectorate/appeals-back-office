@@ -99,9 +99,7 @@ export function generateHASComponents(
 				removeSummaryListActions(
 					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
 				),
-				removeSummaryListActions(
-					mappedAppellantCaseData.applicationReference.display.summaryListItem
-				),
+				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,

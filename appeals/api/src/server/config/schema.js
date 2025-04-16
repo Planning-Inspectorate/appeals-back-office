@@ -39,15 +39,6 @@ export default joi
 						generic: joi.object({
 							id: joi.string().required()
 						}),
-						appealConfirmed: joi.object({
-							id: joi.string().required()
-						}),
-						appealIncomplete: joi.object({
-							id: joi.string().required()
-						}),
-						appealInvalid: joi.object({
-							id: joi.string().required()
-						}),
 						appealWithdrawn: joi.object({
 							appellant: joi.object({
 								id: joi.string().required()
@@ -55,49 +46,6 @@ export default joi
 							lpa: joi.object({
 								id: joi.string().required()
 							})
-						}),
-						appealStartDateChange: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						appealTypeChangedNonHas: joi.object({
-							id: joi.string().required()
-						}),
-						appealValidStartCase: joi.object({
-							has: {
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							},
-							s78: {
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}
-						}),
-						decisionIsAllowedSplitDismissed: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						decisionIsInvalidAppellant: joi.object({
-							id: joi.string()
-						}),
-						decisionIsInvalidLPA: joi.object({
-							id: joi.string()
 						}),
 						siteVisitChange: joi.object({
 							accompaniedDateChange: joi.object({

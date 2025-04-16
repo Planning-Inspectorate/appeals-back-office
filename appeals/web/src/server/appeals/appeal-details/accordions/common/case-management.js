@@ -6,6 +6,7 @@ export const getCaseManagement = (mappedData) => ({
 	type: 'summary-list',
 	parameters: {
 		rows: [
+			mappedData.appeal.appellantCorrespondence.display.summaryListItem,
 			mappedData.appeal.crossTeamCorrespondence.display.summaryListItem,
 			mappedData.appeal.inspectorCorrespondence.display.summaryListItem,
 			mappedData.appeal.caseHistory.display.summaryListItem,

@@ -214,6 +214,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	developmentType?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -532,6 +533,7 @@ interface DocumentationSummaryEntry {
 	receivedAt?: Date | string | undefined | null;
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
+	isRedacted?: boolean;
 }
 
 interface FolderInfo {

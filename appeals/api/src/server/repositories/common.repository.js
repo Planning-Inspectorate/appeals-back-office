@@ -89,6 +89,7 @@ const createIncompleteInvalidReasons = ({
 	// @ts-ignore
 	databaseConnector[incompleteInvalidReasonTextTable].createMany({
 		data: data
+			.filter((reason) => reason.text && reason.text !== null)
 			.map(
 				({ id: reasonId, text }) =>
 					text &&

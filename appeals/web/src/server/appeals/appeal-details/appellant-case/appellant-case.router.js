@@ -30,6 +30,7 @@ import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -152,6 +153,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	procedurePreferenceRouter
+);
+router.use(
+	'/application-development-type',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	applicationDevelopmentTypeRouter
 );
 
 router

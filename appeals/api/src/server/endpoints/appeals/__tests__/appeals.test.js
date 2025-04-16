@@ -82,11 +82,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -94,27 +91,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -142,11 +134,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -154,27 +143,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -225,11 +209,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -237,27 +218,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -336,11 +312,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -348,27 +321,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -447,11 +415,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -459,27 +424,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -558,11 +518,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -570,27 +527,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -656,11 +608,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -668,27 +617,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -756,11 +700,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -768,27 +709,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -853,11 +789,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -865,27 +798,22 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								}
 							},
 							dueDate: null,
@@ -1094,11 +1022,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 					},
 					ipComments: {
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						counts: {},
+						isRedacted: false
 					},
 					lpaQuestionnaire: {
 						receivedAt: '2024-06-24T00:00:00.000Z',
@@ -1106,27 +1031,22 @@ test('gets appeals when given a appealTypeId param', async () => {
 					},
 					lpaStatement: {
 						status: 'not_received',
-						representationStatus: null
+						representationStatus: null,
+						isRedacted: false
 					},
 					lpaFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						counts: {},
+						isRedacted: false
 					},
 					appellantFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						counts: {},
+						isRedacted: false
 					}
 				},
 				isParentAppeal: false,
