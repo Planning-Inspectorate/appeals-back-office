@@ -1602,7 +1602,7 @@ describe('mapRepresentationDocumentSummaryStatus', () => {
 });
 
 describe('mapLPARepresentationDocumentSummaryStatus', () => {
-	it('Should return "No final comments" if no final comments were received', () => {
+	it('Should return "No statement" if no final comments were received', () => {
 		expect(mapLPARepresentationDocumentSummaryStatus('not_received', null)).toBe('No statement');
 	});
 	it('Should return "Accepted" if final comment was accepted', () => {
