@@ -3,8 +3,7 @@ import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import formatDate from '#utils/date-formatter.js';
-import { ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL } from '@pins/appeals/constants/support.js';
-import config from '#config/config.js';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -32,7 +31,7 @@ export const publishWithdrawal = async (
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 
-	const emailVariables = {
+	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
@@ -40,20 +39,19 @@ export const publishWithdrawal = async (
 	};
 
 	if (recipientEmail) {
-		try {
-			await notifyClient.sendEmail(
-				config.govNotify.template.appealWithdrawn.appellant,
-				recipientEmail,
-				emailVariables
-			);
-			await notifyClient.sendEmail(
-				config.govNotify.template.appealWithdrawn.lpa,
-				lpaEmail,
-				emailVariables
-			);
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-		}
+		await notifySend({
+			templateName: 'appeal-withdrawn-appellant',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+
+		await notifySend({
+			templateName: 'appeal-withdrawn-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		});
 	}
 
 	if (result) {

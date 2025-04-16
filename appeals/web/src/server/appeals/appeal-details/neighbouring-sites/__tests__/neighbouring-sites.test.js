@@ -19,9 +19,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -41,9 +39,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -76,9 +72,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -110,9 +104,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -143,9 +135,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -175,9 +165,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -207,9 +195,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -239,9 +225,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -271,9 +255,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

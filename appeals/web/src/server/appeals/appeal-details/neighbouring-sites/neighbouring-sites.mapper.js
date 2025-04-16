@@ -26,10 +26,10 @@ export function addNeighbouringSitePage(appealData, source, origin, currentAddre
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Tell us the address of the neighbour’s land or property',
+		title: 'Add interested party address',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Tell us the address of the neighbour’s land or property',
+		heading: 'Add interested party address',
 		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
 

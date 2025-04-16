@@ -35,7 +35,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -167,7 +167,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -394,7 +394,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -541,7 +541,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -690,7 +690,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -839,7 +839,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -988,7 +988,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1137,7 +1137,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1286,7 +1286,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1435,7 +1435,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1582,7 +1582,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1729,7 +1729,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1878,7 +1878,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2025,7 +2025,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2172,7 +2172,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2325,7 +2325,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2472,7 +2472,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2619,7 +2619,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2768,7 +2768,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2917,7 +2917,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3066,7 +3066,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3215,7 +3215,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3364,7 +3364,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3513,7 +3513,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3660,7 +3660,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3807,7 +3807,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3956,7 +3956,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4103,7 +4103,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4250,7 +4250,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4401,7 +4401,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4550,7 +4550,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4699,7 +4699,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4852,7 +4852,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>

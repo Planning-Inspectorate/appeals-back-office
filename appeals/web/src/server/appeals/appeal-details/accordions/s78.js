@@ -1,18 +1,20 @@
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
+import { getCaseHearing } from './s78/case-hearing.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  *
- * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {SharedPageComponentProperties & AccordionPageComponent}
@@ -20,7 +22,11 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData);
+	const siteDetails = getSiteDetails(mappedData, appealDetails);
+
+	const isStarted =
+		appealDetails.startedAt &&
+		dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDetails.startedAt));
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
@@ -31,12 +37,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				rows: [
 					mappedData.appeal.validAt.display.summaryListItem,
 					mappedData.appeal.startedAt.display.summaryListItem,
-					mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-					mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
-					mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
-					mappedData.appeal.finalCommentDueDate.display.summaryListItem,
-					mappedData.appeal.s106ObligationDueDate.display.summaryListItem,
-					mappedData.appeal.siteVisitDate.display.summaryListItem
+					...(isStarted
+						? [
+								mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
+								mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
+								mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
+								mappedData.appeal.finalCommentDueDate.display.summaryListItem
+						  ]
+						: [])
 				].filter(isDefined)
 			}
 		}
@@ -59,8 +67,8 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				mappedData.appeal.ipComments.display.tableItem,
 				mappedData.appeal.appellantFinalComments.display.tableItem,
 				mappedData.appeal.lpaFinalComments.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem,
-				mappedData.appeal.environmentalAssessment.display.tableItem
+				mappedData.appeal.environmentalAssessment.display.tableItem,
+				mappedData.appeal.appealDecision.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}
@@ -74,10 +82,13 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseManagement = getCaseManagement(mappedData);
 
+	const caseHearing = getCaseHearing(mappedData, appealDetails);
+
 	const accordionComponents = [
 		caseOverview,
 		siteDetails,
 		caseTimetable[0],
+		...(caseHearing ? caseHearing : []),
 		caseDocumentation,
 		caseContacts,
 		caseTeam,
@@ -113,6 +124,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					heading: { text: 'Timetable' },
 					content: { html: '', pageComponents: caseTimetable }
 				},
+				...(caseHearing
+					? [
+							{
+								heading: { text: 'Hearing' },
+								content: { html: '', pageComponents: caseHearing }
+							}
+					  ]
+					: []),
 				{
 					heading: { text: 'Documentation' },
 					content: { html: '', pageComponents: [caseDocumentation] }

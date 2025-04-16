@@ -1755,6 +1755,7 @@ export interface SingleLPAQuestionnaireResponse {
 		/** @example ["Documents or information are missing","Policies are missing","Other"] */
 		incompleteReasons?: string[];
 	};
+	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
 }
 
@@ -2500,6 +2501,7 @@ export interface DocumentationSummary {
 		receivedAt?: string | null;
 		representationStatus?: string | null;
 		counts?: object | null;
+		isRedacted?: boolean | null;
 	};
 	lpaQuestionnaire?: {
 		status?: string;
@@ -2509,6 +2511,7 @@ export interface DocumentationSummary {
 		receivedAt?: string | null;
 		representationStatus?: string | null;
 		counts?: object | null;
+		isRedacted?: boolean | null;
 	};
 	ipComments?: {
 		status?: string;
@@ -2518,6 +2521,7 @@ export interface DocumentationSummary {
 		receivedAt?: string | null;
 		representationStatus?: string | null;
 		counts?: object | null;
+		isRedacted?: boolean | null;
 	};
 	lpaStatement?: {
 		status?: string;
@@ -2527,6 +2531,7 @@ export interface DocumentationSummary {
 		receivedAt?: string | null;
 		representationStatus?: string | null;
 		counts?: object | null;
+		isRedacted?: boolean | null;
 	};
 }
 

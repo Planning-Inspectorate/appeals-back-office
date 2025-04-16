@@ -41,10 +41,10 @@ export function allocationCheckPage(appealDetails, sessionData) {
 	];
 
 	return {
-		title: 'Allocation level and specialisms',
+		title: 'Allocation level',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Allocation level and specialisms',
+		heading: 'Allocation level',
 		submitButtonText: 'Continue',
 		prePageComponents: appealDetails.allocationDetails ? [currentStatus] : [],
 		pageComponents

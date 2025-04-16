@@ -52,7 +52,7 @@ describe('site-visit', () => {
 				'Address of the neighbour’s land or property</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Neighbouring sites (inspector and/or third party request)</dt>'
+				'Interested party and neighbour addresses</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="visit-type" type="radio" value="unaccompanied"'
@@ -648,7 +648,7 @@ describe('site-visit', () => {
 				'Address of the neighbour’s land or property</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Neighbouring sites (inspector and/or third party request)</dt>'
+				'Interested party and neighbour addresses</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="visit-type" type="radio" value="unaccompanied"'

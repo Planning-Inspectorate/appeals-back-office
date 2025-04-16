@@ -3,7 +3,6 @@ import config from '#environment/config.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { dateISOStringToDayMonthYearHourMinute, dateIsInThePast } from '#lib/dates.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
 
@@ -323,48 +322,6 @@ export function nullToEmptyString(value) {
 		return value !== null ? value : '';
 	} else {
 		return undefined;
-	}
-}
-
-/**
- * @param {string|undefined} status
- * @param {string|null|undefined} [dueDate]
- * @returns {string}
- */
-export function mapDocumentStatus(status, dueDate) {
-	switch (status?.toLowerCase()) {
-		case 'received':
-			return 'Received';
-		case 'not_received':
-			return 'Not received';
-		case 'shared':
-			return 'Shared';
-		case 'invalid':
-			return 'Invalid';
-		case 'incomplete':
-			if (dueDate) {
-				const parsedDueDate = dateISOStringToDayMonthYearHourMinute(dueDate);
-				if (
-					parsedDueDate &&
-					parsedDueDate.year &&
-					parsedDueDate.month &&
-					parsedDueDate.day &&
-					dateIsInThePast({
-						year: parsedDueDate.year,
-						month: parsedDueDate.month,
-						day: parsedDueDate.day
-					})
-				) {
-					return 'Overdue';
-				}
-			}
-			return 'Incomplete';
-		case 'valid':
-			return 'Valid';
-		case 'complete':
-			return 'Complete';
-		default:
-			return '';
 	}
 }
 

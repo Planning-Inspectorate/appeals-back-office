@@ -93,38 +93,37 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 		request.session.reviewOutcome = reviewOutcome;
 
-		if (currentAppeal) {
-			if (reviewOutcome === 'complete') {
-				if (currentAppeal.appealType === APPEAL_TYPE.HOUSEHOLDER) {
-					await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
-						request.apiClient,
-						appealId,
-						lpaQuestionnaireId,
-						mapWebValidationOutcomeToApiValidationOutcome('complete')
-					);
-					addNotificationBannerToSession({
-						session: request.session,
-						bannerDefinitionKey: 'lpaqReviewComplete',
-						appealId: currentAppeal.appealId
-					});
-					return response.redirect(`/appeals-service/appeal-details/${appealId}`);
-				} else {
-					return response.redirect(
-						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
-					);
-				}
-			} else if (reviewOutcome === 'incomplete') {
-				addNotificationBannerToSession({
-					session: request.session,
-					bannerDefinitionKey: 'lpaqReviewIncomplete',
-					appealId: currentAppeal.appealId
-				});
+		if (reviewOutcome === 'complete') {
+			if (currentAppeal.appealType !== APPEAL_TYPE.HOUSEHOLDER) {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
 			}
-		} else {
-			return response.status(500).render('app/500.njk');
+
+			await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
+				request.apiClient,
+				appealId,
+				lpaQuestionnaireId,
+				mapWebValidationOutcomeToApiValidationOutcome('complete')
+			);
+
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'lpaqReviewComplete',
+				appealId: currentAppeal.appealId
+			});
+
+			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		} else if (reviewOutcome === 'incomplete') {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'lpaqReviewIncomplete',
+				appealId: currentAppeal.appealId
+			});
+
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+			);
 		}
 	} catch (error) {
 		let errorMessage = 'Something went wrong when completing lpa questionnaire review';
@@ -244,15 +243,10 @@ const renderCheckAndConfirm = async (request, response) => {
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when completing lpa questionnaire review'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`
 		);
-
-		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -296,15 +290,10 @@ export const postCheckAndConfirm = async (request, response) => {
 		delete request.session.webLPAQuestionnaireReviewOutcome;
 
 		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when completing lpa questionnaire review'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`
 		);
-
-		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -477,15 +466,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				});
 			}
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when adding documents to lpa questionnaire'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when adding documents to lpa questionnaire: ${error.message}`
 		);
-
-		return response.render('app/500.njk');
 	}
 };
 
@@ -503,15 +487,10 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when adding document version to lpa questionnaire'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when adding document version to lpa questionnaire: ${error.message}`
 		);
-
-		return response.render('app/500.njk');
 	}
 };
 

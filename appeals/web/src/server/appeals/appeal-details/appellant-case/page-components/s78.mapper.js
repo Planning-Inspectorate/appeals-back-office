@@ -98,14 +98,13 @@ export function generateS78Components(
 					removeSummaryListActions(
 						mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
 					),
-					removeSummaryListActions(
-						mappedAppellantCaseData.applicationReference.display.summaryListItem
-					),
+					mappedAppellantCaseData.applicationReference.display.summaryListItem,
 					mappedAppellantCaseData.applicationDate.display.summaryListItem,
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 					mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
+					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+					mappedAppellantCaseData.developmentType.display.summaryListItem
 				]
 			}
 		};
