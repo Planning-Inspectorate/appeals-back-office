@@ -62,7 +62,7 @@ describe('redact', () => {
 				'<label class="govuk-label govuk-label--s" for="redact-textarea">Redacted statement</label>'
 			);
 			expect(innerHTML).toContain('Redact selected text</button>');
-			expect(innerHTML).toContain('Undo all changes</button>');
+			expect(innerHTML).toContain('Undo changes</button>');
 			expect(innerHTML).toContain('Continue</button>');
 		});
 	});
