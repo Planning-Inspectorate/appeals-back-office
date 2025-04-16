@@ -27,8 +27,6 @@ apps_config = {
     enable_test_endpoints         = true
     notify_template_ids = {
       appeal_generic_id                                               = "3fd5fc42-d77f-42c2-984a-cf9b89e4c415"
-      appeal_withdrawn_appellant_id                                   = "5f58736a-bd1b-4215-a288-0d5f25ceab43"
-      appeal_withdrawn_lpa_id                                         = "6eb8dc75-e141-4e06-a8ee-241e7f7c448c"
       site_visit_change_accompanied_date_change_appellant_id          = "3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc"
       site_visit_change_accompanied_date_change_lpa_id                = "5d23f669-a1d2-4232-9171-10f956dfb400"
       site_visit_change_accompanied_to_access_required_appellant_id   = "f9bd99e7-f3f1-4836-a2dc-018dfdece854"
@@ -46,7 +44,6 @@ apps_config = {
       site_visit_schedule_accompanied_appellant_id                    = "4002346f-fd65-42fe-b663-36600b85080c"
       site_visit_schedule_accompanied_lpa_id                          = "03a6616e-3e0c-4f28-acd5-f4e873847457"
       site_visit_schedule_unaccompanied_appellant_id                  = "a33bb800-56d9-46a4-ba64-35d9d0263666"
-      valid_appellant_case_id                                         = "3b4b74b4-b604-411b-9c98-5be2c6f3bdfd"
     }
   }
 
