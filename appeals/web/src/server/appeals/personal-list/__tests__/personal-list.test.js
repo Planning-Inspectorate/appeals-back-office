@@ -238,21 +238,21 @@ describe('personal-list', () => {
 				name: 'Update Horizon reference',
 				requiredAction: 'addHorizonReference',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Set up site visit',
 				requiredAction: 'arrangeSiteVisit',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fpersonal-list">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Awaiting appellant update',
 				requiredAction: 'awaitingAppellantUpdate',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fpersonal-list">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
 					nonCaseOfficer: 'Awaiting appellant update'
 				}
 			},
@@ -267,7 +267,7 @@ describe('personal-list', () => {
 				name: 'Awaiting IP comments',
 				requiredAction: 'awaitingIpComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">Awaiting IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list">Awaiting IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
@@ -295,7 +295,7 @@ describe('personal-list', () => {
 				name: 'Issue decision',
 				requiredAction: 'issueDecision',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision?backUrl=%2Fappeals-service%2Fpersonal-list">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
@@ -309,49 +309,49 @@ describe('personal-list', () => {
 				name: 'Progress case',
 				requiredAction: 'progressFromFinalComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress case</a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Progress case</a>`
 				}
 			},
 			{
 				name: 'Progress to final comments',
 				requiredAction: 'progressFromStatements',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Review appellant case',
 				requiredAction: 'reviewAppellantCase',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Review appellant final comments',
 				requiredAction: 'reviewAppellantFinalComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Review IP comments',
 				requiredAction: 'reviewIpComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=/personal-list">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Review LPA final comments',
 				requiredAction: 'reviewLpaFinalComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa?backUrl=%2Fappeals-service%2Fpersonal-list">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Review LPA questionnaire',
 				requiredAction: 'reviewLpaQuestionnaire',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}?backUrl=%2Fappeals-service%2Fpersonal-list">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
 					nonCaseOfficer: 'Review LPA questionnaire'
 				}
 			},
@@ -359,28 +359,28 @@ describe('personal-list', () => {
 				name: 'Review LPA statement',
 				requiredAction: 'reviewLpaStatement',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=/personal-list">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=%2Fappeals-service%2Fpersonal-list">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Share final comments',
 				requiredAction: 'shareFinalComments',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share final comments</a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share final comments</a>`
 				}
 			},
 			{
 				name: 'Share IP comments and LPA statement',
 				requiredAction: 'shareIpCommentsAndLpaStatement',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
 				name: 'Start case',
 				requiredAction: 'startAppeal',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=/appeals-service/personal-list">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=%2Fappeals-service%2Fpersonal-list">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
 					nonCaseOfficer: 'Start case'
 				}
 			},
@@ -388,7 +388,7 @@ describe('personal-list', () => {
 				name: 'Update LPA statement',
 				requiredAction: 'updateLpaStatement',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Update LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=%2Fappeals-service%2Fpersonal-list">Update LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			}
 		];
@@ -398,7 +398,7 @@ describe('personal-list', () => {
 				const result = mapActionLinksForAppeal(
 					appealDataToGetRequiredActions[testCase.requiredAction],
 					true,
-					baseUrl
+					{ originalUrl: baseUrl }
 				);
 
 				expect(result).toBe(testCase.expectedHtml.caseOfficer);
@@ -409,7 +409,7 @@ describe('personal-list', () => {
 					const result = mapActionLinksForAppeal(
 						appealDataToGetRequiredActions[testCase.requiredAction],
 						false,
-						baseUrl
+						{ originalUrl: baseUrl }
 					);
 
 					expect(result).toBe(testCase.expectedHtml.nonCaseOfficer);
@@ -424,7 +424,7 @@ describe('personal-list', () => {
 					appealId: undefined
 				},
 				true,
-				baseUrl
+				{ originalUrl: baseUrl }
 			);
 
 			expect(result).toBe('');
@@ -437,7 +437,7 @@ describe('personal-list', () => {
 					lpaQuestionnaireId: null
 				},
 				true,
-				baseUrl
+				{ originalUrl: baseUrl }
 			);
 
 			expect(resultForNull).toBe('');
@@ -448,7 +448,7 @@ describe('personal-list', () => {
 					lpaQuestionnaireId: undefined
 				},
 				true,
-				baseUrl
+				{ originalUrl: baseUrl }
 			);
 
 			expect(resultForUndefined).toBe('');

@@ -32,7 +32,15 @@ describe('appeal-mapper', () => {
 			currentRoute = 'testroute/';
 			// @ts-ignore
 			session = { account: createAccountInfo() };
-			validMappedData = await initialiseAndMapAppealData(appealData, currentRoute, session);
+			validMappedData = await initialiseAndMapAppealData(
+				appealData,
+				currentRoute,
+				session,
+				// @ts-ignore
+				{
+					originalUrl: currentRoute
+				}
+			);
 		});
 
 		it('should return a valid MappedAppealInstructions object for valid inputs', async () => {
@@ -149,10 +157,14 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				baseRoute,
 				'received',
 				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				'lpa-statement'
+				'lpa-statement',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
+				`<a href="${baseRoute}/lpa-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
 			);
 		});
 
@@ -161,10 +173,14 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				baseRoute,
 				'received',
 				APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
-				'lpa-statement'
+				'lpa-statement',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/lpa-statement" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
+				`<a href="${baseRoute}/lpa-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-lpa-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA statement</span></a>`
 			);
 		});
 
@@ -173,10 +189,14 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				baseRoute,
 				'received',
 				APPEAL_REPRESENTATION_STATUS.VALID,
-				'lpa-statement'
+				'lpa-statement',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
+				`<a href="${baseRoute}/lpa-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
 			);
 		});
 
@@ -185,10 +205,14 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				baseRoute,
 				'received',
 				APPEAL_REPRESENTATION_STATUS.PUBLISHED,
-				'lpa-statement'
+				'lpa-statement',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/lpa-statement" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
+				`<a href="${baseRoute}/lpa-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-statement" class="govuk-link">View<span class="govuk-visually-hidden"> LPA statement</span></a>`
 			);
 		});
 
@@ -197,7 +221,11 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				baseRoute,
 				'not_received',
 				null,
-				'lpa-statement'
+				'lpa-statement',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
 			);
 			expect(link).toBe('');
 		});
@@ -211,10 +239,14 @@ describe('Final comments links', () => {
 			baseRoute,
 			'received',
 			APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-			'appellant-final-comments'
+			'appellant-final-comments',
+			// @ts-ignore
+			{
+				originalUrl: baseRoute
+			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/appellant" data-cy="review-appellant-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-appellant-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant final comments</span></a>`
 		);
 	});
 
@@ -223,10 +255,14 @@ describe('Final comments links', () => {
 			baseRoute,
 			'received',
 			APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-			'lpa-final-comments'
+			'lpa-final-comments',
+			// @ts-ignore
+			{
+				originalUrl: baseRoute
+			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/lpa" data-cy="review-lpa-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-lpa-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA final comments</span></a>`
 		);
 	});
 
@@ -235,10 +271,14 @@ describe('Final comments links', () => {
 			baseRoute,
 			'received',
 			APPEAL_REPRESENTATION_STATUS.VALID,
-			'appellant-final-comments'
+			'appellant-final-comments',
+			// @ts-ignore
+			{
+				originalUrl: baseRoute
+			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/appellant" data-cy="view-appellant-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> appellant final comments</span></a>`
 		);
 	});
 
@@ -247,10 +287,14 @@ describe('Final comments links', () => {
 			baseRoute,
 			'received',
 			APPEAL_REPRESENTATION_STATUS.PUBLISHED,
-			'lpa-final-comments'
+			'lpa-final-comments',
+			// @ts-ignore
+			{
+				originalUrl: baseRoute
+			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/lpa" data-cy="view-lpa-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> LPA final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> LPA final comments</span></a>`
 		);
 	});
 
@@ -259,7 +303,11 @@ describe('Final comments links', () => {
 			baseRoute,
 			'not_received',
 			null,
-			'appellant-final-comments'
+			'appellant-final-comments',
+			// @ts-ignore
+			{
+				originalUrl: baseRoute
+			}
 		);
 		expect(link).toBe('');
 	});

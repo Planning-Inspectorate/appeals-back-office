@@ -32,7 +32,13 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
-import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
+import {
+	getOriginPathname,
+	isInternalUrl,
+	safeRedirect,
+	addBackLinkQueryToUrl,
+	getBackLinkUrlFromQuery
+} from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
 
@@ -1573,5 +1579,31 @@ describe('safeRedirect', () => {
 		safeRedirect(request, response, url);
 
 		expect(response._getRedirectUrl()).toBe('/');
+	});
+});
+
+describe('addBackLinkQueryToUrl', () => {
+	it('should append a backUrl query with the URI-encoded originalUrl value from the supplied request to the supplied url', () => {
+		expect(
+			addBackLinkQueryToUrl(
+				// @ts-ignore
+				{ originalUrl: '/test/original/url?withOwnQuery=true' },
+				'/supplied/url'
+			)
+		).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue');
+	});
+});
+
+describe('getBackLinkUrlFromQuery', () => {
+	it('should return undefined if the supplied request.query does not contain a backUrl property', () => {
+		// @ts-ignore
+		expect(getBackLinkUrlFromQuery({ query: {} })).toBe(undefined);
+	});
+	it('should return the URI-decoded value from the supplied request.query.backUrl property, if request.query contains a backUrl property', () => {
+		const query = { backUrl: '%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue' };
+		expect(
+			// @ts-ignore
+			getBackLinkUrlFromQuery({ query })
+		).toBe('/test/original/url?withOwnQuery=true');
 	});
 });

@@ -1,4 +1,6 @@
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+
 /**
  * @param {string} representationStatus
  * @returns {boolean}
@@ -14,13 +16,15 @@ export function isRepresentationReviewRequired(representationStatus) {
  * @param {string|undefined} documentationStatus
  * @param {string|Record<string, number>|null|undefined} representationStatus
  * @param {RepresentationType} representationType
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
 	currentRoute,
 	documentationStatus,
 	representationStatus,
-	representationType
+	representationType,
+	request
 ) {
 	if (documentationStatus !== 'received') {
 		return '';
@@ -55,7 +59,7 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'appellant-final-comments': `${currentRoute}/final-comments/appellant`
 	};
 
-	return `<a href="${hrefs[representationType]}" data-cy="${
+	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
 		reviewRequired ? 'review' : 'view'
 	}-${representationType}" class="govuk-link">${
 		reviewRequired ? 'Review' : 'View'
