@@ -80,8 +80,9 @@ module "app_web" {
     RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_HEARING = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_S78_WRITTEN    = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_HEARING    = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_LINKED_APPEALS = var.apps_config.featureFlags.featureFlagLinkedAppeals
 
     # external URLs
     BETA_FEEDBACK_URL = var.beta_feedback_url

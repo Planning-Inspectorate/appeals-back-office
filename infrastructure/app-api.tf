@@ -80,8 +80,9 @@ module "app_api" {
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_HEARING = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_S78_WRITTEN    = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_HEARING    = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_LINKED_APPEALS = var.apps_config.featureFlags.featureFlagLinkedAppeals
   }
 
   providers = {
