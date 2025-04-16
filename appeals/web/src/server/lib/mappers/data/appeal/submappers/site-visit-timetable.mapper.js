@@ -2,6 +2,7 @@ import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {string} date
@@ -15,7 +16,7 @@ export function dateAndTimeFormatter(date, startTime, endTime) {
 }
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session }) => {
+export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session, request }) => {
 	const id = 'schedule-visit';
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
@@ -34,7 +35,10 @@ export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session }) 
 		id,
 		text: 'Site visit',
 		value: { html: value },
-		link: `${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`,
+		link: addBackLinkQueryToUrl(
+			request,
+			`${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`
+		),
 		actionText: hasVisit ? 'Change' : 'Arrange',
 		editable: userHasPermission(permissionNames.setEvents, session),
 		classes: 'appeal-site-visit'

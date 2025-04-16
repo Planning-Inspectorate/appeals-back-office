@@ -50,7 +50,9 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {'schedule' | 'manage'} pageType
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
+ * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {WebSiteVisitType|null|undefined} visitType
  * @param {string|number|null|undefined} visitDateDay
  * @param {string|number|null|undefined} visitDateMonth
@@ -65,7 +67,9 @@ export async function scheduleOrManageSiteVisitPage(
 	pageType,
 	appealDetails,
 	currentRoute,
+	backUrl,
 	session,
+	request,
 	visitType,
 	visitDateDay,
 	visitDateMonth,
@@ -75,7 +79,13 @@ export async function scheduleOrManageSiteVisitPage(
 	visitEndTimeHour,
 	visitEndTimeMinute
 ) {
-	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session, true);
+	const mappedData = await initialiseAndMapAppealData(
+		appealDetails,
+		currentRoute,
+		session,
+		request,
+		true
+	);
 	const titlePrefix = capitalize(pageType);
 
 	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
@@ -255,7 +265,7 @@ export async function scheduleOrManageSiteVisitPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `${titlePrefix} site visit - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `${titlePrefix} site visit`,
 		submitButtonText: 'Confirm',

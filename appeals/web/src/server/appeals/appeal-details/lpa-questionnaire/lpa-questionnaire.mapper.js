@@ -45,9 +45,18 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string|undefined} backUrl
  * @returns {Promise<PageContent>}
  */
-export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
+export async function lpaQuestionnairePage(
+	lpaqDetails,
+	appealDetails,
+	currentRoute,
+	session,
+	request,
+	backUrl
+) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(
 		lpaqDetails,
 		appealDetails,
@@ -58,6 +67,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		appealDetails,
 		currentRoute,
 		session,
+		request,
 		true
 	);
 
@@ -183,7 +193,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `LPA questionnaire - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',

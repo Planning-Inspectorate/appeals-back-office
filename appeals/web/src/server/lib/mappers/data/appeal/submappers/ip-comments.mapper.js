@@ -5,9 +5,10 @@ import {
 	dateIsInThePast
 } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapIpComments = ({ appealDetails, currentRoute }) => {
+export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 	const actionText = (() => {
 		const { status, counts } = appealDetails?.documentationSummary?.ipComments ?? {};
 
@@ -87,6 +88,9 @@ export const mapIpComments = ({ appealDetails, currentRoute }) => {
 		text: 'Interested party comments',
 		statusText,
 		receivedText,
-		actionHtml: `<a href="${currentRoute}/interested-party-comments" data-cy="review-ip-comments" class="govuk-link">${actionText}<span class="govuk-visually-hidden"> interested party comments</span></a>`
+		actionHtml: `<a href="${addBackLinkQueryToUrl(
+			request,
+			`${currentRoute}/interested-party-comments`
+		)}" data-cy="review-ip-comments" class="govuk-link">${actionText}<span class="govuk-visually-hidden"> interested party comments</span></a>`
 	});
 };

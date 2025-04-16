@@ -14,9 +14,10 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
  *
  * @param {Appeal} appealDetails
  * @param {InspectorDecisionRequest} inspectorDecision
+ * @param {string|undefined} backUrl
  * @returns {PageContent}
  */
-export function issueDecisionPage(appealDetails, inspectorDecision) {
+export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
@@ -60,7 +61,7 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the decision? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [selectVisitTypeComponent]
 	};
@@ -424,15 +425,4 @@ export function mapDecisionOutcome(outcome) {
  */
 export function generateIssueDecisionUrl(appealId) {
 	return `/appeals-service/appeal-details/${appealId}/issue-decision/decision`;
-}
-
-/**
- * @param {string|number} appealId
- * @param {string} [backUrl]
- * @returns {string}
- */
-export function generateStartTimetableUrl(appealId, backUrl) {
-	return `/appeals-service/appeal-details/${appealId}/start-case/add${
-		backUrl ? `?backUrl=${backUrl}` : ''
-	}`;
 }

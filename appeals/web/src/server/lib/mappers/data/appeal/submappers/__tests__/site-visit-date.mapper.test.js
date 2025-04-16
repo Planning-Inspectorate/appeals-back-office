@@ -4,6 +4,7 @@ import { mapSiteVisitDate } from '#lib/mappers/data/appeal/submappers/site-visit
 const data = {
 	currentRoute: '/test',
 	appealDetails: {
+		appealId: 1,
 		validAt: '2025-01-01',
 		appealTimetable: { finalCommentsDueDate: '2025-01-10' },
 		siteVisit: { visitDate: '2025-01-10' },
@@ -15,7 +16,8 @@ const data = {
 
 describe('site-visit-date.mapper', () => {
 	it('should display Site Visit date with Change action link', () => {
-		const mappedData = mapSiteVisitDate(data, null, undefined);
+		data.appealDetails.startedAt = '2025-01-01';
+		const mappedData = mapSiteVisitDate(data);
 		expect(mappedData).toEqual({
 			display: {
 				summaryListItem: {
@@ -25,7 +27,7 @@ describe('site-visit-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-site-visit-date'
 								},
-								href: '/appeals-service/appeal-details/undefined/site-visit/visit-booked',
+								href: '/appeals-service/appeal-details/1/site-visit/visit-booked',
 								text: 'Change',
 								visuallyHiddenText: 'Date'
 							}

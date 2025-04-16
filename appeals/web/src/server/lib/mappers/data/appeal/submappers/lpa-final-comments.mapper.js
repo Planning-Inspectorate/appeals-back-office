@@ -8,7 +8,7 @@ import {
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
+export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) => {
 	const { status, isRedacted } = appealDetails.documentationSummary?.lpaFinalComments ?? {};
 
 	const statusText = (() => {
@@ -75,7 +75,8 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 			currentRoute,
 			appealDetails?.documentationSummary?.lpaFinalComments?.status,
 			appealDetails?.documentationSummary?.lpaFinalComments?.counts,
-			'lpa-final-comments'
+			'lpa-final-comments',
+			request
 		)
 	});
 };

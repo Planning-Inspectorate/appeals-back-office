@@ -2,9 +2,10 @@ import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppealDecision = ({ appealDetails }) => {
+export const mapAppealDecision = ({ appealDetails, request }) => {
 	const actionText = (() => {
 		switch (appealDetails.appealStatus) {
 			case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
@@ -32,8 +33,9 @@ export const mapAppealDecision = ({ appealDetails }) => {
 			: 'Not applicable',
 		receivedTextClasses: 'appeal-decision-due-date',
 		actionHtml: actionText
-			? `<a class="govuk-link" href="${generateIssueDecisionUrl(
-					appealDetails.appealId
+			? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+					request,
+					generateIssueDecisionUrl(appealDetails.appealId)
 			  )}">${actionText}<span class="govuk-visually-hidden"> decision</span></a>`
 			: '',
 		actionHtmlClasses: 'appeal-decision-actions'

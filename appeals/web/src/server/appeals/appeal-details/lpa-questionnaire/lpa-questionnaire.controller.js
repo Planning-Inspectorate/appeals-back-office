@@ -30,6 +30,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -57,7 +58,9 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		lpaQuestionnaire,
 		currentAppeal,
 		request.originalUrl,
-		session
+		session,
+		request,
+		getBackLinkUrlFromQuery(request)
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {

@@ -8,7 +8,7 @@ import {
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
+export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request }) => {
 	const { status, isRedacted } = appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
 	const statusText = (() => {
@@ -75,7 +75,8 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 			currentRoute,
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,
 			appealDetails?.documentationSummary?.appellantFinalComments?.counts,
-			'appellant-final-comments'
+			'appellant-final-comments',
+			request
 		)
 	});
 };

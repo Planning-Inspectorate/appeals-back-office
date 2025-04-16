@@ -3,7 +3,6 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
@@ -162,8 +161,6 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 export function viewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
-
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: false
 	});
@@ -176,7 +173,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session, backU
 
 	const pageContent = {
 		title: 'LPA statement',
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'LPA statement',
 		pageComponents
@@ -194,9 +191,6 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session, backU
  */
 export function reviewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-
-	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
-
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: true
 	});
@@ -244,7 +238,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 
 	const pageContent = {
 		title: 'Review LPA statement',
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
 		submitButtonText: 'Continue',

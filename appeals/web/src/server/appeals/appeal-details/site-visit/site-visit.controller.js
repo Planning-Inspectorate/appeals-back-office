@@ -11,6 +11,7 @@ import {
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  *
@@ -41,7 +42,9 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			pageType,
 			appealDetails,
 			request.originalUrl,
+			getBackLinkUrlFromQuery(request),
 			request.session,
+			request,
 			visitType,
 			visitDateDay,
 			visitDateMonth,

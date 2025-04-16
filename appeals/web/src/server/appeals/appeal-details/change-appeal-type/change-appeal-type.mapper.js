@@ -116,15 +116,16 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 
 /**
  * @param {Appeal} appealDetails
+ * @param {string|undefined} backUrl
  * @returns {PageContent}
  */
-export function addHorizonReferencePage(appealDetails) {
+export function addHorizonReferencePage(appealDetails, backUrl) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the reference of the new appeal on Horizon? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
