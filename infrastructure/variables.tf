@@ -38,8 +38,9 @@ variable "apps_config" {
     })
 
     featureFlags = object({
-      featureFlagS78Written = bool
-      featureFlagS78Hearing = bool
+      featureFlagS78Written    = bool
+      featureFlagS78Hearing    = bool
+      featureFlagLinkedAppeals = bool
     })
 
     logging = object({
