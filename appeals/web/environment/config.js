@@ -54,6 +54,7 @@ export function loadConfig() {
 		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_HEARING,
+		FEATURE_FLAG_LINKED_APPEALS,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -122,7 +123,8 @@ export function loadConfig() {
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
 			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
-			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true'
+			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
+			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true'
 		}
 	};
 
