@@ -23,6 +23,10 @@ exports[`redact GET / should render the redact lpa statement page with expected 
                 white, and a little bit of andykebrown and a little touch of yellow. Anyone
                 can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
                 fiddle with it all day.</div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="revert-button">Revert to original LPA statement</button>
+            </div>
             <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted statement</label>
                 <textarea class="govuk-textarea" id="redact-textarea"
@@ -44,7 +48,7 @@ exports[`redact GET / should render the redact lpa statement page with expected 
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
                 <button type="submit" class="govuk-button govuk-button--secondary"
-                data-module="govuk-button" id="undo-button">Undo all changes</button>
+                data-module="govuk-button" id="undo-button">Undo changes</button>
             </div>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
