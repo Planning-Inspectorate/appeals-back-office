@@ -55,7 +55,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -63,7 +63,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -314,7 +314,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -322,7 +322,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -615,7 +615,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -623,7 +623,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -887,7 +887,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -895,7 +895,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1230,7 +1230,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1238,7 +1238,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1501,7 +1501,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1509,7 +1509,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1821,7 +1821,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1829,7 +1829,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -4214,7 +4214,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -4222,7 +4222,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>

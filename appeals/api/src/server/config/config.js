@@ -59,26 +59,6 @@ const { value, error } = schema.validate({
 					id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID || 'mock-appeal-withdrawn-lpa-id'
 				}
 			},
-			decisionIsAllowedSplitDismissed: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID ||
-						'mock-decision-is-allowed-split-dismissed-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID ||
-						'mock-decision-is-allowed-split-dismissed-lpa-id'
-				}
-			},
-			decisionIsInvalidAppellant: {
-				id:
-					environment.GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID ||
-					'mock-decision-is-invalid-appellant-id'
-			},
-			decisionIsInvalidLPA: {
-				id: environment.GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID || 'mock-decision-is-invalid-lpa-id'
-			},
 			siteVisitChange: {
 				accompaniedDateChange: {
 					appellant: {
