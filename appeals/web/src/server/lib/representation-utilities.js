@@ -61,3 +61,54 @@ export function mapRepresentationDocumentSummaryActionLink(
 		reviewRequired ? 'Review' : 'View'
 	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 }
+
+/**
+ * @param {string|undefined} documentationStatus
+ * @param {string|null|undefined} representationStatus
+ * @returns {string}
+ */
+export function mapRepresentationDocumentSummaryStatus(documentationStatus, representationStatus) {
+	if (documentationStatus !== 'received' || !representationStatus) {
+		return 'No final comments';
+	}
+
+	switch (representationStatus) {
+		case APPEAL_REPRESENTATION_STATUS.VALID:
+			return 'Accepted';
+		case APPEAL_REPRESENTATION_STATUS.INVALID:
+			return 'Rejected';
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
+			return 'Shared';
+		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE:
+			return 'Incomplete';
+		default:
+			return 'Received';
+	}
+}
+
+/**
+ * @param {string|undefined} documentationStatus
+ * @param {string|null|undefined} representationStatus
+ * @returns {string}
+ */
+export function mapLPARepresentationDocumentSummaryStatus(
+	documentationStatus,
+	representationStatus
+) {
+	if (documentationStatus !== 'received' || !representationStatus) {
+		return 'No statement';
+	}
+
+	switch (representationStatus) {
+		case APPEAL_REPRESENTATION_STATUS.VALID:
+			return 'Accepted';
+		case APPEAL_REPRESENTATION_STATUS.INVALID:
+			return 'Rejected';
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
+			return 'Shared';
+		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE:
+			return 'Incomplete';
+		default:
+			return 'Received';
+	}
+}
