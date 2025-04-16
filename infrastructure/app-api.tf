@@ -61,8 +61,6 @@ module "app_api" {
 
     # notify templates
     GOV_NOTIFY_APPEAL_GENERIC_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_generic_id
-    GOV_NOTIFY_APPEAL_WITHDRAWN_APPELLANT_ID                                   = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_appellant_id
-    GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID                                         = var.apps_config.integrations.notify_template_ids.appeal_withdrawn_lpa_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID          = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_appellant_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID                = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_lpa_id
     GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID   = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_access_required_appellant_id
@@ -80,7 +78,6 @@ module "app_api" {
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_APPELLANT_ID                    = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_appellant_id
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID                          = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_lpa_id
     GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
-    GOV_NOTIFY_VALID_APPELLANT_CASE_ID                                         = var.apps_config.integrations.notify_template_ids.valid_appellant_case_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written

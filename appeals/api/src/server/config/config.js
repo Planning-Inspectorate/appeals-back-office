@@ -49,16 +49,6 @@ const { value, error } = schema.validate({
 			generic: {
 				id: environment.GOV_NOTIFY_APPEAL_GENERIC_ID || 'mock-appeal-generic-id'
 			},
-			appealWithdrawn: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_WITHDRAWN_APPELLANT_ID ||
-						'mock-appeal-withdrawn-appellant-id'
-				},
-				lpa: {
-					id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID || 'mock-appeal-withdrawn-lpa-id'
-				}
-			},
 			siteVisitChange: {
 				accompaniedDateChange: {
 					appellant: {
@@ -169,9 +159,6 @@ const { value, error } = schema.validate({
 							'mock-site-visit-schedule-unaccompanied-appellant-id'
 					}
 				}
-			},
-			validAppellantCase: {
-				id: environment.GOV_NOTIFY_VALID_APPELLANT_CASE_ID || 'mock-valid-appellant-case-id'
 			}
 		},
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'

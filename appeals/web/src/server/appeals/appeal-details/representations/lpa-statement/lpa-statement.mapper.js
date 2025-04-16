@@ -3,8 +3,8 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -37,13 +37,17 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 		: null;
 
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
-
+	//check if the redacted statement is the same as the original - if it is the same onlyt show original statement
+	const shouldShowRedactedRow = checkRedactedText(
+		lpaStatement.originalRepresentation,
+		lpaStatement.redactedRepresentation
+	);
 	/** @type {PageComponent} */
 	const lpaStatementSummaryList = {
 		type: 'summary-list',
 		parameters: {
 			rows: [
-				...(lpaStatement.redactedRepresentation
+				...(lpaStatement.redactedRepresentation && shouldShowRedactedRow
 					? [
 							{
 								key: { text: 'Original statement' },
@@ -161,8 +165,6 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 export function viewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
-
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: false
 	});
@@ -175,7 +177,7 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session, backU
 
 	const pageContent = {
 		title: 'LPA statement',
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'LPA statement',
 		pageComponents
@@ -193,9 +195,6 @@ export function viewLpaStatementPage(appealDetails, lpaStatement, session, backU
  */
 export function reviewLpaStatementPage(appealDetails, lpaStatement, session, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-
-	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
-
 	const lpaStatementSummaryList = baseSummaryList(appealDetails.appealId, lpaStatement, {
 		isReview: true
 	});
@@ -243,7 +242,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 
 	const pageContent = {
 		title: 'Review LPA statement',
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Review LPA statement',
 		submitButtonText: 'Continue',

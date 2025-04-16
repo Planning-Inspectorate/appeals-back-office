@@ -1,15 +1,16 @@
-const SELECTORS = {
+export const SELECTORS = {
 	ORIGINAL_COMMENT_IDENTIFIER: '#original-comment',
 	REDACT_BUTTON_IDENTIFIER: '#redact-button',
 	UNDO_BUTTON_IDENTIFIER: '#undo-button',
-	TEXTAREA_IDENTIFIER: '#redact-textarea'
+	TEXTAREA_IDENTIFIER: '#redact-textarea',
+	REVERT_BUTTON: '#revert-button'
 };
 
 /**
  * @param {HTMLTextAreaElement} textarea
  * @returns {HTMLButtonElement['onclick']}
  */
-const generateOnClick = (textarea) => (event) => {
+export const generateOnClick = (textarea) => (event) => {
 	// Stop the form submitting
 	event.preventDefault();
 
@@ -29,38 +30,38 @@ const generateOnClick = (textarea) => (event) => {
 
 /**
  * @param {HTMLTextAreaElement} textarea
- * @param {string} originalComment
+ * @param {string} redactedText
  * @returns {HTMLButtonElement['onclick']}
  * */
-const undoAllChanges = (textarea, originalComment) => (event) => {
+export const setAreaText = (textarea, redactedText) => (event) => {
 	event.preventDefault();
-
-	textarea.value = originalComment;
+	textarea.value = redactedText;
 };
 
 /**
  * @param {Element} element
  * @returns {element is HTMLTextAreaElement}
  */
-const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElement;
-
+export const isHTMLTextAreaElement = (element) => element instanceof HTMLTextAreaElement;
 /**
  * @param {Element} element
  * @returns {element is HTMLButtonElement}
  */
-const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
+export const isHTMLButtonElement = (element) => element instanceof HTMLButtonElement;
 
 /**
  * @param {Element} element
  * @returns {element is HTMLDivElement}
  * */
-const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
+export const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
 
 export const initRedactButtons = () => {
 	const originalCommentText = document.querySelector(SELECTORS.ORIGINAL_COMMENT_IDENTIFIER);
 	const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
 	const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
+	const revertButton = document.querySelector(SELECTORS.REVERT_BUTTON);
 	const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
+	const redactedText = textarea?.textContent?.trim() || '';
 
 	if (
 		!(
@@ -68,8 +69,10 @@ export const initRedactButtons = () => {
 			redactButton &&
 			textarea &&
 			undoButton &&
+			revertButton &&
 			isHTMLDivElement(originalCommentText) &&
 			isHTMLButtonElement(redactButton) &&
+			isHTMLButtonElement(revertButton) &&
 			isHTMLButtonElement(undoButton) &&
 			isHTMLTextAreaElement(textarea)
 		)
@@ -78,5 +81,6 @@ export const initRedactButtons = () => {
 	}
 
 	redactButton.onclick = generateOnClick(textarea);
-	undoButton.onclick = undoAllChanges(textarea, originalCommentText.textContent?.trim() ?? '');
+	undoButton.onclick = setAreaText(textarea, redactedText);
+	revertButton.onclick = setAreaText(textarea, originalCommentText.textContent?.trim() ?? '');
 };

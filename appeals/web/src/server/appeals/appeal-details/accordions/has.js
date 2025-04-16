@@ -1,7 +1,6 @@
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
@@ -22,12 +21,8 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const siteDetails = getSiteDetails(mappedData, appealDetails);
 
-	const isStarted =
-		appealDetails.startedAt &&
-		dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appealDetails.startedAt));
-
 	/** @type {PageComponent[]} */
-	const caseTimetable = isStarted
+	const caseTimetable = appealDetails.startedAt
 		? [
 				{
 					type: 'summary-list',
@@ -36,7 +31,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 						rows: [
 							mappedData.appeal.validAt.display.summaryListItem,
 							mappedData.appeal.startedAt.display.summaryListItem,
-							...(isStarted
+							...(appealDetails.startedAt
 								? [mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem]
 								: []),
 							mappedData.appeal.siteVisitTimetable.display.summaryListItem
