@@ -399,6 +399,51 @@ const newS78Appeals = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_TYPE_SHORTHAND_FPA,
 		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 6 }) },
 		lpaQuestionnaire: true,
 		startedAt: getPastDate({ months: 2 }),
@@ -810,7 +855,8 @@ export async function seedTestData(databaseConnector) {
 	const siteVisitType = await databaseConnector.siteVisitType.findMany();
 
 	const counters = {
-		finalComment: 0
+		finalComment: 0,
+		statements: 0
 	};
 
 	for (const { appealTypeId, id, caseStartedDate, lpaId, appellantId } of appeals) {
@@ -830,58 +876,6 @@ export async function seedTestData(databaseConnector) {
 
 		//REPS
 		if (appealType === APPEAL_TYPE_SHORTHAND_FPA) {
-			const formatSourceMap = {
-				[ODW_SYSTEM_ID]: 'Back Office',
-				citizen: 'Front Office'
-			};
-			const originalRepresentation =
-				'I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.';
-
-			const rejectionReason = await databaseConnector.representationRejectionReason.findFirst();
-			for (let ii in appellantsList) {
-				const represented = appellantsList[ii];
-				const source = Number(ii) % 2 ? 'citizen' : ODW_SYSTEM_ID;
-				const hasEmail = !!(Number(ii) % 3);
-				const status = getRandomReviewStatus();
-
-				const repRecord = await databaseConnector.representation.create({
-					data: {
-						appeal: {
-							connect: {
-								id
-							}
-						},
-						representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-						originalRepresentation,
-						represented: {
-							create: {
-								...represented,
-								email: hasEmail ? represented.email : null,
-								lastName: `${represented.lastName} - Source: ${formatSourceMap[source]} - Has email: ${hasEmail}`
-							}
-						},
-						source,
-						...(status && { status })
-					},
-					include: {
-						represented: true
-					}
-				});
-
-				if (status === 'invalid') {
-					await databaseConnector.representationRejectionReasonsSelected.create({
-						data: {
-							representation: {
-								connect: { id: repRecord.id }
-							},
-							representationRejectionReason: {
-								connect: { id: rejectionReason?.id }
-							}
-						}
-					});
-				}
-			}
-
 			await databaseConnector.representation.create({
 				data: {
 					appeal: {
@@ -900,31 +894,7 @@ export async function seedTestData(databaseConnector) {
 				}
 			});
 
-			await databaseConnector.representation.create({
-				data: {
-					appeal: {
-						connect: {
-							id
-						}
-					},
-					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-					originalRepresentation: `Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.
-
-The secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.
-
-You don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.`,
-					lpa: {
-						connect: {
-							id: lpaId
-						}
-					},
-					source: 'lpa'
-				},
-				include: {
-					represented: true
-				}
-			});
-
+			await addStatements(databaseConnector, id, lpaId, counters);
 			await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
 		}
 
@@ -1034,6 +1004,125 @@ You don't want to kill all your dark areas they are very important. I will take 
 			});
 		}
 	}
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {number} lpaId
+ * @param {Object<string, number>} counters
+ */
+async function addStatements(databaseConnector, id, lpaId, counters) {
+	switch (counters.statements) {
+		case 1:
+			await addIPComments(databaseConnector, id);
+			break;
+		case 2:
+			await addLpaStatement(databaseConnector, id, lpaId);
+			break;
+		case 3:
+			await addIPComments(databaseConnector, id);
+			await addLpaStatement(databaseConnector, id, lpaId);
+			break;
+		default:
+			break;
+	}
+
+	if (counters.statements > 2) {
+		counters.statements = 0;
+	} else {
+		counters.statements++;
+	}
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ */
+async function addIPComments(databaseConnector, id) {
+	const formatSourceMap = {
+		[ODW_SYSTEM_ID]: 'Back Office',
+		citizen: 'Front Office'
+	};
+	const originalRepresentation =
+		'I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.';
+
+	const rejectionReason = await databaseConnector.representationRejectionReason.findFirst();
+	for (let ii in appellantsList) {
+		const represented = appellantsList[ii];
+		const source = Number(ii) % 2 ? 'citizen' : ODW_SYSTEM_ID;
+		const hasEmail = !!(Number(ii) % 3);
+		const status = getRandomReviewStatus();
+
+		const repRecord = await databaseConnector.representation.create({
+			data: {
+				appeal: {
+					connect: {
+						id
+					}
+				},
+				representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+				originalRepresentation,
+				represented: {
+					create: {
+						...represented,
+						email: hasEmail ? represented.email : null,
+						lastName: `${represented.lastName} - Source: ${formatSourceMap[source]} - Has email: ${hasEmail}`
+					}
+				},
+				source,
+				...(status && { status })
+			},
+			include: {
+				represented: true
+			}
+		});
+
+		if (status === 'invalid') {
+			await databaseConnector.representationRejectionReasonsSelected.create({
+				data: {
+					representation: {
+						connect: { id: repRecord.id }
+					},
+					representationRejectionReason: {
+						connect: { id: rejectionReason?.id }
+					}
+				}
+			});
+		}
+	}
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {number} lpaId
+ */
+async function addLpaStatement(databaseConnector, id, lpaId) {
+	await databaseConnector.representation.create({
+		data: {
+			appeal: {
+				connect: {
+					id
+				}
+			},
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			originalRepresentation: `Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.
+
+The secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.
+
+You don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.`,
+			lpa: {
+				connect: {
+					id: lpaId
+				}
+			},
+			source: 'lpa'
+		},
+		include: {
+			represented: true
+		}
+	});
 }
 
 /**

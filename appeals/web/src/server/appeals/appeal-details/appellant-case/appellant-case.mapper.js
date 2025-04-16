@@ -51,10 +51,17 @@ import { ensureArray } from '#lib/array-utilities.js';
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
+ * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {Promise<PageContent>}
  */
-export async function appellantCasePage(appellantCaseData, appealDetails, currentRoute, session) {
+export async function appellantCasePage(
+	appellantCaseData,
+	appealDetails,
+	currentRoute,
+	backUrl,
+	session
+) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
@@ -173,7 +180,7 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Appellant case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Appellant case',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',

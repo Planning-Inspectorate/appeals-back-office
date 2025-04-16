@@ -41,3 +41,23 @@ export function safeRedirect(request, response, url) {
 		return response.redirect('/');
 	}
 }
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} url
+ * @returns {string}
+ */
+export function addBackLinkQueryToUrl(request, url) {
+	return `${url}?backUrl=${encodeURIComponent(request.originalUrl)}`;
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string|undefined}
+ */
+export function getBackLinkUrlFromQuery(request) {
+	if (!request.query.backUrl) {
+		return;
+	}
+	return decodeURIComponent(request.query.backUrl.toString());
+}
