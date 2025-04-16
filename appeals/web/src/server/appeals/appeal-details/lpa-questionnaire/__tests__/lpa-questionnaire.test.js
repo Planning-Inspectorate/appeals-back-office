@@ -3051,7 +3051,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 
@@ -3066,7 +3066,7 @@ describe('LPA Questionnaire review', () => {
 		it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided`, async () => {
 			const response = await request
 				.post(`${baseUrl}/change-document-name/1/1`)
-				.send({ fileName: 'new-name.jpeg', documentId: '1' });
+				.send({ fileName: 'new-name', documentId: '1' });
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toContain(`Found. Redirecting to ${baseUrl}/manage-documents/1/1`);

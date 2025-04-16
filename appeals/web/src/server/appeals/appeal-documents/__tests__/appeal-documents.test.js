@@ -246,13 +246,13 @@ describe('appeal-documents', () => {
 
 			expect(element).toContain('Change document details');
 			expect(element).toContain(fileInfo.latestDocumentVersion.originalFilename);
-			expect(element).toContain(fileInfo.name);
+			expect(element).toContain(fileInfo.name.substring(0, fileInfo.name.lastIndexOf('.')));
 		});
 
 		it('should redirect to manage documents page after change document name success', async () => {
 			const response = await request
 				.post(fullUrl)
-				.send({ fileName: 'valid-fileName_123.jpg', documentId });
+				.send({ fileName: 'valid-fileName_123', documentId });
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toContain(
 				`Found. Redirecting to ${fullUrl.replace('change-document-name', 'manage-documents')}`
@@ -279,7 +279,7 @@ describe('appeal-documents', () => {
 			}).innerHTML;
 
 			expect(element).toContain(
-				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
+				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
 			);
 		});
 
@@ -293,13 +293,13 @@ describe('appeal-documents', () => {
 			}).innerHTML;
 
 			expect(element).toContain(
-				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, underscores and one full stop'
+				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
 			);
 		});
 
 		it('should render change filename page with duplicate filename error', async () => {
 			const response = await request.post(fullUrl).send({
-				fileName: documentName,
+				fileName: documentName.substring(0, documentName.lastIndexOf('.')),
 				documentId
 			});
 			expect(response.statusCode).toBe(200);

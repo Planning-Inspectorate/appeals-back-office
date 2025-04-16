@@ -295,6 +295,14 @@ function mapManageFolderPageHeading(folderPath) {
 }
 
 /**
+ * @param {string} fileName
+ * @returns {string}
+ */
+function stripFileExtension(fileName) {
+	return fileName.replace(/\.\w+$/, '');
+}
+
+/**
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {FolderInfo} params.folder
@@ -595,7 +603,9 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 	const pageComponents = [
 		{
 			wrapperHtml: {
-				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.originalFilename}</h2>`,
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${stripFileExtension(
+					item.originalFilename
+				)}</h2>`,
 				closing: ''
 			},
 			type: 'input',
@@ -618,7 +628,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 					text: 'File name',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
 				},
-				value: fileName
+				value: stripFileExtension(fileName)
 			}
 		}
 	];

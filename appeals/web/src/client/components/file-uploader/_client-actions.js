@@ -284,7 +284,8 @@ const clientActions = (container) => {
 				stagedFiles.errors.push({
 					message: validationError.message || '',
 					name: addedFile.file.name,
-					guid: addedFile.guid
+					guid: addedFile.guid,
+					metadata: validationError.metadata,
 				});
 			}
 		}
@@ -372,7 +373,7 @@ const clientActions = (container) => {
 
 	/**
 	 * @param {File} selectedFile
-	 * @returns {{message: string} | null}
+	 * @returns {{message: string, metadata?: {fileExtension?: string}} | null}
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
@@ -394,6 +395,13 @@ const clientActions = (container) => {
 		}
 		if (!allowedMimeTypes.includes(selectedFile.type)) {
 			return { message: 'TYPE_SINGLE_FILE' };
+		}
+		const originalFileExtension = container.dataset.documentOriginalFileName?.split('.').pop();
+		if (originalFileExtension && selectedFile.name.split('.').pop() !== originalFileExtension) {
+			return {
+				message: 'DIFFERENT_FILE_EXTENSION',
+				metadata: { fileExtension: originalFileExtension.toUpperCase() }
+			};
 		}
 
 		return null;
@@ -433,7 +441,8 @@ const clientActions = (container) => {
 					...stagedFiles.errors.map((errorItem) => ({
 						message: errorItem.message,
 						name: errorItem.name,
-						guid: errorItem.guid
+						guid: errorItem.guid,
+						metadata: errorItem.metadata
 					})),
 					...failedUploads
 				].flat()
