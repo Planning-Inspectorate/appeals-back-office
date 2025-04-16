@@ -7,8 +7,9 @@
  */
 
 import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
-import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
+import { formatReasons, formatSiteAddress } from './utils.js';
 import { notifySend } from '#notify/notify-send.js';
+import formatDate from '#utils/date-formatter.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -31,7 +32,11 @@ export const ipCommentRejection = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+
+	const { ipCommentsDueDate } = appeal.appealTimetable || {};
+	const extendedDeadline =
+		allowResubmit && ipCommentsDueDate ? formatDate(ipCommentsDueDate, false) : '';
+
 	const recipientEmail = representation.represented?.email;
 	if (recipientEmail) {
 		const templateName = extendedDeadline
@@ -113,7 +118,10 @@ export const lpaStatementIncomplete = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+
+	const { lpaStatementDueDate } = appeal.appealTimetable || {};
+	const extendedDeadline =
+		allowResubmit && lpaStatementDueDate ? formatDate(lpaStatementDueDate, false) : '';
 
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {
