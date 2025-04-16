@@ -43,13 +43,13 @@
 							   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
 							   type="file" name="files" value="Choose file"
 							   aria-controls="file-list-{{ params.formId }}"
-							   {% if params.multiple %}multiple{% endif %}>
+							   {% if params.multiple %}multiple{% endif %}><div>
 						{% if params.multiple %}
 							<span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
 						{% endif %}
-						<button type='button' class="pins-file-upload__button govuk-button">
+						<button type='button' class="pins-file-upload__button govuk-button--secondary">
 							Select files
-						</button>
+						</button></div>
 					</div>
 					<div id="file-list-{{ params.formId }}">
 						<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>

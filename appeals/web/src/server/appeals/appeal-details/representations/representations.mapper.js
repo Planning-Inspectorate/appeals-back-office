@@ -2,7 +2,6 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -115,7 +114,7 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 
 /**
  * @param {Appeal} appeal
- * @param {string | undefined} backUrl
+ * @param {string} [backUrl]
  * @returns {PageContent}
  * */
 export function statementAndCommentsSharePage(appeal, backUrl) {
@@ -158,11 +157,9 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 	const heading =
 		valueTexts.length > 0 ? 'Share IP comments and statements' : 'Progress to final comments';
 
-	const backLinkUrl = constructUrl(backUrl, appeal.appealId);
-
 	return {
 		title: heading,
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading,
 		pageComponents: [
@@ -215,12 +212,10 @@ export function finalCommentsSharePage(appeal, backUrl) {
 		: 'Do not progress the case if you are awaiting any late final comments.';
 	const submitButtonText = hasItemsToShare ? 'Share final comments' : 'Progress case';
 
-	const backLinkUrl = constructUrl(backUrl, appeal.appealId);
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title,
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appeal.appealReference)}`,
 		heading: title,
 		pageComponents: [

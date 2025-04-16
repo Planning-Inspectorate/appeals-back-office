@@ -12,6 +12,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -54,7 +55,8 @@ const renderStartDatePage = async (request, response) => {
 	const mappedPageContent = startCasePage(
 		appealId,
 		appealReference,
-		dateISOStringToDisplayDate(getTodaysISOString())
+		dateISOStringToDisplayDate(getTodaysISOString()),
+		getBackLinkUrlFromQuery(request)
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {

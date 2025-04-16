@@ -7,7 +7,7 @@ import {
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
+export const mapLpaStatement = ({ appealDetails, currentRoute, request }) => {
 	const { status, representationStatus, isRedacted } =
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 
@@ -67,7 +67,8 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
 			currentRoute,
 			appealDetails?.documentationSummary?.lpaStatement?.status,
 			appealDetails?.documentationSummary?.lpaStatement?.representationStatus,
-			'lpa-statement'
+			'lpa-statement',
+			request
 		)
 	});
 };
