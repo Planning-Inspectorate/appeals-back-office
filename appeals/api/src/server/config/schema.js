@@ -39,14 +39,6 @@ export default joi
 						generic: joi.object({
 							id: joi.string().required()
 						}),
-						appealWithdrawn: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
 						siteVisitChange: joi.object({
 							accompaniedDateChange: joi.object({
 								appellant: joi.object({
@@ -123,9 +115,6 @@ export default joi
 									id: joi.string().required()
 								})
 							})
-						}),
-						validAppellantCase: joi.object({
-							id: joi.string().required()
 						})
 					})
 					.required(),
