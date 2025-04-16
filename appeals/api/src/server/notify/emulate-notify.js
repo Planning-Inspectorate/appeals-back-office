@@ -2,6 +2,8 @@ import path from 'path';
 import fs from 'fs';
 import { formatSortableDateTime } from '#utils/date-formatter.js';
 
+let notifyCount = 0;
+
 /**
  * Emulate Notify for local dev testing
  * This generates an approximate view of what a completed email will look like sent via notify.
@@ -59,6 +61,12 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 	].join('<br>\n');
 
 	const outputDir = path.join(process.cwd(), 'temp');
+	if (fs.existsSync(outputDir)) {
+		if (!notifyCount) {
+			fs.rmdirSync(outputDir, { recursive: true });
+		}
+	}
+
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
@@ -71,5 +79,6 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 
 	const fullName = path.join(process.cwd(), 'temp', fileName);
 	fs.writeFileSync(fullName, emailHtml);
+	notifyCount++;
 	return fullName;
 }

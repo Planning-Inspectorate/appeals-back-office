@@ -10,7 +10,8 @@ import { permissionNames } from '#environment/permissions.js';
 
 import {
 	validateCaseFolderId,
-	validateCaseDocumentId
+	validateCaseDocumentId,
+	clearUncommittedFilesFromSession
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
@@ -211,7 +212,11 @@ router.use(
 
 router
 	.route('/:lpaQuestionnaireId')
-	.get(validateAppeal, asyncHandler(controller.getLpaQuestionnaire))
+	.get(
+		validateAppeal,
+		clearUncommittedFilesFromSession,
+		asyncHandler(controller.getLpaQuestionnaire)
+	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),

@@ -1,10 +1,7 @@
-import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
-} from '@pins/appeals/constants/common.js';
+import { countBy } from 'lodash-es';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
 import isFPA from '#utils/is-fpa.js';
-import count from '#utils/count-array.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
@@ -87,19 +84,6 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 });
 
 /**
- * @param {Representation[]} reps
- * @param {APPEAL_REPRESENTATION_STATUS[]} statuses
- * */
-const makeCounts = (reps, statuses) =>
-	statuses.reduce(
-		(acc, status) => ({
-			...acc,
-			[status]: count(reps, (rep) => rep.status === status)
-		}),
-		{}
-	);
-
-/**
  * @param {DBAppeal | DBUserAppeal} appeal
  * @returns {DocumentationSummary}
  * */
@@ -138,16 +122,14 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		ipComments: {
 			status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			counts: makeCounts(ipComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			counts: countBy(ipComments, 'status'),
+			isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),
 			representationStatus: lpaStatement?.status ?? null,
-			receivedAt: lpaStatement?.dateCreated
+			receivedAt: lpaStatement?.dateCreated,
+			isRedacted: Boolean(lpaStatement?.redactedRepresentation)
 		},
 		lpaFinalComments: {
 			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
@@ -156,11 +138,8 @@ const formatDocumentationSummary = (appeal) => {
 				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: lpaFinalComments[0]?.status ?? null,
-			counts: makeCounts(lpaFinalComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			counts: countBy(lpaFinalComments, 'status'),
+			isRedacted: lpaFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		appellantFinalComments: {
 			status:
@@ -170,11 +149,8 @@ const formatDocumentationSummary = (appeal) => {
 				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: appellantFinalComments[0]?.status ?? null,
-			counts: makeCounts(appellantFinalComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			counts: countBy(appellantFinalComments, 'status'),
+			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		}
 	};
 };

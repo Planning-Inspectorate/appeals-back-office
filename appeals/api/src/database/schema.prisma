@@ -395,7 +395,7 @@ model LPAQuestionnaire {
   lpaqCreatedDate                           DateTime                                    @default(now())
   lpaQuestionnaireSubmittedDate             DateTime?
   lpaStatement                              String?
-  newConditionDetails                       String?
+  newConditionDetails                       String?                                     @db.NVarChar(Max)
   siteAccessDetails                         String?
   siteSafetyDetails                         String?
   listedBuildingDetails                     ListedBuildingSelected[]
