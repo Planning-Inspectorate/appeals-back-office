@@ -49,15 +49,6 @@ const { value, error } = schema.validate({
 			generic: {
 				id: environment.GOV_NOTIFY_APPEAL_GENERIC_ID || 'mock-appeal-generic-id'
 			},
-			appealConfirmed: {
-				id: environment.GOV_NOTIFY_APPEAL_CONFIRMED_ID || 'mock-appeal-confirmed-id'
-			},
-			appealIncomplete: {
-				id: environment.GOV_NOTIFY_APPEAL_INCOMPLETE_ID || 'mock-appeal-incomplete-id'
-			},
-			appealInvalid: {
-				id: environment.GOV_NOTIFY_APPEAL_INVALID_ID || 'mock-appeal-invalid-id'
-			},
 			appealWithdrawn: {
 				appellant: {
 					id:
@@ -67,69 +58,6 @@ const { value, error } = schema.validate({
 				lpa: {
 					id: environment.GOV_NOTIFY_APPEAL_WITHDRAWN_LPA_ID || 'mock-appeal-withdrawn-lpa-id'
 				}
-			},
-			appealStartDateChange: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_APPELLANT_ID ||
-						'mock-appeal-start-date-change-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_APPEAL_START_DATE_CHANGE_LPA_ID ||
-						'mock-appeal-start-date-change-lpa-id'
-				}
-			},
-			appealTypeChangedNonHas: {
-				id:
-					environment.GOV_NOTIFY_APPEAL_TYPE_CHANGED_NON_HAS_ID ||
-					'mock-appeal-type-changed-non-has-id'
-			},
-			appealValidStartCase: {
-				has: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_APPELLANT_ID ||
-							'mock-appeal-valid-start-case-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_LPA_ID ||
-							'mock-appeal-valid-start-case-lpa-id'
-					}
-				},
-				s78: {
-					appellant: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_APPELLANT_ID ||
-							'mock-appeal-valid-start-case-s78-appellant-id'
-					},
-					lpa: {
-						id:
-							environment.GOV_NOTIFY_APPEAL_VALID_START_CASE_S78_LPA_ID ||
-							'mock-appeal-valid-start-case-s78-lpa-id'
-					}
-				}
-			},
-			decisionIsAllowedSplitDismissed: {
-				appellant: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_APPELLANT_ID ||
-						'mock-decision-is-allowed-split-dismissed-appellant-id'
-				},
-				lpa: {
-					id:
-						environment.GOV_NOTIFY_DECISION_IS_ALLOWED_SPLIT_DISMISSED_LPA_ID ||
-						'mock-decision-is-allowed-split-dismissed-lpa-id'
-				}
-			},
-			decisionIsInvalidAppellant: {
-				id:
-					environment.GOV_NOTIFY_DECISION_IS_INVALID_APPELLANT_ID ||
-					'mock-decision-is-invalid-appellant-id'
-			},
-			decisionIsInvalidLPA: {
-				id: environment.GOV_NOTIFY_DECISION_IS_INVALID_LPA_ID || 'mock-decision-is-invalid-lpa-id'
 			},
 			siteVisitChange: {
 				accompaniedDateChange: {

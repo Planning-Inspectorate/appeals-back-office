@@ -4,18 +4,21 @@ import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import nock from 'nock';
 
-const { app, installMockApi, teardown } = createTestEnvironment();
+const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('change-lpa-reference', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		nock('http://test/')
+			.get(`/appeals/${appealData.appealId}`)
+			.reply(200, { ...appealData, lpaQuestionnaireId: null })
+			.persist();
+	});
+
 	afterEach(teardown);
 
 	describe('GET /change', () => {
-		beforeEach(installMockApi);
-		afterEach(teardown);
-
 		it('should render changeLpaReference page when loaded from appeal details', async () => {
 			const appealId = appealData.appealId;
 			const response = await request.get(`${baseUrl}/${appealId}/lpa-reference/change`);
@@ -23,7 +26,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+			expect(elementInnerHtml).toContain('What is the application reference number?</h1>');
 			expect(elementInnerHtml).toContain('Continue</button>');
 		});
 
@@ -36,7 +39,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+			expect(elementInnerHtml).toContain('What is the application reference number?</h1>');
 			expect(elementInnerHtml).toContain('Continue</button>');
 		});
 	});
@@ -57,7 +60,7 @@ describe('change-lpa-reference', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change the LPA application reference</h1>');
+			expect(elementInnerHtml).toContain('What is the application reference number?</h1>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -65,7 +68,37 @@ describe('change-lpa-reference', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Enter the LPA application reference</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the application reference number</a>');
+		});
+
+		it('should re-render changeLpaReference page with an error when planningApplicationReference is over 100 characters', async () => {
+			const appealId = appealData.appealId.toString();
+
+			const invalidData = {
+				planningApplicationReference:
+					'12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'
+			};
+
+			const response = await request
+				.post(`${baseUrl}/${appealId}/lpa-reference/change`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('What is the application reference number?</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Application reference number must be 100 characters or less</a>'
+			);
 		});
 
 		it('should redirect to the appeal-details page when planningApplicationReference is valid and was opened in appeal details', async () => {

@@ -16,6 +16,7 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -150,7 +151,11 @@ function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
  * */
 function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
-	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpaq-complete-appellant', email);
+	const templateName =
+		appeal.appealType?.type === APPEAL_TYPE.HOUSEHOLDER
+			? 'lpaq-complete-has-appellant'
+			: 'lpaq-complete-appellant';
+	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, templateName, email);
 }
 
 /**
