@@ -1,5 +1,8 @@
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
@@ -69,6 +72,15 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 	return documentationFolderTableItem({
 		id: 'appellant-final-comments',
 		text: 'Appellant final comments',
+		statusText: mapRepresentationDocumentSummaryStatus(
+			appealDetails?.documentationSummary?.appellantFinalComments?.status,
+			appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+		),
+		receivedText:
+			dateISOStringToDisplayDate(
+				appealDetails?.documentationSummary?.appellantFinalComments?.receivedAt
+			) || 'Not applicable',
 		statusText,
 		receivedText,
 		actionHtml: mapRepresentationDocumentSummaryActionLink(

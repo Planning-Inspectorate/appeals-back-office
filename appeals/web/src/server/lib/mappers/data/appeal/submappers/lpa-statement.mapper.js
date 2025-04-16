@@ -1,4 +1,6 @@
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
@@ -61,6 +63,16 @@ export const mapLpaStatement = ({ appealDetails, currentRoute }) => {
 	return documentationFolderTableItem({
 		id: 'lpa-statement',
 		text: 'LPA statement',
+		statusText: mapRepresentationDocumentSummaryStatus(
+			appealDetails?.documentationSummary?.lpaStatement?.status,
+			appealDetails?.documentationSummary?.lpaStatement?.representationStatus,
+			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		),
+		receivedText: dateISOStringToDisplayDate(
+			appealDetails?.documentationSummary?.lpaStatement?.receivedAt instanceof Date
+				? appealDetails?.documentationSummary?.lpaStatement?.receivedAt.toDateString()
+				: appealDetails?.documentationSummary?.lpaStatement?.receivedAt
+		),
 		statusText,
 		receivedText,
 		actionHtml: mapRepresentationDocumentSummaryActionLink(

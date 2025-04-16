@@ -1,4 +1,7 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 /**
  * @param {string} representationStatus
  * @returns {boolean}
@@ -61,3 +64,39 @@ export function mapRepresentationDocumentSummaryActionLink(
 		reviewRequired ? 'Review' : 'View'
 	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 }
+
+/**
+ *
+ * @param {string|undefined} documentationStatus
+ * @param {string|null|undefined} representationStatus
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @returns {string}
+ */
+export function mapRepresentationDocumentSummaryStatus(
+	documentationStatus,
+	representationStatus,
+	representationType
+) {
+	if (documentationStatus !== 'received' || !representationStatus) {
+		let representationRowText =
+			representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT ||
+			representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+				? 'No final comments'
+				: 'Not received';
+		return representationRowText;
+	}
+
+	switch (representationStatus) {
+		case APPEAL_REPRESENTATION_STATUS.VALID:
+			return 'Accepted';
+		case APPEAL_REPRESENTATION_STATUS.INVALID:
+			return 'Rejected';
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED:
+			return 'Shared';
+		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE:
+			return 'Incomplete';
+		default:
+			return 'Received';
+	}
+}
+
