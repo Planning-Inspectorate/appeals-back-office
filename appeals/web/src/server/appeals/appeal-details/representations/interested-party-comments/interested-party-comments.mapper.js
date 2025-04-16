@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, wrapComponents } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -176,10 +176,21 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 	};
 
 	const pageComponents = [
-		simpleHtmlComponent(
-			'p',
-			{ class: 'govuk-body' },
-			'<a href="/documents/${appealDetails.appealId}/bulk-download/documents" class="govuk-link">Download all documents</a>'
+		wrapComponents(
+			[
+				simpleHtmlComponent(
+					'a',
+					{
+						href: `/documents/${appealDetails.appealId}/bulk-download/documents`,
+						class: 'govuk-link'
+					},
+					'Download all documents'
+				)
+			],
+			{
+				opening: '<p class="govuk-body">',
+				closing: '</p>'
+			}
 		),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		table
