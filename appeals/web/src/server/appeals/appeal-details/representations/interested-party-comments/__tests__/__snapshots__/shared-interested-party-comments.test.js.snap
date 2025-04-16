@@ -7,8 +7,7 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
             <h1 class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/\${appealDetails.appealId}/bulk-download/documents"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body"><a href="/documents/2/bulk-download/documents" class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
     <table class="govuk-table">
@@ -31,8 +30,7 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
             <h1 class="govuk-heading-l">Interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/\${appealDetails.appealId}/bulk-download/documents"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body"><a href="/documents/2/bulk-download/documents" class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
     <table class="govuk-table">

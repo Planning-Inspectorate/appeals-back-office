@@ -46,7 +46,7 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				rootElement: '.govuk-body'
 			}).innerHTML;
 			expect(response.statusCode).toEqual(200);
-			const downloadLinkUrl = '/documents/${appealDetails.appealId}/bulk-download/documents';
+			const downloadLinkUrl = '/documents/2/bulk-download/documents';
 			expect(donloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
@@ -111,7 +111,7 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const donloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			const downloadLinkUrl = '/documents/${appealDetails.appealId}/bulk-download/documents';
+			const downloadLinkUrl = `/documents/2/bulk-download/documents`;
 			expect(donloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
