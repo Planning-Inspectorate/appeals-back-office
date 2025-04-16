@@ -120,6 +120,17 @@ exports[`appeal-details GET /:appealId Costs should render a "Costs decision" ro
 
 exports[`appeal-details GET /:appealId Costs should render a "Costs decision" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>"`;
 
+exports[`appeal-details GET /:appealId Hearing should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing" 1`] = `
+"<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup" role="button"
+    draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
+    <div>
+        <h3 class="govuk-heading-m">Hearing estimates</h3>
+        <p><a class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/add-estimates">Add hearing estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
