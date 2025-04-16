@@ -22,10 +22,10 @@ export const changeLpaReferencePage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change the LPA application reference',
+		title: 'What is the application reference number?',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change the LPA application reference',
+		heading: 'What is the application reference number?',
 		pageComponents: [
 			{
 				type: 'input',
@@ -33,9 +33,6 @@ export const changeLpaReferencePage = (
 					id: 'planning-application-reference',
 					name: 'planningApplicationReference',
 					type: 'text',
-					label: {
-						text: 'LPA application reference'
-					},
 					value: storedPlanningApplicationReference ?? appealData.planningApplicationReference,
 					errorMessage: errorPlanningApplicationReference(errors)
 				}

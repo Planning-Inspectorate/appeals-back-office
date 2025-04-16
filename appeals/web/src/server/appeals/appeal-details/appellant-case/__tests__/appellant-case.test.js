@@ -32,7 +32,8 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	calculateIncompleteDueDate
+	calculateIncompleteDueDate,
+	oneMonthBefore
 } from '#lib/dates.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
@@ -229,9 +230,23 @@ describe('appellant-case', () => {
 		describe('notification banners', () => {
 			it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {
 				const appealId = appealData.appealId.toString();
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						lpaQuestionnaireId: undefined
+					})
+					.persist();
 				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 					planningApplicationReference: '12345/A/67890'
 				});
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
 
 				const validData = {
 					planningApplicationReference: '12345/A/67890'
@@ -250,7 +265,7 @@ describe('appellant-case', () => {
 					rootElement: '.govuk-notification-banner'
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
+				expect(notificationBannerElementHTML).toContain('Appeal updated</p>');
 			});
 
 			it('should render a "Application decision date updated" notification banner when the application decision date is updated', async () => {
@@ -1828,7 +1843,7 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the update due date page with pre-populated date values if there is no existing due date and applicationDecisionDate is set', async () => {
-			const decisionDate = '2024-10-12T11:44:21.173Z';
+			const decisionDate = oneMonthBefore(new Date()).toISOString();
 			const expectedDate = calculateIncompleteDueDate(decisionDate, 'Planning appeal');
 			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
 

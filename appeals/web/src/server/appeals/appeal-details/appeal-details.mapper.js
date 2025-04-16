@@ -4,7 +4,6 @@ import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
-import { generateCaseSummary } from './case-summary/case-summary.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 
@@ -35,6 +34,7 @@ export async function appealDetailsPage(
 		appealDetails,
 		currentRoute,
 		session,
+		request,
 		false,
 		appellantFinalComments,
 		lpaFinalComments
@@ -48,7 +48,7 @@ export async function appealDetailsPage(
 
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
 
-	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, currentRoute);
+	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
@@ -57,7 +57,6 @@ export async function appealDetailsPage(
 	const pageComponents = [
 		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
-		generateCaseSummary(mappedData),
 		...caseDownload,
 		caseNotes,
 		accordion

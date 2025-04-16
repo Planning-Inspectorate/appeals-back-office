@@ -9,7 +9,7 @@ import {
 	APPEAL_INVALID_OR_INCOMPLETE_DETAILS,
 	APPEAL_SOURCE,
 	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_EIA_DEVELOPMENT_DESCRIPTION
+	APPEAL_DEVELOPMENT_TYPE
 } from 'pins-data-model';
 
 /** @typedef {import('pins-data-model/src/schemas.js').AppealS78Case} AppealS78Case */
@@ -100,5 +100,5 @@ export const isValidAppealType = (appealType) =>
  */
 export const isValidDevelopmentType = (developmentType) => {
 	if (!developmentType) return false;
-	return Object.values(APPEAL_EIA_DEVELOPMENT_DESCRIPTION).includes(developmentType);
+	return Object.values(APPEAL_DEVELOPMENT_TYPE).includes(developmentType);
 };

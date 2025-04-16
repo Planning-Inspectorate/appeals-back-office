@@ -1,16 +1,13 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	FRONT_OFFICE_URL
-} from '@pins/appeals/constants/support.js';
+import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
-import config from '#config/config.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { setTimeInTimeZone } from '#utils/business-days.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -52,7 +49,7 @@ const changeAppealType = async (
 	]);
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	const emailVariables = {
+	const personalisation = {
 		existing_appeal_type: appeal.appealType?.type || '',
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
@@ -63,15 +60,12 @@ const changeAppealType = async (
 	};
 
 	if (recipientEmail) {
-		try {
-			await notifyClient.sendEmail(
-				config.govNotify.template.appealTypeChangedNonHas,
-				recipientEmail,
-				emailVariables
-			);
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-		}
+		await notifySend({
+			templateName: 'appeal-type-change-non-has',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
 	}
 };
 

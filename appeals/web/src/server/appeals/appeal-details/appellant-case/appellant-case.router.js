@@ -10,6 +10,7 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import {
+	clearUncommittedFilesFromSession,
 	validateCaseDocumentId,
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
@@ -30,6 +31,7 @@ import greenBeltRouter from '../green-belt/green-belt.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -153,10 +155,16 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	procedurePreferenceRouter
 );
+router.use(
+	'/application-development-type',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	applicationDevelopmentTypeRouter
+);
 
 router
 	.route('/')
-	.get(validateAppeal, asyncHandler(controller.getAppellantCase))
+	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),

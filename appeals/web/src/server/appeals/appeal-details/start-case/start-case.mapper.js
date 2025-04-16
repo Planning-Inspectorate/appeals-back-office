@@ -9,13 +9,14 @@ import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
  * @param {number} appealId
  * @param {string} appealReference
  * @param {string} today
+ * @param {string|undefined} backUrl
  * @returns {PageContent}
  */
-export function startCasePage(appealId, appealReference, today) {
+export function startCasePage(appealId, appealReference, today, backUrl) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Start case',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Start case',
 		pageComponents: [

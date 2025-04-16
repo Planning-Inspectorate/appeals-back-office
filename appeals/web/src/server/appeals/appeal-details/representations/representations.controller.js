@@ -4,17 +4,16 @@ import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dat
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { statementAndCommentsSharePage, finalCommentsSharePage } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
-	const { errors, currentAppeal, query } = request;
-
-	const backUrl = query.backUrl ? String(query.backUrl) : '/';
+	const { errors, currentAppeal } = request;
 
 	const pageContent = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				return statementAndCommentsSharePage(currentAppeal, backUrl);
+				return statementAndCommentsSharePage(currentAppeal, getBackLinkUrlFromQuery(request));
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
 				const finalCommentsDueDate = currentAppeal.appealTimetable?.finalCommentsDueDate;
 				if (
@@ -24,7 +23,7 @@ export function renderShareRepresentations(request, response) {
 					throw new Error('Final comments cannot be shared before the due date has passed');
 				}
 
-				return finalCommentsSharePage(currentAppeal, backUrl);
+				return finalCommentsSharePage(currentAppeal, getBackLinkUrlFromQuery(request));
 			}
 			default:
 				throw new Error(

@@ -40,7 +40,7 @@ describe('redact', () => {
 
 		const { innerHTML } = parseHtml(response.text);
 		expect(innerHTML).toMatchSnapshot();
-
+		expect(innerHTML).toContain('Revert to original comment</button>');
 		expect(innerHTML).toContain('Check details and redact comment');
 		expect(innerHTML).toContain('Awaiting review comment 47');
 	});
@@ -52,7 +52,6 @@ describe('redact', () => {
 
 		const { innerHTML } = parseHtml(response.text);
 		expect(innerHTML).toMatchSnapshot();
-
 		expect(innerHTML).toContain('Redact and accept comment');
 		expect(innerHTML).toContain(
 			'<dd class="govuk-summary-list__value">Awaiting review comment 47</dd>'

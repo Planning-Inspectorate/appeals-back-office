@@ -28,7 +28,9 @@ exports[`final-comments GET /lpa-questionnaire/1/add-documents/:folderId/:docume
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary">Select files</button>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -415,9 +417,11 @@ exports[`final-comments GET /review-comments with redacted comment should render
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Redacted comment</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Change<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>

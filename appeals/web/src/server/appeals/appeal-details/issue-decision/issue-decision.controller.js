@@ -23,6 +23,7 @@ import {
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -86,7 +87,11 @@ const renderIssueDecision = async (request, response) => {
 		request.session.inspectorDecision = {};
 	}
 
-	const mappedPageContent = issueDecisionPage(appealData, request.session.inspectorDecision);
+	const mappedPageContent = issueDecisionPage(
+		appealData,
+		request.session.inspectorDecision,
+		getBackLinkUrlFromQuery(request)
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
