@@ -17,6 +17,8 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -52,8 +54,13 @@ const updateLPAQuestionnaireValidationOutcome = async (
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, applicationReference: lpaReference } = appeal;
+	const { id: appealId, applicationReference: lpaReference, appealStatus } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
+
+	if (appealStatus[0].status != APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) {
+		logger.error('LPAQ already validated');
+		throw new Error('LPAQ already validated');
+	}
 
 	if (lpaQuestionnaireDueDate) {
 		timetable = {
