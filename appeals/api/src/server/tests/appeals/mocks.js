@@ -290,6 +290,12 @@ export const householdAppealLPAQuestionnaireComplete = {
 
 export const householdAppealLPAQuestionnaireIncomplete = {
 	...householdAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
 	lpaQuestionnaire: {
 		...householdAppeal.lpaQuestionnaire,
 		...incompleteLPAQuestionnaireOutcome

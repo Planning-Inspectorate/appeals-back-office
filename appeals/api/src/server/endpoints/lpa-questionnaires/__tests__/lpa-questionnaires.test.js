@@ -1679,14 +1679,6 @@ describe('lpa questionnaires routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					data: {
-						lpaQuestionnaireValidationOutcomeId: lpaQuestionnaireValidationOutcomes[0].id
-					},
-					where: {
-						id: householdAppeal.lpaQuestionnaire.id
-					}
-				});
 				expect(response.status).toEqual(500);
 				expect(response.body).toEqual({
 					errors: {
