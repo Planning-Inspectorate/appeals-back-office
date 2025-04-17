@@ -33,13 +33,13 @@ export const mapDocumentationSummary = (data) => {
 		) ?? null;
 
 	const appellantFinalComments =
-		appeal.representations?.filter(
+		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		) ?? [];
+		) ?? null;
 	const lpaFinalComments =
-		appeal.representations?.filter(
+		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		) ?? [];
+		) ?? null;
 
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
@@ -72,22 +72,18 @@ export const mapDocumentationSummary = (data) => {
 				isRedacted: Boolean(lpaStatement?.redactedRepresentation)
 			},
 			lpaFinalComments: {
-				status:
-					lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: lpaFinalComments[0]?.dateCreated
-					? lpaFinalComments[0].dateCreated.toISOString()
+				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaFinalComments?.dateCreated
+					? lpaFinalComments.dateCreated.toISOString()
 					: null,
-				counts: countBy(lpaFinalComments, 'status')
+				representationStatus: lpaFinalComments?.status ?? null
 			},
 			appellantFinalComments: {
-				status:
-					appellantFinalComments.length > 0
-						? DOCUMENT_STATUS_RECEIVED
-						: DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: appellantFinalComments[0]?.dateCreated
-					? appellantFinalComments[0].dateCreated.toISOString()
+				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantFinalComments?.dateCreated
+					? appellantFinalComments.dateCreated.toISOString()
 					: null,
-				counts: countBy(appellantFinalComments, 'status')
+				representationStatus: appellantFinalComments?.status ?? null
 			}
 		})
 	};

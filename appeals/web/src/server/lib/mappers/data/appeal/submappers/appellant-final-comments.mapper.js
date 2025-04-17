@@ -5,7 +5,10 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateIsInThePast
 } from '#lib/dates.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import {
+	mapRepresentationDocumentSummaryActionLink,
+	mapFinalCommentRepresentationStatusToLabelText
+} from '#lib/representation-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request }) => {
@@ -25,29 +28,14 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 				: 'Awaiting final comments';
 		}
 
-		const counts = appealDetails.documentationSummary?.appellantFinalComments?.counts ?? {};
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.PUBLISHED] > 0) {
-			return 'Shared';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] > 0) {
-			return 'Ready to review';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.VALID] > 0) {
-			return isRedacted ? 'Redacted and accepted' : 'Accepted';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.INVALID] > 0) {
-			return 'Rejected';
-		}
-
-		return '';
+		return mapFinalCommentRepresentationStatusToLabelText(
+			appealDetails.documentationSummary?.appellantFinalComments?.representationStatus,
+			isRedacted
+		);
 	})();
 
 	const receivedText = (() => {
-		const { status, counts, receivedAt } =
+		const { status, representationStatus, receivedAt } =
 			appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
 		if (!appealDetails.startedAt) {
@@ -56,7 +44,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 
 		if (
 			status === 'not_received' ||
-			(counts?.[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0)
+			representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		) {
 			return `Due by ${dateISOStringToDisplayDate(
 				appealDetails.appealTimetable?.finalCommentsDueDate
@@ -74,7 +62,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
 			appealDetails?.documentationSummary?.appellantFinalComments?.status,
-			appealDetails?.documentationSummary?.appellantFinalComments?.counts,
+			appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
 			'appellant-final-comments',
 			request
 		)

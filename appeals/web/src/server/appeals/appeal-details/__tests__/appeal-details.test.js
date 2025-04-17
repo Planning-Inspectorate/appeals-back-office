@@ -2392,9 +2392,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											awaiting_review: 1
-										}
+										representationStatus: 'awaiting_review'
 									}
 								}
 							});
@@ -2422,9 +2420,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											valid: 1
-										}
+										representationStatus: 'valid'
 									}
 								}
 							});
@@ -2452,9 +2448,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											invalid: 1
-										}
+										representationStatus: 'invalid'
 									}
 								}
 							});

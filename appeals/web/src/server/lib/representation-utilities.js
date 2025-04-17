@@ -14,7 +14,7 @@ export function isRepresentationReviewRequired(representationStatus) {
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
- * @param {string|Record<string, number>|null|undefined} representationStatus
+ * @param {string|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string} action link html
@@ -36,10 +36,6 @@ export function mapRepresentationDocumentSummaryActionLink(
 				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
 				APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 			].includes(representationStatus);
-		}
-
-		if (typeof representationStatus === 'object' && representationStatus !== null) {
-			return representationStatus[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0;
 		}
 
 		return false;
@@ -64,4 +60,30 @@ export function mapRepresentationDocumentSummaryActionLink(
 	}-${representationType}" class="govuk-link">${
 		reviewRequired ? 'Review' : 'View'
 	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+}
+
+/**
+ *
+ * @param {string|null|undefined} representationStatus
+ * @param {boolean|undefined} isRedacted
+ * @returns
+ */
+export function mapFinalCommentRepresentationStatusToLabelText(representationStatus, isRedacted) {
+	switch (representationStatus) {
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED: {
+			return 'Shared';
+		}
+		case APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW: {
+			return 'Ready to review';
+		}
+		case APPEAL_REPRESENTATION_STATUS.VALID: {
+			return isRedacted ? 'Redacted and accepted' : 'Accepted';
+		}
+		case APPEAL_REPRESENTATION_STATUS.INVALID: {
+			return 'Rejected';
+		}
+		default: {
+			return '';
+		}
+	}
 }
