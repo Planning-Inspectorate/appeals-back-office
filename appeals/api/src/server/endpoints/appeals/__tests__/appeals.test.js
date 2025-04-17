@@ -98,14 +98,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -150,14 +148,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -225,14 +221,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -328,14 +322,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -431,14 +423,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -534,14 +524,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -624,14 +612,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -716,14 +702,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -805,14 +789,12 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
@@ -1038,14 +1020,12 @@ test('gets appeals when given a appealTypeId param', async () => {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					},
 					appellantFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					}
 				},

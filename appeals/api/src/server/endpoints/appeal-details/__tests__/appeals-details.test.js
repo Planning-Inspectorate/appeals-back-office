@@ -160,9 +160,7 @@ const s78AppealDto = {
 		},
 		appellantFinalComments: {
 			receivedAt: '2024-11-27T15:08:55.704Z',
-			counts: {
-				awaiting_review: 1
-			},
+			representationStatus: 'awaiting_review',
 			status: 'received'
 		},
 		lpaQuestionnaire: {
@@ -182,9 +180,7 @@ const s78AppealDto = {
 		},
 		lpaFinalComments: {
 			receivedAt: '2024-11-27T15:08:55.711Z',
-			counts: {
-				awaiting_review: 1
-			},
+			representationStatus: 'awaiting_review',
 			status: 'received'
 		},
 		lpaStatement: {
