@@ -1591,10 +1591,10 @@ describe('appeal-details', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Case details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
@@ -1853,31 +1853,7 @@ describe('appeal-details', () => {
 			);
 		});
 
-		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
-			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
-			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-				.reply(200, appellantFinalCommentsAwaitingReview);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-				.reply(200, lpaFinalCommentsAwaitingReview);
-			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const linkedAppealsRowElement = parseHtml(response.text, {
-				rootElement: '.appeal-linked-appeals',
-				skipPrettyPrint: true
-			});
-			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"'
-			);
-		});
-
-		it('should render action links to the manage linked appeals page and the add linked appeal page in the linked appeals row, if there are linked appeals', async () => {
+		it('should render an action link to the manage linked appeals page, if there are linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
@@ -1906,6 +1882,35 @@ describe('appeal-details', () => {
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
+		});
+
+		it('should render an action link to the add linked appeals page, if the appeal is in a state before STATEMENTS', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'lpa_questionnaire',
+					linkedAppeals
+				});
+			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
+				.reply(200, lpaFinalCommentsAwaitingReview);
+
+			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
