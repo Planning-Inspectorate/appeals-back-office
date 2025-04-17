@@ -116,6 +116,8 @@ model AppealTimetable {
   finalCommentsDueDate      DateTime?
   s106ObligationDueDate     DateTime?
   issueDeterminationDate    DateTime?
+  hearingDate               DateTime?
+  planningObligationDueDate DateTime?
 }
 
 /// AppealStatus model
