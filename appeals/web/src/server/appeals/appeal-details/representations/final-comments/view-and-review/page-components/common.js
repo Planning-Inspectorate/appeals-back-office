@@ -81,7 +81,8 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items:
-					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED || redactedCommentDifferent ||
+					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+					redactedCommentDifferent ||
 					comment.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 						? []
 						: [
@@ -123,7 +124,7 @@ export function generateCommentsSummaryList(appealId, comment) {
 			: []),
 		{
 			key: { text: 'Supporting documents' },
-			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+			value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 			actions: {
 				items: [
 					...(filteredAttachments?.length > 0

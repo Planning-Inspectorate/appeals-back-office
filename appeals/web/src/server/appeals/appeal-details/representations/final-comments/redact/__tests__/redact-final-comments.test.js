@@ -161,7 +161,7 @@ describe('final-comments', () => {
 					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact">Change<span class="govuk-visually-hidden"> redacted final comments</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
-				expect(unprettifiedHTML).toContain(`Not provided</dd>`);
+				expect(unprettifiedHTML).toContain(`No documents</dd>`);
 				expect(unprettifiedHTML).toContain('Review decision</dt>');
 				expect(unprettifiedHTML).toContain('Redact and accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(

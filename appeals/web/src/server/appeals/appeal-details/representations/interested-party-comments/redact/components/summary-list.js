@@ -62,28 +62,28 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 								}
 							}
 					  ]),
-					  {
-						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
-						actions: {
-							items: [
-								...(comment.attachments?.length > 0
-									? [
-											{
-												text: 'Manage',
-												href: `${baseUrl}/manage-documents/${folderId}?backUrl=/interested-party-comments/${comment.id}/redact/confirm`,
-												visuallyHiddenText: 'supporting documents'
-											}
-									  ]
-									: []),
-								{
-									text: 'Add',
-									href: `${baseUrl}/add-document?backUrl=/interested-party-comments/${comment.id}/redact/confirm`,
-									visuallyHiddenText: 'supporting documents'
-								}
-							]
-						}
+				{
+					key: { text: 'Supporting documents' },
+					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+					actions: {
+						items: [
+							...(comment.attachments?.length > 0
+								? [
+										{
+											text: 'Manage',
+											href: `${baseUrl}/manage-documents/${folderId}?backUrl=/interested-party-comments/${comment.id}/redact/confirm`,
+											visuallyHiddenText: 'supporting documents'
+										}
+								  ]
+								: []),
+							{
+								text: 'Add',
+								href: `${baseUrl}/add-document?backUrl=/interested-party-comments/${comment.id}/redact/confirm`,
+								visuallyHiddenText: 'supporting documents'
+							}
+						]
 					}
+				}
 			]
 		}
 	};
