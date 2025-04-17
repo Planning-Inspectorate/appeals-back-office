@@ -5,6 +5,7 @@ import { nationalListPage } from './national-list.mapper.js';
 import { getAppeals, getAppealTypes } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -48,7 +49,7 @@ export const viewNationalList = async (request, response) => {
 
 	const appealTypes = await getAppealTypes(request.apiClient);
 
-	const urlWithoutQuery = originalUrl.split('?')[0];
+	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
 	const appeals = await getAppeals(
 		request.apiClient,

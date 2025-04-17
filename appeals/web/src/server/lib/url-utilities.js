@@ -61,3 +61,11 @@ export function getBackLinkUrlFromQuery(request) {
 	}
 	return decodeURIComponent(request.query.backUrl.toString());
 }
+
+/**
+ * @param {string} url
+ * @returns {string}
+ */
+export function stripQueryString(url) {
+	return url.split('?')[0];
+}
