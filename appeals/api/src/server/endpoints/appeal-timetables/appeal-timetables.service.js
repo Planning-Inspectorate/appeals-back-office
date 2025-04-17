@@ -109,9 +109,6 @@ const startCase = async (
 
 			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 			const lpaEmail = appeal.lpa?.email || '';
-
-			//This is necessary to avoid duplication of the word "appeal" in the email display
-			// when emails are titled with "Planning appeal"
 			const { type } = appeal.appealType || {};
 			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
 
