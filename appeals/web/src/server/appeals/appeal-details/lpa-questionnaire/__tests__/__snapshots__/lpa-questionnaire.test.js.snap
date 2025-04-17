@@ -16,7 +16,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
@@ -386,7 +386,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
@@ -721,7 +721,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1296,7 +1296,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
@@ -1648,7 +1648,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
@@ -4088,7 +4088,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
                     </dd>
                 </div>
             </dl>
