@@ -19,6 +19,11 @@ router.use('/:commentId/edit', validateAppeal, validateComment, editIpCommentRou
 
 router.use('/:commentId', validateAppeal, validateComment, viewAndReviewIpCommentRouter);
 
+// Redirect as shared manage documents routes return to the wrong page after a successful delete
+router.get('/:commentId', (request, response) => {
+	response.redirect(`${request.baseUrl}/${request.params.commentId}/view`);
+});
+
 router
 	.route('/')
 	.get(
