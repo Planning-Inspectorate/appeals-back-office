@@ -32,6 +32,7 @@ import developmentDescriptionRouter from './development-description/development-
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -160,6 +161,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationDevelopmentTypeRouter
+);
+
+router.use(
+	'/change-appeal-details/local-planning-authority',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaRouter
 );
 
 router

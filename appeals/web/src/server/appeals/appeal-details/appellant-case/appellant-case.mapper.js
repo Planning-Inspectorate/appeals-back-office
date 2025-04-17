@@ -69,27 +69,36 @@ export async function appellantCasePage(
 		session
 	);
 
+	const lpaText = 'Local planning authority';
+
 	/**
 	 * @type {PageComponent}
 	 */
 	const appellantCaseSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
 			closing: '</div></div>'
 		},
 		parameters: {
 			classes: 'govuk-summary-list--no-border',
 			rows: [
 				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
+					? [
+							{
+								...mappedAppellantCaseData.siteAddress.display.summaryListItem,
+								key: {
+									text: 'Site address'
+								}
+							}
+					  ]
 					: []),
 				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
 					? [
 							{
 								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 								key: {
-									text: 'LPA'
+									text: lpaText
 								}
 							}
 					  ]
@@ -99,7 +108,8 @@ export async function appellantCasePage(
 	};
 
 	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
+		(/** @type {SummaryListRowProperties} */ row) =>
+			row.key.text === lpaText ? row : removeSummaryListActions(row)
 	);
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
@@ -187,6 +197,7 @@ export async function appellantCasePage(
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
+			appellantCaseSummary,
 			...appealTypeSpecificComponents,
 			...reviewOutcomeComponents
 		]

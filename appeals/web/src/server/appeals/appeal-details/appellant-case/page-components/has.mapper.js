@@ -96,9 +96,7 @@ export function generateHASComponents(
 				}
 			},
 			rows: [
-				removeSummaryListActions(
-					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-				),
+				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
