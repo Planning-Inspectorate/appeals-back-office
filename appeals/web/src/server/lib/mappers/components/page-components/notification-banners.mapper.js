@@ -100,7 +100,7 @@ export const notificationBannerDefinitions = {
 			'lpaQuestionnaire',
 			'lpaStatement',
 			'viewFinalComments',
-			'ipComments'
+			'viewIpComment'
 		],
 		text: 'Document removed'
 	},
