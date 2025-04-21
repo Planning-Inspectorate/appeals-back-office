@@ -100,7 +100,7 @@
     "@types/jest": "^27.5.0",
     "@types/morgan": "^1.9.3",
     "@types/node-schedule": "^2.1.0",
-    "@types/nunjucks": "^3.2.1",
+    "@types/nunjucks": "^3.2.6",
     "@types/pluralize": "^0.0.29",
     "@types/regenerator-runtime": "^0.13.1",
     "@types/response-time": "^2.3.5",
