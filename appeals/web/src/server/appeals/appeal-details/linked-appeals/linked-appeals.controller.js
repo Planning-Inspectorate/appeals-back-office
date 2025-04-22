@@ -9,7 +9,8 @@ import {
 	addLinkedAppealPage,
 	addLinkedAppealCheckAndConfirmPage,
 	unlinkAppealPage,
-	generateUnlinkAppealBackLinkUrl
+	generateUnlinkAppealBackLinkUrl,
+	alreadyLinkedPage
 } from './linked-appeals.mapper.js';
 import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -90,6 +91,12 @@ export const postAddLinkedAppeal = (request, response) => {
 	const {
 		params: { appealId }
 	} = request;
+
+	if (request.body.linkConflict) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/already-linked`
+		);
+	}
 
 	if (request.body.problemWithHorizon) {
 		return response.status(500).render('app/500.njk', {
@@ -187,7 +194,7 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
-		if (error instanceof HTTPError && error.response.statusCode === 400) {
+		if (error instanceof HTTPError) {
 			// @ts-ignore
 			request.errors = error.response.body.errors;
 			return renderAddLinkedAppealCheckAndConfirm(request, response);
@@ -196,6 +203,36 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 		throw error;
 	}
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function renderAlreadyLinked(request, response) {
+	const { currentAppeal, session, errors } = request;
+
+	const pageContent = alreadyLinkedPage(
+		currentAppeal,
+		session.linkableAppeal?.linkableAppealSummary
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent,
+		errors
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postAlreadyLinked(request, response) {
+	const { params, session } = request;
+
+	delete session.linkableAppeal;
+
+	return response.redirect(`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add`);
+}
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
