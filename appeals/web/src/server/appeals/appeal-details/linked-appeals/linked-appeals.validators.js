@@ -18,13 +18,15 @@ export const validateAddLinkedAppealReference = createValidator(
 					req.apiClient,
 					reference
 				).catch((error) => {
-					if (error.response.statusCode === 404) {
-						return Promise.reject();
-					}
-
-					if (error.response.statusCode === 500) {
-						req.body.problemWithHorizon = true;
-						return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
+					switch (error.response.statusCode) {
+						case 404:
+							return Promise.reject();
+						case 409:
+							req.body.linkConflict = true;
+							return { appealReference: reference };
+						case 500:
+							req.body.problemWithHorizon = true;
+							return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
 					}
 				});
 

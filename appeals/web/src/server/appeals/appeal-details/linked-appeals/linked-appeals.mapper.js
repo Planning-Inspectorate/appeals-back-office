@@ -283,6 +283,28 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, linkCandidateSumm
 }
 
 /**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @returns {PageContent}
+ * */
+export function alreadyLinkedPage(appealData, linkCandidateSummary) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const title = `You have already linked appeal ${linkCandidateSummary.appealReference}`;
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		heading: title,
+		preHeading: `Appeal ${shortAppealReference}`,
+		submitButtonProperties: {
+			text: 'Add a different linked appeal'
+		}
+	};
+
+	return pageContent;
+}
+
+/**
  *
  * @param {Appeal} appealData
  * @param {string} childRef

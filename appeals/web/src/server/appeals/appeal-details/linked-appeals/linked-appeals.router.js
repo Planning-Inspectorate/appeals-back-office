@@ -11,6 +11,11 @@ router
 	.post(validators.validateAddLinkedAppealReference, asyncHandler(controller.postAddLinkedAppeal));
 
 router
+	.route('/add/already-linked')
+	.get(asyncHandler(controller.renderAlreadyLinked))
+	.post(asyncHandler(controller.postAlreadyLinked));
+
+router
 	.route('/add/check-and-confirm')
 	.get(asyncHandler(controller.renderAddLinkedAppealCheckAndConfirm))
 	.post(asyncHandler(controller.postAddLinkedAppealCheckAndConfirm));
