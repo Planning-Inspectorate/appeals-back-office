@@ -2,7 +2,6 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.ListedBuildingSelected} ListedBuildingSelected */
 /** @typedef {import('@pins/appeals.api').Schema.ListedBuilding} ListedBuilding */
-/** @typedef {import('@pins/appeals.api').Api.ListedBuilding} ListedBuildinHistoricEngland */
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
@@ -21,34 +20,6 @@ export const getListedBuilding = async (reference) => {
 };
 
 /**
- * Gets a listed building by reference
- * @param {string} reference
- * @returns {Promise<ListedBuilding>}
- */
-export const deleteListedBuilding = async (reference) => {
-	// @ts-ignore
-	return databaseConnector.listedBuilding.delete({
-		where: { reference }
-	});
-};
-
-/**
- * Gets a listed building by reference
- * @param {ListedBuilding} data
- * @returns {Promise<ListedBuilding>}
- */
-export const upsertListedBuilding = async (data) => {
-	const { reference } = data;
-	// @ts-ignore
-	return databaseConnector.listedBuilding.upsert({
-		where: { reference },
-		create: data,
-		update: data
-	});
-};
-
-
-/**
  * Adds a listed building with a list entry
  * @param {number} lpaQuestionnaireId
  * @param {string} listEntry
@@ -56,6 +27,7 @@ export const upsertListedBuilding = async (data) => {
  * @returns {Promise<ListedBuildingSelected>}
  */
 export const addListedBuilding = async (lpaQuestionnaireId, listEntry, affectsListedBuilding) => {
+	// @ts-ignore
 	// @ts-ignore
 	return databaseConnector.listedBuildingSelected.create({
 		data: {

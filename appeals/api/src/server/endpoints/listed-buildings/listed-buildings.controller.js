@@ -16,6 +16,21 @@ import * as listedBuildingRepository from '#repositories/listed-buildings.reposi
  * @param {Response} res
  * @returns {Promise<Response>}
  */
+export const findListedBuilding = async (req, res) => {
+	const { reference } = req.params;
+
+	const result = await listedBuildingRepository.getListedBuilding(reference);
+	if (!result) {
+		return res.status(404).send();
+	}
+	return res.status(201).send(result);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
 export const addListedBuilding = async (req, res) => {
 	const { appeal } = req;
 	const { lpaQuestionnaireId, listEntry, affectsListedBuilding } = req.body;
