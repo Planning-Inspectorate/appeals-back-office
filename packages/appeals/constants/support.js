@@ -185,6 +185,10 @@ export const ERROR_INVALID_REPRESENTATION_TYPE = `must be one of ${Object.values
 	APPEAL_REPRESENTATION_TYPE
 ).join(', ')}`;
 export const ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS = 'must be between 2 and 8 characters';
+export const ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS = (
+	/** @type {string} */ min,
+	/** @type {string} */ max
+) => `must be between ${min} and ${max} characters`;
 export const ERROR_MAX_LENGTH_CHARACTERS = 'must be {replacement0} characters or less';
 export const ERROR_MUST_BE_ARRAY_OF_NUMBERS = 'must be an array of numbers';
 export const ERROR_MUST_BE_ARRAY_OF_STRINGS = 'must be an array of strings';

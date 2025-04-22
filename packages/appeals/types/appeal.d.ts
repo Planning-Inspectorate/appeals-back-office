@@ -22,6 +22,7 @@ export interface AppealSummary {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
+	planningApplicationReference: string | null;
 }
 
 export interface AppealList {

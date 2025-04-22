@@ -71,7 +71,7 @@ describe('national-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Enter appeal reference or postcode (include spaces)</label>'
+				'Enter the appeal reference, planning application reference or postcode (including spaces)</label>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('name="searchTerm" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain('Search</button>');

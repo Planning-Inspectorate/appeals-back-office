@@ -55,7 +55,8 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	documentationSummary: formatDocumentationSummary(appeal),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
 
 /**
@@ -80,7 +81,8 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
 
 /**
