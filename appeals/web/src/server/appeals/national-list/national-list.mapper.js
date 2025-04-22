@@ -161,7 +161,7 @@ export function nationalListPage(
 				id: 'searchTerm',
 				name: 'searchTerm',
 				label: {
-					text: 'Enter appeal reference or postcode (include spaces)',
+					text: 'Enter the appeal reference, planning application reference or postcode (including spaces)',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
 				},
 				value: searchTerm,
@@ -377,6 +377,9 @@ export function nationalListPage(
 								text: 'Appeal reference'
 							},
 							{
+								text: 'Planning application reference'
+							},
+							{
 								text: 'Site address'
 							},
 							{
@@ -399,6 +402,14 @@ export function nationalListPage(
 									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 										shortReference || ''
 									)}" data-cy="${shortReference}" >${shortReference}</a>`
+								},
+								{
+									html: `<a class="govuk-link" href="/appeals-service/appeal-details/${
+										appeal.appealId
+									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+										appeal.planningApplicationReference || ''
+									)}" 
+									data-cy="${appeal.planningApplicationReference}" >${appeal.planningApplicationReference}</a>`
 								},
 								{
 									text: addressToString(appeal.appealSite)

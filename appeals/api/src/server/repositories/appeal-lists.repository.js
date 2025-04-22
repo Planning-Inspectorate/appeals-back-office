@@ -54,6 +54,11 @@ const getAllAppeals = async (
 							contains: searchTerm
 						}
 					}
+				},
+				{
+					applicationReference: {
+						contains: searchTerm
+					}
 				}
 			]
 		}),

@@ -518,6 +518,7 @@ interface AppealListResponse {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
+	planningApplicationReference: string | null;
 }
 
 interface DocumentationSummary {
