@@ -27,6 +27,7 @@ router.get(
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
+		#swagger.responses[409] = {}
 	 */
 	asyncHandler(getLinkableAppealById)
 );
