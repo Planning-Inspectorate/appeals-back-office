@@ -17,45 +17,32 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getManageLinkedAppeals = async (request, response) => {
-	return renderManageLinkedAppeals(request, response);
-};
-
-/**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderManageLinkedAppeals = async (request, response) => {
+export const renderManageLinkedAppeals = async (request, response) => {
 	const {
 		errors,
 		params: { appealId }
 	} = request;
 
 	const appealData = request.currentAppeal;
-	let leadAppealData;
-	let leadLinkedAppeal;
 
-	if (appealData.isChildAppeal === true) {
-		leadLinkedAppeal = appealData.linkedAppeals.find(
-			(
-				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
-			) => linkedAppeal.isParentAppeal
-		);
+	const leadLinkedAppeal = appealData.isChildAppeal
+		? appealData.linkedAppeals.find(
+				(
+					/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+				) => linkedAppeal.isParentAppeal
+		  )
+		: undefined;
 
-		if (leadLinkedAppeal && leadLinkedAppeal.appealId) {
-			leadAppealData = await getAppealDetailsFromId(
-				request.apiClient,
-				`${leadLinkedAppeal.appealId}`
-			);
-		}
+	const leadAppealData = leadLinkedAppeal?.appealId
+		? await getAppealDetailsFromId(request.apiClient, leadLinkedAppeal.appealId)
+		: undefined;
 
-		if (!leadLinkedAppeal || !leadAppealData) {
-			return response.status(500).render('app/500.njk');
-		}
+	if (appealData.isChildAppeal && !(leadLinkedAppeal && leadAppealData)) {
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = manageLinkedAppealsPage(
@@ -75,20 +62,12 @@ const renderManageLinkedAppeals = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getAddLinkedAppealReference = async (request, response) => {
-	return renderAddLinkedAppealReference(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderAddLinkedAppealReference = async (request, response) => {
+export const renderAddLinkedAppealReference = (request, response) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await addLinkedAppealPage(appealDetails);
+	const mappedPageContent = addLinkedAppealPage(appealDetails);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -100,7 +79,7 @@ export const renderAddLinkedAppealReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postAddLinkedAppeal = async (request, response) => {
+export const postAddLinkedAppeal = (request, response) => {
 	if (request.errors) {
 		return renderAddLinkedAppealReference(request, response);
 	}
@@ -125,14 +104,6 @@ export const postAddLinkedAppeal = async (request, response) => {
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/linked-appeals/add/check-and-confirm`
 	);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	return renderAddLinkedAppealCheckAndConfirm(request, response);
 };
 
 /**
@@ -237,33 +208,26 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getUnlinkAppeal = async (request, response) => {
-	return renderUnlinkAppeal(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 export const postUnlinkAppeal = async (request, response) => {
-	try {
-		const { appealId, relationshipId, backLinkAppealId } = request.params;
-		const { unlinkAppeal } = request.body;
-		const { errors } = request;
+	const { appealId, relationshipId, backLinkAppealId } = request.params;
+	const { unlinkAppeal } = request.body;
+	const { errors } = request;
 
-		if (errors) {
-			return renderUnlinkAppeal(request, response);
-		}
+	if (errors) {
+		return renderUnlinkAppeal(request, response);
+	}
 
-		if (unlinkAppeal === 'no') {
+	switch (unlinkAppeal) {
+		case 'no': {
 			const backLinkUrl = generateUnlinkAppealBackLinkUrl(
 				appealId,
 				relationshipId,
 				backLinkAppealId
 			);
+
 			return response.redirect(backLinkUrl);
 		}
-		if (unlinkAppeal === 'yes') {
+		case 'yes': {
 			const appealRelationshipId = parseInt(relationshipId, 10);
 			const appealData = request.currentAppeal;
 			const childRef =
@@ -286,12 +250,10 @@ export const postUnlinkAppeal = async (request, response) => {
 
 			return response.redirect(`/appeals-service/appeal-details/${backLinkAppealId}`);
 		}
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
-		);
-	} catch (error) {
-		return response.status(500).render('app/500.njk');
+		default:
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+			);
 	}
 };
 
@@ -300,7 +262,7 @@ export const postUnlinkAppeal = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderUnlinkAppeal = async (request, response) => {
+export const renderUnlinkAppeal = (request, response) => {
 	const {
 		errors,
 		params: { appealId, relationshipId, backLinkAppealId }
@@ -315,7 +277,7 @@ const renderUnlinkAppeal = async (request, response) => {
 			) => linkedAppeal.relationshipId === parseInt(relationshipId, 10)
 		)?.appealReference || '';
 
-	const mappedPageContent = await unlinkAppealPage(
+	const mappedPageContent = unlinkAppealPage(
 		appealData,
 		childRef,
 		appealId,
