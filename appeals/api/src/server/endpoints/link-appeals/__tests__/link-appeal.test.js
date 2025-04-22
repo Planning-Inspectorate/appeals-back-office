@@ -105,7 +105,7 @@ describe('appeal linked appeals routes', () => {
 				expect(response.status).toEqual(400);
 			});
 
-			test('returns 400 when an internal appeal is already a parent', async () => {
+			test('returns 409 when an internal appeal is already a parent', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValueOnce({
 					...householdAppeal,
@@ -120,7 +120,7 @@ describe('appeal linked appeals routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
+				expect(response.status).toEqual(409);
 			});
 
 			test('returns 200 when an external appeal reference is received', async () => {

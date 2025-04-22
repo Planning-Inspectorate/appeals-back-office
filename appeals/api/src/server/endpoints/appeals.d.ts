@@ -447,6 +447,8 @@ interface LinkableAppealSummary {
 	agentName?: string | undefined | null;
 	submissionDate: string;
 	source: 'horizon' | 'back-office';
+	childAppeals?: AppealRelationship[];
+	parentAppeals?: AppealRelationship[];
 }
 
 export interface AppealAllocation {
