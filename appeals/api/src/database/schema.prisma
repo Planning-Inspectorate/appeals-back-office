@@ -800,6 +800,24 @@ model CaseNote {
   @@index([caseId])
 }
 
+/// ListedBuilding model
+/// Stores the listed buildings dataset
+model ListedBuilding {
+  reference String                   @id
+  name      String
+  grade     String
+  selected  ListedBuildingSelected[]
+}
+
+/// Temporary migration storage for ListedBuildingSelected
+model MigrateListedBuildingSelected {
+  lpaQuestionnaireId    Int
+  listEntry             String
+  affectsListedBuilding Boolean
+
+  @@id([lpaQuestionnaireId, listEntry])
+}
+
 //Hearing model
 //Store hearing related information
 model Hearing {
