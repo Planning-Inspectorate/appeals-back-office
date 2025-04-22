@@ -19,11 +19,11 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 	);
 
 	if (!virusCheckStatus.checked) {
-		return '<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>';
+		return '<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>';
 	}
 
 	if (!virusCheckStatus.safe) {
-		return '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
+		return '<strong class="govuk-tag govuk-tag--red">Virus detected</strong>';
 	}
 
 	const { decision } = appealDetails;
