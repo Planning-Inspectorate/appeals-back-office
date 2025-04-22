@@ -1,6 +1,9 @@
 # Notifications
 
 The api back-end communicates changes to relevant parties by sending email notifications through the [Gov.UK Notify](https://www.notifications.service.gov.uk/) service.
+
+See the [list of email notifications](notifications-and-triggers.md) sent and what triggers them.
+
 In local development, the notifications will not be sent, but simply logged to the Notify system. At runtime, the API still requires a test mailbox to successfully invoke Notify.
 
 You can update the api back-end environment settings in `/appeals/api/.env` to add the following settings:
@@ -13,10 +16,10 @@ GOV_NOTIFY_APPEAL_GENERIC_ID=########-####-####-####-############
 
 All templates are stored as markdown files located within the codebase at [Notify Templates](../appeals/api/src/server/notify/templates) as _.content.md and _.subject.md template pairs for the email content and subject line respectively.
 
-When an email is sent, the templates are pre-populated with the personalisation variables before sending the contents to Notify with the `GOV_NOTIFY_APPEAL_GENERIC_ID`.
+When an email is sent, the templates are pre-populated with the personalisation variables before sending the contents to Notify with the template id as `GOV_NOTIFY_APPEAL_GENERIC_ID`.
 
 > [!IMPORTANT]
-> The `API GOV_NOTIFY_API_KEY` cannot be publicly disclosed, and need to be retrieved through the repository owner
+> The `API GOV_NOTIFY_API_KEY` cannot be publicly disclosed, and needs to be retrieved through the repository owner
 
 When developing locally, it's advantageous to prevent any emails from being sent to notify at all and instead emulate this process and have approximate rendering of these emails in the local temporary email folder `/appeals/api/temp` as \*.html files.
 
@@ -45,6 +48,8 @@ Dear ((first_name)) ((last_name)),
 Please see your list of information below:
 ((information))
 ```
+
+##### An example of how to use the above templates and send an email
 
 ```javascript
 import { notifySend } from '#notify/notify-send.js';
