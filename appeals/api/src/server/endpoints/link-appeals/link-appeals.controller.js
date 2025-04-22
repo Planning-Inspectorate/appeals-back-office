@@ -40,7 +40,7 @@ export const linkAppeal = async (req, res) => {
 		!canLinkAppeals(currentAppeal, currentAppealType) ||
 		!canLinkAppeals(linkedAppeal, linkedAppealType)
 	) {
-		return res.status(400).send({
+		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
 			}
@@ -86,7 +86,7 @@ export const linkExternalAppeal = async (req, res) => {
 	const currentAppeal = req.appeal;
 	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
 	if (!canLinkAppeals(currentAppeal, currentAppealType)) {
-		return res.status(400).send({
+		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
 			}
