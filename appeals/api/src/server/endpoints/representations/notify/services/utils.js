@@ -27,15 +27,20 @@ export const formatReasons = (representation) => {
 
 /**
  * @param {boolean} allowResubmit
+ * @param {Date | null} dueDate
  * @returns {Promise<string>}
  */
-export const formatExtendedDeadline = async (allowResubmit) => {
-	if (!allowResubmit) {
-		return '';
+export const formatExtendedDeadline = async (allowResubmit, dueDate) => {
+	if (!allowResubmit) return '';
+
+	const extendedDate = await addDays(new Date().toISOString(), 7);
+
+	if (!dueDate) {
+		return formatDate(extendedDate, false);
 	}
 
-	const date = await addDays(new Date().toISOString(), 7);
-	return formatDate(date, false);
+	const finalDate = extendedDate.getTime() > dueDate.getTime() ? extendedDate : dueDate;
+	return formatDate(finalDate, false);
 };
 
 /**
