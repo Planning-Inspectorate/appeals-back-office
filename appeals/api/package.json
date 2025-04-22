@@ -87,6 +87,8 @@
     "nodemon": "^2.0.18",
     "prisma": "6.5.0",
     "rimraf": "^6.0.1",
+    "stream-chain": "^3.4.0",
+    "stream-json": "^1.9.1",
     "supertest": "7.0.0",
     "swagger-autogen": "^2.21.4",
     "swagger-typescript-api": "^13.0.5"
