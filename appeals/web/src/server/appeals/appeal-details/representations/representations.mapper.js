@@ -3,11 +3,11 @@ import { ensureArray } from '#lib/array-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
-/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RepresentationRejectionReason} RepresentationRejectionReason */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RejectionReasonUpdateInput} RejectionReasonUpdateInput */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RejectionReasons} RejectionReasons */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRejectionReason} RepresentationRejectionReason */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput} RejectionReasonUpdateInput */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RejectionReasons} RejectionReasons */
 
 /**
  * @param {Representation} comment
@@ -128,13 +128,14 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 			: null;
 	})();
 
-	const statementsText =
-		appeal.documentationSummary?.lpaStatement?.representationStatus ===
-		APPEAL_REPRESENTATION_STATUS.VALID
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
-			: null;
+	const lpaStatementText = [
+		APPEAL_REPRESENTATION_STATUS.VALID,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(appeal.documentationSummary?.lpaStatement?.representationStatus)
+		? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
+		: null;
 
-	const valueTexts = [ipCommentsText, statementsText].filter(Boolean);
+	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
 
 	/** @type {PageComponent} */
 	const textComponent =
