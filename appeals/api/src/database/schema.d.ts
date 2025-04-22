@@ -100,7 +100,10 @@ export interface LPAQuestionnaireIncompleteReasonsSelected
 }
 export interface LPAQuestionnaireIncompleteReasonText
 	extends schema.LPAQuestionnaireIncompleteReasonText {}
-export interface ListedBuildingSelected extends schema.ListedBuildingSelected {}
+export interface ListedBuilding extends schema.ListedBuilding {}
+export interface ListedBuildingSelected extends schema.ListedBuildingSelected {
+	listedBuilding: ListedBuilding;
+}
 export interface LPANotificationMethods extends schema.LPANotificationMethods {}
 export interface LPANotificationMethodsSelected extends schema.LPANotificationMethodsSelected {
 	lpaNotificationMethod: LPANotificationMethods;

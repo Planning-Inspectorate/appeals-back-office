@@ -10,6 +10,22 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import * as listedBuildingRepository from '#repositories/listed-buildings.repository.js';
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const findListedBuilding = async (req, res) => {
+	const { reference } = req.params;
+
+	const result = await listedBuildingRepository.getListedBuilding(reference);
+	if (!result) {
+		return res.status(404).send();
+	}
+	return res.status(201).send(result);
+};
+
 /**
  * @param {Request} req
  * @param {Response} res
