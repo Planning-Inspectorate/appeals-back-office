@@ -496,7 +496,8 @@ model LPAQuestionnaireIncompleteReasonText {
 model ListedBuildingSelected {
   id                    Int               @id @default(autoincrement())
   lpaQuestionnaireId    Int?
-  listEntry             String?
+  listEntry             String
+  listedBuilding        ListedBuilding    @relation(fields: [listEntry], references: [reference], onUpdate: NoAction, onDelete: NoAction)
   affectsListedBuilding Boolean           @default(true)
   lpaQuestionnaire      LPAQuestionnaire? @relation(fields: [lpaQuestionnaireId], references: [id])
 }
@@ -797,6 +798,24 @@ model CaseNote {
   archived  Boolean  @default(false)
 
   @@index([caseId])
+}
+
+/// ListedBuilding model
+/// Stores the listed buildings dataset
+model ListedBuilding {
+  reference String                   @id
+  name      String
+  grade     String
+  selected  ListedBuildingSelected[]
+}
+
+/// Temporary migration storage for ListedBuildingSelected
+model MigrateListedBuildingSelected {
+  lpaQuestionnaireId    Int
+  listEntry             String
+  affectsListedBuilding Boolean
+
+  @@id([lpaQuestionnaireId, listEntry])
 }
 
 //Hearing model

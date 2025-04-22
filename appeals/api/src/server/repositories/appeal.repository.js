@@ -80,7 +80,11 @@ const appealDetailsInclude = {
 	inspectorDecision: true,
 	lpaQuestionnaire: {
 		include: {
-			listedBuildingDetails: true,
+			listedBuildingDetails: {
+				include: {
+					listedBuilding: true
+				}
+			},
 			designatedSiteNames: {
 				include: {
 					designatedSite: true
