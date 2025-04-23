@@ -58,7 +58,46 @@ exports[`redact GET / should render the redact lpa statement page with expected 
 </main>"
 `;
 
-exports[`redact GET /allocation-level should render the allocation level redaction page with expected content 1`] = `
+exports[`redact GET /allocation-check should render the allocation check page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation level</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you need to update the allocation level and specialisms?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms-2"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /allocation-level should render the allocation level page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -94,7 +133,7 @@ exports[`redact GET /allocation-level should render the allocation level redacti
 </main>"
 `;
 
-exports[`redact GET /allocation-specialisms should render the allocation specialisms redaction page with expected content 1`] = `
+exports[`redact GET /allocation-specialisms should render the allocation specialisms page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -164,7 +203,7 @@ exports[`redact GET /confirm should render the CYA redaction page with expected 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted statement</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="" data-mode="text">Test redacted lpa statement text</div>
+                        <div class="pins-show-more" data-label="" data-mode="text">Test redacted final comment text</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/redact">Change<span class="govuk-visually-hidden"> redacted statement</span></a>
                     </dd>
@@ -178,6 +217,11 @@ exports[`redact GET /confirm should render the CYA redaction page with expected 
                     <dd class="govuk-summary-list__value">Redact and accept statement</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement">Change<span class="govuk-visually-hidden"> review decision</span></a>
                     </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you need to update the allocation level and specialisms?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
