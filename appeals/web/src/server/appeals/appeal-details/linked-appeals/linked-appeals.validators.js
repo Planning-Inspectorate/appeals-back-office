@@ -31,7 +31,8 @@ export const validateAddLinkedAppealReference = createValidator(
 				});
 
 				req.session.linkableAppeal = {
-					linkableAppealSummary
+					linkableAppealSummary,
+					leadAppeal: req.currentAppeal.appealReference
 				};
 
 				return Promise.resolve();
@@ -41,6 +42,10 @@ export const validateAddLinkedAppealReference = createValidator(
 			}
 		})
 		.withMessage('Enter a valid appeal reference')
+);
+
+export const validateChangeLeadAppeal = createValidator(
+	body('lead-appeal').trim().notEmpty().withMessage('Select the lead appeal').bail()
 );
 
 export const validateUnlinkAppeal = createValidator(

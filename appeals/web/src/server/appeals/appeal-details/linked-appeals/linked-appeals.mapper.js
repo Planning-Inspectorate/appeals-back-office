@@ -1,6 +1,7 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
+import { radiosInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -208,24 +209,39 @@ export function addLinkedAppealPage(appealData, sessionData, backLinkUrl) {
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @param {{ leadAppeal: string, linkableAppealSummary: import('@pins/appeals.api').Appeals.LinkableAppealSummary }} sessionData
  * @returns {PageContent}
  */
-export function addLinkedAppealCheckAndConfirmPage(appealData, linkCandidateSummary) {
+export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
+	const { leadAppeal: leadAppealRef, linkableAppealSummary } = sessionData;
+
 	const linkCandidateHtml = `
-		<span>${linkCandidateSummary.appealReference}${
-		linkCandidateSummary.source === 'horizon' ? ' (Horizon)' : ''
+		<span>${linkableAppealSummary.appealReference}${
+		linkableAppealSummary.source === 'horizon' ? ' (Horizon)' : ''
 	}</span>
 		<br>
-		<span>${linkCandidateSummary.appealType}</span>
+		<span>${linkableAppealSummary.appealType}</span>
 	`;
 
+	const [leadAppeal, childAppeal] = (() => {
+		switch (leadAppealRef) {
+			case appealData.appealReference:
+				return [appealData, linkableAppealSummary];
+			case linkableAppealSummary.appealReference:
+				return [linkableAppealSummary, appealData];
+			default:
+				throw new Error(
+					`Appeal reference ${sessionData.leadAppeal} is not correlated with either member of the linked appeal`
+				);
+		}
+	})();
+
 	const leadAppealHtml = `
-		<span>${appealData.appealReference}${appealData.source === 'horizon' ? ' (Horizon)' : ''}</span>
+		<span>${leadAppeal.appealReference}${leadAppeal.source === 'horizon' ? ' (Horizon)' : ''}</span>
 		<br>
-		<span>${appealData.appealType}</span>
+		<span>${leadAppeal.appealType}</span>
 	`;
 
 	/** @type {PageContent} */
@@ -265,6 +281,14 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, linkCandidateSumm
 							},
 							value: {
 								html: leadAppealHtml
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/lead-appeal`
+									}
+								]
 							}
 						}
 					]
@@ -273,7 +297,7 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, linkCandidateSumm
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">${appealData.appealReference} will be the lead appeal of ${linkCandidateSummary.appealReference}</p>`
+					html: `<p class="govuk-body">${leadAppeal.appealReference} will be the lead appeal of ${childAppeal.appealReference}</p>`
 				}
 			}
 		]
@@ -299,6 +323,48 @@ export function alreadyLinkedPage(appealData, linkCandidateSummary) {
 		submitButtonProperties: {
 			text: 'Add a different linked appeal'
 		}
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @returns {PageContent}
+ * */
+export function changeLeadAppealPage(appealData, linkCandidateSummary) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const title = 'Which is the lead appeal?';
+
+	/**
+	 * @param {string | undefined | null} appealReference
+	 * @param {string | undefined | null} appealType
+	 * */
+	const radioItem = (appealReference, appealType) => ({
+		value: appealReference,
+		html: `
+			<span>${appealReference}</span>
+			<br>
+			<span class="govuk-caption-m">${appealType}</span>
+		`
+	});
+
+	const pageContent = {
+		title,
+		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/check-and-confirm`,
+		pageComponents: [
+			radiosInput({
+				name: 'lead-appeal',
+				legendText: title,
+				legendIsPageHeading: true,
+				items: [
+					radioItem(appealData.appealReference, appealData.appealType),
+					radioItem(linkCandidateSummary.appealReference, linkCandidateSummary.appealType)
+				]
+			})
+		]
 	};
 
 	return pageContent;
