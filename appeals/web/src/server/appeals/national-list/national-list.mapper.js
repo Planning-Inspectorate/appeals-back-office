@@ -406,16 +406,20 @@ export function nationalListPage(
 								{
 									html: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 										appeal.appealId
-									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+									}" aria-label="Application ${numberToAccessibleDigitLabel(
 										appeal.planningApplicationReference || ''
 									)}" 
 									data-cy="${appeal.planningApplicationReference}" >${appeal.planningApplicationReference}</a>`
 								},
 								{
-									text: addressToString(appeal.appealSite)
+									// text: addressToString(appeal.appealSite),
+									html: `<span class="govuk-!-width-one-third">${addressToString(
+										appeal.appealSite
+									)}</span>`
 								},
 								{
-									text: appeal.localPlanningDepartment
+									// text: appeal.localPlanningDepartment,
+									html: `<span class="govuk-!-width-one-third">${appeal.localPlanningDepartment}</span>`
 								},
 								{
 									text: appeal.appealType
