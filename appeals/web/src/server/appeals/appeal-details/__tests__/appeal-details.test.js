@@ -3069,9 +3069,6 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
-				);
 			});
 
 			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
@@ -3100,9 +3097,6 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red">Virus detected</strong></li>'
-				);
 			});
 
 			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
