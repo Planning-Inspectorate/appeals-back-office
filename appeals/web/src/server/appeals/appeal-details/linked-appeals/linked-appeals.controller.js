@@ -168,7 +168,7 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 					request.apiClient,
 					appealId,
 					request.session.linkableAppeal?.linkableAppealSummary.appealId,
-					true
+					true // TODO: use actual lead/child value
 				);
 				break;
 			case 'horizon':
@@ -176,7 +176,7 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 					request.apiClient,
 					appealId,
 					request.session.linkableAppeal?.linkableAppealSummary.appealReference,
-					true
+					true // TODO: use actual lead/child value
 				);
 				break;
 			default:
