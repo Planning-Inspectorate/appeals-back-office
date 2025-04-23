@@ -181,20 +181,31 @@ const setTimeInTimeZone = (date, hours, minutes) => {
  *
  * @param {string} appealType
  * @param {Date|null} startedAt
+ * @param {string|null} appealProcedureType
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
-const calculateTimetable = async (appealType, startedAt) => {
+const calculateTimetable = async (appealType, startedAt, appealProcedureType = null) => {
 	if (startedAt) {
-		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
+		const startDate =
+			startedAt !== null ? setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE) : startedAt;
 
 		// @ts-ignore
-		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
+		const appealTimetableConfig =
+			CONFIG_APPEAL_TIMETABLE[
+				appealProcedureType !== null ? `${appealType}_${appealProcedureType}` : appealType
+			];
 
 		if (appealTimetableConfig) {
 			const bankHolidays = await fetchBankHolidaysForDivision();
 
 			return Object.fromEntries(
 				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
+					if (
+						daysFromStartDate === undefined &&
+						(fieldName === 'hearingDate' || fieldName === 'planningObligationDueDate')
+					) {
+						return [fieldName, null];
+					}
 					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
 					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
 

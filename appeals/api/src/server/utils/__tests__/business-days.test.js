@@ -49,12 +49,41 @@ describe('business-days', () => {
 				timetable: {
 					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z')
 				}
+			},
+			{
+				name: 'S78W appeal types',
+				appealType: 'W',
+				procedureType: 'written',
+				startedAt: new Date('2024-09-26T23:00:00Z'), // midnight in Europe/London, input is 27/9
+				timetable: {
+					appellantStatementDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					finalCommentsDueDate: new Date('2024-11-15T23:59:00.000Z'),
+					ipCommentsDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z'),
+					lpaStatementDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					s106ObligationDueDate: new Date('2024-11-15T23:59:00.000Z')
+				}
+			},
+			{
+				name: 'S78H appeal types',
+				appealType: 'W',
+				procedureType: 'hearing',
+				startedAt: new Date('2024-09-26T23:00:00Z'), // midnight in Europe/London, input is 27/9
+				timetable: {
+					appellantStatementDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					finalCommentsDueDate: new Date('2024-11-15T23:59:00.000Z'),
+					hearingDate: null,
+					ipCommentsDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z'),
+					lpaStatementDueDate: new Date('2024-11-01T23:59:00.000Z'),
+					planningObligationDueDate: null
+				}
 			}
 		];
 
 		for (const t of tests) {
 			it('' + t.name, async () => {
-				const timetable = await calculateTimetable(t.appealType, t.startedAt);
+				const timetable = await calculateTimetable(t.appealType, t.startedAt, t.procedureType);
 				expect(timetable).toEqual(t.timetable);
 			});
 		}
