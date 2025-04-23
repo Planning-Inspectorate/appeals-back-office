@@ -25,6 +25,8 @@ export const formatLinkableAppealSummary = (appeal) => {
 			  }`
 			: 'No agent',
 		submissionDate: new Date(appeal.caseCreatedDate).toISOString(),
-		source: 'back-office'
+		source: 'back-office',
+		childAppeals: appeal.childAppeals,
+		parentAppeals: appeal.parentAppeals
 	};
 };
