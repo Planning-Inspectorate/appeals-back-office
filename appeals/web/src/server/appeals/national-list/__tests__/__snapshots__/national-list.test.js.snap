@@ -12,9 +12,10 @@ exports[`national-list GET / should render national list - 10 pages - all page i
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -112,6 +113,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -123,8 +125,13 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -133,8 +140,13 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell">19 Beauchamp Road, Bristol, BS7 8LQ</td>
-                        <td class="govuk-table__cell">Dorset Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
                         </td>
@@ -199,9 +211,10 @@ exports[`national-list GET / should render national list - 15 pages - pagination
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -299,6 +312,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -310,8 +324,13 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -320,8 +339,13 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell">19 Beauchamp Road, Bristol, BS7 8LQ</td>
-                        <td class="govuk-table__cell">Dorset Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
                         </td>
@@ -368,9 +392,10 @@ exports[`national-list GET / should render national list - appeal type filter ap
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -476,6 +501,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -487,8 +513,13 @@ exports[`national-list GET / should render national list - appeal type filter ap
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -512,9 +543,10 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -612,6 +644,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -623,8 +656,13 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -633,8 +671,13 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell">19 Beauchamp Road, Bristol, BS7 8LQ</td>
-                        <td class="govuk-table__cell">Dorset Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
                         </td>
@@ -658,9 +701,10 @@ exports[`national-list GET / should render national list - no search term - filt
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -766,6 +810,7 @@ exports[`national-list GET / should render national list - no search term - filt
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -777,8 +822,13 @@ exports[`national-list GET / should render national list - no search term - filt
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -802,9 +852,10 @@ exports[`national-list GET / should render national list - search term - filter 
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="BS7 8LQ" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="BS7 8LQ" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -912,6 +963,7 @@ exports[`national-list GET / should render national list - search term - filter 
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -923,8 +975,13 @@ exports[`national-list GET / should render national list - search term - filter 
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -948,9 +1005,10 @@ exports[`national-list GET / should render national list - search term - no resu
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="NORESULT" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="NORESULT" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1067,9 +1125,10 @@ exports[`national-list GET / should render national list - search term 1`] = `
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="BS7 8LQ" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="BS7 8LQ" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1172,6 +1231,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1183,8 +1243,13 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -1193,8 +1258,13 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell">19 Beauchamp Road, Bristol, BS7 8LQ</td>
-                        <td class="govuk-table__cell">Dorset Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
                         </td>
@@ -1218,9 +1288,10 @@ exports[`national-list GET / should render the header with navigation containing
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter appeal reference or postcode (include spaces)</label>
-                    <input class="govuk-input"
-                    id="searchTerm" name="searchTerm" type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1318,6 +1389,7 @@ exports[`national-list GET / should render the header with navigation containing
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1329,8 +1401,13 @@ exports[`national-list GET / should render the header with navigation containing
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell">Copthalls, Clevedon Road, West Hill, BS48 1PN</td>
-                        <td class="govuk-table__cell">Wiltshire Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow single-line">LPA questionnaire</strong>
                         </td>
@@ -1339,8 +1416,13 @@ exports[`national-list GET / should render the header with navigation containing
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell">19 Beauchamp Road, Bristol, BS7 8LQ</td>
-                        <td class="govuk-table__cell">Dorset Council</td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Application "
+                            data-cy="undefined">undefined</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--pink single-line">Issue decision</strong>
                         </td>
