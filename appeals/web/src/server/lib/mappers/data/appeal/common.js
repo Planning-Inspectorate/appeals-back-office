@@ -28,23 +28,11 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 
 	const { decision } = appealDetails;
 
-			html = `<a class="govuk-link" href="${
-				decision?.documentId && decision?.documentName
-					? mapDocumentDownloadUrl(
-							appealDetails.appealId,
-							decision?.documentId,
-							decision?.documentName
-					  )
-					: '#'
-			}" target="_blank">${linkText}</a>`;
-		} else {
-			html = '<strong class="govuk-tag govuk-tag--red">Virus detected</strong>';
-		}
-	} else {
-		html = '<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>';
-	}
-
-	return html;
+	return `<a class="govuk-link" href="${
+		decision?.documentId && decision?.documentName
+			? mapDocumentDownloadUrl(appealDetails.appealId, decision?.documentId, decision?.documentName)
+			: '#'
+	}" target="_blank">${linkText}</a>`;
 }
 
 /**
