@@ -17,7 +17,7 @@ import { acceptRepresentation } from '../../representations.service.js';
 export function renderAllocationCheck(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const pageContent = allocationCheckPage(currentAppeal, session.acceptLPAStatement);
+	const pageContent = allocationCheckPage(currentAppeal, 'valid', session.acceptLPAStatement);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -60,7 +60,7 @@ export function postAllocationCheck(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderAllocationLevel(request, response) {
-	const { errors, currentAppeal, currentRepresentation, session } = request;
+	const { errors, currentAppeal, session } = request;
 
 	const allocationLevels = await (async () => {
 		const levels = await api.getAllocationDetailsLevels(request.apiClient);
@@ -69,7 +69,6 @@ export async function renderAllocationLevel(request, response) {
 
 	const pageContent = allocationLevelPage(
 		currentAppeal,
-		currentRepresentation,
 		allocationLevels,
 		session.acceptLPAStatement,
 		'valid'
