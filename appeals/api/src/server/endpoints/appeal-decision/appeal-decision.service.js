@@ -61,7 +61,7 @@ export const publishDecision = async (
 			await notifySend({
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				notifyClient,
-				recipientEmail,
+				recipientEmail: lpaEmail,
 				personalisation
 			});
 		}
