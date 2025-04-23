@@ -65,6 +65,7 @@ export const postReviewLpaStatement = async (request, response) => {
 					`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
 				);
 			}
+			delete session.acceptLPAStatement.forcedAllocation;
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
 			);
