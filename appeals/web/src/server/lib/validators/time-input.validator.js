@@ -3,57 +3,53 @@ import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
 import { timeIsBeforeTime } from '#lib/times.js';
 
+/**
+ * @typedef {import('express-validator').ValidationChain} ValidationChain
+ * @typedef {import('express-validator').CustomValidator} CustomValidator
+ */
+
+/**
+ * Creates a validator for a time input component.
+ * @param {string} [fieldNamePrefix]
+ * @param {string | null} [messageFieldNamePrefix]
+ * @param {ValidationChain | CustomValidator} [continueValidationCondition]
+ * @returns {import('express').RequestHandler<any>}
+ */
 export const createTimeInputValidator = (
 	fieldNamePrefix = 'time',
-	messageFieldNamePrefix = 'time',
+	messageFieldNamePrefix = null,
 	// @ts-ignore
 	// eslint-disable-next-line no-unused-vars
 	continueValidationCondition = (value) => true
-) =>
-	createValidator(
+) => {
+	const missingPrefix = messageFieldNamePrefix ? capitalize(messageFieldNamePrefix) : 'The time';
+	const invalidPrefix = messageFieldNamePrefix ? capitalize(messageFieldNamePrefix) : 'The';
+
+	return createValidator(
 		body(`${fieldNamePrefix}-hour`)
 			.if(continueValidationCondition)
 			.trim()
 			.notEmpty()
-			.withMessage(capitalize(`${messageFieldNamePrefix} must include an hour`))
+			.withMessage(capitalize(`${missingPrefix} must include an hour`))
 			.bail()
 			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}hour must be a number`
-				)
-			)
+			.withMessage(capitalize(`${invalidPrefix} hour must be a number`))
 			.bail()
 			.isInt({ min: 0, max: 23 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}hour cannot be less than 0 or greater than 23`
-				)
-			),
+			.withMessage(capitalize(`${invalidPrefix} hour cannot be less than 0 or greater than 23`)),
 		body(`${fieldNamePrefix}-minute`)
 			.if(continueValidationCondition)
 			.trim()
 			.notEmpty()
-			.withMessage(capitalize(`${messageFieldNamePrefix} must include a minute`))
+			.withMessage(capitalize(`${missingPrefix} must include a minute`))
 			.bail()
 			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}minute must be a number`
-				)
-			)
+			.withMessage(capitalize(`${invalidPrefix} minute must be a number`))
 			.bail()
 			.isInt({ min: 0, max: 59 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}minute cannot be less than 0 or greater than 59`
-				)
-			)
+			.withMessage(capitalize(`${invalidPrefix} minute cannot be less than 0 or greater than 59`))
 	);
+};
 
 export const createStartTimeBeforeEndTimeValidator = (
 	startTimeFieldNamePrefix = 'startTime',

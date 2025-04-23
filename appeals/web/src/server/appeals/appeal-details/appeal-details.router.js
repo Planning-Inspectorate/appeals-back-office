@@ -36,6 +36,7 @@ import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-detail
 import representationsRouter from './representations/representations.router.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
+import hearingRouter from './hearing/hearing.router.js';
 
 const router = createRouter();
 
@@ -177,6 +178,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeAppealDetailsRouter
+);
+
+router.use(
+	'/:appealId/hearing',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	hearingRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);
