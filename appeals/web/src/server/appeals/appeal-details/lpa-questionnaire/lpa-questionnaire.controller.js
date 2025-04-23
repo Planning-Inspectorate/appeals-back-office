@@ -272,19 +272,14 @@ export const postCheckAndConfirm = async (request, response) => {
 			)
 		);
 
-		if (request.session.reviewOutcome === 'complete') {
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewComplete',
-				appealId: currentAppeal.appealId
-			});
-		} else if (request.session.reviewOutcome === 'incomplete') {
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewIncomplete',
-				appealId: currentAppeal.appealId
-			});
-		}
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey:
+				request.session.reviewOutcome === 'complete'
+					? 'lpaqReviewComplete'
+					: 'lpaqReviewIncomplete',
+			appealId: currentAppeal.appealId
+		});
 
 		delete request.session.reviewOutcome;
 
