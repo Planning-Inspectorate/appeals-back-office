@@ -140,7 +140,7 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain('Final comments</dt>');
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
-				expect(unprettifiedHTML).toContain(`Not provided</dd>`);
+				expect(unprettifiedHTML).toContain(`No documents</dd>`);
 				expect(unprettifiedHTML).toContain('Review decision</dt>');
 				expect(unprettifiedHTML).toContain(
 					`Why are you rejecting the ${finalCommentsType.label}&#39;s final comments?`

@@ -446,6 +446,8 @@ interface LinkableAppealSummary {
 	agentName?: string | undefined | null;
 	submissionDate: string;
 	source: 'horizon' | 'back-office';
+	childAppeals?: AppealRelationship[];
+	parentAppeals?: AppealRelationship[];
 }
 
 export interface AppealAllocation {
@@ -516,6 +518,7 @@ interface AppealListResponse {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
+	planningApplicationReference: string | null;
 }
 
 interface DocumentationSummary {

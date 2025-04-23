@@ -74,6 +74,7 @@ export async function deleteAllRecords(databaseConnector) {
 
 	await databaseConnector.$transaction([
 		deleteRepsAttachments,
+		deleteRepsText,
 		deleteDecisions,
 		deleteDocAudits,
 		deleteAudits
@@ -89,7 +90,6 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteLPAQSelectedDesignatedNames,
 		deleteAllDesignatedNames,
 		deleteDocuments,
-		deleteRepsText,
 		deleteRepsSelected,
 		deleteReps,
 		deleteCaseNotes,

@@ -7,22 +7,24 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add')
-	.get(asyncHandler(controller.getAddLinkedAppealReference))
+	.get(asyncHandler(controller.renderAddLinkedAppealReference))
 	.post(validators.validateAddLinkedAppealReference, asyncHandler(controller.postAddLinkedAppeal));
 
 router
-	.route('/add/check-and-confirm')
-	.get(asyncHandler(controller.getAddLinkedAppealCheckAndConfirm))
-	.post(
-		validators.validateAddLinkedAppealCheckAndConfirm,
-		asyncHandler(controller.postAddLinkedAppealCheckAndConfirm)
-	);
+	.route('/add/already-linked')
+	.get(asyncHandler(controller.renderAlreadyLinked))
+	.post(asyncHandler(controller.postAlreadyLinked));
 
-router.route('/manage').get(asyncHandler(controller.getManageLinkedAppeals));
+router
+	.route('/add/check-and-confirm')
+	.get(asyncHandler(controller.renderAddLinkedAppealCheckAndConfirm))
+	.post(asyncHandler(controller.postAddLinkedAppealCheckAndConfirm));
+
+router.route('/manage').get(asyncHandler(controller.renderManageLinkedAppeals));
 
 router
 	.route('/unlink-appeal/:childId/:relationshipId/:backLinkAppealId')
-	.get(asyncHandler(controller.getUnlinkAppeal))
+	.get(asyncHandler(controller.renderUnlinkAppeal))
 	.post(validators.validateUnlinkAppeal, asyncHandler(controller.postUnlinkAppeal));
 
 export default router;

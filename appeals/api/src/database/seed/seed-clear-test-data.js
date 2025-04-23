@@ -7,7 +7,13 @@ import { databaseConnector } from '../../server/utils/database-connector.js';
 
 async function deleteTestRecords() {
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
+
 	const appealIDs = await getAppeals(lpaCodes);
+	if (appealIDs.length === 0) {
+		console.log('Nothing to delete.');
+		return;
+	}
+
 	const representationIDs = await getReps(appealIDs);
 	const appellantCaseIDs = await getAppellantCases(appealIDs);
 	const lpaqIDs = await getLpaQuestionnaires(appealIDs);
@@ -333,12 +339,16 @@ const deleteAppealData = async (
 	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocumentAudits;
-	await deleteRepsInvalidIncomplete;
 	await deleteRepsInvalidIncompleteCustom;
+	await deleteRepsInvalidIncomplete;
 	await deleteRepsAttachments;
 	await deleteReps;
 	await deleteDocumentVersions;
 	await deleteDocuments;
+
+	if (appealIDs.length > 0) {
+		await deleteFolders;
+	}
 
 	await databaseConnector.$transaction([
 		deleteCaseNotes,
@@ -364,7 +374,6 @@ const deleteAppealData = async (
 		deleteSiteVisits,
 		deleteReps,
 		deleteRepsAttachments,
-		deleteFolders,
 		deleteAppeals
 	]);
 };

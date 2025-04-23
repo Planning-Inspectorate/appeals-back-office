@@ -87,7 +87,7 @@ exports[`generateCommentSummaryList should return the comment summary list inclu
           "text": "Supporting documents",
         },
         "value": {
-          "text": "Not provided",
+          "text": "No documents",
         },
       },
     ],
@@ -186,7 +186,7 @@ exports[`generateCommentSummaryList should return the default comment summary li
           "text": "Supporting documents",
         },
         "value": {
-          "text": "Not provided",
+          "text": "No documents",
         },
       },
     ],

@@ -33,7 +33,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 			},
 			{
 				key: { text: 'Supporting documents' },
-				value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+				value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 				...(comment.attachments?.length > 0
 					? {
 							actions: {

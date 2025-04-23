@@ -348,54 +348,6 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
 			});
 
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
-					childId: appealData.appealId,
-					childRef: appealData.appealReference,
-					externaAppealType: null,
-					externalSource: false,
-					id: 1,
-					linkingDate: '2024-02-22T16:45:24.037Z',
-					parentId: linkableAppealSummaryBackOffice.appealId,
-					parentRef: linkableAppealSummaryBackOffice.appealReference,
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
-					'appeal-reference': appealReference
-				});
-
-				await request.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`).send({
-					confirmation: 'lead'
-				});
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
-			});
-
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
 				const appealReference = '1234567';
 
@@ -442,63 +394,6 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
-			});
-
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
-					childId: 5466,
-					childRef: 'TEST-489773',
-					externaAppealType: null,
-					externalSource: true,
-					id: 1,
-					linkingDate: '2024-02-22T17:16:57.654Z',
-					parentId: null,
-					parentRef: '3171066',
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-
-				const addLinkedAppealReferencePostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add`)
-					.send({
-						'appeal-reference': appealReference
-					});
-
-				expect(addLinkedAppealReferencePostResponse.statusCode).toBe(302);
-
-				const addLinkedAppealCheckAndConfirmPostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`)
-					.send({
-						confirmation: 'lead'
-					});
-
-				expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
