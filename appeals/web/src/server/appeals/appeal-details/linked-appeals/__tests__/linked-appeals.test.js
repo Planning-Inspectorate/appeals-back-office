@@ -288,6 +288,112 @@ describe('linked-appeals', () => {
 		});
 	});
 
+	describe('GET /linked-appeals/add/lead-appeal', () => {
+		it('should render the change lead appeal page', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference
+				});
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({ 'appeal-reference': testValidLinkableAppealReference });
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`);
+			const element = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('Which is the lead appeal?</h1>');
+			expect(element.innerHTML).toContain(`<span>${appealData.appealReference}</span>`);
+			expect(element.innerHTML).toContain(`${linkableAppealSummaryBackOffice.appealType}</span>`);
+		});
+	});
+
+	describe('POST /linked-appeals/add/lead-appeal', () => {
+		it('should update the lead appeal on the confirm page after submit', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, {
+					...linkableAppealSummaryBackOffice,
+					appealReference: testValidLinkableAppealReference
+				});
+
+			const addResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({ 'appeal-reference': testValidLinkableAppealReference });
+
+			expect(addResponse.statusCode).toBe(302);
+
+			const leadAppealResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`)
+				.send({ 'lead-appeal': testValidLinkableAppealReference });
+
+			expect(leadAppealResponse.statusCode).toBe(302);
+			expect(leadAppealResponse.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+			);
+
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+
+			const element = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain(
+				`<dt class="govuk-summary-list__key"> Which is the lead appeal?</dt><dd class="govuk-summary-list__value"><span>${testValidLinkableAppealReference}</span>`
+			);
+		});
+
+		it('should reload the page and show an error if no option is selected', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.reply(200, {
+					...linkableAppealSummaryBackOffice,
+					appealReference: testValidLinkableAppealReference
+				});
+
+			const addResponse = await request
+				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.send({ 'appeal-reference': testValidLinkableAppealReference });
+
+			expect(addResponse.statusCode).toBe(302);
+
+			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`);
+
+			const element = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(response.statusCode).toBe(200);
+			expect(element.innerHTML).toContain('Select the lead appeal</a>');
+		});
+	});
+
 	describe('POST /linked-appeals/add/check-and-confirm', () => {
 		it('should re-render the check and confirm page with the expected error message if the API endpoint returns a 400 (validation) error', async () => {
 			nock.cleanAll();
