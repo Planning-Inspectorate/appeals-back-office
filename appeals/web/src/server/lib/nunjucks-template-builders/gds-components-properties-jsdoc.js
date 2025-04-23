@@ -716,6 +716,7 @@
  * @property {string} id
  * @property {{value: number}} hour
  * @property {{value: number}} minute
+ * @property {FieldsetProperties} [fieldset] Options for the fieldset component.
  */
 
 /**
