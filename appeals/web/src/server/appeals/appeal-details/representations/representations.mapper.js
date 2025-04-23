@@ -128,12 +128,13 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 			: null;
 	})();
 
-	const lpaStatementText = [
-		APPEAL_REPRESENTATION_STATUS.VALID,
-		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-	].includes(appeal.documentationSummary?.lpaStatement?.representationStatus)
-		? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
-		: null;
+	const lpaStatementText =
+		appeal.documentationSummary?.lpaStatement?.representationStatus ===
+			APPEAL_REPRESENTATION_STATUS.VALID ||
+		appeal.documentationSummary?.lpaStatement?.representationStatus ===
+			APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
+			: null;
 
 	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
 
