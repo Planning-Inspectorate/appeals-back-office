@@ -3043,6 +3043,62 @@ describe('appeal-details', () => {
 				}
 			});
 
+			it('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'not_scanned'
+						}
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+			});
+
+			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'affected'
+						}
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+			});
+
 			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
 				const appealId = 2;
 

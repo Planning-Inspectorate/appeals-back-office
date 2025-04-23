@@ -99,7 +99,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 					parameters: {
 						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
 								<p><span class="govuk-body">View withdrawal request</span>
-								<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
+								<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></p>`
 					}
 				});
 			}
