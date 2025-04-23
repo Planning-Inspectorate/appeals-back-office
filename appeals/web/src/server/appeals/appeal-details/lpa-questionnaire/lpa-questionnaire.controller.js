@@ -110,20 +110,8 @@ export const postLpaQuestionnaire = async (request, response) => {
 				mapWebValidationOutcomeToApiValidationOutcome('complete')
 			);
 
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewComplete',
-				appealId: currentAppeal.appealId
-			});
-
 			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 		} else if (reviewOutcome === 'incomplete') {
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewIncomplete',
-				appealId: currentAppeal.appealId
-			});
-
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
 			);
@@ -139,6 +127,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		return renderLpaQuestionnaire(request, response, errorMessage);
 	}
 };
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
@@ -282,6 +271,15 @@ export const postCheckAndConfirm = async (request, response) => {
 				webLPAQuestionnaireReviewOutcome.updatedDueDate
 			)
 		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey:
+				request.session.reviewOutcome === 'complete'
+					? 'lpaqReviewComplete'
+					: 'lpaqReviewIncomplete',
+			appealId: currentAppeal.appealId
+		});
 
 		delete request.session.reviewOutcome;
 
