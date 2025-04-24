@@ -48,7 +48,11 @@ export function safeRedirect(request, response, url) {
  * @returns {string}
  */
 export function addBackLinkQueryToUrl(request, url) {
-	return `${url}?backUrl=${encodeURIComponent(request.originalUrl)}`;
+	const urlParts = url.split('#');
+
+	return `${urlParts[0]}?backUrl=${encodeURIComponent(request.originalUrl)}${
+		urlParts.length > 1 ? `#${urlParts[1]}` : ''
+	}`;
 }
 
 /**
