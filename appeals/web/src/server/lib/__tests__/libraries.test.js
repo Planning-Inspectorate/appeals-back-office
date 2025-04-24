@@ -1594,6 +1594,16 @@ describe('url-utilities', () => {
 				)
 			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue');
 		});
+
+		it('should move the URL hash to the end of the URL (after the query string) if a hash is present in the supplied URL', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url#with-hash'
+				)
+			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash');
+		});
 	});
 
 	describe('getBackLinkUrlFromQuery', () => {

@@ -2,6 +2,7 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -114,17 +115,21 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 
 /**
  * @param {Appeal} appeal
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} [backUrl]
  * @returns {PageContent}
  * */
-export function statementAndCommentsSharePage(appeal, backUrl) {
+export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	const shortAppealReference = appealShortReference(appeal.appealReference);
 
 	const ipCommentsText = (() => {
 		const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
 
 		return numIpComments > 0
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments?backUrl=/share#valid" class="govuk-link">${numIpComments} interested party comments</a>`
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
+			  )}" class="govuk-link">${numIpComments} interested party comments</a>`
 			: null;
 	})();
 
@@ -133,7 +138,10 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 			APPEAL_REPRESENTATION_STATUS.VALID ||
 		appeal.documentationSummary?.lpaStatement?.representationStatus ===
 			APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
+			  )}" class="govuk-link">1 statement</a>`
 			: null;
 
 	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
