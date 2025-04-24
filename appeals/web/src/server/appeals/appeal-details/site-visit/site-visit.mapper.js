@@ -8,7 +8,7 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	dateISOStringToDayMonthYearHourMinute
 } from '#lib/dates.js';
-
+import { timeInput } from '#lib/mappers/components/page-components/time.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -214,43 +214,23 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
-	/** @type {PageComponent} */
-	const selectStartTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-4"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-start-time',
-			hour: {
-				value: visitStartTimeHour
-			},
-			minute: {
-				value: visitStartTimeMinute
-			}
-		}
-	};
+	const selectStartTimeComponent = timeInput({
+		id: 'visit-start-time',
+		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
+		legendText: 'Start time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-4',
+		showLabels: false
+	});
 
-	/** @type {PageComponent} */
-	const selectEndTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-6"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-end-time',
-			hour: {
-				value: visitEndTimeHour
-			},
-			minute: {
-				value: visitEndTimeMinute
-			}
-		}
-	};
+	const selectEndTimeComponent = timeInput({
+		id: 'visit-end-time',
+		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
+		legendText: 'End time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-6',
+		showLabels: false
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {

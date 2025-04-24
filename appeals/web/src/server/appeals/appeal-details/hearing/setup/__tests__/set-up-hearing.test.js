@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';

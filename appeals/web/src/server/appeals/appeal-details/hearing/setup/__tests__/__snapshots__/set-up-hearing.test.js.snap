@@ -20,14 +20,14 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="hearing-date-day" name="hearing-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
                                             id="hearing-date-month" name="hearing-date-month" type="text" value=""
                                             inputmode="numeric">
                                         </div>
@@ -35,7 +35,7 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
                                             id="hearing-date-year" name="hearing-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
@@ -49,7 +49,7 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                 <div class="govuk-date-input__item govuk-!-margin-right-1">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label" for="hearing-time-hour">Hour</label>
-                                        <input class="govuk-input govuk-input--width-2 " id="hearing-time-hour"
+                                        <input class="govuk-input govuk-input--width-2" id="hearing-time-hour"
                                         name="hearing-time-hour" type="text" value="">
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label" for="hearing-time-minute">Minute</label>
-                                        <input class="govuk-input govuk-input--width-2 " id="hearing-time-minute"
+                                        <input class="govuk-input govuk-input--width-2" id="hearing-time-minute"
                                         name="hearing-time-minute" type="text" value="">
                                     </div>
                                 </div>
