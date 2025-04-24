@@ -745,6 +745,157 @@
 				}
 			}
 		},
+		"/appeals/listed-buildings/{reference}": {
+			"get": {
+				"tags": ["Listed buildings"],
+				"description": "Retrieves the listed building info, given the reference",
+				"parameters": [
+					{
+						"name": "reference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Returns the listedBuilding data",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Listed buildings"],
+				"description": "Deletes a listed building record, from a Service Bus message",
+				"parameters": [
+					{
+						"name": "reference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Returns the listedBuilding data",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/listed-buildings": {
+			"post": {
+				"tags": ["Listed buildings"],
+				"description": "Inserts or updates a listed building record, from a Service Bus message",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Returns the listedBuilding data",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ListedBuilding"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "A list entry",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuilding"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ListedBuilding"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-incomplete-reasons": {
 			"get": {
 				"tags": ["Appellant Case Incomplete Reasons"],
@@ -4330,62 +4481,6 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/listed-buildings/{reference}": {
-			"get": {
-				"tags": ["Listed buildings"],
-				"description": "Retrieves the listed building info, given the reference",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "reference",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"201": {
-						"description": "Returns the listedBuilding data",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ListedBuilding"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ListedBuilding"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
-		},
 		"/appeals/{appealId}/listed-buildings": {
 			"post": {
 				"tags": ["Listed buildings"],
@@ -4842,6 +4937,9 @@
 					},
 					"404": {
 						"description": "Not Found"
+					},
+					"409": {
+						"description": "Conflict"
 					}
 				}
 			}
@@ -12102,19 +12200,21 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
-							"agriculture-aquaculture",
-							"change-extensions",
-							"chemical-industry",
-							"energy-industry",
-							"extractive-industry",
-							"food-industry",
-							"infrastructure-projects",
-							"mineral-industry",
-							"other-projects",
-							"production-processing-of-metals",
-							"rubber-industry",
-							"textile-industries",
-							"tourism-leisure"
+							"change-of-use",
+							"householder",
+							"major-dwellings",
+							"major-industry-storage",
+							"major-offices",
+							"major-retail-services",
+							"major-traveller-caravan",
+							"mineral-workings",
+							"minor-dwellings",
+							"minor-industry-storage",
+							"minor-offices",
+							"minor-retail-services",
+							"minor-traveller-caravan",
+							"other-major",
+							"other-minor"
 						]
 					},
 					"validation": {
@@ -28685,19 +28785,21 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
-							"agriculture-aquaculture",
-							"change-extensions",
-							"chemical-industry",
-							"energy-industry",
-							"extractive-industry",
-							"food-industry",
-							"infrastructure-projects",
-							"mineral-industry",
-							"other-projects",
-							"production-processing-of-metals",
-							"rubber-industry",
-							"textile-industries",
-							"tourism-leisure"
+							"change-of-use",
+							"householder",
+							"major-dwellings",
+							"major-industry-storage",
+							"major-offices",
+							"major-retail-services",
+							"major-traveller-caravan",
+							"mineral-workings",
+							"minor-dwellings",
+							"minor-industry-storage",
+							"minor-offices",
+							"minor-retail-services",
+							"minor-traveller-caravan",
+							"other-major",
+							"other-minor"
 						]
 					},
 					"appellantCaseValidationOutcomeId": {

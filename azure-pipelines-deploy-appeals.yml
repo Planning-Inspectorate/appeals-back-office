@@ -11,8 +11,8 @@ parameters:
     displayName: Deploy Function - Appeals Casedata Import
     type: boolean
     default: true
-  - name: deployFunctionAppealsUserImport
-    displayName: Deploy Function - Appeals User Import
+  - name: deployFunctionAppealsRefDataImport
+    displayName: Deploy Function - Appeals Referencedata Import
     type: boolean
     default: true
   - name: deployFunctionAppealsDocProcessing
@@ -155,17 +155,17 @@ extends:
                   appName: pins-func-appeals-bo-casedata-import-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
                   workingDirectory: $(Pipeline.Workspace)/build/function-appeals-casedata-import
-          - name: Deploy Function - Appeals User Import
-            condition: eq(${{ parameters.deployFunctionAppealsUserImport }}, 'true')
+          - name: Deploy Function - Appeals Refdata Import
+            condition: eq(${{ parameters.deployFunctionAppealsRefDataImport }}, 'true')
             steps:
               - download: build
-                artifact: function-appeals-user-import
-                displayName: Download function-appeals-user-import
+                artifact: function-appeals-refdata-import
+                displayName: Download function-appeals-refdata-import
               - template: ../steps/function_app_deploy.yml
                 parameters:
-                  appName: pins-func-appeals-bo-user-import-$(ENVIRONMENT)
+                  appName: pins-func-appeals-bo-refdata-import-$(ENVIRONMENT)
                   resourceGroup: $(resourceGroup)
-                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-user-import
+                  workingDirectory: $(Pipeline.Workspace)/build/function-appeals-refdata-import
           - name: Deploy Function - Appeals Document Processing
             condition: eq(${{ parameters.deployFunctionAppealsDocProcessing }}, 'true')
             steps:

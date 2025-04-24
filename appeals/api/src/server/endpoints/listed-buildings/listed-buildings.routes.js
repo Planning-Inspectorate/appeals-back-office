@@ -3,7 +3,6 @@ import { asyncHandler } from '@pins/express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
 	addListedBuilding,
-	findListedBuilding,
 	removeListedBuilding,
 	updateListedBuilding
 } from './listed-buildings.controller.js';
@@ -13,29 +12,6 @@ import {
 	removeListedBuildingValidator
 } from './listed-buildings.validators.js';
 const router = createRouter();
-
-router.get(
-	'/:appealId/listed-buildings/:reference',
-	/*
-		#swagger.tags = ['Listed buildings']
-		#swagger.path = '/appeals/{appealId}/listed-buildings/{reference}'
-		#swagger.description = Retrieves the listed building info, given the reference
-		#swagger.parameters['azureAdUserId'] = {
-			in: 'header',
-			required: true,
-			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-		}
-		#swagger.responses[400] = {}
-		#swagger.responses[201] = {
-			description: 'Returns the listedBuilding data',
-			schema: { $ref: '#/components/schemas/ListedBuilding' }
-		}
-		#swagger.responses[400] = {}
-		#swagger.responses[404] = {}
-	 */
-	checkAppealExistsByIdAndAddToRequest,
-	asyncHandler(findListedBuilding)
-);
 
 router.post(
 	'/:appealId/listed-buildings',
