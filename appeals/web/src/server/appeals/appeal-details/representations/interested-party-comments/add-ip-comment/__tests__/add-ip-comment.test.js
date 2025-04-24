@@ -400,9 +400,9 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render day, month, and year input fields', () => {
-			expect(pageHtml.querySelector('input#date-day')).not.toBeNull();
-			expect(pageHtml.querySelector('input#date-month')).not.toBeNull();
-			expect(pageHtml.querySelector('input#date-year')).not.toBeNull();
+			expect(pageHtml.querySelector('input#day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#year')).not.toBeNull();
 		});
 	});
 
