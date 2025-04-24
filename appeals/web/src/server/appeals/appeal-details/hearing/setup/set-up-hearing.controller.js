@@ -53,26 +53,9 @@ export const postHearingDate = async (request, response) => {
 		return renderHearingDate(request, response);
 	}
 
-	const {
-		params: { appealId }
-	} = request;
+	const { appealId } = request.currentAppeal;
 
-	if (request.body.problemWithHorizon) {
-		return response.status(500).render('app/500.njk', {
-			titleCopy: 'Sorry, there is a problem with Horizon',
-			additionalCtas: [
-				{
-					href: `/appeals-service/appeal-details/${appealId}`,
-					text: 'Go back to case overview'
-				}
-			],
-			hideDefaultCta: true
-		});
-	}
-
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/hearing/setup/address`
-	);
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/hearing/setup/address`);
 };
 
 /**
@@ -81,5 +64,5 @@ export const postHearingDate = async (request, response) => {
  */
 export const getHearingAddress = async (request, response) => {
 	/// TODO: Not yet implemented
-	return response.status(404).render('app/404.njk')
+	return response.status(404).render('app/404.njk');
 };

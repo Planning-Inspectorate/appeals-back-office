@@ -13,6 +13,7 @@ import { kebabCase } from 'lodash-es';
  * @param {DayMonthYearHourMinute|null} [params.value]
  * @param {string} [params.legendText]
  * @param {boolean} [params.legendIsPageHeading=false]
+ * @param {string} [params.legendClasses]
  * @param {string} [params.hint]
  * @returns {PageComponent}
  */
@@ -23,6 +24,7 @@ export function dateInput({
 	value,
 	legendText,
 	legendIsPageHeading = false,
+	legendClasses = 'govuk-fieldset__legend--l',
 	hint
 }) {
 	const formattedNamePrefix = namePrefix ? `${namePrefix}-` : '';
@@ -36,18 +38,21 @@ export function dateInput({
 				{
 					label: 'Day',
 					name: `${formattedNamePrefix}day`,
+					id: `${formattedNamePrefix}day`,
 					classes: 'govuk-input--width-2',
 					value: value?.day
 				},
 				{
 					label: 'Month',
 					name: `${formattedNamePrefix}month`,
+					id: `${formattedNamePrefix}month`,
 					classes: 'govuk-input--width-2',
 					value: value?.month
 				},
 				{
 					label: 'Year',
 					name: `${formattedNamePrefix}year`,
+					id: `${formattedNamePrefix}year`,
 					classes: 'govuk-input--width-4',
 					value: value?.year
 				}
@@ -63,7 +68,7 @@ export function dateInput({
 			legend: {
 				text: legendText,
 				isPageHeading: legendIsPageHeading,
-				classes: 'govuk-fieldset__legend--l'
+				classes: legendClasses
 			}
 		};
 	}
