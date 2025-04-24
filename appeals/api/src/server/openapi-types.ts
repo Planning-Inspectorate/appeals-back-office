@@ -3388,19 +3388,21 @@ export type AppellantCase = {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
 		| null;
 	validation?: {
 		outcome?: string | null;
@@ -10741,19 +10743,21 @@ export interface AppellantCaseUpdateRequest {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
 		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
