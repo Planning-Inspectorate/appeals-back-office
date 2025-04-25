@@ -10,13 +10,14 @@ import {
 import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate, { formatTime } from '#utils/date-formatter.js';
-import { format } from 'date-fns';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { formatInTimeZone } from 'date-fns-tz';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
@@ -53,7 +54,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				appealId,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					formatInTimeZone(new Date(visitDate), DEFAULT_TIMEZONE, DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
 				])
 			});
 		}

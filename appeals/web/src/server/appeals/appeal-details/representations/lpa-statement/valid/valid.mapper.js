@@ -71,7 +71,7 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+						value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 						actions: {
 							items: [
 								...(lpaStatement.attachments?.length > 0

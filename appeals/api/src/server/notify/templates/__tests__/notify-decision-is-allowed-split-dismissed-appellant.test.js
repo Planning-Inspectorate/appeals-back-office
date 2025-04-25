@@ -1,5 +1,6 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
+import { householdAppeal } from '#tests/appeals/mocks.js';
 
 describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
@@ -9,7 +10,7 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
-			recipientEmail: 'test@136s7.com',
+			recipientEmail: householdAppeal.appellant.email,
 			personalisation: {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
@@ -29,7 +30,7 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 			'',
 			'We have made a decision on your appeal.',
 			'',
-			'[Sign in to our service](<https://appeals-service-test.planninginspectorate.gov.uk/appeals/ABC45678>) to view the decision letter dated 01 January 2021.',
+			'[Sign in to our service](https://appeals-service-test.planninginspectorate.gov.uk/appeals/ABC45678) to view the decision letter dated 01 January 2021.',
 			'',
 			'We have also informed the local planning authority of the decision.',
 			'',
@@ -51,7 +52,7 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 			{
 				id: 'mock-appeal-generic-id'
 			},
-			'test@136s7.com',
+			householdAppeal.appellant.email,
 			{
 				content: expectedContent,
 				subject: 'Appeal decision: ABC45678'

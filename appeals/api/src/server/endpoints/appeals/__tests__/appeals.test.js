@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
-	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
+	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
@@ -98,19 +98,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -150,19 +149,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -225,19 +223,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -276,6 +273,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21'
+									}
 								}
 							],
 							appealStatus: {
@@ -328,19 +330,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -379,6 +380,11 @@ describe('appeals list routes', () => {
 											contains: 'md21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'md21'
+									}
 								}
 							],
 							appealStatus: {
@@ -431,19 +437,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -482,6 +487,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21 5XY'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21 5XY'
+									}
 								}
 							],
 							appealStatus: {
@@ -534,19 +544,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -624,19 +633,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -716,19 +724,18 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -805,20 +812,19 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -917,20 +923,20 @@ describe('appeals list routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
 
-			test('returns an error if searchTerm is more than 8 characters', async () => {
+			test('returns an error if searchTerm is more than 50 characters', async () => {
 				const response = await request
-					.get('/appeals?searchTerm=aaaaaaaaa')
+					.get(`/appeals?searchTerm=${'a'.repeat(51)}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
@@ -1038,19 +1044,18 @@ test('gets appeals when given a appealTypeId param', async () => {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					},
 					appellantFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					}
 				},
 				isParentAppeal: false,
-				isChildAppeal: false
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference
 			}
 		],
 		lpas,

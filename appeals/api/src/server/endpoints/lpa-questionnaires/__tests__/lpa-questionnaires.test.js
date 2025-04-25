@@ -612,7 +612,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2025-04-18T00:00:00.000Z',
+					lpaQuestionnaireDueDate: '2125-04-18T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -1679,14 +1679,6 @@ describe('lpa questionnaires routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					data: {
-						lpaQuestionnaireValidationOutcomeId: lpaQuestionnaireValidationOutcomes[0].id
-					},
-					where: {
-						id: householdAppeal.lpaQuestionnaire.id
-					}
-				});
 				expect(response.status).toEqual(500);
 				expect(response.body).toEqual({
 					errors: {

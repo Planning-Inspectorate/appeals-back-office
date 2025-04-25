@@ -30,7 +30,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -57,7 +57,7 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 	const mappedPageContent = await lpaQuestionnairePage(
 		lpaQuestionnaire,
 		currentAppeal,
-		request.originalUrl,
+		stripQueryString(request.originalUrl),
 		session,
 		request,
 		getBackLinkUrlFromQuery(request)
@@ -110,20 +110,8 @@ export const postLpaQuestionnaire = async (request, response) => {
 				mapWebValidationOutcomeToApiValidationOutcome('complete')
 			);
 
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewComplete',
-				appealId: currentAppeal.appealId
-			});
-
 			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 		} else if (reviewOutcome === 'incomplete') {
-			addNotificationBannerToSession({
-				session: request.session,
-				bannerDefinitionKey: 'lpaqReviewIncomplete',
-				appealId: currentAppeal.appealId
-			});
-
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
 			);
@@ -139,6 +127,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		return renderLpaQuestionnaire(request, response, errorMessage);
 	}
 };
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
@@ -282,6 +271,15 @@ export const postCheckAndConfirm = async (request, response) => {
 				webLPAQuestionnaireReviewOutcome.updatedDueDate
 			)
 		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey:
+				request.session.reviewOutcome === 'complete'
+					? 'lpaqReviewComplete'
+					: 'lpaqReviewIncomplete',
+			appealId: currentAppeal.appealId
+		});
 
 		delete request.session.reviewOutcome;
 

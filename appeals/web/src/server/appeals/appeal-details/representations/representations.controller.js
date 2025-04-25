@@ -13,7 +13,11 @@ export function renderShareRepresentations(request, response) {
 	const pageContent = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				return statementAndCommentsSharePage(currentAppeal, getBackLinkUrlFromQuery(request));
+				return statementAndCommentsSharePage(
+					currentAppeal,
+					request,
+					getBackLinkUrlFromQuery(request)
+				);
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
 				const finalCommentsDueDate = currentAppeal.appealTimetable?.finalCommentsDueDate;
 				if (
@@ -23,7 +27,7 @@ export function renderShareRepresentations(request, response) {
 					throw new Error('Final comments cannot be shared before the due date has passed');
 				}
 
-				return finalCommentsSharePage(currentAppeal, getBackLinkUrlFromQuery(request));
+				return finalCommentsSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
 			}
 			default:
 				throw new Error(

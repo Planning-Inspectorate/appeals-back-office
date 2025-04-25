@@ -1,9 +1,7 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
+import { radiosInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -175,16 +173,18 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 
 /**
  * @param {Appeal} appealData
+ * @param {{ appealReference: string }} [sessionData]
+ * @param {string} [backLinkUrl]
  * @returns {PageContent}
  */
-export function addLinkedAppealPage(appealData) {
+export function addLinkedAppealPage(appealData, sessionData, backLinkUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Add linked appeal - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		backLinkUrl: backLinkUrl || `/appeals-service/appeal-details/${appealData.appealId}`,
+		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -192,10 +192,11 @@ export function addLinkedAppealPage(appealData) {
 					id: 'appeal-reference',
 					name: 'appeal-reference',
 					type: 'text',
+					value: sessionData?.appealReference,
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
 						isPageHeading: true,
-						text: 'What is the appeal reference?',
+						text: 'Appeal reference',
 						classes: 'govuk-label--l'
 					}
 				}
@@ -208,316 +209,163 @@ export function addLinkedAppealPage(appealData) {
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
- * @param {Appeal|undefined} linkCandidateAppealData
+ * @param {{ leadAppeal: string, linkableAppealSummary: import('@pins/appeals.api').Appeals.LinkableAppealSummary }} sessionData
  * @returns {PageContent}
  */
-export function addLinkedAppealCheckAndConfirmPage(
-	appealData,
-	linkCandidateSummary,
-	linkCandidateAppealData
-) {
+export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const { leadAppeal: leadAppealRef, linkableAppealSummary } = sessionData;
+
+	const linkCandidateHtml = `
+		<span>${linkableAppealSummary.appealReference}${
+		linkableAppealSummary.source === 'horizon' ? ' (Horizon)' : ''
+	}</span>
+		<br>
+		<span>${linkableAppealSummary.appealType}</span>
+	`;
+
+	const [leadAppeal, childAppeal] = (() => {
+		switch (leadAppealRef) {
+			case appealData.appealReference:
+				return [appealData, linkableAppealSummary];
+			case linkableAppealSummary.appealReference:
+				return [linkableAppealSummary, appealData];
+			default:
+				throw new Error(
+					`Appeal reference ${sessionData.leadAppeal} is not correlated with either member of the linked appeal`
+				);
+		}
+	})();
+
+	const leadAppealHtml = `
+		<span>${leadAppeal.appealReference}${leadAppeal.source === 'horizon' ? ' (Horizon)' : ''}</span>
+		<br>
+		<span>${leadAppeal.appealType}</span>
+	`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of the appeal you're linking to ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Details of the appeal you're linking to`,
+		heading: 'Check details and add linked appeal',
+		submitButtonProperties: {
+			text: 'Add linked appeal'
+		},
 		pageComponents: [
 			{
 				type: 'summary-list',
 				parameters: {
-					classes: 'govuk-!-margin-bottom-9',
+					classes: 'govuk-!-margin-bottom-5',
 					rows: [
 						{
 							key: {
 								text: 'Appeal reference'
 							},
 							value: {
-								text: `${linkCandidateSummary.appealReference}${
-									linkCandidateSummary.source === 'horizon' ? ' (Horizon)' : ''
-								}`
+								html: linkCandidateHtml
+							},
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add?backUrl=/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/check-and-confirm`
+									}
+								]
 							}
 						},
 						{
 							key: {
-								text: 'Appeal status'
+								text: 'Which is the lead appeal?'
 							},
 							value: {
-								text: appealStatusToStatusTag(linkCandidateSummary.appealStatus)
-							}
-						},
-						{
-							key: {
-								text: 'Appeal type'
+								html: leadAppealHtml
 							},
-							value: {
-								text: linkCandidateSummary.appealType
-							}
-						},
-						{
-							key: {
-								text: 'Site address'
-							},
-							value: {
-								text: appealSiteToAddressString(linkCandidateSummary.siteAddress)
-							}
-						},
-						{
-							key: {
-								text: 'Local planning authority (LPA)'
-							},
-							value: {
-								text: linkCandidateSummary.localPlanningDepartment
-							}
-						},
-						{
-							key: {
-								text: 'Appellant name'
-							},
-							value: {
-								text: linkCandidateSummary.appellantName
-							}
-						},
-						{
-							key: {
-								text: 'Agent name'
-							},
-							value: {
-								text: linkCandidateSummary.agentName
-							}
-						},
-						{
-							key: {
-								text: 'Submission date'
-							},
-							value: {
-								text: dateISOStringToDisplayDate(linkCandidateSummary.submissionDate)
+							actions: {
+								items: [
+									{
+										text: 'Change',
+										href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/lead-appeal`
+									}
+								]
 							}
 						}
 					]
+				}
+			},
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">${leadAppeal.appealReference} will be the lead appeal of ${childAppeal.appealReference}</p>`
 				}
 			}
 		]
 	};
 
-	const candidateIsLead = linkCandidateAppealData && linkCandidateAppealData.isParentAppeal;
-	const candidateIsChild = linkCandidateAppealData && linkCandidateAppealData.isChildAppeal;
+	return pageContent;
+}
 
-	// candidate and target are the same appeal
-	if (appealData.appealReference === linkCandidateAppealData?.appealReference) {
-		pageContent.pageComponents?.unshift({
-			type: 'warning-text',
-			parameters: {
-				text: 'This is the appeal you are currently reviewing.'
-			}
-		});
-		pageContent.submitButtonProperties = {
-			text: 'Return to search',
-			href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-		};
-	}
-	// candidate is already linked to target
-	else if (
-		appealData.linkedAppeals.filter(
-			(linkedAppeal) => linkedAppeal.appealReference === linkCandidateSummary.appealReference
-		).length > 0
-	) {
-		pageContent.pageComponents?.unshift({
-			type: 'warning-text',
-			parameters: {
-				text: 'Appeals already linked.'
-			}
-		});
-		pageContent.submitButtonProperties = {
-			text: 'Return to search',
-			href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-		};
-	}
-	// target has no linked appeals
-	else if (appealData.linkedAppeals.length === 0) {
-		// candidate has no linked appeals
-		if (!linkCandidateAppealData || linkCandidateAppealData?.linkedAppeals.length === 0) {
-			pageContent.pageComponents?.push({
-				type: 'radios',
-				parameters: {
-					name: 'confirmation',
-					idPrefix: 'confirmation',
-					fieldset: {
-						legend: {
-							text: 'Is this the appeal you want to link?',
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'lead',
-							text: `Yes, make this the lead appeal for ${shortAppealReference}`
-						},
-						{
-							value: 'child',
-							text: `Yes, this is a child appeal of ${shortAppealReference}`
-						},
-						{
-							divider: 'or'
-						},
-						{
-							value: 'cancel',
-							text: 'No, return to search'
-						}
-					]
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Continue',
-				type: 'submit'
-			};
-		}
-		// candidate is a lead
-		else if (candidateIsLead) {
-			pageContent.pageComponents?.push({
-				type: 'radios',
-				parameters: {
-					name: 'confirmation',
-					idPrefix: 'confirmation',
-					fieldset: {
-						legend: {
-							text: 'Is this the appeal you want to link?',
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'lead',
-							text: `Yes, make this the lead appeal for ${shortAppealReference}`
-						},
-						{
-							divider: 'or'
-						},
-						{
-							value: 'cancel',
-							text: 'No, return to search'
-						}
-					]
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Continue',
-				type: 'submit'
-			};
-		}
-		// candidate is a child
-		else if (candidateIsChild) {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: 'Link your case to the lead of this appeal.'
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Return to search',
-				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-			};
-		}
-	}
-	// target is a lead
-	else if (appealData.isParentAppeal) {
-		// candidate has no linked appeals
-		if (!linkCandidateAppealData || linkCandidateAppealData.linkedAppeals.length === 0) {
-			pageContent.pageComponents?.push({
-				type: 'radios',
-				parameters: {
-					name: 'confirmation',
-					idPrefix: 'confirmation',
-					fieldset: {
-						legend: {
-							text: 'Is this the appeal you want to link?',
-							classes: 'govuk-fieldset__legend--m'
-						}
-					},
-					items: [
-						{
-							value: 'child',
-							text: `Yes, this is a child appeal of ${shortAppealReference}`
-						},
-						{
-							divider: 'or'
-						},
-						{
-							value: 'cancel',
-							text: `No, return to search`
-						}
-					]
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Continue',
-				type: 'submit'
-			};
-		}
-		// candidate is a lead
-		else if (candidateIsLead) {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: 'Appeals are both lead appeals and cannot be linked.'
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Return to search',
-				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-			};
-		}
-		// candidate is a child (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
-		else {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: 'Appeal already linked to another lead appeal. Cannot be linked.'
-				}
-			});
-			pageContent.submitButtonProperties = {
-				text: 'Return to search',
-				href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-			};
-		}
-	}
-	// target is a child
-	else if (appealData.isChildAppeal) {
-		// candidate has no linked appeals
-		if (!linkCandidateAppealData || linkCandidateAppealData.linkedAppeals.length === 0) {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: `Link this appeal to your case's lead appeal.`
-				}
-			});
-		}
-		// candidate is a lead (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
-		else if (candidateIsLead) {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: 'Appeal already a lead appeal. Cannot be linked.'
-				}
-			});
-			// candidate is a child (of another appeal, because "candidate is already linked to target" scenario has already been ruled out by prior check)
-		} else {
-			pageContent.pageComponents?.unshift({
-				type: 'warning-text',
-				parameters: {
-					text: 'Appeal already linked to another lead appeal. Cannot be linked.'
-				}
-			});
-		}
+/**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @returns {PageContent}
+ * */
+export function alreadyLinkedPage(appealData, linkCandidateSummary) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const title = `You have already linked appeal ${linkCandidateSummary.appealReference}`;
 
-		pageContent.submitButtonProperties = {
-			text: 'Return to search',
-			href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`
-		};
-	}
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		heading: title,
+		preHeading: `Appeal ${shortAppealReference}`,
+		submitButtonProperties: {
+			text: 'Add a different linked appeal'
+		}
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @returns {PageContent}
+ * */
+export function changeLeadAppealPage(appealData, linkCandidateSummary) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const title = 'Which is the lead appeal?';
+
+	/**
+	 * @param {string | undefined | null} appealReference
+	 * @param {string | undefined | null} appealType
+	 * */
+	const radioItem = (appealReference, appealType) => ({
+		value: appealReference,
+		html: `
+			<span>${appealReference}</span>
+			<br>
+			<span class="govuk-caption-m">${appealType}</span>
+		`
+	});
+
+	const pageContent = {
+		title,
+		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/check-and-confirm`,
+		pageComponents: [
+			radiosInput({
+				name: 'lead-appeal',
+				legendText: title,
+				legendIsPageHeading: true,
+				items: [
+					radioItem(appealData.appealReference, appealData.appealType),
+					radioItem(linkCandidateSummary.appealReference, linkCandidateSummary.appealType)
+				]
+			})
+		]
+	};
 
 	return pageContent;
 }

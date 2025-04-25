@@ -1,4 +1,3 @@
-import logger from '#lib/logger.js';
 import { HTTPError } from 'got';
 import {
 	postUnlinkRequest,
@@ -10,52 +9,40 @@ import {
 	addLinkedAppealPage,
 	addLinkedAppealCheckAndConfirmPage,
 	unlinkAppealPage,
-	generateUnlinkAppealBackLinkUrl
+	generateUnlinkAppealBackLinkUrl,
+	alreadyLinkedPage,
+	changeLeadAppealPage
 } from './linked-appeals.mapper.js';
 import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getManageLinkedAppeals = async (request, response) => {
-	return renderManageLinkedAppeals(request, response);
-};
 
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderManageLinkedAppeals = async (request, response) => {
+export const renderManageLinkedAppeals = async (request, response) => {
 	const {
 		errors,
 		params: { appealId }
 	} = request;
 
 	const appealData = request.currentAppeal;
-	let leadAppealData;
-	let leadLinkedAppeal;
 
-	if (appealData.isChildAppeal === true) {
-		leadLinkedAppeal = appealData.linkedAppeals.find(
-			(
-				/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
-			) => linkedAppeal.isParentAppeal
-		);
+	const leadLinkedAppeal = appealData.isChildAppeal
+		? appealData.linkedAppeals.find(
+				(
+					/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
+				) => linkedAppeal.isParentAppeal
+		  )
+		: undefined;
 
-		if (leadLinkedAppeal && leadLinkedAppeal.appealId) {
-			leadAppealData = await getAppealDetailsFromId(
-				request.apiClient,
-				`${leadLinkedAppeal.appealId}`
-			);
-		}
+	const leadAppealData = leadLinkedAppeal?.appealId
+		? await getAppealDetailsFromId(request.apiClient, leadLinkedAppeal.appealId)
+		: undefined;
 
-		if (!leadLinkedAppeal || !leadAppealData) {
-			return response.status(500).render('app/500.njk');
-		}
+	if (appealData.isChildAppeal && !(leadLinkedAppeal && leadAppealData)) {
+		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = manageLinkedAppealsPage(
@@ -75,20 +62,16 @@ const renderManageLinkedAppeals = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getAddLinkedAppealReference = async (request, response) => {
-	return renderAddLinkedAppealReference(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderAddLinkedAppealReference = async (request, response) => {
-	const { errors } = request;
+export const renderAddLinkedAppealReference = (request, response) => {
+	const { errors, query, session } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await addLinkedAppealPage(appealDetails);
+	const mappedPageContent = addLinkedAppealPage(
+		appealDetails,
+		session.linkableAppeal?.linkableAppealSummary,
+		query.backUrl ? String(query.backUrl) : undefined
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -100,7 +83,7 @@ export const renderAddLinkedAppealReference = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postAddLinkedAppeal = async (request, response) => {
+export const postAddLinkedAppeal = (request, response) => {
 	if (request.errors) {
 		return renderAddLinkedAppealReference(request, response);
 	}
@@ -108,6 +91,12 @@ export const postAddLinkedAppeal = async (request, response) => {
 	const {
 		params: { appealId }
 	} = request;
+
+	if (request.body.linkConflict) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/already-linked`
+		);
+	}
 
 	if (request.body.problemWithHorizon) {
 		return response.status(500).render('app/500.njk', {
@@ -131,35 +120,16 @@ export const postAddLinkedAppeal = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	return renderAddLinkedAppealCheckAndConfirm(request, response);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 export const renderAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
+	if (!request.session.linkableAppeal?.linkableAppealSummary) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const { errors } = request;
-
-	const targetAppealDetails = request.currentAppeal;
-	let linkCandidateAppealData;
-
-	if (request.session.linkableAppeal?.linkableAppealSummary.source === 'back-office') {
-		linkCandidateAppealData = await getAppealDetailsFromId(
-			request.apiClient,
-			request.session.linkableAppeal?.linkableAppealSummary.appealId
-		);
-	}
+	const { session, errors } = request;
 
 	const mappedPageContent = addLinkedAppealCheckAndConfirmPage(
-		targetAppealDetails,
-		request.session.linkableAppeal?.linkableAppealSummary,
-		linkCandidateAppealData
+		request.currentAppeal,
+		session.linkableAppeal
 	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
@@ -173,14 +143,14 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
+	if (!request.session.linkableAppeal?.linkableAppealSummary) {
 		return response.status(500).render('app/500.njk');
 	}
 
 	const {
 		errors,
 		params: { appealId },
-		body: { confirmation }
+		session
 	} = request;
 
 	if (errors) {
@@ -188,82 +158,150 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 	}
 
 	try {
-		const targetIsLead = confirmation === 'child';
+		const { appealId: linkedAppealId, source } =
+			session.linkableAppeal?.linkableAppealSummary ?? {};
 
-		if (confirmation === 'cancel') {
-			return response.redirect(`/appeals-service/appeal-details/${appealId}/linked-appeals/add`);
-		} else if (request.session.linkableAppeal?.linkableAppealSummary.source === 'back-office') {
-			await linkAppealToBackOfficeAppeal(
-				request.apiClient,
-				appealId,
-				request.session.linkableAppeal?.linkableAppealSummary.appealId,
-				targetIsLead
-			);
-		} else {
-			await linkAppealToLegacyAppeal(
-				request.apiClient,
-				appealId,
-				request.session.linkableAppeal?.linkableAppealSummary.appealReference,
-				targetIsLead
-			);
+		const targetIsLead =
+			session.linkableAppeal.leadAppeal === session.linkableAppeal.linkableAppealSummary.appealId;
+
+		switch (source) {
+			case 'back-office':
+				await linkAppealToBackOfficeAppeal(
+					request.apiClient,
+					appealId,
+					session.linkableAppeal?.linkableAppealSummary.appealId,
+					targetIsLead
+				);
+				break;
+			case 'horizon':
+				await linkAppealToLegacyAppeal(
+					request.apiClient,
+					appealId,
+					session.linkableAppeal?.linkableAppealSummary.appealReference,
+					targetIsLead
+				);
+				break;
+			default:
+				throw new Error(`unrecognised appeal source '${source}' for appeal ${linkedAppealId}`);
 		}
 
 		addNotificationBannerToSession({
-			session: request.session,
+			session,
 			bannerDefinitionKey: 'appealLinked',
 			appealId,
-			text: `This appeal is now ${targetIsLead ? 'the lead for' : 'a child of'} appeal ${
-				request.session.linkableAppeal?.linkableAppealSummary.appealReference
-			}`
+			text: targetIsLead
+				? `Appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference} is now the lead for this appeal`
+				: `This appeal is now the lead for appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference}`
 		});
 
-		delete request.session.linkableAppeal;
+		delete session.linkableAppeal;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
-		if (error instanceof HTTPError && error.response.statusCode === 400) {
+		if (error instanceof HTTPError) {
 			// @ts-ignore
 			request.errors = error.response.body.errors;
 			return renderAddLinkedAppealCheckAndConfirm(request, response);
 		}
 
-		logger.error(error);
+		throw error;
 	}
-
-	return response.status(500).render('app/500.njk');
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getUnlinkAppeal = async (request, response) => {
-	return renderUnlinkAppeal(request, response);
-};
+export function renderAlreadyLinked(request, response) {
+	const { currentAppeal, session, errors } = request;
+
+	const pageContent = alreadyLinkedPage(
+		currentAppeal,
+		session.linkableAppeal?.linkableAppealSummary
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent,
+		errors
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postAlreadyLinked(request, response) {
+	const { params, session } = request;
+
+	delete session.linkableAppeal;
+
+	return response.redirect(`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add`);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function renderLeadAppeal(request, response) {
+	const { currentAppeal, session, errors } = request;
+
+	if (!session.linkableAppeal) {
+		throw new Error('linkableAppeal not present in session');
+	}
+
+	const pageContent = changeLeadAppealPage(
+		currentAppeal,
+		session.linkableAppeal.linkableAppealSummary
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postLeadAppeal(request, response) {
+	const { params, body, session, errors } = request;
+
+	if (errors) {
+		return renderLeadAppeal(request, response);
+	}
+
+	session.linkableAppeal.leadAppeal = body['lead-appeal'];
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add/check-and-confirm`
+	);
+}
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postUnlinkAppeal = async (request, response) => {
-	try {
-		const { appealId, relationshipId, backLinkAppealId } = request.params;
-		const { unlinkAppeal } = request.body;
-		const { errors } = request;
+	const { appealId, relationshipId, backLinkAppealId } = request.params;
+	const { unlinkAppeal } = request.body;
+	const { errors } = request;
 
-		if (errors) {
-			return renderUnlinkAppeal(request, response);
-		}
+	if (errors) {
+		return renderUnlinkAppeal(request, response);
+	}
 
-		if (unlinkAppeal === 'no') {
+	switch (unlinkAppeal) {
+		case 'no': {
 			const backLinkUrl = generateUnlinkAppealBackLinkUrl(
 				appealId,
 				relationshipId,
 				backLinkAppealId
 			);
+
 			return response.redirect(backLinkUrl);
 		}
-		if (unlinkAppeal === 'yes') {
+		case 'yes': {
 			const appealRelationshipId = parseInt(relationshipId, 10);
 			const appealData = request.currentAppeal;
 			const childRef =
@@ -286,12 +324,10 @@ export const postUnlinkAppeal = async (request, response) => {
 
 			return response.redirect(`/appeals-service/appeal-details/${backLinkAppealId}`);
 		}
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
-		);
-	} catch (error) {
-		return response.status(500).render('app/500.njk');
+		default:
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+			);
 	}
 };
 
@@ -300,7 +336,7 @@ export const postUnlinkAppeal = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderUnlinkAppeal = async (request, response) => {
+export const renderUnlinkAppeal = (request, response) => {
 	const {
 		errors,
 		params: { appealId, relationshipId, backLinkAppealId }
@@ -315,7 +351,7 @@ const renderUnlinkAppeal = async (request, response) => {
 			) => linkedAppeal.relationshipId === parseInt(relationshipId, 10)
 		)?.appealReference || '';
 
-	const mappedPageContent = await unlinkAppealPage(
+	const mappedPageContent = unlinkAppealPage(
 		appealData,
 		childRef,
 		appealId,

@@ -31,7 +31,8 @@ export const ipCommentRejection = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+	const { ipCommentsDueDate = null } = appeal.appealTimetable || {};
+	const extendedDeadline = await formatExtendedDeadline(allowResubmit, ipCommentsDueDate);
 	const recipientEmail = representation.represented?.email;
 	if (recipientEmail) {
 		const templateName = extendedDeadline
@@ -113,7 +114,8 @@ export const lpaStatementIncomplete = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+	const { lpaStatementDueDate = null } = appeal.appealTimetable || {};
+	const extendedDeadline = await formatExtendedDeadline(allowResubmit, lpaStatementDueDate);
 
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {

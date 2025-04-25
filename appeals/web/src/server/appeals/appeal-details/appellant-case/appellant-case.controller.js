@@ -29,7 +29,7 @@ import {
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 
 /**
  *
@@ -55,7 +55,7 @@ const renderAppellantCase = async (request, response) => {
 		const mappedPageContent = await appellantCasePage(
 			appellantCaseResponse,
 			currentAppeal,
-			request.originalUrl,
+			stripQueryString(request.originalUrl),
 			getBackLinkUrlFromQuery(request),
 			request.session
 		);

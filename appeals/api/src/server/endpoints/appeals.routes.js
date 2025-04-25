@@ -40,12 +40,15 @@ import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
+import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/local-planning-authorities.routes.js';
+import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
 
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
+router.use(historicEnglandRoutes);
 
 router.use('/', checkAzureAdUserIdHeaderExists);
 router.use('/', initNotifyClientAndAddToRequest);
@@ -64,6 +67,7 @@ router.use(appealTypeRoutes);
 router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
+router.use(localPlanningAuthoritiesRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);

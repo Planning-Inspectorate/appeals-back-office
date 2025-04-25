@@ -141,6 +141,8 @@ export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';
 export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was removed';
 
+export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
+
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
@@ -185,6 +187,10 @@ export const ERROR_INVALID_REPRESENTATION_TYPE = `must be one of ${Object.values
 	APPEAL_REPRESENTATION_TYPE
 ).join(', ')}`;
 export const ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS = 'must be between 2 and 8 characters';
+export const ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS = (
+	/** @type {string} */ min,
+	/** @type {string} */ max
+) => `must be between ${min} and ${max} characters`;
 export const ERROR_MAX_LENGTH_CHARACTERS = 'must be {replacement0} characters or less';
 export const ERROR_MUST_BE_ARRAY_OF_NUMBERS = 'must be an array of numbers';
 export const ERROR_MUST_BE_ARRAY_OF_STRINGS = 'must be an array of strings';
@@ -234,6 +240,8 @@ export const ERROR_INVALID_APPELLANT_CASE_DATA =
 export const ERROR_INVALID_LPAQ_DATA = 'The integration payload LPA_QUESTIONNAIRE is invalid.';
 export const ERROR_INVALID_REP_DATA = 'The integration payload APPEAL_REPRESENTATION is invalid.';
 export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is invalid.';
+export const ERROR_INVALID_LISTED_BUILDING_DATA =
+	'The integration payload LISTED_BUILDING is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;
 export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;

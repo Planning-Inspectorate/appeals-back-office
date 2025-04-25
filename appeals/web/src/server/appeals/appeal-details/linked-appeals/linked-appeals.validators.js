@@ -18,16 +18,21 @@ export const validateAddLinkedAppealReference = createValidator(
 					req.apiClient,
 					reference
 				).catch((error) => {
-					if (error.response.statusCode === 404) {
-						return Promise.reject();
-					} else if (error.response.statusCode === 500) {
-						req.body.problemWithHorizon = true;
-						return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
+					switch (error.response.statusCode) {
+						case 404:
+							return Promise.reject();
+						case 409:
+							req.body.linkConflict = true;
+							return { appealReference: reference };
+						case 500:
+							req.body.problemWithHorizon = true;
+							return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
 					}
 				});
 
 				req.session.linkableAppeal = {
-					linkableAppealSummary
+					linkableAppealSummary,
+					leadAppeal: req.currentAppeal.appealReference
 				};
 
 				return Promise.resolve();
@@ -39,14 +44,8 @@ export const validateAddLinkedAppealReference = createValidator(
 		.withMessage('Enter a valid appeal reference')
 );
 
-export const validateAddLinkedAppealCheckAndConfirm = createValidator(
-	body('confirmation')
-		.trim()
-		.notEmpty()
-		.withMessage('Choose an option')
-		.bail()
-		.isIn(['lead', 'child', 'cancel'])
-		.withMessage('Choose an option')
+export const validateChangeLeadAppeal = createValidator(
+	body('lead-appeal').trim().notEmpty().withMessage('Select the lead appeal').bail()
 );
 
 export const validateUnlinkAppeal = createValidator(

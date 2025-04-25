@@ -19,26 +19,25 @@ exports[`infrastructure-levy-expected-date GET /change should render the infrast
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -88,26 +87,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -159,26 +157,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -230,26 +227,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -301,26 +297,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -370,26 +365,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -441,26 +435,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -512,26 +505,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -583,26 +575,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -652,26 +643,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the lev
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -723,26 +713,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the lev
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -794,26 +783,25 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the lev
                                 <div class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-day" name="levy-expected-date-day"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-day" name="levy-expected-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-month" name="levy-expected-date-month"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-month" name="levy-expected-date-month" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="infrastructure-levy-expected-date-levy-expected-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="levy-expected-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="infrastructure-levy-expected-date-levy-expected-date-year" name="levy-expected-date-year"
-                                            type="text" inputmode="numeric">
+                                            id="levy-expected-date-year" name="levy-expected-date-year" type="text"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>

@@ -348,54 +348,6 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
 			});
 
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
-					childId: appealData.appealId,
-					childRef: appealData.appealReference,
-					externaAppealType: null,
-					externalSource: false,
-					id: 1,
-					linkingDate: '2024-02-22T16:45:24.037Z',
-					parentId: linkableAppealSummaryBackOffice.appealId,
-					parentRef: linkableAppealSummaryBackOffice.appealReference,
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
-					'appeal-reference': appealReference
-				});
-
-				await request.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`).send({
-					confirmation: 'lead'
-				});
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
-			});
-
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
 				const appealReference = '1234567';
 
@@ -442,63 +394,6 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
-			});
-
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
-					childId: 5466,
-					childRef: 'TEST-489773',
-					externaAppealType: null,
-					externalSource: true,
-					id: 1,
-					linkingDate: '2024-02-22T17:16:57.654Z',
-					parentId: null,
-					parentRef: '3171066',
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-
-				const addLinkedAppealReferencePostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add`)
-					.send({
-						'appeal-reference': appealReference
-					});
-
-				expect(addLinkedAppealReferencePostResponse.statusCode).toBe(302);
-
-				const addLinkedAppealCheckAndConfirmPostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`)
-					.send({
-						confirmation: 'lead'
-					});
-
-				expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
@@ -1591,10 +1486,10 @@ describe('appeal-details', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Case details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
@@ -1853,31 +1748,7 @@ describe('appeal-details', () => {
 			);
 		});
 
-		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
-			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
-			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-				.reply(200, appellantFinalCommentsAwaitingReview);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-				.reply(200, lpaFinalCommentsAwaitingReview);
-			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const linkedAppealsRowElement = parseHtml(response.text, {
-				rootElement: '.appeal-linked-appeals',
-				skipPrettyPrint: true
-			});
-			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"'
-			);
-		});
-
-		it('should render action links to the manage linked appeals page and the add linked appeal page in the linked appeals row, if there are linked appeals', async () => {
+		it('should render an action link to the manage linked appeals page, if there are linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
@@ -1906,6 +1777,35 @@ describe('appeal-details', () => {
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
+		});
+
+		it('should render an action link to the add linked appeals page, if the appeal is in a state before STATEMENTS', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'lpa_questionnaire',
+					linkedAppeals
+				});
+			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
+				.reply(200, lpaFinalCommentsAwaitingReview);
+
+			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
@@ -2392,9 +2292,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											awaiting_review: 1
-										}
+										representationStatus: 'awaiting_review'
 									}
 								}
 							});
@@ -2422,9 +2320,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											valid: 1
-										}
+										representationStatus: 'valid'
 									}
 								}
 							});
@@ -2452,9 +2348,7 @@ describe('appeal-details', () => {
 									[testCase.documentationSummaryKey]: {
 										status: 'received',
 										receivedAt: '2024-12-17T17:36:19.631Z',
-										counts: {
-											invalid: 1
-										}
+										representationStatus: 'invalid'
 									}
 								}
 							});
@@ -3147,6 +3041,62 @@ describe('appeal-details', () => {
 						'<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>'
 					);
 				}
+			});
+
+			it('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'not_scanned'
+						}
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
+			});
+
+			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'complete',
+						decision: {
+							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
+							folderId: 72,
+							letterDate: '2024-06-26T00:00:00.000Z',
+							outcome: 'allowed',
+							virusCheckStatus: 'affected'
+						}
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const columnHtml = parseHtml(response.text, {
+					rootElement: '.appeal-decision-actions',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(columnHtml).toMatchSnapshot();
 			});
 
 			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {

@@ -48,6 +48,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -146,8 +161,11 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -307,6 +325,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -405,8 +438,11 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -608,6 +644,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -706,8 +757,11 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -880,6 +934,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -978,8 +1047,11 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1223,6 +1295,21 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1321,8 +1408,11 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1494,6 +1584,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1607,8 +1712,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1814,6 +1922,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1912,8 +2035,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -2329,7 +2455,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2615,7 +2741,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -3240,7 +3366,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3256,7 +3382,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">2 March 2024</td>
@@ -3272,7 +3398,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3358,7 +3484,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3374,12 +3500,12 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">
                             <div>2 March 2024</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3394,7 +3520,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3414,7 +3540,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                         </td>
                         <td class="govuk-table__cell">
                             <div>3 April 2025</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3493,7 +3619,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3539,9 +3665,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                                     </div>
                                 </td>
                                 <td class="govuk-table__cell"></td>
@@ -3553,7 +3679,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3601,7 +3727,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3657,7 +3783,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3705,7 +3831,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3751,7 +3877,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3886,7 +4012,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3932,7 +4058,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3979,7 +4105,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -4025,7 +4151,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -4207,6 +4333,21 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -4305,8 +4446,11 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7996,6 +8140,101 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case change LPA page GET /appellant-case/change-appeal-details/local-planning-authority should render the local planning authority page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="localPlanningAuthority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="localPlanningAuthority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="localPlanningAuthority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="localPlanningAuthority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case change LPA page POST /appellant-case/change-appeal-details/local-planning-authority should re-render the page with an error message if required field is missing 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#local-planning-authority">Please choose a local planning authority.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="localPlanningAuthority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="localPlanningAuthority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="localPlanningAuthority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="localPlanningAuthority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>

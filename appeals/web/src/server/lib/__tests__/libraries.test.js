@@ -37,7 +37,8 @@ import {
 	isInternalUrl,
 	safeRedirect,
 	addBackLinkQueryToUrl,
-	getBackLinkUrlFromQuery
+	getBackLinkUrlFromQuery,
+	stripQueryString
 } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
@@ -1249,88 +1250,6 @@ describe('linkedAppealStatus', () => {
 	});
 });
 
-describe('isInternalUrl', () => {
-	test('should return true for URL starting with a single slash', () => {
-		const url = '/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'https://localhost/',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return true for fully qualified internal HTTP URL', () => {
-		const url = 'http://localhost/appeals-service/all-cases';
-
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost/',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return true for fully qualified internal HTTPS URL', () => {
-		const url = 'https://localhost/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return false for external URL', () => {
-		const url = 'https://external-phishing-url.com';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(false);
-	});
-
-	test('should return false for an invalid URL', () => {
-		const url = '://bad.url';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(false);
-	});
-
-	test('should handle URLs without protocols', () => {
-		const url = '//localhost/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost/appeals-service/all-cases',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-});
-
 describe('stringIsValidPostcodeFormat', () => {
 	it('returns true when passed a string in valid UK postcode format (uppercase)', () => {
 		expect(stringIsValidPostcodeFormat('A1 1AA')).toBe(true);
@@ -1387,223 +1306,333 @@ describe('stringIsValidPostcodeFormat', () => {
 	});
 });
 
-describe('getOriginPathname', () => {
-	it('should return the pathname for a standard URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases'
+describe('url-utilities', () => {
+	describe('isInternalUrl', () => {
+		test('should return true for URL starting with a single slash', () => {
+			const url = '/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'https://localhost/',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
-		const result = getOriginPathname(request);
+		test('should return true for fully qualified internal HTTP URL', () => {
+			const url = 'http://localhost/appeals-service/all-cases';
 
-		expect(result).toBe('/appeals-service/all-cases');
-	});
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost/',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
 
-	it('should return the pathname for a URL with query parameters', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases?search=test',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases?search=test'
+			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
-		const result = getOriginPathname(request);
-
-		expect(result).toBe('/appeals-service/all-cases');
-	});
-
-	it('should return the pathname for a URL with hash parameters', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases#section1',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases#section1'
+		test('should return true for fully qualified internal HTTPS URL', () => {
+			const url = 'https://localhost/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
-		const result = getOriginPathname(request);
-
-		expect(result).toBe('/appeals-service/all-cases');
-	});
-
-	it('should return the pathname for an HTTP URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases'
+		test('should return false for external URL', () => {
+			const url = 'https://external-phishing-url.com';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(false);
 		});
 
-		const result = getOriginPathname(request);
-
-		expect(result).toBe('/appeals-service/all-cases');
-	});
-
-	it('should return the pathname for a URL with port', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost:3000'
-			},
-			originalUrl: '/appeals-service/all-cases'
+		test('should return false for an invalid URL', () => {
+			const url = '://bad.url';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(false);
 		});
 
-		const result = getOriginPathname(request);
-
-		expect(result).toBe('/appeals-service/all-cases');
+		test('should handle URLs without protocols', () => {
+			const url = '//localhost/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost/appeals-service/all-cases',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
+		});
 	});
 
-	it('should handle empty originalUrl gracefully', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: ''
+	describe('getOriginPathname', () => {
+		it('should return the pathname for a standard URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
 		});
 
-		const result = getOriginPathname(request);
+		it('should return the pathname for a URL with query parameters', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases?search=test',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases?search=test'
+			});
 
-		expect(result).toBe('/');
-	});
-});
+			const result = getOriginPathname(request);
 
-describe('safeRedirect', () => {
-	it('should redirect to the provided internal URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+			expect(result).toBe('/appeals-service/all-cases');
 		});
-		const response = httpMocks.createResponse();
-		const url = '/appeals-service/new-case';
 
-		safeRedirect(request, response, url);
+		it('should return the pathname for a URL with hash parameters', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases#section1',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases#section1'
+			});
 
-		expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
-	});
+			const result = getOriginPathname(request);
 
-	it('should redirect to the homepage if the URL is external', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+			expect(result).toBe('/appeals-service/all-cases');
 		});
-		const response = httpMocks.createResponse();
-		const url = 'https://external-phishing-url.com';
 
-		safeRedirect(request, response, url);
+		it('should return the pathname for an HTTP URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
 
-		expect(response._getRedirectUrl()).toBe('/');
-	});
+			const result = getOriginPathname(request);
 
-	it('should redirect to the homepage if the URL is a protocol-relative URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+			expect(result).toBe('/appeals-service/all-cases');
 		});
-		const response = httpMocks.createResponse();
-		const url = '//localhost/appeals-service/new-case';
 
-		safeRedirect(request, response, url);
+		it('should return the pathname for a URL with port', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost:3000'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
 
-		expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
-	});
+			const result = getOriginPathname(request);
 
-	it('should handle invalid URLs by redirecting to the homepage', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+			expect(result).toBe('/appeals-service/all-cases');
 		});
-		const response = httpMocks.createResponse();
-		const url = '://bad.url';
 
-		safeRedirect(request, response, url);
+		it('should handle empty originalUrl gracefully', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: ''
+			});
 
-		expect(response._getRedirectUrl()).toBe('/');
-	});
+			const result = getOriginPathname(request);
 
-	it('should redirect to the homepage if the provided URL is null, undefined, or an empty string', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+			expect(result).toBe('/');
 		});
-		const response = httpMocks.createResponse();
-		const url = '';
-
-		safeRedirect(request, response, url);
-
-		expect(response._getRedirectUrl()).toBe('/');
 	});
-});
 
-describe('addBackLinkQueryToUrl', () => {
-	it('should append a backUrl query with the URI-encoded originalUrl value from the supplied request to the supplied url', () => {
-		expect(
-			addBackLinkQueryToUrl(
-				// @ts-ignore
-				{ originalUrl: '/test/original/url?withOwnQuery=true' },
-				'/supplied/url'
-			)
-		).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue');
-	});
-});
+	describe('safeRedirect', () => {
+		it('should redirect to the provided internal URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '/appeals-service/new-case';
 
-describe('getBackLinkUrlFromQuery', () => {
-	it('should return undefined if the supplied request.query does not contain a backUrl property', () => {
-		// @ts-ignore
-		expect(getBackLinkUrlFromQuery({ query: {} })).toBe(undefined);
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
+		});
+
+		it('should redirect to the homepage if the URL is external', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = 'https://external-phishing-url.com';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
+
+		it('should redirect to the homepage if the URL is a protocol-relative URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '//localhost/appeals-service/new-case';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
+		});
+
+		it('should handle invalid URLs by redirecting to the homepage', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '://bad.url';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
+
+		it('should redirect to the homepage if the provided URL is null, undefined, or an empty string', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
 	});
-	it('should return the URI-decoded value from the supplied request.query.backUrl property, if request.query contains a backUrl property', () => {
-		const query = { backUrl: '%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue' };
-		expect(
+
+	describe('addBackLinkQueryToUrl', () => {
+		it('should append a backUrl query with the URI-encoded originalUrl value from the supplied request to the supplied url', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url'
+				)
+			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue');
+		});
+
+		it('should move the URL hash to the end of the URL (after the query string) if a hash is present in the supplied URL', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url#with-hash'
+				)
+			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash');
+		});
+	});
+
+	describe('getBackLinkUrlFromQuery', () => {
+		it('should return undefined if the supplied request.query does not contain a backUrl property', () => {
 			// @ts-ignore
-			getBackLinkUrlFromQuery({ query })
-		).toBe('/test/original/url?withOwnQuery=true');
+			expect(getBackLinkUrlFromQuery({ query: {} })).toBe(undefined);
+		});
+		it('should return the URI-decoded value from the supplied request.query.backUrl property, if request.query contains a backUrl property', () => {
+			const query = { backUrl: '%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue' };
+			expect(
+				// @ts-ignore
+				getBackLinkUrlFromQuery({ query })
+			).toBe('/test/original/url?withOwnQuery=true');
+		});
+	});
+
+	describe('stripQueryString', () => {
+		it('should return the supplied URL with the query string removed, if there is a query string', () => {
+			expect(stripQueryString('/test/url/with-query?testQuery=someValue')).toBe(
+				'/test/url/with-query'
+			);
+		});
+		it('should return the supplied URL with the whole query string removed, if there is a query string whose value contains another query string', () => {
+			expect(
+				stripQueryString('/test/url/with-query?testQuery=someValue/with/?additionalQuery=true')
+			).toBe('/test/url/with-query');
+		});
+		it('should return the supplied URL intact, if there is no query string', () => {
+			expect(stripQueryString('/test/url/without-query')).toBe('/test/url/without-query');
+		});
 	});
 });

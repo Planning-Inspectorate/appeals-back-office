@@ -1,0 +1,12 @@
+{
+	"bindings": [
+		{
+			"name": "registerSubscription",
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"topicName": "listed-building",
+			"subscriptionName": "listed-building-bo-sub",
+			"connection": "ServiceBusConnection"
+		}
+	]
+}

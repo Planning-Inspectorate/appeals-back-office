@@ -55,7 +55,8 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	documentationSummary: formatDocumentationSummary(appeal),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
 
 /**
@@ -80,7 +81,8 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
 
 /**
@@ -133,23 +135,19 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		lpaFinalComments: {
 			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: We might want to remove these fields (receivedAt, representationStatus) and just use the `counts` field as with ipComments, but this will be a breaking change for the front end
 			receivedAt: lpaFinalComments[0]?.dateCreated
 				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: lpaFinalComments[0]?.status ?? null,
-			counts: countBy(lpaFinalComments, 'status'),
 			isRedacted: lpaFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		appellantFinalComments: {
 			status:
 				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: See todo above
 			receivedAt: appellantFinalComments[0]?.dateCreated
 				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: appellantFinalComments[0]?.status ?? null,
-			counts: countBy(appellantFinalComments, 'status'),
 			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		}
 	};
