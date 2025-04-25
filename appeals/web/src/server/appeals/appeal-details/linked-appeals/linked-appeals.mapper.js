@@ -248,7 +248,7 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 	const pageContent = {
 		title: `Details of the appeal you're linking to ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
-		preHeading: `Appeal ${shortAppealReference} (lead)`,
+		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check details and add linked appeal',
 		submitButtonProperties: {
 			text: 'Add linked appeal'
