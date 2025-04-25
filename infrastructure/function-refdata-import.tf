@@ -1,4 +1,4 @@
-module "function_user_import" {
+module "function_refdata_import" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
   source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.40"
 
@@ -6,7 +6,7 @@ module "function_user_import" {
   location            = module.primary_region.location
 
   # naming
-  app_name        = "user-import"
+  app_name        = "refdata-import"
   resource_suffix = var.environment
   service_name    = local.service_name
   tags            = local.tags
@@ -36,4 +36,22 @@ module "function_user_import" {
     # Function env variables
     API_HOST = module.app_api.default_site_hostname
   }
+}
+
+# Service Bus subscriptions
+
+resource "azurerm_servicebus_subscription" "odw_listed_building_sub" {
+  name                                 = "${azurerm_servicebus_topic.listed_building.name}-bo-sub"
+  topic_id                             = azurerm_servicebus_topic.listed_building.id
+  max_delivery_count                   = 1
+  default_message_ttl                  = var.sb_ttl.bo_sub
+  dead_lettering_on_message_expiration = true
+}
+
+# RBAC for subscriptions
+
+resource "azurerm_role_assignment" "odw_listed_building_sub_reciever" {
+  scope                = azurerm_servicebus_subscription.odw_listed_building_sub.id
+  role_definition_name = "Azure Service Bus Data Receiver"
+  principal_id         = module.function_refdata_import.principal_id
 }

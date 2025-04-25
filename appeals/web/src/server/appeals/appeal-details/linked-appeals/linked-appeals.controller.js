@@ -10,11 +10,11 @@ import {
 	addLinkedAppealCheckAndConfirmPage,
 	unlinkAppealPage,
 	generateUnlinkAppealBackLinkUrl,
-	alreadyLinkedPage
+	alreadyLinkedPage,
+	changeLeadAppealPage
 } from './linked-appeals.mapper.js';
 import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 
 /**
  *
@@ -121,17 +121,15 @@ export const postAddLinkedAppeal = (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
+	if (!request.session.linkableAppeal?.linkableAppealSummary) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const { errors } = request;
-
-	const targetAppealDetails = request.currentAppeal;
+	const { session, errors } = request;
 
 	const mappedPageContent = addLinkedAppealCheckAndConfirmPage(
-		targetAppealDetails,
-		request.session.linkableAppeal?.linkableAppealSummary
+		request.currentAppeal,
+		session.linkableAppeal
 	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
@@ -145,13 +143,14 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, 'linkableAppeal')) {
+	if (!request.session.linkableAppeal?.linkableAppealSummary) {
 		return response.status(500).render('app/500.njk');
 	}
 
 	const {
 		errors,
-		params: { appealId }
+		params: { appealId },
+		session
 	} = request;
 
 	if (errors) {
@@ -160,23 +159,26 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 
 	try {
 		const { appealId: linkedAppealId, source } =
-			request.session.linkableAppeal?.linkableAppealSummary ?? {};
+			session.linkableAppeal?.linkableAppealSummary ?? {};
+
+		const targetIsLead =
+			session.linkableAppeal.leadAppeal === session.linkableAppeal.linkableAppealSummary.appealId;
 
 		switch (source) {
 			case 'back-office':
 				await linkAppealToBackOfficeAppeal(
 					request.apiClient,
 					appealId,
-					request.session.linkableAppeal?.linkableAppealSummary.appealId,
-					true // TODO: use actual lead/child value
+					session.linkableAppeal?.linkableAppealSummary.appealId,
+					targetIsLead
 				);
 				break;
 			case 'horizon':
 				await linkAppealToLegacyAppeal(
 					request.apiClient,
 					appealId,
-					request.session.linkableAppeal?.linkableAppealSummary.appealReference,
-					true // TODO: use actual lead/child value
+					session.linkableAppeal?.linkableAppealSummary.appealReference,
+					targetIsLead
 				);
 				break;
 			default:
@@ -184,13 +186,15 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 		}
 
 		addNotificationBannerToSession({
-			session: request.session,
+			session,
 			bannerDefinitionKey: 'appealLinked',
 			appealId,
-			text: `This appeal is now the lead for appeal ${request.session.linkableAppeal?.linkableAppealSummary.appealReference}`
+			text: targetIsLead
+				? `Appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference} is now the lead for this appeal`
+				: `This appeal is now the lead for appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference}`
 		});
 
-		delete request.session.linkableAppeal;
+		delete session.linkableAppeal;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
@@ -232,6 +236,46 @@ export function postAlreadyLinked(request, response) {
 	delete session.linkableAppeal;
 
 	return response.redirect(`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add`);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function renderLeadAppeal(request, response) {
+	const { currentAppeal, session, errors } = request;
+
+	if (!session.linkableAppeal) {
+		throw new Error('linkableAppeal not present in session');
+	}
+
+	const pageContent = changeLeadAppealPage(
+		currentAppeal,
+		session.linkableAppeal.linkableAppealSummary
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postLeadAppeal(request, response) {
+	const { params, body, session, errors } = request;
+
+	if (errors) {
+		return renderLeadAppeal(request, response);
+	}
+
+	session.linkableAppeal.leadAppeal = body['lead-appeal'];
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add/check-and-confirm`
+	);
 }
 
 /**

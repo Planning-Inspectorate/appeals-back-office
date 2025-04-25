@@ -125,14 +125,14 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-user-import --workspace=@pins/functions-bo-appeals-document-processing --workspace=@pins/functions-bo-appeals-scheduled-jobs
+              script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-refdata-import --workspace=@pins/functions-bo-appeals-document-processing --workspace=@pins/functions-bo-appeals-scheduled-jobs
 
           # merge node modules
           - template: azure-pipelines-package-function-merge.yml@self
             parameters:
               appealsFolderNames:
                 - 'casedata-import'
-                - 'user-import'
+                - 'refdata-import'
                 - 'document-processing'
                 - 'scheduled-jobs'
 
@@ -142,11 +142,11 @@ extends:
               root: 'appeals'
               folderName: 'casedata-import'
 
-          # package Appeals BO user function
+          # package Appeals BO refdata function
           - template: azure-pipelines-package-function.yml@self
             parameters:
               root: 'appeals'
-              folderName: 'user-import'
+              folderName: 'refdata-import'
 
           # package Appeals BO document function
           - template: azure-pipelines-package-function.yml@self

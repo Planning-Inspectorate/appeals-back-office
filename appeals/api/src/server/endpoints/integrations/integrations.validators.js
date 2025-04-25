@@ -16,7 +16,8 @@ export const schemas = {
 		appealHas: 'appeal-has',
 		appealS78: 'appeal-s78',
 		appealEvent: 'appeal-event',
-		appealRepresentation: 'appeal-representation'
+		appealRepresentation: 'appeal-representation',
+		listedBuilding: 'listed-building'
 	}
 };
 
