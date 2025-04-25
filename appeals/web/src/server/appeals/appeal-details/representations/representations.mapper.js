@@ -189,10 +189,11 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 
 /**
  * @param {Appeal} appeal
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {string | undefined} backUrl
  * @returns {PageContent}
  * */
-export function finalCommentsSharePage(appeal, backUrl) {
+export function finalCommentsSharePage(appeal, request, backUrl) {
 	const hasValidFinalCommentsAppellant =
 		appeal.documentationSummary.appellantFinalComments?.representationStatus ===
 		COMMENT_STATUS.VALID;
@@ -200,16 +201,25 @@ export function finalCommentsSharePage(appeal, backUrl) {
 		appeal.documentationSummary.lpaFinalComments?.representationStatus === COMMENT_STATUS.VALID;
 
 	const infoText = (() => {
+		const appellantFinalCommentsLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant`
+		)}">appellant final comments</a>`;
+		const lpaFinalCommentsLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa`
+		)}">LPA final comments</a>`;
+
 		if (hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> and <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share ${appellantFinalCommentsLink} and ${lpaFinalCommentsLink} with the relevant parties.`;
 		}
 
 		if (hasValidFinalCommentsAppellant && !hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> with the relevant parties.`;
+			return `We’ll share ${appellantFinalCommentsLink} with the relevant parties.`;
 		}
 
 		if (!hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share ${lpaFinalCommentsLink} with the relevant parties.`;
 		}
 
 		return `There are no final comments to share.`;

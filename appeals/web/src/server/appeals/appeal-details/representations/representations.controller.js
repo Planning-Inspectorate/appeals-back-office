@@ -27,7 +27,7 @@ export function renderShareRepresentations(request, response) {
 					throw new Error('Final comments cannot be shared before the due date has passed');
 				}
 
-				return finalCommentsSharePage(currentAppeal, getBackLinkUrlFromQuery(request));
+				return finalCommentsSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
 			}
 			default:
 				throw new Error(
