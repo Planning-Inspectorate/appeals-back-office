@@ -46,7 +46,8 @@ exports[`issue-decision GET /check-invalid-decision should render the check your
 exports[`issue-decision GET /decision should render the 'what is the decision' page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+            <h1             class="govuk-heading-l">Decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -54,6 +55,16 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
+                        <div class="govuk-inset-text govuk-!-margin-top-0">
+                            <dl class="govuk-summary-list">
+                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant</dt>
+                                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
+                                </div>
+                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                                    <dd class="govuk-summary-list__value">Householder</dd>
+                                </div>
+                            </dl>
+                        </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -257,7 +268,7 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers</h1>
+            <h1 class="govuk-heading-l">Check details and issue decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -269,31 +280,7 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                        <dd class="govuk-summary-list__value">test-document.txt</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload">Change<span class="govuk-visually-hidden"> decision letter</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
-                        <dd class="govuk-summary-list__value">1 January 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-date">Change<span class="govuk-visually-hidden"> decision date</span></a>
-                        </dd>
-                    </div>
                 </dl>
-                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to send
-                        the decision to relevant parties and close the appeal. Make sure you have
-                        reviewed the decision information.</strong>
-                </div>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
-                            type="checkbox" value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
-                        </div>
-                    </div>
-                </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
             </form>
         </div>
