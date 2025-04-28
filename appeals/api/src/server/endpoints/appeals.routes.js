@@ -41,6 +41,7 @@ import { representationRejectionReasonsRoutes } from './representation-rejection
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/local-planning-authorities.routes.js';
+import { hearingRoutes } from './hearings/hearing.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
 import { hearingRoutes } from './hearings/hearing.routes.js';
