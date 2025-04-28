@@ -92,7 +92,7 @@ const appealsApiRequests = {
 					neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
 				}
 			],
-			affectedListedBuildingNumbers: ['10001', '10002'],
+			affectedListedBuildingNumbers: ['1021466', '1021468'],
 			lpaCostsAppliedFor: false,
 			// S78 fields
 			extraConditions: null,
@@ -109,7 +109,7 @@ const appealsApiRequests = {
 			lpaProcedurePreferenceDetails: 'pref details lpa',
 			lpaProcedurePreferenceDuration: 3,
 			reasonForNeighbourVisits: null,
-			changedListedBuildingNumbers: ['14214', '62354'],
+			changedListedBuildingNumbers: ['1021469', '1021470'],
 			designatedSitesNames: ['cSAC', 'SAC', 'customVal1', 'customVal2'],
 			eiaSensitiveAreaDetails: null,
 			consultedBodiesDetails: null,
