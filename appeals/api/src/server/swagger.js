@@ -1182,6 +1182,158 @@ export const spec = {
 				}
 			}
 		},
+		CreateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		UpdateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		HearingResponse: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				hearingId: {
+					type: 'number',
+					example: 1
+				},
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

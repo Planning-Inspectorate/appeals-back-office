@@ -2411,6 +2411,97 @@ export interface EiaScreeningRequiredRequest {
 	eiaScreeningRequired?: boolean;
 }
 
+export type CreateHearingRequest = any & {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+};
+
+export type UpdateHearingRequest = any & {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+};
+
+export interface HearingResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	hearingId?: number;
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingStartTime?: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
