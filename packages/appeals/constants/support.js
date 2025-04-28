@@ -267,6 +267,7 @@ export const LENGTH_10 = 10;
 export const LENGTH_250 = 250;
 export const LENGTH_300 = 300;
 export const LENGTH_1000 = 1000;
+export const LENGTH_8000 = 8000;
 
 export const NODE_ENV_PRODUCTION = 'production';
 
