@@ -4642,6 +4642,201 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/hearing/{hearingId}": {
+			"get": {
+				"tags": ["Hearing Details"],
+				"description": "Gets a single hearing by appeal ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hearingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single hearing by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Hearing Details"],
+				"description": "Updates hearing values for a single appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hearingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single hearing by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateHearing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateHearingRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateHearingRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/hearing": {
+			"post": {
+				"tags": ["Hearing Details"],
+				"description": "Sets a single hearing by appeal ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Sets a single hearing by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Site visit details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateHearingRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateHearingRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealReference}/site-visit-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
@@ -10048,6 +10243,188 @@
 					}
 				}
 			},
+			"CreateHearingRequest": {
+				"type": "object",
+				"properties": {
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				},
+				"required": ["hearingStartTime"],
+				"oneOf": [
+					{
+						"required": ["addressId"],
+						"not": {
+							"required": ["address"]
+						}
+					},
+					{
+						"required": ["address"],
+						"not": {
+							"required": ["addressId"]
+						}
+					}
+				]
+			},
+			"UpdateHearingRequest": {
+				"type": "object",
+				"properties": {
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				},
+				"required": ["hearingStartTime"],
+				"oneOf": [
+					{
+						"required": ["addressId"],
+						"not": {
+							"required": ["address"]
+						}
+					},
+					{
+						"required": ["address"],
+						"not": {
+							"required": ["addressId"]
+						}
+					}
+				]
+			},
+			"HearingResponse": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"hearingId": {
+						"type": "number",
+						"example": 1
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
 			"Address": {
 				"type": "object",
 				"required": ["addressLine1", "postCode"],
@@ -12046,19 +12423,21 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
-							"agriculture-aquaculture",
-							"change-extensions",
-							"chemical-industry",
-							"energy-industry",
-							"extractive-industry",
-							"food-industry",
-							"infrastructure-projects",
-							"mineral-industry",
-							"other-projects",
-							"production-processing-of-metals",
-							"rubber-industry",
-							"textile-industries",
-							"tourism-leisure"
+							"change-of-use",
+							"householder",
+							"major-dwellings",
+							"major-industry-storage",
+							"major-offices",
+							"major-retail-services",
+							"major-traveller-caravan",
+							"mineral-workings",
+							"minor-dwellings",
+							"minor-industry-storage",
+							"minor-offices",
+							"minor-retail-services",
+							"minor-traveller-caravan",
+							"other-major",
+							"other-minor"
 						]
 					},
 					"validation": {
@@ -28629,19 +29008,21 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
-							"agriculture-aquaculture",
-							"change-extensions",
-							"chemical-industry",
-							"energy-industry",
-							"extractive-industry",
-							"food-industry",
-							"infrastructure-projects",
-							"mineral-industry",
-							"other-projects",
-							"production-processing-of-metals",
-							"rubber-industry",
-							"textile-industries",
-							"tourism-leisure"
+							"change-of-use",
+							"householder",
+							"major-dwellings",
+							"major-industry-storage",
+							"major-offices",
+							"major-retail-services",
+							"major-traveller-caravan",
+							"mineral-workings",
+							"minor-dwellings",
+							"minor-industry-storage",
+							"minor-offices",
+							"minor-retail-services",
+							"minor-traveller-caravan",
+							"other-major",
+							"other-minor"
 						]
 					},
 					"appellantCaseValidationOutcomeId": {

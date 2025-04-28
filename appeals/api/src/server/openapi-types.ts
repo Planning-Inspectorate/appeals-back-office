@@ -2411,6 +2411,97 @@ export interface EiaScreeningRequiredRequest {
 	eiaScreeningRequired?: boolean;
 }
 
+export type CreateHearingRequest = any & {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+};
+
+export type UpdateHearingRequest = any & {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+};
+
+export interface HearingResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	hearingId?: number;
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingStartTime?: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
@@ -3388,19 +3479,21 @@ export type AppellantCase = {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
 		| null;
 	validation?: {
 		outcome?: string | null;
@@ -10741,19 +10834,21 @@ export interface AppellantCaseUpdateRequest {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
 		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
