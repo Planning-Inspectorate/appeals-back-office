@@ -44,7 +44,9 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'review-lpa-statement'
+		reviewLpaStatement: 'review-lpa-statement',
+		caseDetailsHearingSectionButton: '#case-details-hearing-section > .govuk-button',
+		caseDetailsHearingAddEstimateLink: '#case-details-hearing-section p'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -138,7 +140,9 @@ export class CaseDetailsPage extends Page {
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
-			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a')
+			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
+		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
+		caseDetailsHearingAddEstimateLink: () => cy.get('#case-details-hearing-section p')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -404,6 +408,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.lPAStatementTableChangeLink(row).click();
 	}
 
+	expandSectionAccordionHeader(section) {
+		this.clickAccordionByText(section);
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
@@ -605,5 +613,12 @@ export class CaseDetailsPage extends Page {
 			this.elements.showMoreToggle().should('not.exist');
 		}
 		this.elements.showMoreContent().should('contain.text', statement);
+	}
+
+	verifyHearingSectionIsDisplayed() {
+		this.elements.caseDetailsHearingSectionButton().should('be.visible');
+		this.elements
+			.caseDetailsHearingAddEstimateLink()
+			.should('contain.text', 'Add hearing estimates');
 	}
 }
