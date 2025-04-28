@@ -64,7 +64,7 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
     "notifications-node-client": "^8.2.1",
-    "pino": "^8.1.0",
+    "pino": "^9.6.0",
     "pino-http": "^8.1.0",
     "pino-pretty": "^8.1.0",
     "pins-data-model": "github:Planning-Inspectorate/data-model#1.9.19",
