@@ -109,6 +109,11 @@ const appealDetailsInclude = {
 			siteVisitType: true
 		}
 	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
 	caseNotes: true,
 	folders: {
 		include: {
