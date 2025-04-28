@@ -2,7 +2,6 @@ import logger from '#lib/logger.js';
 import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.mapper.js';
 import { redactAndAccept } from '#appeals/appeal-details/representations/representations.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -14,11 +13,6 @@ export const getRedactFinalComment = async (request, response) => {
 		session,
 		params: { finalCommentsType }
 	} = request;
-
-	if (currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
-		logger.info('returning 404 as final comments cannot be redacted after sharing');
-		return response.status(404).render('app/404.njk');
-	}
 
 	const pageContent = redactFinalCommentPage(
 		currentAppeal,
@@ -41,13 +35,8 @@ export const postRedactFinalComment = async (request, response) => {
 	const {
 		params: { appealId, finalCommentsType },
 		body: { redactedRepresentation },
-		session,
-		currentRepresentation
+		session
 	} = request;
-
-	if (currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
-		throw new Error('cannot redact a final comment that has already been shared');
-	}
 
 	session.redactedRepresentation = redactedRepresentation;
 
