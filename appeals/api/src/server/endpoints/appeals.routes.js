@@ -41,6 +41,7 @@ import { representationRejectionReasonsRoutes } from './representation-rejection
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/local-planning-authorities.routes.js';
+import { hearingRoutes } from './hearings/hearing.routes.js';
 
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
@@ -87,6 +88,7 @@ router.use(environmentalImpactAssessmentRoutes);
 router.use(representationRoutes);
 router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);
+router.use(hearingRoutes);
 
 if (config.enableTestEndpoints) {
 	router.use(testUtilsRoutes);
