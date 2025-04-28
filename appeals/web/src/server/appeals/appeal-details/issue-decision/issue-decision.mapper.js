@@ -127,34 +127,6 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 }
 
 /**
- * @returns {PageComponent[]}
- */
-export function decisionLetterUploadPageBodyComponents() {
-	const checklistHtml = `<ul class="govuk-list govuk-list--bullet">
-	<li>added the correct appeal reference</li>
-	<li>added the decision date and visit date</li>
-	<li>added the correct site address</li>
-	<li>added the decision to the top and bottom of the letter</li>
-	<li>signed the letter</li>
-</ul>`;
-
-	return [
-		{
-			type: 'warning-text',
-			parameters: {
-				text: 'Before uploading, check that you have:'
-			}
-		},
-		{
-			type: 'html',
-			parameters: {
-				html: checklistHtml
-			}
-		}
-	];
-}
-
-/**
  *
  * @param {Appeal} appealData
  * @param {string} decisionLetterDay

@@ -64,7 +64,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
 			);
 		});
 
@@ -75,7 +75,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
 			);
 		});
 
@@ -86,7 +86,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
 			);
 		});
 
@@ -97,7 +97,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
 			);
 		});
 	});
@@ -112,23 +112,6 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Upload decision letter</h1>');
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Warning</span> Before uploading, check that you have:'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<li>added the correct appeal reference</li>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<li>added the decision date and visit date</li>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('<li>added the correct site address</li>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<li>added the decision to the top and bottom of the letter</li>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('<li>signed the letter</li>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
