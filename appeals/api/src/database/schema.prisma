@@ -59,7 +59,7 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
-  Hearing               Hearing?
+  hearing               Hearing?
 
   @@index([addressId])
   @@index([appealTypeId])
