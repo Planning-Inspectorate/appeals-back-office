@@ -175,3 +175,5 @@ export interface RepresentationRejectionReasonText
 	extends schema.RepresentationRejectionReasonText {
 	representationRejectionReasonsSelected: RepresentationRejectionReasonsSelected;
 }
+
+export interface AppealNotification extends schema.AppealNotification {}

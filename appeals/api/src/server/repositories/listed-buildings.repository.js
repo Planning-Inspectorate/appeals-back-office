@@ -47,7 +47,6 @@ export const upsertListedBuilding = async (data) => {
 	});
 };
 
-
 /**
  * Adds a listed building with a list entry
  * @param {number} lpaQuestionnaireId
@@ -56,7 +55,6 @@ export const upsertListedBuilding = async (data) => {
  * @returns {Promise<ListedBuildingSelected>}
  */
 export const addListedBuilding = async (lpaQuestionnaireId, listEntry, affectsListedBuilding) => {
-	// @ts-ignore
 	// @ts-ignore
 	return databaseConnector.listedBuildingSelected.create({
 		data: {

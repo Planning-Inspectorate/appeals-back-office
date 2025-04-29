@@ -1,6 +1,5 @@
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
@@ -80,17 +79,13 @@ export function generateCommentsSummaryList(appealId, comment) {
 						]
 				  },
 			actions: {
-				items:
-					comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED || redactedCommentDifferent ||
-					comment.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-						? []
-						: [
-								{
-									text: 'Redact',
-									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
-									visuallyHiddenText: 'final comments'
-								}
-						  ]
+				items: [
+					{
+						text: 'Redact',
+						href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
+						visuallyHiddenText: 'final comments'
+					}
+				]
 			}
 		},
 		...(comment.redactedRepresentation && redactedCommentDifferent

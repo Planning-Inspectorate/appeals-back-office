@@ -59,6 +59,7 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
+  appealNotifications   AppealNotification[]
   hearing               Hearing?
 
   @@index([addressId])
@@ -800,24 +801,6 @@ model CaseNote {
   @@index([caseId])
 }
 
-/// ListedBuilding model
-/// Stores the listed buildings dataset
-model ListedBuilding {
-  reference String                   @id
-  name      String
-  grade     String
-  selected  ListedBuildingSelected[]
-}
-
-/// Temporary migration storage for ListedBuildingSelected
-model MigrateListedBuildingSelected {
-  lpaQuestionnaireId    Int
-  listEntry             String
-  affectsListedBuilding Boolean
-
-  @@id([lpaQuestionnaireId, listEntry])
-}
-
 //Hearing model
 //Store hearing related information
 model Hearing {
@@ -846,16 +829,4 @@ model MigrateListedBuildingSelected {
   affectsListedBuilding Boolean
 
   @@id([lpaQuestionnaireId, listEntry])
-}
-
-//Hearing model
-//Store hearing related information
-model Hearing {
-  id               Int       @id @default(autoincrement())
-  appealId         Int       @unique
-  hearingStartTime DateTime
-  hearingEndTime   DateTime?
-  addressId        Int?      @unique
-  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
