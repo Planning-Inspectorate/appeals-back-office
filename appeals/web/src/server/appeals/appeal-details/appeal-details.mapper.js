@@ -62,14 +62,7 @@ export async function appealDetailsPage(
 					  ]
 					: []),
 				...(mappedData.appeal.siteAddress.display.summaryListItem
-					? [
-							{
-								...mappedData.appeal.siteAddress.display.summaryListItem,
-								key: {
-									text: 'Site address'
-								}
-							}
-					  ]
+					? [mappedData.appeal.siteAddress.display.summaryListItem]
 					: []),
 				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
 					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
