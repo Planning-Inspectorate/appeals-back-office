@@ -30,10 +30,7 @@ export const validateAddLinkedAppealReference = createValidator(
 					}
 				});
 
-				req.session.linkableAppeal = {
-					linkableAppealSummary,
-					leadAppeal: req.currentAppeal.appealReference
-				};
+				req.session.linkableAppeal = { linkableAppealSummary };
 
 				return Promise.resolve();
 			} catch (error) {

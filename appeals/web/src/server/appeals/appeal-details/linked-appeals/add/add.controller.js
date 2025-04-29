@@ -62,7 +62,7 @@ export const postAddLinkedAppeal = (request, response) => {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/linked-appeals/add/check-and-confirm`
+		`/appeals-service/appeal-details/${appealId}/linked-appeals/add/lead-appeal`
 	);
 };
 
@@ -109,7 +109,8 @@ export function renderLeadAppeal(request, response) {
 
 	const pageContent = changeLeadAppealPage(
 		currentAppeal,
-		session.linkableAppeal.linkableAppealSummary
+		session.linkableAppeal.linkableAppealSummary,
+		session.linkableAppeal.leadAppeal
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
