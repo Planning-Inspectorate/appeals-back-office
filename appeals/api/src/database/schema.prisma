@@ -848,15 +848,3 @@ model AppealNotification {
   @@index([template])
   @@index([dateCreated(sort: Desc)])
 }
-
-//Hearing model
-//Store hearing related information
-model Hearing {
-  id               Int       @id @default(autoincrement())
-  appealId         Int       @unique
-  hearingStartTime DateTime
-  hearingEndTime   DateTime?
-  addressId        Int?      @unique
-  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
