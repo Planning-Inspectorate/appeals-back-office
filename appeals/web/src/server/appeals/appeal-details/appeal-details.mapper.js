@@ -6,6 +6,7 @@ import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
+import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
 
 export const pageHeading = 'Case details';
 
@@ -41,6 +42,42 @@ export async function appealDetailsPage(
 	);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
+	/**
+	 * @type {PageComponent}
+	 */
+	const caseSummary = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			classes: 'pins-summary-list--no-border',
+			rows: [
+				...(mappedData.appeal.caseOfficer.display.summaryListItem
+					? [
+							formatCaseOfficerDetailsForCaseSummary(
+								mappedData.appeal.caseOfficer.display.summaryListItem
+							)
+					  ]
+					: []),
+				...(mappedData.appeal.siteAddress.display.summaryListItem
+					? [
+							{
+								...mappedData.appeal.siteAddress.display.summaryListItem,
+								key: {
+									text: 'Site address'
+								}
+							}
+					  ]
+					: []),
+				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
+					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
+					: [])
+			]
+		}
+	};
+
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
 	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem
 		? [mappedData.appeal.downloadCaseFiles.display.htmlItem]
@@ -57,6 +94,7 @@ export async function appealDetailsPage(
 	const pageComponents = [
 		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
+		caseSummary,
 		...caseDownload,
 		caseNotes,
 		accordion
