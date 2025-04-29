@@ -3,7 +3,6 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseOfficer = ({
-	appealDetails,
 	currentRoute,
 	skipAssignedUsersData,
 	caseOfficerUser,
@@ -32,6 +31,6 @@ export const mapCaseOfficer = ({
 		link: `${currentRoute}/assign-user/case-officer`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-officer',
-		actionText: appealDetails.caseOfficer ? 'Change' : 'Assign'
+		actionText: caseOfficerUser ? 'Change' : 'Assign'
 	});
 };
