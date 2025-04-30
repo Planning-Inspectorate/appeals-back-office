@@ -7,9 +7,10 @@ import { radiosInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {{ appealReference: string }} [sessionData]
  * @param {string} [backLinkUrl]
+ * @param {string} [errorMsg]
  * @returns {PageContent}
  */
-export function addLinkedAppealPage(appealData, sessionData, backLinkUrl) {
+export function addLinkedAppealPage(appealData, sessionData, backLinkUrl, errorMsg) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -25,6 +26,11 @@ export function addLinkedAppealPage(appealData, sessionData, backLinkUrl) {
 					name: 'appeal-reference',
 					type: 'text',
 					value: sessionData?.appealReference,
+					errorMessage: errorMsg
+						? {
+								text: errorMsg
+						  }
+						: undefined,
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
 						isPageHeading: true,

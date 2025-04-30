@@ -20,7 +20,8 @@ export const renderAddLinkedAppealReference = (request, response) => {
 	const mappedPageContent = addLinkedAppealPage(
 		appealDetails,
 		session.linkableAppeal?.linkableAppealSummary,
-		query.backUrl ? String(query.backUrl) : undefined
+		query.backUrl ? String(query.backUrl) : undefined,
+		errors?.['appeal-reference'].msg
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

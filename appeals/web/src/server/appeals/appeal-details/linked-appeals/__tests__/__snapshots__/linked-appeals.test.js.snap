@@ -365,10 +365,11 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an appeal reference</p>
+                            <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -406,10 +407,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference must
+                                be 7 digits</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -447,10 +450,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference must
+                                be 7 digits</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -488,10 +493,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid appeal
+                                reference</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
