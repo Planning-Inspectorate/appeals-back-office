@@ -135,10 +135,25 @@ export function nationalListPage(
 
 	const searchInputErrorMessage = {};
 
+	/** @type {PageComponent[]} */
+	let errorSummaryPageComponents = [];
+
 	if (searchTermError) {
 		searchInputErrorMessage.errorMessage = {
 			text: searchTermError
 		};
+		errorSummaryPageComponents.push({
+			type: 'error-summary',
+			parameters: {
+				titleText: 'There is a problem',
+				errorList: [
+					{
+						text: searchTermError,
+						href: '#searchTerm'
+					}
+				]
+			}
+		});
 	}
 
 	let clearFilterUrl = urlWithoutQuery;
@@ -446,7 +461,7 @@ export function nationalListPage(
 	const pageContent = {
 		title: 'All cases',
 		heading: 'Search all cases',
-		pageComponents: [...searchPageContent, ...appealsDataPageContent]
+		pageComponents: [...searchPageContent, ...appealsDataPageContent, ...errorSummaryPageComponents]
 	};
 
 	if (pageContent.pageComponents) {
