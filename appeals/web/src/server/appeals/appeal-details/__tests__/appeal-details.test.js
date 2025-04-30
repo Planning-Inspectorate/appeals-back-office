@@ -2499,13 +2499,21 @@ describe('appeal-details', () => {
 					expect(caseTimeTable).toMatchSnapshot();
 				});
 
-				it('should render a "Timetable" with all rows with the Start date row including a date and change action link', async () => {
+				it('should render a "Timetable" with all rows with the Start & IP comments due date rows, both including a date and change action link', async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
-							appealId
+							appealId,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								ipComments: {}
+							}
 						});
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
@@ -2532,22 +2540,83 @@ describe('appeal-details', () => {
 
 					expect(startDateRow).toContain('data-cy="change-start-case-date">Change<span');
 
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
+
 					const caseTimeTable = parseHtml(response.text, {
 						rootElement: '.appeal-case-timetable'
 					}).innerHTML;
 
 					expect(caseTimeTable).toMatchSnapshot();
 				});
-				it('should render a "Timetable" with all rows with the Start date without an action link', async () => {
+
+				it('should render a "Timetable" with all rows with the IP comments due date and change link displaying when published IP comments count equals zero', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								ipComments: { count: 0 }
+							}
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
+				});
+
+				it('should render a "Timetable" with all rows with the Start date and IP comments due date without an action link', async () => {
 					const testDocumentationSummary = {
 						...appealDataFullPlanning.documentationSummary,
-						lpaQuestionnaire: { status: 'received' }
+						lpaQuestionnaire: { status: 'received' },
+						ipComments: { counts: { published: 1 } }
 					};
+
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							documentationSummary: testDocumentationSummary,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
 							appealId
 						});
@@ -2577,6 +2646,23 @@ describe('appeal-details', () => {
 					expect(startDateRow).toContain('data-cy="-start-case-date"><span');
 
 					expect(response.text).toContain(`appeal-lpa-questionnaire-due-date`);
+
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).not.toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
 
 					const caseTimeTable = parseHtml(response.text, {
 						rootElement: '.appeal-case-timetable'

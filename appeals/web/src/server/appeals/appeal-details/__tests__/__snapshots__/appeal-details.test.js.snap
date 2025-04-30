@@ -532,7 +532,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
 </dl>"
 `;
 
-exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date row including a date and change action link 1`] = `
+exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start & IP comments due date rows, both including a date and change action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
         <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -559,7 +559,10 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         </dd>
     </div>
     <div class="govuk-summary-list__row appeal-ip-comments-due-date"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
-        <dd         class="govuk-summary-list__value"></dd>
+        <dd         class="govuk-summary-list__value">29 April 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/ip-comments"
+                data-cy="change-ip-comments-due-date">Change<span class="govuk-visually-hidden"> Interested party comments due</span></a>
+            </dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
         <dd class="govuk-summary-list__value">12 October 2023</dd>
@@ -570,7 +573,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
 </dl>"
 `;
 
-exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date without an action link 1`] = `
+exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date and IP comments due date without an action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
         <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -594,7 +597,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         </dd>
     </div>
     <div class="govuk-summary-list__row appeal-ip-comments-due-date"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
-        <dd         class="govuk-summary-list__value"></dd>
+        <dd         class="govuk-summary-list__value">29 April 2025</dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
         <dd class="govuk-summary-list__value">12 October 2023</dd>
