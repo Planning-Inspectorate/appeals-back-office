@@ -51,6 +51,7 @@ apps_config = {
     featureFlagS78Written    = true
     featureFlagS78Hearing    = true
     featureFlagLinkedAppeals = true
+    featureFlagS20           = true
   }
 
   logging = {

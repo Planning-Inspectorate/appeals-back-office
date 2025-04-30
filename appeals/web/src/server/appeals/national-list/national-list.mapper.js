@@ -5,6 +5,9 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { isFeatureActive } from '#common/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -100,6 +103,15 @@ export function nationalListPage(
 		selected: inspectorFilter === String(inspector?.id)
 	}));
 
+	//TODO: maybe make this a shared function across web
+	const enabledAppealTypes = [APPEAL_CASE_TYPE.D];
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.W);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.Y);
+	}
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',
@@ -107,7 +119,7 @@ export function nationalListPage(
 			selected: appealTypeFilter === 'all'
 		},
 		...appealTypes
-			.filter(({ key }) => key === 'D' || key === 'W')
+			.filter(({ key }) => enabledAppealTypes.includes(key))
 			.map(({ type, id }) => ({
 				text: type,
 				value: id.toString(),
@@ -423,7 +435,7 @@ export function nationalListPage(
 										appeal.appealId
 									}" aria-label="Application ${numberToAccessibleDigitLabel(
 										appeal.planningApplicationReference || ''
-									)}" 
+									)}"
 									data-cy="${appeal.planningApplicationReference}" >${appeal.planningApplicationReference}</a>`
 								},
 								{
