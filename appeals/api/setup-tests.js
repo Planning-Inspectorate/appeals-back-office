@@ -71,6 +71,9 @@ const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolv
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingCreate = jest.fn().mockResolvedValue({});
+const mockHearingUpdate = jest.fn().mockResolvedValue({});
+const mockHearingFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindMany = jest.fn().mockResolvedValue({});
 const mockSpecialismsFindUnique = jest.fn().mockResolvedValue({});
@@ -319,6 +322,14 @@ class MockPrismaClient {
 			create: mockSiteVisitCreate,
 			update: mockSiteVisitUpdate,
 			findUnique: mockSiteVisitFindUnique
+		};
+	}
+
+	get hearing() {
+		return {
+			create: mockHearingCreate,
+			update: mockHearingUpdate,
+			findUnique: mockHearingFindUnique
 		};
 	}
 
