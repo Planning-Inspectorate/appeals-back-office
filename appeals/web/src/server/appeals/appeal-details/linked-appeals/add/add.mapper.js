@@ -1,5 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal */
 
@@ -46,12 +47,15 @@ export function addLinkedAppealPage(appealData, sessionData, backLinkUrl, errorM
 }
 
 /**
- * @param {Appeal} appealData
- * @param {{ leadAppeal: string, linkableAppealSummary: import('@pins/appeals.api').Appeals.LinkableAppealSummary }} sessionData
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageContent}
  */
-export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
+export function addLinkedAppealCheckAndConfirmPage(request) {
+	const { currentAppeal, session } = request;
+
+	const sessionData = session.linkableAppeal;
+
+	const shortAppealReference = appealShortReference(currentAppeal.appealReference);
 
 	const { leadAppeal: leadAppealRef, linkableAppealSummary } = sessionData;
 
@@ -65,10 +69,10 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 
 	const [leadAppeal, childAppeal] = (() => {
 		switch (leadAppealRef) {
-			case appealData.appealReference:
-				return [appealData, linkableAppealSummary];
+			case currentAppeal.appealReference:
+				return [currentAppeal, linkableAppealSummary];
 			case linkableAppealSummary.appealReference:
-				return [linkableAppealSummary, appealData];
+				return [linkableAppealSummary, currentAppeal];
 			default:
 				throw new Error(
 					`Appeal reference ${sessionData.leadAppeal} is not correlated with either member of the linked appeal`
@@ -85,7 +89,7 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of the appeal you're linking to ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check details and add linked appeal',
 		submitButtonProperties: {
@@ -108,7 +112,10 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add?backUrl=/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/check-and-confirm`
+										href: addBackLinkQueryToUrl(
+											request,
+											`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add`
+										)
 									}
 								]
 							}
@@ -124,7 +131,10 @@ export function addLinkedAppealCheckAndConfirmPage(appealData, sessionData) {
 								items: [
 									{
 										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/lead-appeal`
+										href: addBackLinkQueryToUrl(
+											request,
+											`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`
+										)
 									}
 								]
 							}
@@ -170,10 +180,17 @@ export function alreadyLinkedPage(appealData, linkCandidateSummary) {
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
  * @param {string} [leadAppeal]
+ * @param {string} [backUrl]
  * @param {string} [errorMessage]
  * @returns {PageContent}
  * */
-export function changeLeadAppealPage(appealData, linkCandidateSummary, leadAppeal, errorMessage) {
+export function changeLeadAppealPage(
+	appealData,
+	linkCandidateSummary,
+	leadAppeal,
+	backUrl,
+	errorMessage
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const title = 'Which is the lead appeal?';
 
@@ -193,7 +210,8 @@ export function changeLeadAppealPage(appealData, linkCandidateSummary, leadAppea
 	const pageContent = {
 		title,
 		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add/check-and-confirm`,
+		backLinkUrl:
+			backUrl || `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
 		pageComponents: [
 			radiosInput({
 				name: 'lead-appeal',

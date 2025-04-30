@@ -7,20 +7,21 @@ import {
 	changeLeadAppealPage
 } from './add.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAddLinkedAppealReference = (request, response) => {
-	const { errors, query, session } = request;
+	const { errors, session } = request;
 
 	const appealDetails = request.currentAppeal;
 
 	const mappedPageContent = addLinkedAppealPage(
 		appealDetails,
 		session.linkableAppeal?.linkableAppealSummary,
-		query.backUrl ? String(query.backUrl) : undefined,
+		getBackLinkUrlFromQuery(request),
 		errors?.['appeal-reference'].msg
 	);
 
@@ -112,6 +113,7 @@ export function renderLeadAppeal(request, response) {
 		currentAppeal,
 		session.linkableAppeal.linkableAppealSummary,
 		session.linkableAppeal.leadAppeal,
+		getBackLinkUrlFromQuery(request),
 		errors?.['lead-appeal'].msg
 	);
 
@@ -148,12 +150,9 @@ export const renderAddLinkedAppealCheckAndConfirm = async (request, response) =>
 		return response.status(500).render('app/500.njk');
 	}
 
-	const { session, errors } = request;
+	const { errors } = request;
 
-	const mappedPageContent = addLinkedAppealCheckAndConfirmPage(
-		request.currentAppeal,
-		session.linkableAppeal
-	);
+	const mappedPageContent = addLinkedAppealCheckAndConfirmPage(request);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
