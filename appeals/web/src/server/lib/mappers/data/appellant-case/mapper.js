@@ -19,7 +19,8 @@ import { submaps as s78Submaps } from './s78.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
-	[APPEAL_TYPE.S78]: s78Submaps
+	[APPEAL_TYPE.S78]: s78Submaps,
+	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s78Submaps
 };
 
 /**

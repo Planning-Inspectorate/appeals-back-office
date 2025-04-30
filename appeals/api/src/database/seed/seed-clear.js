@@ -63,6 +63,7 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.lPAQuestionnaireIncompleteReason.deleteMany();
 	const deleteLPAQSelectedDesignatedNames = databaseConnector.designatedSiteSelected.deleteMany();
 	const deleteAllDesignatedNames = databaseConnector.designatedSite.deleteMany();
+	const deleteAllNotifications = databaseConnector.appealNotification.deleteMany();
 
 	await databaseConnector.$queryRawUnsafe(`
 		UPDATE Document SET latestVersionId = NULL;
@@ -77,7 +78,8 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteRepsText,
 		deleteDecisions,
 		deleteDocAudits,
-		deleteAudits
+		deleteAudits,
+		deleteAllNotifications
 	]);
 
 	await batchDelete(
