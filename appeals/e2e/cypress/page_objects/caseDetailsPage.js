@@ -44,9 +44,7 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'review-lpa-statement',
-		caseDetailsHearingSectionButton: '#case-details-hearing-section > .govuk-button',
-		caseDetailsHearingAddEstimateLink: '#case-details-hearing-section p'
+		reviewLpaStatement: 'review-lpa-statement'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -142,7 +140,11 @@ export class CaseDetailsPage extends Page {
 		lPAStatementTableChangeLink: (row) =>
 			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
 		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
-		caseDetailsHearingAddEstimateLink: () => cy.get('#case-details-hearing-section p')
+		caseDetailsHearingEstimateLink: () => cy.get('#case-details-hearing-section p > a'),
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
+		estimatedPreparationTime: () => cy.get('#preparation-time'),
+		estimatedSittingTime: () => cy.get('#sitting-time'),
+		estimatedReportingTime: () => cy.get('#reporting-time')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -408,8 +410,12 @@ export class CaseDetailsPage extends Page {
 		this.elements.lPAStatementTableChangeLink(row).click();
 	}
 
-	expandSectionAccordionHeader(section) {
-		this.clickAccordionByText(section);
+	clickHearingButton() {
+		this.elements.caseDetailsHearingSectionButton().click();
+	}
+
+	clickHearingEstimateLink() {
+		this.elements.caseDetailsHearingEstimateLink().click();
 	}
 
 	/***************************************************************
@@ -617,8 +623,28 @@ export class CaseDetailsPage extends Page {
 
 	verifyHearingSectionIsDisplayed() {
 		this.elements.caseDetailsHearingSectionButton().should('be.visible');
-		this.elements
-			.caseDetailsHearingAddEstimateLink()
-			.should('contain.text', 'Add hearing estimates');
+		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
+	}
+
+	setUpHearing(date, hour, minute) {
+		dateTimeSection.enterHearingDate(date);
+		dateTimeSection.enterHearingTime(hour, minute);
+		this.clickButtonByText('Continue');
+	}
+
+	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
+		this.elements.errorMessageLink(link).click();
+		cy.focused().should('have.attr', attribute, value);
+	}
+
+	verifyInlineErrorMessage(element) {
+		cy.get(`#${element}`).should('be.visible');
+	}
+
+	addHearingEstimates(preparationTime, sittingTime, reportingTime) {
+		this.elements.estimatedPreparationTime().clear().type(preparationTime);
+		this.elements.estimatedSittingTime().clear().type(sittingTime);
+		this.elements.estimatedReportingTime().clear().type(reportingTime);
+		this.clickButtonByText('Continue');
 	}
 }
