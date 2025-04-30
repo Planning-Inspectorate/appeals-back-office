@@ -208,4 +208,61 @@ describe('lpa statement valid', () => {
 			);
 		});
 	});
+
+	describe('GET /allocation-specialisms', () => {
+		it('should render the allocation specialisms page with expected content', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const { innerHTML } = parseHtml(response.text);
+
+			expect(innerHTML).toMatchSnapshot();
+			expect(innerHTML).toContain('Appeal 351062</span>');
+			expect(innerHTML).toContain(`Allocation specialisms</h1>`);
+			expect(innerHTML).toContain(
+				`<label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms">Specialism 1</label>`
+			);
+			expect(innerHTML).toContain(
+				`<label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-2">Specialism 2</label>`
+			);
+			expect(innerHTML).toContain(
+				`<label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-3">Specialism 3</label>`
+			);
+			expect(innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render a back link to the valid journey version of the allocation level page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const { innerHTML } = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level" class="govuk-back-link"`
+			);
+		});
+	});
 });
