@@ -9,11 +9,13 @@ import {
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_INVALID_POSTCODE,
+	ERROR_MUST_BE_NUMBER,
 	LENGTH_250,
 	LENGTH_8,
 	UK_POSTCODE_REGEX
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
+import { body } from 'express-validator';
 
 export const getHearingValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -23,31 +25,37 @@ export const getHearingValidator = composeMiddleware(
 
 export const postHearingValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateIdParameter('addressId'),
-	validateDateParameter({ parameterName: 'hearingStartTime' }),
+	validateDateParameter({ parameterName: 'hearingStartTime', isRequired: true }),
 	validateDateParameter({ parameterName: 'hearingEndTime' }),
-	validateRequiredStringParameter('address.addressLine1', LENGTH_250),
+	body('addressId').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
+	body('address').optional(),
+	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
 	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
-	validateRequiredStringParameter('address.town', LENGTH_250),
+	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),
 	validateStringParameter('address.country', LENGTH_250),
 	validateStringParameterAllowingEmpty('address.county', LENGTH_250),
-	validateRequiredStringParameter('address.postcode', LENGTH_8),
-	validateRegex('address.postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
+	validateRequiredStringParameter('address.postcode', LENGTH_8, 'address'),
+	validateRegex('address.postcode', UK_POSTCODE_REGEX, 'address').withMessage(
+		ERROR_INVALID_POSTCODE
+	),
 	validationErrorHandler
 );
 
 export const patchHearingValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateIdParameter('hearingId'),
-	validateIdParameter('addressId'),
-	validateDateParameter({ parameterName: 'hearingStartTime' }),
+	validateDateParameter({ parameterName: 'hearingStartTime', isRequired: true }),
 	validateDateParameter({ parameterName: 'hearingEndTime' }),
-	validateRequiredStringParameter('address.addressLine1', LENGTH_250),
+	body('addressId').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
+	body('address').optional(),
+	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
 	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
-	validateRequiredStringParameter('address.town', LENGTH_250),
+	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),
 	validateStringParameter('address.country', LENGTH_250),
 	validateStringParameterAllowingEmpty('address.county', LENGTH_250),
-	validateRequiredStringParameter('address.postcode', LENGTH_8),
-	validateRegex('address.postcode', UK_POSTCODE_REGEX).withMessage(ERROR_INVALID_POSTCODE),
+	validateRequiredStringParameter('address.postcode', LENGTH_8, 'address'),
+	validateRegex('address.postcode', UK_POSTCODE_REGEX, 'address').withMessage(
+		ERROR_INVALID_POSTCODE
+	),
 	validationErrorHandler
 );
