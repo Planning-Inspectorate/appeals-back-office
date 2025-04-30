@@ -170,9 +170,10 @@ export function alreadyLinkedPage(appealData, linkCandidateSummary) {
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
  * @param {string} [leadAppeal]
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  * */
-export function changeLeadAppealPage(appealData, linkCandidateSummary, leadAppeal) {
+export function changeLeadAppealPage(appealData, linkCandidateSummary, leadAppeal, errorMessage) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const title = 'Which is the lead appeal?';
 
@@ -202,7 +203,8 @@ export function changeLeadAppealPage(appealData, linkCandidateSummary, leadAppea
 				items: [
 					radioItem(appealData.appealReference, appealData.appealType),
 					radioItem(linkCandidateSummary.appealReference, linkCandidateSummary.appealType)
-				]
+				],
+				errorMessage
 			})
 		]
 	};

@@ -111,7 +111,8 @@ export function renderLeadAppeal(request, response) {
 	const pageContent = changeLeadAppealPage(
 		currentAppeal,
 		session.linkableAppeal.linkableAppealSummary,
-		session.linkableAppeal.leadAppeal
+		session.linkableAppeal.leadAppeal,
+		errors?.['lead-appeal'].msg
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
