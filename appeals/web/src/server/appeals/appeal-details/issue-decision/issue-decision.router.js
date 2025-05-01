@@ -13,7 +13,7 @@ router
 	.route('/decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderIssueDecision)
+		asyncHandler(controller.getIssueDecision)
 	)
 	.post(
 		validators.validateDecision,
@@ -26,7 +26,7 @@ router
 	.get(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderDecisionLetterUpload)
+		asyncHandler(controller.getDecisionLetterUpload)
 	)
 	.post(
 		validateAppeal,
@@ -38,7 +38,7 @@ router
 	.route('/decision-letter-date')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderDateDecisionLetter)
+		asyncHandler(controller.getDateDecisionLetter)
 	)
 	.post(
 		validators.validateVisitDateFields,
@@ -53,7 +53,7 @@ router
 	.route('/invalid-reason')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderInvalidReason)
+		asyncHandler(controller.getInvalidReason)
 	)
 	.post(
 		createTextAreaSanitizer('decisionInvalidReason'),
@@ -67,7 +67,7 @@ router
 	.get(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderCheckDecision)
+		asyncHandler(controller.getCheckDecision)
 	)
 	.post(
 		validateAppeal,
@@ -80,7 +80,7 @@ router
 	.route('/check-invalid-decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderCheckInvalidDecision)
+		asyncHandler(controller.getCheckInvalidDecision)
 	)
 	.post(
 		validators.validateCheckDecision,
