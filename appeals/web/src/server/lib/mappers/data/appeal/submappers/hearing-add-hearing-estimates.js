@@ -8,6 +8,6 @@ export const mapAddHearingEstimates = ({ currentRoute, userHasUpdateCasePermissi
 	}
 	return simpleHtml({
 		id,
-		content: `<h3 class="govuk-heading-m">Hearing estimates</h3><p><a class="govuk-body govuk-link" href="${currentRoute}/hearing/add-estimates">Add hearing estimates</a></p>`
+		content: `<h3 class="govuk-heading-m">Hearing estimates</h3><p><a id="addHearingEstimates" class="govuk-body govuk-link" href="${currentRoute}/hearing/estimates/add">Add hearing estimates</a></p>`
 	});
 };

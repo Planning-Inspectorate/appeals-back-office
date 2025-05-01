@@ -2411,12 +2411,12 @@ export interface EiaScreeningRequiredRequest {
 	eiaScreeningRequired?: boolean;
 }
 
-export type CreateHearingRequest = any & {
+export interface CreateHearingRequest {
 	/**
 	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
-	hearingStartTime: string;
+	hearingStartTime?: string;
 	/**
 	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
@@ -2438,14 +2438,14 @@ export type CreateHearingRequest = any & {
 		/** @example "Woodton" */
 		town?: string;
 	};
-};
+}
 
-export type UpdateHearingRequest = any & {
+export interface UpdateHearingRequest {
 	/**
 	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
-	hearingStartTime: string;
+	hearingStartTime?: string;
 	/**
 	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
@@ -2467,7 +2467,7 @@ export type UpdateHearingRequest = any & {
 		/** @example "Woodton" */
 		town?: string;
 	};
-};
+}
 
 export interface HearingResponse {
 	/** @example 1 */
@@ -2500,6 +2500,38 @@ export interface HearingResponse {
 		/** @example "Woodton" */
 		town?: string;
 	};
+}
+
+export interface HearingEstimate {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateCreateRequest {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateUpdateRequest {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateResponse {
+	/** @example 1 */
+	hearingEstimateId?: number;
 }
 
 export interface Address {

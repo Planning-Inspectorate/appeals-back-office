@@ -143,6 +143,10 @@ export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was remove
 
 export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
 
+export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
+
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
@@ -208,6 +212,7 @@ export const ERROR_MUST_BE_INCOMPLETE_INVALID_REASON =
 	'must be an array of objects containing a required id number parameter and an optional text string array parameter containing 10 or less items';
 export const ERROR_MUST_BE_NUMBER = 'must be a number';
 export const ERROR_NUMBER_RANGE = 'must be a number between {replacement0} and {replacement1}';
+export const ERROR_NUMBER_INCREMENTS = 'must be in increments of {replacement0}';
 export const ERROR_MUST_BE_SET_AS_HEADER = 'must be set as a header';
 export const ERROR_MUST_BE_STRING = 'must be a string';
 export const ERROR_MUST_BE_UUID = 'must be a uuid';

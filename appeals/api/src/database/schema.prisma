@@ -61,6 +61,7 @@ model Appeal {
   caseNotes             CaseNote[]
   hearing               Hearing?
   appealNotifications   AppealNotification[]
+  hearingEstimate       HearingEstimate?
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -847,4 +848,15 @@ model AppealNotification {
   @@index([caseReference])
   @@index([template])
   @@index([dateCreated(sort: Desc)])
+}
+
+/// HearingEstimate model
+/// Contains information on the hearing estimates for an appeal
+model HearingEstimate {
+  id              Int      @id @default(autoincrement())
+  appealId        Int      @unique
+  preparationTime Decimal?
+  sittingTime     Decimal?
+  reportingTime   Decimal?
+  appeal          Appeal   @relation(fields: [appealId], references: [id])
 }

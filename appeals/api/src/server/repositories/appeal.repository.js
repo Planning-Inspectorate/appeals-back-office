@@ -128,7 +128,8 @@ const appealDetailsInclude = {
 			}
 		}
 	},
-	representations: true
+	representations: true,
+	hearingEstimate: true
 };
 
 /**

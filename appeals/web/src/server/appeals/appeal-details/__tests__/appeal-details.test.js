@@ -2846,7 +2846,7 @@ describe('appeal-details', () => {
 				);
 				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
 				expect(unprettifiedHearingSectionHtml).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/hearing/add-estimates">Add hearing estimates</a>`
+					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
 				);
 			});
 		});
