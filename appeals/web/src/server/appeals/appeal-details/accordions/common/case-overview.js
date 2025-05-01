@@ -9,8 +9,6 @@ export const getCaseOverview = (mappedData) => ({
 	type: 'summary-list',
 	parameters: {
 		rows: [
-			mappedData.appeal.siteAddress.display.summaryListItem,
-			mappedData.appeal.localPlanningAuthority.display.summaryListItem,
 			removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
 			mappedData.appeal.appealType.display.summaryListItem,
 			removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),

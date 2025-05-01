@@ -112,7 +112,8 @@ export async function renderAllocationSpecialisms(request, response) {
 	const pageContent = allocationSpecialismsPage(
 		currentAppeal,
 		specialisms,
-		session.acceptLPAStatement
+		session.acceptLPAStatement,
+		'valid'
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

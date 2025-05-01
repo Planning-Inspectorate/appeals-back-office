@@ -55,6 +55,7 @@ export function loadConfig() {
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_HEARING,
 		FEATURE_FLAG_LINKED_APPEALS,
+		FEATURE_FLAG_S20,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -124,7 +125,8 @@ export function loadConfig() {
 		featureFlags: {
 			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
 			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
-			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true'
+			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
+			featureFlagS20: FEATURE_FLAG_S20 === 'true'
 		}
 	};
 

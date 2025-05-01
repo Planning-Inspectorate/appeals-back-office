@@ -41,6 +41,7 @@ variable "apps_config" {
       featureFlagS78Written    = bool
       featureFlagS78Hearing    = bool
       featureFlagLinkedAppeals = bool
+      featureFlagS20           = bool
     })
 
     logging = object({

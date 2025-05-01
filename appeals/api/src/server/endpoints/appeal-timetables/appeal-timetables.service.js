@@ -78,7 +78,8 @@ const startCase = async (
 		/** @type {Record<string, string>} */
 		const appealTypeMap = {
 			D: '-',
-			W: '-s78-'
+			W: '-s78-',
+			Y: '-s78-'
 		};
 
 		const appellantTemplate = appeal.caseStartedDate

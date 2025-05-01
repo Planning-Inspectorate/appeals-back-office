@@ -138,7 +138,13 @@ export class CaseDetailsPage extends Page {
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
-			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a')
+			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
+		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
+		caseDetailsHearingEstimateLink: () => cy.get('#case-details-hearing-section p > a'),
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
+		estimatedPreparationTime: () => cy.get('#preparation-time'),
+		estimatedSittingTime: () => cy.get('#sitting-time'),
+		estimatedReportingTime: () => cy.get('#reporting-time')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -404,6 +410,14 @@ export class CaseDetailsPage extends Page {
 		this.elements.lPAStatementTableChangeLink(row).click();
 	}
 
+	clickHearingButton() {
+		this.elements.caseDetailsHearingSectionButton().click();
+	}
+
+	clickHearingEstimateLink() {
+		this.elements.caseDetailsHearingEstimateLink().click();
+	}
+
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
@@ -605,5 +619,32 @@ export class CaseDetailsPage extends Page {
 			this.elements.showMoreToggle().should('not.exist');
 		}
 		this.elements.showMoreContent().should('contain.text', statement);
+	}
+
+	verifyHearingSectionIsDisplayed() {
+		this.elements.caseDetailsHearingSectionButton().should('be.visible');
+		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
+	}
+
+	setUpHearing(date, hour, minute) {
+		dateTimeSection.enterHearingDate(date);
+		dateTimeSection.enterHearingTime(hour, minute);
+		this.clickButtonByText('Continue');
+	}
+
+	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
+		this.elements.errorMessageLink(link).click();
+		cy.focused().should('have.attr', attribute, value);
+	}
+
+	verifyInlineErrorMessage(element) {
+		cy.get(`#${element}`).should('be.visible');
+	}
+
+	addHearingEstimates(preparationTime, sittingTime, reportingTime) {
+		this.elements.estimatedPreparationTime().clear().type(preparationTime);
+		this.elements.estimatedSittingTime().clear().type(sittingTime);
+		this.elements.estimatedReportingTime().clear().type(reportingTime);
+		this.clickButtonByText('Continue');
 	}
 }

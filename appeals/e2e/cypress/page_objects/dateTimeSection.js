@@ -2,7 +2,6 @@
 import { Page } from './basePage';
 
 export class DateTimeSection extends Page {
-
 	// S E L E C T O R S
 
 	selectors = {
@@ -10,7 +9,9 @@ export class DateTimeSection extends Page {
 		visitStartHour: '#visit-start-time-hour',
 		visitStartMinute: '#visit-start-time-minute',
 		visitEndHour: '#visit-end-time-hour',
-		visitEndMinute: '#visit-end-time-minute'
+		visitEndMinute: '#visit-end-time-minute',
+		hearingTimeHour: '#hearing-time-hour',
+		hearingTimeMinute: '#hearing-time-minute'
 	};
 
 	// Prefix of date selector which is expected to end in 'day', 'month' and 'year' for each dropdown in the HTML
@@ -20,7 +21,8 @@ export class DateTimeSection extends Page {
 		visitDate: '#visit-date-',
 		decisionLetterDate: '#decision-letter-date-',
 		changeAppealDate: '#change-appeal-final-date-',
-		withdrawalRequestDate: '#withdrawal-request-date-'
+		withdrawalRequestDate: '#withdrawal-request-date-',
+		hearingDate: '#hearing-date-'
 	};
 
 	// E L E M E N T S
@@ -30,7 +32,9 @@ export class DateTimeSection extends Page {
 		enterVisitStartHour: () => cy.get(this.selectors.visitStartHour),
 		enterVisitStartMinute: () => cy.get(this.selectors.visitStartMinute),
 		enterVisitEndHour: () => cy.get(this.selectors.visitEndHour),
-		enterVisitEndMinute: () => cy.get(this.selectors.visitEndMinute)
+		enterVisitEndMinute: () => cy.get(this.selectors.visitEndMinute),
+		enterHearingTimeHour: () => cy.get(this.selectors.hearingTimeHour),
+		enterHearingTimeMinute: () => cy.get(this.selectors.hearingTimeMinute)
 	};
 
 	// A C T I O N S
@@ -76,13 +80,13 @@ export class DateTimeSection extends Page {
 	}
 
 	enterVisitStartTime(hour, minute) {
-		this.#set(this.elements.enterVisitStartHour(), hour );
-		this.#set(this.elements.enterVisitStartMinute(), minute );
+		this.#set(this.elements.enterVisitStartHour(), hour);
+		this.#set(this.elements.enterVisitStartMinute(), minute);
 	}
 
 	enterVisitEndTime(hour, minute) {
-		this.#set(this.elements.enterVisitEndHour(), hour );
-		this.#set(this.elements.enterVisitEndMinute(), minute );
+		this.#set(this.elements.enterVisitEndHour(), hour);
+		this.#set(this.elements.enterVisitEndMinute(), minute);
 	}
 
 	formatDate(date) {
@@ -106,6 +110,15 @@ export class DateTimeSection extends Page {
 	}
 	removeVisitEndTimeMinute(index = 0) {
 		this.elements.enterVisitEndMinute().eq(index).clear();
+	}
+
+	enterHearingDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.hearingDate, date);
+	}
+
+	enterHearingTime(hour, minute) {
+		this.#set(this.elements.enterHearingTimeHour(), hour);
+		this.#set(this.elements.enterHearingTimeMinute(), minute);
 	}
 
 	// Private helper methods

@@ -59,7 +59,7 @@ describe('/appeals/case-submission', () => {
 			const payload = {
 				casedata: {
 					...validPayload,
-					caseType: APPEAL_CASE_TYPE.Y
+					caseType: APPEAL_CASE_TYPE.Q
 				},
 				users: validAppellantCase.users,
 				documents: []
@@ -70,7 +70,7 @@ describe('/appeals/case-submission', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					details: `Error validating case types: ${APPEAL_CASE_TYPE.Y} not currently supported`,
+					details: `Error validating case types: ${payload.casedata.caseType} not currently supported`,
 					integration: ERROR_INVALID_APPELLANT_CASE_DATA
 				}
 			});

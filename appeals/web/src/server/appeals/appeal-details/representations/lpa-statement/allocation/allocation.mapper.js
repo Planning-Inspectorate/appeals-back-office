@@ -91,9 +91,10 @@ export function allocationLevelPage(appealDetails, allocationLevels, sessionData
  * @param {Appeal} appealDetails
  * @param {{ id: number, name: string }[]} specialisms
  * @param {Record<string, string>} sessionData
+ * @param {'valid'|'redact'} flowRoute
  * @returns {PageContent}
  * */
-export function allocationSpecialismsPage(appealDetails, specialisms, sessionData) {
+export function allocationSpecialismsPage(appealDetails, specialisms, sessionData, flowRoute) {
 	// move "General allocation" to the top as per A2-1426
 	let specialismsSorted = specialisms.slice();
 	const generalAllocationIndex = specialisms.findIndex(
@@ -132,7 +133,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, sessionDat
 
 	return {
 		title: 'Allocation specialisms',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${flowRoute}/allocation-level`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation specialisms',
 		submitButtonText: 'Continue',
