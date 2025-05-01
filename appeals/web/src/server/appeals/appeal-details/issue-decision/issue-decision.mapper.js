@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -18,58 +18,6 @@ import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
  * @returns {PageContent}
  */
 export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
-	/** @type {PageComponent} */
-	const summaryBlock = {
-		type: 'inset-text',
-		parameters: {
-			classes: 'govuk-!-margin-top-0',
-			html: '',
-			pageComponents: [
-				{
-					type: 'summary-list',
-					parameters: {
-						rows: [
-							...(appealDetails.appellant
-								? [
-										{
-											key: {
-												text: 'Appellant'
-											},
-											value: {
-												text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
-											}
-										}
-								  ]
-								: []),
-							...(appealDetails.siteAddress
-								? [
-										{
-											key: {
-												text: 'Site address'
-											},
-											value: {
-												html: appealDetails.siteAddress
-													? addressToMultilineStringHtml(appealDetails.siteAddress)
-													: null
-											}
-										}
-								  ]
-								: []),
-							{
-								key: {
-									text: 'Appeal type'
-								},
-								value: {
-									text: appealDetails.appealType
-								}
-							}
-						]
-					}
-				}
-			]
-		}
-	};
-
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
@@ -97,7 +45,7 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 				{
 					value: 'Split',
 					text: 'Split Decision',
-					checked: inspectorDecision?.outcome === 'Split'
+					checked: inspectorDecision?.outcome === 'Split-decision'
 				},
 				{
 					value: 'Invalid',
@@ -108,19 +56,14 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 		}
 	};
 
-	const pageComponents = [summaryBlock, selectVisitTypeComponent];
-
-	preRenderPageComponents(pageComponents);
-
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the decision? - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference} - issue decision`,
-		heading: 'Decision',
-		pageComponents
+		preHeading: `Appeal ${shortAppealReference}`,
+		pageComponents: [selectVisitTypeComponent]
 	};
 
 	return pageContent;
@@ -216,12 +159,15 @@ export function dateDecisionLetterPage(
 }
 
 /**
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(appealData, session) {
+export function checkAndConfirmPage(request, appealData, session) {
 	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+	const decisionLetter = session.fileUploadInfo?.files[0]?.name;
+	const letterDate = session.inspectorDecision?.letterDate;
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
@@ -244,20 +190,83 @@ export function checkAndConfirmPage(appealData, session) {
 							}
 						]
 					}
+				},
+				{
+					key: {
+						text: 'Decision letter'
+					},
+					value: {
+						text: decisionLetter
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
+								visuallyHiddenText: 'decision letter'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Decision date'
+					},
+					value: {
+						text: dateISOStringToDisplayDate(letterDate)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
+								visuallyHiddenText: 'decision date'
+							}
+						]
+					}
 				}
 			]
 		}
 	};
 
-	const title = 'Check details and issue decision';
+	/** @type {PageComponent} */
+	const warningTextComponent = {
+		type: 'warning-text',
+		parameters: {
+			text: 'You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
+		}
+	};
+
+	/** @type {PageComponent} */
+	const insetConfirmComponent = {
+		type: 'checkboxes',
+		parameters: {
+			name: 'ready-to-send',
+			idPrefix: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
+		}
+	};
+
+	const title = 'Check your answers';
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
+		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		submitButtonText: 'Send decision',
-		pageComponents: [summaryListComponent]
+		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
+
+	if (pageContent.pageComponents) {
+		preRenderPageComponents(pageContent.pageComponents);
+	}
 
 	return pageContent;
 }
