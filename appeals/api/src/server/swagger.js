@@ -1334,6 +1334,66 @@ export const spec = {
 				}
 			}
 		},
+		HearingEstimate: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateCreateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateUpdateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateResponse: {
+			type: 'object',
+			properties: {
+				hearingEstimateId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

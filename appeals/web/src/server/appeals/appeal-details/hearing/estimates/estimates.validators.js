@@ -29,14 +29,11 @@ const daysOrHalfDaysValidator = (name, label) =>
 	);
 
 export const validatePreparationTime = daysOrHalfDaysValidator(
-	'preparation-time',
+	'preparationTime',
 	'Estimated preparation time'
 );
-export const validateSittingTime = daysOrHalfDaysValidator(
-	'sitting-time',
-	'Estimated sitting time'
-);
+export const validateSittingTime = daysOrHalfDaysValidator('sittingTime', 'Estimated sitting time');
 export const validateReportingTime = daysOrHalfDaysValidator(
-	'reporting-time',
+	'reportingTime',
 	'Estimated reporting time'
 );

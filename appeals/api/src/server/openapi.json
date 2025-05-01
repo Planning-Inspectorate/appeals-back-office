@@ -5235,6 +5235,183 @@
 					}
 				}
 			}
+		},
+		"/appeals/{appealId}/hearing-estimates": {
+			"post": {
+				"tags": ["Hearing Estimates"],
+				"description": "Creates hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Creates hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing estimate details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateCreateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateCreateRequest"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Hearing Estimates"],
+				"description": "Updates hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing estimate details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Hearing Estimates"],
+				"description": "Deletes hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -10491,22 +10668,7 @@
 							}
 						}
 					}
-				},
-				"required": ["hearingStartTime"],
-				"oneOf": [
-					{
-						"required": ["addressId"],
-						"not": {
-							"required": ["address"]
-						}
-					},
-					{
-						"required": ["address"],
-						"not": {
-							"required": ["addressId"]
-						}
-					}
-				]
+				}
 			},
 			"UpdateHearingRequest": {
 				"type": "object",
@@ -10554,22 +10716,7 @@
 							}
 						}
 					}
-				},
-				"required": ["hearingStartTime"],
-				"oneOf": [
-					{
-						"required": ["addressId"],
-						"not": {
-							"required": ["address"]
-						}
-					},
-					{
-						"required": ["address"],
-						"not": {
-							"required": ["addressId"]
-						}
-					}
-				]
+				}
 			},
 			"HearingResponse": {
 				"type": "object",
@@ -10624,6 +10771,66 @@
 								"example": "Woodton"
 							}
 						}
+					}
+				}
+			},
+			"HearingEstimate": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateCreateRequest": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateUpdateRequest": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateResponse": {
+				"type": "object",
+				"properties": {
+					"hearingEstimateId": {
+						"type": "number",
+						"example": 1
 					}
 				}
 			},

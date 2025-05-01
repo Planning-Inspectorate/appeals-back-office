@@ -124,6 +124,7 @@ interface SingleAppealDetailsResponse {
 		withdrawalRequestDate: Date | null;
 	};
 	eiaScreeningRequired?: boolean | null;
+	hearingEstimate?: HearingEstimate | null;
 }
 
 interface UpdateAppealRequest {
@@ -470,6 +471,12 @@ interface NeighbouringSite {
 	siteId: number;
 	source: string;
 	address: AppealSite;
+}
+
+interface HearingEstimate {
+	preparationTime?: number;
+	sittingTime?: number;
+	reportingTime?: number;
 }
 
 interface AppealTimetable {

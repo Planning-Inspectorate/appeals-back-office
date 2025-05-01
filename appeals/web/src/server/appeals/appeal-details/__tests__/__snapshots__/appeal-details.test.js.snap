@@ -131,11 +131,12 @@ exports[`appeal-details GET /:appealId Costs should render a "Costs decision" ro
 exports[`appeal-details GET /:appealId Hearing should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing" 1`] = `
 "<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup" role="button"
     draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
-    <div>
-        <h3 class="govuk-heading-m">Hearing estimates</h3>
-        <p><a class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/add-estimates">Add hearing estimates</a>
-        </p>
-    </div>
+    <h3     class="govuk-heading-m">Hearing estimates</h3>
+        <div>
+            <h3 class="govuk-heading-m">Hearing estimates</h3>
+            <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+            </p>
+        </div>
 </div>"
 `;
 
