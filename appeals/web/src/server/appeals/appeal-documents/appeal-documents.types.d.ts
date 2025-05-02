@@ -8,6 +8,7 @@ export interface DocumentUploadPageParameters {
 	documentId?: string;
 	documentOriginalFileName?: string;
 	documentVersion?: number;
+	documentTitle?: string | null | undefined;
 	useBlobEmulator: boolean;
 	filenamesInFolder?: string;
 	blobStorageHost: string;
@@ -18,9 +19,11 @@ export interface DocumentUploadPageParameters {
 	appealShortReference?: string | null | undefined;
 	pageTitle?: string;
 	pageHeadingText: string;
+	uploadContainerHeadingText?: string;
 	pageBodyComponents: PageComponent[];
 	caseInfoText?: string;
 	documentType: string;
+	allowedTypes: string[];
 	nextPageUrl: string;
 	displayLateEntryContent?: boolean;
 	displayCorrectFolderConfirmationContent?: boolean;
@@ -51,6 +54,7 @@ export interface FileUploadError {
 	message: string;
 	guid: string;
 	name: string;
+	formId?: string;
 }
 
 export interface UploadFilesResult {
@@ -94,6 +98,7 @@ export interface StagedFileError {
 	message: string;
 	guid: string;
 	metadata?: Record<string, string>;
+	formId?: string;
 }
 
 export interface FileUploadParameters {

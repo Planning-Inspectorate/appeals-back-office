@@ -133,7 +133,7 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 		});
 	});
 
