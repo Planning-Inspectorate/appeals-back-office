@@ -94,3 +94,6 @@ export const errorAddressProvidedRadio = (/** @type {Error} */ errors) => {
 		  }
 		: undefined;
 };
+
+export const getErrorByFieldname = (/** @type {Error} */ errors, /** @type {string} */ fieldName) =>
+	errors?.[fieldName]?.msg ? { text: errors[fieldName].msg } : undefined;

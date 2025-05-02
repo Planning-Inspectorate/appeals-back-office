@@ -3,6 +3,7 @@ import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -15,9 +16,10 @@ import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/app
  * @param {Appeal} appealDetails
  * @param {InspectorDecisionRequest} inspectorDecision
  * @param {string|undefined} backUrl
+ * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
+export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, errors) {
 	/** @type {PageComponent} */
 	const summaryBlock = {
 		type: 'inset-text',
@@ -74,12 +76,14 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 		}
 	};
 
+	const fieldName = 'decision';
+
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
 		parameters: {
-			name: 'decision',
-			idPrefix: 'decision',
+			name: fieldName,
+			idPrefix: fieldName,
 			fieldset: {
 				legend: {
 					text: 'What is the decision?',
@@ -108,7 +112,8 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 					text: 'Invalid',
 					checked: inspectorDecision?.outcome === 'Invalid'
 				}
-			]
+			],
+			errorMessage: getErrorByFieldname(errors, fieldName)
 		}
 	};
 
