@@ -57,6 +57,17 @@ describe('issue-decision', () => {
 		});
 		afterEach(teardown);
 
+		it(`should require a chosen option`, async () => {
+			const response = await request.post(`${baseUrl}/1/issue-decision/decision`).expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Select decision</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="decision-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select decision</p>'
+			);
+		});
+
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)

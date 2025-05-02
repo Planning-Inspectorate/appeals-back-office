@@ -67,7 +67,8 @@ export const renderIssueDecision = async (request, response) => {
 	const mappedPageContent = issueDecisionPage(
 		appealData,
 		request.session.inspectorDecision,
-		getBackLinkUrlFromQuery(request)
+		getBackLinkUrlFromQuery(request),
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
