@@ -7,7 +7,7 @@
  * @param {MappingRequest} data
  * @returns {HearingResponse|undefined}
  */
-export const mapSiteVisit = (data) => {
+export const mapHearing = (data) => {
 	const { appeal } = data;
 
 	if (appeal.hearing) {
