@@ -649,7 +649,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -1131,7 +1131,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -1583,7 +1583,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -2041,7 +2041,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -2537,7 +2537,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -2989,7 +2989,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -3459,7 +3459,7 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -3922,7 +3922,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -4376,7 +4376,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -4830,7 +4830,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -5321,7 +5321,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -5784,7 +5784,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -6259,7 +6259,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -6710,7 +6710,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -7180,7 +7180,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <p class="govuk-body">Not assigned</p>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                        data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -7650,7 +7650,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <p class="govuk-body">Not assigned</p>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
-                                    data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                                    data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
