@@ -49,7 +49,7 @@ export const mapLpaQuestionnaire = (data) => {
 		eiaSensitiveAreaDetails: casedata?.eiaSensitiveAreaDetails ?? null,
 		consultedBodiesDetails: casedata?.consultedBodiesDetails ?? null,
 		eiaScreeningOpinion: casedata?.eiaScreeningOpinion ?? null,
-
+		eiaScopingOpinion: casedata?.eiaScopingOpinion ?? null,
 		eiaColumnTwoThreshold: casedata?.eiaColumnTwoThreshold ?? null,
 		eiaRequiresEnvironmentalStatement: casedata?.eiaRequiresEnvironmentalStatement ?? null,
 		// @ts-ignore
