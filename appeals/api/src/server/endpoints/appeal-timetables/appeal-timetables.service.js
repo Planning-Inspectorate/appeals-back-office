@@ -108,7 +108,7 @@ const startCase = async (
 				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
 			});
 
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 			const lpaEmail = appeal.lpa?.email || '';
 			const { type } = appeal.appealType || {};
 			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
@@ -119,7 +119,7 @@ const startCase = async (
 				lpa_reference: appeal.applicationReference || '',
 				site_address: siteAddress,
 				start_date: formatDate(new Date(startDate || ''), false),
-				appellant_email_address: recipientEmail || '',
+				appellant_email_address: appellantEmail || '',
 				url: FRONT_OFFICE_URL,
 				appeal_type: appealType || '',
 				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
@@ -135,11 +135,11 @@ const startCase = async (
 				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
 			};
 
-			if (recipientEmail) {
+			if (appellantEmail) {
 				await notifySend({
 					templateName: appellantTemplate,
 					notifyClient,
-					recipientEmail,
+					recipientEmail: appellantEmail,
 					personalisation: commonEmailVariables
 				});
 			}
@@ -148,7 +148,7 @@ const startCase = async (
 				await notifySend({
 					templateName: lpaTemplate,
 					notifyClient,
-					recipientEmail,
+					recipientEmail: lpaEmail,
 					personalisation: commonEmailVariables
 				});
 			}
