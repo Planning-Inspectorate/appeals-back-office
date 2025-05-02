@@ -318,6 +318,7 @@ interface SingleLPAQuestionnaireResponse {
 		consultationResponses?: FolderInfo | null;
 		eiaEnvironmentalStatement?: FolderInfo | null;
 		eiaScreeningOpinion?: FolderInfo | null;
+		eiaScopingOpinion?: FolderInfo | null;
 		eiaScreeningDirection?: FolderInfo | null;
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;

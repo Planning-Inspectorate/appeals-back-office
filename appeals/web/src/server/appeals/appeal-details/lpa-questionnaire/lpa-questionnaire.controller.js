@@ -324,6 +324,8 @@ export const getAddDocuments = async (request, response) => {
 		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION]: 'Upload the screening direction',
 		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION]:
 			'Upload your screening opinion and any correspondence',
+		[APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION]:
+			'Upload your scoping opinion and any correspondence',
 		[APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT]:
 			'Environmental statement and supporting information',
 		[APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES]:
