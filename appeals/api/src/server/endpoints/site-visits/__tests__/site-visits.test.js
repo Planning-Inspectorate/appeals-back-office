@@ -322,7 +322,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitSchedule.unaccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -373,7 +373,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitSchedule.accompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -391,7 +391,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitSchedule.accompanied.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -445,7 +445,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitSchedule.accessRequired.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1256,7 +1256,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.unaccompaniedToAccessRequired.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1332,7 +1332,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1351,7 +1351,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1428,7 +1428,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accessRequiredDateChange.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1504,7 +1504,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedDateChange.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1523,7 +1523,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedDateChange.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1599,7 +1599,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1618,7 +1618,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToUnaccompanied.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1694,7 +1694,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.unaccompaniedToAccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1713,7 +1713,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.unaccompaniedToAccompanied.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1790,7 +1790,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accessRequiredToAccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1809,7 +1809,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accessRequiredToAccompanied.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1885,7 +1885,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToAccessRequired.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1904,7 +1904,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accompaniedToAccessRequired.lpa.id,
-					'maid@lpa-email.gov.uk',
+					householdAppeal.lpa.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -1980,7 +1980,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.accessRequiredToUnaccompanied.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
@@ -2057,7 +2057,7 @@ describe('site visit routes', () => {
 				// eslint-disable-next-line no-undef
 				expect(mockSendEmail).toHaveBeenCalledWith(
 					config.govNotify.template.siteVisitChange.unaccompaniedToAccessRequired.appellant.id,
-					'test@136s7.com',
+					householdAppeal.agent.email,
 					{
 						emailReplyToId: null,
 						personalisation: {
