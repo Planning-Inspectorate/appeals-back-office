@@ -2883,7 +2883,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -2914,7 +2914,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -2945,7 +2945,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -2976,7 +2976,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3007,7 +3007,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3053,7 +3053,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3084,7 +3084,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3115,7 +3115,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3146,7 +3146,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
@@ -3177,7 +3177,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'

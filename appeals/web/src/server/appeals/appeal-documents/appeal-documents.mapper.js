@@ -44,6 +44,9 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {boolean} [allowMultipleFiles]
  * @param {string} [documentType]
  * @param {string} [filenamesInFolder]
+ * @param {string[]} [allowedTypes]
+ * @param {string?} [uploadContainerHeadingTextOverride]
+ * @param {string?} [documentTitle]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
@@ -63,11 +66,15 @@ export async function documentUploadPage(
 	pageBodyComponents = [],
 	allowMultipleFiles,
 	documentType,
-	filenamesInFolder
+	filenamesInFolder,
+	allowedTypes = [],
+	uploadContainerHeadingTextOverride = '',
+	documentTitle = ''
 ) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
+	const uploadContainerHeadingText = uploadContainerHeadingTextOverride || pageHeadingText;
 	const pathComponents = folderPath ? folderPath.split('/') : [];
 	const documentStage = pathComponents.length > 0 ? pathComponents[0] : 'unknown';
 	const documentTypeComputed =
@@ -100,7 +107,10 @@ export async function documentUploadPage(
 		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText,
 		pageBodyComponents,
+		uploadContainerHeadingText,
+		documentTitle,
 		documentType: documentTypeComputed,
+		allowedTypes,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||
 			backButtonUrl?.replace('{{folderId}}', folderId),
