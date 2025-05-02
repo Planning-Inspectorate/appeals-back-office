@@ -60,7 +60,7 @@ model Appeal {
   representations       Representation[]
   caseNotes             CaseNote[]
   hearing               Hearing?
-  AppealNotification    AppealNotification[]
+  appealNotification    AppealNotification[]
 
   @@index([addressId])
   @@index([appealTypeId])
