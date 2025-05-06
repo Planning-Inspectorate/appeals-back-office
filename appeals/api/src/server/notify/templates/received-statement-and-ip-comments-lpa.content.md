@@ -2,11 +2,7 @@ We’ve received comments from interested parties.
 
 You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address).
 
-# Appeal details
-
-^Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-Planning application reference: {{lpa_reference}}
+{% include 'parts/appeal-details.md' %}
 
 # What happens next
 
