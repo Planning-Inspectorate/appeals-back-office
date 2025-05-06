@@ -59,6 +59,7 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
+  hearing               Hearing?
   appealNotifications   AppealNotification[]
 
   @@index([addressId])
@@ -230,6 +231,7 @@ model Address {
   Appeal            Appeal[]
   ServiceUser       ServiceUser[]
   NeighbouringSites NeighbouringSite[]
+  Hearing           Hearing?
 }
 
 /// NeighbouringSite model
@@ -797,6 +799,18 @@ model CaseNote {
   archived  Boolean  @default(false)
 
   @@index([caseId])
+}
+
+//Hearing model
+//Store hearing related information
+model Hearing {
+  id               Int       @id @default(autoincrement())
+  appealId         Int       @unique
+  hearingStartTime DateTime
+  hearingEndTime   DateTime?
+  addressId        Int?      @unique
+  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// ListedBuilding model
