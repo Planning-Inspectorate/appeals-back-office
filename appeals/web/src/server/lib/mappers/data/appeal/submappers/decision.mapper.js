@@ -18,7 +18,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 	return textSummaryListItem({
 		id: 'decision',
 		text: 'Decision',
-		value: mapDecisionOutcome(appealDetails.decision?.outcome || '') || 'Not yet issued',
+		value: mapDecisionOutcome(appealDetails.decision?.outcome || '') || 'Not issued',
 		link: addBackLinkQueryToUrl(request, generateIssueDecisionUrl(appealDetails.appealId)),
 		editable: userHasPermission(permissionNames.setCaseOutcome, session) && canIssueDecision,
 		actionText: 'Issue',

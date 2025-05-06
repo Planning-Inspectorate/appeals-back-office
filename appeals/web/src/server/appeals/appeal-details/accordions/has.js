@@ -63,8 +63,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
-				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem
+				mappedData.appeal.lpaQuestionnaire.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}
