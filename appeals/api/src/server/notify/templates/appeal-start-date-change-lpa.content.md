@@ -4,11 +4,7 @@ There is a new start date for the {{appeal_type}} appeal against the planning ap
 
 The new start date is {{start_date}}.
 
-# Appeal details
-
-^Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-Planning application reference: {{lpa_reference}}
+{% include 'parts/appeal-details.md' %}
 
 We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
 

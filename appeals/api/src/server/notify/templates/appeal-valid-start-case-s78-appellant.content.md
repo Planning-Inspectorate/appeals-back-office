@@ -4,11 +4,7 @@ Your appeal started on {{start_date}}. The timetable for the appeal begins from 
 
 Your appeal procedure is written representations.
 
-# Appeal details
-
-^Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-Planning application reference: {{lpa_reference}}
+{% include 'parts/appeal-details.md' %}
 
 # Timetable
 
