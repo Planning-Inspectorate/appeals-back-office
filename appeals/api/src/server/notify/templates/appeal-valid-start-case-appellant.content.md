@@ -6,7 +6,7 @@ We started your appeal on ((start_date)).
 
 ^Appeal reference number: ((appeal_reference_number))
 Address: ((site_address))
-Local planning authority: ((lpa_reference))
+Planning application reference: ((lpa_reference))
 
 # Next steps
 
