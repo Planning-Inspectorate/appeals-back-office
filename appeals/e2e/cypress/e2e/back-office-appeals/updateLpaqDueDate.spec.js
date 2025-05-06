@@ -16,7 +16,6 @@ describe('Update LPAQ Due date', () => {
 
 	it('change lpaq due date from timetable', () => {
 		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
@@ -26,13 +25,13 @@ describe('Update LPAQ Due date', () => {
 			});
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Timetable updated');
+			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewLpaq(caseRef);
 		});
 	});
 
 	it('change S78 lpaq due date from timetable', () => {
 		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startS78Case(caseRef, 'written');
@@ -42,6 +41,7 @@ describe('Update LPAQ Due date', () => {
 			});
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Timetable updated');
+			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewS78Lpaq(caseRef);
 		});
 	});

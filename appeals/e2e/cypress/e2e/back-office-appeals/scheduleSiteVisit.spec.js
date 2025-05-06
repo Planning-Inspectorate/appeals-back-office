@@ -25,7 +25,7 @@ describe('Schedule site visit', () => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
 				happyPathHelper.startCase(caseRef);
-				caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+				caseDetailsPage.clickSetUpSiteVisitType();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
 				dateTimeSection.enterVisitStartTime('08', '00');
