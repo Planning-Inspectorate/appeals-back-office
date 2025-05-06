@@ -64,7 +64,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 
@@ -75,7 +75,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 
@@ -86,7 +86,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/1/issue-decision/decision-letter-upload`
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 
@@ -97,7 +97,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/1/issue-decision/invalid-reason`
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});
@@ -573,20 +573,9 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check your answers</h1>');
+			expect(element.innerHTML).toContain('Check details and issue decision</h1>');
 			expect(element.innerHTML).toContain('Decision</dt>');
-			expect(element.innerHTML).toContain('Decision letter</dt>');
-			expect(element.innerHTML).toContain('Decision date</dt>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Warning</span> You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="ready-to-send" type="checkbox" value="yes">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
+			expect(element.innerHTML).toContain('Send decision</button>');
 		});
 	});
 
