@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "pdf-head.njk" %}
+</head>
+<body class="govuk-body">
+ {% include "pdf-header.njk" %}
+
+  <h1 class="govuk-heading-m">LPA statement</h1>
+
+  <div class="site-address-header">
+    <p><strong>Site address</strong>
+    {% if lpaStatementData.appealSite %}
+        {{ lpaStatementData.appealSite.addressLine1 | default('') }}{% if lpaStatementData.appealSite.addressLine2 %}, {{ lpaStatementData.appealSite.addressLine2 }}{% endif %}{% if lpaStatementData.appealSite.town %}, {{ lpaStatementData.appealSite.town }}{% endif %}, {{ lpaStatementData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal reference</strong> {{ lpaStatementData.appealReference | default('N/A') }}</p>
+
+
+  {% if lpaStatementData %}
+    <div class="meta-info">
+      <strong>Date received</strong> {{ lpaStatementData.created | date('d MMMM yyyy, HH:mm') if lpaStatementData.created else 'N/A' }}<br>
+      <strong>Status</strong> {{ lpaStatementData.status | default('N/A') }}
+    </div>
+
+    <h2 >Statement</h2>
+    <div class="statement-text-block">
+        <p class="govuk-body">{{ lpaStatementData.originalRepresentation | nl2br | default('No statement text provided.') | safe }}</p>
+    </div>
+
+    <h2 style="margin-top: 30px;">Supporting documents</h2>
+    {% if lpaStatementData.attachments and lpaStatementData.attachments.length %}
+      <ul class="govuk-list document-list">
+        {% for doc in lpaStatementData.attachments %}
+          <li>{{ doc.name | default('Unnamed document') }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="not-available">No documents</p>
+    {% endif %}
+
+  {% else %}
+    <p class="not-available">No LPA statement found or submitted for this appeal.</p>
+  {% endif %}
+
+</body>
+</html>

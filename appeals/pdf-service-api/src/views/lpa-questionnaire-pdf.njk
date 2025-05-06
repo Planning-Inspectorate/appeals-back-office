@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   {% include "pdf-head.njk" %}
+</head>
+<body >
+	 {% include "pdf-header.njk" %}
+  <h1 class="govuk-heading-l">LPA questionnaire</h1>
+
+  <div class="site-address-header">
+    <p><strong>Site address</strong>
+    {% if lpaQuestionnaireData.appealSite %}
+        {{ lpaQuestionnaireData.appealSite.addressLine1 | default('') }}{% if lpaQuestionnaireData.appealSite.addressLine2 %}, {{ lpaQuestionnaireData.appealSite.addressLine2 }}{% endif %}{% if lpaQuestionnaireData.appealSite.town %}, {{ lpaQuestionnaireData.appealSite.town }}{% endif %}{% if lpaQuestionnaireData.appealSite.county %}, {{ lpaQuestionnaireData.appealSite.county }}{% endif %}, {{ lpaQuestionnaireData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal reference</strong> {{ lpaQuestionnaireData.appealReference | default('N/A') }}</p>
+  <p><strong>LPA</strong> {{ lpaQuestionnaireData.localPlanningDepartment | default('N/A') }}</p>
+  <p><strong>Planning application reference</strong> {{ lpaQuestionnaireData.planningApplicationReference | default('N/A') }}</p>
+  <p><strong>Submitted</strong> {{ lpaQuestionnaireData.submittedAt | date('d MMMM yyyy, HHmm') if lpaQuestionnaireData.submittedAt else 'N/A' }}</p>
+
+  {# Section 1 Constraints, designations and other issues #}
+  <h2 class="govuk-heading-m">1. Constraints, designations and other issues</h2>
+  <div class="question-block">
+    <span class="question-title">Is planning appeal the correct type of appeal?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.isCorrectAppealType == true else ("No" if lpaQuestionnaireData.isCorrectAppealType == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Does the development change a listed building?</span>
+    {% set changedListedBuildings = [] %}
+    {% if lpaQuestionnaireData.listedBuildingDetails %}
+      {% for lb in lpaQuestionnaireData.listedBuildingDetails %}
+        {% if lb.affectsListedBuilding == false %}
+          {% set changedListedBuildings = (changedListedBuildings.push(lb), changedListedBuildings) %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% if changedListedBuildings.length > 0 %}
+      <ul class="document-list">
+      {% for lb in changedListedBuildings %}
+          <li>{{ lb.listEntry | default('N/A') }} - {{ lb.name | default('N/A') }} (Grade {{ lb.grade | default('N/A') }})</li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <span class="answer no-answer">No</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Does the development affect the setting of listed buildings?</span>
+    {% set affectedListedBuildings = [] %}
+    {% if lpaQuestionnaireData.listedBuildingDetails %}
+      {% for lb in lpaQuestionnaireData.listedBuildingDetails %}
+        {% if lb.affectsListedBuilding == true %}
+          {% set affectedListedBuildings = (affectedListedBuildings.push(lb), affectedListedBuildings) %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% if affectedListedBuildings.length > 0 %}
+      <ul class="document-list">
+      {% for lb in affectedListedBuildings %}
+          <li>{{ lb.listEntry | default('N/A') }} - {{ lb.name | default('N/A') }} (Grade {{ lb.grade | default('N/A') }})</li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <span class="answer no-answer">No</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Would the development affect a scheduled monument?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.affectsScheduledMonument == true else ("No" if lpaQuestionnaireData.affectsScheduledMonument == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Conservation area map and guidance</span>
+    {% set docs = lpaQuestionnaireData.documents.conservationMap.documents %}
+    {% if docs and docs.length %}
+      <ul class="document-list">{% for doc in docs %}<li>{{ doc.name | default('Unnamed document') }}</li>{% endfor %}</ul>
+    {% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Would the development affect a protected species?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.hasProtectedSpecies == true else ("No" if lpaQuestionnaireData.hasProtectedSpecies == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Green belt</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.isGreenBelt == true else ("No" if lpaQuestionnaireData.isGreenBelt == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the site in an area of outstanding natural beauty?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.isAonbNationalLandscape == true else ("No" if lpaQuestionnaireData.isAonbNationalLandscape == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the development in, near or likely to affect any designated sites?</span>
+    {% if lpaQuestionnaireData.designatedSiteNames and lpaQuestionnaireData.designatedSiteNames.length %}
+      <span class="answer">Yes</span>
+      <ul class="standard-list">{% for site in lpaQuestionnaireData.designatedSiteNames %}<li>{{ site.name }}</li>{% endfor %}</ul>
+    {% else %}
+      <span class="answer no-answer">No</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Tree preservation order</span>
+    {% set docs = lpaQuestionnaireData.documents.treePreservationPlan.documents %}
+    {% if docs and docs.length %}
+      <ul class="document-list">{% for doc in docs %}<li>{{ doc.name | default('Unnamed document') }}</li>{% endfor %}</ul>
+    {% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Does the development relate to anyone claiming to be a Gypsy or Traveller?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.isGypsyOrTravellerSite == true else ("No" if lpaQuestionnaireData.isGypsyOrTravellerSite == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Definitive map and statement extract</span>
+    {% set docs = lpaQuestionnaireData.documents.definitiveMapStatement.documents %}
+    {% if docs and docs.length %}
+      <ul class="document-list">{% for doc in docs %}<li>{{ doc.name | default('Unnamed document') }}</li>{% endfor %}</ul>
+    {% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+
+  {# Section 2 Environmental impact assessment #}
+  <h2 class="govuk-heading-m">2. Environmental impact assessment</h2>
+  <div class="question-block">
+    <span class="question-title">What is the development category?</span>
+    <span class="answer">{{ lpaQuestionnaireData.eiaEnvironmentalImpactSchedule | default("Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Does the development meet or exceed the threshold or criteria in column 2?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.eiaColumnTwoThreshold == true else ("No" if lpaQuestionnaireData.eiaColumnTwoThreshold == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Did your screening opinion say the development needed an environmental statement?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.eiaRequiresEnvironmentalStatement == true else ("No" if lpaQuestionnaireData.eiaRequiresEnvironmentalStatement == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Environmental statement and supporting information</span>
+    {% set docs = lpaQuestionnaireData.documents.eiaEnvironmentalStatement.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Screening opinion documents</span>
+    {% set docs = lpaQuestionnaireData.documents.eiaScreeningOpinion.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Screening direction documents</span>
+    {% set docs = lpaQuestionnaireData.documents.eiaScreeningDirection.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Description of development</span>
+    <span class="answer">{{ lpaQuestionnaireData.eiaDevelopmentDescription | default("Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the development in, partly in, or likely to affect a sensitive area?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.eiaSensitiveAreaDetails and lpaQuestionnaireData.eiaSensitiveAreaDetails | trim else "No" }}</span>
+    {% if lpaQuestionnaireData.eiaSensitiveAreaDetails and lpaQuestionnaireData.eiaSensitiveAreaDetails | trim %}
+        <p class="answer">Details {{ lpaQuestionnaireData.eiaSensitiveAreaDetails }}</p>
+    {% endif %}
+  </div>
+
+  {# Section 3 Notifying relevant parties #}
+  <h2 class="govuk-heading-m">3. Notifying relevant parties</h2>
+  <div class="question-block">
+    <span class="question-title">Who did you notify about this application?</span>
+    {% set docs = lpaQuestionnaireData.documents.whoNotified.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">How did you notify relevant parties about this application?</span>
+    {% if lpaQuestionnaireData.lpaNotificationMethods and lpaQuestionnaireData.lpaNotificationMethods.length %}
+      <ul class="standard-list">{% for method in lpaQuestionnaireData.lpaNotificationMethods %}<li>{{ method.name }}</li>{% endfor %}</ul>
+    {% else %}
+      <span class="answer not-available">Not specified.</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Site notice</span>
+    {% set docs = lpaQuestionnaireData.documents.whoNotifiedSiteNotice.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Letter or email notification</span>
+    {% set docs = lpaQuestionnaireData.documents.whoNotifiedLetterToNeighbours.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Press advertisement</span>
+    {% set docs = lpaQuestionnaireData.documents.whoNotifiedPressAdvert.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Appeal notification letter</span>
+    {% set docs = lpaQuestionnaireData.documents.appealNotification.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+
+  {# Section 4 Consultation responses and representations #}
+  <h2 class="govuk-heading-m">4. Consultation responses and representations</h2>
+  <div class="question-block">
+    <span class="question-title">Representations from members of the public or other parties</span>
+    {% set docs = lpaQuestionnaireData.documents.otherPartyRepresentations.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Consultation responses and standing advice</span>
+    {% set docs = lpaQuestionnaireData.documents.consultationResponses.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Did you consult all the relevant statutory consultees about the development?</span>
+    {% if lpaQuestionnaireData.consultedBodiesDetails and lpaQuestionnaireData.consultedBodiesDetails | trim != "" %}
+        <span class="answer">Yes</span>
+        <p class="answer">Details {{lpaQuestionnaireData.consultedBodiesDetails}}</p>
+    {% elif lpaQuestionnaireData.consultedBodiesDetails == false %}
+        <span class="answer">No</span>
+    {% else %}
+        <span class="answer no-answer">No</span>
+    {% endif %}
+  </div>
+
+  {# Section 5 Planning officer’s report and supplementary documents #}
+  <h2 class="govuk-heading-m">5. Planning officer’s report and supplementary documents</h2>
+  <div class="question-block">
+    <span class="question-title">Planning officer's report</span>
+    {% set docs = lpaQuestionnaireData.documents.planningOfficerReport.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Relevant policies from statutory development plan</span>
+    {% set docs = lpaQuestionnaireData.documents.developmentPlanPolicies.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Supplementary planning documents</span>
+    {% set docs = lpaQuestionnaireData.documents.supplementaryPlanning.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Emerging plan relevant to appeal</span>
+    {% set docs = lpaQuestionnaireData.documents.emergingPlan.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Other relevant policies</span>
+    {% set docs = lpaQuestionnaireData.documents.otherRelevantPolicies.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+
+  <div class="question-block">
+    <span class="question-title">Community infrastructure levy</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.hasInfrastructureLevy == true else ("No" if lpaQuestionnaireData.hasInfrastructureLevy == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the community infrastructure levy formally adopted?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted == true else ("No" if lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted == false else "Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">When was the community infrastructure levy formally adopted?</span>
+    <span class="answer">{{ lpaQuestionnaireData.infrastructureLevyAdoptedDate | date('d MMMM yyyy') if lpaQuestionnaireData.infrastructureLevyAdoptedDate else "N/A" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">When do you expect to formally adopt the community infrastructure levy?</span>
+    <span class="answer">{{ lpaQuestionnaireData.infrastructureLevyExpectedDate | date('d MMMM yyyy') if lpaQuestionnaireData.infrastructureLevyExpectedDate else "N/A" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Community infrastructure levy documents</span>
+    {% set docs = lpaQuestionnaireData.documents.communityInfrastructureLevy.documents %}
+    {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+
+  {# Section 6 Site access #}
+  <h2 class="govuk-heading-m">6. Site access</h2>
+  <div class="question-block">
+    <span class="question-title">Might the inspector need access to the appellant’s land or property?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.siteAccessRequired.isRequired == true else ("No" if lpaQuestionnaireData.siteAccessRequired.isRequired == false else "Not answered") }}</span>
+    {% if lpaQuestionnaireData.siteAccessRequired.isRequired and lpaQuestionnaireData.siteAccessRequired.details %}
+      <p class="answer">Details {{ lpaQuestionnaireData.siteAccessRequired.details }}</p>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Might the inspector need to enter a neighbour’s land or property?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.reasonForNeighbourVisits and lpaQuestionnaireData.reasonForNeighbourVisits | trim else "No" }}</span>
+    {% if lpaQuestionnaireData.reasonForNeighbourVisits and lpaQuestionnaireData.reasonForNeighbourVisits | trim %}
+      <p class="answer">Details {{ lpaQuestionnaireData.reasonForNeighbourVisits }}</p>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Address of the neighbour’s land or property</span>
+    {% if lpaQuestionnaireData.neighbouringSites and lpaQuestionnaireData.neighbouringSites.length %}
+        <ul class="document-list">
+                {% for site_item in lpaQuestionnaireData.neighbouringSites %}
+                {# Access properties through the nested 'address' object #}
+                <li>
+                    {{ site_item.address.addressLine1 | default('') }}
+                    {% if site_item.address.addressLine2 and site_item.address.addressLine2 | trim %}, {{ site_item.address.addressLine2 }}{% endif %}
+                    {% if site_item.address.town and site_item.address.town | trim %}, {{ site_item.address.town }}{% endif %}
+                    {% if site_item.address.county and site_item.address.county | trim %}, {{ site_item.address.county }}{% endif %}
+                    {% if site_item.address.postCode and site_item.address.postCode | trim %}, {{ site_item.address.postCode }}{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <span class="answer no-answer">None</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are there any potential safety risks?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.healthAndSafety.hasIssues == true else ("No" if lpaQuestionnaireData.healthAndSafety.hasIssues == false else "Not answered") }}</span>
+    {% if lpaQuestionnaireData.healthAndSafety.hasIssues and lpaQuestionnaireData.healthAndSafety.details %}
+      <p class="answer">Details {{ lpaQuestionnaireData.healthAndSafety.details }}</p>
+    {% endif %}
+  </div>
+
+  {# Section 7 Appeal process #}
+  <h2 class="govuk-heading-m">7. Appeal process</h2>
+  <div class="question-block">
+    <span class="question-title">Which procedure do you think is most appropriate for this appeal?</span>
+    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreference | default("Not applicable", true) }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Why would you prefer this procedure?</span>
+    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreferenceDetails | default("N/A") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">How many days would you expect the inquiry/hearing to last?</span>
+    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreferenceDuration | default("N/A") }} day(s)</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are there any other ongoing appeals next to, or close to the site?</span>
+    {% if lpaQuestionnaireData.otherAppeals and lpaQuestionnaireData.otherAppeals.length %}
+      <ul class="document-list">{% for appeal_item in lpaQuestionnaireData.otherAppeals %}<li>{{ appeal_item.appealReference | default(appeal_item) }}</li>{% endfor %}</ul>
+    {% else %}
+      <span class="answer no-answer">No</span>
+    {% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are there any new conditions?</span>
+    <span class="answer">{{ "Yes" if lpaQuestionnaireData.hasExtraConditions == true else ("No" if lpaQuestionnaireData.hasExtraConditions == false else "Not answered") }}</span>
+    {% if lpaQuestionnaireData.hasExtraConditions and lpaQuestionnaireData.extraConditions %}
+      <p class="answer">Details {{ lpaQuestionnaireData.extraConditions }}</p>
+    {% endif %}
+  </div>
+
+  <h2 class="govuk-heading-m">Additional Ddcuments (LPA case correspondence)</h2>
+  <div class="question-block">
+    {% if lpaQuestionnaireData.documents.lpaCaseCorrespondence and lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents.length %}
+      <ul class="document-list">
+        {% for doc in lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents %}
+          <li>{{ doc.name | default('Unnamed document') }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="not-available">No documents.</p>
+    {% endif %}
+  </div>
+
+</body>
+</html>

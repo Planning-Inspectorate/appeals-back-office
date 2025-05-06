@@ -4,9 +4,9 @@ import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getSingularRepresentationByType } from './representations/representations.service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
+import { mapDownloadAllPdfsButton } from '#lib/mappers/data/appeal/submappers/download-all-pdfs.mapper.js';
 
 /**
- *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
@@ -16,7 +16,7 @@ export const viewAppealDetails = async (request, response) => {
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
-
+	session.currentAppeal = currentAppeal;
 	delete session.reviewOutcome;
 
 	const appealCaseNotes = await getAppealCaseNotes(
@@ -63,8 +63,13 @@ export const viewAppealDetails = async (request, response) => {
 		appellantCase
 	);
 
+	mappedPageContent.pageComponents = mappedPageContent.pageComponents || [];
+
+	// Add the component returned by our mapper function
+	mappedPageContent.pageComponents.push(mapDownloadAllPdfsButton({ appealDetails: currentAppeal }));
+
 	return response.status(200).render('patterns/display-page.pattern.njk', {
-		pageContent: mappedPageContent,
+		pageContent: { ...mappedPageContent, currentAppeal },
 		errors
 	});
 };
