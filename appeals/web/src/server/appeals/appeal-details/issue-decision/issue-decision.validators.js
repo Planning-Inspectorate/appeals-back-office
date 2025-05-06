@@ -21,7 +21,7 @@ export const validateTextArea = createTextareaValidator(
 );
 
 export const validateDecision = createValidator(
-	body('decision').trim().notEmpty().withMessage('Please issue a decision')
+	body('decision').trim().notEmpty().withMessage('Select decision')
 );
 
 export const validateDecisionLetterDate = createValidator(
