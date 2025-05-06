@@ -59,7 +59,8 @@ export class Page {
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
 		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
+		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
+		serviceHeader: '.pins-header-domainname'
 	};
 
 	basePageElements = {
@@ -114,7 +115,8 @@ export class Page {
 		genericText: () => cy.get(this.selectors.body),
 		projectManagement: () => cy.get(this.selectors.projectManagement),
 		unpublishLink: () => cy.get(this.selectors.unpublish),
-		errorMessageLink: (link) => cy.get(`a[href='#${link}']`)
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
+		serviceHeader: () => cy.get(this.selectors.serviceHeader)
 	};
 
 	/********************************************************
