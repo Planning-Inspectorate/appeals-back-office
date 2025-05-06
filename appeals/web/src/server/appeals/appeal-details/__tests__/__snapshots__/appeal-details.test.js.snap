@@ -133,7 +133,6 @@ exports[`appeal-details GET /:appealId Hearing should render the Hearing accordi
     draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
     <h3     class="govuk-heading-m">Hearing estimates</h3>
         <div>
-            <h3 class="govuk-heading-m">Hearing estimates</h3>
             <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
             </p>
         </div>
