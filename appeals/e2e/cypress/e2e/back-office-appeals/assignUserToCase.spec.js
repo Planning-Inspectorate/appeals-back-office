@@ -119,7 +119,7 @@ describe('Assign user to case', () => {
 	});
 
 	viewports.forEach((viewport) => {
-		it(`should wrap service header properly on small screens - ${viewport.name}`, () => {
+		it(`should wrap service header text properly on small screens - ${viewport.name}`, () => {
 			cy.viewport(viewport.name);
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.basePageElements.serviceHeader().then(($el) => {

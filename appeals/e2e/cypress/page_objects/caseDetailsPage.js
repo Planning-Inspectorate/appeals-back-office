@@ -61,7 +61,7 @@ export class CaseDetailsPage extends Page {
 	elements = {
 		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
-		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer).last(),
+		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
 		changeInspector: () => cy.getByData(this._cyDataSelectors.changeInspector),
 		answerCellAppeals: (answer) =>
