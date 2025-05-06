@@ -68,7 +68,7 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickIssueDecision(caseRef);
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.document);
+			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterDecisionLetterDate(new Date());
 			caseDetailsPage.clickButtonByText('Continue');
