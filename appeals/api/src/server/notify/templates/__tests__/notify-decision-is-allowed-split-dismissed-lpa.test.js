@@ -30,7 +30,7 @@ describe('decision-is-allowed-split-dismissed-lpa.md', () => {
 			'',
 			'A decision has been made on this appeal.',
 			'',
-			'[Sign in to our service](https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/ABC45678) to view the decision letter dated 01 January 2021.',
+			'[Sign in to our service](https://appeals-service.planninginspectorate.gov.uk/manage-appeals/ABC45678) to view the decision letter dated 01 January 2021.',
 			'',
 			'The appellant has been informed of the decision.',
 			'',
