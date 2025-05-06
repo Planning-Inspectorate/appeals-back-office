@@ -277,7 +277,7 @@ const clientActions = (container) => {
 
 		showProgressMessage(container);
 
-		let addedFiles = Array.from(fileList || []).map((file) => ({
+		const addedFiles = Array.from(fileList || []).map((file) => ({
 			file,
 			guid: isNewVersionOfExistingFile()
 				? container.dataset?.documentId || ''
