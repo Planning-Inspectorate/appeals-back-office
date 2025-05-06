@@ -59,25 +59,8 @@ module "app_api" {
     TEST_MAILBOX          = local.key_vault_refs["appeals-bo-test-mailbox"]
     ENABLE_TEST_ENDPOINTS = var.apps_config.integrations.enable_test_endpoints
 
-    # notify templates
-    GOV_NOTIFY_APPEAL_GENERIC_ID                                               = var.apps_config.integrations.notify_template_ids.appeal_generic_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_APPELLANT_ID          = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_DATE_CHANGE_LPA_ID                = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_date_change_lpa_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID   = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_access_required_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_ACCESS_REQUIRED_LPA_ID         = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_access_required_lpa_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_UNACCOMPANIED_APPELLANT_ID     = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_unaccompanied_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCOMPANIED_TO_UNACCOMPANIED_LPA_ID           = var.apps_config.integrations.notify_template_ids.site_visit_change_accompanied_to_unaccompanied_lpa_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_DATE_CHANGE_APPELLANT_ID      = var.apps_config.integrations.notify_template_ids.site_visit_change_access_required_date_change_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_ACCOMPANIED_APPELLANT_ID   = var.apps_config.integrations.notify_template_ids.site_visit_change_access_required_to_accompanied_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_ACCOMPANIED_LPA_ID         = var.apps_config.integrations.notify_template_ids.site_visit_change_access_required_to_accompanied_lpa_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_ACCESS_REQUIRED_TO_UNACCOMPANIED_APPELLANT_ID = var.apps_config.integrations.notify_template_ids.site_visit_change_access_required_to_unaccompanied_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCESS_REQUIRED_APPELLANT_ID = var.apps_config.integrations.notify_template_ids.site_visit_change_unaccompanied_to_access_required_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCOMPANIED_APPELLANT_ID     = var.apps_config.integrations.notify_template_ids.site_visit_change_unaccompanied_to_accompanied_appellant_id
-    GOV_NOTIFY_SITE_VISIT_CHANGE_UNACCOMPANIED_TO_ACCOMPANIED_LPA_ID           = var.apps_config.integrations.notify_template_ids.site_visit_change_unaccompanied_to_accompanied_lpa_id
-    GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCESS_REQUIRED_APPELLANT_ID                = var.apps_config.integrations.notify_template_ids.site_visit_schedule_access_required_appellant_id
-    GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_APPELLANT_ID                    = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_appellant_id
-    GOV_NOTIFY_SITE_VISIT_SCHEDULE_ACCOMPANIED_LPA_ID                          = var.apps_config.integrations.notify_template_ids.site_visit_schedule_accompanied_lpa_id
-    GOV_NOTIFY_SITE_VISIT_SCHEDULE_UNACCOMPANIED_APPELLANT_ID                  = var.apps_config.integrations.notify_template_ids.site_visit_schedule_unaccompanied_appellant_id
+    # notify template
+    GOV_NOTIFY_APPEAL_GENERIC_ID = var.apps_config.integrations.notify_template_ids.appeal_generic_id
 
     #feature flags
     FEATURE_FLAG_S78_WRITTEN    = var.apps_config.featureFlags.featureFlagS78Written

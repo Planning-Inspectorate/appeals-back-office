@@ -49,13 +49,13 @@ export const publishInvalidDecision = async (
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
 		await Promise.all([
-			notifySend({
+			await notifySend({
 				templateName: 'decision-is-invalid-appellant',
 				notifyClient,
 				recipientEmail,
 				personalisation
 			}),
-			notifySend({
+			await notifySend({
 				templateName: 'decision-is-invalid-lpa',
 				notifyClient,
 				recipientEmail,
