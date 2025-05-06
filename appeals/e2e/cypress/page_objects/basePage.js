@@ -113,7 +113,8 @@ export class Page {
 		textArea: () => cy.get(this.selectors.textArea),
 		genericText: () => cy.get(this.selectors.body),
 		projectManagement: () => cy.get(this.selectors.projectManagement),
-		unpublishLink: () => cy.get(this.selectors.unpublish)
+		unpublishLink: () => cy.get(this.selectors.unpublish),
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`)
 	};
 
 	/********************************************************
@@ -341,5 +342,18 @@ export class Page {
 
 	validateSectionHeader(sectionHeader) {
 		this.basePageElements.sectionHeader().should('have.text', sectionHeader);
+	}
+
+	checkErrorMessageDisplays(errorMessage) {
+		cy.get('li').contains(errorMessage).should('be.visible');
+	}
+
+	verifyInlineErrorMessage(element) {
+		cy.get(`#${element}`).should('be.visible');
+	}
+
+	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
+		this.basePageElements.errorMessageLink(link).click();
+		cy.focused().should('have.attr', attribute, value);
 	}
 }
