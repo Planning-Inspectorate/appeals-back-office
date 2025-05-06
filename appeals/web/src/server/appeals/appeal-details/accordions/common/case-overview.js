@@ -15,7 +15,9 @@ export const getCaseOverview = (mappedData) => ({
 			mappedData.appeal?.allocationDetails?.display.summaryListItem,
 			mappedData.appeal?.linkedAppeals?.display.summaryListItem,
 			mappedData.appeal?.otherAppeals?.display.summaryListItem,
-			mappedData.appeal?.decision?.display.summaryListItem
+			mappedData.appeal?.decision?.display.summaryListItem,
+			mappedData.appeal?.costsAppellantDecision?.display.summaryListItem,
+			mappedData.appeal?.costsLpaDecision?.display.summaryListItem
 		].filter(isDefined)
 	}
 });
