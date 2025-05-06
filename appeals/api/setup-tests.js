@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
+import notify from '#notify/notify-send.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
@@ -114,7 +114,7 @@ const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
 	if (doNotMockNotifySend) {
-		return notifySend(options);
+		return notify.notifySend(options);
 	} else {
 		return Promise.resolve();
 	}
@@ -530,7 +530,9 @@ jest.unstable_mockModule('got', () => ({
 }));
 
 jest.unstable_mockModule('#notify/notify-send.js', () => ({
-	notifySend: mockNotifySend
+	...notify,
+	notifySend: mockNotifySend,
+	default: notify
 }));
 
 jest.unstable_mockModule('notifications-node-client', () => ({

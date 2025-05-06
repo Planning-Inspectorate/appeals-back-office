@@ -1,8 +1,8 @@
 # Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # Appeal decision
 
@@ -11,8 +11,9 @@ We have reviewed your appeal and decided that it is invalid. We have contacted t
 Your appeal is now closed.
 
 # Why the appeal is invalid
-
-((reasons))
+{% for reason in reasons %}
+- {{reason}}
+{%- endfor %}
 
 # The Planning Inspectorate’s role
 
