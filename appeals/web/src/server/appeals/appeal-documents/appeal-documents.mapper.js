@@ -45,8 +45,8 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @param {string} [documentType]
  * @param {string} [filenamesInFolder]
  * @param {string[]} [allowedTypes]
- * @param {string?} [uploadContainerHeadingTextOverride]
- * @param {string?} [documentTitle]
+ * @param {string} [uploadContainerHeadingTextOverride]
+ * @param {string} [documentTitle]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
 export async function documentUploadPage(
