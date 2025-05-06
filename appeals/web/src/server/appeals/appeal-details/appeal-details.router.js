@@ -44,7 +44,7 @@ import updateDecisionLetterRouter from './update-decision-letter/update-decision
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
-
+import downloadAllGeneratedPdfsRouter from './download-all-generated-pdfs.router.js';
 const router = createRouter();
 
 router
@@ -66,7 +66,16 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	startDateRouter
 );
-
+//router.use('/:appealId/download-pdf', appealPdfRoutes);
+//multi pdf download below
+//router.use('/:appealId/download-all-generated-pdfs', downloadAllGeneratedPdfsRouter);
+// router.use(
+// 	'/:appealId/download-all-generated-pdfs', // Match the base path for this router
+// 	validateAppeal, // Ensure req.currentAppeal is populated
+// 	assertUserHasPermission(permissionNames.viewCaseDetails), // Example permission
+// 	downloadAllGeneratedPdfsRouter
+// );
+router.use('/', downloadAllGeneratedPdfsRouter);
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    {% include "pdf-head.njk" %}
+</head>
+<body >
+  	 {% include "pdf-header.njk" %}
+  <h1 class="govuk-heading-m">Interested Party Comments</h1>
+
+  <div class="site-address-header">
+    <p><strong>Site address</strong>
+    {% if ipCommentsData.appealSite %}
+        {{ ipCommentsData.appealSite.addressLine1 | default('') }}{% if ipCommentsData.appealSite.addressLine2 %}, {{ ipCommentsData.appealSite.addressLine2 }}{% endif %}, {{ ipCommentsData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal Reference</strong> {{ ipCommentsData.appealReference | default('N/A') }}</p>
+
+  {# Section for Awaiting Review Comments #}
+  <h2 >Awaiting review</h2>
+  {% if ipCommentsData.awaitingReviewComments and ipCommentsData.awaitingReviewComments.length %}
+    {% for comment_item in ipCommentsData.awaitingReviewComments %}
+      <div class="comment-block">
+        <p class="comment-meta">
+          <strong>Interested party</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date Received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+        </p>
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No comments awaiting review.</p>
+  {% endif %}
+
+  {# Section for Accepted Comments #}
+  <h2 >Accepted</h2>
+  {% if ipCommentsData.acceptedComments and ipCommentsData.acceptedComments.length %}
+    {% for comment_item in ipCommentsData.acceptedComments %}
+      <div class="comment-block accepted">
+        <p class="comment-meta">
+          <strong>Interested party</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date Received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+        </p>
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No accepted comments.</p>
+  {% endif %}
+</body>
+</html>

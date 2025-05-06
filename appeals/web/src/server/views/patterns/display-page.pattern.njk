@@ -20,6 +20,7 @@
 			{%- set _ = notificationBanners.push(component) -%}
 		{%- endif -%}
 	{%- endfor -%}
+
 	{%- if errorSummaries | length -%}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
@@ -40,7 +41,6 @@
 	{%- endif -%}
 	{{ pageHeading(pageContent) }}
 {%- endblock -%}
-
 {%- block pageContent -%}
 	{%- set formComponents = [] -%}
 	{%- for component in pageContent.pageComponents -%}

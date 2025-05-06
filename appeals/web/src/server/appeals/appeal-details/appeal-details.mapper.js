@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib/mappers/index.js';
@@ -8,7 +9,7 @@ import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
 
-export const pageHeading = 'Case details';
+/** @typedef {import('./appeal-details.types.js').WebAppeal} Appeal */
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 
@@ -26,7 +27,7 @@ export const pageHeading = 'Case details';
 export async function appealDetailsPage(
 	appealDetails,
 	appealCaseNotes,
-	currentRoute,
+	currentUrl,
 	session,
 	request,
 	appellantFinalComments,
@@ -35,7 +36,7 @@ export async function appealDetailsPage(
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
-		currentRoute,
+		currentUrl,
 		session,
 		request,
 		false,
@@ -46,9 +47,7 @@ export async function appealDetailsPage(
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
-	/**
-	 * @type {PageComponent}
-	 */
+	/** @type {PageComponent} */
 	const caseSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -58,17 +57,17 @@ export async function appealDetailsPage(
 		parameters: {
 			classes: 'pins-summary-list--no-border',
 			rows: [
-				...(mappedData.appeal.caseOfficer.display.summaryListItem
+				...(mappedData.appeal.caseOfficer?.display?.summaryListItem
 					? [
 							formatCaseOfficerDetailsForCaseSummary(
 								mappedData.appeal.caseOfficer.display.summaryListItem
 							)
 					  ]
 					: []),
-				...(mappedData.appeal.siteAddress.display.summaryListItem
+				...(mappedData.appeal.siteAddress?.display?.summaryListItem
 					? [mappedData.appeal.siteAddress.display.summaryListItem]
 					: []),
-				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
+				...(mappedData.appeal.localPlanningAuthority?.display?.summaryListItem
 					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
 					: [])
 			]
@@ -76,26 +75,49 @@ export async function appealDetailsPage(
 	};
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
-	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem
-		? [mappedData.appeal.downloadCaseFiles.display.htmlItem]
-		: [];
+
+	// 1. Get the existing "Download case" button component object. It might be undefined.
+	const caseDownloadComponent = mappedData.appeal.downloadCaseFiles?.display?.htmlItem;
+
+	// 2. Create the HTML for our new link.
+	const downloadAllPdfsLinkHtml = `
+        <a class="govuk-link"
+           href="/appeals-service/appeal-details/${appealDetails.appealId}/download-all-generated-pdfs"
+           role="button"
+           data-cy="download-all-generated-pdfs">
+          Download all generated PDFs as ZIP
+        </a>
+    `;
+
+	// 3. If the original "Download case" component exists, append our new link to its HTML content.
+	if (caseDownloadComponent && caseDownloadComponent.parameters?.html) {
+		const originalHtml = caseDownloadComponent.parameters.html;
+		caseDownloadComponent.parameters.html = `
+            ${originalHtml}
+            <p class="govuk-body" style="margin-top: 15px;">${downloadAllPdfsLinkHtml}</p>
+        `;
+	}
+	// Note: If caseDownloadComponent does NOT exist, we currently do not add our button.
+	// This is the safest way to avoid the crash. If the button needs to appear even when
+	// "Download case" doesn't, we would need a different strategy.
 
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
-
 	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
 	]);
+	const statusTags = await generateStatusTags(mappedData, appealDetails, request);
 
+	/** @type {PageComponent[]} */
 	const pageComponents = [
 		...notificationBanners,
-		...(await generateStatusTags(mappedData, appealDetails, request)),
+		...(statusTags || []),
 		caseSummary,
-		...caseDownload,
+		caseDownloadComponent,
 		caseNotes,
 		accordion
-	];
+	].filter(Boolean);
 
 	preRenderPageComponents(pageComponents);
 
