@@ -28,11 +28,6 @@ const __dirname = path.dirname(__filename); // get the name of the directory
  */
 
 /**
- * @type {Record<string, string>}
- */
-const templateCache = {};
-
-/**
  * Template variable names must:
  * - Be within double brackets (( ... ))
  * - Start with a lowercase letter
@@ -52,7 +47,7 @@ function validateTemplate(template) {
 	// Filter to get only invalid matches
 	const invalidMatches = allMatches.filter((match) => !validPattern.test(match));
 	if (invalidMatches.length > 0) {
-		throw new Error(
+		return new Error(
 			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 				`the following corrupt parameter definitions in the template: ((${invalidMatches.join(
 					')), (('
@@ -66,25 +61,28 @@ function validateTemplate(template) {
  * Retrieves template held in cache or from the file if not retrieved before
  *
  * @param {string} templateName
- * @returns {string}
+ * @returns {Promise<string>}
  */
-function getTemplate(templateName) {
-	if (!templateCache[templateName]) {
-		const templatePath = path.join(__dirname, 'templates', `${templateName}.md`);
-		let template;
-		try {
-			template = fs.readFileSync(templatePath, { encoding: 'utf8' }).trim();
-		} catch {
-			throw new Error(
-				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					`a missing template "${templateName}.md"`
-				])
-			);
-		}
-		validateTemplate(template);
-		templateCache[templateName] = template;
-	}
-	return templateCache[templateName];
+async function getTemplate(templateName) {
+	const templatePath = path.join(__dirname, 'templates', `${templateName}.md`);
+	return new Promise(function (resolve, reject) {
+		return fs.readFile(templatePath, { encoding: 'utf8' }, (error, template) => {
+			if (error) {
+				return reject(
+					new Error(
+						stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+							`a missing template "${templateName}.md"`
+						])
+					)
+				);
+			}
+			const validationError = validateTemplate(template.trim());
+			if (validationError) {
+				return reject(validationError);
+			}
+			return resolve(template.trim());
+		});
+	});
 }
 
 /**
@@ -138,8 +136,8 @@ export const notifySend = async (options) => {
 		throw new Error(ERROR_NOTIFICATION_PERSONALISATION);
 	}
 	const genericTemplate = config.govNotify.template.generic;
-	const content = populateTemplate(getTemplate(`${templateName}.content`), personalisation);
-	const subject = populateTemplate(getTemplate(`${templateName}.subject`), personalisation);
+	const content = populateTemplate(await getTemplate(`${templateName}.content`), personalisation);
+	const subject = populateTemplate(await getTemplate(`${templateName}.subject`), personalisation);
 	try {
 		if (config.useNotifyEmulator) {
 			emulateSendEmail(templateName, recipientEmail, subject, content);
