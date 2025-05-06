@@ -4,9 +4,9 @@ You can [view this information in the appeals service](https://appeal-planning-d
 
 # Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # What happens next
 

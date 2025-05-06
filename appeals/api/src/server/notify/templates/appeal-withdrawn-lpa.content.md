@@ -1,12 +1,12 @@
 # Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # Appeal withdrawn
 
-This appeal has been withdrawn following a request from the appellant dated ((withdrawal_date)).
+This appeal has been withdrawn following a request from the appellant dated {{withdrawal_date}}.
 
 # Next steps
 

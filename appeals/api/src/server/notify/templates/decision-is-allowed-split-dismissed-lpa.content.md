@@ -1,14 +1,14 @@
 # Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # Appeal decision
 
 A decision has been made on this appeal.
 
-[Sign in to our service](https://appeals-service.planninginspectorate.gov.uk/manage-appeals/((appeal_reference_number))) to view the decision letter dated ((decision_date)).
+[Sign in to our service](https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 
 The appellant has been informed of the decision.
 

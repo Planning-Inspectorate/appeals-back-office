@@ -2,15 +2,16 @@ We have rejected your final comments.
 
 # Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # Why we rejected your final comments
 
 We rejected your final comments because:
-
-((reasons))
+{% for reason in reasons %}
+- {{reason}}
+{%- endfor %}
 
 # What happens next
 
