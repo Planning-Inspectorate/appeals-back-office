@@ -41,15 +41,19 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 										}
 								  ]
 								: []),
-							...(appealDetails.siteAddress
+							...(appealDetails.appealSite
 								? [
 										{
 											key: {
 												text: 'Site address'
 											},
 											value: {
-												html: appealDetails.siteAddress
-													? addressToMultilineStringHtml(appealDetails.siteAddress)
+												html: appealDetails.appealSite
+													? addressToMultilineStringHtml(
+															/** @type {import('@pins/appeals').Address} */ (
+																appealDetails.appealSite
+															)
+													  )
 													: null
 											}
 										}

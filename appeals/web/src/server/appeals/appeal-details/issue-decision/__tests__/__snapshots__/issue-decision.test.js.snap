@@ -60,6 +60,9 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant</dt>
                                     <dd class="govuk-summary-list__value">Roger Simmons</dd>
                                 </div>
+                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
                                     <dd class="govuk-summary-list__value">Householder</dd>
                                 </div>
