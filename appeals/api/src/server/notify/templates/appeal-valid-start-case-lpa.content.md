@@ -6,7 +6,7 @@ We will decide the appeal by ((procedure_type)). You can tell us if you think a 
 
 Appeal reference number: ((appeal_reference_number))
 Address: ((site_address))
-Local planning authority: ((lpa_reference))
+Planning application reference: ((lpa_reference))
 Start date: ((start_date))
 
 # Next steps
