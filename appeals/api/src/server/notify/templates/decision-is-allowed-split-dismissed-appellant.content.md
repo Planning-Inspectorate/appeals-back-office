@@ -8,7 +8,7 @@ Planning application reference: ((lpa_reference))
 
 We have made a decision on your appeal.
 
-[Sign in to our service](<https://appeals-service.planninginspectorate.gov.uk/appeals/((appeal_reference_number))>) to view the decision letter dated ((decision_date)).
+[Sign in to our service](https://appeals-service.planninginspectorate.gov.uk/appeals/((appeal_reference_number))) to view the decision letter dated ((decision_date)).
 
 We have also informed the local planning authority of the decision.
 
