@@ -3005,7 +3005,8 @@ describe('appeal-details', () => {
 				expect(columnHtml).toContain('Awaiting decision</td>');
 			});
 
-			it('should render a row in the case documentation accordion with "Sent" in the Status column, if a decision has been issued', async () => {
+			//TODO: restore when reinstating new decision flow
+			it.skip('should render a row in the case documentation accordion with "Sent" in the Status column, if a decision has been issued', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -3129,7 +3130,8 @@ describe('appeal-details', () => {
 				}
 			});
 
-			it('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
+			//TODO: restore when reinstating new decision flow
+			it.skip('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -3157,7 +3159,8 @@ describe('appeal-details', () => {
 				expect(columnHtml).toMatchSnapshot();
 			});
 
-			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
+			//TODO: restore when reinstating new decision flow
+			it.skip('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -3185,7 +3188,8 @@ describe('appeal-details', () => {
 				expect(columnHtml).toMatchSnapshot();
 			});
 
-			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
+			//TODO: restore when reinstating new decision flow
+			it.skip('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
