@@ -37,7 +37,7 @@ import representationsRouter from './representations/representations.router.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
 import hearingRouter from './hearing/hearing.router.js';
-
+import appealPdfRoutes from './appeal-pdf.js';
 const router = createRouter();
 
 router
@@ -59,7 +59,7 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	startDateRouter
 );
-
+router.use('/', appealPdfRoutes);
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);

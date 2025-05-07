@@ -14,6 +14,6 @@ module.exports = {
 			lines: 95
 		}
 	},
-	workerThreads: true,
+	workerThreads: false,
 	workerIdleMemoryLimit: '500MB'
 };
