@@ -16,7 +16,7 @@ export const changeDevelopmentTypePage = (appealData, appellantCaseData, storedS
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Check the Development type',
+		title: 'Development type',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -26,7 +26,7 @@ export const changeDevelopmentTypePage = (appealData, appellantCaseData, storedS
 					name: 'developmentType',
 					fieldset: {
 						legend: {
-							text: 'Check the Development type',
+							text: 'Development type',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
