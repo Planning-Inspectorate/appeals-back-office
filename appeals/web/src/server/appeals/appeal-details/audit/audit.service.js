@@ -82,7 +82,7 @@ const tryMapUsers = async (log, session) => {
  * @param {number | null} lpaqId
  * @returns {Promise<string>}
  */
-const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
+export const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 	if (!docInfo) {
 		return log;
 	}
