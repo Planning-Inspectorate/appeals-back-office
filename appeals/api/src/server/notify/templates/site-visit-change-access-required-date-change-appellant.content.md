@@ -8,17 +8,19 @@ Planning application reference: ((lpa_reference))
 
 Our inspector (or their representative) will now visit ((site_address)) at ((start_time)) on ((visit_date)).
 
-# About the visit
+#Giving the inspector access to the site
+
+You, or someone else, must be at the site at the scheduled time to provide access for our inspector.
+
+Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at caseofficers@planninginspectorate.gov.uk
+
+Include our appeal reference number in any communication.
+
+#About the visit
 
 You cannot give the inspector any documents or discuss the appeal with them.
 
-# Who will attend
-
-You must attend the site visit with our inspector and a representative from the local planning authority.
-
-You will accompany the inspector throughout the visit.
-
-If you need to contact us, include our appeal reference number in any communication.
+The inspector will carry out the inspection on their own.
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk
