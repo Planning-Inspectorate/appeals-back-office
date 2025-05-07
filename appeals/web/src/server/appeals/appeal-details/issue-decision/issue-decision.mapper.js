@@ -2,12 +2,12 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- */
-/**
  * @typedef {import('./issue-decision.types.js').InspectorDecisionRequest} InspectorDecisionRequest
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -188,36 +188,85 @@ export function dateDecisionLetterPage(
 }
 
 /**
+ *
+ * @param {Appeal} appealData
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @returns {{ key: { text: string; }; value: { html: string; text?: undefined; } | { text: string; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }[]}
+ */
+function checkAndConfirmPageRows(appealData, session) {
+	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+	const rows = [
+		{
+			key: 'Decision',
+			value: decisionOutcome,
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+					visuallyHiddenText: 'decision'
+				}
+			]
+		}
+	];
+
+	const documentTypes = ['caseDecisionLetter'];
+
+	documentTypes.forEach((documentType) => {
+		const fileInfo = session.fileUploadInfo?.files?.find(
+			(/** @type {FileUploadInfoItem} */ fileInfo) => fileInfo.documentType === documentType
+		);
+
+		if (!fileInfo) return;
+
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			fileInfo.GUID,
+			fileInfo.name
+		);
+
+		switch (documentType) {
+			case 'caseDecisionLetter':
+				rows.push({
+					key: 'Decision letter',
+					value: fileInfo.name,
+					href,
+					actions: [
+						{
+							text: 'Change',
+							href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
+							visuallyHiddenText: 'decision letter'
+						}
+					]
+				});
+				break;
+		}
+	});
+
+	return rows.map(({ key, value, href = '', actions }) => {
+		return {
+			key: { text: key },
+			value: href
+				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+				: { text: value },
+			actions: {
+				items: actions
+			}
+		};
+	});
+}
+
+/**
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(appealData, session) {
-	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
-
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: [
-				{
-					key: {
-						text: 'Decision'
-					},
-					value: {
-						text: decisionOutcome
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
-								visuallyHiddenText: 'decision'
-							}
-						]
-					}
-				}
-			]
+			rows: checkAndConfirmPageRows(appealData, session)
 		}
 	};
 
