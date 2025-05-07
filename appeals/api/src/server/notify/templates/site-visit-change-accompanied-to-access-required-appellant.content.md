@@ -1,8 +1,8 @@
 #Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 # The site visit has changed
 
@@ -10,7 +10,7 @@ We now require you, or someone else, to attend the site visit to provide access 
 
 # Visit details
 
-Our inspector (or their representative) will visit ((site_address)) between ((start_time)) and ((end_time)) on ((visit_date)).
+Our inspector (or their representative) will visit {{site_address}} between {{start_time}} and {{end_time}} on {{visit_date}}.
 
 Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at planningcaseofficerscbos@planninginspectorate.gov.uk. Include our appeal reference number in any communication.
 

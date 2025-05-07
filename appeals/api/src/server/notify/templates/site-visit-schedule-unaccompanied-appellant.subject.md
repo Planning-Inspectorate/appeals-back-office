@@ -1,1 +1,1 @@
-Inspector visit to appeal site: ((appeal_reference_number))
+Inspector visit to appeal site: {{appeal_reference_number}}
