@@ -1,10 +1,6 @@
 We have received the local planning authority’s final comments.
 
-# Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 # What happens next
 

@@ -20,7 +20,7 @@ describe('site-visit-change-access-required-to-accompanied-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: LMN34567',
 			'Address: 77, Decision Way',

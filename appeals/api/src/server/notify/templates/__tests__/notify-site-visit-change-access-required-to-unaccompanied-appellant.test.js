@@ -19,19 +19,19 @@ describe('site-visit-change-access-required-to-unaccompanied-appellant.md', () =
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: UVW98765',
 			'Address: 9, Quiet Close',
 			'Planning application reference: PLN-11223',
 			'',
-			'#The site visit has changed',
+			'# The site visit has changed',
 			'',
 			'You are no longer required to provide access to our inspector (or their representative) for the site visit to 9, Quiet Close on 2 August 2025.',
 			'',
 			'The inspector will now carry out the inspection on their own.',
 			'',
-			'#About the visit',
+			'# About the visit',
 			'',
 			'If you see the inspector, you cannot give them any documents or discuss the appeal with them.',
 			'',

@@ -1,14 +1,10 @@
-#Appeal details
+{% include 'parts/appeal-details.md' %}
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+# When we will visit
 
-#When we will visit
+The inspector (or their representative) will visit {{site_address}} between {{start_time}} and {{end_time}} on {{visit_date}}.
 
-The inspector (or their representative) will visit ((site_address)) between ((start_time)) and ((end_time)) on ((visit_date)).
-
-#Give the inspector access to the site
+# Give the inspector access to the site
 
 Someone must be at the site at the scheduled time to give the inspector access to the site.
 
@@ -19,9 +15,9 @@ In all cases, email caseofficers@planninginspectorate.gov.uk to either give:
 - the details of who will be at the site to give the inspector access
 - your consent for the inspector to access the site by themselves
 
-Include your appeal reference number in the subject of your email: ((appeal_reference_number)).
+Include your appeal reference number in the subject of your email: {{appeal_reference_number}}.
 
-#About the visit
+# About the visit
 
 The purpose of the site visit is for the inspector to view the site and its surroundings. You are only required to give the inspector access to the site.
 

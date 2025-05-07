@@ -1,1 +1,1 @@
-We have rejected your comment: ((appeal_reference_number))
+We have rejected your comment: {{appeal_reference_number}}

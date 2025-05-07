@@ -20,7 +20,7 @@ describe('site-visit-change-unaccompanied-to-accompanied-appellant.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: XYZ55667',
 			'Address: 88, Inspector Rise',

@@ -1,12 +1,8 @@
-#Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 # Visit details
 
-Our inspector (or their representative) will visit ((site_address)) at ((start_time)) on ((visit_date)).
+Our inspector (or their representative) will visit {{site_address}} at {{start_time}} on {{visit_date}}.
 
 # Who will attend
 

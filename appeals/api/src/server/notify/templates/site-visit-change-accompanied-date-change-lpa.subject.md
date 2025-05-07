@@ -1,1 +1,1 @@
-Rescheduled inspector visit to appeal site: ((appeal_reference_number))
+Rescheduled inspector visit to appeal site: {{appeal_reference_number}}

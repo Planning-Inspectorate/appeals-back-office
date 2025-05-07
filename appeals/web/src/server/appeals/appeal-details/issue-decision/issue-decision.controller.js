@@ -5,7 +5,6 @@ import {
 	dateDecisionLetterPage,
 	issueDecisionPage,
 	mapDecisionOutcome,
-	decisionLetterUploadPageBodyComponents,
 	invalidReasonPage,
 	checkAndConfirmInvalidPage
 } from './issue-decision.mapper.js';
@@ -43,7 +42,7 @@ export const postIssueDecision = async (request, response) => {
 	};
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+		`/appeals-service/appeal-details/${params.appealId}/issue-decision/decision-letter-upload`
 	);
 };
 
@@ -93,7 +92,8 @@ export const postDecisionLetterUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`
+		// nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
 	});
 };
 
@@ -110,17 +110,17 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
-
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
-		pageHeadingTextOverride: 'Upload decision letter',
-		pageBodyComponents,
-		allowMultipleFiles: false
+		pageHeadingTextOverride: 'Decision letter',
+		uploadContainerHeadingTextOverride: 'Upload decision letter',
+		documentTitle: 'decision letter',
+		allowMultipleFiles: false,
+		allowedTypes: ['pdf']
 	});
 };
 

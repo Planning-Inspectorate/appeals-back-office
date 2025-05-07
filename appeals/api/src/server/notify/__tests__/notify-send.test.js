@@ -21,11 +21,11 @@ describe('notify-send', () => {
 	beforeEach(() => {
 		mockFileSystem({
 			[templatesPath]: {
-				'test-template.subject.md': 'Subject for ((first_name)) ((last_name))',
-				'test-template.content.md': 'Content for ((first_name)) ((last_name))',
-				'corrupt-template.subject.md': 'Subject for ((first_name)) ((last_name))',
+				'test-template.subject.md': 'Subject for {{first_name}} {{last_name}}',
+				'test-template.content.md': 'Content for {{first_name}} {{last_name}}',
+				'corrupt-template.subject.md': 'Subject for {{first_name}} {{last_name}}',
 				'corrupt-template.content.md':
-					'Content for ((gaps in variable name)) text here ((this_one_is_ok)) ((Uppercase_variable_name)) other text here ((contains_special_characters_**)) ((10_started_with_numeric)) more text here ((_started_with_underscore))'
+					'Content for {{gaps in variable name}} text here {{this_one_is_ok}} {{Uppercase_variable_name}} other text here {{contains_special_characters_**}} {{10_started_with_numeric}} more text here {{_started_with_underscore}}'
 			}
 		});
 
@@ -55,14 +55,7 @@ describe('notify-send', () => {
 		).rejects.toThrow(
 			new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'the following corrupt parameter definitions in the template: ' +
-						[
-							'((gaps in variable name))',
-							'((Uppercase_variable_name))',
-							'((contains_special_characters_**))',
-							'((10_started_with_numeric))',
-							'((_started_with_underscore))'
-						].join(', ')
+					`'expected variable end' at line #1 and column #32 in template: corrupt-template.content.md`
 				])
 			)
 		);
@@ -78,12 +71,23 @@ describe('notify-send', () => {
 		);
 	});
 
+	test('should throw if the template is missing', async () => {
+		notifySendData.templateName = 'missing';
+		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
+			new Error(
+				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+					'template not found: missing.content.md'
+				])
+			)
+		);
+	});
+
 	test('should throw the failed to populate error when the template expects missing personalisation parameters', async () => {
 		delete notifySendData.personalisation.first_name;
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
 			new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'missing personalisation parameters: ((first_name))'
+					'missing parameter at line #1 and column #13 in template: test-template.content.md'
 				])
 			)
 		);

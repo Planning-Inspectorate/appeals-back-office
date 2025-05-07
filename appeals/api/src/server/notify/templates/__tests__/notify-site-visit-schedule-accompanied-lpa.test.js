@@ -20,7 +20,7 @@ describe('site-visit-schedule-accompanied-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: BBB22334',
 			'Address: 72, Planning Crescent',

@@ -20,13 +20,13 @@ describe('site-visit-schedule-accompanied-appellant.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: AAA11234',
 			'Address: 45, Hearing Road',
 			'Planning application reference: PLAN-12345',
 			'',
-			'#About the visit',
+			'# About the visit',
 			'',
 			'Our inspector (or their representative) will visit 45, Hearing Road at 11:00am on 15 October 2025.',
 			'',

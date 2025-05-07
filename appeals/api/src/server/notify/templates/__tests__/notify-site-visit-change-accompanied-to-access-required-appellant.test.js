@@ -21,7 +21,7 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: GHI45678',
 			'Address: 101, Example View',
