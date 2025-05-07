@@ -113,10 +113,13 @@ describe('issue-decision', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload decision letter</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+			expect(unprettifiedElement.innerHTML).toContain('or drop file</span>');
 		});
 	});
 
@@ -175,7 +178,7 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/decision-letter-date'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});
@@ -530,7 +533,8 @@ describe('issue-decision', () => {
 			uploadDecisionLetterResponse = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
 				.send({
-					'upload-info': fileUploadInfo
+					'upload-info':
+						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
 				});
 
 			const mockLetterDecisionDate = {
@@ -558,6 +562,9 @@ describe('issue-decision', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Check details and issue decision</h1>');
 			expect(element.innerHTML).toContain('Decision</dt>');
+			expect(element.innerHTML).toContain('Allowed</dd>');
+			expect(element.innerHTML).toContain('Decision letter</dt>');
+			expect(element.innerHTML).toContain('test-document.pdf</a>');
 			expect(element.innerHTML).toContain('Send decision</button>');
 		});
 	});

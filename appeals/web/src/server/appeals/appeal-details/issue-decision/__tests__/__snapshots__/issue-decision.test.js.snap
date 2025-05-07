@@ -271,6 +271,13 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                        <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
+                            target="_blank">test-document.pdf</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        </dd>
+                    </div>
                 </dl>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
             </form>
