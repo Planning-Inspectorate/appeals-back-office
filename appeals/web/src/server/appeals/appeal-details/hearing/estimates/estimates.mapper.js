@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { formatDays } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 
 /**
@@ -91,12 +92,12 @@ export function checkDetailsPage(appealData, values = {}, action) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const rows = [
-		{ key: 'Estimated preparation time', value: `${values.preparationTime} days` },
-		{ key: 'Estimated sitting time', value: `${values.sittingTime} days` },
-		{ key: 'Estimated reporting time', value: `${values.reportingTime} days` }
+		{ key: 'Estimated preparation time', value: values.preparationTime },
+		{ key: 'Estimated sitting time', value: values.sittingTime },
+		{ key: 'Estimated reporting time', value: values.reportingTime }
 	].map((row) => ({
 		key: { text: row.key },
-		value: { text: row.value },
+		value: { text: formatDays(row.value) },
 		actions: {
 			items: [
 				{

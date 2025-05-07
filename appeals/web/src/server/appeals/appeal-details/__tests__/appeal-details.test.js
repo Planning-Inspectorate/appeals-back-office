@@ -2849,6 +2849,59 @@ describe('appeal-details', () => {
 					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
 				);
 			});
+
+			it('should render the Hearing estimates summary list when estimates are present', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearingEstimate: {
+							preparationTime: 1,
+							sittingTime: 2.5,
+							reportingTime: 3
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
+				);
+				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 1 day</dd>'
+				);
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 2.5 days</dd>'
+				);
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 3 days</dd>'
+				);
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`<dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/hearing/estimates/change"`
+				);
+			});
 		});
 
 		describe('Costs', () => {
