@@ -28,6 +28,11 @@ const __dirname = path.dirname(__filename); // get the name of the directory
  */
 
 /**
+ * @type {Record<string, string>}
+ */
+const templateCache = {};
+
+/**
  * Template variable names must:
  * - Be within double brackets (( ... ))
  * - Start with a lowercase letter
@@ -64,6 +69,10 @@ function validateTemplate(template) {
  * @returns {Promise<string>}
  */
 async function getTemplate(templateName) {
+	if (templateCache[templateName]) {
+		return templateCache[templateName];
+	}
+
 	const templatePath = path.join(__dirname, 'templates', `${templateName}.md`);
 	return new Promise(function (resolve, reject) {
 		return fs.readFile(templatePath, { encoding: 'utf8' }, (error, template) => {
@@ -80,6 +89,7 @@ async function getTemplate(templateName) {
 			if (validationError) {
 				return reject(validationError);
 			}
+			templateCache[templateName] = template.trim();
 			return resolve(template.trim());
 		});
 	});
