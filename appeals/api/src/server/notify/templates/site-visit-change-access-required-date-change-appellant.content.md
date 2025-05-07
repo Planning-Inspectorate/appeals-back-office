@@ -8,7 +8,7 @@ Planning application reference: ((lpa_reference))
 
 Our inspector (or their representative) will now visit ((site_address)) at ((start_time)) on ((visit_date)).
 
-#Giving the inspector access to the site
+# Giving the inspector access to the site
 
 You, or someone else, must be at the site at the scheduled time to provide access for our inspector.
 
@@ -16,7 +16,7 @@ Alternatively, and only if it is possible at the site, you can provide written c
 
 Include our appeal reference number in any communication.
 
-#About the visit
+# About the visit
 
 You cannot give the inspector any documents or discuss the appeal with them.
 
