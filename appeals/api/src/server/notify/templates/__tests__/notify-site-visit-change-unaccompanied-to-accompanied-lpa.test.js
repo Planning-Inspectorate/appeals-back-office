@@ -20,7 +20,7 @@ describe('site-visit-change-unaccompanied-to-accompanied-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC11223',
 			'Address: 21, Appeal Avenue',

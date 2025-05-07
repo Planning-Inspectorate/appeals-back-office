@@ -20,7 +20,7 @@ describe('site-visit-change-accompanied-to-access-required-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: JKL98765',
 			'Address: 23, Transition Street',

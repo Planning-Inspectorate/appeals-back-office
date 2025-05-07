@@ -20,7 +20,7 @@ describe('site-visit-change-accompanied-to-unaccompanied-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: QRS33445',
 			'Address: 99, Final Close',

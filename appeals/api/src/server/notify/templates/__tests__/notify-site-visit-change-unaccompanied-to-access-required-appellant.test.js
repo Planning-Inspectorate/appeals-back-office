@@ -21,7 +21,7 @@ describe('site-visit-change-unaccompanied-to-access-required-appellant.md', () =
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: TUV44556',
 			'Address: 5, Meadow Way',

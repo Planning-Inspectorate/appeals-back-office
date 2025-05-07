@@ -20,17 +20,17 @@ describe('site-visit-change-access-required-to-accompanied-appellant.md', () => 
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: XYZ67890',
 			'Address: 55, Sample Road',
 			'Planning application reference: APP-45678',
 			'',
-			'#The site visit has changed',
+			'# The site visit has changed',
 			'',
 			'You are now required to attend the site visit taking place at 55, Sample Road at 2:00pm on 19 June 2025.',
 			'',
-			'#Who will attend',
+			'# Who will attend',
 			'',
 			'You will attend the visit with our inspector (or their representative) and a representative from the local planning authority.',
 			'',
