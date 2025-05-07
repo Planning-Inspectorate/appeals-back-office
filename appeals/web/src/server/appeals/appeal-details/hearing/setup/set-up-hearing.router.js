@@ -8,6 +8,8 @@ import {
 } from '#lib/validators/date-input.validator.js';
 import { createTimeInputValidator } from '#lib/validators/time-input.validator.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
+import * as validators from './set-up-hearing-validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -25,7 +27,25 @@ router
 		asyncHandler(controller.postHearingDate)
 	);
 
-router.route('/address')
-	.get(asyncHandler(controller.getHearingAddress));
+router
+	.route('/address')
+	.get(asyncHandler(controller.getHearingAddress))
+	.post(
+		createYesNoRadioValidator(
+			'addressKnown',
+			'Select yes if you know the address of where the hearing will take place'
+		),
+		saveBodyToSession('setUpHearing'),
+		asyncHandler(controller.postHearingAddress)
+	);
+
+router
+	.route('/address-details')
+	.get(asyncHandler(controller.getHearingAddressDetails))
+	.post(
+		validators.validateHearingAddress,
+		saveBodyToSession('setUpHearing'),
+		asyncHandler(controller.postHearingAddressDetails)
+	);
 
 export default router;
