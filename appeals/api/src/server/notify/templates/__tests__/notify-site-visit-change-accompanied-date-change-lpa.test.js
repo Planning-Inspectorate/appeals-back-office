@@ -20,17 +20,17 @@ describe('site-visit-change-accompanied-date-change-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: DEF67890',
 			'Address: 44, Reschedule Road',
-			'Local planning authority: LPA-00987',
+			'Planning application reference: LPA-00987',
 			'',
-			'#The site visit has changed',
+			'# The site visit has changed',
 			'',
 			'Our inspector (or their representative) will now visit 44, Reschedule Road at 3:15pm on 5 September 2025.',
 			'',
-			'#Who will attend',
+			'# Who will attend',
 			'',
 			'You must be at the site at the scheduled time to accompany our inspector and the appellant.',
 			'',

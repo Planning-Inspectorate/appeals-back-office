@@ -20,7 +20,7 @@ describe('site-visit-change-access-required-date-change-appellant.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: XYZ12345',
 			'Address: 22, Example Lane',

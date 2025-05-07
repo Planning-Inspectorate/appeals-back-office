@@ -19,7 +19,7 @@ describe('site-visit-change-accompanied-to-unaccompanied-appellant.md', () => {
 		};
 
 		const expectedContent = [
-			'#Appeal details',
+			'# Appeal details',
 			'',
 			'^Appeal reference number: MNO11223',
 			'Address: 66, Solitude Way',
