@@ -51,7 +51,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept current date', () => {
 		navigateToTimeTableSection();
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItems.lpaQuestionnaire);
-		caseDetailsPage.clickTimetableChangeLink(timetableItems.lpaQuestionnaire);
+		caseDetailsPage.clickRowChangeLink(timetableItems.lpaQuestionnaire);
 		caseDetailsPage.changeTimetableDate(new Date());
 		caseDetailsPage.checkErrorMessageDisplays('Date must be in the future');
 	});
@@ -59,7 +59,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept non business date', () => {
 		navigateToTimeTableSection();
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItems.interestedParty);
-		caseDetailsPage.clickTimetableChangeLink(timetableItems.interestedParty);
+		caseDetailsPage.clickRowChangeLink(timetableItems.interestedParty);
 		const nextYear = new Date().getFullYear() + 1;
 		const nonBusinessDate = new Date(nextYear, 0, 1);
 		caseDetailsPage.changeTimetableDate(nonBusinessDate);
@@ -88,7 +88,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 
 	const verifyDateChange = (timetableItem) => {
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItem);
-		caseDetailsPage.clickTimetableChangeLink(timetableItem);
+		caseDetailsPage.clickRowChangeLink(timetableItem);
 
 		cy.getBusinessActualDate(
 			new Date(new Date().getFullYear() + futureDate.years, 0, 1),
