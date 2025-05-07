@@ -1,8 +1,10 @@
+// @ts-nocheck
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
+import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -28,7 +30,6 @@ describe('set up hearing', () => {
 	describe('GET /hearing/setup/date', () => {
 		const appealId = 2;
 
-		/** @type {*} */
 		let pageHtml;
 
 		beforeAll(async () => {
@@ -211,6 +212,158 @@ describe('set up hearing', () => {
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('The time must include an hour');
 			expect(errorSummaryHtml).toContain('The time must include a minute');
+		});
+	});
+
+	describe('GET /hearing/setup/address', () => {
+		const appealId = 2;
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Do you know the address of where the hearing will take place?'
+			);
+		});
+
+		it('should render a radio button for address known', () => {
+			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
+		});
+
+		it('should render a radio button for address unknown', () => {
+			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
+		});
+	});
+
+	describe('POST /hearing/setup/address', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should redirect to /hearing/setup/confirmation when answering no', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({
+				addressKnown: 'no'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+		});
+
+		it('should redirect to /hearing/setup/address-details when answering yes', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({
+				addressKnown: 'yes'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/address-details`
+			);
+		});
+
+		it('should return 400 on missing addressKnown with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Select yes if you know the address of where the hearing will take place'
+			);
+		});
+	});
+
+	describe('GET /hearing/setup/address-details', () => {
+		const appealId = 2;
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address-details`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Address');
+		});
+
+		it('should render a text input for address line 1', () => {
+			expect(pageHtml.querySelector('input[name="addressLine1"]')).not.toBeNull();
+		});
+
+		it('should render a text input for address line 2', () => {
+			expect(pageHtml.querySelector('input[name="addressLine2"]')).not.toBeNull();
+		});
+
+		it('should render a text input for town', () => {
+			expect(pageHtml.querySelector('input[name="town"]')).not.toBeNull();
+		});
+
+		it('should render a text input for county', () => {
+			expect(pageHtml.querySelector('input[name="county"]')).not.toBeNull();
+		});
+
+		it('should render a text input for postcode', () => {
+			expect(pageHtml.querySelector('input[name="postCode"]')).not.toBeNull();
+		});
+	});
+
+	describe('POST /hearing/setup/address-details', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should redirect to /hearing/setup/check-details with valid inputs', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send({
+					addressLine1: 'Flat 9',
+					addressLine2: '123 Gerbil Drive',
+					town: 'Blarberton',
+					county: 'Slabshire',
+					postCode: 'X25 3YZ'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+		});
+
+		behavesLikeAddressForm({
+			request,
+			url: `${baseUrl}/${appealId}/hearing/setup/address-details`
 		});
 	});
 });
