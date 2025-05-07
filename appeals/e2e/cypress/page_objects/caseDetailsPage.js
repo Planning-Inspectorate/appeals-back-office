@@ -138,7 +138,7 @@ export class CaseDetailsPage extends Page {
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
-		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`),
+		rowChangeLink: (row) => cy.getByData(`change-${row}`),
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
@@ -409,8 +409,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.siteVisitBanner(caseRef).click();
 	}
 
-	clickTimetableChangeLink(row) {
-		this.elements.timeTableRowChangeLink(row).click();
+	clickRowChangeLink(row) {
+		this.elements.rowChangeLink(row).click();
 	}
 
 	clickLpaStatementChangeLink(row) {
@@ -652,5 +652,15 @@ export class CaseDetailsPage extends Page {
 	updatePlanningApplicationReference(reference) {
 		this.elements.planningApplicationReferenceField().clear().type(reference);
 		this.clickButtonByText('Continue');
+	}
+
+	verifyHearingEstimatedValue(estimateField, value) {
+		this.elements.rowChangeLink(`${estimateField}`).then(($el) => {
+			cy.wrap($el)
+				.parent('dd')
+				.siblings('dd')
+				.should('contain.text', `${value} days`)
+				.and('be.visible');
+		});
 	}
 }
