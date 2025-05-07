@@ -131,6 +131,33 @@ exports[`appeal-details GET /:appealId Hearing should render the Hearing accordi
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Hearing should render the Hearing estimates summary list when estimates are present 1`] = `
+"<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup" role="button"
+    draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
+    <h3     class="govuk-heading-m">Hearing estimates</h3>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preparation time</dt>
+                <dd class="govuk-summary-list__value">1 day</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-preparation-time">Change<span class="govuk-visually-hidden"> Preparation time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Sitting time</dt>
+                <dd class="govuk-summary-list__value">2.5 days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-sitting-time">Change<span class="govuk-visually-hidden"> Sitting time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reporting time</dt>
+                <dd class="govuk-summary-list__value">3 days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-reporting-time">Change<span class="govuk-visually-hidden"> Reporting time</span></a>
+                </dd>
+            </div>
+        </dl>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"

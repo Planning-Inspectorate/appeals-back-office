@@ -1,3 +1,5 @@
+import { formatDays } from '#lib/dates.js';
+
 /** @type {import('../mapper.js').SubMapper} */
 export const mapHearingEstimates = ({
 	appealDetails,
@@ -29,21 +31,23 @@ export const mapHearingEstimates = ({
 		};
 	};
 
+	const { preparationTime, sittingTime, reportingTime } = appealDetails.hearingEstimate || {};
+
 	/** @type {SummaryListRowProperties[]} */
 	const rows = [
 		{
 			key: { text: 'Preparation time' },
-			value: { text: `${appealDetails.hearingEstimate?.preparationTime} days` },
+			value: { text: formatDays(preparationTime) },
 			...actions('Preparation time')
 		},
 		{
 			key: { text: 'Sitting time' },
-			value: { text: `${appealDetails.hearingEstimate?.sittingTime} days` },
+			value: { text: formatDays(sittingTime) },
 			...actions('Sitting time')
 		},
 		{
 			key: { text: 'Reporting time' },
-			value: { text: `${appealDetails.hearingEstimate?.reportingTime} days` },
+			value: { text: formatDays(reportingTime) },
 			...actions('Reporting time')
 		}
 	];
