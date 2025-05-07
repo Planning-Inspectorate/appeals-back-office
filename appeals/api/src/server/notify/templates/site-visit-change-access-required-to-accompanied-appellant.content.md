@@ -1,12 +1,12 @@
 #Appeal details
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Planning application reference: {{lpa_reference}}
 
 #The site visit has changed
 
-You are now required to attend the site visit taking place at ((site_address)) at ((start_time)) on ((visit_date)).
+You are now required to attend the site visit taking place at {{site_address}} at {{start_time}} on {{visit_date}}.
 
 #Who will attend
 
