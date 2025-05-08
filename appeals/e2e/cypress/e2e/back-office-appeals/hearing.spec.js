@@ -11,7 +11,7 @@ const caseDetailsPage = new CaseDetailsPage();
 describe('Setup hearing and add hearing estimates', () => {
 	let caseRef;
 
-	const initialEstimates = { preparationTime: '0.50', sittingTime: '1', reportingTime: '99' };
+	const initialEstimates = { preparationTime: '0.50', sittingTime: '1.00', reportingTime: '99' };
 	const updatedEstimates = { preparationTime: '5.50', sittingTime: '1.50', reportingTime: '99' };
 	const finalEstimates = { preparationTime: '2', sittingTime: '3', reportingTime: '4.5' };
 
@@ -62,6 +62,13 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should navigate back to overview page - Hearing Estimate', () => {
 		caseDetailsPage.clickHearingEstimateLink();
+		caseDetailsPage.addHearingEstimates(
+			initialEstimates.preparationTime,
+			initialEstimates.sittingTime,
+			initialEstimates.reportingTime
+		);
+		caseDetailsPage.validateSectionHeader('Check details and add hearing estimates');
+		caseDetailsPage.clickBackLink();
 		caseDetailsPage.validateSectionHeader('Hearing estimates');
 		caseDetailsPage.clickBackLink();
 		caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseRef}`);
@@ -139,6 +146,13 @@ describe('Setup hearing and add hearing estimates', () => {
 			expect(hearingEstimates.preparationTime).to.eq(finalEstimates.preparationTime);
 			expect(hearingEstimates.sittingTime).to.eq(finalEstimates.sittingTime);
 			expect(hearingEstimates.reportingTime).to.eq(finalEstimates.reportingTime);
+		});
+	});
+
+	it('should add and update hearing date', () => {
+		caseDetailsPage.clickHearingButton();
+		cy.getBusinessActualDate(new Date(), 2).then((date) => {
+			caseDetailsPage.setUpHearing(date, '10', '30');
 		});
 	});
 
