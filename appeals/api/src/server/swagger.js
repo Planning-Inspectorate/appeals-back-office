@@ -288,6 +288,18 @@ export const spec = {
 					documents: [],
 					folderId: 2400,
 					path: 'costs/decision'
+				},
+				appellantDecisionFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2401,
+					path: 'costs/appellantDecision'
+				},
+				lpaDecisionFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2402,
+					path: 'costs/lpaDecision'
 				}
 			},
 			internalCorrespondence: {

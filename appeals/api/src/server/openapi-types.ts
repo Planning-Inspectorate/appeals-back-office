@@ -1011,6 +1011,26 @@ export interface SingleAppealResponse {
 			/** @example "costs/decision" */
 			path?: string;
 		};
+		appellantDecisionFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2401 */
+			folderId?: number;
+			/** @example "costs/appellantDecision" */
+			path?: string;
+		};
+		lpaDecisionFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2402 */
+			folderId?: number;
+			/** @example "costs/lpaDecision" */
+			path?: string;
+		};
 	};
 	internalCorrespondence?: {
 		crossTeam?: {

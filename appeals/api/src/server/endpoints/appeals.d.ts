@@ -60,6 +60,8 @@ interface SingleAppealDetailsResponse {
 		lpaWithdrawalFolder?: FolderInfo | null;
 		lpaCorrespondenceFolder?: FolderInfo | null;
 		decisionFolder?: FolderInfo | null;
+		appellantDecisionFolder?: FolderInfo | null;
+		lpaDecisionFolder?: FolderInfo | null;
 	};
 	decision: {
 		folderId: number;

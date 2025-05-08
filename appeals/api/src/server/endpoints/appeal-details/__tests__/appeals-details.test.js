@@ -59,7 +59,23 @@ const householdAppealDto = {
 	},
 	appellantCaseId: householdAppeal.appellantCase.id,
 	caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
-	costs: {},
+	costs: {
+		// These are needed because we're currently hard coding these two properties
+		// in: src/server/mappers/mapper-factory.js
+		// TODO: remove these once real folder data is available and we can use a .find
+		appellantDecisionFolder: {
+			caseId: 0,
+			folderId: 0,
+			path: 'costs/appellantDecision',
+			documents: []
+		},
+		lpaDecisionFolder: {
+			caseId: 0,
+			folderId: 0,
+			path: 'costs/lpaDecision',
+			documents: []
+		}
+	},
 	internalCorrespondence: {},
 	decision: {
 		folderId: savedFolder.id,
@@ -146,7 +162,23 @@ const s78AppealDto = {
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,
 	caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
-	costs: {},
+	costs: {
+		// These are needed because we're currently hard coding these two properties
+		// in: src/server/mappers/mapper-factory.js
+		// TODO: remove these once real folder data is available and we can use a .find
+		appellantDecisionFolder: {
+			caseId: 0,
+			folderId: 0,
+			path: 'costs/appellantDecision',
+			documents: []
+		},
+		lpaDecisionFolder: {
+			caseId: 0,
+			folderId: 0,
+			path: 'costs/lpaDecision',
+			documents: []
+		}
+	},
 	decision: {
 		folderId: savedFolder.id,
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
