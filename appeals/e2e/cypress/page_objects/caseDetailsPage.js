@@ -655,11 +655,13 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyHearingEstimatedValue(estimateField, value) {
+		const numberOfDays = parseFloat(value);
+		const suffix = numberOfDays === 1 ? 'day' : 'days';
 		this.elements.rowChangeLink(`${estimateField}`).then(($el) => {
 			cy.wrap($el)
 				.parent('dd')
 				.siblings('dd')
-				.should('contain.text', `${value} days`)
+				.should('contain.text', `${numberOfDays} ${suffix}`)
 				.and('be.visible');
 		});
 	}
