@@ -11,6 +11,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { emulateSendEmail } from '#notify/emulate-notify.js';
 import logger from '#utils/logger.js';
 import nunjucks from 'nunjucks';
+import { EOL } from 'node:os';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -89,7 +90,8 @@ export const notifySend = async (options) => {
  */
 function renderTemplate(name, personalisation) {
 	try {
-		return nunjucksEnv.render(name, personalisation).trim();
+		// note that nunjucks returns a string with EOL characters specific to the os; we want to replace them with \n to make them the same in the logs and tests.
+		return nunjucksEnv.render(name, personalisation).trim().split(EOL).join('\n');
 	} catch (/** @type {any} */ e) {
 		logger.error({ error: e, template: name }, 'failed to render template');
 		const message = e?.message || '';
