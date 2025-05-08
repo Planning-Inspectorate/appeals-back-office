@@ -1651,6 +1651,22 @@ export interface SingleLPAQuestionnaireResponse {
 				caseId?: number;
 			}[];
 		};
+		scopingOpinion?: {
+			/** @example 1 */
+			folderId?: number;
+			/** @example "path/to/document/folder" */
+			path?: string;
+			documents?: {
+				/** @example "fdadc281-f686-40ee-97cf-9bafdd02b1cb" */
+				id?: string;
+				/** @example "an appeal related document.pdf" */
+				name?: string;
+				/** @example 1 */
+				folderId?: number;
+				/** @example 2 */
+				caseId?: number;
+			}[];
+		};
 		siteNotice?: {
 			/** @example 1 */
 			folderId?: number;
