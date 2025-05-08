@@ -545,6 +545,7 @@ export const spec = {
 				representationsFromOtherParties: folderWithDocs,
 				responsesOrAdvice: folderWithDocs,
 				screeningDirection: folderWithDocs,
+				scopingOpinion: folderWithDocs,
 				siteNotice: folderWithDocs,
 				supplementaryPlanningtestDocuments: folderWithDocs,
 				treePreservationOrder: folderWithDocs
