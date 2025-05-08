@@ -35,6 +35,7 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = {
 	[APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES]: 'Consultation responses or standing advice',
 	[APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT]: 'Environmental statement',
 	[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION]: 'Screening opinion documents',
+	[APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION]: 'Scoping opinion documents',
 	[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION]: 'Screening direction documents',
 	[APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE]: 'Additional documents',
 	[APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES]: 'Other relevant policies',
