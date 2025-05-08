@@ -823,15 +823,6 @@ model ListedBuilding {
   selected  ListedBuildingSelected[]
 }
 
-/// Temporary migration storage for ListedBuildingSelected
-model MigrateListedBuildingSelected {
-  lpaQuestionnaireId    Int
-  listEntry             String
-  affectsListedBuilding Boolean
-
-  @@id([lpaQuestionnaireId, listEntry])
-}
-
 /// AppealNotification model
 /// Stores a log of sent notifications
 model AppealNotification {

@@ -23,16 +23,6 @@ export const importListedBuildingsDataset = async (url) => {
 			if (response.body) {
 				const totalRecords = await importListedBuildings(Readable.from(response.body));
 				console.log(`\n\nComplete! ${totalRecords} records imported.`);
-
-				// Migration code - could be removed in the future, together with the MigrateListedBuildingSelected table
-				const migrateSQL = `INSERT INTO [dbo].[ListedBuildingSelected]
-						SELECT * FROM [dbo].[MigrateListedBuildingSelected]
-						WHERE [listEntry] IN (SELECT [reference] FROM [dbo].[ListedBuilding])
-						AND [lpaQuestionnaireId] IN (SELECT [id] FROM [dbo].[LpaQuestionnaire]);
-
-						DELETE FROM [dbo].[MigrateListedBuildingSelected];`;
-
-				await databaseConnector.$executeRawUnsafe(migrateSQL);
 			}
 		});
 	}
