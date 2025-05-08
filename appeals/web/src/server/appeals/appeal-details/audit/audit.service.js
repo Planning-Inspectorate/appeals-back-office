@@ -89,27 +89,18 @@ export const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 
 	const { name, documentGuid, documentType, stage, folderId } = docInfo;
 
-	const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
-
-	if (repAuditDisplayName && documentGuid && documentType && stage && folderId) {
+	if (name && documentGuid && documentType && stage && folderId) {
 		switch (stage) {
 			case APPEAL_CASE_STAGE.APPELLANT_CASE: {
 				const url = `/appeals-service/appeal-details/${appealId}/appellant-case/manage-documents/${folderId}/${documentGuid}`;
-				return log.replace(
-					repAuditDisplayName,
-					`<a class="govuk-link" href="${url}">${repAuditDisplayName}</a>`
-				);
+				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
 			case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE: {
 				if (!lpaqId) {
 					break;
 				}
-
 				const url = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}/manage-documents/${folderId}/${documentGuid}`;
-				return log.replace(
-					repAuditDisplayName,
-					`<a class="govuk-link" href="${url}">${repAuditDisplayName}</a>`
-				);
+				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
 			case APPEAL_CASE_STAGE.COSTS: {
 				const types = ['application', 'correspondence', 'withdrawal'];
@@ -142,18 +133,15 @@ export const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 						break;
 					}
 				}
-
 				const url = `/appeals-service/appeal-details/${appealId}/costs/${path}/manage-documents/${folderId}/${documentGuid}`;
-				return log.replace(
-					repAuditDisplayName,
-					`<a class="govuk-link" href="${url}">${repAuditDisplayName}</a>`
-				);
+				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
 			case 'representation': {
+				const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
 				return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
 			}
+			//TODO: internal folders, when the data model is updated
 		}
-		//TODO: internal folders, when the data model is updated
 	}
 
 	return log;
