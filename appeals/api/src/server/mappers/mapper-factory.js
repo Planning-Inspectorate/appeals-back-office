@@ -244,23 +244,16 @@ function createFoldersLayout(folders, context) {
 							f.path ===
 							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`
 					),
-					decisionFolder: folders.find(
+					appellantDecisionFolder: folders.find(
 						(f) =>
-							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
 					),
-					// TODO: populate `appellantDecisionFolder` and `lpaDecisionFolder` with real folder data once relevant document types are added
-					appellantDecisionFolder: {
-						caseId: 0,
-						folderId: 0,
-						path: 'costs/appellantDecision',
-						documents: []
-					},
-					lpaDecisionFolder: {
-						caseId: 0,
-						folderId: 0,
-						path: 'costs/lpaDecision',
-						documents: []
-					}
+					lpaDecisionFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+					)
 				},
 				internalCorrespondence: {
 					crossTeam: folders.find(

@@ -283,12 +283,6 @@ export const spec = {
 					folderId: 2302,
 					path: 'costs/lpaCorrespondence'
 				},
-				decisionFolder: {
-					caseId: '118',
-					documents: [],
-					folderId: 2400,
-					path: 'costs/decision'
-				},
 				appellantDecisionFolder: {
 					caseId: '118',
 					documents: [],
