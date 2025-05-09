@@ -90,6 +90,7 @@ export function timingsPage(appealData, values, errors = {}) {
  */
 export function checkDetailsPage(appealData, values = {}, action) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const actionSlug = action === 'update' ? 'change' : action;
 
 	const rows = [
 		{ key: 'Estimated preparation time', value: values.preparationTime },
@@ -101,7 +102,7 @@ export function checkDetailsPage(appealData, values = {}, action) {
 		actions: {
 			items: [
 				{
-					href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/estimates/${action}/timings`,
+					href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/estimates/${actionSlug}/timings`,
 					text: 'Change',
 					visuallyHiddenText: row.key,
 					attributes: { 'data-cy': `change-${row.key.toLowerCase().replaceAll(' ', '-')}` }
@@ -119,7 +120,7 @@ export function checkDetailsPage(appealData, values = {}, action) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Check details and ${action} hearing estimates - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/hearing/estimates/${action}/timings`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/hearing/estimates/${actionSlug}/timings`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Check details and ${action} hearing estimates`,
 		pageComponents: [summaryListComponent],

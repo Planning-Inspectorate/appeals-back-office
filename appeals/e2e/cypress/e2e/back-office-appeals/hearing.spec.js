@@ -133,8 +133,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		);
 
 		// Submit the estimates
-		caseDetailsPage.clickButtonByText('Change hearing estimates');
-		caseDetailsPage.validateBannerMessage('Success', 'Hearing estimates changed');
+		caseDetailsPage.clickButtonByText('Update hearing estimates');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing estimates updated');
 
 		// Verify final estimates were updated correctly
 		caseDetailsPage.verifyHearingEstimatedValue('preparation-time', finalEstimates.preparationTime);

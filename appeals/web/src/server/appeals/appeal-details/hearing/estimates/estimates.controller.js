@@ -129,7 +129,7 @@ export const getChangeCheckDetails = async (request, response) => {
 		);
 	}
 
-	const mappedPageContent = checkDetailsPage(request.currentAppeal, hearingEstimates, 'change');
+	const mappedPageContent = checkDetailsPage(request.currentAppeal, hearingEstimates, 'update');
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent
