@@ -19,10 +19,10 @@ router
 	.route('/date')
 	.get(asyncHandler(controller.getHearingDate))
 	.post(
-		createDateInputFieldsValidator('hearing-date'),
+		createDateInputFieldsValidator('hearing-date', 'hearing date'),
 		createDateInputDateValidityValidator('hearing-date', 'hearing date'),
 		createDateInputDateInFutureValidator('hearing-date', 'hearing date'),
-		createTimeInputValidator('hearing-time'),
+		createTimeInputValidator('hearing-time', 'hearing time'),
 		saveBodyToSession('setUpHearing'),
 		asyncHandler(controller.postHearingDate)
 	);

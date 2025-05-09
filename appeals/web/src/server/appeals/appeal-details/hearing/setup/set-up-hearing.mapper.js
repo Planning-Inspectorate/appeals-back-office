@@ -16,7 +16,10 @@ import { addressInputs } from '#lib/mappers/index.js';
 export function hearingDatePage(appealData, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
-	const time = { hour: values.hour || '', minute: values.minute || '' };
+	const time =
+		values.hour || values.minute
+			? { hour: values.hour || '', minute: values.minute || '' }
+			: { hour: '10', minute: '00' };
 
 	const dateComponent = dateInput({
 		name: 'hearing-date',

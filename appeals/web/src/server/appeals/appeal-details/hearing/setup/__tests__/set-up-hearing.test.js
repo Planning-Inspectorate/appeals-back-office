@@ -151,7 +151,7 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Hearing date must include a day, a month and a year');
 		});
 
 		it('should return 400 on date in the past with appropriate error message', async () => {
@@ -191,8 +191,9 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The hour cannot be less than 0 or greater than 23');
-			expect(errorSummaryHtml).toContain('The minute cannot be less than 0 or greater than 59');
+			expect(errorSummaryHtml).toContain(
+				'Hearing time hour cannot be less than 0 or greater than 23'
+			);
 		});
 
 		it('should return 400 on missing time with appropriate error message', async () => {
@@ -210,8 +211,7 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The time must include an hour');
-			expect(errorSummaryHtml).toContain('The time must include a minute');
+			expect(errorSummaryHtml).toContain('Hearing time must include an hour');
 		});
 	});
 
