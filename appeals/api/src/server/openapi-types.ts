@@ -469,6 +469,7 @@ export interface Folder {
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
@@ -565,6 +566,7 @@ export interface Folder {
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
@@ -1597,6 +1599,22 @@ export interface SingleLPAQuestionnaireResponse {
 			}[];
 		};
 		screeningDirection?: {
+			/** @example 1 */
+			folderId?: number;
+			/** @example "path/to/document/folder" */
+			path?: string;
+			documents?: {
+				/** @example "fdadc281-f686-40ee-97cf-9bafdd02b1cb" */
+				id?: string;
+				/** @example "an appeal related document.pdf" */
+				name?: string;
+				/** @example 1 */
+				folderId?: number;
+				/** @example 2 */
+				caseId?: number;
+			}[];
+		};
+		scopingOpinion?: {
 			/** @example 1 */
 			folderId?: number;
 			/** @example "path/to/document/folder" */
@@ -2728,6 +2746,7 @@ export interface AppealDecision {
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
@@ -2824,6 +2843,7 @@ export interface AppealDecision {
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
@@ -2943,6 +2963,7 @@ export interface AppealWithdrawal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
@@ -3039,6 +3060,7 @@ export interface AppealWithdrawal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
@@ -3162,6 +3184,7 @@ export interface Document {
 			| 'designAccessStatement'
 			| 'developmentPlanPolicies'
 			| 'eiaEnvironmentalStatement'
+			| 'eiaScopingOpinion'
 			| 'eiaScreeningDirection'
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
@@ -3258,6 +3281,7 @@ export interface Document {
 			| 'designAccessStatement'
 			| 'developmentPlanPolicies'
 			| 'eiaEnvironmentalStatement'
+			| 'eiaScopingOpinion'
 			| 'eiaScreeningDirection'
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
@@ -3356,6 +3380,7 @@ export interface DocumentVersion {
 		| 'designAccessStatement'
 		| 'developmentPlanPolicies'
 		| 'eiaEnvironmentalStatement'
+		| 'eiaScopingOpinion'
 		| 'eiaScreeningDirection'
 		| 'eiaScreeningOpinion'
 		| 'emergingPlan'
@@ -3616,6 +3641,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -3712,6 +3738,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -3822,6 +3849,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -3918,6 +3946,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4028,6 +4057,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4124,6 +4154,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4234,6 +4265,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4330,6 +4362,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4440,6 +4473,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4536,6 +4570,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4646,6 +4681,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4742,6 +4778,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4852,6 +4889,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -4948,6 +4986,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5058,6 +5097,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5154,6 +5194,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5264,6 +5305,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5360,6 +5402,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5470,6 +5513,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5566,6 +5610,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5676,6 +5721,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5772,6 +5818,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5882,6 +5929,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -5978,6 +6026,7 @@ export type AppellantCase = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6199,6 +6248,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6295,6 +6345,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6405,6 +6456,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6501,6 +6553,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6611,6 +6664,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6707,6 +6761,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6817,6 +6872,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -6913,6 +6969,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7023,6 +7080,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7119,6 +7177,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7229,6 +7288,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7325,6 +7385,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7435,6 +7496,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7531,6 +7593,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7641,6 +7704,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7737,6 +7801,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7847,6 +7912,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -7943,6 +8009,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8053,6 +8120,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8149,6 +8217,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8259,6 +8328,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8355,6 +8425,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8465,6 +8536,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8561,6 +8633,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8671,6 +8744,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8767,6 +8841,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8877,6 +8952,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -8973,6 +9049,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9083,6 +9160,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9179,6 +9257,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9289,6 +9368,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9385,6 +9465,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9495,6 +9576,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9591,6 +9673,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9701,6 +9784,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9797,6 +9881,215 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		eiaScopingOpinion?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'costsDecisionLetter'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -9907,6 +10200,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -10003,6 +10297,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -10113,6 +10408,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -10209,6 +10505,7 @@ export type LpaQuestionnaire = {
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
@@ -10463,6 +10760,7 @@ export interface Appeal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
@@ -10559,6 +10857,7 @@ export interface Appeal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
@@ -10678,6 +10977,7 @@ export interface Appeal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
@@ -10774,6 +11074,7 @@ export interface Appeal {
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
