@@ -92,7 +92,7 @@ exports[`change estimates GET /hearing/estimates/change/check-details should mat
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and change hearing estimates</h1>
+            <h1 class="govuk-heading-l">Check details and update hearing estimates</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -121,7 +121,7 @@ exports[`change estimates GET /hearing/estimates/change/check-details should mat
                             </div>
                         </dl>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Change hearing estimates</button>
+                        data-module="govuk-button">Update hearing estimates</button>
                     </form>
                 </div>
             </div>

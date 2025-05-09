@@ -409,7 +409,7 @@ export const notificationBannerDefinitions = {
 	hearingEstimatesChanged: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Hearing estimates changed'
+		text: 'Hearing estimates updated'
 	}
 };
 

@@ -477,12 +477,12 @@ describe('change estimates', () => {
 
 		it('should render the correct heading', () => {
 			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
-				'Check details and change hearing estimates'
+				'Check details and update hearing estimates'
 			);
 		});
 
 		it('should render the correct button text', () => {
-			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Change hearing estimates');
+			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Update hearing estimates');
 		});
 	});
 
