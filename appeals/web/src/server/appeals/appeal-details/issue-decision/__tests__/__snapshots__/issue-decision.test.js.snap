@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`issue-decision GET /appellant-cost-decision should render the appellant cost decision page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you want to issue the appellant&#39;s costs decision?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appellant-cost-decision" name="appellantCostDecision"
+                                        type="radio" value="true">
+                                        <label class="govuk-label govuk-radios__label" for="appellant-cost-decision">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appellant-cost-decision-2" name="appellantCostDecision"
+                                        type="radio" value="false">
+                                        <label class="govuk-label govuk-radios__label" for="appellant-cost-decision-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`issue-decision GET /check-invalid-decision should render the check your answer page for invalid decision 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -271,15 +311,20 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                         <dd class="govuk-summary-list__value">Allowed</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision">Change<span class="govuk-visually-hidden"> decision</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
                             target="_blank">test-document.pdf</a>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
                         </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the appellant&#39;s costs decision?</dt>
+                        <dd                         class="govuk-summary-list__value">Yes</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-cost-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
+                            </dd>
                     </div>
                 </dl>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>

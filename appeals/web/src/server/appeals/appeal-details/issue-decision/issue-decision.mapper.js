@@ -8,6 +8,7 @@ import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-han
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('./issue-decision.types.js').InspectorDecisionRequest} InspectorDecisionRequest
+ * @typedef {import('./issue-decision.types.js').AppellantCostDecisionRequest} AppellantCostDecisionRequest
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
@@ -134,6 +135,62 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 
 	return pageContent;
 }
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {AppellantCostDecisionRequest} appellantCostDecision
+ * @param {string|undefined} backUrl
+ * @param {any} errors
+ * @returns {PageContent}
+ */
+export function appellantCostDecisionPage(appealDetails, appellantCostDecision, backUrl, errors) {
+	/** @type {PageComponent} */
+	const selectAppellantCostDecisionComponent = {
+		type: 'radios',
+		parameters: {
+			name: 'appellantCostDecision',
+			idPrefix: 'appellant-cost-decision',
+			fieldset: {
+				legend: {
+					text: "Do you want to issue the appellant's costs decision?",
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
+			items: [
+				{
+					value: true,
+					text: 'Yes',
+					checked: appellantCostDecision?.outcome === 'true'
+				},
+				{
+					value: false,
+					text: 'No',
+					checked: appellantCostDecision?.outcome === 'false'
+				}
+			],
+			errorMessage: errors?.appellantCostDecision?.msg
+		}
+	};
+
+	const pageComponents = [selectAppellantCostDecisionComponent];
+
+	preRenderPageComponents(pageComponents);
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `What is the appellant cost decision? - ${shortAppealReference}`,
+		backLinkUrl:
+			backUrl ||
+			`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/decision-letter-upload`,
+		preHeading: `Appeal ${shortAppealReference} - issue decision`,
+		pageComponents
+	};
+
+	return pageContent;
+}
 
 /**
  *
@@ -198,12 +255,26 @@ export function dateDecisionLetterPage(
 
 /**
  *
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} documentType
+ * @returns {FileUploadInfoItem|undefined}
+ */
+function findFileInformaton(session, documentType) {
+	return session.fileUploadInfo?.files?.find(
+		(/** @type {FileUploadInfoItem} */ fileInfo) => fileInfo.documentType === documentType
+	);
+}
+
+/**
+ *
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {{ key: { text: string; }; value: { html: string; text?: undefined; } | { text: string; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }[]}
  */
 function checkAndConfirmPageRows(appealData, session) {
 	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+	const baseRoute = `/appeals-service/appeal-details/${appealData.appealId}/issue-decision`;
+	const currentRoute = encodeURIComponent(`${baseRoute}/check-your-decision`);
 	const rows = [
 		{
 			key: 'Decision',
@@ -212,45 +283,50 @@ function checkAndConfirmPageRows(appealData, session) {
 			actions: [
 				{
 					text: 'Change',
-					href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+					href: `${baseRoute}/decision?backUrl=${currentRoute}`,
 					visuallyHiddenText: 'decision'
 				}
 			]
 		}
 	];
 
-	const documentTypes = ['caseDecisionLetter'];
+	const caseDecisionLetter = findFileInformaton(session, 'caseDecisionLetter');
 
-	documentTypes.forEach((documentType) => {
-		const fileInfo = session.fileUploadInfo?.files?.find(
-			(/** @type {FileUploadInfoItem} */ fileInfo) => fileInfo.documentType === documentType
-		);
-
-		if (!fileInfo) return;
-
+	if (caseDecisionLetter) {
 		const href = mapUncommittedDocumentDownloadUrl(
 			appealData.appealReference,
-			fileInfo.GUID,
-			fileInfo.name
+			caseDecisionLetter.GUID,
+			caseDecisionLetter.name
 		);
+		rows.push({
+			key: 'Decision letter',
+			value: caseDecisionLetter.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/decision-letter-upload?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'decision letter'
+				}
+			]
+		});
+	}
 
-		switch (documentType) {
-			case 'caseDecisionLetter':
-				rows.push({
-					key: 'Decision letter',
-					value: fileInfo.name,
-					href,
-					actions: [
-						{
-							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
-							visuallyHiddenText: 'decision letter'
-						}
-					]
-				});
-				break;
-		}
-	});
+	const appellantCostDecisionOutcome = session.appellantCostDecision?.outcome;
+	if (appellantCostDecisionOutcome) {
+		rows.push({
+			key: "Do you want to issue the appellant's costs decision?",
+			value: appellantCostDecisionOutcome === 'true' ? 'Yes' : 'No',
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/appellant-cost-decision?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'appellant cost decision'
+				}
+			]
+		});
+	}
 
 	return rows.map(({ key, value, href = '', actions }) => {
 		return {

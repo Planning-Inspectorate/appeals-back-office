@@ -50,6 +50,18 @@ router
 	);
 
 router
+	.route('/appellant-cost-decision')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderAppellantCostDecision)
+	)
+	.post(
+		validators.validateAppellantCostDecision,
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.postAppellantCostDecision)
+	);
+
+router
 	.route('/invalid-reason')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
