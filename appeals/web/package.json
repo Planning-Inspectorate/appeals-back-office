@@ -98,7 +98,7 @@
     "@types/express-session": "^1.17.4",
     "@types/humps": "^2.0.1",
     "@types/jest": "^27.5.0",
-    "@types/morgan": "^1.9.3",
+    "@types/morgan": "^1.9.9",
     "@types/node-schedule": "^2.1.0",
     "@types/nunjucks": "^3.2.1",
     "@types/pluralize": "^0.0.29",
