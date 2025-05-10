@@ -7,8 +7,10 @@ import {
 	NODE_ENV_PRODUCTION
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from './string-token-replacement.js';
+import { loadEnvironment } from '@pins/platform';
 
 /** @typedef {import('@pins/appeals.api').Appeals.NotifyTemplate} NotifyTemplate */
+const environment = loadEnvironment(process.env.NODE_ENV);
 
 class NotifyClient {
 	/** @type {any} */
@@ -33,11 +35,10 @@ class NotifyClient {
 	 */
 	setRecipientEmail(recipientEmail) {
 		const {
-			govNotify: { testMailbox },
-			NODE_ENV
+			govNotify: { testMailbox }
 		} = config;
 
-		return NODE_ENV !== NODE_ENV_PRODUCTION ? testMailbox : recipientEmail;
+		return environment.NODE_ENV === NODE_ENV_PRODUCTION ? testMailbox : recipientEmail;
 	}
 
 	/**
