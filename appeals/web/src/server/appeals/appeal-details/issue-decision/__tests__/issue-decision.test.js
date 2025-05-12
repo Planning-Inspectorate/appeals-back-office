@@ -19,6 +19,7 @@ const issueDecisionPath = '/issue-decision';
 const decisionPath = '/decision';
 const decisionLetterUploadPath = '/decision-letter-upload';
 const decisionLetterDatePath = '/decision-letter-date';
+const appellantCostsDecisionLetterUploadPath = '/appellant-costs-decision-letter-upload';
 const checkYourDecisionPath = '/check-your-decision';
 
 describe('issue-decision', () => {
@@ -180,7 +181,7 @@ describe('issue-decision', () => {
 			);
 		});
 
-		it('should redirect to the decision letter date page if upload-info is present in the request body and in the correct format', async () => {
+		it('should redirect to the appellant cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
 				.send({
@@ -189,7 +190,7 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/appellant-cost-decision'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/appellant-costs-decision'
 			);
 		});
 	});
@@ -428,16 +429,16 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/appellant-cost-decision`
+				`/appeals-service/appeal-details/${mockAppealId}/issue-decision/appellant-costs-decision`
 			);
 		});
 	});
 
-	describe('GET /appellant-cost-decision', () => {
+	describe('GET /appellant-costs-decision', () => {
 		it('should render the appellant cost decision page', async () => {
 			const mockAppealId = '1';
 			const response = await request.get(
-				`${baseUrl}/${mockAppealId}/issue-decision/appellant-cost-decision`
+				`${baseUrl}/${mockAppealId}/issue-decision/appellant-costs-decision`
 			);
 
 			const element = parseHtml(response.text);
@@ -450,12 +451,140 @@ describe('issue-decision', () => {
 				'Do you want to issue the appellant&#39;s costs decision?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="appellant-cost-decision" name="appellantCostDecision" type="radio" value="true">'
+				'<input class="govuk-radios__input" id="appellant-costs-decision" name="appellantCostsDecision" type="radio" value="true">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="appellant-cost-decision-2" name="appellantCostDecision" type="radio" value="false">'
+				'<input class="govuk-radios__input" id="appellant-costs-decision-2" name="appellantCostsDecision" type="radio" value="false">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /appellant-costs-decision', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(teardown);
+
+		it(`should require a chosen option`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Select yes if you want to issue the appellant&#39;s cost decision</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="appellant-costs-decision-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you want to issue the appellant&#39;s cost decision</p>'
+			);
+		});
+
+		it(`should redirect to the appellant costs decision letter upload page, if the appellant costs decision is 'Yes'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+				.send({ appellantCostsDecision: 'true' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload'
+			);
+		});
+
+		it(`should redirect to the check your decision page, if the decision is 'No'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+				.send({ appellantCostsDecision: 'false' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+			);
+		});
+	});
+
+	describe('GET /appellant-costs-decision-letter-upload', () => {
+		it('should render the decision letter upload page with a file upload component', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload appellant costs decision letter</h2>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+			expect(unprettifiedElement.innerHTML).toContain('or drop file</span>');
+		});
+	});
+
+	describe('POST /appellant-costs-decision-letter-upload', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if upload-info is not present in the request body', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the appellant cost decision page if upload-info is present in the request body and in the correct format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision'
+			);
 		});
 	});
 
@@ -557,7 +686,11 @@ describe('issue-decision', () => {
 		/**
 		 * @type {import("superagent").Response}
 		 */
-		let issueAppellantCostDecisionResponse;
+		let issueAppellantCostsDecisionResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let uploadAppellantCostsDecisionLetterResponse;
 
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
@@ -565,7 +698,8 @@ describe('issue-decision', () => {
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
+				.reply(200, documentRedactionStatuses)
+				.persist();
 
 			issueDecisionResponse = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
@@ -578,9 +712,16 @@ describe('issue-decision', () => {
 						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
 				});
 
-			issueAppellantCostDecisionResponse = await request
-				.post(`${baseUrl}/1/issue-decision/appellant-cost-decision`)
-				.send({ appellantCostDecision: 'true' });
+			issueAppellantCostsDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+				.send({ appellantCostsDecision: 'true' });
+
+			uploadAppellantCostsDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document-2.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
 
 			const mockLetterDecisionDate = {
 				'decision-letter-date-day': '1',
@@ -598,7 +739,8 @@ describe('issue-decision', () => {
 		it('should render the check your decision page', async () => {
 			expect(issueDecisionResponse.statusCode).toBe(302);
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
-			expect(issueAppellantCostDecisionResponse.statusCode).toBe(302);
+			expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
+			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
@@ -613,12 +755,16 @@ describe('issue-decision', () => {
 
 			expect(element.innerHTML).toContain('Decision letter</dt>');
 			expect(element.innerHTML).toContain('test-document.pdf</a>');
-			expect(element.innerHTML).toContain('Send decision</button>');
 
 			expect(element.innerHTML).toContain(
 				'Do you want to issue the appellant&#39;s costs decision?</dt>'
 			);
 			expect(element.innerHTML).toContain('Yes</dd>');
+
+			expect(element.innerHTML).toContain('Appellant costs decision letter</dt>');
+			expect(element.innerHTML).toContain('test-document-2.pdf</a>');
+
+			expect(element.innerHTML).toContain('Send decision</button>');
 		});
 	});
 
