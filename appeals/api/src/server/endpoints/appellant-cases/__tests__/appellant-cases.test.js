@@ -1133,4 +1133,83 @@ describe('appellant cases routes', () => {
 			});
 		});
 	});
+
+	describe('PATCH /appeals/:appealId/appellant-cases/:appellantCaseId', () => {
+		test('updates appellant case development type and logs the correct label', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const patchBody = {
+				developmentType: 'other-minor'
+			};
+			const expectedLabel = 'other minor developments';
+
+			const { appellantCase, id } = householdAppeal;
+			const response = await request
+				.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+				.send(patchBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: appellantCase.id },
+				data: {
+					developmentType: patchBody.developmentType
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: `Development type updated to ${expectedLabel}`,
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('handles unmapped development type gracefully', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const patchBody = {
+				developmentType: 'unknown-type'
+			};
+
+			const { appellantCase, id } = householdAppeal;
+			const response = await request
+				.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+				.send(patchBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: appellantCase.id },
+				data: {
+					developmentType: patchBody.developmentType
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: 'Development type updated to unknown-type',
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(200);
+		});
+	});
 });
