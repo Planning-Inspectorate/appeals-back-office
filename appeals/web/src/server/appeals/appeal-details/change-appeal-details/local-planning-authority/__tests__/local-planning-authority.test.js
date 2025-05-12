@@ -95,7 +95,7 @@ describe('change-appeal-details/local-planning-authority', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Please choose a local planning authority');
+			expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
 		});
 	});
 });

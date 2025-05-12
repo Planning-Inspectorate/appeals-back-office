@@ -109,8 +109,7 @@ export async function lpaQuestionnairePage(
 		}
 	};
 	caseSummary.parameters.rows = caseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) =>
-			row.key.text === lpaText ? row : removeSummaryListActions(row)
+		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
 	);
 
 	/**

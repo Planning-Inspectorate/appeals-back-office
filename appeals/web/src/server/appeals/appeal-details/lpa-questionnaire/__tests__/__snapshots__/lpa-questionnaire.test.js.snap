@@ -6478,7 +6478,7 @@ exports[`LPA Questionnaire review change LPA link POST /lpa-questionnaire/1/chan
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#local-planning-authority">Please choose a local planning authority.</a>
+                            <li><a href="#local-planning-authority">Select the local planning authority.</a>
                             </li>
                         </ul>
                     </div>
