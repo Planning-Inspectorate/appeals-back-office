@@ -40,6 +40,7 @@ export async function appealDetailsPage(
 		appellantFinalComments,
 		lpaFinalComments
 	);
+
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/**

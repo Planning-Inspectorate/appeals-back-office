@@ -37,6 +37,7 @@ import representationsRouter from './representations/representations.router.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
 import hearingRouter from './hearing/hearing.router.js';
+import siteAddressRouter from './appellant-case/address/address.router.js';
 
 const router = createRouter();
 
@@ -185,6 +186,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	hearingRouter
+);
+
+router.use(
+	'/:appealId/site-address',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAddressRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);
