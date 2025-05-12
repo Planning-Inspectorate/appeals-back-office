@@ -23,7 +23,7 @@ export const APPEAL_TYPE = Object.freeze({
 	AFFORDABLE_HOUSING_OBLIGATION: 'Affordable housing obligation appeal',
 	CALL_IN_APPLICATION: 'Call-in application',
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate appeal',
-	PLANNED_LISTED_BUILDING: 'Planned listed building and conservation area appeal',
+	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area appeal',
 	COMMERCIAL: 'Commercial (CAS) appeal'
 });
 
