@@ -8,6 +8,5 @@ import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
  * @param {WebAppeal} appealDetails
  * @returns {boolean}
  */
-export const isLpaqReceived = (appealDetails) => {
-	return appealDetails.documentationSummary?.lpaQuestionnaire?.status === DOCUMENT_STATUS_RECEIVED;
-};
+export const isLpaqReceived = (appealDetails) =>
+	appealDetails.documentationSummary?.lpaQuestionnaire?.status === DOCUMENT_STATUS_RECEIVED;

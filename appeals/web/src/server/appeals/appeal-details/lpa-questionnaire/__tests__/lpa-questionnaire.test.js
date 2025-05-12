@@ -18,7 +18,6 @@ import {
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
 	appealData,
-	appealDataFullPlanning,
 	notCheckedDocumentFolderInfoDocuments,
 	lpaQuestionnaireData,
 	fileUploadInfo,
@@ -45,7 +44,6 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/lpa-questionnaire/2';
 const notificationBannerElement = '.govuk-notification-banner';
-
 const incompleteReasonIds = lpaQuestionnaireIncompleteReasons.map((reason) => reason.id);
 const incompleteReasonsWithText = lpaQuestionnaireIncompleteReasons.filter(
 	(reason) => reason.hasText === true
@@ -59,6 +57,22 @@ const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason
 const lpaqAdditionalDocumentsFolderInfo = {
 	...additionalDocumentsFolderInfo,
 	path: 'lpa-questionnaire/lpaCaseCorrespondence'
+};
+
+const lpaqAppealData = {
+	...appealData,
+	documentationSummary: {
+		...appealData.documentationSummary,
+		lpaQuestionnaire: {
+			...appealData.documentationSummary.lpaQuestionnaire,
+			status: 'received'
+		}
+	}
+};
+
+const appealDataFullPlanning = {
+	...lpaqAppealData,
+	appealType: 'Planning appeal'
 };
 
 describe('LPA Questionnaire review', () => {
@@ -92,8 +106,8 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render a success notification banner when "green belt" is updated', async () => {
-			const appealId = appealData.appealId.toString();
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId.toString();
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 			const apiUrl = `/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`;
 			nock('http://test/').get(apiUrl).reply(200, lpaQuestionnaireData).persist();
@@ -116,8 +130,8 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
-			const appealId = appealData.appealId;
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId;
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const validData = {
 				inspectorAccessRadio: 'yes',
 				inspectorAccessDetails: 'Details'
@@ -146,8 +160,8 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render a "Safety risks updated" success notification banner when the safety risks (lpa) is updated', async () => {
-			const appealId = appealData.appealId;
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId;
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const validData = {
 				safetyRisksRadio: 'yes',
 				safetyRisksDetails: 'Details'
@@ -178,7 +192,7 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -220,7 +234,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/').patch(`/appeals/1/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -251,7 +265,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -335,7 +349,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Notification methods updated" success notification banner when notification methods are changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -358,7 +372,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -382,7 +396,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -406,7 +420,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Description of development updated" success notification banner when eia development description is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -428,7 +442,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Development category updated" success notification banner when eia environmental impact schedule is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -494,8 +508,8 @@ describe('LPA Questionnaire review', () => {
 
 		describe('banner ordering', () => {
 			it('should render success banners before (above) important banners', async () => {
-				const appealId = appealData.appealId.toString();
-				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+				const appealId = lpaqAppealData.appealId.toString();
+				const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 
 				nock('http://test/')
 					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
@@ -633,7 +647,7 @@ describe('LPA Questionnaire review', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
-						...appealData,
+						...lpaqAppealData,
 						appealId
 					})
 					.persist();
@@ -792,7 +806,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 2,
 					appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 				});
@@ -831,7 +845,7 @@ describe('LPA Questionnaire review', () => {
 				nock('http://test/')
 					.get(`/appeals/3`)
 					.reply(200, {
-						...appealData,
+						...lpaqAppealData,
 						appealId: 3,
 						appealStatus
 					});
@@ -1146,7 +1160,10 @@ describe('LPA Questionnaire review', () => {
 	describe('GET / with unchecked documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/${lpaqAppealData.appealId}`)
+				.reply(200, lpaqAppealData)
+				.persist();
 		});
 
 		it('should render a notification banner when a file is unscanned', async () => {
@@ -1488,7 +1505,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 1
 				});
 		});
@@ -1501,12 +1518,12 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 2,
 					documentationSummary: {
-						...appealData.documentationSummary,
+						...lpaqAppealData.documentationSummary,
 						lpaQuestionnaire: {
-							...appealData.documentationSummary.lpaQuestionnaire,
+							...lpaqAppealData.documentationSummary.lpaQuestionnaire,
 							dueDate: '2024-10-11T10:27:06.626Z'
 						}
 					}
@@ -1549,7 +1566,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 1
 				});
 		});
@@ -1986,7 +2003,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -2127,7 +2144,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
@@ -2271,7 +2288,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -2449,7 +2466,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3076,7 +3093,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3144,7 +3161,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3226,7 +3243,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3295,7 +3312,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3835,7 +3852,7 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHTML).toContain('Please choose a local planning authority');
+				expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
 			});
 		});
 	});
