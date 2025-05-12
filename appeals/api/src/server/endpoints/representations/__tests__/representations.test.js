@@ -215,7 +215,6 @@ describe('/appeals/:id/reps', () => {
 				lpa_reference: householdAppeal.applicationReference,
 				appeal_reference_number: householdAppeal.reference,
 				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-				url: 'https://www.gov.uk/appeal-planning-inspectorate',
 				site_address: expectedSiteAddress
 			};
 
@@ -309,7 +308,6 @@ describe('/appeals/:id/reps', () => {
 				deadline_date: '20 December 2024',
 				appeal_reference_number: mockAppealS78.reference,
 				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-				url: 'https://www.gov.uk/appeal-planning-inspectorate',
 				site_address: expectedSiteAddress
 			};
 

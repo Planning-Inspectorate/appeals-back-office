@@ -8,8 +8,7 @@ import {
 	ERROR_NOT_FOUND,
 	ERROR_INVALID_APPEAL_STATE,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	ERROR_MUST_BE_STRING,
-	FRONT_OFFICE_URL
+	ERROR_MUST_BE_STRING
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -169,7 +168,6 @@ describe('appeal change type resubmit routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					appeal_type: 'type a',
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					url: FRONT_OFFICE_URL,
 					due_date: formatDate(new Date('3000-02-05'), false)
 				},
 				recipientEmail: 'test@136s7.com',
