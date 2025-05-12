@@ -202,7 +202,7 @@ export const notificationBannerDefinitions = {
 	},
 	siteAddressUpdated: {
 		type: 'success',
-		pages: ['appellantCase'],
+		pages: ['appealDetails', 'appellantCase'],
 		text: 'Site address updated'
 	},
 	timetableDueDateUpdated: {

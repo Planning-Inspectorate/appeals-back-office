@@ -14,6 +14,7 @@ import { mapUser } from '#appeals/appeal-details/audit/audit.service.js';
  */
 export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
 	const caseNotes = [...unmappedCaseNotes];
+
 	return {
 		sessionComment: session.comment || '',
 		caseNotes: await Promise.all(
