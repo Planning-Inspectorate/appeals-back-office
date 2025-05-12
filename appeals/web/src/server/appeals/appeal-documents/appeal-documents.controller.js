@@ -44,6 +44,7 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {string} [params.nextPageUrl]
  * @param {boolean} [params.isLateEntry]
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
  * @param {string} [params.uploadContainerHeadingTextOverride]
  * @param {string} [params.documentTitle]
  * @param {PageComponent[]} [params.pageBodyComponents]
@@ -59,6 +60,7 @@ export const renderDocumentUpload = async ({
 	nextPageUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	preHeadingTextOverride,
 	uploadContainerHeadingTextOverride = '',
 	documentTitle,
 	pageBodyComponents,
@@ -110,29 +112,29 @@ export const renderDocumentUpload = async ({
 			.sort((a, b) => b - a)[0];
 	}
 
-	const mappedPageContent = await documentUploadPage(
+	const mappedPageContent = await documentUploadPage({
 		appealId,
-		appealDetails.appealReference,
-		`${currentFolder.folderId}`,
-		currentFolder.path,
+		appealReference: appealDetails.appealReference,
+		folderId: `${currentFolder.folderId}`,
+		folderPath: currentFolder.path,
 		documentId,
-		// @ts-ignore
 		documentName,
 		latestVersion,
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
-		session.fileUploadInfo,
+		fileUploadInfo: session.fileUploadInfo,
 		errors,
 		pageHeadingTextOverride,
+		preHeadingTextOverride,
 		pageBodyComponents,
 		allowMultipleFiles,
-		_documentType,
+		documentType: _documentType,
 		filenamesInFolder,
 		allowedTypes,
 		uploadContainerHeadingTextOverride,
 		documentTitle
-	);
+	});
 
 	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);
 };
@@ -142,8 +144,9 @@ export const renderDocumentUpload = async ({
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.nextPageUrl
+ * @param {function} [params.callBack]
  */
-export const postDocumentUpload = async ({ request, response, nextPageUrl }) => {
+export const postDocumentUpload = async ({ request, response, nextPageUrl, callBack }) => {
 	const { body, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -180,7 +183,11 @@ export const postDocumentUpload = async ({ request, response, nextPageUrl }) => 
 		files: uncommittedFiles
 	};
 
-	response.redirect(nextPageUrl);
+	if (callBack) {
+		await callBack();
+	}
+
+	await response.redirect(nextPageUrl);
 };
 
 /**

@@ -7,7 +7,7 @@ import {
 	mapDecisionOutcome,
 	invalidReasonPage,
 	checkAndConfirmInvalidPage,
-	appellantCostDecisionPage
+	appellantCostsDecisionPage
 } from './issue-decision.mapper.js';
 import {
 	renderDocumentUpload,
@@ -23,6 +23,8 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { cloneDeep } from 'lodash-es';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -78,9 +80,39 @@ export const renderIssueDecision = async (request, response) => {
 	});
 };
 
+/**
+ *
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} documentType
+ */
+function storeFileUploadInfo(session, documentType) {
+	const { inspectorDecision = {} } = session;
+	if (!inspectorDecision.fileUploadInfo) {
+		inspectorDecision.fileUploadInfo = {};
+	}
+
+	if (session.fileUploadInfo) {
+		inspectorDecision.fileUploadInfo[documentType] = cloneDeep(session.fileUploadInfo);
+		session.inspectorDecision = inspectorDecision;
+	}
+}
+
+/**
+ *
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string} documentType
+ */
+function restoreFileUploadInfo(session, documentType) {
+	const { fileUploadInfo = {} } = session.inspectorDecision || {};
+
+	if (fileUploadInfo[documentType]) {
+		session.fileUploadInfo = fileUploadInfo[documentType];
+	}
+}
+
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postDecisionLetterUpload = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, session } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404');
@@ -94,8 +126,10 @@ export const postDecisionLetterUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/appellant-cost-decision`
-		// nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/appellant-costs-decision`,
+		callBack: async () => {
+			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER);
+		}
 	});
 };
 
@@ -106,11 +140,14 @@ export const postDecisionLetterUpload = async (request, response) => {
  */
 export const renderDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
+	const documentType = APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER;
 
 	request.currentFolder = {
 		folderId: currentAppeal.decision?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
 	};
+
+	restoreFileUploadInfo(request.session, documentType);
 
 	await renderDocumentUpload({
 		request,
@@ -121,6 +158,9 @@ export const renderDecisionLetterUpload = async (request, response) => {
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
 		pageHeadingTextOverride: 'Decision letter',
+		preHeadingTextOverride: `Appeal ${appealShortReference(
+			currentAppeal.appealReference
+		)} - issue decision`,
 		uploadContainerHeadingTextOverride: 'Upload decision letter',
 		documentTitle: 'decision letter',
 		allowMultipleFiles: false,
@@ -152,7 +192,7 @@ export const postDateDecisionLetter = async (request, response) => {
 	};
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/issue-decision/appellant-cost-decision`
+		`/appeals-service/appeal-details/${appealId}/issue-decision/appellant-costs-decision`
 	);
 };
 
@@ -210,23 +250,29 @@ export const renderDateDecisionLetter = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postAppellantCostDecision = async (request, response) => {
+export const postAppellantCostsDecision = async (request, response) => {
 	const { params, body, session, errors } = request;
 
 	if (errors) {
-		return renderAppellantCostDecision(request, response);
+		return renderAppellantCostsDecision(request, response);
 	}
 
-	/** @type {import('./issue-decision.types.js').AppellantCostDecisionRequest} */
-	session.appellantCostDecision = {
+	/** @type {import('./issue-decision.types.js').AppellantCostsDecisionRequest} */
+	session.appellantCostsDecision = {
 		appealId: params.appealId,
-		...request.session.appellantCostDecision,
-		outcome: body.appellantCostDecision
+		...request.session.appellantCostsDecision,
+		outcome: body.appellantCostsDecision
 	};
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
-	);
+	if (body.appellantCostsDecision === 'true') {
+		return response.redirect(
+			`/appeals-service/appeal-details/${params.appealId}/issue-decision/appellant-costs-decision-letter-upload`
+		);
+	} else {
+		return response.redirect(
+			`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+		);
+	}
 };
 
 /**
@@ -234,22 +280,22 @@ export const postAppellantCostDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const renderAppellantCostDecision = async (request, response) => {
+export const renderAppellantCostsDecision = async (request, response) => {
 	const { errors } = request;
 
 	const appealId = request.params.appealId;
 	const appealData = request.currentAppeal;
 
 	if (
-		request.session?.appellantCostDecision?.appealId &&
-		request.session?.appellantCostDecision?.appealId !== appealId
+		request.session?.appellantCostsDecision?.appealId &&
+		request.session?.appellantCostsDecision?.appealId !== appealId
 	) {
-		request.session.appellantCostDecision = {};
+		request.session.appellantCostsDecision = {};
 	}
 
-	const mappedPageContent = appellantCostDecisionPage(
+	const mappedPageContent = appellantCostsDecisionPage(
 		appealData,
-		request.session.appellantCostDecision,
+		request.session.appellantCostsDecision,
 		getBackLinkUrlFromQuery(request),
 		errors
 	);
@@ -257,6 +303,64 @@ export const renderAppellantCostDecision = async (request, response) => {
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postAppellantCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal, session } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	request.currentFolder = {
+		folderId: currentAppeal.appellantDecisionFolder?.folderId,
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
+	};
+
+	await postDocumentUpload({
+		request,
+		response,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
+		callBack: async () => {
+			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
+		}
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderAppellantCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal } = request;
+	const documentType = APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER;
+
+	request.currentFolder = {
+		folderId: currentAppeal.appellantDecisionFolder?.folderId,
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+	};
+
+	restoreFileUploadInfo(request.session, documentType);
+
+	await renderDocumentUpload({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl:
+			getBackLinkUrlFromQuery(request) ||
+			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/appellant-costs-decision`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/check-your-decision`,
+		pageHeadingTextOverride: 'Appellant costs decision letter',
+		preHeadingTextOverride: `Appeal ${appealShortReference(
+			currentAppeal.appealReference
+		)} - issue decision`,
+		uploadContainerHeadingTextOverride: 'Upload appellant costs decision letter',
+		documentTitle: 'appellant costs decision letter',
+		allowMultipleFiles: false,
+		allowedTypes: ['pdf']
 	});
 };
 
