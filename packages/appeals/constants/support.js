@@ -90,6 +90,7 @@ export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
 export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
 export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated';
 export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
+export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated';
 export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED = 'Green belt status updated';
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED = 'Site ownership updated';

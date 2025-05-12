@@ -8,6 +8,8 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { APPEAL_DEVELOPMENT_TYPES } from './appellant-cases.constants.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -140,8 +142,16 @@ const updateAppellantCaseById = async (req, res) => {
 		if (updatedProperties.length === 1) {
 			const updatedProperty = updatedProperties[0];
 			const constantKey = `AUDIT_TRAIL_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
-			// @ts-ignore
-			auditTrailDetail = CONSTANTS[constantKey] || auditTrailDetail;
+			if (constantKey === 'AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED' && developmentType) {
+				const developmentTypeLabel =
+					APPEAL_DEVELOPMENT_TYPES.find(({ value }) => value === developmentType)?.label ||
+					developmentType;
+
+				auditTrailDetail = stringTokenReplacement(CONSTANTS[constantKey], [developmentTypeLabel]);
+			} else {
+				// @ts-ignore
+				auditTrailDetail = CONSTANTS[constantKey] || auditTrailDetail;
+			}
 		} else if (updatedProperties.length > 1) {
 			if (updatedProperties.includes('ownsSomeLand') && updatedProperties.includes('ownsAllLand')) {
 				auditTrailDetail = CONSTANTS.AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED;
