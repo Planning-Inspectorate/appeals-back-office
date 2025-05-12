@@ -701,7 +701,7 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -1167,7 +1167,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -1602,7 +1602,7 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -2044,7 +2044,7 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -2524,7 +2524,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -2959,7 +2959,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -3413,7 +3413,7 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -3860,7 +3860,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -4298,7 +4298,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -4736,7 +4736,7 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -5211,7 +5211,7 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -5658,7 +5658,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -6117,7 +6117,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -6552,7 +6552,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -7006,7 +7006,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                     </dd>
                 </div>
@@ -7460,7 +7460,7 @@ exports[`appeal-details should not render a back button 1`] = `
                             </div>
                             <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
                                 </dd>
                             </div>
