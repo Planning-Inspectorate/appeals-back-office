@@ -82,7 +82,7 @@ const tryMapUsers = async (log, session) => {
  * @param {number | null} lpaqId
  * @returns {Promise<string>}
  */
-const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
+export const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 	if (!docInfo) {
 		return log;
 	}
@@ -99,7 +99,6 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 				if (!lpaqId) {
 					break;
 				}
-
 				const url = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}/manage-documents/${folderId}/${documentGuid}`;
 				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
@@ -134,9 +133,12 @@ const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 						break;
 					}
 				}
-
 				const url = `/appeals-service/appeal-details/${appealId}/costs/${path}/manage-documents/${folderId}/${documentGuid}`;
 				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+			}
+			case 'representation': {
+				const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
+				return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
 			}
 			//TODO: internal folders, when the data model is updated
 		}

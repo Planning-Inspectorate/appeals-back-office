@@ -39,3 +39,15 @@
 		margin-block: auto;
 	}
 }
+
+.pins-summary-list--no-border {
+  .govuk-summary-list__row {
+    border: 0
+  }
+  .govuk-summary-list__actions,
+  .govuk-summary-list__value,
+  .govuk-summary-list__key {
+    padding-top: .2;
+    padding-bottom: 0;
+  }
+}

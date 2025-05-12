@@ -111,4 +111,11 @@ router.route('/case/:caseReference').get((req, res) => {
 	return res.status(404);
 });
 
+router.get('/favicon.ico', (req, res) => {
+	res.redirect('/assets/images/favicon.ico');
+});
+router.get('/images/favicon.ico', (req, res) => {
+	res.redirect('/assets/images/favicon.ico');
+});
+
 export default router;

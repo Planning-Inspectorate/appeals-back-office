@@ -4,11 +4,7 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { DateTimeSection } from '../../page_objects/dateTimeSection';
 
-const listCasesPage = new ListCasesPage();
-const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('Change start date', () => {
@@ -22,8 +18,9 @@ describe('Change start date', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.changeStartDate(caseRef);
-			const date = new Date();
-			caseDetailsPage.verifyDateChanges('start-date', date);
+			cy.getBusinessActualDate(new Date(), 0).then((newDate) => {
+				caseDetailsPage.verifyDateChanges('start-date', newDate);
+			});
 		});
 	});
 });

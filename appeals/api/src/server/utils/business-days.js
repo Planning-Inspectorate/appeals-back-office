@@ -14,6 +14,11 @@ import {
 	DEFAULT_TIMEZONE
 } from '@pins/appeals/constants/dates.js';
 import { getCache, setCache } from './cache-data.js';
+import {
+	APPEAL_TYPE_SHORTHAND_HAS,
+	APPEAL_TYPE_SHORTHAND_FPA
+} from '@pins/appeals/constants/support.js';
+import isFPA from './is-fpa.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -186,9 +191,10 @@ const setTimeInTimeZone = (date, hours, minutes) => {
 const calculateTimetable = async (appealType, startedAt) => {
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
+		const appealTypeKey = isFPA(appealType) ? APPEAL_TYPE_SHORTHAND_FPA : APPEAL_TYPE_SHORTHAND_HAS;
 
 		// @ts-ignore
-		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealType];
+		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealTypeKey];
 
 		if (appealTimetableConfig) {
 			const bankHolidays = await fetchBankHolidaysForDivision();

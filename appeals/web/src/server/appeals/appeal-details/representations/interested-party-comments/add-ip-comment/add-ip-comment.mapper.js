@@ -123,7 +123,7 @@ export const checkAddressPage = (appealDetails, value, errors) => ({
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} providedAddress
  * @param {number} folderId
- * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
+ * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, allowedTypes: string[], size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
 export const uploadPage = (appealDetails, errors, providedAddress, folderId, fileUploadInfo) => ({
@@ -150,6 +150,7 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId, fil
 	pageHeadingText: 'Upload interested party comment',
 	pageBodyComponents: [],
 	documentType: DOCUMENT_TYPE,
+	allowedTypes: [],
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
 	errors
 });

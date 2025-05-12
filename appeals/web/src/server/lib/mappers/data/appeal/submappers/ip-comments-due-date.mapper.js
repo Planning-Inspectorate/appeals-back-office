@@ -17,7 +17,7 @@ export const mapIpCommentsDueDate = ({
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate),
 		link: `${currentRoute}/appeal-timetables/ip-comments`,
 		editable:
-			appealDetails.documentationSummary?.ipComments?.counts?.published === 0 &&
+			!appealDetails.documentationSummary.ipComments?.counts?.published &&
 			userHasUpdateCasePermission &&
 			Boolean(appealDetails.startedAt),
 		classes: 'appeal-ip-comments-due-date'

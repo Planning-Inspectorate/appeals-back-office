@@ -109,6 +109,11 @@ const appealDetailsInclude = {
 			siteVisitType: true
 		}
 	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
 	caseNotes: true,
 	folders: {
 		include: {
@@ -123,7 +128,8 @@ const appealDetailsInclude = {
 			}
 		}
 	},
-	representations: true
+	representations: true,
+	hearingEstimate: true
 };
 
 /**

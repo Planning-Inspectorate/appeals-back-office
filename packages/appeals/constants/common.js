@@ -7,7 +7,8 @@ export const EVENT_TYPE = Object.freeze({
 
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
-	SECTION_78_HEARING: 'featureFlagS78Hearing'
+	SECTION_78_HEARING: 'featureFlagS78Hearing',
+	SECTION_20: 'featureFlagS20'
 });
 
 export const APPEAL_TYPE = Object.freeze({

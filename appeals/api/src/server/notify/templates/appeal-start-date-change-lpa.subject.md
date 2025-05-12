@@ -1,1 +1,1 @@
-New start date: ((appeal_reference_number))
+New start date: {{appeal_reference_number}}

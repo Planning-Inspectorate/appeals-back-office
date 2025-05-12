@@ -672,7 +672,7 @@ describe('appeal timetables routes', () => {
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -686,7 +686,7 @@ describe('appeal timetables routes', () => {
 						start_date: '5 June 2024',
 						url: 'https://www.gov.uk/appeal-planning-inspectorate'
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-start-date-change-appellant'
 				});
 				// eslint-disable-next-line no-undef
@@ -695,7 +695,7 @@ describe('appeal timetables routes', () => {
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -709,7 +709,7 @@ describe('appeal timetables routes', () => {
 						start_date: '5 June 2024',
 						url: 'https://www.gov.uk/appeal-planning-inspectorate'
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-start-date-change-lpa'
 				});
 			});
@@ -739,7 +739,7 @@ describe('appeal timetables routes', () => {
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -753,7 +753,7 @@ describe('appeal timetables routes', () => {
 						start_date: '5 June 2024',
 						url: 'https://www.gov.uk/appeal-planning-inspectorate'
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
 				});
 				// eslint-disable-next-line no-undef
@@ -762,7 +762,7 @@ describe('appeal timetables routes', () => {
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -776,7 +776,7 @@ describe('appeal timetables routes', () => {
 						start_date: '5 June 2024',
 						url: 'https://www.gov.uk/appeal-planning-inspectorate'
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-valid-start-case-lpa'
 				});
 			});

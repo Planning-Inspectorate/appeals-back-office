@@ -22,7 +22,7 @@ describe('Change site visit', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 			dateTimeSection.enterVisitDate(visitDate);
 			dateTimeSection.enterVisitStartTime('08', '00');
@@ -49,7 +49,7 @@ describe('Change site visit', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Access required');
 			dateTimeSection.enterVisitDate(visitDate);
 			dateTimeSection.enterVisitStartTime('08', '00');

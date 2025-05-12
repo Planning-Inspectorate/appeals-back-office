@@ -283,11 +283,17 @@ export const spec = {
 					folderId: 2302,
 					path: 'costs/lpaCorrespondence'
 				},
-				decisionFolder: {
+				appellantDecisionFolder: {
 					caseId: '118',
 					documents: [],
-					folderId: 2400,
-					path: 'costs/decision'
+					folderId: 2401,
+					path: 'costs/appellantDecision'
+				},
+				lpaDecisionFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2402,
+					path: 'costs/lpaDecision'
 				}
 			},
 			internalCorrespondence: {
@@ -1179,6 +1185,218 @@ export const spec = {
 				eiaScreeningRequired: {
 					type: 'boolean',
 					example: true
+				}
+			}
+		},
+		CreateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		UpdateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		HearingResponse: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				hearingId: {
+					type: 'number',
+					example: 1
+				},
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		HearingEstimate: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateCreateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateUpdateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateResponse: {
+			type: 'object',
+			properties: {
+				hearingEstimateId: {
+					type: 'number',
+					example: 1
 				}
 			}
 		},

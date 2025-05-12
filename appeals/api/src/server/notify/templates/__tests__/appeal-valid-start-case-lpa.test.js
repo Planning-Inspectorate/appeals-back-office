@@ -36,7 +36,7 @@ describe('appeal-valid-start-case-lpa.md', () => {
 			'',
 			'Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			'Local planning authority: 48269/APP/2021/1482',
+			'Planning application reference: 48269/APP/2021/1482',
 			'Start date: 01 January 2025',
 			'',
 			'# Next steps',

@@ -2,12 +2,13 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- */
-/**
  * @typedef {import('./issue-decision.types.js').InspectorDecisionRequest} InspectorDecisionRequest
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
 /**
@@ -15,9 +16,10 @@ import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
  * @param {Appeal} appealDetails
  * @param {InspectorDecisionRequest} inspectorDecision
  * @param {string|undefined} backUrl
+ * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
+export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, errors) {
 	/** @type {PageComponent} */
 	const summaryBlock = {
 		type: 'inset-text',
@@ -41,15 +43,19 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 										}
 								  ]
 								: []),
-							...(appealDetails.siteAddress
+							...(appealDetails.appealSite
 								? [
 										{
 											key: {
 												text: 'Site address'
 											},
 											value: {
-												html: appealDetails.siteAddress
-													? addressToMultilineStringHtml(appealDetails.siteAddress)
+												html: appealDetails.appealSite
+													? addressToMultilineStringHtml(
+															/** @type {import('@pins/appeals').Address} */ (
+																appealDetails.appealSite
+															)
+													  )
 													: null
 											}
 										}
@@ -70,12 +76,14 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 		}
 	};
 
+	const fieldName = 'decision';
+
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
 		parameters: {
-			name: 'decision',
-			idPrefix: 'decision',
+			name: fieldName,
+			idPrefix: fieldName,
 			fieldset: {
 				legend: {
 					text: 'What is the decision?',
@@ -104,7 +112,8 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 					text: 'Invalid',
 					checked: inspectorDecision?.outcome === 'Invalid'
 				}
-			]
+			],
+			errorMessage: getErrorByFieldname(errors, fieldName)
 		}
 	};
 
@@ -124,34 +133,6 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl) {
 	};
 
 	return pageContent;
-}
-
-/**
- * @returns {PageComponent[]}
- */
-export function decisionLetterUploadPageBodyComponents() {
-	const checklistHtml = `<ul class="govuk-list govuk-list--bullet">
-	<li>added the correct appeal reference</li>
-	<li>added the decision date and visit date</li>
-	<li>added the correct site address</li>
-	<li>added the decision to the top and bottom of the letter</li>
-	<li>signed the letter</li>
-</ul>`;
-
-	return [
-		{
-			type: 'warning-text',
-			parameters: {
-				text: 'Before uploading, check that you have:'
-			}
-		},
-		{
-			type: 'html',
-			parameters: {
-				html: checklistHtml
-			}
-		}
-	];
 }
 
 /**
@@ -216,36 +197,85 @@ export function dateDecisionLetterPage(
 }
 
 /**
+ *
+ * @param {Appeal} appealData
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @returns {{ key: { text: string; }; value: { html: string; text?: undefined; } | { text: string; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }[]}
+ */
+function checkAndConfirmPageRows(appealData, session) {
+	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+	const rows = [
+		{
+			key: 'Decision',
+			value: decisionOutcome,
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+					visuallyHiddenText: 'decision'
+				}
+			]
+		}
+	];
+
+	const documentTypes = ['caseDecisionLetter'];
+
+	documentTypes.forEach((documentType) => {
+		const fileInfo = session.fileUploadInfo?.files?.find(
+			(/** @type {FileUploadInfoItem} */ fileInfo) => fileInfo.documentType === documentType
+		);
+
+		if (!fileInfo) return;
+
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			fileInfo.GUID,
+			fileInfo.name
+		);
+
+		switch (documentType) {
+			case 'caseDecisionLetter':
+				rows.push({
+					key: 'Decision letter',
+					value: fileInfo.name,
+					href,
+					actions: [
+						{
+							text: 'Change',
+							href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
+							visuallyHiddenText: 'decision letter'
+						}
+					]
+				});
+				break;
+		}
+	});
+
+	return rows.map(({ key, value, href = '', actions }) => {
+		return {
+			key: { text: key },
+			value: href
+				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+				: { text: value },
+			actions: {
+				items: actions
+			}
+		};
+	});
+}
+
+/**
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(appealData, session) {
-	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
-
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: [
-				{
-					key: {
-						text: 'Decision'
-					},
-					value: {
-						text: decisionOutcome
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
-								visuallyHiddenText: 'decision'
-							}
-						]
-					}
-				}
-			]
+			rows: checkAndConfirmPageRows(appealData, session)
 		}
 	};
 

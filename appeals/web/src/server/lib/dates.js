@@ -285,3 +285,19 @@ export const oneMonthBefore = (date) => {
 	dateOneMonthBefore.setMonth(dateOneMonthBefore.getMonth() - 1);
 	return dateOneMonthBefore;
 };
+
+/**
+ * Returns the days with one or no decimal places, followed by 'day' or 'days
+ * @param {string | number | undefined} days
+ * @returns {string}
+ */
+export const formatDays = (days) => {
+	if (typeof days === 'undefined') {
+		return '';
+	}
+
+	const numberOfDays = typeof days === 'string' ? parseFloat(days) : days;
+	const suffix = numberOfDays === 1 ? 'day' : 'days';
+
+	return `${numberOfDays} ${suffix}`;
+};

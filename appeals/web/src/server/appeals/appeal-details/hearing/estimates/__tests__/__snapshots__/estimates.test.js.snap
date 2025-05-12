@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add estimates GET /hearing/estimates/add/check-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and add hearing estimates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated preparation time</dt>
+                                <dd                                 class="govuk-summary-list__value">1.5 days</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/add/timings"
+                                        data-cy="change-estimated-preparation-time">Change<span class="govuk-visually-hidden"> Estimated preparation time</span></a>
+                                    </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated sitting time</dt>
+                                <dd class="govuk-summary-list__value">2 days</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/add/timings"
+                                    data-cy="change-estimated-sitting-time">Change<span class="govuk-visually-hidden"> Estimated sitting time</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated reporting time</dt>
+                                <dd                                 class="govuk-summary-list__value">1 day</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/add/timings"
+                                        data-cy="change-estimated-reporting-time">Change<span class="govuk-visually-hidden"> Estimated reporting time</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Add hearing estimates</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`add estimates GET /hearing/estimates/add/timings should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Hearing estimates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="preparation-time">Estimated preparation time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="preparation-time"
+                                name="preparationTime" type="text">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="sitting-time">Estimated sitting time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="sitting-time" name="sittingTime"
+                                type="text">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="reporting-time">Estimated reporting time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="reporting-time" name="reportingTime"
+                                type="text">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change estimates GET /hearing/estimates/change/check-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update hearing estimates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated preparation time</dt>
+                                <dd                                 class="govuk-summary-list__value">1.5 days</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/change/timings"
+                                        data-cy="change-estimated-preparation-time">Change<span class="govuk-visually-hidden"> Estimated preparation time</span></a>
+                                    </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated sitting time</dt>
+                                <dd class="govuk-summary-list__value">2 days</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/change/timings"
+                                    data-cy="change-estimated-sitting-time">Change<span class="govuk-visually-hidden"> Estimated sitting time</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated reporting time</dt>
+                                <dd                                 class="govuk-summary-list__value">1 day</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/estimates/change/timings"
+                                        data-cy="change-estimated-reporting-time">Change<span class="govuk-visually-hidden"> Estimated reporting time</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Update hearing estimates</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change estimates GET /hearing/estimates/change/timings should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Hearing estimates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="preparation-time">Estimated preparation time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="preparation-time"
+                                name="preparationTime" type="text" value="4">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="sitting-time">Estimated sitting time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="sitting-time" name="sittingTime"
+                                type="text" value="5">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-bottom-3" for="reporting-time">Estimated reporting time</label>
+                            <div class="govuk-input__wrapper">
+                                <input class="govuk-input govuk-input--width-4" id="reporting-time" name="reportingTime"
+                                type="text" value="0.5">
+                                <div class="govuk-input__suffix" aria-hidden="true">days</div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

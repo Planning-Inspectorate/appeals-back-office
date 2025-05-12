@@ -33,6 +33,7 @@ import createManyToManyRelationData from '#utils/create-many-to-many-relation-da
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { ERROR_MAX_LENGTH_CHARACTERS } from '@pins/appeals/constants/support.js';
 
 describe('lpa questionnaires routes', () => {
 	afterEach(() => {
@@ -1638,6 +1639,53 @@ describe('lpa questionnaires routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(body);
+			});
+
+			test('updates newConditionDetails when given string is less than 8000 characters', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const requestBody = {
+					extraConditions: 'a'.repeat(6000)
+				};
+				const responseBody = {
+					extraConditions: 'a'.repeat(6000)
+				};
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(requestBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {
+						newConditionDetails: 'a'.repeat(6000)
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(responseBody);
+			});
+
+			test('returns an error if newConditionDetails is more than 8000 characters', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const body = {
+					extraConditions: 'a'.repeat(8001)
+				};
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						extraConditions: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [8000])
+					}
+				});
 			});
 
 			test('does not return an error when given an empty body', async () => {

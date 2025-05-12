@@ -1,12 +1,8 @@
-# Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 # Appeal withdrawn
 
-We have withdrawn this appeal following your request on ((withdrawal_date)).
+We have withdrawn this appeal following your request on {{withdrawal_date}}.
 
 # Next steps
 

@@ -99,7 +99,7 @@ describe('appeal-documents', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('<form method="POST"');
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
@@ -136,7 +136,7 @@ describe('appeal-documents', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('<form method="POST"');
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 

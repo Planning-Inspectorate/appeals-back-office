@@ -14,7 +14,7 @@ exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] =
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -89,7 +89,7 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 1`
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -186,7 +186,7 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 2`
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -283,7 +283,7 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 1`]
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -380,7 +380,7 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 2`]
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">

@@ -12,6 +12,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import isFPA from '#utils/is-fpa.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -40,8 +41,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
+	const appealTypeKey = isFPA(appealType.key)
+		? APPEAL_TYPE_SHORTHAND_FPA
+		: APPEAL_TYPE_SHORTHAND_HAS;
 
-	const stateMachine = createStateMachine(appealType.key, procedureKey, currentState);
+	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {
