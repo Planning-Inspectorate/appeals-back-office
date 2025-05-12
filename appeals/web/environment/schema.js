@@ -74,6 +74,7 @@ export default baseSchema
 					.options({ presence: 'required' })
 			})
 			.options({ presence: 'required' }),
-		featureFlags: joi.object().pattern(/featureFlag.*/, joi.boolean())
+		featureFlags: joi.object().pattern(/featureFlag.*/, joi.boolean()),
+		useSystemTestBcForChangeLpa: joi.boolean().optional()
 	})
 	.options({ presence: 'required' }); // all required by default

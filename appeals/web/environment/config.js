@@ -68,7 +68,8 @@ export function loadConfig() {
 		SSL_CERT_FILE,
 		SSL_KEY_FILE,
 		RETRY_MAX_ATTEMPTS,
-		RETRY_STATUS_CODES
+		RETRY_STATUS_CODES,
+		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	} = environment;
 
 	const config = {
@@ -127,7 +128,8 @@ export function loadConfig() {
 			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
 			featureFlagS20: FEATURE_FLAG_S20 === 'true'
-		}
+		},
+		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	};
 
 	const { value: validatedConfig, error } = schema.validate(config);

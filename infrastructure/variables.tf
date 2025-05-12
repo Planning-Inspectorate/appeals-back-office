@@ -247,3 +247,7 @@ variable "front_office_url" {
   description = "The base URL for the front office application"
   type        = string
 }
+variable "use_system_test_bc_for_change_lpa" {
+  description = "Bool for allowing STBC on change LPA options"
+  type        = bool
+}

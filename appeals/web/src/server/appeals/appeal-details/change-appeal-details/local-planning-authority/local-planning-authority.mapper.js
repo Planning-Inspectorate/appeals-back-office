@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
@@ -50,7 +51,9 @@ export function changeLpaPage(appealDetails, lpaList, backLinkUrl) {
  */
 export function mapLpasToSelectItemParameters(lpaList) {
 	return lpaList
-		.filter((lpa) => !['Q1111', 'Q9999'].includes(lpa.lpaCode))
+		.filter((lpa) =>
+			config.useSystemTestBcForChangeLpa ? lpa : !['Q1111', 'Q9999'].includes(lpa.lpaCode)
+		)
 		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((lpa) => ({
 			value: lpa.id.toString(),
