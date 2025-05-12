@@ -698,6 +698,7 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.S78:
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING: //TODO: new field mappings and feature flag logic
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78Components(
 					appealDetails,

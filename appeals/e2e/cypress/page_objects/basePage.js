@@ -59,7 +59,8 @@ export class Page {
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
 		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
+		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
+		serviceHeader: '.pins-header-domainname'
 	};
 
 	basePageElements = {
@@ -113,7 +114,9 @@ export class Page {
 		textArea: () => cy.get(this.selectors.textArea),
 		genericText: () => cy.get(this.selectors.body),
 		projectManagement: () => cy.get(this.selectors.projectManagement),
-		unpublishLink: () => cy.get(this.selectors.unpublish)
+		unpublishLink: () => cy.get(this.selectors.unpublish),
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
+		serviceHeader: () => cy.get(this.selectors.serviceHeader)
 	};
 
 	/********************************************************
@@ -341,5 +344,18 @@ export class Page {
 
 	validateSectionHeader(sectionHeader) {
 		this.basePageElements.sectionHeader().should('have.text', sectionHeader);
+	}
+
+	checkErrorMessageDisplays(errorMessage) {
+		cy.get('li').contains(errorMessage).should('be.visible');
+	}
+
+	verifyInlineErrorMessage(element) {
+		cy.get(`#${element}`).should('be.visible');
+	}
+
+	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
+		this.basePageElements.errorMessageLink(link).click();
+		cy.focused().should('have.attr', attribute, value);
 	}
 }

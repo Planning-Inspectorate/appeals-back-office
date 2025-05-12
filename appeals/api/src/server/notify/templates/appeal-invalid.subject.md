@@ -1,1 +1,1 @@
-Your appeal is not valid: ((appeal_reference_number))
+Your appeal is not valid: {{appeal_reference_number}}

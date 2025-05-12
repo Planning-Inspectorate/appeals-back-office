@@ -18,15 +18,28 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 		return;
 	}
 
+	/** @type {PageComponent} */
+	const hearingEstimatesHeading = {
+		type: 'html',
+		parameters: { html: '<h3 class="govuk-heading-m">Hearing estimates</h3>' }
+	};
+
+	/** @type {PageComponent | undefined} */
+	const hearingEstimatesComponent = appealDetails.hearingEstimate
+		? {
+				type: 'summary-list',
+				parameters: { rows: mappedData.appeal.hearingEstimates.display.summaryListItems }
+		  }
+		: mappedData.appeal.addHearingEstimates.display.htmlItem;
+
 	return [
 		wrapComponents(
 			[
 				...(mappedData.appeal.setUpHearing.display.buttonItem
 					? [mappedData.appeal.setUpHearing.display.buttonItem]
 					: []),
-				...(mappedData.appeal.addHearingEstimates.display.htmlItem
-					? [mappedData.appeal.addHearingEstimates.display.htmlItem]
-					: [])
+				hearingEstimatesHeading,
+				...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])
 			],
 			{
 				opening: '<div id="case-details-hearing-section">',

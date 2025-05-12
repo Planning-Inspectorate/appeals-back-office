@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
+import notify from '#notify/notify-send.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
@@ -71,6 +71,9 @@ const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolv
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingCreate = jest.fn().mockResolvedValue({});
+const mockHearingUpdate = jest.fn().mockResolvedValue({});
+const mockHearingFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindMany = jest.fn().mockResolvedValue({});
 const mockSpecialismsFindUnique = jest.fn().mockResolvedValue({});
@@ -111,7 +114,7 @@ const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
 	if (doNotMockNotifySend) {
-		return notifySend(options);
+		return notify.notifySend(options);
 	} else {
 		return Promise.resolve();
 	}
@@ -150,6 +153,7 @@ class MockPrismaClient {
 			create: mockAddressCreate
 		};
 	}
+
 	get appeal() {
 		return {
 			findUnique: mockAppealFindUnique,
@@ -157,6 +161,13 @@ class MockPrismaClient {
 			findMany: mockAppealFindMany,
 			count: mockAppealCount,
 			create: mockAppealCreate
+		};
+	}
+
+	get appealNotification() {
+		return {
+			findUnique: mockAppealFindUnique,
+			createMany: mockAppealCreate
 		};
 	}
 
@@ -311,6 +322,14 @@ class MockPrismaClient {
 			create: mockSiteVisitCreate,
 			update: mockSiteVisitUpdate,
 			findUnique: mockSiteVisitFindUnique
+		};
+	}
+
+	get hearing() {
+		return {
+			create: mockHearingCreate,
+			update: mockHearingUpdate,
+			findUnique: mockHearingFindUnique
 		};
 	}
 
@@ -511,7 +530,9 @@ jest.unstable_mockModule('got', () => ({
 }));
 
 jest.unstable_mockModule('#notify/notify-send.js', () => ({
-	notifySend: mockNotifySend
+	...notify,
+	notifySend: mockNotifySend,
+	default: notify
 }));
 
 jest.unstable_mockModule('notifications-node-client', () => ({

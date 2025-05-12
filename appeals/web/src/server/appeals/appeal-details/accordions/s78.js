@@ -62,8 +62,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 				mappedData.appeal.ipComments.display.tableItem,
 				mappedData.appeal.appellantFinalComments.display.tableItem,
 				mappedData.appeal.lpaFinalComments.display.tableItem,
-				mappedData.appeal.environmentalAssessment.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem
+				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}
@@ -83,7 +82,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 		caseOverview,
 		siteDetails,
 		caseTimetable[0],
-		...(caseHearing ? caseHearing : []),
+		...(caseHearing ?? []),
 		caseDocumentation,
 		caseContacts,
 		caseTeam,

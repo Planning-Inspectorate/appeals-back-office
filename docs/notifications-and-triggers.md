@@ -112,18 +112,71 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Lpa statement incomplete
 
-- **Appeal type:** all
+- **Appeal type:** s78
 - **Notify Template:** [lpa-statement-incomplete](../appeals/api/src/server/notify/templates/lpa-statement-incomplete.content.md)
 - **Trigger:** Review a lpa statement and mark it as incomplete by selecting "Incomplete" and continue
 
 ### Ip comment rejected
 
-- **Appeal type:** all
+- **Appeal type:** s78
 - **Notify Template:** [ip-comment-rejected](../appeals/api/src/server/notify/templates/ip-comment-rejected.content.md)
 - **Trigger:** Review an ip comment and mark it as rejected by selecting "Reject" and continue
 
 ### Ip comment rejected deadline extended
 
-- **Appeal type:** all
+- **Appeal type:** s78
 - **Notify Template:** [ip-comment-rejected](../appeals/api/src/server/notify/templates/ip-comment-rejected.content.md)
 - **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by selecting "Reject" and continue
+
+## Final comments
+
+### Final comments done appellant
+
+- **Appeal type:** s78
+- **Notify Template:** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.content.md)
+- **Trigger:** Review final comments and mark as accepted and continue
+
+### Final comments done lpa
+
+- **Appeal type:** s78
+- **Notify Template:** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.content.md)
+- **Trigger:** Review final comments and mark as accepted and continue
+
+### Final comment rejected appellant
+
+- **Appeal type:** s78
+- **Notify Template:** [final-comment-rejected-appellant](../appeals/api/src/server/notify/templates/final-comment-rejected-appellant.content.md)
+- **Trigger:** Review final comments and mark as rejected, add some reasons and continue
+-
+
+### Final comment rejected lpa
+
+- **Appeal type:** s78
+- **Notify Template:** [final-comment-rejected-lpa](../appeals/api/src/server/notify/templates/final-comment-rejected-lpa.content.md)
+- **Trigger:** Review final comments and mark as rejected, add some reasons and continue
+
+## Decision
+
+### Decision is (allowed, split, or dismissed) appellant
+
+- **Appeal type:** all
+- **Notify Template:** [decision-is-allowed-split-dismissed-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
+- **Trigger:** Issue decision and select allowed, split, or dismissed and continue
+
+### Decision is (allowed, split, or dismissed) lpa
+
+- **Appeal type:** all
+- **Notify Template:** [decision-is-allowed-split-dismissed-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
+- **Trigger:** Issue decision and select allowed, split, or dismissed and continue
+
+### Decision is invalid appellant
+
+- **Appeal type:** all
+- **Notify Template:** [decision-is-invalid-appellant](../appeals/api/src/server/notify/templates/decision-is-invalid-appellant.content.md)
+- **Trigger:** Issue decision and select invalid and continue
+
+### Decision is invalid lpa
+
+- **Appeal type:** all
+- **Notify Template:** [decision-is-invalid-lpa](../appeals/api/src/server/notify/templates/decision-is-invalid-lpa.content.md)
+- **Trigger:** Issue decision and select invalid and continue

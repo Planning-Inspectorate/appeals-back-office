@@ -5,9 +5,9 @@ import {
 	dateDecisionLetterPage,
 	issueDecisionPage,
 	mapDecisionOutcome,
-	decisionLetterUploadPageBodyComponents,
 	invalidReasonPage,
-	checkAndConfirmInvalidPage
+	checkAndConfirmInvalidPage,
+	appellantCostDecisionPage
 } from './issue-decision.mapper.js';
 import {
 	renderDocumentUpload,
@@ -43,7 +43,7 @@ export const postIssueDecision = async (request, response) => {
 	};
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+		`/appeals-service/appeal-details/${params.appealId}/issue-decision/decision-letter-upload`
 	);
 };
 
@@ -68,7 +68,8 @@ export const renderIssueDecision = async (request, response) => {
 	const mappedPageContent = issueDecisionPage(
 		appealData,
 		request.session.inspectorDecision,
-		getBackLinkUrlFromQuery(request)
+		getBackLinkUrlFromQuery(request),
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -93,7 +94,8 @@ export const postDecisionLetterUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/appellant-cost-decision`
+		// nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/decision-letter-date`
 	});
 };
 
@@ -110,17 +112,19 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	const pageBodyComponents = decisionLetterUploadPageBodyComponents();
-
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
+		backButtonUrl:
+			getBackLinkUrlFromQuery(request) ||
+			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
-		pageHeadingTextOverride: 'Upload decision letter',
-		pageBodyComponents,
-		allowMultipleFiles: false
+		pageHeadingTextOverride: 'Decision letter',
+		uploadContainerHeadingTextOverride: 'Upload decision letter',
+		documentTitle: 'decision letter',
+		allowMultipleFiles: false,
+		allowedTypes: ['pdf']
 	});
 };
 
@@ -148,7 +152,7 @@ export const postDateDecisionLetter = async (request, response) => {
 	};
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/issue-decision/check-your-decision`
+		`/appeals-service/appeal-details/${appealId}/issue-decision/appellant-cost-decision`
 	);
 };
 
@@ -194,6 +198,60 @@ export const renderDateDecisionLetter = async (request, response) => {
 		decisionLetterDay,
 		decisionLetterMonth,
 		decisionLetterYear
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postAppellantCostDecision = async (request, response) => {
+	const { params, body, session, errors } = request;
+
+	if (errors) {
+		return renderAppellantCostDecision(request, response);
+	}
+
+	/** @type {import('./issue-decision.types.js').AppellantCostDecisionRequest} */
+	session.appellantCostDecision = {
+		appealId: params.appealId,
+		...request.session.appellantCostDecision,
+		outcome: body.appellantCostDecision
+	};
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+	);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderAppellantCostDecision = async (request, response) => {
+	const { errors } = request;
+
+	const appealId = request.params.appealId;
+	const appealData = request.currentAppeal;
+
+	if (
+		request.session?.appellantCostDecision?.appealId &&
+		request.session?.appellantCostDecision?.appealId !== appealId
+	) {
+		request.session.appellantCostDecision = {};
+	}
+
+	const mappedPageContent = appellantCostDecisionPage(
+		appealData,
+		request.session.appellantCostDecision,
+		getBackLinkUrlFromQuery(request),
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -312,7 +370,7 @@ export const renderCheckDecision = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = checkAndConfirmPage(currentAppeal, request.session);
+	const mappedPageContent = checkAndConfirmPage(currentAppeal, session);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,

@@ -52,92 +52,139 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Appeal decision" in the Documentation (label) column 1`] = `"<th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Awaiting decision" in the Status column, if a decision has not yet been issued 1`] = `"<td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Issue" link to the issue decision start page in the Actions column, if the appeal status is "issue_determination" 1`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Issue<span class="govuk-visually-hidden"> decision</span></a></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Not applicable" in the Due date column 1`] = `"<td class="govuk-table__cell appeal-decision-due-date">Not applicable</td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Sent" in the Status column, if a decision has been issued 1`] = `"<td class="govuk-table__cell appeal-decision-status">Issued</td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe 1`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View<span class="govuk-visually-hidden"> decision</span></a></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe 1`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View<span class="govuk-visually-hidden"> decision</span></a></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending 1`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View<span class="govuk-visually-hidden"> decision</span></a></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 1`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 2`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 3`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 4`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 5`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 6`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 7`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 8`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with an "Issue" action link 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/costs/appellant-decision" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 9`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination", "complete" or "invalid" 10`] = `"<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not yet issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
 exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="300"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 300 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
-exports[`appeal-details GET /:appealId Costs should render a "Appellant costs application" row in the costs accordion 1`] = `"<th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>"`;
+exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 1`] = `"<th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>"`;
 
-exports[`appeal-details GET /:appealId Costs should render a "Appellant costs application" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>"`;
-
-exports[`appeal-details GET /:appealId Costs should render a "Costs decision" row in the costs accordion 1`] = `"<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>"`;
-
-exports[`appeal-details GET /:appealId Costs should render a "Costs decision" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>"`;
+exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>"`;
 
 exports[`appeal-details GET /:appealId Hearing should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing" 1`] = `
 "<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup" role="button"
     draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
-    <div>
-        <h3 class="govuk-heading-m">Hearing estimates</h3>
-        <p><a class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/add-estimates">Add hearing estimates</a>
-        </p>
-    </div>
+    <h3     class="govuk-heading-m">Hearing estimates</h3>
+        <div>
+            <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+            </p>
+        </div>
 </div>"
 `;
+
+exports[`appeal-details GET /:appealId Hearing should render the Hearing estimates summary list when estimates are present 1`] = `
+"<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup" role="button"
+    draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
+    <h3     class="govuk-heading-m">Hearing estimates</h3>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preparation time</dt>
+                <dd class="govuk-summary-list__value">1 day</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-preparation-time">Change<span class="govuk-visually-hidden"> Preparation time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Sitting time</dt>
+                <dd class="govuk-summary-list__value">2.5 days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-sitting-time">Change<span class="govuk-visually-hidden"> Sitting time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reporting time</dt>
+                <dd class="govuk-summary-list__value">3 days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/change"
+                    data-cy="change-reporting-time">Change<span class="govuk-visually-hidden"> Reporting time</span></a>
+                </dd>
+            </div>
+        </dl>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with an "Issue" action link 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/costs/lpa-decision" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
@@ -532,7 +579,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
 </dl>"
 `;
 
-exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date row including a date and change action link 1`] = `
+exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start & IP comments due date rows, both including a date and change action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
         <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -559,7 +606,10 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         </dd>
     </div>
     <div class="govuk-summary-list__row appeal-ip-comments-due-date"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
-        <dd         class="govuk-summary-list__value"></dd>
+        <dd         class="govuk-summary-list__value">29 April 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appeal-timetables/ip-comments"
+                data-cy="change-ip-comments-due-date">Change<span class="govuk-visually-hidden"> Interested party comments due</span></a>
+            </dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
         <dd class="govuk-summary-list__value">12 October 2023</dd>
@@ -570,7 +620,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
 </dl>"
 `;
 
-exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date without an action link 1`] = `
+exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with all rows with the Start date and IP comments due date without an action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
         <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -594,7 +644,7 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
         </dd>
     </div>
     <div class="govuk-summary-list__row appeal-ip-comments-due-date"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
-        <dd         class="govuk-summary-list__value"></dd>
+        <dd         class="govuk-summary-list__value">29 April 2025</dd>
     </div>
     <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
         <dd class="govuk-summary-list__value">12 October 2023</dd>
@@ -640,10 +690,33 @@ exports[`appeal-details GET /:appealId should not render action links to the man
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -691,18 +764,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -871,12 +932,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -896,11 +951,11 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -955,16 +1010,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1003,9 +1048,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -1114,6 +1156,29 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -1165,18 +1230,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -1335,13 +1388,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     <td class="govuk-table__cell">Due by 11 October 2023</td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Issued</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View<span class="govuk-visually-hidden"> decision</span></a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -1361,11 +1407,11 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -1420,16 +1466,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -1468,9 +1504,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -1558,10 +1591,33 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Child</strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -1609,18 +1665,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -1786,12 +1830,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1811,11 +1849,11 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -1870,16 +1908,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1918,9 +1946,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -2008,10 +2033,33 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Lead</strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -2059,18 +2107,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -2239,12 +2275,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -2264,11 +2294,11 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -2323,16 +2353,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -2371,9 +2391,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -2496,6 +2513,29 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -2547,18 +2587,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -2717,13 +2745,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                     <td class="govuk-table__cell">Due by 11 October 2023</td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Issue<span class="govuk-visually-hidden"> decision</span></a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -2743,11 +2764,11 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -2802,16 +2823,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -2850,9 +2861,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -2940,10 +2948,33 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -2991,18 +3022,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -3180,12 +3199,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -3205,11 +3218,11 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -3264,16 +3277,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -3312,9 +3315,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -3402,10 +3402,33 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -3453,18 +3476,6 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -3635,12 +3646,6 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -3660,11 +3665,11 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -3719,16 +3724,6 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -3767,9 +3762,6 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -3857,6 +3849,29 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -3908,18 +3923,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -4081,12 +4084,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <td class="govuk-table__cell"></td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -4106,11 +4103,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -4165,16 +4162,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -4213,9 +4200,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -4303,6 +4287,29 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -4354,18 +4361,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -4527,12 +4522,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     <td class="govuk-table__cell"></td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -4552,11 +4541,11 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -4611,16 +4600,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -4659,9 +4638,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -4749,10 +4725,33 @@ exports[`appeal-details GET /:appealId should render the case reference for each
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -4800,18 +4799,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -4982,12 +4969,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -5007,11 +4988,11 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -5066,16 +5047,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -5114,9 +5085,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -5201,7 +5169,7 @@ role="banner" data-module="govuk-header">
                 </div><span>Planning Inspectorate</span>
             </div>
             <div class="pins-column--central">
-                <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                 <nav class="govuk-header__navigation pins-header-navigation"
                 aria-label="Menu">
                     <ul class="govuk-header__navigation-list">
@@ -5232,10 +5200,33 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -5283,18 +5274,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         </div>
                         <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -5465,12 +5444,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -5490,11 +5463,11 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -5549,16 +5522,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -5597,9 +5560,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -5687,10 +5647,33 @@ exports[`appeal-details GET /:appealId should render the received appeal details
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/3/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/3/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -5738,18 +5721,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div id="accordion-default3-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -5932,12 +5903,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -5957,11 +5922,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/3/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/3/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -6016,16 +5981,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/3/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -6064,9 +6019,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -6154,6 +6106,29 @@ exports[`appeal-details GET /:appealId should render the received appeal details
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -6205,18 +6180,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -6375,12 +6338,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <td class="govuk-table__cell">Due by 11 October 2023</td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -6400,11 +6357,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -6459,16 +6416,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -6507,9 +6454,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -6597,10 +6541,33 @@ exports[`appeal-details GET /:appealId should render the received appeal details
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
-            data-cy="download-case-files"><a class="govuk-link" href="/documents/2/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
-            </p>
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
         </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
+                data-cy="download-case-files"><a class="govuk-link" href="/documents/2/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
+                </p>
+            </div>
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
@@ -6648,18 +6615,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div id="accordion-default2-content-1" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
-                                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                    </dd>
-                                </div>
-                                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                    </dd>
-                                </div>
                                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                     <dd                                     class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                 </div>
@@ -6837,12 +6792,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <td class="govuk-table__cell">Due by 11 October 2023</td>
                                         <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                        <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                        <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                        <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -6862,11 +6811,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                 </thead>
                                 <tbody class="govuk-table__body">
                                     <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                        <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                         <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                             <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -6921,16 +6870,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="govuk-table__row">
-                                        <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                        <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                        <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                            <ul class="govuk-summary-list__actions-list">
-                                                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -6969,9 +6908,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                             <li>Wiltshire Council</li>
                                             <li>wilt@lpa-email.gov.uk</li>
                                         </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                        data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -7059,6 +6995,29 @@ exports[`appeal-details GET /:appealId should render the received appeal details
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
             <p class="govuk-body govuk-!-margin-bottom-6" id="download-case-files"
             data-cy="download-case-files"><a class="govuk-link" href="/documents/1/bulk-download/case-APP/Q9999/D/21/351062.zip">Download case</a>
             </p>
@@ -7110,18 +7069,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </div>
                     <div id="accordion-default1-content-1" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                </dd>
-                            </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                 <dd                                 class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                             </div>
@@ -7263,12 +7210,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     <td class="govuk-table__cell">Not applicable</td>
                                     <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                    <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                    <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                    <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -7288,11 +7229,11 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             </thead>
                             <tbody class="govuk-table__body">
                                 <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                     <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                         <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -7347,16 +7288,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         </ul>
                                     </td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                    <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -7395,9 +7326,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <li>Wiltshire Council</li>
                                         <li>wilt@lpa-email.gov.uk</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                    data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -7486,7 +7414,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -7517,6 +7445,29 @@ exports[`appeal-details should not render a back button 1`] = `
                 </div>
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Received appeal</strong>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <dl class="govuk-summary-list pins-summary-list--no-border">
+                            <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <p class="govuk-body">Not assigned</p>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-user/case-officer"
+                                    data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                                <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
                 <div class="govuk-grid-row">
@@ -7572,18 +7523,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                 </div>
                                 <div id="accordion-default2-content-1" class="govuk-accordion__section-content">
                                     <dl class="govuk-summary-list">
-                                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
-                                            <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
-                                                data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
-                                            <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                                data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                                            </dd>
-                                        </div>
                                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                                             <dd                                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                                         </div>
@@ -7742,12 +7681,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                                                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
                                             </tr>
-                                            <tr class="govuk-table__row">
-                                                <th scope="row" class="govuk-table__header appeal-decision-documentation">Decision</th>
-                                                <td class="govuk-table__cell appeal-decision-status">Awaiting decision</td>
-                                                <td class="govuk-table__cell appeal-decision-due-date">25 December 2023</td>
-                                                <td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -7767,11 +7700,11 @@ exports[`appeal-details should not render a back button 1`] = `
                                         </thead>
                                         <tbody class="govuk-table__body">
                                             <tr class="govuk-table__row">
-                                                <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant costs application</th>
+                                                <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
                                                 <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
                                                 <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
                                                     <ul class="govuk-summary-list__actions-list">
-                                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant costs application</span></a>
+                                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -7826,16 +7759,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                                     </ul>
                                                 </td>
                                             </tr>
-                                            <tr class="govuk-table__row">
-                                                <th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>
-                                                <td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>
-                                                <td class="govuk-table__cell appeal-costs-decision-actions govuk-!-text-align-right">
-                                                    <ul class="govuk-summary-list__actions-list">
-                                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-decision" href="/appeals-service/appeal-details/2/costs/decision/upload-documents/7">Add<span class="govuk-visually-hidden"> Costs decision</span></a>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -7874,9 +7797,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                                     <li>Wiltshire Council</li>
                                                     <li>wilt@lpa-email.gov.uk</li>
                                                 </ul>
-                                            </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                                                data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
                                             </dd>
                                         </div>
                                     </dl>

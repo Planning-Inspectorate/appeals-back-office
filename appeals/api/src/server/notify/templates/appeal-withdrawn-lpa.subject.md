@@ -1,1 +1,1 @@
-Appeal withdrawn: ((appeal_reference_number))
+Appeal withdrawn: {{appeal_reference_number}}

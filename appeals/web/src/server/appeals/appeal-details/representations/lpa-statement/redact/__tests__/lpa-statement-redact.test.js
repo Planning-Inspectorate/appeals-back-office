@@ -360,6 +360,30 @@ describe('redact', () => {
 			);
 			expect(innerHTML).toContain('Continue</button>');
 		});
+
+		it('should render a back link to the redact journey version of the allocation level page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/lpa-statement/redact/allocation-specialisms`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const { innerHTML } = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/lpa-statement/redact/allocation-level" class="govuk-back-link"`
+			);
+		});
 	});
 
 	describe('GET /confirm', () => {
