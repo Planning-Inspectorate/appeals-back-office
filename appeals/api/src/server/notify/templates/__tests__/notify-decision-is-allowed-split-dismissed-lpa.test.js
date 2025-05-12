@@ -15,7 +15,8 @@ describe('decision-is-allowed-split-dismissed-lpa.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				decision_date: '01 January 2021'
+				decision_date: '01 January 2021',
+				front_office_url: 'https://appeal-planning-decision.service.gov.uk'
 			}
 		};
 
@@ -30,7 +31,7 @@ describe('decision-is-allowed-split-dismissed-lpa.md', () => {
 			'',
 			'A decision has been made on this appeal.',
 			'',
-			'[Sign in to our service](https://appeals-service.planninginspectorate.gov.uk/manage-appeals/ABC45678) to view the decision letter dated 01 January 2021.',
+			'[Sign in to our service](https://appeal-planning-decision.service.gov.uk/manage-appeals/ABC45678) to view the decision letter dated 01 January 2021.',
 			'',
 			'The appellant has been informed of the decision.',
 			'',

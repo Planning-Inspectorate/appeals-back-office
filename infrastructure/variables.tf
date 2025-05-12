@@ -242,3 +242,8 @@ variable "beta_feedback_url" {
   description = "URL for beta feedback form"
   type        = string
 }
+
+variable "front_office_url" {
+  description = "The base URL for the front office application"
+  type        = string
+}

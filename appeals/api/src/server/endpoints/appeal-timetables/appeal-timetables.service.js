@@ -11,8 +11,7 @@ import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	AUDIT_TRAIL_SYSTEM_UUID,
-	ERROR_NOT_FOUND,
-	FRONT_OFFICE_URL
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
@@ -120,7 +119,6 @@ const startCase = async (
 				site_address: siteAddress,
 				start_date: formatDate(new Date(startDate || ''), false),
 				appellant_email_address: appellantEmail || '',
-				url: FRONT_OFFICE_URL,
 				appeal_type: appealType || '',
 				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
 				questionnaire_due_date: formatDate(

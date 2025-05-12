@@ -291,7 +291,6 @@ export const CASE_RELATIONSHIP_RELATED = 'related';
 
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';
-export const FRONT_OFFICE_URL = 'https://www.gov.uk/appeal-planning-inspectorate';
 
 export const CONFIG_APPEAL_TIMETABLE = {
 	W: {

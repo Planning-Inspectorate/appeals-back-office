@@ -6,7 +6,6 @@
  * code will the switching logic for you.
  */
 
-import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 import { notifySend } from '#notify/notify-send.js';
 
@@ -43,7 +42,6 @@ export const ipCommentRejection = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons,
 			deadline_date: extendedDeadline
 		};
@@ -75,7 +73,6 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons
 		}
 	});
@@ -99,7 +96,6 @@ export const lpaFinalCommentRejection = async ({ notifyClient, appeal, represent
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons
 		}
 	});
@@ -130,7 +126,6 @@ export const lpaStatementIncomplete = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			deadline_date: extendedDeadline,
 			reasons
 		}

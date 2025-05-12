@@ -1,6 +1,5 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
@@ -54,7 +53,6 @@ const changeAppealType = async (
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
-		url: FRONT_OFFICE_URL,
 		due_date: formatDate(new Date(dueDate || ''), false),
 		appeal_type: newAppealType || ''
 	};

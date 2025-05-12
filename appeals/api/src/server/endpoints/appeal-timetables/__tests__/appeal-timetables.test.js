@@ -683,8 +683,7 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a written procedure',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						start_date: '5 June 2024'
 					},
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-start-date-change-appellant'
@@ -706,8 +705,7 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a written procedure',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						start_date: '5 June 2024'
 					},
 					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-start-date-change-lpa'
@@ -750,8 +748,7 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a written procedure',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						start_date: '5 June 2024'
 					},
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
@@ -773,8 +770,7 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a written procedure',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						start_date: '5 June 2024'
 					},
 					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-valid-start-case-lpa'
