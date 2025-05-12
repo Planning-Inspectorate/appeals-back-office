@@ -1,16 +1,13 @@
-# Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 # Appeal decision
 
 We've decided that the appeal is invalid. We've closed the appeal.
 
 # Why the appeal is invalid
-
-((reasons))
+{% for reason in reasons %}
+- {{reason}}
+{%- endfor %}
 
 # The Planning Inspectorate’s role
 

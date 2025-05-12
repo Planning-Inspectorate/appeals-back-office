@@ -14,7 +14,7 @@ exports[`application-development-type GET /change should render the development 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -134,7 +134,7 @@ exports[`application-development-type POST /change should re-render page if inva
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -254,7 +254,7 @@ exports[`application-development-type POST /change should re-render page if no s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

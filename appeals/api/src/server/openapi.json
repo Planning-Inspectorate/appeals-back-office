@@ -4841,6 +4841,201 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/hearing/{hearingId}": {
+			"get": {
+				"tags": ["Hearing Details"],
+				"description": "Gets a single hearing by appeal ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hearingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single hearing by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Hearing Details"],
+				"description": "Updates hearing values for a single appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hearingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single hearing by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateHearing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateHearingRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateHearingRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/hearing": {
+			"post": {
+				"tags": ["Hearing Details"],
+				"description": "Sets a single hearing by appeal ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Sets a single hearing by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Site visit details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateHearingRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateHearingRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealReference}/site-visit-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
@@ -5037,6 +5232,183 @@
 					},
 					"404": {
 						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/hearing-estimates": {
+			"post": {
+				"tags": ["Hearing Estimates"],
+				"description": "Creates hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Creates hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing estimate details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateCreateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateCreateRequest"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Hearing Estimates"],
+				"description": "Updates hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Hearing estimate details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/HearingEstimateUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Hearing Estimates"],
+				"description": "Deletes hearing estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes hearing estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
@@ -6087,6 +6459,7 @@
 												"appellantCaseWithdrawalLetter",
 												"appellantCostsApplication",
 												"appellantCostsCorrespondence",
+												"appellantCostsDecisionLetter",
 												"appellantCostsWithdrawal",
 												"appellantFinalComment",
 												"appellantProofOfEvidence",
@@ -6098,12 +6471,12 @@
 												"communityInfrastructureLevy",
 												"conservationMap",
 												"consultationResponses",
-												"costsDecisionLetter",
 												"crossTeamCorrespondence",
 												"definitiveMapStatement",
 												"designAccessStatement",
 												"developmentPlanPolicies",
 												"eiaEnvironmentalStatement",
+												"eiaScopingOpinion",
 												"eiaScreeningDirection",
 												"eiaScreeningOpinion",
 												"emergingPlan",
@@ -6113,11 +6486,13 @@
 												"lpaCaseCorrespondence",
 												"lpaCostsApplication",
 												"lpaCostsCorrespondence",
+												"lpaCostsDecisionLetter",
 												"lpaCostsWithdrawal",
 												"lpaFinalComment",
 												"lpaProofOfEvidence",
 												"lpaStatement",
 												"lpaWitnessesEvidence",
+												"mainPartyCorrespondence",
 												"newPlansDrawings",
 												"originalApplicationForm",
 												"otherNewDocuments",
@@ -6246,6 +6621,7 @@
 													"appellantCaseWithdrawalLetter",
 													"appellantCostsApplication",
 													"appellantCostsCorrespondence",
+													"appellantCostsDecisionLetter",
 													"appellantCostsWithdrawal",
 													"appellantFinalComment",
 													"appellantProofOfEvidence",
@@ -6257,12 +6633,12 @@
 													"communityInfrastructureLevy",
 													"conservationMap",
 													"consultationResponses",
-													"costsDecisionLetter",
 													"crossTeamCorrespondence",
 													"definitiveMapStatement",
 													"designAccessStatement",
 													"developmentPlanPolicies",
 													"eiaEnvironmentalStatement",
+													"eiaScopingOpinion",
 													"eiaScreeningDirection",
 													"eiaScreeningOpinion",
 													"emergingPlan",
@@ -6272,11 +6648,13 @@
 													"lpaCaseCorrespondence",
 													"lpaCostsApplication",
 													"lpaCostsCorrespondence",
+													"lpaCostsDecisionLetter",
 													"lpaCostsWithdrawal",
 													"lpaFinalComment",
 													"lpaProofOfEvidence",
 													"lpaStatement",
 													"lpaWitnessesEvidence",
+													"mainPartyCorrespondence",
 													"newPlansDrawings",
 													"originalApplicationForm",
 													"otherNewDocuments",
@@ -7154,7 +7532,7 @@
 									}
 								}
 							},
-							"decisionFolder": {
+							"appellantDecisionFolder": {
 								"type": "object",
 								"properties": {
 									"caseId": {
@@ -7168,11 +7546,33 @@
 									},
 									"folderId": {
 										"type": "number",
-										"example": 2400
+										"example": 2401
 									},
 									"path": {
 										"type": "string",
-										"example": "costs/decision"
+										"example": "costs/appellantDecision"
+									}
+								}
+							},
+							"lpaDecisionFolder": {
+								"type": "object",
+								"properties": {
+									"caseId": {
+										"type": "string",
+										"example": "118"
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									},
+									"folderId": {
+										"type": "number",
+										"example": 2402
+									},
+									"path": {
+										"type": "string",
+										"example": "costs/lpaDecision"
 									}
 								}
 							}
@@ -10250,6 +10650,218 @@
 					}
 				}
 			},
+			"CreateHearingRequest": {
+				"type": "object",
+				"properties": {
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
+			"UpdateHearingRequest": {
+				"type": "object",
+				"properties": {
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
+			"HearingResponse": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"hearingId": {
+						"type": "number",
+						"example": 1
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"description": "Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
+			"HearingEstimate": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateCreateRequest": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateUpdateRequest": {
+				"type": "object",
+				"properties": {
+					"preparationTime": {
+						"type": "number",
+						"example": 1.5
+					},
+					"sittingTime": {
+						"type": "number",
+						"example": 0.5
+					},
+					"reportingTime": {
+						"type": "number",
+						"example": 2
+					}
+				}
+			},
+			"HearingEstimateResponse": {
+				"type": "object",
+				"properties": {
+					"hearingEstimateId": {
+						"type": "number",
+						"example": 1
+					}
+				}
+			},
 			"Address": {
 				"type": "object",
 				"required": ["addressLine1", "postCode"],
@@ -10758,6 +11370,7 @@
 												"appellantCaseWithdrawalLetter",
 												"appellantCostsApplication",
 												"appellantCostsCorrespondence",
+												"appellantCostsDecisionLetter",
 												"appellantCostsWithdrawal",
 												"appellantFinalComment",
 												"appellantProofOfEvidence",
@@ -10769,12 +11382,12 @@
 												"communityInfrastructureLevy",
 												"conservationMap",
 												"consultationResponses",
-												"costsDecisionLetter",
 												"crossTeamCorrespondence",
 												"definitiveMapStatement",
 												"designAccessStatement",
 												"developmentPlanPolicies",
 												"eiaEnvironmentalStatement",
+												"eiaScopingOpinion",
 												"eiaScreeningDirection",
 												"eiaScreeningOpinion",
 												"emergingPlan",
@@ -10784,11 +11397,13 @@
 												"lpaCaseCorrespondence",
 												"lpaCostsApplication",
 												"lpaCostsCorrespondence",
+												"lpaCostsDecisionLetter",
 												"lpaCostsWithdrawal",
 												"lpaFinalComment",
 												"lpaProofOfEvidence",
 												"lpaStatement",
 												"lpaWitnessesEvidence",
+												"mainPartyCorrespondence",
 												"newPlansDrawings",
 												"originalApplicationForm",
 												"otherNewDocuments",
@@ -10917,6 +11532,7 @@
 													"appellantCaseWithdrawalLetter",
 													"appellantCostsApplication",
 													"appellantCostsCorrespondence",
+													"appellantCostsDecisionLetter",
 													"appellantCostsWithdrawal",
 													"appellantFinalComment",
 													"appellantProofOfEvidence",
@@ -10928,12 +11544,12 @@
 													"communityInfrastructureLevy",
 													"conservationMap",
 													"consultationResponses",
-													"costsDecisionLetter",
 													"crossTeamCorrespondence",
 													"definitiveMapStatement",
 													"designAccessStatement",
 													"developmentPlanPolicies",
 													"eiaEnvironmentalStatement",
+													"eiaScopingOpinion",
 													"eiaScreeningDirection",
 													"eiaScreeningOpinion",
 													"emergingPlan",
@@ -10943,11 +11559,13 @@
 													"lpaCaseCorrespondence",
 													"lpaCostsApplication",
 													"lpaCostsCorrespondence",
+													"lpaCostsDecisionLetter",
 													"lpaCostsWithdrawal",
 													"lpaFinalComment",
 													"lpaProofOfEvidence",
 													"lpaStatement",
 													"lpaWitnessesEvidence",
+													"mainPartyCorrespondence",
 													"newPlansDrawings",
 													"originalApplicationForm",
 													"otherNewDocuments",
@@ -11142,6 +11760,7 @@
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
 														"appellantCostsCorrespondence",
+														"appellantCostsDecisionLetter",
 														"appellantCostsWithdrawal",
 														"appellantFinalComment",
 														"appellantProofOfEvidence",
@@ -11153,12 +11772,12 @@
 														"communityInfrastructureLevy",
 														"conservationMap",
 														"consultationResponses",
-														"costsDecisionLetter",
 														"crossTeamCorrespondence",
 														"definitiveMapStatement",
 														"designAccessStatement",
 														"developmentPlanPolicies",
 														"eiaEnvironmentalStatement",
+														"eiaScopingOpinion",
 														"eiaScreeningDirection",
 														"eiaScreeningOpinion",
 														"emergingPlan",
@@ -11168,11 +11787,13 @@
 														"lpaCaseCorrespondence",
 														"lpaCostsApplication",
 														"lpaCostsCorrespondence",
+														"lpaCostsDecisionLetter",
 														"lpaCostsWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -11301,6 +11922,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -11312,12 +11934,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -11327,11 +11949,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -11532,6 +12156,7 @@
 									"appellantCaseWithdrawalLetter",
 									"appellantCostsApplication",
 									"appellantCostsCorrespondence",
+									"appellantCostsDecisionLetter",
 									"appellantCostsWithdrawal",
 									"appellantFinalComment",
 									"appellantProofOfEvidence",
@@ -11543,12 +12168,12 @@
 									"communityInfrastructureLevy",
 									"conservationMap",
 									"consultationResponses",
-									"costsDecisionLetter",
 									"crossTeamCorrespondence",
 									"definitiveMapStatement",
 									"designAccessStatement",
 									"developmentPlanPolicies",
 									"eiaEnvironmentalStatement",
+									"eiaScopingOpinion",
 									"eiaScreeningDirection",
 									"eiaScreeningOpinion",
 									"emergingPlan",
@@ -11558,11 +12183,13 @@
 									"lpaCaseCorrespondence",
 									"lpaCostsApplication",
 									"lpaCostsCorrespondence",
+									"lpaCostsDecisionLetter",
 									"lpaCostsWithdrawal",
 									"lpaFinalComment",
 									"lpaProofOfEvidence",
 									"lpaStatement",
 									"lpaWitnessesEvidence",
+									"mainPartyCorrespondence",
 									"newPlansDrawings",
 									"originalApplicationForm",
 									"otherNewDocuments",
@@ -11685,6 +12312,7 @@
 										"appellantCaseWithdrawalLetter",
 										"appellantCostsApplication",
 										"appellantCostsCorrespondence",
+										"appellantCostsDecisionLetter",
 										"appellantCostsWithdrawal",
 										"appellantFinalComment",
 										"appellantProofOfEvidence",
@@ -11696,12 +12324,12 @@
 										"communityInfrastructureLevy",
 										"conservationMap",
 										"consultationResponses",
-										"costsDecisionLetter",
 										"crossTeamCorrespondence",
 										"definitiveMapStatement",
 										"designAccessStatement",
 										"developmentPlanPolicies",
 										"eiaEnvironmentalStatement",
+										"eiaScopingOpinion",
 										"eiaScreeningDirection",
 										"eiaScreeningOpinion",
 										"emergingPlan",
@@ -11711,11 +12339,13 @@
 										"lpaCaseCorrespondence",
 										"lpaCostsApplication",
 										"lpaCostsCorrespondence",
+										"lpaCostsDecisionLetter",
 										"lpaCostsWithdrawal",
 										"lpaFinalComment",
 										"lpaProofOfEvidence",
 										"lpaStatement",
 										"lpaWitnessesEvidence",
+										"mainPartyCorrespondence",
 										"newPlansDrawings",
 										"originalApplicationForm",
 										"otherNewDocuments",
@@ -11839,6 +12469,7 @@
 							"appellantCaseWithdrawalLetter",
 							"appellantCostsApplication",
 							"appellantCostsCorrespondence",
+							"appellantCostsDecisionLetter",
 							"appellantCostsWithdrawal",
 							"appellantFinalComment",
 							"appellantProofOfEvidence",
@@ -11850,12 +12481,12 @@
 							"communityInfrastructureLevy",
 							"conservationMap",
 							"consultationResponses",
-							"costsDecisionLetter",
 							"crossTeamCorrespondence",
 							"definitiveMapStatement",
 							"designAccessStatement",
 							"developmentPlanPolicies",
 							"eiaEnvironmentalStatement",
+							"eiaScopingOpinion",
 							"eiaScreeningDirection",
 							"eiaScreeningOpinion",
 							"emergingPlan",
@@ -11865,11 +12496,13 @@
 							"lpaCaseCorrespondence",
 							"lpaCostsApplication",
 							"lpaCostsCorrespondence",
+							"lpaCostsDecisionLetter",
 							"lpaCostsWithdrawal",
 							"lpaFinalComment",
 							"lpaProofOfEvidence",
 							"lpaStatement",
 							"lpaWitnessesEvidence",
+							"mainPartyCorrespondence",
 							"newPlansDrawings",
 							"originalApplicationForm",
 							"otherNewDocuments",
@@ -12493,6 +13126,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -12504,12 +13138,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -12519,11 +13153,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -12652,6 +13288,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -12663,12 +13300,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -12678,11 +13315,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -12852,6 +13491,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -12863,12 +13503,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -12878,11 +13518,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13011,6 +13653,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -13022,12 +13665,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -13037,11 +13680,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13211,6 +13856,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -13222,12 +13868,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -13237,11 +13883,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13370,6 +14018,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -13381,12 +14030,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -13396,11 +14045,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13570,6 +14221,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -13581,12 +14233,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -13596,11 +14248,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -13729,6 +14383,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -13740,12 +14395,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -13755,11 +14410,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -13929,6 +14586,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -13940,12 +14598,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -13955,11 +14613,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14088,6 +14748,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -14099,12 +14760,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -14114,11 +14775,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -14288,6 +14951,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -14299,12 +14963,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -14314,11 +14978,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14447,6 +15113,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -14458,12 +15125,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -14473,11 +15140,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -14647,6 +15316,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -14658,12 +15328,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -14673,11 +15343,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -14806,6 +15478,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -14817,12 +15490,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -14832,11 +15505,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15006,6 +15681,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -15017,12 +15693,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -15032,11 +15708,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15165,6 +15843,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -15176,12 +15855,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -15191,11 +15870,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15365,6 +16046,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -15376,12 +16058,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -15391,11 +16073,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15524,6 +16208,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -15535,12 +16220,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -15550,11 +16235,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -15724,6 +16411,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -15735,12 +16423,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -15750,11 +16438,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -15883,6 +16573,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -15894,12 +16585,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -15909,11 +16600,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -16083,6 +16776,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -16094,12 +16788,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -16109,11 +16803,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -16242,6 +16938,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -16253,12 +16950,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -16268,11 +16965,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -16442,6 +17141,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -16453,12 +17153,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -16468,11 +17168,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -16601,6 +17303,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -16612,12 +17315,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -16627,11 +17330,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17163,6 +17868,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -17174,12 +17880,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -17189,11 +17895,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -17322,6 +18030,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -17333,12 +18042,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -17348,11 +18057,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17522,6 +18233,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -17533,12 +18245,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -17548,11 +18260,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -17681,6 +18395,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -17692,12 +18407,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -17707,11 +18422,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -17881,6 +18598,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -17892,12 +18610,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -17907,11 +18625,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18040,6 +18760,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -18051,12 +18772,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -18066,11 +18787,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -18240,6 +18963,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -18251,12 +18975,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -18266,11 +18990,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18399,6 +19125,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -18410,12 +19137,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -18425,11 +19152,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -18599,6 +19328,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -18610,12 +19340,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -18625,11 +19355,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -18758,6 +19490,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -18769,12 +19502,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -18784,11 +19517,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -18958,6 +19693,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -18969,12 +19705,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -18984,11 +19720,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19117,6 +19855,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -19128,12 +19867,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -19143,11 +19882,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -19317,6 +20058,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -19328,12 +20070,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -19343,11 +20085,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19476,6 +20220,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -19487,12 +20232,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -19502,11 +20247,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -19676,6 +20423,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -19687,12 +20435,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -19702,11 +20450,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -19835,6 +20585,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -19846,12 +20597,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -19861,11 +20612,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20035,6 +20788,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -20046,12 +20800,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -20061,11 +20815,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20194,6 +20950,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -20205,12 +20962,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -20220,11 +20977,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20394,6 +21153,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -20405,12 +21165,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -20420,11 +21180,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20553,6 +21315,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -20564,12 +21327,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -20579,11 +21342,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -20753,6 +21518,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -20764,12 +21530,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -20779,11 +21545,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -20912,6 +21680,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -20923,12 +21692,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -20938,11 +21707,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21112,6 +21883,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -21123,12 +21895,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -21138,11 +21910,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -21271,6 +22045,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -21282,12 +22057,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -21297,11 +22072,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21471,6 +22248,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -21482,12 +22260,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -21497,11 +22275,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -21630,6 +22410,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -21641,12 +22422,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -21656,11 +22437,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -21830,6 +22613,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -21841,12 +22625,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -21856,11 +22640,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -21989,6 +22775,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -22000,12 +22787,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -22015,11 +22802,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22189,6 +22978,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -22200,12 +22990,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -22215,11 +23005,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -22348,6 +23140,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -22359,12 +23152,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -22374,11 +23167,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22548,6 +23343,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -22559,12 +23355,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -22574,11 +23370,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -22707,6 +23505,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -22718,12 +23517,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -22733,11 +23532,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -22907,6 +23708,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -22918,12 +23720,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -22933,11 +23735,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23066,6 +23870,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -23077,12 +23882,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -23092,11 +23897,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -23266,6 +24073,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -23277,12 +24085,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -23292,11 +24100,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23425,6 +24235,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -23436,12 +24247,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -23451,11 +24262,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -23625,6 +24438,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -23636,12 +24450,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -23651,11 +24465,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -23784,6 +24600,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -23795,12 +24612,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -23810,11 +24627,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -23984,6 +24803,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -23995,12 +24815,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -24010,11 +24830,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -24143,6 +24965,7 @@
 																	"appellantCaseWithdrawalLetter",
 																	"appellantCostsApplication",
 																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
 																	"appellantCostsWithdrawal",
 																	"appellantFinalComment",
 																	"appellantProofOfEvidence",
@@ -24154,12 +24977,12 @@
 																	"communityInfrastructureLevy",
 																	"conservationMap",
 																	"consultationResponses",
-																	"costsDecisionLetter",
 																	"crossTeamCorrespondence",
 																	"definitiveMapStatement",
 																	"designAccessStatement",
 																	"developmentPlanPolicies",
 																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
 																	"eiaScreeningDirection",
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
@@ -24169,11 +24992,13 @@
 																	"lpaCaseCorrespondence",
 																	"lpaCostsApplication",
 																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
 																	"lpaCostsWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
 																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
 																	"newPlansDrawings",
 																	"originalApplicationForm",
 																	"otherNewDocuments",
@@ -24851,6 +25676,7 @@
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
 														"appellantCostsCorrespondence",
+														"appellantCostsDecisionLetter",
 														"appellantCostsWithdrawal",
 														"appellantFinalComment",
 														"appellantProofOfEvidence",
@@ -24862,12 +25688,12 @@
 														"communityInfrastructureLevy",
 														"conservationMap",
 														"consultationResponses",
-														"costsDecisionLetter",
 														"crossTeamCorrespondence",
 														"definitiveMapStatement",
 														"designAccessStatement",
 														"developmentPlanPolicies",
 														"eiaEnvironmentalStatement",
+														"eiaScopingOpinion",
 														"eiaScreeningDirection",
 														"eiaScreeningOpinion",
 														"emergingPlan",
@@ -24877,11 +25703,13 @@
 														"lpaCaseCorrespondence",
 														"lpaCostsApplication",
 														"lpaCostsCorrespondence",
+														"lpaCostsDecisionLetter",
 														"lpaCostsWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -25010,6 +25838,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -25021,12 +25850,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -25036,11 +25865,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25232,6 +26063,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -25243,12 +26075,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -25258,11 +26090,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25391,6 +26225,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -25402,12 +26237,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -25417,11 +26252,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -25590,6 +26427,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -25601,12 +26439,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -25616,11 +26454,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -25749,6 +26589,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -25760,12 +26601,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -25775,11 +26616,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -25948,6 +26791,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -25959,12 +26803,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -25974,11 +26818,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26107,6 +26953,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -26118,12 +26965,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -26133,11 +26980,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -26306,6 +27155,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -26317,12 +27167,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -26332,11 +27182,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26465,6 +27317,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -26476,12 +27329,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -26491,11 +27344,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -26664,6 +27519,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -26675,12 +27531,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -26690,11 +27546,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -26823,6 +27681,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -26834,12 +27693,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -26849,11 +27708,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27022,6 +27883,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -27033,12 +27895,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -27048,11 +27910,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27181,6 +28045,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -27192,12 +28057,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -27207,11 +28072,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27380,6 +28247,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -27391,12 +28259,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -27406,11 +28274,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27539,6 +28409,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -27550,12 +28421,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -27565,11 +28436,741 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planningObligation",
+																"planningOfficerReport",
+																"plansDrawings",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											}
+										}
+									}
+								}
+							}
+						},
+						"appellantDecisionFolder": {
+							"type": "object",
+							"properties": {
+								"caseId": {
+									"type": "number"
+								},
+								"folderId": {
+									"type": "number"
+								},
+								"path": {
+									"type": "string"
+								},
+								"documents": {
+									"nullable": true,
+									"type": "array",
+									"items": {
+										"type": "object",
+										"required": ["id", "name"],
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"caseId": {
+												"type": "number"
+											},
+											"folderId": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"latestDocumentVersion": {
+												"type": "object",
+												"required": [
+													"id",
+													"version",
+													"virusCheckStatus",
+													"redactionStatus",
+													"documentURI"
+												],
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"version": {
+														"type": "number"
+													},
+													"fileName": {
+														"type": "string"
+													},
+													"originalFileName": {
+														"type": "string"
+													},
+													"size": {
+														"type": "number"
+													},
+													"mime": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"dateReceived": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"redactionStatus": {
+														"type": "string",
+														"enum": ["no_redaction_required", "not_redacted", "redacted"]
+													},
+													"virusCheckStatus": {
+														"type": "string",
+														"enum": ["affected", "not_scanned", "scanned"]
+													},
+													"documentType": {
+														"type": "string",
+														"enum": [
+															"appealNotification",
+															"appellantCaseCorrespondence",
+															"appellantCaseWithdrawalLetter",
+															"appellantCostsApplication",
+															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
+															"appellantCostsWithdrawal",
+															"appellantFinalComment",
+															"appellantProofOfEvidence",
+															"appellantStatement",
+															"appellantWitnessesEvidence",
+															"applicationDecisionLetter",
+															"caseDecisionLetter",
+															"changedDescription",
+															"communityInfrastructureLevy",
+															"conservationMap",
+															"consultationResponses",
+															"crossTeamCorrespondence",
+															"definitiveMapStatement",
+															"designAccessStatement",
+															"developmentPlanPolicies",
+															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
+															"eiaScreeningDirection",
+															"eiaScreeningOpinion",
+															"emergingPlan",
+															"environmentalAssessment",
+															"inspectorCorrespondence",
+															"interestedPartyComment",
+															"lpaCaseCorrespondence",
+															"lpaCostsApplication",
+															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
+															"lpaCostsWithdrawal",
+															"lpaFinalComment",
+															"lpaProofOfEvidence",
+															"lpaStatement",
+															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
+															"newPlansDrawings",
+															"originalApplicationForm",
+															"otherNewDocuments",
+															"otherPartyRepresentations",
+															"otherRelevantPolicies",
+															"ownershipCertificate",
+															"planningObligation",
+															"planningOfficerReport",
+															"plansDrawings",
+															"rule6ProofOfEvidence",
+															"rule6Statement",
+															"rule6WitnessesEvidence",
+															"statementCommonGround",
+															"supplementaryPlanning",
+															"treePreservationPlan",
+															"uncategorised",
+															"whoNotified",
+															"whoNotifiedLetterToNeighbours",
+															"whoNotifiedPressAdvert",
+															"whoNotifiedSiteNotice"
+														]
+													},
+													"stage": {
+														"type": "string",
+														"enum": [
+															"appeal-decision",
+															"appellant-case",
+															"costs",
+															"evidence",
+															"final-comments",
+															"internal",
+															"lpa-questionnaire",
+															"statements",
+															"third-party-comments",
+															"witnesses"
+														]
+													},
+													"documentURI": {
+														"type": "string"
+													},
+													"isLateEntry": {
+														"type": "boolean"
+													},
+													"isDeleted": {
+														"type": "boolean"
+													},
+													"versionAudit": {
+														"nullable": true,
+														"type": "array",
+														"items": {
+															"type": "object",
+															"required": ["loggedAt", "user", "action", "details"],
+															"properties": {
+																"loggedAt": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"user": {
+																	"type": "string",
+																	"format": "uuid"
+																},
+																"action": {
+																	"type": "string"
+																},
+																"details": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											},
+											"allVersions": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapStatement",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"environmentalAssessment",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planningObligation",
+																"planningOfficerReport",
+																"plansDrawings",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											}
+										}
+									}
+								}
+							}
+						},
+						"lpaDecisionFolder": {
+							"type": "object",
+							"properties": {
+								"caseId": {
+									"type": "number"
+								},
+								"folderId": {
+									"type": "number"
+								},
+								"path": {
+									"type": "string"
+								},
+								"documents": {
+									"nullable": true,
+									"type": "array",
+									"items": {
+										"type": "object",
+										"required": ["id", "name"],
+										"properties": {
+											"id": {
+												"type": "string",
+												"format": "uuid"
+											},
+											"caseId": {
+												"type": "number"
+											},
+											"folderId": {
+												"type": "number"
+											},
+											"name": {
+												"type": "string"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"latestDocumentVersion": {
+												"type": "object",
+												"required": [
+													"id",
+													"version",
+													"virusCheckStatus",
+													"redactionStatus",
+													"documentURI"
+												],
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"version": {
+														"type": "number"
+													},
+													"fileName": {
+														"type": "string"
+													},
+													"originalFileName": {
+														"type": "string"
+													},
+													"size": {
+														"type": "number"
+													},
+													"mime": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"dateReceived": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"redactionStatus": {
+														"type": "string",
+														"enum": ["no_redaction_required", "not_redacted", "redacted"]
+													},
+													"virusCheckStatus": {
+														"type": "string",
+														"enum": ["affected", "not_scanned", "scanned"]
+													},
+													"documentType": {
+														"type": "string",
+														"enum": [
+															"appealNotification",
+															"appellantCaseCorrespondence",
+															"appellantCaseWithdrawalLetter",
+															"appellantCostsApplication",
+															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
+															"appellantCostsWithdrawal",
+															"appellantFinalComment",
+															"appellantProofOfEvidence",
+															"appellantStatement",
+															"appellantWitnessesEvidence",
+															"applicationDecisionLetter",
+															"caseDecisionLetter",
+															"changedDescription",
+															"communityInfrastructureLevy",
+															"conservationMap",
+															"consultationResponses",
+															"crossTeamCorrespondence",
+															"definitiveMapStatement",
+															"designAccessStatement",
+															"developmentPlanPolicies",
+															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
+															"eiaScreeningDirection",
+															"eiaScreeningOpinion",
+															"emergingPlan",
+															"environmentalAssessment",
+															"inspectorCorrespondence",
+															"interestedPartyComment",
+															"lpaCaseCorrespondence",
+															"lpaCostsApplication",
+															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
+															"lpaCostsWithdrawal",
+															"lpaFinalComment",
+															"lpaProofOfEvidence",
+															"lpaStatement",
+															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
+															"newPlansDrawings",
+															"originalApplicationForm",
+															"otherNewDocuments",
+															"otherPartyRepresentations",
+															"otherRelevantPolicies",
+															"ownershipCertificate",
+															"planningObligation",
+															"planningOfficerReport",
+															"plansDrawings",
+															"rule6ProofOfEvidence",
+															"rule6Statement",
+															"rule6WitnessesEvidence",
+															"statementCommonGround",
+															"supplementaryPlanning",
+															"treePreservationPlan",
+															"uncategorised",
+															"whoNotified",
+															"whoNotifiedLetterToNeighbours",
+															"whoNotifiedPressAdvert",
+															"whoNotifiedSiteNotice"
+														]
+													},
+													"stage": {
+														"type": "string",
+														"enum": [
+															"appeal-decision",
+															"appellant-case",
+															"costs",
+															"evidence",
+															"final-comments",
+															"internal",
+															"lpa-questionnaire",
+															"statements",
+															"third-party-comments",
+															"witnesses"
+														]
+													},
+													"documentURI": {
+														"type": "string"
+													},
+													"isLateEntry": {
+														"type": "boolean"
+													},
+													"isDeleted": {
+														"type": "boolean"
+													},
+													"versionAudit": {
+														"nullable": true,
+														"type": "array",
+														"items": {
+															"type": "object",
+															"required": ["loggedAt", "user", "action", "details"],
+															"properties": {
+																"loggedAt": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"user": {
+																	"type": "string",
+																	"format": "uuid"
+																},
+																"action": {
+																	"type": "string"
+																},
+																"details": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"nullable": true
+											},
+											"allVersions": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapStatement",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"environmentalAssessment",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -27740,6 +29341,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -27751,12 +29353,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -27766,11 +29368,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -27899,6 +29503,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -27910,12 +29515,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -27925,11 +29530,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -28098,6 +29705,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -28109,12 +29717,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -28124,11 +29732,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",
@@ -28257,6 +29867,7 @@
 																"appellantCaseWithdrawalLetter",
 																"appellantCostsApplication",
 																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
 																"appellantCostsWithdrawal",
 																"appellantFinalComment",
 																"appellantProofOfEvidence",
@@ -28268,12 +29879,12 @@
 																"communityInfrastructureLevy",
 																"conservationMap",
 																"consultationResponses",
-																"costsDecisionLetter",
 																"crossTeamCorrespondence",
 																"definitiveMapStatement",
 																"designAccessStatement",
 																"developmentPlanPolicies",
 																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
 																"eiaScreeningDirection",
 																"eiaScreeningOpinion",
 																"emergingPlan",
@@ -28283,11 +29894,13 @@
 																"lpaCaseCorrespondence",
 																"lpaCostsApplication",
 																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
 																"lpaCostsWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
 																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
 																"newPlansDrawings",
 																"originalApplicationForm",
 																"otherNewDocuments",
@@ -28457,6 +30070,7 @@
 														"appellantCaseWithdrawalLetter",
 														"appellantCostsApplication",
 														"appellantCostsCorrespondence",
+														"appellantCostsDecisionLetter",
 														"appellantCostsWithdrawal",
 														"appellantFinalComment",
 														"appellantProofOfEvidence",
@@ -28468,12 +30082,12 @@
 														"communityInfrastructureLevy",
 														"conservationMap",
 														"consultationResponses",
-														"costsDecisionLetter",
 														"crossTeamCorrespondence",
 														"definitiveMapStatement",
 														"designAccessStatement",
 														"developmentPlanPolicies",
 														"eiaEnvironmentalStatement",
+														"eiaScopingOpinion",
 														"eiaScreeningDirection",
 														"eiaScreeningOpinion",
 														"emergingPlan",
@@ -28483,11 +30097,13 @@
 														"lpaCaseCorrespondence",
 														"lpaCostsApplication",
 														"lpaCostsCorrespondence",
+														"lpaCostsDecisionLetter",
 														"lpaCostsWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
 														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
 														"newPlansDrawings",
 														"originalApplicationForm",
 														"otherNewDocuments",
@@ -28616,6 +30232,7 @@
 															"appellantCaseWithdrawalLetter",
 															"appellantCostsApplication",
 															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
 															"appellantCostsWithdrawal",
 															"appellantFinalComment",
 															"appellantProofOfEvidence",
@@ -28627,12 +30244,12 @@
 															"communityInfrastructureLevy",
 															"conservationMap",
 															"consultationResponses",
-															"costsDecisionLetter",
 															"crossTeamCorrespondence",
 															"definitiveMapStatement",
 															"designAccessStatement",
 															"developmentPlanPolicies",
 															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
 															"eiaScreeningDirection",
 															"eiaScreeningOpinion",
 															"emergingPlan",
@@ -28642,11 +30259,13 @@
 															"lpaCaseCorrespondence",
 															"lpaCostsApplication",
 															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
 															"lpaCostsWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
 															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
 															"newPlansDrawings",
 															"originalApplicationForm",
 															"otherNewDocuments",

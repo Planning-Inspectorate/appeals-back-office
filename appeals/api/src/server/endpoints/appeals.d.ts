@@ -12,6 +12,7 @@ declare global {
 			visitType: SiteVisitType;
 			validationOutcome: ValidationOutcome;
 			documentRedactionStatusIds: number[];
+			address: Schema.Address;
 		}
 	}
 }
@@ -59,6 +60,8 @@ interface SingleAppealDetailsResponse {
 		lpaWithdrawalFolder?: FolderInfo | null;
 		lpaCorrespondenceFolder?: FolderInfo | null;
 		decisionFolder?: FolderInfo | null;
+		appellantDecisionFolder?: FolderInfo | null;
+		lpaDecisionFolder?: FolderInfo | null;
 	};
 	decision: {
 		folderId: number;
@@ -123,6 +126,7 @@ interface SingleAppealDetailsResponse {
 		withdrawalRequestDate: Date | null;
 	};
 	eiaScreeningRequired?: boolean | null;
+	hearingEstimate?: HearingEstimate | null;
 }
 
 interface UpdateAppealRequest {
@@ -469,6 +473,12 @@ interface NeighbouringSite {
 	siteId: number;
 	source: string;
 	address: AppealSite;
+}
+
+interface HearingEstimate {
+	preparationTime?: number;
+	sittingTime?: number;
+	reportingTime?: number;
 }
 
 interface AppealTimetable {
@@ -853,6 +863,30 @@ type UpdateDocumentAvCheckRequest = {
 	version: number;
 };
 
+type CreateHearing = {
+	appealId: number;
+	hearingStartTime: Date;
+	hearingEndTime: Date | undefined;
+	address: Address | undefined;
+};
+type UpdateHearing = {
+	appealId: number;
+	hearingId: number;
+	hearingStartTime: Date;
+	hearingEndTime: Date | undefined;
+	addressId: number | undefined;
+	address: Address | undefined;
+};
+
+type HearingResponse = {
+	appealId: number;
+	hearingId: number;
+	hearingStartTime: Date;
+	hearingEndTime: Date | null;
+	address: HearingAddress | null;
+	addressId: number | null;
+};
+
 type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
@@ -934,5 +968,9 @@ export {
 	ServiceUserResponse,
 	GetCaseNotesResponse,
 	GetCaseNoteResponse,
-	StateStub
+	StateStub,
+	HearingAddress,
+	CreateHearing,
+	UpdateHearing,
+	HearingResponse
 };

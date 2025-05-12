@@ -162,8 +162,12 @@ describe('documents and folders', () => {
 				label: 'LPA costs correspondence'
 			},
 			{
-				documentType: APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER,
-				label: 'Costs decision'
+				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER,
+				label: 'Appellant costs decision'
+			},
+			{
+				documentType: APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER,
+				label: 'LPA costs decision'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE,

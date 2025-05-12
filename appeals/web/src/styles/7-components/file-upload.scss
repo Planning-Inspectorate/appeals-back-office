@@ -31,6 +31,10 @@
 	  background-color: colors.govuk-colour("mid-grey");
 	  color: colors.govuk-colour('black');
 	}
+
+	&:focus, &-focus {
+	  border: 2px solid colors.govuk-colour('black') !important;
+	}
   }
 
   &__files-rows {
@@ -62,17 +66,18 @@
 
   &__dropzone {
 	padding: 60px 15px;
-	outline: 3px dashed colors.govuk-colour('black');
+	outline: 2px dashed colors.govuk-colour('mid-grey');
 	transition: outline-offset .1s ease-in-out, background-color .1s linear;
 
 	&--dragover {
-		outline-color: colors.govuk-colour('mid-grey', $legacy: 'grey-2');
+		outline-color: colors.govuk-colour('light-grey', $legacy: 'grey-2');
 	}
 
 	&-text {
 		line-height: 2rem;
 		margin-bottom: 0;
 		margin-right: 0.5rem;
+		display: none;
 	}
   }
 
@@ -84,3 +89,12 @@
 	}
   }
 }
+
+.js-enabled {
+  .pins-file-upload {
+    &__dropzone-text {
+ 	  display: unset;
+    }
+  }
+}
+

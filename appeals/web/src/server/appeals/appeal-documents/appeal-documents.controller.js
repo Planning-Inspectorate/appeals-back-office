@@ -44,9 +44,12 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {string} [params.nextPageUrl]
  * @param {boolean} [params.isLateEntry]
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.uploadContainerHeadingTextOverride]
+ * @param {string} [params.documentTitle]
  * @param {PageComponent[]} [params.pageBodyComponents]
  * @param {boolean} [params.allowMultipleFiles]
  * @param {string} [params.documentType]
+ * @param {string[]} [params.allowedTypes]
  */
 export const renderDocumentUpload = async ({
 	request,
@@ -56,9 +59,12 @@ export const renderDocumentUpload = async ({
 	nextPageUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	uploadContainerHeadingTextOverride = '',
+	documentTitle,
 	pageBodyComponents,
 	allowMultipleFiles = true,
-	documentType
+	documentType,
+	allowedTypes
 }) => {
 	const {
 		currentFolder,
@@ -122,7 +128,10 @@ export const renderDocumentUpload = async ({
 		pageBodyComponents,
 		allowMultipleFiles,
 		_documentType,
-		filenamesInFolder
+		filenamesInFolder,
+		allowedTypes,
+		uploadContainerHeadingTextOverride,
+		documentTitle
 	);
 
 	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);

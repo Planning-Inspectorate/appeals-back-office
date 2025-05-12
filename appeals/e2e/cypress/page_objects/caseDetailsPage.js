@@ -16,6 +16,7 @@ export class CaseDetailsPage extends Page {
 		assignInspector: 'assign-inspector',
 		changeInspector: 'change-inspector',
 		reviewAppellantCase: 'review-appellant-case',
+		setUpSiteVisit: 'set up-site-visit',
 		changeSetVisitType: 'change-set-visit-type',
 		changeScheduleVisit: 'change-schedule-visit',
 		arrangeScheduleVisit: 'arrange-schedule-visit',
@@ -44,7 +45,9 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'review-lpa-statement'
+		reviewLpaStatement: 'review-lpa-statement',
+		changeApplicationReference: 'change-application-reference',
+		viewCaseHistory: 'view-case-history'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -64,6 +67,7 @@ export class CaseDetailsPage extends Page {
 		answerCellAppeals: (answer) =>
 			cy.contains(this.selectors.summaryListValue, answer, { matchCase: false }),
 		reviewAppeallantCase: () => cy.getByData(this._cyDataSelectors.reviewAppellantCase),
+		setUpSiteVisit: () => cy.getByData(this._cyDataSelectors.setUpSiteVisit),
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
 		changeScheduleVisit: () => cy.getByData(this._cyDataSelectors.changeScheduleVisit),
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
@@ -134,17 +138,20 @@ export class CaseDetailsPage extends Page {
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
-		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`),
+		rowChangeLink: (row) => cy.getByData(`change-${row}`),
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
 			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
 		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
 		caseDetailsHearingEstimateLink: () => cy.get('#case-details-hearing-section p > a'),
-		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
 		estimatedPreparationTime: () => cy.get('#preparation-time'),
 		estimatedSittingTime: () => cy.get('#sitting-time'),
-		estimatedReportingTime: () => cy.get('#reporting-time')
+		estimatedReportingTime: () => cy.get('#reporting-time'),
+		changeApplicationReferenceLink: () =>
+			cy.getByData(this._cyDataSelectors.changeApplicationReference),
+		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
+		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -228,9 +235,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.reviewAppeallantCase().click();
 	}
 
-	clickChangeVisitTypeHasSiteDetails() {
+	clickSetUpSiteVisitType() {
 		this.clickAccordionByButton('Site');
-		this.elements.changeSetVisitType().click();
+		this.elements.setUpSiteVisit().click();
 	}
 
 	clickReadyToStartCase() {
@@ -402,8 +409,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.siteVisitBanner(caseRef).click();
 	}
 
-	clickTimetableChangeLink(row) {
-		this.elements.timeTableRowChangeLink(row).click();
+	clickRowChangeLink(row) {
+		this.elements.rowChangeLink(row).click();
 	}
 
 	clickLpaStatementChangeLink(row) {
@@ -418,16 +425,15 @@ export class CaseDetailsPage extends Page {
 		this.elements.caseDetailsHearingEstimateLink().click();
 	}
 
+	clickViewCaseHistory() {
+		this.elements.viewCaseHistory().click();
+	}
 	/***************************************************************
 	 ************************ Verfifications ************************
 	 ****************************************************************/
 
 	checkAdditonalDocsAppellantCase(value) {
 		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
-	}
-
-	checkErrorMessageDisplays(errorMessage) {
-		cy.get('li').contains(errorMessage).should('be.visible');
 	}
 
 	checkFileNameDisplays(fileName) {
@@ -632,19 +638,31 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Continue');
 	}
 
-	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
-		this.elements.errorMessageLink(link).click();
-		cy.focused().should('have.attr', attribute, value);
-	}
-
-	verifyInlineErrorMessage(element) {
-		cy.get(`#${element}`).should('be.visible');
-	}
-
 	addHearingEstimates(preparationTime, sittingTime, reportingTime) {
 		this.elements.estimatedPreparationTime().clear().type(preparationTime);
 		this.elements.estimatedSittingTime().clear().type(sittingTime);
 		this.elements.estimatedReportingTime().clear().type(reportingTime);
 		this.clickButtonByText('Continue');
+	}
+
+	clickChangeApplicationReferenceLink() {
+		this.elements.changeApplicationReferenceLink().click();
+	}
+
+	updatePlanningApplicationReference(reference) {
+		this.elements.planningApplicationReferenceField().clear().type(reference);
+		this.clickButtonByText('Continue');
+	}
+
+	verifyHearingEstimatedValue(estimateField, value) {
+		const numberOfDays = parseFloat(value);
+		const suffix = numberOfDays === 1 ? 'day' : 'days';
+		this.elements.rowChangeLink(`${estimateField}`).then(($el) => {
+			cy.wrap($el)
+				.parent('dd')
+				.siblings('dd')
+				.should('contain.text', `${numberOfDays} ${suffix}`)
+				.and('be.visible');
+		});
 	}
 }

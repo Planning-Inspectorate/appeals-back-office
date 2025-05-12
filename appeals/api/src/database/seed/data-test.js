@@ -711,11 +711,27 @@ const appealsReadyToStart = [
 	})
 ];
 
+const appealsReadyToIssueDecision = [
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.D,
+		status: {
+			status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			createdAt: getPastDate({ weeks: 3 })
+		},
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getPastDate({ weeks: 1 }),
+		siteAddressList: addressListForTrainers,
+		assignCaseOfficer: true
+	})
+];
+
 const appealsData = [
 	...appealsReadyToStart,
 	...newAppeals,
 	...appealsLpaQuestionnaireDue,
-	...newS78Appeals
+	...newS78Appeals,
+	...appealsReadyToIssueDecision
 ];
 
 /**

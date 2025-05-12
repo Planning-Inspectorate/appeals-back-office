@@ -42,8 +42,9 @@ import { environmentalImpactAssessmentRoutes } from './environmental-impact-asse
 import { appealNotificationRouter } from './notifications/notifications.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/local-planning-authorities.routes.js';
+import { hearingRoutes } from './hearings/hearing.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
-
+import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
 const router = createRouter();
@@ -91,6 +92,7 @@ router.use(representationRoutes);
 router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);
 router.use(appealNotificationRouter);
+router.use(hearingRoutes);
 
 if (config.enableTestEndpoints) {
 	router.use(testUtilsRoutes);
@@ -98,5 +100,6 @@ if (config.enableTestEndpoints) {
 
 router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);
+router.use(hearingEstimatesRoutes);
 
 export { router as appealsRoutes };

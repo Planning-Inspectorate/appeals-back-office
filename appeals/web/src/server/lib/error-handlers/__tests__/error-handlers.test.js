@@ -1,4 +1,9 @@
-import { errorAddressLine1, errorPostcode, errorTown } from '../change-screen-error-handlers.js';
+import {
+	errorAddressLine1,
+	errorPostcode,
+	errorTown,
+	getErrorByFieldname
+} from '../change-screen-error-handlers.js';
 
 describe('Address', () => {
 	describe('First line error', () => {
@@ -66,5 +71,46 @@ describe('Address', () => {
 				text: 'Enter a full UK postcode'
 			});
 		});
+	});
+});
+
+describe('getErrorByFieldname', () => {
+	it('should return undefined if errors is undefined', () => {
+		const result = getErrorByFieldname(undefined, 'fieldName');
+		expect(result).toBeUndefined();
+	});
+
+	it('should return undefined if errors is null', () => {
+		// @ts-ignore
+		const result = getErrorByFieldname(null, 'fieldName');
+		expect(result).toBeUndefined();
+	});
+
+	it('should return undefined if fieldName does not exist in errors', () => {
+		/** @type {import("@pins/express").ValidationErrors} */
+		const errors = {};
+		const result = getErrorByFieldname(errors, 'fieldName');
+		expect(result).toBeUndefined();
+	});
+
+	it('should return undefined if msg does not exist for fieldName in errors', () => {
+		/** @type {import("@pins/express").ValidationErrors} */ // @ts-ignore
+		const errors = { fieldName: {} };
+		const result = getErrorByFieldname(errors, 'fieldName');
+		expect(result).toBeUndefined();
+	});
+
+	it('should return undefined if msg doesnt use matching fieldname', () => {
+		/** @type {import("@pins/express").ValidationErrors} */ // @ts-ignore
+		const errors = { fieldName: {} };
+		const result = getErrorByFieldname(errors, 'fieldName2');
+		expect(result).toBeUndefined();
+	});
+
+	it('should return the error message if msg exists for fieldName in errors', () => {
+		/** @type {import("@pins/express").ValidationErrors} */ // @ts-ignore
+		const errors = { fieldName: { msg: 'Error message' } };
+		const result = getErrorByFieldname(errors, 'fieldName');
+		expect(result).toEqual({ text: 'Error message' });
 	});
 });
