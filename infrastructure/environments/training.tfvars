@@ -38,6 +38,8 @@ apps_config = {
     featureFlagS20           = false
   }
 
+  use_system_test_bc_for_change_lpa = false
+
   logging = {
     level_file   = "silent"
     level_stdout = "info"
