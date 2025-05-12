@@ -102,7 +102,25 @@ export const postChangeTimings = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+const renderAlreadySubmittedError = (request, response) => {
+	return response.status(404).render('app/404.njk', {
+		titleCopy: 'You cannot check these answers',
+		bodyCopy: [
+			'It looks like you may have already submitted the data.',
+			`Continue to <a href="/appeals-service/appeal-details/${request.currentAppeal.appealId}">appeal details</a>`
+		]
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const getAddCheckDetails = async (request, response) => {
+	if (!request.session.hearingEstimates) {
+		return renderAlreadySubmittedError(request, response);
+	}
+
 	const mappedPageContent = checkDetailsPage(
 		request.currentAppeal,
 		request.session.hearingEstimates,
@@ -119,17 +137,15 @@ export const getAddCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeCheckDetails = async (request, response) => {
-	const { hearingEstimates } = request.session;
-
-	if (!hearingEstimates) {
-		return redirectAndClearSession('/change/timings', 'hearingEstimates')(
-			request,
-			response,
-			() => {}
-		);
+	if (!request.session.hearingEstimates) {
+		return renderAlreadySubmittedError(request, response);
 	}
 
-	const mappedPageContent = checkDetailsPage(request.currentAppeal, hearingEstimates, 'update');
+	const mappedPageContent = checkDetailsPage(
+		request.currentAppeal,
+		request.session.hearingEstimates,
+		'update'
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent
@@ -143,6 +159,10 @@ export const getChangeCheckDetails = async (request, response) => {
 export const postAddCheckDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 	const estimates = request.session.hearingEstimates;
+
+	if (!request.session.hearingEstimates) {
+		return renderAlreadySubmittedError(request, response);
+	}
 
 	try {
 		await createHearingEstimates(request, {
@@ -174,6 +194,10 @@ export const postAddCheckDetails = async (request, response) => {
 export const postChangeCheckDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 	const estimates = request.session.hearingEstimates;
+
+	if (!request.session.hearingEstimates) {
+		return renderAlreadySubmittedError(request, response);
+	}
 
 	try {
 		await updateHearingEstimates(request, {
