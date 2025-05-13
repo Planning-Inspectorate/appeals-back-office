@@ -31,6 +31,13 @@ export const validateAppellantCostsDecision = createValidator(
 		.withMessage("Select yes if you want to issue the appellant's cost decision")
 );
 
+export const validateLpaCostsDecision = createValidator(
+	body('lpaCostsDecision')
+		.trim()
+		.notEmpty()
+		.withMessage("Select yes if you want to issue the LPA's cost decision")
+);
+
 export const validateDecisionLetterDate = createValidator(
 	body('decision-letter-date')
 		.trim()

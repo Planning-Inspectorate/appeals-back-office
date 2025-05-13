@@ -7,7 +7,8 @@ import {
 	mapDecisionOutcome,
 	invalidReasonPage,
 	checkAndConfirmInvalidPage,
-	appellantCostsDecisionPage
+	appellantCostsDecisionPage,
+	lpaCostsDecisionPage
 } from './issue-decision.mapper.js';
 import {
 	renderDocumentUpload,
@@ -322,7 +323,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/lpa-costs-decision`,
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
 		}
@@ -361,6 +362,60 @@ export const renderAppellantCostsDecisionLetterUpload = async (request, response
 		documentTitle: 'appellant costs decision letter',
 		allowMultipleFiles: false,
 		allowedTypes: ['pdf']
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postLpaCostsDecision = async (request, response) => {
+	const { params, body, session, errors } = request;
+
+	if (errors) {
+		return renderLpaCostsDecision(request, response);
+	}
+
+	/** @type {import('./issue-decision.types.js').LpaCostsDecisionRequest} */
+	session.lpaCostsDecision = {
+		appealId: params.appealId,
+		...request.session.lpaCostsDecision,
+		outcome: body.lpaCostsDecision
+	};
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+	);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderLpaCostsDecision = async (request, response) => {
+	const { errors } = request;
+
+	const appealId = request.params.appealId;
+	const appealData = request.currentAppeal;
+
+	if (
+		request.session?.lpaCostsDecision?.appealId &&
+		request.session?.lpaCostsDecision?.appealId !== appealId
+	) {
+		request.session.lpaCostsDecision = {};
+	}
+
+	const mappedPageContent = lpaCostsDecisionPage(
+		appealData,
+		request.session.lpaCostsDecision,
+		getBackLinkUrlFromQuery(request),
+		errors
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
 	});
 };
 
