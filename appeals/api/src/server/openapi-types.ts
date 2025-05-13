@@ -1049,6 +1049,16 @@ export interface SingleAppealResponse {
 			/** @example "internal/inspectorCorrespondence" */
 			path?: string;
 		};
+		mainParty?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2123 */
+			folderId?: number;
+			/** @example "internal/mainPartyCorrespondence" */
+			path?: string;
+		};
 	};
 	/** @example [] */
 	neighbouringSites?: any[];
