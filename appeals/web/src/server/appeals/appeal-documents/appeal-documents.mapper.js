@@ -1423,7 +1423,6 @@ export async function manageDocumentPage({
 				{
 					type: 'table',
 					parameters: {
-						classes: 'govuk-!-font-size-16',
 						head: [
 							{
 								text: 'Version'
