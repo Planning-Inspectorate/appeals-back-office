@@ -64,7 +64,7 @@ export const addDocument = async (metadata, context) => {
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { document: true },
+			include: { document: true, redactionStatus: true },
 			where: { documentGuid: guid, version: metadata.version }
 		});
 
@@ -133,7 +133,7 @@ export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
 		});
 
 		const latestVersion = await tx.documentVersion.findFirst({
-			include: { document: true },
+			include: { document: true, redactionStatus: true },
 			where: { documentGuid, version: newVersionId }
 		});
 

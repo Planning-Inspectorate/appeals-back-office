@@ -93,7 +93,9 @@ export const mapDocumentsForAuditTrail = (documents) => {
 			const fileName = document.fileName || document.documentGuid;
 			return {
 				documentName: fileName,
-				GUID: document.documentGuid
+				GUID: document.documentGuid,
+				redactionStatus: document.redactionStatus?.key,
+				versionId: document.version
 			};
 		}
 

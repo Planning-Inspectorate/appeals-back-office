@@ -1,11 +1,7 @@
 import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import logger from '#utils/logger.js';
 import config from '#config/config.js';
-import {
-	mapDocumentsForDatabase,
-	mapDocumentsForBlobStorage,
-	mapDocumentsForAuditTrail
-} from './documents.mapper.js';
+import { mapDocumentsForDatabase, mapDocumentsForAuditTrail } from './documents.mapper.js';
 import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
 import {
 	addDocument,
@@ -366,15 +362,12 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		documentVersionCreated.version,
 		EventType.Update
 	);
-
-	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
-		[documentVersionCreated],
-		appeal.reference,
-		documentVersionCreated.version
-	).filter((d) => d !== null);
+	const documentsToAddToAuditTrail = mapDocumentsForAuditTrail([documentVersionCreated]).filter(
+		(d) => d !== null
+	);
 
 	return {
-		documents: documentsToAddToBlobStorage
+		documents: documentsToAddToAuditTrail
 	};
 };
 
