@@ -43,7 +43,7 @@ describe('Remove doc from upload page', () => {
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
-			caseDetailsPage.uploadSampleFile(sampleFiles.img);
+			caseDetailsPage.uploadSampleFile(sampleFiles.document3);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');

@@ -49,13 +49,17 @@ export class CaseDetailsPage extends Page {
 		reviewIpComments: 'review-ip-comments',
 		reviewLpaStatement: 'review-lpa-statement',
 		changeApplicationReference: 'change-application-reference',
-		viewCaseHistory: 'view-case-history'
+		viewCaseHistory: 'view-case-history',
+		reviewLpaStatement: 'review-lpa-statement', 
+		uploadFile: 'upload-file-button'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
 
 	sampleFiles = {
 		document: 'sample-file.doc',
+		document2:'sample-file-2.doc',
+		document3: 'sample-file-3.doc',
 		img: 'sample-img.jpeg',
 		pdf: 'test.pdf'
 	};
@@ -63,7 +67,7 @@ export class CaseDetailsPage extends Page {
 	elements = {
 		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
-		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer),
+		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer).last(),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
 		changeInspector: () => cy.getByData(this._cyDataSelectors.changeInspector),
 		answerCellAppeals: (answer) =>
@@ -87,7 +91,7 @@ export class CaseDetailsPage extends Page {
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
-		uploadFile: () => cy.get('#upload-file-1'),
+		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
@@ -360,7 +364,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	uploadSampleFile(fileName) {
-		this.elements.uploadFile().selectFile(this.fixturesPath + fileName, { force: true });
+		this.elements.uploadFile().click().selectFile(this.fixturesPath + fileName, {action:'drag-drop'}, { force: true });
 	}
 
 	clickViewAppealWithdrawal() {

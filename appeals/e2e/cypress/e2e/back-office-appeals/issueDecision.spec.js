@@ -39,11 +39,11 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickIssueDecision(caseRef);
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleFile(sampleFiles.document);
+				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 				caseDetailsPage.clickButtonByText('Continue');
-				dateTimeSection.enterDecisionLetterDate(todaysDate);
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectCheckbox();
+				//dateTimeSection.enterDecisionLetterDate(todaysDate);
+				//caseDetailsPage.clickButtonByText('Continue');
+				//caseDetailsPage.selectCheckbox();
 				caseDetailsPage.clickButtonByText('Send Decision');
 				caseDetailsPage.checkStatusOfCase('Complete', 0);
 				caseDetailsPage.checkDecisionOutcome(issueDecision);

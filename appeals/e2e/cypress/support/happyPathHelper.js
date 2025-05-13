@@ -129,7 +129,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageNotifyingParties();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
-		caseDetailsPage.uploadSampleFile(sampleFiles.img);
+		caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
