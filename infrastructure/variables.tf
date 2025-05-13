@@ -44,6 +44,8 @@ variable "apps_config" {
       featureFlagS20           = bool
     })
 
+    use_system_test_bc_for_change_lpa = bool # Whether to allow STBC/STBC2 on change LPA list
+
     logging = object({
       level_file   = string
       level_stdout = string
@@ -57,6 +59,11 @@ variable "apps_config" {
 
     session_max_age = string
   })
+}
+
+variable "beta_feedback_url" {
+  description = "URL for beta feedback form"
+  type        = string
 }
 
 variable "common_config" {
@@ -112,6 +119,10 @@ variable "front_office_infra_config" {
   })
 }
 
+variable "front_office_url" {
+  description = "The base URL for the front office application"
+  type        = string
+}
 variable "health_check_eviction_time_in_min" {
   description = "The eviction time in minutes for the health check"
   type        = number
@@ -238,16 +249,3 @@ variable "waf_rate_limits" {
   })
 }
 
-variable "beta_feedback_url" {
-  description = "URL for beta feedback form"
-  type        = string
-}
-
-variable "front_office_url" {
-  description = "The base URL for the front office application"
-  type        = string
-}
-variable "use_system_test_bc_for_change_lpa" {
-  description = "Bool for allowing STBC on change LPA options"
-  type        = bool
-}
