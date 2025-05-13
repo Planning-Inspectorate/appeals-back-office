@@ -43,7 +43,7 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-lpa-questionnaire-due-date'
 								},
-								href: '/test/appeal-timetables/lpa-questionnaire',
+								href: '/test/timetable/edit',
 								text: 'Change',
 								visuallyHiddenText: 'LPA questionnaire due'
 							}

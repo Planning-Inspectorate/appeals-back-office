@@ -38,6 +38,7 @@ import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appe
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
 import hearingRouter from './hearing/hearing.router.js';
 import siteAddressRouter from './appellant-case/address/address.router.js';
+import timetableRouter from './timetable/timetable.router.js';
 
 const router = createRouter();
 
@@ -64,6 +65,7 @@ router.use(
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);
+router.use('/:appealId/timetable', timetableRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
 router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use('/:appealId/final-comments', finalCommentsRouter);

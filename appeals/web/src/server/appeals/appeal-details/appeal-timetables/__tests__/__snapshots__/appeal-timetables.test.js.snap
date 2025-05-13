@@ -4,7 +4,7 @@ exports[`Appeal Timetables should render "Change LPA questionnaire Date" page 1`
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Change LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Change LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -50,7 +50,7 @@ exports[`Appeal Timetables should render "Change final comments due date" page 1
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Change final comments due date</h1>
+            <h1 class="govuk-heading-l">Change final comments due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -111,7 +111,7 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Change final comments due date</h1>
+            <h1 class="govuk-heading-l">Change final comments due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -172,7 +172,7 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Change final comments due date</h1>
+            <h1 class="govuk-heading-l">Change final comments due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -218,7 +218,7 @@ exports[`Appeal Timetables should render "Change statement review Date" page 1`]
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Change LPA statement due date</h1>
+            <h1 class="govuk-heading-l">Change LPA statement due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -264,7 +264,7 @@ exports[`Appeal Timetables should render "Schedule LPA questionnaire Date" page 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Schedule LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Schedule LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -308,7 +308,7 @@ exports[`Appeal Timetables should render "Schedule statement review Date" page 1
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Schedule LPA statement due date</h1>
+            <h1 class="govuk-heading-l">Schedule LPA statement due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
