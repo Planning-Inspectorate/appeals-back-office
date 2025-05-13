@@ -10,3 +10,5 @@ You need to submit the following by {{due_date}} to caseofficers@planninginspect
 {%- endfor %}
 
 The Planning Inspectorate
+caseofficers@planninginspectorate.gov.uk
+

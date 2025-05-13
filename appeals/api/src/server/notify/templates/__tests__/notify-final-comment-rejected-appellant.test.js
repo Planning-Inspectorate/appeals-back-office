@@ -40,7 +40,8 @@ describe('final-comment-rejected-appellant.md', () => {
 			'',
 			'You can send different final comments to caseofficers@planninginspectorate.gov.uk. The case officer will decide whether to accept any new final comments.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);
