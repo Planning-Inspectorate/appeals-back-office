@@ -24,7 +24,7 @@ describe('isLpaqReceived', () => {
 
 		expect(isLpaqReceived(appeal)).toBe(false);
 	});
-	it('returns false is status undefined', () => {
+	it('returns false if status undefined', () => {
 		/** @type {WebAppeal} */
 		const appeal = {
 			...appealData,
@@ -40,6 +40,23 @@ describe('isLpaqReceived', () => {
 			documentationSummary: {
 				lpaQuestionnaire: {
 					status: DOCUMENT_STATUS_RECEIVED,
+					dueDate: new Date().toUTCString(),
+					receivedAt: new Date().toUTCString(),
+					representationStatus: null
+				}
+			}
+		};
+
+		expect(isLpaqReceived(appeal)).toBe(true);
+	});
+
+	it('returns true if status complete', () => {
+		/** @type {WebAppeal} */
+		const appeal = {
+			...appealData,
+			documentationSummary: {
+				lpaQuestionnaire: {
+					status: 'Complete',
 					dueDate: new Date().toUTCString(),
 					receivedAt: new Date().toUTCString(),
 					representationStatus: null
