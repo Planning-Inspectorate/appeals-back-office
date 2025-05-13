@@ -1,5 +1,5 @@
 import usersService from '#appeals/appeal-users/users-service.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetAuditTrailsResponse} GetAuditTrailsResponse */
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
@@ -38,6 +38,8 @@ export const mapMessageContent = async (appeal, log, docInfo, session) => {
 	if (log.toLowerCase().indexOf('document') === -1) {
 		result = await tryMapUsers(result, session);
 	}
+
+	result = await tryMapDocumentRedactionStatus(result);
 	result = await tryMapDocument(
 		appeal.appealId,
 		result,
@@ -136,11 +138,31 @@ export const tryMapDocument = async (appealId, log, docInfo, lpaqId) => {
 				const url = `/appeals-service/appeal-details/${appealId}/costs/${path}/manage-documents/${folderId}/${documentGuid}`;
 				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 			}
+			case APPEAL_CASE_STAGE.INTERNAL: {
+				const internalTypes = ['appellant', 'cross-team', 'inspector'];
+				let internalDocsPath = '';
+				switch (documentType) {
+					case APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE: {
+						internalDocsPath = `internal-correspondence/${internalTypes[0]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE: {
+						internalDocsPath = `internal-correspondence/${internalTypes[1]}`;
+						break;
+					}
+					case APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE: {
+						internalDocsPath = `internal-correspondence/${internalTypes[2]}`;
+						break;
+					}
+				}
+
+				const url = `/appeals-service/appeal-details/${appealId}/${internalDocsPath}/manage-documents/${folderId}/${documentGuid}`;
+				return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+			}
 			case 'representation': {
 				const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
 				return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
 			}
-			//TODO: internal folders, when the data model is updated
 		}
 	}
 
@@ -235,6 +257,21 @@ const tryMapRepresentationType = async (log) => {
 	result = result.replace('lpa_statement', 'The LPA statement');
 	result = result.replace('lpa_final_comment', 'The LPA final comment');
 	result = result.replace('appellant_final_comment', 'The appellant final comment');
+
+	return result;
+};
+
+/**
+ *
+ * @param {string} log
+ * @returns {Promise<string>}
+ */
+const tryMapDocumentRedactionStatus = async (log) => {
+	let result = log;
+
+	result = result.replace(APPEAL_REDACTED_STATUS.REDACTED, 'redacted');
+	result = result.replace(APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED, 'unredacted');
+	result = result.replace(APPEAL_REDACTED_STATUS.NOT_REDACTED, 'no redaction required');
 
 	return result;
 };
