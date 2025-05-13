@@ -95,10 +95,19 @@ const addDocuments = async (req, res) => {
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
+				const matchingBodyDoc = req.body.documents.find(
+					(/** * @type {Object<string, number>} */ bodyDocument) =>
+						bodyDocument.GUID === document.GUID
+				);
+				const redactionStatus = getRedactionStatusById(matchingBodyDoc.redactionStatusId);
 				const auditTrail = await createAuditTrail({
 					appealId: appeal.id,
 					azureAdUserId: req.get('azureAdUserId'),
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [document.documentName, 1])
+					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
+						document.documentName,
+						1,
+						redactionStatus
+					])
 				});
 
 				return {
@@ -340,6 +349,23 @@ function getAuditMessage(redactionStatus) {
 			return AUDIT_TRAIL_DOCUMENT_UNREDACTED;
 		case 3:
 			return AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED;
+		default:
+			return null;
+	}
+}
+
+/**
+ * @param {number} redactionStatusId
+ * @returns {string|null}
+ */
+function getRedactionStatusById(redactionStatusId) {
+	switch (redactionStatusId) {
+		case 1:
+			return 'Redacted';
+		case 2:
+			return 'Unredacted';
+		case 3:
+			return 'No redaction required';
 		default:
 			return null;
 	}
