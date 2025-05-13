@@ -3080,7 +3080,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3124,7 +3124,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5884,7 +5884,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5945,7 +5945,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6006,7 +6006,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6067,7 +6067,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6128,7 +6128,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6189,7 +6189,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6250,7 +6250,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6311,7 +6311,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6372,7 +6372,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6431,7 +6431,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6490,7 +6490,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
