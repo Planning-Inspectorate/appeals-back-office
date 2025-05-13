@@ -34,6 +34,17 @@ export const createAddressLine1Validator = (
 			.withMessage(`Address line 1 must be ${maxLength} characters or less`)
 	);
 
+export const createAddressLine2Validator = (
+	fieldName = 'addressLine2',
+	maxLength = maxAddressLength
+) =>
+	createValidator(
+		body(fieldName)
+			.trim()
+			.isLength({ max: maxLength })
+			.withMessage(`Address line 2 must be ${maxLength} characters or less`)
+	);
+
 export const createTownValidator = (
 	fieldName = 'town',
 	emptyErrorMessage = 'Enter town or city',
