@@ -8,6 +8,7 @@ import { createEmailInputOptionalValidator } from '#lib/validators/email-input.v
 import {
 	createPostcodeValidator,
 	createAddressLine1Validator,
+	createAddressLine2Validator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -37,11 +38,7 @@ export const validateInterestedPartyDetails = createValidator(
 
 export const validateInterestedPartyAddress = createValidator(
 	createAddressLine1Validator(),
-	createTextInputOptionalValidator(
-		'addressLine2',
-		maxLength,
-		`Address line 2 must be ${maxLength} characters or less`
-	),
+	createAddressLine2Validator(),
 	createTownValidator(),
 	createTextInputOptionalValidator(
 		'county',

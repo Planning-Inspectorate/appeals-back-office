@@ -3,6 +3,7 @@ import { Router as createRouter } from 'express';
 import {
 	createPostcodeValidator,
 	createAddressLine1Validator,
+	createAddressLine2Validator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
 import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
@@ -16,6 +17,7 @@ router
 	.get(asyncHandler(controller.renderEditAddress))
 	.post(
 		createAddressLine1Validator(),
+		createAddressLine2Validator(),
 		createTownValidator(),
 		createPostcodeValidator(),
 		saveBodyToSession('editIpComment'),
