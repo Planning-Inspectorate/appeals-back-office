@@ -7,3 +7,7 @@ export interface InspectorDecisionRequest {
 export interface AppellantCostsDecisionRequest {
 	outcome?: string;
 }
+
+export interface LpaCostsDecisionRequest {
+	outcome?: string;
+}

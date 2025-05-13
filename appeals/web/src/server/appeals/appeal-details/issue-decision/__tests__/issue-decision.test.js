@@ -583,7 +583,78 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/lpa-costs-decision'
+			);
+		});
+	});
+
+	describe('GET /lpa-costs-decision', () => {
+		it('should render the LPA cost decision page', async () => {
+			const mockAppealId = '1';
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/issue-decision/lpa-costs-decision`
+			);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to issue the LPA&#39;s costs decision?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="lpa-costs-decision" name="lpaCostsDecision" type="radio" value="true">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="lpa-costs-decision-2" name="lpaCostsDecision" type="radio" value="false">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /lpa-costs-decision', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(teardown);
+
+		it(`should require a chosen option`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Select yes if you want to issue the LPA&#39;s cost decision</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="lpa-costs-decision-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you want to issue the LPA&#39;s cost decision</p>'
+			);
+		});
+
+		it(`should redirect to the LPA costs decision letter upload page, if the LPA costs decision is 'Yes'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+				.send({ lpaCostsDecision: 'true' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+			);
+		});
+
+		it(`should redirect to the check your decision page, if the decision is 'No'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+				.send({ lpaCostsDecision: 'false' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});
@@ -691,6 +762,10 @@ describe('issue-decision', () => {
 		 * @type {import("superagent").Response}
 		 */
 		let uploadAppellantCostsDecisionLetterResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let issueLpaCostsDecisionResponse;
 
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
@@ -720,8 +795,12 @@ describe('issue-decision', () => {
 				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
-						'[{"name": "test-document-2.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
 				});
+
+			issueLpaCostsDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+				.send({ lpaCostsDecision: 'true' });
 
 			const mockLetterDecisionDate = {
 				'decision-letter-date-day': '1',
@@ -741,6 +820,7 @@ describe('issue-decision', () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
 			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
+			expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
@@ -748,23 +828,29 @@ describe('issue-decision', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and issue decision</h1>');
 
-			expect(element.innerHTML).toContain('Decision</dt>');
-			expect(element.innerHTML).toContain('Allowed</dd>');
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(element.innerHTML).toContain('Decision letter</dt>');
-			expect(element.innerHTML).toContain('test-document.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Check details and issue decision</h1>');
 
-			expect(element.innerHTML).toContain(
-				'Do you want to issue the appellant&#39;s costs decision?</dt>'
+			expect(unprettifiedElement.innerHTML).toContain('Decision</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to issue the appellant&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
 			);
-			expect(element.innerHTML).toContain('Yes</dd>');
 
-			expect(element.innerHTML).toContain('Appellant costs decision letter</dt>');
-			expect(element.innerHTML).toContain('test-document-2.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document-appellant.pdf</a>');
 
-			expect(element.innerHTML).toContain('Send decision</button>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to issue the LPA&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
 		});
 	});
 
