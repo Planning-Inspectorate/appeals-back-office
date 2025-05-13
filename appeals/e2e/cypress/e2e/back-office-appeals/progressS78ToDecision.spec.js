@@ -70,9 +70,9 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(new Date());
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectCheckbox();
+			//dateTimeSection.enterDecisionLetterDate(new Date());
+			//caseDetailsPage.clickButtonByText('Continue');
+			//caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
 			caseDetailsPage.checkStatusOfCase('Complete', 0);
 			caseDetailsPage.checkDecisionOutcome('Allowed');
