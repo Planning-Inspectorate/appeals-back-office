@@ -1,12 +1,8 @@
-import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
-import { HTTPError } from 'got';
+import { postInspectorDecision } from './issue-decision.service.js';
 import {
 	checkAndConfirmPage,
-	dateDecisionLetterPage,
 	issueDecisionPage,
 	mapDecisionOutcome,
-	invalidReasonPage,
-	checkAndConfirmInvalidPage,
 	appellantCostsDecisionPage,
 	lpaCostsDecisionPage
 } from './issue-decision.mapper.js';
@@ -15,10 +11,6 @@ import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
-import {
-	dayMonthYearHourMinuteToISOString,
-	dateISOStringToDayMonthYearHourMinute
-} from '#lib/dates.js';
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
@@ -26,6 +18,41 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { cloneDeep } from 'lodash-es';
+
+/**
+ *
+ * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
+ * @returns {{appellantHasAppliedForCosts: boolean, lpaHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
+ */
+function buildLogicData(currentAppeal) {
+	const appellantApplicationDocumentsExists =
+		!!currentAppeal.costs?.appellantApplicationFolder?.documents?.length;
+	const appellantWithdrawalDocumentsExists =
+		!!currentAppeal.costs?.appellantWithdrawalFolder?.documents?.length;
+	const lpaApplicationDocumentsExists =
+		!!currentAppeal.costs?.lpaApplicationFolder?.documents?.length;
+	const lpaWithdrawalDocumentsExists =
+		!!currentAppeal.costs?.lpaWithdrawalFolder?.documents?.length;
+	const appellantDecisionLetterExists =
+		!!currentAppeal.costs?.appellantDecisionFolder?.documents?.length;
+	const lpaDecisionLetterExists = !!currentAppeal.costs?.lpaDecisionFolder?.documents?.length;
+	return {
+		appellantHasAppliedForCosts:
+			appellantApplicationDocumentsExists && !appellantWithdrawalDocumentsExists,
+		lpaHasAppliedForCosts: lpaApplicationDocumentsExists && !lpaWithdrawalDocumentsExists,
+		appellantDecisionHasAlreadyBeenIssued: appellantDecisionLetterExists,
+		lpaDecisionHasAlreadyBeenIssued: lpaDecisionLetterExists
+	};
+}
+
+/**
+ *
+ * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
+ * @returns {string}
+ */
+function baseUrl(currentAppeal) {
+	return `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision`;
+}
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -126,10 +153,27 @@ export const postDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
+	const {
+		appellantHasAppliedForCosts,
+		lpaHasAppliedForCosts,
+		appellantDecisionHasAlreadyBeenIssued,
+		lpaDecisionHasAlreadyBeenIssued
+	} = buildLogicData(currentAppeal);
+
+	let nextPageUrl;
+
+	if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
+	} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
+	} else {
+		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
+	}
+
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/appellant-costs-decision`,
+		nextPageUrl,
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER);
 		}
@@ -159,7 +203,6 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		backButtonUrl:
 			getBackLinkUrlFromQuery(request) ||
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
-		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision-letter-date`,
 		pageHeadingTextOverride: 'Decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
@@ -175,86 +218,8 @@ export const renderDecisionLetterUpload = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postDateDecisionLetter = async (request, response) => {
-	const { appealId } = request.params;
-	const {
-		'decision-letter-date-day': day,
-		'decision-letter-date-month': month,
-		'decision-letter-date-year': year
-	} = request.body;
-	const { errors } = request;
-
-	if (errors) {
-		return renderDateDecisionLetter(request, response);
-	}
-
-	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-	request.session.inspectorDecision = {
-		...request.session.inspectorDecision,
-		letterDate: dayMonthYearHourMinuteToISOString({ year, month, day })
-	};
-
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/issue-decision/appellant-costs-decision`
-	);
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderDateDecisionLetter = async (request, response) => {
-	const { errors, currentAppeal, session } = request;
-
-	if (!currentAppeal) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'inspectorDecision'])) {
-		return response.status(500).render('app/500.njk');
-	}
-
-	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-	request.session.inspectorDecision = {
-		...session.inspectorDecision,
-		documentId: session.fileUploadInfo.files[0].GUID
-	};
-
-	let decisionLetterDay = request.body['decision-letter-date-day'];
-	let decisionLetterMonth = request.body['decision-letter-date-month'];
-	let decisionLetterYear = request.body['decision-letter-date-year'];
-
-	if (!decisionLetterDay || !decisionLetterMonth || !decisionLetterYear) {
-		if (request.session.inspectorDecision?.letterDate) {
-			const letterDate = dateISOStringToDayMonthYearHourMinute(
-				request.session.inspectorDecision.letterDate
-			);
-			decisionLetterDay = letterDate.day;
-			decisionLetterMonth = letterDate.month;
-			decisionLetterYear = letterDate.year;
-		}
-	}
-
-	const mappedPageContent = dateDecisionLetterPage(
-		currentAppeal,
-		decisionLetterDay,
-		decisionLetterMonth,
-		decisionLetterYear
-	);
-
-	return response.status(200).render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContent,
-		errors
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 export const postAppellantCostsDecision = async (request, response) => {
-	const { params, body, session, errors } = request;
+	const { currentAppeal, params, body, session, errors } = request;
 
 	if (errors) {
 		return renderAppellantCostsDecision(request, response);
@@ -267,15 +232,18 @@ export const postAppellantCostsDecision = async (request, response) => {
 		outcome: body.appellantCostsDecision
 	};
 
+	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
+
+	let nextPageUrl;
+
 	if (body.appellantCostsDecision === 'true') {
-		return response.redirect(
-			`/appeals-service/appeal-details/${params.appealId}/issue-decision/appellant-costs-decision-letter-upload`
-		);
+		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`;
+	} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
 	} else {
-		return response.redirect(
-			`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
-		);
+		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
 	}
+	return response.redirect(nextPageUrl);
 };
 
 /**
@@ -322,10 +290,19 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
 	};
 
+	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
+
+	let nextPageUrl;
+	if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
+	} else {
+		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
+	}
+
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/lpa-costs-decision`,
+		nextPageUrl,
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
 		}
@@ -355,7 +332,6 @@ export const renderAppellantCostsDecisionLetterUpload = async (request, response
 		backButtonUrl:
 			getBackLinkUrlFromQuery(request) ||
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/appellant-costs-decision`,
-		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/check-your-decision`,
 		pageHeadingTextOverride: 'Appellant costs decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
@@ -389,11 +365,11 @@ export const postLpaCostsDecision = async (request, response) => {
 		return response.redirect(
 			`/appeals-service/appeal-details/${params.appealId}/issue-decision/lpa-costs-decision-letter-upload`
 		);
-	} else {
-		return response.redirect(
-			`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
-		);
 	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+	);
 };
 
 /**
@@ -473,7 +449,6 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 		backButtonUrl:
 			getBackLinkUrlFromQuery(request) ||
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/lpa-costs-decision`,
-		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/check-your-decision`,
 		pageHeadingTextOverride: 'LPA costs decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
@@ -482,54 +457,6 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 		documentTitle: 'LPA costs decision letter',
 		allowMultipleFiles: false,
 		allowedTypes: ['pdf']
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const postInvalidReason = async (request, response) => {
-	const { appealId } = request.params;
-	const { decisionInvalidReason: invalidReason } = request.body;
-	const { errors } = request;
-	if (errors) {
-		return renderInvalidReason(request, response);
-	}
-
-	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-	request.session.inspectorDecision = {
-		...request.session.inspectorDecision,
-		invalidReason: invalidReason
-	};
-
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/issue-decision/check-invalid-decision`
-	);
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderInvalidReason = async (request, response) => {
-	const { errors } = request;
-
-	const appealData = request.currentAppeal;
-
-	if (!appealData) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const invalidReason =
-		request.body['decisionInvalidReason'] || request.session.inspectorDecision?.invalidReason;
-
-	const mappedPageContent = invalidReasonPage(appealData, invalidReason);
-
-	return response.status(200).render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContent,
-		errors
 	});
 };
 
@@ -601,63 +528,4 @@ export const renderCheckDecision = async (request, response) => {
 		pageContent: mappedPageContent,
 		errors
 	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const renderCheckInvalidDecision = async (request, response) => {
-	const { errors } = request;
-	const appealData = request.currentAppeal;
-
-	if (!appealData) {
-		return response.status(404).render('app/404.njk');
-	}
-
-	const mappedPageContent = checkAndConfirmInvalidPage(
-		request,
-		appealData,
-		request.session.inspectorDecision
-	);
-
-	return response.status(200).render('appeals/appeal/issue-decision.njk', {
-		pageContent: mappedPageContent,
-		errors
-	});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const postCheckInvalidDecision = async (request, response) => {
-	const { appealId } = request.params;
-	const { errors } = request;
-
-	if (errors) {
-		return renderCheckInvalidDecision(request, response);
-	}
-
-	const invalidReason = request.session.inspectorDecision.invalidReason;
-
-	try {
-		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
-
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'issuedDecisionInvalid',
-			appealId
-		});
-
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
-	} catch (error) {
-		if (error instanceof HTTPError && error.response.statusCode === 400) {
-			// @ts-ignore
-			request.errors = error.response.body.errors;
-			return renderCheckInvalidDecision(request, response);
-		}
-
-		throw error;
-	}
 };
