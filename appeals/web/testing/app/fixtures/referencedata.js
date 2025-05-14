@@ -221,6 +221,18 @@ export const appealData = {
 			folderId: 7,
 			path: 'costs/costsDecisionLetter',
 			documents: []
+		},
+		appellantDecisionFolder: {
+			caseId: '1',
+			folderId: 8,
+			path: 'costs/appellantCostsDecision',
+			documents: []
+		},
+		lpaDecisionFolder: {
+			caseId: '1',
+			folderId: 9,
+			path: 'costs/lpaCostsDecision',
+			documents: []
 		}
 	},
 	decision: {
