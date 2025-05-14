@@ -12,6 +12,7 @@ import { mapEnvironmentalAssessment } from './submappers/environmental-assessmen
 import { mapSetUpHearing } from './submappers/hearing-set-up-hearing.js';
 import { mapAddHearingEstimates } from './submappers/hearing-add-hearing-estimates.js';
 import { mapHearingEstimates } from './submappers/hearing-hearing-estimates.js';
+import { mapHearingDetails } from './submappers/hearing-details.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -27,6 +28,7 @@ export const submaps = {
 	lpaFinalComments: mapLPAFinalComments,
 	environmentalAssessment: mapEnvironmentalAssessment,
 	setUpHearing: mapSetUpHearing,
+	hearingDetails: mapHearingDetails,
 	addHearingEstimates: mapAddHearingEstimates,
 	hearingEstimates: mapHearingEstimates
 };

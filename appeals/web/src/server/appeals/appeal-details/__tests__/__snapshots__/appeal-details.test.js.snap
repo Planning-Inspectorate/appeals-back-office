@@ -156,6 +156,55 @@ exports[`appeal-details GET /:appealId Hearing should render the Hearing estimat
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Hearing should render the hearing details summary list when hearing is present with address 1`] = `
+"<div id="case-details-hearing-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2025</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">123 Main St
+                <br>Apt 1
+                <br>Anytown
+                <br>Anycounty
+                <br>AA1 1AA</dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <div>
+        <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Hearing should render the hearing details summary list when hearing is present with no address 1`] = `
+"<div id="case-details-hearing-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2025</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <div>
+        <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with an "Issue" action link 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/costs/lpa-decision" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;

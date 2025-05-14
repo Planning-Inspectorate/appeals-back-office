@@ -18,6 +18,14 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 		return;
 	}
 
+	/** @type {PageComponent | undefined} */
+	const hearingComponent = appealDetails.hearing
+		? {
+				type: 'summary-list',
+				parameters: { rows: mappedData.appeal.hearingDetails.display.summaryListItems }
+		  }
+		: mappedData.appeal.setUpHearing.display.buttonItem;
+
 	/** @type {PageComponent} */
 	const hearingEstimatesHeading = {
 		type: 'html',
@@ -35,9 +43,7 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 	return [
 		wrapComponents(
 			[
-				...(mappedData.appeal.setUpHearing.display.buttonItem
-					? [mappedData.appeal.setUpHearing.display.buttonItem]
-					: []),
+				...(hearingComponent ? [hearingComponent] : []),
 				hearingEstimatesHeading,
 				...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])
 			],

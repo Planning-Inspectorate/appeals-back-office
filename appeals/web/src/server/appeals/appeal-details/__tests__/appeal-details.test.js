@@ -27,6 +27,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -2888,6 +2889,124 @@ describe('appeal-details', () => {
 				expect(unprettifiedHearingSectionHtml).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
 				);
+			});
+
+			it('should render the hearing details summary list when hearing is present with address', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							address: {
+								addressLine1: '123 Main St',
+								addressLine2: 'Apt 1',
+								town: 'Anytown',
+								county: 'Anycounty',
+								postcode: 'AA1 1AA'
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.split('<br>')
+						.map((line) => line.trim())
+				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
+			});
+
+			it('should render the hearing details summary list when hearing is present with no address', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2025-05-15T12:00:00.000Z'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('No');
+				expect(
+					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+				).toBeFalsy();
 			});
 
 			it('should render the Hearing estimates summary list when estimates are present', async () => {

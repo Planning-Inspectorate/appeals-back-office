@@ -13,7 +13,7 @@ import * as validators from './set-up-hearing-validators.js';
 
 const router = createRouter({ mergeParams: true });
 
-router.get('/', controller.redirectToHearingDate);
+router.get('/', controller.redirectAndClearSession('/date', 'setUpHearing'));
 
 router
 	.route('/date')
@@ -47,5 +47,10 @@ router
 		saveBodyToSession('setUpHearing'),
 		asyncHandler(controller.postHearingAddressDetails)
 	);
+
+router
+	.route('/check-details')
+	.get(asyncHandler(controller.getHearingCheckDetails))
+	.post(asyncHandler(controller.postHearingCheckDetails));
 
 export default router;

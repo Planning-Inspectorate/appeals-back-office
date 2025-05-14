@@ -14,7 +14,17 @@ export const mapHearing = (data) => {
 		return {
 			hearingId: appeal.hearing.id,
 			hearingStartTime: appeal.hearing.hearingStartTime?.toISOString() || '',
-			hearingEndTime: appeal.hearing.hearingEndTime?.toISOString() || ''
+			hearingEndTime: appeal.hearing.hearingEndTime?.toISOString() || '',
+			addressId: appeal.hearing.addressId || undefined,
+			...(appeal.hearing.address && {
+				address: {
+					addressLine1: appeal.hearing.address.addressLine1 || undefined,
+					addressLine2: appeal.hearing.address.addressLine2 || undefined,
+					town: appeal.hearing.address.addressTown || undefined,
+					county: appeal.hearing.address.addressCounty || undefined,
+					postcode: appeal.hearing.address.postcode || undefined
+				}
+			})
 		};
 	}
 };

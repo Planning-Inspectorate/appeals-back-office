@@ -107,7 +107,7 @@ const renderAlreadySubmittedError = (request, response) => {
 		titleCopy: 'You cannot check these answers',
 		bodyCopy: [
 			'It looks like you may have already submitted the data.',
-			`Continue to <a href="/appeals-service/appeal-details/${request.currentAppeal.appealId}">appeal details</a>`
+			`Continue to <a class="govuk-link" href="/appeals-service/appeal-details/${request.currentAppeal.appealId}">appeal details</a>`
 		]
 	});
 };
