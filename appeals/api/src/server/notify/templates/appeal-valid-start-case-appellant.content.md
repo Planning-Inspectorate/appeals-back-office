@@ -2,11 +2,7 @@ We have reviewed your appeal and it is valid.
 
 We started your appeal on {{start_date}}.
 
-# Appeal details
-
-^Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-Planning application reference: {{lpa_reference}}
+{% include 'parts/appeal-details.md' %}
 
 # Next steps
 
