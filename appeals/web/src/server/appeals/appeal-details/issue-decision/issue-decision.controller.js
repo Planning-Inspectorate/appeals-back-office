@@ -47,11 +47,47 @@ function buildLogicData(currentAppeal) {
 
 /**
  *
- * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
+ * @param {string|number} appealId
  * @returns {string}
  */
-function baseUrl(currentAppeal) {
-	return `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision`;
+function baseUrl(appealId) {
+	return `/appeals-service/appeal-details/${appealId}/issue-decision`;
+}
+
+/**
+ *
+ * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
+ * @param {string} url
+ * @returns {string}
+ */
+function calculateNextPageUrl(currentAppeal, url) {
+	const {
+		appellantHasAppliedForCosts,
+		lpaHasAppliedForCosts,
+		appellantDecisionHasAlreadyBeenIssued,
+		lpaDecisionHasAlreadyBeenIssued
+	} = buildLogicData(currentAppeal);
+
+	const base = baseUrl(currentAppeal.appealId);
+	const backUrl = encodeURIComponent(`${base}${url.split('?')[0]}`);
+
+	if (
+		url === '/decision-letter-upload' &&
+		appellantHasAppliedForCosts &&
+		!appellantDecisionHasAlreadyBeenIssued
+	) {
+		return `${base}/appellant-costs-decision?backUrl=${backUrl}`;
+	}
+
+	if (
+		!url.startsWith('/lpa-costs-decision') &&
+		lpaHasAppliedForCosts &&
+		!lpaDecisionHasAlreadyBeenIssued
+	) {
+		return `${base}/lpa-costs-decision?backUrl=${backUrl}`;
+	}
+
+	return `${base}/check-your-decision?backUrl=${backUrl}`;
 }
 
 /**
@@ -72,9 +108,10 @@ export const postIssueDecision = async (request, response) => {
 		outcome: body.decision
 	};
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/decision-letter-upload`
-	);
+	const base = baseUrl(params.appealId);
+	const backUrl = encodeURIComponent(`${base}${request.url.split('?')[0]}`);
+
+	return response.redirect(`${base}/decision-letter-upload?backUrl=${backUrl}`);
 };
 
 /**
@@ -153,27 +190,10 @@ export const postDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	const {
-		appellantHasAppliedForCosts,
-		lpaHasAppliedForCosts,
-		appellantDecisionHasAlreadyBeenIssued,
-		lpaDecisionHasAlreadyBeenIssued
-	} = buildLogicData(currentAppeal);
-
-	let nextPageUrl;
-
-	if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
-		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
-	} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
-		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
-	} else {
-		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
-	}
-
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl,
+		nextPageUrl: calculateNextPageUrl(currentAppeal, request.url),
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER);
 		}
@@ -201,8 +221,7 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl:
-			getBackLinkUrlFromQuery(request) ||
-			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
+			getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal.appealId)}/decision`,
 		pageHeadingTextOverride: 'Decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
@@ -232,17 +251,14 @@ export const postAppellantCostsDecision = async (request, response) => {
 		outcome: body.appellantCostsDecision
 	};
 
-	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
+	const base = baseUrl(currentAppeal.appealId);
+	const backUrl = encodeURIComponent(`${base}${request.url.split('?')[0]}`);
 
-	let nextPageUrl;
+	const nextPageUrl =
+		body.appellantCostsDecision === 'true'
+			? `${base}/appellant-costs-decision-letter-upload?backUrl=${backUrl}`
+			: calculateNextPageUrl(currentAppeal, request.url);
 
-	if (body.appellantCostsDecision === 'true') {
-		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`;
-	} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
-		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
-	} else {
-		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
-	}
 	return response.redirect(nextPageUrl);
 };
 
@@ -290,19 +306,10 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
 	};
 
-	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
-
-	let nextPageUrl;
-	if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
-		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
-	} else {
-		nextPageUrl = `${baseUrl(currentAppeal)}/check-your-decision`;
-	}
-
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl,
+		nextPageUrl: calculateNextPageUrl(currentAppeal, request.url),
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
 		}
@@ -331,7 +338,7 @@ export const renderAppellantCostsDecisionLetterUpload = async (request, response
 		appealDetails: currentAppeal,
 		backButtonUrl:
 			getBackLinkUrlFromQuery(request) ||
-			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/appellant-costs-decision`,
+			`${baseUrl(currentAppeal.appealId)}/appellant-costs-decision`,
 		pageHeadingTextOverride: 'Appellant costs decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
@@ -361,15 +368,14 @@ export const postLpaCostsDecision = async (request, response) => {
 		outcome: body.lpaCostsDecision
 	};
 
+	const base = baseUrl(params.appealId);
+	const backUrl = encodeURIComponent(`${base}${request.url.split('?')[0]}`);
+
 	if (body.lpaCostsDecision === 'true') {
-		return response.redirect(
-			`/appeals-service/appeal-details/${params.appealId}/issue-decision/lpa-costs-decision-letter-upload`
-		);
+		return response.redirect(`${base}/lpa-costs-decision-letter-upload?backUrl=${backUrl}`);
 	}
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
-	);
+	return response.redirect(`${base}/check-your-decision?backUrl=${backUrl}`);
 };
 
 /**
@@ -419,7 +425,7 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
+		nextPageUrl: calculateNextPageUrl(currentAppeal, request.url),
 		callBack: async () => {
 			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER);
 		}
@@ -447,8 +453,7 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl:
-			getBackLinkUrlFromQuery(request) ||
-			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/lpa-costs-decision`,
+			getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal.appealId)}/lpa-costs-decision`,
 		pageHeadingTextOverride: 'LPA costs decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
