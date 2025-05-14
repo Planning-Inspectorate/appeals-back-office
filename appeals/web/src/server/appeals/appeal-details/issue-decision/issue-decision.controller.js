@@ -383,9 +383,15 @@ export const postLpaCostsDecision = async (request, response) => {
 		outcome: body.lpaCostsDecision
 	};
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
-	);
+	if (body.lpaCostsDecision === 'true') {
+		return response.redirect(
+			`/appeals-service/appeal-details/${params.appealId}/issue-decision/lpa-costs-decision-letter-upload`
+		);
+	} else {
+		return response.redirect(
+			`/appeals-service/appeal-details/${params.appealId}/issue-decision/check-your-decision`
+		);
+	}
 };
 
 /**
@@ -416,6 +422,64 @@ export const renderLpaCostsDecision = async (request, response) => {
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postLpaCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal, session } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	request.currentFolder = {
+		folderId: currentAppeal.lpaDecisionFolder?.folderId,
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+	};
+
+	await postDocumentUpload({
+		request,
+		response,
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
+		callBack: async () => {
+			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER);
+		}
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal } = request;
+	const documentType = APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER;
+
+	request.currentFolder = {
+		folderId: currentAppeal.lpaDecisionFolder?.folderId,
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+	};
+
+	restoreFileUploadInfo(request.session, documentType);
+
+	await renderDocumentUpload({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl:
+			getBackLinkUrlFromQuery(request) ||
+			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/lpa-costs-decision`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/issue-decision/check-your-decision`,
+		pageHeadingTextOverride: 'LPA costs decision letter',
+		preHeadingTextOverride: `Appeal ${appealShortReference(
+			currentAppeal.appealReference
+		)} - issue decision`,
+		uploadContainerHeadingTextOverride: 'Upload LPA costs decision letter',
+		documentTitle: 'LPA costs decision letter',
+		allowMultipleFiles: false,
+		allowedTypes: ['pdf']
 	});
 };
 
