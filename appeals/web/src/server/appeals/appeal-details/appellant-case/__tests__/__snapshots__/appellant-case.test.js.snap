@@ -2174,11 +2174,14 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                     <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
                 </div>
             </dl>
         </div>
@@ -2284,6 +2287,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dl class="govuk-summary-list" id="application-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
