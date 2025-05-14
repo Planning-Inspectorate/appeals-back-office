@@ -80,11 +80,13 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items: [
-					{
-						text: 'Redact',
-						href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
-						visuallyHiddenText: 'final comments'
-					}
+					!redactedCommentDifferent
+						? {
+								text: 'Redact',
+								href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
+								visuallyHiddenText: 'final comments'
+						  }
+						: {}
 				]
 			}
 		},

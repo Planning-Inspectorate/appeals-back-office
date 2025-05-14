@@ -3,7 +3,8 @@ export const SELECTORS = {
 	REDACT_BUTTON_IDENTIFIER: '#redact-button',
 	UNDO_BUTTON_IDENTIFIER: '#undo-button',
 	TEXTAREA_IDENTIFIER: '#redact-textarea',
-	REVERT_BUTTON: '#revert-button'
+	REVERT_BUTTON: '#revert-button',
+	SAVED_TEXTAREA: '#saved-textarea'
 };
 
 /**
@@ -61,7 +62,8 @@ export const initRedactButtons = () => {
 	const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
 	const revertButton = document.querySelector(SELECTORS.REVERT_BUTTON);
 	const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
-	const redactedText = textarea?.textContent?.trim() || '';
+	const savedTextarea = document.querySelector(SELECTORS.SAVED_TEXTAREA);
+	const savedRedaction = savedTextarea?.textContent?.trim() || '';
 
 	if (
 		!(
@@ -81,6 +83,6 @@ export const initRedactButtons = () => {
 	}
 
 	redactButton.onclick = generateOnClick(textarea);
-	undoButton.onclick = setAreaText(textarea, redactedText);
+	undoButton.onclick = setAreaText(textarea, savedRedaction);
 	revertButton.onclick = setAreaText(textarea, originalCommentText.textContent?.trim() ?? '');
 };
