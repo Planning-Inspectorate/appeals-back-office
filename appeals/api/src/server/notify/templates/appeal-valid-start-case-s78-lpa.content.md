@@ -2,12 +2,25 @@ You have a new {{appeal_type}} appeal against the application {{lpa_reference}}.
 
 We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
-# Appeal details
+{% include 'parts/appeal-details.md' %}
 
-Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-Planning application reference: {{lpa_reference}}
-Start date: {{start_date}}
+# Timetable
+
+## Local planning authority questionnaire
+
+Due by {{questionnaire_due_date}}.
+
+## Statements from the local planning authority
+
+Due by {{lpa_statement_deadline}}.
+
+## Interested party comments
+
+Due by {{ip_comments_deadline}}.
+
+## Final comments from the local planning authority
+
+Due by {{final_comments_deadline}}.
 
 # Next steps
 
