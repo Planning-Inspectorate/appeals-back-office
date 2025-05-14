@@ -255,67 +255,6 @@ export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, e
 /**
  *
  * @param {Appeal} appealData
- * @param {string} decisionLetterDay
- * @param {string} decisionLetterMonth
- * @param {string} decisionLetterYear
- * @returns {PageContent}
- */
-export function dateDecisionLetterPage(
-	appealData,
-	decisionLetterDay,
-	decisionLetterMonth,
-	decisionLetterYear
-) {
-	const title = 'Enter date of decision letter';
-
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'decision-letter-date',
-			namePrefix: 'decision-letter-date',
-			fieldset: {
-				legend: {
-					text: '',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: decisionLetterDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: decisionLetterMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: decisionLetterYear || ''
-				}
-			]
-		}
-	};
-
-	return {
-		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
-		backLinkText: 'Back',
-		preHeading: `Appeal ${appealShortReference(appealData.appealReference)} - issue decision`,
-		heading: title,
-		pageComponents: [selectDateComponent]
-	};
-}
-
-/**
- *
- * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {{ key: { text: string; }; value: { html: string; text?: undefined; } | { text: string; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }[]}
  */
@@ -376,30 +315,31 @@ function checkAndConfirmPageRows(appealData, session) {
 				}
 			]
 		});
-	}
 
-	const appellantCostsDecisionLetter =
-		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER];
-
-	if (appellantCostsDecisionLetter) {
-		const file = appellantCostsDecisionLetter?.files[0] || {};
-		const href = mapUncommittedDocumentDownloadUrl(
-			appealData.appealReference,
-			file.GUID,
-			file.name
-		);
-		rows.push({
-			key: 'Appellant costs decision letter',
-			value: file.name,
-			href,
-			actions: [
-				{
-					text: 'Change',
-					href: `${baseRoute}/appellant-costs-decision-letter-upload?backUrl=${currentRoute}`,
-					visuallyHiddenText: 'appellant cost decision letter'
-				}
-			]
-		});
+		if (appellantCostsDecisionOutcome === 'true') {
+			const appellantCostsDecisionLetter =
+				session.inspectorDecision.fileUploadInfo[
+					APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
+				];
+			const file = appellantCostsDecisionLetter?.files[0] || {};
+			const href = mapUncommittedDocumentDownloadUrl(
+				appealData.appealReference,
+				file.GUID,
+				file.name
+			);
+			rows.push({
+				key: 'Appellant costs decision letter',
+				value: file.name,
+				href,
+				actions: [
+					{
+						text: 'Change',
+						href: `${baseRoute}/appellant-costs-decision-letter-upload?backUrl=${currentRoute}`,
+						visuallyHiddenText: 'appellant cost decision letter'
+					}
+				]
+			});
+		}
 	}
 
 	const lpaCostsDecisionOutcome = session.lpaCostsDecision?.outcome;
@@ -416,30 +356,30 @@ function checkAndConfirmPageRows(appealData, session) {
 				}
 			]
 		});
-	}
 
-	const lpaCostsDecisionLetter =
-		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER];
+		if (lpaCostsDecisionOutcome === 'true') {
+			const lpaCostsDecisionLetter =
+				session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER];
 
-	if (lpaCostsDecisionLetter) {
-		const file = lpaCostsDecisionLetter?.files[0] || {};
-		const href = mapUncommittedDocumentDownloadUrl(
-			appealData.appealReference,
-			file.GUID,
-			file.name
-		);
-		rows.push({
-			key: 'LPA costs decision letter',
-			value: file.name,
-			href,
-			actions: [
-				{
-					text: 'Change',
-					href: `${baseRoute}/lpa-costs-decision-letter-upload?backUrl=${currentRoute}`,
-					visuallyHiddenText: 'lpa costs decision letter'
-				}
-			]
-		});
+			const file = lpaCostsDecisionLetter?.files[0] || {};
+			const href = mapUncommittedDocumentDownloadUrl(
+				appealData.appealReference,
+				file.GUID,
+				file.name
+			);
+			rows.push({
+				key: 'LPA costs decision letter',
+				value: file.name,
+				href,
+				actions: [
+					{
+						text: 'Change',
+						href: `${baseRoute}/lpa-costs-decision-letter-upload?backUrl=${currentRoute}`,
+						visuallyHiddenText: 'lpa costs decision letter'
+					}
+				]
+			});
+		}
 	}
 
 	return rows.map(({ key, value, href = '', actions }) => {

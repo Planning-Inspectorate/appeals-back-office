@@ -2,7 +2,6 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './issue-decision.controller.js';
 import * as validators from './issue-decision.validators.js';
-import { createTextAreaSanitizer } from '#lib/sanitizers/textarea-sanitizer.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
@@ -35,21 +34,6 @@ router
 	);
 
 router
-	.route('/decision-letter-date')
-	.get(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderDateDecisionLetter)
-	)
-	.post(
-		validators.validateVisitDateFields,
-		validators.validateVisitDateValid,
-		validators.validateDueDateInPastOrToday,
-		validators.validateDecisionDateIsBusinessDay,
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.postDateDecisionLetter)
-	);
-
-router
 	.route('/appellant-costs-decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
@@ -57,6 +41,7 @@ router
 	)
 	.post(
 		validators.validateAppellantCostsDecision,
+		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postAppellantCostsDecision)
 	);
@@ -82,6 +67,7 @@ router
 	)
 	.post(
 		validators.validateLpaCostsDecision,
+		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postLpaCostsDecision)
 	);
@@ -100,19 +86,6 @@ router
 	);
 
 router
-	.route('/invalid-reason')
-	.get(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderInvalidReason)
-	)
-	.post(
-		createTextAreaSanitizer('decisionInvalidReason'),
-		validators.validateTextArea,
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.postInvalidReason)
-	);
-
-router
 	.route('/check-your-decision')
 	.get(
 		validateAppeal,
@@ -124,18 +97,6 @@ router
 		validators.validateCheckDecision,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postCheckDecision)
-	);
-
-router
-	.route('/check-invalid-decision')
-	.get(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.renderCheckInvalidDecision)
-	)
-	.post(
-		validators.validateCheckDecision,
-		assertUserHasPermission(permissionNames.setCaseOutcome),
-		asyncHandler(controller.postCheckInvalidDecision)
 	);
 
 export default router;
