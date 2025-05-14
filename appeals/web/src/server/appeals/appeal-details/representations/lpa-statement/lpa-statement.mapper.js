@@ -67,7 +67,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 							},
 							{
 								key: { text: 'Redacted statement' },
-								classes: 'govuk-summary-list__row--no-actions',
+								classes: isReview ? 'govuk-summary-list__row--no-actions' : '',
 								value: {
 									html: '',
 									pageComponents: [
@@ -98,7 +98,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 					: [
 							{
 								key: { text: 'Statement' },
-								classes: 'govuk-summary-list__row--no-actions',
+								classes: isReview ? 'govuk-summary-list__row--no-actions' : '',
 								value: {
 									html: '',
 									pageComponents: [

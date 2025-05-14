@@ -144,7 +144,7 @@ exports[`lpa-statements GET / should render the view LPA statement page with the
         </div>
     </div>
     <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
             <dd class="govuk-summary-list__value">
                 <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
                     to you to make friends with the little rascals. Steve wants reflections,
