@@ -107,7 +107,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	//check if the redacted statement is the same as the original
-	const redactMatching = checkRedactedText(
+	const shouldShowRedactedRow = checkRedactedText(
 		lpaStatement.originalRepresentation,
 		session?.redactLPAStatement?.redactedRepresentation
 	);
@@ -122,7 +122,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 			parameters: {
 				rows: [
 					{
-						key: { text: redactMatching ? 'Original statement' : 'Statement' },
+						key: { text: shouldShowRedactedRow ? 'Original statement' : 'Statement' },
 						value: {
 							html: '',
 							pageComponents: [
@@ -135,7 +135,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 							]
 						}
 					},
-					...(redactMatching
+					...(shouldShowRedactedRow
 						? [
 								{
 									key: { text: 'Redacted statement' },
@@ -184,7 +184,9 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 					},
 					{
 						key: { text: 'Review decision' },
-						value: { text: redactMatching ? 'Redact and accept statement' : 'Accept statement' },
+						value: {
+							text: shouldShowRedactedRow ? 'Redact and accept statement' : 'Accept statement'
+						},
 						actions: {
 							items: [
 								{
@@ -254,12 +256,12 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 	preRenderPageComponents(pageComponents);
 
 	return {
-		title: redactMatching ? 'Check details and accept statement' : 'Accept statement',
+		title: shouldShowRedactedRow ? 'Check details and accept statement' : 'Accept statement',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: redactMatching ? 'Check details and accept statement' : 'Accept statement',
+		heading: shouldShowRedactedRow ? 'Check details and accept statement' : 'Accept statement',
 		forceRenderSubmitButton: true,
-		submitButtonText: redactMatching ? 'Redact and accept statement' : 'Accept statement',
+		submitButtonText: shouldShowRedactedRow ? 'Redact and accept statement' : 'Accept statement',
 		pageComponents
 	};
 }

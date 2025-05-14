@@ -281,19 +281,22 @@ describe('initRedactButtons (Integration Tests)', () => {
 		addUndo = true,
 		addRevert = true,
 		addTextarea = true,
+		addSavedTextarea = true,
 		originalType = 'div',
 		redactType = 'button',
 		undoType = 'button',
 		revertType = 'button',
 		textareaType = 'textarea',
 		originalText = 'Original Sample Text',
-		textareaText = 'Initial Textarea Content'
+		textareaText = 'Initial Textarea Content',
+		savedTextAreaText = 'Saved Textarea Content'
 	} = {}) => {
 		const originalId = SELECTORS.ORIGINAL_COMMENT_IDENTIFIER.substring(1);
 		const redactId = SELECTORS.REDACT_BUTTON_IDENTIFIER.substring(1);
 		const undoId = SELECTORS.UNDO_BUTTON_IDENTIFIER.substring(1);
 		const revertId = SELECTORS.REVERT_BUTTON.substring(1);
 		const textareaId = SELECTORS.TEXTAREA_IDENTIFIER.substring(1);
+		const savedTextareaId = SELECTORS.SAVED_TEXTAREA.substring(1);
 		// Uses global document now available from beforeAll
 		document.body.innerHTML = `
 			${addOriginal ? `<${originalType} id="${originalId}">${originalText}</${originalType}>` : ''}
@@ -301,6 +304,8 @@ describe('initRedactButtons (Integration Tests)', () => {
 			${addUndo ? `<${undoType} id="${undoId}">Undo</${undoType}>` : ''}
 			${addRevert ? `<${revertType} id="${revertId}">Revert</${revertType}>` : ''}
 			${addTextarea ? `<${textareaType} id="${textareaId}">${textareaText}</${textareaType}>` : ''}
+			${addSavedTextarea ? `<div id="${savedTextareaId}">${savedTextAreaText}</div>` : ''}
+			}
 		`;
 	};
 	beforeEach(() => {
@@ -329,7 +334,8 @@ describe('initRedactButtons (Integration Tests)', () => {
 
 	it('should initialise handlers and revert text to initial state on undo button click', () => {
 		const initialText = 'Redact the middle word.';
-		setupTestDOM({ textareaText: initialText });
+		const originalText = 'Redact the middle word.';
+		setupTestDOM({ textareaText: initialText, savedTextAreaText: originalText });
 		const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
 		const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
 		const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
@@ -377,7 +383,11 @@ describe('initRedactButtons (Integration Tests)', () => {
 	it('should initialise handlers and undo text to textarea comment on undo button click', () => {
 		const originalText = 'This is the original comment text.';
 		const textareaText = 'This ███the original comment text.';
-		setupTestDOM({ originalText: originalText, textareaText: textareaText });
+		setupTestDOM({
+			originalText: originalText,
+			textareaText: textareaText,
+			savedTextAreaText: textareaText
+		});
 		const undoButton = document.querySelector(SELECTORS.UNDO_BUTTON_IDENTIFIER);
 		const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
 		const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
