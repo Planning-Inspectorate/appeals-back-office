@@ -11,7 +11,6 @@ import { getTodaysISOString } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -21,20 +20,19 @@ export const getStartDate = async (request, response) => {
 		session
 	} = request;
 
+	if (session.startCaseAppealProcedure?.[appealId]) {
+		delete session.startCaseAppealProcedure?.[appealId];
+	}
+
 	if (
 		appealType === APPEAL_TYPE.S78 &&
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) &&
-		session.startCaseAppealProcedure?.[appealId]?.appealProcedure !== APPEAL_CASE_PROCEDURE.WRITTEN
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING)
 	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
 				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
 			}`
 		);
-	}
-
-	if (session.startCaseAppealProcedure?.[appealId]) {
-		delete session.startCaseAppealProcedure?.[appealId];
 	}
 
 	renderStartDatePage(request, response);
