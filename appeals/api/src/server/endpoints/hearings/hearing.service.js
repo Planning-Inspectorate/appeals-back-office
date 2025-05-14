@@ -69,8 +69,8 @@ const updateHearing = async (updateHearingData) => {
 			hearingId,
 			hearingStartTime: hearingStartTime,
 			hearingEndTime: hearingEndTime || undefined,
-			addressId: addressId || null,
-			address: address || null
+			addressId: addressId,
+			address: address
 		};
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);

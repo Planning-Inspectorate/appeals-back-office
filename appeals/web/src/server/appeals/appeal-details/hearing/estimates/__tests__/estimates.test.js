@@ -254,7 +254,7 @@ describe('add estimates', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
-		it('should redirect to hearing page after successful submission', async () => {
+		it('should redirect to appeal details page after successful submission', async () => {
 			nock('http://test/')
 				.post(`/appeals/${appealId}/hearing-estimates`, {
 					preparationTime: 1.5,
@@ -520,7 +520,7 @@ describe('change estimates', () => {
 				.reply(200, { ...appealWithEstimates, appealId });
 		});
 
-		it('should redirect to hearing page after successful submission', async () => {
+		it('should redirect to appeal details page after successful submission', async () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing-estimates`, {
 					preparationTime: 1.5,
@@ -532,26 +532,18 @@ describe('change estimates', () => {
 			// set session data with post request to previous page
 			await request.post(`${baseUrl}/${appealId}/hearing/estimates/change/timings`).send(estimates);
 
-			const response = await request
-				.post(`${baseUrl}/${appealId}/hearing/estimates/change/check-details`)
-				.send(estimates);
+			const response = await request.post(
+				`${baseUrl}/${appealId}/hearing/estimates/change/check-details`
+			);
 
 			expect(response.status).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should show 404 page if error is the session data is not present', async () => {
-			nock('http://test/')
-				.post(`/appeals/${appealId}/hearing-estimates`, {
-					preparationTime: 1.5,
-					sittingTime: 2.0,
-					reportingTime: 1.0
-				})
-				.reply(500, { error: 'Internal Server Error' });
-
-			const response = await request
-				.post(`${baseUrl}/${appealId}/hearing/estimates/change/check-details`)
-				.send(estimates);
+			const response = await request.post(
+				`${baseUrl}/${appealId}/hearing/estimates/change/check-details`
+			);
 
 			expect(response.status).toBe(404);
 			expect(response.text).toContain('You cannot check these answers');
@@ -559,19 +551,15 @@ describe('change estimates', () => {
 
 		it('should show 500 page if error is thrown', async () => {
 			nock('http://test/')
-				.post(`/appeals/${appealId}/hearing-estimates`, {
-					preparationTime: 1.5,
-					sittingTime: 2.0,
-					reportingTime: 1.0
-				})
+				.post(`/appeals/${appealId}/hearing-estimates`)
 				.reply(500, { error: 'Internal Server Error' });
 
 			// set session data with post request to previous page
 			await request.post(`${baseUrl}/${appealId}/hearing/estimates/change/timings`).send(estimates);
 
-			const response = await request
-				.post(`${baseUrl}/${appealId}/hearing/estimates/change/check-details`)
-				.send(estimates);
+			const response = await request.post(
+				`${baseUrl}/${appealId}/hearing/estimates/change/check-details`
+			);
 
 			expect(response.status).toBe(500);
 			expect(response.text).toContain('Sorry, there is a problem with the service');

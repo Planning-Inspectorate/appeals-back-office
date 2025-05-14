@@ -3,12 +3,21 @@ import { jest } from '@jest/globals';
 
 import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import { omit } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('hearing routes', () => {
 	/** @type {typeof householdAppealData} */
 	let householdAppeal;
+	const address = {
+		addressLine1: householdAppealData.address.addressLine1,
+		addressLine2: householdAppealData.address.addressLine2,
+		town: householdAppealData.address.addressTown,
+		county: householdAppealData.address.addressCounty,
+		postcode: householdAppealData.address.postcode,
+		country: householdAppealData.address.addressCountry
+	};
 
 	beforeEach(() => {
 		householdAppeal = JSON.parse(JSON.stringify(householdAppealData));
@@ -133,8 +142,27 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: hearing.hearingEndTime,
+						address: {
+							create: omit(hearing.address, 'id')
+						}
+					},
+					where: {
+						id: hearing.id
+					}
+				});
+
 				expect(response.status).toEqual(201);
 			});
+
 			test('updates a single hearing with addressId', async () => {
 				const { hearing } = householdAppeal;
 
@@ -146,9 +174,58 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						addressId: 42
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: hearing.hearingEndTime,
+						address: {
+							connect: {
+								id: 42
+							}
+						}
+					},
+					where: {
+						id: hearing.id
+					}
+				});
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('updates a single hearing with no address or hearingEndTime', async () => {
+				const { hearing } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
+					.send({ hearingStartTime: hearing.hearingStartTime })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: undefined
+					},
+					where: {
+						id: hearing.id
+					}
+				});
 
 				expect(response.status).toEqual(201);
 			});
@@ -164,7 +241,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -184,7 +261,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -205,7 +282,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -225,34 +302,13 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: { hearingId: 'must be a number' }
-				});
-			});
-
-			test('returns an error if addressId is not a number', async () => {
-				const { hearing } = householdAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						addressId: 'addressId'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { addressId: 'must be a number' }
 				});
 			});
 
@@ -266,7 +322,7 @@ describe('hearing routes', () => {
 					.patch(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
 					.send({
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -288,7 +344,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: 'hearingStartTime',
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -298,6 +354,20 @@ describe('hearing routes', () => {
 						hearingStartTime: 'must be a valid utc date time format'
 					}
 				});
+			});
+
+			test('does not return an error if hearingEndTime is not provided', async () => {
+				const { hearing } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
+					.send({ hearingStartTime: hearing.hearingStartTime, address })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
 			});
 
 			test('returns an error if hearingEndTime is not a valid date', async () => {
@@ -311,7 +381,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: 'hearingEndTime',
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -794,7 +864,7 @@ describe('hearing routes', () => {
 
 	describe('/:appealId/hearing', () => {
 		describe('POST', () => {
-			test('updates a single hearing with address', async () => {
+			test('creates a single hearing with address', async () => {
 				const { hearing } = householdAppeal;
 
 				// @ts-ignore
@@ -816,9 +886,25 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.hearing.create).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: hearing.hearingEndTime,
+						address: {
+							create: omit(hearing.address, 'id')
+						}
+					}
+				});
+
 				expect(response.status).toEqual(201);
 			});
-			test('updates a single hearing with addressId', async () => {
+
+			test('creates a single hearing with no address or hearingEndTime', async () => {
 				const { hearing } = householdAppeal;
 
 				// @ts-ignore
@@ -826,12 +912,20 @@ describe('hearing routes', () => {
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/hearing`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
-					})
+					.send({ hearingStartTime: hearing.hearingStartTime })
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.hearing.create).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: undefined
+					}
+				});
 
 				expect(response.status).toEqual(201);
 			});
@@ -847,7 +941,7 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -867,34 +961,13 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId
+						address
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: { appealId: 'must be a number' }
-				});
-			});
-
-			test('returns an error if addressId is not a number', async () => {
-				const { hearing } = householdAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/hearing`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						addressId: 'addressId'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { addressId: 'must be a number' }
 				});
 			});
 
@@ -906,7 +979,7 @@ describe('hearing routes', () => {
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/hearing`)
-					.send({ hearingEndTime: hearing.hearingEndTime, addressId: hearing.addressId })
+					.send({ hearingEndTime: hearing.hearingEndTime, address })
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
@@ -916,6 +989,7 @@ describe('hearing routes', () => {
 					}
 				});
 			});
+
 			test('returns an error if hearingStartTime is not a valid date', async () => {
 				const { hearing } = householdAppeal;
 
@@ -926,7 +1000,7 @@ describe('hearing routes', () => {
 					.post(`/appeals/${householdAppeal.id}/hearing`)
 					.send({
 						hearingEndTime: hearing.hearingEndTime,
-						addressId: hearing.addressId,
+						address,
 						hearingStartTime: 'hearingStartTime'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -938,6 +1012,21 @@ describe('hearing routes', () => {
 					}
 				});
 			});
+
+			test('does not return an error if hearingEndTime is not provided', async () => {
+				const { hearing } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/hearing`)
+					.send({ hearingStartTime: hearing.hearingStartTime, address })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+			});
+
 			test('returns an error if hearingEndTime is not a valid date', async () => {
 				const { hearing } = householdAppeal;
 
@@ -948,7 +1037,7 @@ describe('hearing routes', () => {
 					.post(`/appeals/${householdAppeal.id}/hearing`)
 					.send({
 						hearingStartTime: hearing.hearingStartTime,
-						addressId: hearing.addressId,
+						address,
 						hearingEndTime: 'hearingEndTime'
 					})
 					.set('azureAdUserId', azureAdUserId);

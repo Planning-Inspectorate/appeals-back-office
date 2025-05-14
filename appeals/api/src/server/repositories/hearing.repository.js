@@ -31,7 +31,7 @@ const getHearingById = async (id) => {
  *  appealId: number;
  * 	hearingStartTime: Date;
  * 	hearingEndTime?: Date ;
- *  address?: Address
+ *  address?: Omit<Address, 'id'>
  * }} data
  * @returns
  */
@@ -69,12 +69,30 @@ const createHearingById = (data) => {
  *  appealId: number;
  * 	hearingStartTime: Date;
  * 	hearingEndTime?: Date ;
- *  address?: Address
+ *  address?: Omit<Address, 'id'>
+ *  addressId?: number
  * }} data
  * @returns {PrismaPromise<object>}
  */
 const updateHearingById = (id, data) => {
-	const { appealId, hearingStartTime, hearingEndTime, address } = data;
+	const { appealId, hearingStartTime, hearingEndTime, address, addressId } = data;
+
+	let addressStatement;
+
+	if (addressId) {
+		addressStatement = { connect: { id: addressId } };
+	} else if (address) {
+		addressStatement = {
+			create: {
+				addressLine1: address.addressLine1 ?? null,
+				addressLine2: address.addressLine2 ?? null,
+				addressTown: address.addressTown ?? null,
+				addressCounty: address.addressCounty ?? null,
+				postcode: address.postcode ?? null,
+				addressCountry: address.addressCountry ?? null
+			}
+		};
+	}
 
 	const hearingData = {
 		...(appealId && {
@@ -84,18 +102,7 @@ const updateHearingById = (id, data) => {
 		}),
 		hearingStartTime,
 		hearingEndTime,
-		...(address && {
-			address: {
-				create: {
-					addressLine1: address.addressLine1 ?? null,
-					addressLine2: address.addressLine2 ?? null,
-					addressTown: address.addressTown ?? null,
-					addressCounty: address.addressCounty ?? null,
-					postcode: address.postcode ?? null,
-					addressCountry: address.addressCountry ?? null
-				}
-			}
-		})
+		...(addressStatement && { address: addressStatement })
 	};
 
 	return databaseConnector.hearing.update({

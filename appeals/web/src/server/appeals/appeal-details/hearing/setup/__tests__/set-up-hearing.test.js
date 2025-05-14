@@ -5,6 +5,7 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
+import { omit } from 'lodash-es';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -364,6 +365,179 @@ describe('set up hearing', () => {
 		behavesLikeAddressForm({
 			request,
 			url: `${baseUrl}/${appealId}/hearing/setup/address-details`
+		});
+	});
+
+	describe('GET /hearing/setup/check-details', () => {
+		const appealId = 1;
+		const dateValues = {
+			'hearing-date-day': '01',
+			'hearing-date-month': '02',
+			'hearing-date-year': '3025',
+			'hearing-time-hour': '12',
+			'hearing-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
+
+		let pageHtml;
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Check details and set up hearing'
+			);
+		});
+
+		it('should render the correct date', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[0]?.innerHTML.trim()).toBe(
+				'1 February 3025'
+			);
+		});
+
+		it('should render the correct time', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[1]?.innerHTML.trim()).toBe(
+				'12:00pm'
+			);
+		});
+
+		it('should render the correct yes or no answer', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[2]?.innerHTML.trim()).toBe(
+				'Yes'
+			);
+		});
+
+		it('should render the correct address', () => {
+			expect(
+				pageHtml
+					.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+					?.innerHTML.split('<br>')
+					.map((line) => line.trim())
+			).toEqual(['Flat 9', '123 Gerbil Drive', 'Blarberton', 'Slabshire', 'X25 3YZ']);
+		});
+
+		it('should render the correct button text', () => {
+			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Set up hearing');
+		});
+	});
+
+	describe('POST /hearing/setup/check-details', () => {
+		const appealId = 1;
+
+		const dateValues = {
+			'hearing-date-day': '01',
+			'hearing-date-month': '02',
+			'hearing-date-year': '3025',
+			'hearing-time-hour': '12',
+			'hearing-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should redirect to appeal details page after submission with address', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/hearing`, {
+					hearingStartTime: '3025-02-01T12:00:00.000Z',
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+				})
+				.reply(201, { hearingId: 1 });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+		});
+
+		it('should redirect to appeal details page after submission with no address', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/hearing`, {
+					hearingStartTime: '3025-02-01T12:00:00.000Z'
+				})
+				.reply(201, { hearingId: 1 });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'no' });
+
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+		});
+
+		it('should show 404 page if error is the session data is not present', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+
+			expect(response.status).toBe(404);
+			expect(response.text).toContain('You cannot check these answers');
+		});
+
+		it('should show 500 page if error is thrown', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/hearing`)
+				.reply(500, { error: 'Internal Server Error' });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+
+			expect(response.status).toBe(500);
+			expect(response.text).toContain('Sorry, there is a problem with the service');
 		});
 	});
 });

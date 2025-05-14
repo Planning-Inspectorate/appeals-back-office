@@ -124,6 +124,7 @@ interface SingleAppealDetailsResponse {
 	};
 	eiaScreeningRequired?: boolean | null;
 	hearingEstimate?: HearingEstimate | null;
+	hearing?: Hearing | null;
 }
 
 interface UpdateAppealRequest {
@@ -476,6 +477,14 @@ interface HearingEstimate {
 	preparationTime?: number;
 	sittingTime?: number;
 	reportingTime?: number;
+}
+
+interface Hearing {
+	hearingId: number;
+	hearingStartTime: string;
+	hearingEndTime?: string;
+	addressId?: number;
+	address: Schema.Address;
 }
 
 interface AppealTimetable {
@@ -864,7 +873,7 @@ type CreateHearing = {
 	appealId: number;
 	hearingStartTime: Date;
 	hearingEndTime: Date | undefined;
-	address: Address | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
 };
 type UpdateHearing = {
 	appealId: number;
@@ -872,7 +881,7 @@ type UpdateHearing = {
 	hearingStartTime: Date;
 	hearingEndTime: Date | undefined;
 	addressId: number | undefined;
-	address: Address | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
 type HearingResponse = {
@@ -880,7 +889,7 @@ type HearingResponse = {
 	hearingId: number;
 	hearingStartTime: Date;
 	hearingEndTime: Date | null;
-	address: HearingAddress | null;
+	address: Schema.Address | null;
 	addressId: number | null;
 };
 

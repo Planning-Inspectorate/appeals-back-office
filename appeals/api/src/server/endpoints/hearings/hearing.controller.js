@@ -34,7 +34,21 @@ export const postHearing = async (req, res) => {
 	const appealId = Number(params.appealId);
 
 	try {
-		await createHearing({ appealId, hearingStartTime, hearingEndTime, address });
+		await createHearing({
+			appealId,
+			hearingStartTime,
+			hearingEndTime,
+			...(address && {
+				address: {
+					addressLine1: address.addressLine1,
+					addressLine2: address.addressLine2,
+					addressTown: address.town,
+					addressCounty: address.county,
+					postcode: address.postcode,
+					addressCountry: address.country
+				}
+			})
+		});
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
@@ -63,8 +77,17 @@ export const rearrangeHearing = async (req, res) => {
 			hearingId,
 			hearingStartTime,
 			hearingEndTime,
-			address,
-			addressId: Number(addressId)
+			addressId,
+			...(address && {
+				address: {
+					addressLine1: address.addressLine1,
+					addressLine2: address.addressLine2,
+					addressTown: address.town,
+					addressCounty: address.county,
+					postcode: address.postcode,
+					addressCountry: address.country
+				}
+			})
 		});
 	} catch (error) {
 		logger.error(error);
