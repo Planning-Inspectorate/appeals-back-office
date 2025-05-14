@@ -132,7 +132,7 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId, fil
 		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	appealId: String(appealDetails.appealId),
 	appealReference: appealDetails.appealReference,
-	appealShortReference: appealShortReference(appealDetails.appealReference),
+	preHeadingText: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	multiple: false,
 	// TODO: replace with real values
 	folderId: String(folderId),

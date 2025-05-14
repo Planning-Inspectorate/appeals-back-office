@@ -16,9 +16,9 @@ export interface DocumentUploadPageParameters {
 	multiple: boolean;
 	documentStage: string;
 	serviceName?: string;
-	appealShortReference?: string | null | undefined;
 	pageTitle?: string;
 	pageHeadingText: string;
+	preHeadingText?: string;
 	uploadContainerHeadingText?: string;
 	pageBodyComponents: PageComponent[];
 	caseInfoText?: string;

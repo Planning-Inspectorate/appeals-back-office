@@ -11,3 +11,5 @@ The statement is incomplete because:{% for reason in reasons %}
 You need to send the information to caseofficers@planninginspectorate.gov.uk by {{deadline_date}}.
 
 The Planning Inspectorate
+caseofficers@planninginspectorate.gov.uk
+

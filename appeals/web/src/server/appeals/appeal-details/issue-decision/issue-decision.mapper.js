@@ -4,11 +4,13 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('./issue-decision.types.js').InspectorDecisionRequest} InspectorDecisionRequest
- * @typedef {import('./issue-decision.types.js').AppellantCostDecisionRequest} AppellantCostDecisionRequest
+ * @typedef {import('./issue-decision.types.js').AppellantCostsDecisionRequest} AppellantCostsDecisionRequest
+ * @typedef {import('./issue-decision.types.js').LpaCostsDecisionRequest} LpaCostsDecisionRequest
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
 
@@ -135,21 +137,22 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 
 	return pageContent;
 }
+
 /**
  *
  * @param {Appeal} appealDetails
- * @param {AppellantCostDecisionRequest} appellantCostDecision
+ * @param {AppellantCostsDecisionRequest} appellantCostsDecision
  * @param {string|undefined} backUrl
  * @param {any} errors
  * @returns {PageContent}
  */
-export function appellantCostDecisionPage(appealDetails, appellantCostDecision, backUrl, errors) {
+export function appellantCostsDecisionPage(appealDetails, appellantCostsDecision, backUrl, errors) {
 	/** @type {PageComponent} */
-	const selectAppellantCostDecisionComponent = {
+	const selectAppellantCostsDecisionComponent = {
 		type: 'radios',
 		parameters: {
-			name: 'appellantCostDecision',
-			idPrefix: 'appellant-cost-decision',
+			name: 'appellantCostsDecision',
+			idPrefix: 'appellant-costs-decision',
 			fieldset: {
 				legend: {
 					text: "Do you want to issue the appellant's costs decision?",
@@ -161,19 +164,19 @@ export function appellantCostDecisionPage(appealDetails, appellantCostDecision, 
 				{
 					value: true,
 					text: 'Yes',
-					checked: appellantCostDecision?.outcome === 'true'
+					checked: appellantCostsDecision?.outcome === 'true'
 				},
 				{
 					value: false,
 					text: 'No',
-					checked: appellantCostDecision?.outcome === 'false'
+					checked: appellantCostsDecision?.outcome === 'false'
 				}
 			],
-			errorMessage: errors?.appellantCostDecision?.msg
+			errorMessage: getErrorByFieldname(errors, 'appellantCostsDecision')
 		}
 	};
 
-	const pageComponents = [selectAppellantCostDecisionComponent];
+	const pageComponents = [selectAppellantCostsDecisionComponent];
 
 	preRenderPageComponents(pageComponents);
 
@@ -185,6 +188,63 @@ export function appellantCostDecisionPage(appealDetails, appellantCostDecision, 
 		backLinkUrl:
 			backUrl ||
 			`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/decision-letter-upload`,
+		preHeading: `Appeal ${shortAppealReference} - issue decision`,
+		pageComponents
+	};
+
+	return pageContent;
+}
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {LpaCostsDecisionRequest} lpaCostsDecision
+ * @param {string|undefined} backUrl
+ * @param {any} errors
+ * @returns {PageContent}
+ */
+export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, errors) {
+	/** @type {PageComponent} */
+	const selectLpaCostsDecisionComponent = {
+		type: 'radios',
+		parameters: {
+			name: 'lpaCostsDecision',
+			idPrefix: 'lpa-costs-decision',
+			fieldset: {
+				legend: {
+					text: "Do you want to issue the LPA's costs decision?",
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
+			items: [
+				{
+					value: true,
+					text: 'Yes',
+					checked: lpaCostsDecision?.outcome === 'true'
+				},
+				{
+					value: false,
+					text: 'No',
+					checked: lpaCostsDecision?.outcome === 'false'
+				}
+			],
+			errorMessage: getErrorByFieldname(errors, 'lpaCostsDecision')
+		}
+	};
+
+	const pageComponents = [selectLpaCostsDecisionComponent];
+
+	preRenderPageComponents(pageComponents);
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `What is the  LPA cost decision? - ${shortAppealReference}`,
+		backLinkUrl:
+			backUrl ||
+			`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/appellant-costs-decision-letter-upload`,
 		preHeading: `Appeal ${shortAppealReference} - issue decision`,
 		pageComponents
 	};
@@ -247,22 +307,10 @@ export function dateDecisionLetterPage(
 		title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
 		backLinkText: 'Back',
-		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)} - issue decision`,
 		heading: title,
 		pageComponents: [selectDateComponent]
 	};
-}
-
-/**
- *
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} documentType
- * @returns {FileUploadInfoItem|undefined}
- */
-function findFileInformaton(session, documentType) {
-	return session.fileUploadInfo?.files?.find(
-		(/** @type {FileUploadInfoItem} */ fileInfo) => fileInfo.documentType === documentType
-	);
 }
 
 /**
@@ -290,17 +338,19 @@ function checkAndConfirmPageRows(appealData, session) {
 		}
 	];
 
-	const caseDecisionLetter = findFileInformaton(session, 'caseDecisionLetter');
+	const caseDecisionLetter =
+		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER];
 
 	if (caseDecisionLetter) {
+		const file = caseDecisionLetter?.files[0] || {};
 		const href = mapUncommittedDocumentDownloadUrl(
 			appealData.appealReference,
-			caseDecisionLetter.GUID,
-			caseDecisionLetter.name
+			file.GUID,
+			file.name
 		);
 		rows.push({
 			key: 'Decision letter',
-			value: caseDecisionLetter.name,
+			value: file.name,
 			href,
 			actions: [
 				{
@@ -312,17 +362,81 @@ function checkAndConfirmPageRows(appealData, session) {
 		});
 	}
 
-	const appellantCostDecisionOutcome = session.appellantCostDecision?.outcome;
-	if (appellantCostDecisionOutcome) {
+	const appellantCostsDecisionOutcome = session.appellantCostsDecision?.outcome;
+	if (appellantCostsDecisionOutcome) {
 		rows.push({
 			key: "Do you want to issue the appellant's costs decision?",
-			value: appellantCostDecisionOutcome === 'true' ? 'Yes' : 'No',
+			value: appellantCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
 			href: '',
 			actions: [
 				{
 					text: 'Change',
-					href: `${baseRoute}/appellant-cost-decision?backUrl=${currentRoute}`,
+					href: `${baseRoute}/appellant-costs-decision?backUrl=${currentRoute}`,
 					visuallyHiddenText: 'appellant cost decision'
+				}
+			]
+		});
+	}
+
+	const appellantCostsDecisionLetter =
+		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER];
+
+	if (appellantCostsDecisionLetter) {
+		const file = appellantCostsDecisionLetter?.files[0] || {};
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			file.GUID,
+			file.name
+		);
+		rows.push({
+			key: 'Appellant costs decision letter',
+			value: file.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/appellant-costs-decision-letter-upload?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'appellant cost decision letter'
+				}
+			]
+		});
+	}
+
+	const lpaCostsDecisionOutcome = session.lpaCostsDecision?.outcome;
+	if (lpaCostsDecisionOutcome) {
+		rows.push({
+			key: "Do you want to issue the LPA's costs decision?",
+			value: lpaCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/lpa-costs-decision?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'lpa cost decision'
+				}
+			]
+		});
+	}
+
+	const lpaCostsDecisionLetter =
+		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER];
+
+	if (lpaCostsDecisionLetter) {
+		const file = lpaCostsDecisionLetter?.files[0] || {};
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			file.GUID,
+			file.name
+		);
+		rows.push({
+			key: 'LPA costs decision letter',
+			value: file.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/lpa-costs-decision-letter-upload?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'lpa costs decision letter'
 				}
 			]
 		});
@@ -361,7 +475,7 @@ export function checkAndConfirmPage(appealData, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
+		submitButtonText: 'Issue decision',
 		pageComponents: [summaryListComponent]
 	};
 
@@ -484,7 +598,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
+		submitButtonText: 'Issue decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 

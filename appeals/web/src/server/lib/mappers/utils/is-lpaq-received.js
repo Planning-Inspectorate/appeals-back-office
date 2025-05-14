@@ -1,4 +1,4 @@
-import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
+import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -8,5 +8,7 @@ import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
  * @param {WebAppeal} appealDetails
  * @returns {boolean}
  */
-export const isLpaqReceived = (appealDetails) =>
-	appealDetails.documentationSummary?.lpaQuestionnaire?.status === DOCUMENT_STATUS_RECEIVED;
+export const isLpaqReceived = (appealDetails) => {
+	const { status } = appealDetails.documentationSummary?.lpaQuestionnaire || {};
+	return !(status === DOCUMENT_STATUS_NOT_RECEIVED || !status);
+};

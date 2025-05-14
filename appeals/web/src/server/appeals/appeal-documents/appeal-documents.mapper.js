@@ -26,30 +26,33 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
+
 /**
- * @param {string} appealId
- * @param {string} appealReference
- * @param {string} folderId
- * @param {string} folderPath
- * @param {string} documentId
- * @param {string} documentName
- * @param {number} latestVersion
- * @param {string} backButtonUrl
- * @param {string|undefined} nextPageUrl
- * @param {boolean} isLateEntry
- * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} fileUploadInfo
- * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @param {string} [pageHeadingTextOverride]
- * @param {PageComponent[]} [pageBodyComponents]
- * @param {boolean} [allowMultipleFiles]
- * @param {string} [documentType]
- * @param {string} [filenamesInFolder]
- * @param {string[]} [allowedTypes]
- * @param {string} [uploadContainerHeadingTextOverride]
- * @param {string} [documentTitle]
+ * @param {Object} params
+ * @param {string} params.appealId
+ * @param {string} params.appealReference
+ * @param {string} params.folderId
+ * @param {string} params.folderPath
+ * @param {string} params.documentId
+ * @param {string|undefined} params.documentName
+ * @param {number|undefined} params.latestVersion
+ * @param {string} params.backButtonUrl
+ * @param {string|undefined} params.nextPageUrl
+ * @param {boolean} params.isLateEntry
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} params.fileUploadInfo
+ * @param {import('@pins/express').ValidationErrors|undefined} params.errors
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
+ * @param {PageComponent[]} [params.pageBodyComponents]
+ * @param {boolean} [params.allowMultipleFiles]
+ * @param {string} [params.documentType]
+ * @param {string} [params.filenamesInFolder]
+ * @param {string[]} [params.allowedTypes]
+ * @param {string} [params.uploadContainerHeadingTextOverride]
+ * @param {string} [params.documentTitle]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
-export async function documentUploadPage(
+export async function documentUploadPage({
 	appealId,
 	appealReference,
 	folderId,
@@ -63,6 +66,7 @@ export async function documentUploadPage(
 	fileUploadInfo,
 	errors,
 	pageHeadingTextOverride,
+	preHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
 	documentType,
@@ -70,11 +74,13 @@ export async function documentUploadPage(
 	allowedTypes = [],
 	uploadContainerHeadingTextOverride = '',
 	documentTitle = ''
-) {
+}) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
 	const uploadContainerHeadingText = uploadContainerHeadingTextOverride || pageHeadingText;
+	const preHeadingText =
+		preHeadingTextOverride || 'Appeal ' + appealShortReference(appealReference);
 	const pathComponents = folderPath ? folderPath.split('/') : [];
 	const documentStage = pathComponents.length > 0 ? pathComponents[0] : 'unknown';
 	const documentTypeComputed =
@@ -104,8 +110,8 @@ export async function documentUploadPage(
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
 		pageTitle: pageHeadingTextOverride || 'Upload documents',
-		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText,
+		preHeadingText,
 		pageBodyComponents,
 		uploadContainerHeadingText,
 		documentTitle,

@@ -5,7 +5,7 @@ apps_config = {
   node_environment           = "production"
   private_endpoint_enabled   = true
   session_max_age            = 10800000
-  front_office_url           = "https://appeals-service-test.planninginspectorate.gov.uk/"
+  front_office_url           = "https://appeals-service-test.planninginspectorate.gov.uk"
 
   auth = {
     client_id = "591f9564-095c-459a-b090-ce0f0a16ee09" # Appeals Back Office TEST

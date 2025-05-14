@@ -36,7 +36,8 @@ describe('ip-comment-rejected.md', () => {
 			'- Reason two',
 			'- Reason three',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

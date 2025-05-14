@@ -12,3 +12,5 @@ Send the following to caseofficers@planninginspectorate.gov.uk by {{due_date}}:
 {%- endfor %}
 
 The Planning Inspectorate
+caseofficers@planninginspectorate.gov.uk
+

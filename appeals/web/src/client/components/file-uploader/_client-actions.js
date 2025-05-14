@@ -98,7 +98,7 @@ const clientActions = (container) => {
 		}
 
 		addSelectedFiles(uploadInput?.files);
-		updateUploadButton();
+		updateUploadControlsVisibility();
 	}
 
 	if (
@@ -367,17 +367,6 @@ const clientActions = (container) => {
 			dropZone.style.display = displayStyle;
 		}
 	};
-
-	function updateUploadButton() {
-		const filesRowsNumber = globalDataTransfer.files.length;
-
-		if (uploadButton) {
-			uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose files';
-			uploadButton.blur();
-		}
-
-		updateUploadControlsVisibility();
-	}
 
 	/**
 	 * @param {File} selectedFile

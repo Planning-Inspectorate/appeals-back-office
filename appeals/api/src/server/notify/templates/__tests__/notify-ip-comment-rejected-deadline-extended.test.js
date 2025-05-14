@@ -40,7 +40,8 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'',
 			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

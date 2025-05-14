@@ -4,6 +4,10 @@ export interface InspectorDecisionRequest {
 	invalidReason?: string;
 }
 
-export interface AppellantCostDecisionRequest {
+export interface AppellantCostsDecisionRequest {
+	outcome?: string;
+}
+
+export interface LpaCostsDecisionRequest {
 	outcome?: string;
 }
