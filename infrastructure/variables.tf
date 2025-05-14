@@ -9,11 +9,14 @@ variable "alerts_enabled" {
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
-    app_service_plan_sku       = string
-    functions_node_version     = number
-    functions_service_plan_sku = string
-    node_environment           = string
-    private_endpoint_enabled   = bool
+    app_service_plan_sku              = string
+    functions_node_version            = number
+    functions_service_plan_sku        = string
+    node_environment                  = string
+    private_endpoint_enabled          = bool
+    session_max_age                   = string
+    use_system_test_bc_for_change_lpa = bool # Whether to allow STBC/STBC2 on change LPA list
+    front_office_url                  = string
 
     auth = object({
       client_id = string
@@ -44,8 +47,6 @@ variable "apps_config" {
       featureFlagS20           = bool
     })
 
-    use_system_test_bc_for_change_lpa = bool # Whether to allow STBC/STBC2 on change LPA list
-
     logging = object({
       level_file   = string
       level_stdout = string
@@ -56,8 +57,6 @@ variable "apps_config" {
       family   = string
       sku_name = string
     })
-
-    session_max_age = string
   })
 }
 
@@ -119,10 +118,6 @@ variable "front_office_infra_config" {
   })
 }
 
-variable "front_office_url" {
-  description = "The base URL for the front office application"
-  type        = string
-}
 variable "health_check_eviction_time_in_min" {
   description = "The eviction time in minutes for the health check"
   type        = number
