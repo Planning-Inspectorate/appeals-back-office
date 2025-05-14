@@ -352,7 +352,9 @@ describe('appeals documents', () => {
 				documents: [
 					{
 						GUID: blobInfo.GUID,
-						documentName: blobInfo.documentName
+						documentName: blobInfo.documentName,
+						redactionStatus: undefined,
+						versionId: 1
 					}
 				]
 			});
@@ -396,8 +398,10 @@ describe('appeals documents', () => {
 			expect(response).toEqual({
 				documents: [
 					{
-						...blobInfo,
-						blobStoreUrl: expect.any(String)
+						GUID: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
+						documentName: 'mydoc.pdf',
+						redactionStatus: undefined,
+						versionId: 1
 					}
 				]
 			});
