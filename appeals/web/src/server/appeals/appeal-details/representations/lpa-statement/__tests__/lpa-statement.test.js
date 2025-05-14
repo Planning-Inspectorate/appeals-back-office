@@ -152,6 +152,12 @@ describe('lpa-statements', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('>LPA statement</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>'
+			);
 			expect(unprettifiedElement.innerHTML).not.toContain('Review decision</legend>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'name="status" type="radio" value="valid">'
