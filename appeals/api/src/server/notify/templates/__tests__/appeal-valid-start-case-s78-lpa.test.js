@@ -62,7 +62,7 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'',
 			'# Next steps',
 			'',
-			'Submit your questionnaire and other documents, including your appeal notification letter and a list of those notified by 01 January 2025.',
+			'[Submit your questionnaire and other documents](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address), including your appeal notification letter and a list of those notified by 01 January 2025.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
