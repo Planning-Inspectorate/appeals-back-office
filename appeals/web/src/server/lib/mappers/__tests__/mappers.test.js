@@ -158,12 +158,12 @@ describe('pagination mapper', () => {
 			const containsEllipsisElementBeforeLastPageMarker = isEqual(result.items[3], {
 				ellipsis: true
 			});
-			const containsBlankEllipsisElementBeforeLastPageMarker =
+			const containsBlankEllipsisElement =
 				result.items.filter((item) => isEqual(item, { ellipsis: false })).length > 0;
 
 			expect(containsEllipsisElementAfterFirstPageMarker).toBeFalsy();
 			expect(containsEllipsisElementBeforeLastPageMarker).toBeTruthy();
-			expect(containsBlankEllipsisElementBeforeLastPageMarker).toBeFalsy();
+			expect(containsBlankEllipsisElement).toBeFalsy();
 		});
 
 		it('renders an ellipsis element after the first page marker and no ellipsis element before the last page marker when page count is greater than 10 and current page is 17', () => {
@@ -176,12 +176,12 @@ describe('pagination mapper', () => {
 			const containsEllipsisElementBeforeLastPageMarker = isEqual(result.items[3], {
 				ellipsis: true
 			});
-			const containsBlankEllipsisElementBeforeLastPageMarker =
+			const containsBlankEllipsisElement =
 				result.items.filter((item) => isEqual(item, { ellipsis: false })).length > 0;
 
 			expect(containsEllipsisElementAfterFirstPageMarker).toBeTruthy();
 			expect(containsEllipsisElementBeforeLastPageMarker).toBeFalsy();
-			expect(containsBlankEllipsisElementBeforeLastPageMarker).toBeFalsy();
+			expect(containsBlankEllipsisElement).toBeFalsy();
 		});
 	});
 });
