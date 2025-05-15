@@ -401,6 +401,7 @@ function checkAndConfirmPageRows(appealData, session) {
 			]
 		});
 	}
+
 	const lpaCostsDecisionOutcome = session.lpaCostsDecision?.outcome;
 	if (lpaCostsDecisionOutcome) {
 		rows.push({
@@ -412,6 +413,30 @@ function checkAndConfirmPageRows(appealData, session) {
 					text: 'Change',
 					href: `${baseRoute}/lpa-costs-decision?backUrl=${currentRoute}`,
 					visuallyHiddenText: 'lpa cost decision'
+				}
+			]
+		});
+	}
+
+	const lpaCostsDecisionLetter =
+		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER];
+
+	if (lpaCostsDecisionLetter) {
+		const file = lpaCostsDecisionLetter?.files[0] || {};
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			file.GUID,
+			file.name
+		);
+		rows.push({
+			key: 'LPA costs decision letter',
+			value: file.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: `${baseRoute}/lpa-costs-decision-letter-upload?backUrl=${currentRoute}`,
+					visuallyHiddenText: 'lpa costs decision letter'
 				}
 			]
 		});
@@ -450,7 +475,7 @@ export function checkAndConfirmPage(appealData, session) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
+		submitButtonText: 'Issue decision',
 		pageComponents: [summaryListComponent]
 	};
 
@@ -573,7 +598,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
+		submitButtonText: 'Issue decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 

@@ -39,7 +39,7 @@ module "app_api" {
     APPLICATIONINSIGHTS_CONNECTION_STRING      = local.key_vault_refs["app-insights-connection-string"]
     ApplicationInsightsAgent_EXTENSION_VERSION = "~3"
     NODE_ENV                                   = var.apps_config.node_environment
-    FRONT_OFFICE_URL                           = var.front_office_url
+    FRONT_OFFICE_URL                           = var.apps_config.front_office_url
 
     # documents
     BO_BLOB_CONTAINER       = azurerm_storage_container.appeal_documents.name

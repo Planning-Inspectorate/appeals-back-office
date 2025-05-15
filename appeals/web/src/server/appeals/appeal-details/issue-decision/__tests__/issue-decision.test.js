@@ -20,6 +20,7 @@ const decisionPath = '/decision';
 const decisionLetterUploadPath = '/decision-letter-upload';
 const decisionLetterDatePath = '/decision-letter-date';
 const appellantCostsDecisionLetterUploadPath = '/appellant-costs-decision-letter-upload';
+const lpaCostsDecisionLetterUploadPath = '/lpa-costs-decision-letter-upload';
 const checkYourDecisionPath = '/check-your-decision';
 
 describe('issue-decision', () => {
@@ -643,7 +644,7 @@ describe('issue-decision', () => {
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload'
 			);
 		});
 
@@ -655,6 +656,87 @@ describe('issue-decision', () => {
 
 			expect(response.headers.location).toBe(
 				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+			);
+		});
+	});
+
+	describe('GET /lpa-costs-decision-letter-upload', () => {
+		it('should render the decision letter upload page with a file upload component', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Upload LPA costs decision letter</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-grid-row pins-file-upload"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
+			expect(unprettifiedElement.innerHTML).toContain('or drop file</span>');
+		});
+	});
+
+	describe('POST /lpa-costs-decision-letter-upload', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render a 500 error page if upload-info is not present in the request body', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the lpa cost decision page if upload-info is present in the request body and in the correct format', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});
@@ -766,6 +848,10 @@ describe('issue-decision', () => {
 		 * @type {import("superagent").Response}
 		 */
 		let issueLpaCostsDecisionResponse;
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let uploadLpaCostsDecisionLetterResponse;
 
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
@@ -802,6 +888,13 @@ describe('issue-decision', () => {
 				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
 				.send({ lpaCostsDecision: 'true' });
 
+			uploadLpaCostsDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
+
 			const mockLetterDecisionDate = {
 				'decision-letter-date-day': '1',
 				'decision-letter-date-month': '1',
@@ -821,6 +914,7 @@ describe('issue-decision', () => {
 			expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
 			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
 			expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
+			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
@@ -850,7 +944,10 @@ describe('issue-decision', () => {
 				'Do you want to issue the LPA&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
 			);
 
-			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
+			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('test-document-lpa.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
 		});
 	});
 
@@ -893,7 +990,7 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="ready-to-send" type="checkbox" value="yes">'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Send decision</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
 		});
 	});
 });

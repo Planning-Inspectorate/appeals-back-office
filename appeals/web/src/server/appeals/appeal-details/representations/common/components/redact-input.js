@@ -57,7 +57,13 @@ export const redactInput = ({
 		],
 		{
 			opening: '<div class="govuk-button-group">',
-			closing: '</div>'
+			closing:
+				'</div>' +
+				'<p class="govuk-visually-hidden" id="saved-textarea">' +
+				(!representation.redactedRepresentation || representation.redactedRepresentation === ''
+					? representation.originalRepresentation
+					: representation.redactedRepresentation) +
+				' </p> '
 		}
 	)
 ];

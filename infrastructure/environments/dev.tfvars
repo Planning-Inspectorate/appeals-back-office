@@ -75,8 +75,6 @@ documents_config = {
 
 environment = "dev"
 
-front_office_url = "https://appeals-service-dev.planninginspectorate.gov.uk/"
-
 front_door_config = {
   name        = "pins-fd-common-tooling"
   rg          = "pins-rg-common-tooling"
