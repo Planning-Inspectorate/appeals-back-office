@@ -36,6 +36,7 @@ apps_config = {
     featureFlagS78Hearing    = true
     featureFlagLinkedAppeals = true
     featureFlagS20           = true
+    featureFlagIssueDecision = true
   }
 
   use_system_test_bc_for_change_lpa = true
