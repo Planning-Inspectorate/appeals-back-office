@@ -73,9 +73,11 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			}
 		} else {
 			// do not show ellipsis if you're in the beginning of the pagination
-			pagination.items.push({
-				ellipsis: currentPage > 3
-			});
+			if (currentPage > 3) {
+				pagination.items.push({
+					ellipsis: true
+				});
+			}
 
 			// logic for neighbouring indexes (previous, current and next ones)
 			if (previousPage > 1) {
@@ -109,9 +111,11 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 			}
 
 			// do not show this ellipsis if you're in the end of the pagination
-			pagination.items.push({
-				ellipsis: currentPage < pageCount - 2
-			});
+			if (currentPage < pageCount - 2) {
+				pagination.items.push({
+					ellipsis: true
+				});
+			}
 
 			// last index
 			if (currentPage < pageCount) {
