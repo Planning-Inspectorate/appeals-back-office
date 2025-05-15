@@ -5,6 +5,7 @@ Your appeal started on {{start_date}}. The timetable for the appeal begins from 
 Your appeal procedure is written representations.
 
 {% include 'parts/appeal-details.md' %}
+Start date: {{start_date}}
 
 # Timetable
 
