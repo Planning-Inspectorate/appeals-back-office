@@ -42,7 +42,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 			'Planning application reference: 48269/APP/2021/1482',
-			'Start date: 01 January 2025',
 			'',
 			'# Timetable',
 			'',
