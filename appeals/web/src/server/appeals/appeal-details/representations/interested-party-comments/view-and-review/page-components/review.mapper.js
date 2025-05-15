@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { representationHasAddress } from '#lib/address-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList } from './common.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
@@ -14,6 +15,8 @@ import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
  */
 export function reviewInterestedPartyCommentPage(appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const hasAddress = representationHasAddress(comment);
+
 	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment, {
 		isReviewPage: true
 	});
@@ -28,7 +31,13 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 				{
 					text: 'Comment includes a site visit request',
 					value: 'site-visit',
-					checked: comment?.siteVisitRequested
+					checked: comment?.siteVisitRequested,
+					disabled: !hasAddress,
+					hint: !hasAddress
+						? {
+								text: 'Address is required to setup the site visit'
+						  }
+						: undefined
 				}
 			]
 		}

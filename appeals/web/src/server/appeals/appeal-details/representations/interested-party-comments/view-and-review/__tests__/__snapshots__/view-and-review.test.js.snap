@@ -363,8 +363,10 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="site-visit-request" name="siteVisitRequested"
-                            type="checkbox" value="site-visit">
+                            type="checkbox" value="site-visit" disabled aria-describedby="site-visit-request-item-hint">
                             <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
+                            <div id="site-visit-request-item-hint"
+                            class="govuk-hint govuk-checkboxes__hint">Address is required to setup the site visit</div>
                         </div>
                     </div>
                 </div>
@@ -434,8 +436,10 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="site-visit-request" name="siteVisitRequested"
-                            type="checkbox" value="site-visit">
+                            type="checkbox" value="site-visit" disabled aria-describedby="site-visit-request-item-hint">
                             <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
+                            <div id="site-visit-request-item-hint"
+                            class="govuk-hint govuk-checkboxes__hint">Address is required to setup the site visit</div>
                         </div>
                     </div>
                 </div>
