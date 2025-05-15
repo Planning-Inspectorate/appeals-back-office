@@ -361,8 +361,6 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                     <li class="govuk-pagination__item govuk-pagination__item--current"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=1"
                         aria-label="Page 1" aria-current="page"> 1</a>
                     </li>
-                    <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="" aria-label="Page undefined"></a>
-                    </li>
                     <li class="govuk-pagination__item"><a class="govuk-link govuk-pagination__link" href="/appeals-service/all-cases?pageSize=30&amp;pageNumber=2"
                         aria-label="Page 2"> 2</a>
                     </li>

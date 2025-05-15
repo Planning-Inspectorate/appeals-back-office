@@ -146,6 +146,31 @@ describe('pagination mapper', () => {
 				`${testBaseUrl}?pageSize=10&pageNumber=5${testAdditionalQueryString}`
 			);
 		});
+		it('renders a truthy ellipsis element between pg4 & pg19 markers if page count is greater than 10 and current page is pg2', () => {
+			const testBaseUrl = 'test-base-url';
+			const result = mapPagination(2, 15, 30, testBaseUrl, testAdditionalQuery);
+			let containsNullEllipsisValue = result.items[3].ellipsis === true;
+			expect(containsNullEllipsisValue).toBeTruthy();
+		});
+
+		it('renders a truthy ellipsis element between pg1 & pg16 markers if page count is greater than 10 and current page is pg17', () => {
+			const testBaseUrl = 'test-base-url';
+			const result = mapPagination(17, 19, 30, testBaseUrl, testAdditionalQuery);
+			let containsNullEllipsisValue = result.items[1].ellipsis === true;
+			expect(containsNullEllipsisValue).toBeTruthy();
+		});
+		it('does not render a falsy ellipsis element between pg4 & pg19 markers if page count is greater than 10 and current page is pg2', () => {
+			const testBaseUrl = 'test-base-url';
+			const result = mapPagination(2, 15, 30, testBaseUrl, testAdditionalQuery);
+			let containsNullEllipsisValue = result.items[1].ellipsis === false;
+			expect(containsNullEllipsisValue).toBeFalsy();
+		});
+		it('does not render a falsy ellipsis element between pg1 & pg16 markers if page count is greater than 10 and current page is pg17', () => {
+			const testBaseUrl = 'test-base-url';
+			const result = mapPagination(17, 19, 30, testBaseUrl, testAdditionalQuery);
+			let containsNullEllipsisValue = result.items[5].ellipsis === false;
+			expect(containsNullEllipsisValue).toBeFalsy();
+		});
 	});
 });
 
