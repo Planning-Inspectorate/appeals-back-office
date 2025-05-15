@@ -1,16 +1,14 @@
+We have withdrawn the appeal after the appellant's request.
+
 {% include 'parts/appeal-details.md' %}
 
-# Appeal withdrawn
+# What happens next
 
-This appeal has been withdrawn following a request from the appellant dated {{withdrawal_date}}.
+The appeal is closed.
 
-# Next steps
-
-The case will be closed.
-
-Any appointments made for this appeal will be cancelled.
-
-The appellant has been informed.
+{% if event_set %}
+We have cancelled the {{event_type}}.
+{% endif %}
 
 # Feedback
 

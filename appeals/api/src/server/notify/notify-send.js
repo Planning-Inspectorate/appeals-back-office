@@ -23,7 +23,7 @@ export const nunjucksEnv = nunjucks.configure(templatesDir, {
 });
 
 /**
- * @typedef {Record<string, string | string[]>} Personalisation
+ * @typedef {Record<string, string | string[] | boolean | number>} Personalisation
  */
 
 /**
