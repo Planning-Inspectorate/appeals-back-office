@@ -10,6 +10,7 @@ import { mapPagination } from '../index.js';
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { isEqual } from 'lodash-es';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -146,30 +147,41 @@ describe('pagination mapper', () => {
 				`${testBaseUrl}?pageSize=10&pageNumber=5${testAdditionalQueryString}`
 			);
 		});
-		it('renders a truthy ellipsis element between pg4 & pg19 markers if page count is greater than 10 and current page is pg2', () => {
+
+		it('renders an ellipsis element before the final page marker and no ellipsis element after the first page marker when page count is greater than 10 and current page is 2', () => {
 			const testBaseUrl = 'test-base-url';
 			const result = mapPagination(2, 15, 30, testBaseUrl, testAdditionalQuery);
-			let containsNullEllipsisValue = result.items[3].ellipsis === true;
-			expect(containsNullEllipsisValue).toBeTruthy();
+
+			const containsEllipsisElementAfterFirstPageMarker = isEqual(result.items[1], {
+				ellipsis: true
+			});
+			const containsEllipsisElementBeforeLastPageMarker = isEqual(result.items[3], {
+				ellipsis: true
+			});
+			const containsBlankEllipsisElementBeforeLastPageMarker =
+				result.items.filter((item) => isEqual(item, { ellipsis: false })).length > 0;
+
+			expect(containsEllipsisElementAfterFirstPageMarker).toBeFalsy();
+			expect(containsEllipsisElementBeforeLastPageMarker).toBeTruthy();
+			expect(containsBlankEllipsisElementBeforeLastPageMarker).toBeFalsy();
 		});
 
-		it('renders a truthy ellipsis element between pg1 & pg16 markers if page count is greater than 10 and current page is pg17', () => {
+		it('renders an ellipsis element after the first page marker and no ellipsis element before the last page marker when page count is greater than 10 and current page is 17', () => {
 			const testBaseUrl = 'test-base-url';
-			const result = mapPagination(17, 19, 30, testBaseUrl, testAdditionalQuery);
-			let containsNullEllipsisValue = result.items[1].ellipsis === true;
-			expect(containsNullEllipsisValue).toBeTruthy();
-		});
-		it('does not render a falsy ellipsis element between pg4 & pg19 markers if page count is greater than 10 and current page is pg2', () => {
-			const testBaseUrl = 'test-base-url';
-			const result = mapPagination(2, 15, 30, testBaseUrl, testAdditionalQuery);
-			let containsNullEllipsisValue = result.items[1].ellipsis === false;
-			expect(containsNullEllipsisValue).toBeFalsy();
-		});
-		it('does not render a falsy ellipsis element between pg1 & pg16 markers if page count is greater than 10 and current page is pg17', () => {
-			const testBaseUrl = 'test-base-url';
-			const result = mapPagination(17, 19, 30, testBaseUrl, testAdditionalQuery);
-			let containsNullEllipsisValue = result.items[5].ellipsis === false;
-			expect(containsNullEllipsisValue).toBeFalsy();
+			const result = mapPagination(17, 15, 30, testBaseUrl, testAdditionalQuery);
+
+			const containsEllipsisElementAfterFirstPageMarker = isEqual(result.items[1], {
+				ellipsis: true
+			});
+			const containsEllipsisElementBeforeLastPageMarker = isEqual(result.items[3], {
+				ellipsis: true
+			});
+			const containsBlankEllipsisElementBeforeLastPageMarker =
+				result.items.filter((item) => isEqual(item, { ellipsis: false })).length > 0;
+
+			expect(containsEllipsisElementAfterFirstPageMarker).toBeTruthy();
+			expect(containsEllipsisElementBeforeLastPageMarker).toBeFalsy();
+			expect(containsBlankEllipsisElementBeforeLastPageMarker).toBeFalsy();
 		});
 	});
 });
