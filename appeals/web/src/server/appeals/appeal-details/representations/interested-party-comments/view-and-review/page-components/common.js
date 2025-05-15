@@ -1,5 +1,5 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { addressToMultilineStringHtml, representationHasAddress } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
@@ -39,9 +39,7 @@ export function generateCommentSummaryList(
 	comment,
 	{ isReviewPage } = { isReviewPage: false }
 ) {
-	const { addressLine1, postCode } = comment.represented?.address ?? {};
-	const hasAddress = addressLine1 && postCode;
-
+	const hasAddress = representationHasAddress(comment);
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
