@@ -24,9 +24,7 @@ export const behavesLikeAddressForm = ({ request, url }) => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain(
-				'Enter address line 1, typically the building and street</a>'
-			);
+			expect(element.innerHTML).toContain('Enter address line 1</a>');
 		});
 
 		it(`should re-render the page if town is ${description}`, async () => {
@@ -63,7 +61,7 @@ export const behavesLikeAddressForm = ({ request, url }) => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Enter a full UK postcode</a>');
+			expect(element.innerHTML).toContain('Enter postcode</a>');
 		});
 	});
 
@@ -83,6 +81,6 @@ export const behavesLikeAddressForm = ({ request, url }) => {
 
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('There is a problem</h2>');
-		expect(element.innerHTML).toContain('Invalid postcode</a>');
+		expect(element.innerHTML).toContain('Enter a full UK postcode</a>');
 	});
 };

@@ -319,7 +319,7 @@ exports[`neighbouring-sites POST /add should re-render the page if addressLine1 
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                <li><a href="#address-line-1">Enter address line 1</a>
                 </li>
             </ul>
         </div>
@@ -333,7 +333,7 @@ exports[`neighbouring-sites POST /add should re-render the page if addressLine1 
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                <li><a href="#address-line-1">Enter address line 1</a>
                 </li>
             </ul>
         </div>
@@ -347,7 +347,7 @@ exports[`neighbouring-sites POST /add should re-render the page if the postcode 
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter a full UK postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
@@ -361,7 +361,7 @@ exports[`neighbouring-sites POST /add should re-render the page if the postcode 
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Invalid postcode</a>
+                <li><a href="#post-code">Enter a full UK postcode</a>
                 </li>
             </ul>
         </div>
@@ -375,7 +375,7 @@ exports[`neighbouring-sites POST /add should re-render the page if the postcode 
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter a full UK postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
@@ -420,7 +420,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                            <li><a href="#address-line-1">Enter address line 1</a>
                             </li>
                         </ul>
                     </div>
@@ -440,10 +440,9 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
-                            <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1,
-                                typically the building and street</p>
-                            <input class="govuk-input govuk-input--error"
-                            id="address-line-1" name="addressLine1" type="text" value="" aria-describedby="address-line-1-error">
+                            <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1</p>
+                            <input                             class="govuk-input govuk-input--error" id="address-line-1" name="addressLine1"
+                            type="text" value="" aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
@@ -488,7 +487,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                            <li><a href="#address-line-1">Enter address line 1</a>
                             </li>
                         </ul>
                     </div>
@@ -508,10 +507,9 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
-                            <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1,
-                                typically the building and street</p>
-                            <input class="govuk-input govuk-input--error"
-                            id="address-line-1" name="addressLine1" type="text" value="" aria-describedby="address-line-1-error">
+                            <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1</p>
+                            <input                             class="govuk-input govuk-input--error" id="address-line-1" name="addressLine1"
+                            type="text" value="" aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
@@ -556,7 +554,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter a full UK postcode</a>
+                            <li><a href="#post-code">Enter postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -596,7 +594,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" value="" aria-describedby="post-code-error">
                         </div>
@@ -623,7 +621,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Invalid postcode</a>
+                            <li><a href="#post-code">Enter a full UK postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -690,7 +688,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#post-code">Enter a full UK postcode</a>
+                            <li><a href="#post-code">Enter postcode</a>
                             </li>
                         </ul>
                     </div>
@@ -730,7 +728,7 @@ exports[`neighbouring-sites POST /change/site/:siteId should re-render changeNei
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
-                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a full UK postcode</p>
+                            <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
                             id="post-code" name="postCode" type="text" value="" aria-describedby="post-code-error">
                         </div>
