@@ -108,6 +108,8 @@ function restoreFileUploadInfo(session, documentType) {
 
 	if (fileUploadInfo[documentType]) {
 		session.fileUploadInfo = fileUploadInfo[documentType];
+	} else {
+		delete session.fileUploadInfo;
 	}
 }
 
