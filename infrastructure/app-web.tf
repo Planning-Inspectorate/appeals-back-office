@@ -84,6 +84,7 @@ module "app_web" {
     FEATURE_FLAG_S78_HEARING    = var.apps_config.featureFlags.featureFlagS78Hearing
     FEATURE_FLAG_LINKED_APPEALS = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_S20            = var.apps_config.featureFlags.featureFlagS20
+    FEATURE_FLAG_ISSUE_DECISION = var.apps_config.featureFlags.featureFlagIssueDecision
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
