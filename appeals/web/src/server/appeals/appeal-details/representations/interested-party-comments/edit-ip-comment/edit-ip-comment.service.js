@@ -31,3 +31,11 @@ export const unsetSiteVisitRequested = (apiClient, appealId, commentId) =>
 			json: { siteVisitRequested: false }
 		})
 		.json();
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} commentId
+ * */
+export const patchInterestedPartyComment = (apiClient, appealId, commentId) =>
+	apiClient.patch(`appeals/${appealId}/reps/${commentId}`, {}).json();
