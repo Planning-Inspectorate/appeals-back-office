@@ -1,5 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import config from '#environment/config.js';
 import startDateRouter from './start-case/start-case.router.js';
 import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router.js';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
@@ -14,6 +15,7 @@ import {
 import { auditRouter } from './audit/audit.router.js';
 import * as controller from './appeal-details.controller.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
+import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
@@ -97,7 +99,7 @@ router.use(
 	'/:appealId/issue-decision',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
-	issueDecisionRouter
+	config.featureFlags.featureFlagIssueDecision ? issueDecisionRouter : issueDecisionOldRouter
 );
 router.use(
 	'/:appealId/change-appeal-type',

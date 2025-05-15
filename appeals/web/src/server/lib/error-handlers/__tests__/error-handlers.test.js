@@ -23,10 +23,10 @@ describe('Address', () => {
 		it('should return error text if addressLine1 does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				addressLine1: { value: '', msg: 'Enter the address', param: 'town', location: 'body' }
+				addressLine1: { value: '', msg: 'Enter address line 1', param: 'town', location: 'body' }
 			};
 			expect(errorAddressLine1(errors)).toEqual({
-				text: 'Enter address line 1, typically the building and street'
+				text: 'Enter address line 1'
 			});
 		});
 	});
@@ -41,7 +41,7 @@ describe('Address', () => {
 		it('should return error text if town does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' }
+				town: { value: '', msg: 'Enter town or city', param: 'town', location: 'body' }
 			};
 			expect(errorTown(errors)).toEqual({
 				text: 'Enter town or city'

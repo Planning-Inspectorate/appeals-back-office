@@ -6,8 +6,8 @@ const maxAddressLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const createPostcodeValidator = (
 	fieldName = 'postCode',
-	emptyErrorMessage = 'Enter a full UK postcode',
-	invalidErrorMessage = 'Invalid postcode'
+	emptyErrorMessage = 'Enter postcode',
+	invalidErrorMessage = 'Enter a full UK postcode'
 ) =>
 	createValidator(
 		body(fieldName)
@@ -21,7 +21,7 @@ export const createPostcodeValidator = (
 
 export const createAddressLine1Validator = (
 	fieldName = 'addressLine1',
-	emptyErrorMessage = 'Enter address line 1, typically the building and street',
+	emptyErrorMessage = 'Enter address line 1',
 	maxLength = maxAddressLength
 ) =>
 	createValidator(
@@ -57,5 +57,5 @@ export const createTownValidator = (
 			.withMessage(emptyErrorMessage)
 			.bail()
 			.isLength({ max: maxLength })
-			.withMessage(`Town must be ${maxLength} characters or less`)
+			.withMessage(`Town or city must be ${maxLength} characters or less`)
 	);
