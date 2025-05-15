@@ -41,7 +41,7 @@ describe('Address', () => {
 		it('should return error text if town does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' }
+				town: { value: '', msg: 'Enter town or city', param: 'town', location: 'body' }
 			};
 			expect(errorTown(errors)).toEqual({
 				text: 'Enter town or city'

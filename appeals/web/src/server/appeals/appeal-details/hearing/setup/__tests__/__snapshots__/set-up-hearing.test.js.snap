@@ -170,7 +170,7 @@ exports[`set up hearing POST /hearing/setup/address-details should re-render the
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                <li><a href="#address-line-1">Enter address line 1</a>
                 </li>
             </ul>
         </div>
@@ -184,7 +184,7 @@ exports[`set up hearing POST /hearing/setup/address-details should re-render the
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#address-line-1">Enter address line 1, typically the building and street</a>
+                <li><a href="#address-line-1">Enter address line 1</a>
                 </li>
             </ul>
         </div>
@@ -198,7 +198,7 @@ exports[`set up hearing POST /hearing/setup/address-details should re-render the
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter a full UK postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
@@ -212,7 +212,7 @@ exports[`set up hearing POST /hearing/setup/address-details should re-render the
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Invalid postcode</a>
+                <li><a href="#post-code">Enter a full UK postcode</a>
                 </li>
             </ul>
         </div>
@@ -226,7 +226,7 @@ exports[`set up hearing POST /hearing/setup/address-details should re-render the
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
         <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
-                <li><a href="#post-code">Enter a full UK postcode</a>
+                <li><a href="#post-code">Enter postcode</a>
                 </li>
             </ul>
         </div>
