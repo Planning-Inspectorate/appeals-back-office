@@ -64,3 +64,12 @@ export const appealSiteToMultilineAddressStringHtml = (appealSite) => {
 
 	return '';
 };
+
+/**
+ * @param {import('#appeals/appeal-details/representations/types.js').Representation} rep
+ * @returns {boolean}
+ */
+export const representationHasAddress = (rep) => {
+	const { addressLine1, postCode } = rep.represented?.address ?? {};
+	return !!(addressLine1 && postCode);
+};
