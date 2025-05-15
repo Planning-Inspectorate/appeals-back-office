@@ -198,6 +198,7 @@ const lpaQuestionnaire = {
 				eiaEnvironmentalStatement: { ...Folder },
 				eiaScreeningOpinion: { ...Folder },
 				eiaScreeningDirection: { ...Folder },
+				eiaScopingOpinion: { ...Folder },
 				lpaCaseCorrespondence: { ...Folder },
 				otherRelevantPolicies: { ...Folder }
 			},
