@@ -540,7 +540,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Final date must be a valid date</a>
+                            <li><a href="#">Final date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -612,7 +612,11 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Final date must include a day, a month and a year</a>
+                            <li><a href="#change-appeal-final-date-day">Final date must include a day</a>
+                            </li>
+                            <li><a href="#change-appeal-final-date-month">Final date must include a month</a>
+                            </li>
+                            <li><a href="#change-appeal-final-date-year">Final date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -686,7 +690,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#change-appeal-final-date-day">Final date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Final date must be a valid date</a>
+                            <li><a href="#">Final date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -758,7 +762,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a business day</a>
+                            <li><a href="#">The Date must be a business day</a>
                             </li>
                         </ul>
                     </div>
@@ -832,7 +836,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#change-appeal-final-date-month">Final date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Final date must be a valid date</a>
+                            <li><a href="#">Final date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -906,7 +910,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#change-appeal-final-date-year">Final date year must be a number</a>
                             </li>
-                            <li><a href="#">Final date must be a valid date</a>
+                            <li><a href="#">Final date must be a real date</a>
                             </li>
                         </ul>
                     </div>

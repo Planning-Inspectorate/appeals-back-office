@@ -1620,7 +1620,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Date must include a day');
+			expect(errorSummaryHtml).toContain('Date must include a month');
+			expect(errorSummaryHtml).toContain('Date must include a year');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -1883,7 +1885,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(errorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {

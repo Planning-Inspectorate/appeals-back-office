@@ -495,7 +495,9 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Submitted date must include a day');
+			expect(errorSummaryHtml).toContain('Submitted date must include a month');
+			expect(errorSummaryHtml).toContain('Submitted date must include a year');
 		});
 
 		it('should return 400 on invalid date input with appropriate error messages', async () => {
@@ -520,7 +522,7 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date must be a valid date');
+			expect(errorSummaryHtml).toContain('Submitted date must be a real date');
 		});
 	});
 

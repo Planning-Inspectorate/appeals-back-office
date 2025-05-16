@@ -1,8 +1,22 @@
 import {
 	createDateInputFieldsValidator,
 	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator
+	createDateInputDateInFutureValidator,
+	createDateInputDateBusinessDayValidator
 } from '#lib/validators/date-input.validator.js';
-export const validateDueDateFields = createDateInputFieldsValidator();
-export const validateDueDateValid = createDateInputDateValidityValidator();
-export const validateDueDateInFuture = createDateInputDateInFutureValidator();
+export const validateLpaqDueDateFields = createDateInputFieldsValidator(
+	'lpa-questionnaire-due-date',
+	'LPA questionnaire due date'
+);
+export const validateLpaqDueDateValid = createDateInputDateValidityValidator(
+	'lpa-questionnaire-due-date',
+	'LPA questionnaire due date'
+);
+export const validateLpaqDueDateInFuture = createDateInputDateInFutureValidator(
+	'lpa-questionnaire-due-date',
+	'LPA questionnaire due date'
+);
+export const validateLpaqDueDateBusinessDay = await createDateInputDateBusinessDayValidator(
+	'lpa-questionnaire-due-date',
+	'LPA questionnaire due date'
+);
