@@ -8,8 +8,7 @@ import {
 } from './issue-decision.mapper.js';
 import {
 	renderDocumentUpload,
-	postDocumentUpload,
-	postUploadDocumentsCheckAndConfirm
+	postDocumentUpload
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -18,6 +17,9 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { cloneDeep } from 'lodash-es';
+import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
+import { createNewDocument } from '#app/components/file-uploader.component.js';
+import { getTodaysISOString } from '#lib/dates.js';
 
 /**
  *
@@ -93,6 +95,8 @@ export const renderIssueDecision = async (request, response) => {
 		request.session?.inspectorDecision?.appealId !== appealId
 	) {
 		request.session.inspectorDecision = {};
+		request.session.appellantCostsDecision = {};
+		request.session.lpaCostsDecision = {};
 	}
 
 	const mappedPageContent = issueDecisionPage(
@@ -111,30 +115,25 @@ export const renderIssueDecision = async (request, response) => {
 /**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} documentType
+ * @param {string} decisionType
  */
-function storeFileUploadInfo(session, documentType) {
-	const { inspectorDecision = {} } = session;
-	if (!inspectorDecision.fileUploadInfo) {
-		inspectorDecision.fileUploadInfo = {};
-	}
-
-	if (session.fileUploadInfo) {
-		inspectorDecision.fileUploadInfo[documentType] = cloneDeep(session.fileUploadInfo);
-		session.inspectorDecision = inspectorDecision;
-	}
+function storeFileUploadInfo(session, decisionType) {
+	const { outcome } = session[decisionType] || {};
+	session[decisionType] = cloneDeep({ outcome, ...session.fileUploadInfo });
+	delete session.fileUploadInfo;
 }
 
 /**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} documentType
+ * @param {string} decisionType
  */
-function restoreFileUploadInfo(session, documentType) {
-	const { fileUploadInfo = {} } = session.inspectorDecision || {};
+function restoreFileUploadInfo(session, decisionType) {
+	// eslint-disable-next-line no-unused-vars
+	const { outcome, ...fileUploadInfo } = session[decisionType] || {};
 
-	if (fileUploadInfo[documentType]) {
-		session.fileUploadInfo = fileUploadInfo[documentType];
+	if (fileUploadInfo) {
+		session.fileUploadInfo = cloneDeep(fileUploadInfo);
 	} else {
 		delete session.fileUploadInfo;
 	}
@@ -175,7 +174,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 		response,
 		nextPageUrl,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER);
+			storeFileUploadInfo(session, 'inspectorDecision');
 		}
 	});
 };
@@ -187,14 +186,13 @@ export const postDecisionLetterUpload = async (request, response) => {
  */
 export const renderDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER;
 
 	request.currentFolder = {
 		folderId: currentAppeal.decision?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'inspectorDecision');
 
 	await renderDocumentUpload({
 		request,
@@ -285,10 +283,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		return response.status(404).render('app/404');
 	}
 
-	request.currentFolder = {
-		folderId: currentAppeal.appellantDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
-	};
+	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
 
 	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
 
@@ -304,7 +299,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		response,
 		nextPageUrl,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
+			storeFileUploadInfo(session, 'appellantCostsDecision');
 		}
 	});
 };
@@ -316,14 +311,10 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
  */
 export const renderAppellantCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER;
 
-	request.currentFolder = {
-		folderId: currentAppeal.appellantDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
-	};
+	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'appellantCostsDecision');
 
 	await renderDocumentUpload({
 		request,
@@ -411,17 +402,14 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	request.currentFolder = {
-		folderId: currentAppeal.lpaDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
-	};
+	request.currentFolder = cloneDeep(currentAppeal.costs.lpaDecisionFolder);
 
 	await postDocumentUpload({
 		request,
 		response,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER);
+			storeFileUploadInfo(session, 'lpaCostsDecision');
 		}
 	});
 };
@@ -433,14 +421,10 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
  */
 export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER;
 
-	request.currentFolder = {
-		folderId: currentAppeal.lpaDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
-	};
+	request.currentFolder = cloneDeep(currentAppeal.costs.lpaDecisionFolder);
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'lpaCostsDecision');
 
 	await renderDocumentUpload({
 		request,
@@ -461,41 +445,57 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 };
 
 /**
+ * @param {object} params
+ * @param {import('got').Got} params.apiClient
+ * @param {{appealId: number|string, folderId: number, letterDate: string, files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} params.decision - The decision object.
+ * @returns {Promise<*>}
+ */
+const postDecision = async ({ apiClient, decision }) => {
+	const { appealId, folderId, ...fileUploadInfo } = decision;
+
+	const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments({
+		caseId: appealId,
+		folderId,
+		fileUploadInfo
+	});
+
+	await createNewDocument(apiClient, appealId, addDocumentsRequestPayload);
+};
+
+/**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCheckDecision = async (request, response) => {
-	const { appealId } = request.params;
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session, params, apiClient } = request;
+	const { appealId } = params;
 
 	if (!currentAppeal) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	if (!objectContainsAllKeys(request.session, 'fileUploadInfo')) {
+	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = session;
+
+	const decisions = [inspectorDecision, appellantCostsDecision, lpaCostsDecision].filter(
+		(decision) => decision?.files?.length
+	);
+
+	if (!decisions.length) {
 		return response.status(500).render('app/500.njk');
 	}
-
-	request.currentFolder = {
-		folderId: currentAppeal.decision?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
-	};
 
 	if (errors) {
 		return renderCheckDecision(request, response);
 	}
 
-	const decisionOutcome = request.session.inspectorDecision.outcome;
-	const documentId = request.session.inspectorDecision.documentId;
-
-	await postUploadDocumentsCheckAndConfirm({ request, response });
+	await Promise.all(decisions.map((decision) => postDecision({ apiClient, decision })));
 
 	await postInspectorDecision(
-		request.apiClient,
+		apiClient,
 		appealId,
-		mapDecisionOutcome(decisionOutcome).toLowerCase(),
-		documentId,
-		request.session.inspectorDecision.letterDate
+		mapDecisionOutcome(inspectorDecision.outcome).toLowerCase(),
+		inspectorDecision.files[0].GUID,
+		getTodaysISOString()
 	);
 
 	addNotificationBannerToSession({

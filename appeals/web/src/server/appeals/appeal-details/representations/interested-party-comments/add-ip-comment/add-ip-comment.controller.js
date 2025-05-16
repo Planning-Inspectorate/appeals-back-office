@@ -6,7 +6,6 @@ import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import config from '@pins/appeals.web/environment/config.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
@@ -22,7 +21,6 @@ import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 import {
 	checkAddressPage,
 	ipDetailsPage,
-	mapFileUploadInfoToMappedDocuments,
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
@@ -30,6 +28,7 @@ import { postRepresentationComment } from './add-ip-comment.service.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { dateSubmitted } from './add-ip-comment.mapper.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 
 /**
  *
@@ -266,14 +265,12 @@ export async function postIPComment(request, response) {
 			);
 		}
 
-		const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments(
-			currentAppeal.appealId,
+		const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments({
+			caseId: currentAppeal.appealId,
 			folderId,
-			redactionStatusId,
-			config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-			config.blobStorageDefaultContainer,
-			request.session.fileUploadInfo
-		);
+			redactionStatus: redactionStatusId,
+			fileUploadInfo: request.session.fileUploadInfo
+		});
 
 		try {
 			await createNewDocument(
