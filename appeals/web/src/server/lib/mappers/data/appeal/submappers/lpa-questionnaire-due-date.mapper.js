@@ -4,6 +4,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaQuestionnaireDueDate = ({
@@ -18,7 +19,10 @@ export const mapLpaQuestionnaireDueDate = ({
 	let editable = Boolean(userHasUpdateCasePermission && appealDetails.validAt);
 	const lpaQuestionnaireStatus = appealDetails.documentationSummary.lpaQuestionnaire?.status;
 
-	if (lpaQuestionnaireStatus && lpaQuestionnaireStatus === DOCUMENT_STATUS_RECEIVED) {
+	if (
+		(lpaQuestionnaireStatus && lpaQuestionnaireStatus === DOCUMENT_STATUS_RECEIVED) ||
+		appealDetails.appealStatus !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+	) {
 		editable = false;
 	}
 
@@ -26,7 +30,10 @@ export const mapLpaQuestionnaireDueDate = ({
 		id,
 		text: 'LPA questionnaire due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate),
-		link: `${currentRoute}/timetable/edit`,
+		link:
+			appealDetails.appealType === 'Householder'
+				? `${currentRoute}/timetable/edit`
+				: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
 		editable,
 		classes: 'appeal-lpa-questionnaire-due-date'
 	});

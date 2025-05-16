@@ -20,11 +20,24 @@ router
 	)
 	.post(
 		validateAppeal,
-		validators.validateDueDateFields,
-		validators.validateDueDateValid,
-		validators.validateDueDateInFuture,
+		validators.validateLpaqDueDateFields,
+		validators.validateLpaqDueDateValid,
+		validators.validateLpaqDueDateInFuture,
+		validators.validateLpaqDueDateBusinessDay,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(timetableController.postEditTimetable)
 	);
 
+router
+	.route('/edit/check')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(timetableController.renderCheckYourAnswers)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(timetableController.postAppealTimetables)
+	);
 export default router;
