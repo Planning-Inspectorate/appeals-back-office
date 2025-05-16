@@ -107,7 +107,16 @@ export const confirmRejectFinalCommentPage = (
 							)}'s final comments?`
 						},
 						value: {
-							html: rejectionReasonHtml(rejectionReasons)
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										html: rejectionReasonHtml(rejectionReasons),
+										labelText: 'Read more'
+									}
+								}
+							]
 						},
 						actions: {
 							items: [

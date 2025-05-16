@@ -2886,13 +2886,15 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
-                            <li>Attachments and/or appendices have not been included to the full statement
-                                of case: test reason text 1</li>
-                            <li>Attachments and/or appendices have not been included to the full statement
-                                of case: test reason text 2</li>
-                            <li>LPA's decision notice is incorrect or incomplete: test reason text 1</li>
-                        </ul>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 1</li>
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 2</li>
+                                <li>LPA's decision notice is incorrect or incomplete: test reason text 1</li>
+                            </ul>
+                        </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete">Change<span class="govuk-visually-hidden"> Incomplete reasons</span></a>
                     </dd>
@@ -2934,11 +2936,13 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
-                            <li>Documents have not been submitted on time: test reason text 1</li>
-                            <li>Other: test reason text 1</li>
-                            <li>Other: test reason text 2</li>
-                        </ul>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Documents have not been submitted on time: test reason text 1</li>
+                                <li>Other: test reason text 1</li>
+                                <li>Other: test reason text 2</li>
+                            </ul>
+                        </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
                     </dd>
@@ -4706,7 +4710,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -4750,7 +4754,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
                                             id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -5574,7 +5578,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -5618,7 +5622,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
                                             id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -6604,7 +6608,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -6646,7 +6650,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -7107,7 +7111,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -7149,7 +7153,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>

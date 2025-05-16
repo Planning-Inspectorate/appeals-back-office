@@ -4,6 +4,7 @@ import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -157,7 +158,16 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						text: 'Why are you rejecting the comment?'
 					},
 					value: {
-						html: rejectionReasonHtml(payload.rejectionReasons)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: rejectionReasonHtml(payload.rejectionReasons),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -206,6 +216,11 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 
 	const backLinkPath = userProvidedEmail ? 'allow-resubmit' : 'select-reason';
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, bottomText];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		heading: 'Check details and reject comment',
@@ -214,7 +229,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 		submitButtonProperties: {
 			text: 'Reject comment'
 		},
-		pageComponents: [summaryListComponent, bottomText]
+		pageComponents
 	};
 
 	return pageContent;

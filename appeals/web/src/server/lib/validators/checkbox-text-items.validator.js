@@ -38,7 +38,7 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) =>
 			.withMessage('Enter a reason')
 			.bail()
 			.custom((bodyFields) => {
-				const characterLimit = textInputCharacterLimits.defaultInputLength;
+				const characterLimit = textInputCharacterLimits.checkboxTextItemsLength;
 				let checkboxIds = bodyFields[checkboxIdsBodyKey];
 
 				if (!Array.isArray(checkboxIds)) {
@@ -64,6 +64,6 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) =>
 				return true;
 			})
 			.withMessage(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.defaultInputLength} characters`
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters`
 			)
 	);

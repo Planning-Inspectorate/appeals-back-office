@@ -1403,7 +1403,7 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-					textInputCharacterLimits.defaultInputLength + 1
+					textInputCharacterLimits.checkboxTextItemsLength + 1
 				)
 			});
 
@@ -1417,7 +1417,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
+			expect(errorSummaryHtml).toContain(
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -1425,7 +1427,7 @@ describe('LPA Questionnaire review', () => {
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 				[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'a'.repeat(
-					textInputCharacterLimits.defaultInputLength + 1
+					textInputCharacterLimits.checkboxTextItemsLength + 1
 				)
 			});
 
@@ -1439,7 +1441,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
+			expect(errorSummaryHtml).toContain(
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+			);
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {

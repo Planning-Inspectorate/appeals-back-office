@@ -203,7 +203,16 @@ export const renderCheckYourAnswers = async (
 					}
 				},
 				'Why is the statement incomplete?': {
-					html: rejectionReasonHtml(rejectionReasons),
+					html: '',
+					pageComponents: [
+						{
+							type: 'show-more',
+							parameters: {
+								html: rejectionReasonHtml(rejectionReasons),
+								labelText: 'Read more'
+							}
+						}
+					],
 					actions: {
 						Change: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`,
