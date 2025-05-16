@@ -58,6 +58,9 @@ export default joi
 			url: joi.string().optional(),
 			mock: joi.bool().optional(),
 			timeoutLimit: joi.number().optional()
-		})
+		}),
+		frontOffice: {
+			url: joi.string().optional()
+		}
 	})
 	.options({ presence: 'required' }); // required by default;

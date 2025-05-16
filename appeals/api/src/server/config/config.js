@@ -69,6 +69,9 @@ const { value, error } = schema.validate({
 		url: environment.SRV_HORIZON_URL,
 		mock: environment.MOCK_HORIZON,
 		timeoutLimit: environment.TIMEOUT_LIMIT_HORIZON || 5000
+	},
+	frontOffice: {
+		url: environment.FRONT_OFFICE_URL || '/mock-front-office-url'
 	}
 });
 

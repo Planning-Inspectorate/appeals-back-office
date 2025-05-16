@@ -21,7 +21,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		const expectedContent = [
 			'We’ve received comments from interested parties.',
 			'',
-			'You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address).',
+			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'',
 			'# Appeal details',
 			'',
@@ -31,7 +31,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You need to [submit your final comments](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address) by 01 January 2021.',
+			'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'

@@ -50,8 +50,11 @@ export const notifySend = async (options) => {
 	if (!recipientEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
-	if (personalisation?.appeal_reference_number === null) {
+	if (!personalisation.appeal_reference_number) {
 		throw new Error(ERROR_NOTIFICATION_PERSONALISATION);
+	}
+	if (!personalisation.front_office_url) {
+		personalisation.front_office_url = config.frontOffice.url;
 	}
 	const genericTemplate = config.govNotify.template.generic;
 	const content = renderTemplate(`${templateName}.content.md`, personalisation);
