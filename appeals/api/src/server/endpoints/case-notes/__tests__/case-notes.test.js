@@ -108,14 +108,22 @@ describe('appeal case notes routes', () => {
 				expect(response.status).toEqual(400);
 			});
 
-			// TODO: A2-3316: add test case `returns 400 when the comment exceeds the character limit`
+			it('returns 400 when the comment exceeds the character limit', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/case-notes`)
+					.send({ comment: 'a'.repeat(501) })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+			});
 
 			it('returns 200 when the submission is valid', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/case-notes`)
-					.send({ comment: 'My Comment' })
+					.send({ comment: 'a'.repeat(500) })
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(201);
