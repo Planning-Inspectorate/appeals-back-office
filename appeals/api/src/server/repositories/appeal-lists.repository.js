@@ -2,6 +2,7 @@ import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import { uniq } from 'lodash-es';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
@@ -267,7 +268,43 @@ const getAppealsStatusesInPersonalList = (userId) => {
 	});
 };
 
+/**
+ * @returns {Promise<string[]>} a duplicate-free list of all appeal statuses in the national list
+ */
+const getAppealsStatusesInNationalList = async () => {
+	const where = {
+		AND: {
+			appealStatus: {
+				some: {
+					valid: true
+				}
+			}
+		}
+	};
+
+	const results = await databaseConnector.appeal.findMany({
+		where,
+		select: {
+			appealStatus: {
+				select: {
+					status: true
+				},
+				where: {
+					valid: true
+				}
+			}
+		}
+	});
+
+	return uniq(
+		results.flatMap((result) =>
+			result.appealStatus.map((appealStatusEntry) => appealStatusEntry.status)
+		)
+	);
+};
+
 export default {
 	getAllAppeals,
-	getUserAppeals
+	getUserAppeals,
+	getAppealsStatusesInNationalList
 };

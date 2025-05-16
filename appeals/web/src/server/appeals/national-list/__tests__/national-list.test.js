@@ -81,11 +81,11 @@ describe('national-list', () => {
 				'<select class="govuk-select" id="appeal-status-filter" name="appealStatusFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="assign_case_officer"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="ready_to_start"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="issue_determination"');
-			expect(unprettifiedElement.innerHTML).toContain('<option value="complete"');
+
+			for (const status of appealsNationalList.statusesInNationalList) {
+				expect(unprettifiedElement.innerHTML).toContain(`<option value="${status}"`);
+			}
+
 			expect(unprettifiedElement.innerHTML).toContain('Inspector status</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="inspector-status-filter" name="inspectorStatusFilter"'
@@ -205,6 +205,7 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					statusesInNationalList: appealsNationalList.statusesInNationalList,
 					lpas,
 					inspectors,
 					caseOfficers,
@@ -242,6 +243,7 @@ describe('national-list', () => {
 					itemCount: 1,
 					items: [appealsNationalList.items[0]],
 					statuses,
+					statusesInNationalList: appealsNationalList.statusesInNationalList,
 					lpas,
 					inspectors,
 					caseOfficers,

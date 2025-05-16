@@ -132,6 +132,17 @@ export const appealsNationalList = {
 		'issue_determination',
 		'complete'
 	],
+	statusesInNationalList: [
+		'assign_case_officer',
+		'lpa_questionnaire',
+		'statements',
+		'ready_to_start',
+		'validation',
+		'final_comments',
+		'invalid',
+		'issue_determination',
+		'withdrawn'
+	],
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],

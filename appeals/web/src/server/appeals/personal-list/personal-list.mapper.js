@@ -5,7 +5,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
-import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
+import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
@@ -38,7 +38,7 @@ export function personalListPage(
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])].map(
 		(appealStatus) => ({
-			text: capitalizeFirstLetter(appealStatusToStatusTag(appealStatus)),
+			text: capitalizeFirstLetter(appealStatusToStatusText(appealStatus)),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})
