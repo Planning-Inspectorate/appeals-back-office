@@ -54,12 +54,12 @@ exports[`issue-decision GET /appellant-costs-decision-letter-upload should rende
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="undefined" data-document-type="appellantCostsDecisionLetter"
-            data-document-stage="appeal-decision" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
-            data-blob-storage-container="document-service-uploads" data-document-title="appellant costs decision letter"
-            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+            data-folder-id="8" data-document-type="appellantCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="appellant costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
-                data-filenames-in-folder="">
+                data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
                         <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
@@ -256,7 +256,8 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                             </dd>
                     </div>
                 </dl>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Issue decision</button>
+                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
+                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue decision</button>
             </form>
         </div>
     </div>
@@ -317,12 +318,12 @@ exports[`issue-decision GET /lpa-costs-decision-letter-upload should render the 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="undefined" data-document-type="lpaCostsDecisionLetter"
-            data-document-stage="appeal-decision" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
-            data-blob-storage-container="document-service-uploads" data-document-title="LPA costs decision letter"
-            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+            data-folder-id="9" data-document-type="lpaCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="LPA costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
-                data-filenames-in-folder="">
+                data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
                         <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
