@@ -10,3 +10,9 @@ updates:
     schedule:
       interval: 'weekly'
     rebase-strategy: 'disabled'
+  - package-ecosystem: 'terraform'
+    directory: '/infrastructure' # Location of package manifests
+    schedule:
+        interval: 'weekly'
+        day: 'tuesday' # day after npm updates
+    rebase-strategy: 'disabled'
