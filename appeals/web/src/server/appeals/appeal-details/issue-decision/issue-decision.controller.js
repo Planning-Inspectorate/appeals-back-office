@@ -111,30 +111,24 @@ export const renderIssueDecision = async (request, response) => {
 /**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} documentType
+ * @param {string} decisionType
  */
-function storeFileUploadInfo(session, documentType) {
-	const { inspectorDecision = {} } = session;
-	if (!inspectorDecision.fileUploadInfo) {
-		inspectorDecision.fileUploadInfo = {};
-	}
-
-	if (session.fileUploadInfo) {
-		inspectorDecision.fileUploadInfo[documentType] = cloneDeep(session.fileUploadInfo);
-		session.inspectorDecision = inspectorDecision;
-	}
+function storeFileUploadInfo(session, decisionType) {
+	const { outcome } = session[decisionType] || {};
+	session[decisionType] = cloneDeep({ outcome, ...session.fileUploadInfo });
 }
 
 /**
  *
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} documentType
+ * @param {string} decisionType
  */
-function restoreFileUploadInfo(session, documentType) {
-	const { fileUploadInfo = {} } = session.inspectorDecision || {};
+function restoreFileUploadInfo(session, decisionType) {
+	// eslint-disable-next-line no-unused-vars
+	const { outcome, ...fileUploadInfo } = session[decisionType] || {};
 
-	if (fileUploadInfo[documentType]) {
-		session.fileUploadInfo = fileUploadInfo[documentType];
+	if (fileUploadInfo) {
+		session.fileUploadInfo = cloneDeep(fileUploadInfo);
 	} else {
 		delete session.fileUploadInfo;
 	}
@@ -175,7 +169,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 		response,
 		nextPageUrl,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER);
+			storeFileUploadInfo(session, 'inspectorDecision');
 		}
 	});
 };
@@ -187,14 +181,13 @@ export const postDecisionLetterUpload = async (request, response) => {
  */
 export const renderDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER;
 
 	request.currentFolder = {
 		folderId: currentAppeal.decision?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'inspectorDecision');
 
 	await renderDocumentUpload({
 		request,
@@ -304,7 +297,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		response,
 		nextPageUrl,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER);
+			storeFileUploadInfo(session, 'appellantCostsDecision');
 		}
 	});
 };
@@ -316,14 +309,13 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
  */
 export const renderAppellantCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER;
 
 	request.currentFolder = {
 		folderId: currentAppeal.appellantDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
 	};
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'appellantCostsDecision');
 
 	await renderDocumentUpload({
 		request,
@@ -421,7 +413,7 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 		response,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/issue-decision/check-your-decision`,
 		callBack: async () => {
-			storeFileUploadInfo(session, APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER);
+			storeFileUploadInfo(session, 'lpaCostsDecision');
 		}
 	});
 };
@@ -433,14 +425,13 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
  */
 export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal } = request;
-	const documentType = APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER;
 
 	request.currentFolder = {
 		folderId: currentAppeal.lpaDecisionFolder?.folderId,
-		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${documentType}`
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
 	};
 
-	restoreFileUploadInfo(request.session, documentType);
+	restoreFileUploadInfo(request.session, 'lpaCostsDecision');
 
 	await renderDocumentUpload({
 		request,

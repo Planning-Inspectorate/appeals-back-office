@@ -94,7 +94,6 @@ router
 	)
 	.post(
 		validateAppeal,
-		validators.validateCheckDecision,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postCheckDecision)
 	);

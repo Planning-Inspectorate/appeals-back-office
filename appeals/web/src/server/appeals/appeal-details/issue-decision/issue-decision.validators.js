@@ -18,13 +18,3 @@ export const validateLpaCostsDecision = createValidator(
 		.notEmpty()
 		.withMessage("Select yes if you want to issue the LPA's cost decision")
 );
-
-export const validateCheckDecision = createValidator(
-	body('ready-to-send')
-		.trim()
-		.notEmpty()
-		.withMessage('Please confirm that the decision is ready to be sent to all parties')
-		.bail()
-		.equals('yes')
-		.withMessage('Please confirm that the decision is ready to be sent to all parties')
-);
