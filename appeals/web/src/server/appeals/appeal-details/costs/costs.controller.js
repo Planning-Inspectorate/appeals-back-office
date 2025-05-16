@@ -18,7 +18,8 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentRedactionStatuses,
-	getFileInfo
+	getFileInfo,
+	getDocumentFileType
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -87,6 +88,7 @@ export const postDocumentUploadPage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDocumentVersionUpload = async (request, response) => {
 	const {
+		apiClient,
 		currentAppeal,
 		currentFolder,
 		params: { costsCategory, costsDocumentType, documentId }
@@ -95,6 +97,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
+
+	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
 
 	await renderDocumentUpload({
 		request,
@@ -108,7 +112,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		allowMultipleFiles: false
+		allowMultipleFiles: false,
+		allowedTypes: allowedType ? [allowedType] : undefined
 	});
 };
 

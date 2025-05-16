@@ -26,6 +26,7 @@ import {
 	renderChangeDocumentFileName,
 	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
@@ -554,7 +555,7 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersion = async (request, response) => {
-	const { currentAppeal, currentFolder } = request;
+	const { apiClient, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -565,13 +566,20 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(
+		apiClient,
+		currentAppeal.appealId,
+		request.params.documentId
+	);
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${request.params.folderId}/${request.params.documentId}`,
-		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
+		allowedTypes: allowedType ? [allowedType] : undefined
 	});
 };
 

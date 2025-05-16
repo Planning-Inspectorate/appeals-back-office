@@ -15,6 +15,7 @@ import {
 	postChangeDocumentFileName,
 	renderChangeDocumentFileName
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import logger from '#lib/logger.js';
@@ -68,6 +69,7 @@ export const postDocumentUploadPage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDocumentVersionUpload = async (request, response) => {
 	const {
+		apiClient,
 		currentAppeal,
 		currentFolder,
 		params: { correspondenceCategory, documentId }
@@ -77,13 +79,16 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/${documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		allowMultipleFiles: false
+		allowMultipleFiles: false,
+		allowedTypes: allowedType ? [allowedType] : undefined
 	});
 };
 

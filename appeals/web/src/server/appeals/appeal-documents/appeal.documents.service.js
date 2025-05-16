@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { fileType } from '#lib/nunjucks-filters/mime-type.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 /** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
@@ -67,6 +68,21 @@ export const getFileVersionsInfo = async (apiClient, appealId, fileGuid) => {
 	} catch {
 		return undefined;
 	}
+};
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} fileGuid
+ * @returns {Promise<string|null>}
+ */
+export const getDocumentFileType = async (apiClient, appealId, fileGuid) => {
+	const versionsInfo = await getFileVersionsInfo(apiClient, appealId, fileGuid);
+	if (!versionsInfo) {
+		return null;
+	}
+
+	return fileType(versionsInfo.latestDocumentVersion.mime);
 };
 
 /**
