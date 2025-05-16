@@ -2175,7 +2175,9 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2208,7 +2210,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2241,7 +2243,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2274,7 +2276,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
