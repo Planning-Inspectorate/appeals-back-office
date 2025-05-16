@@ -30,7 +30,7 @@ export { fileSize } from './file-size.js';
 export { userTypeMap } from './user-type-map.js';
 export { MIME, allowedMimeTypes, fileType, formattedFileTypes } from './mime-type.js';
 export { setAttribute } from './set-attribute.js';
-export { appealStatusToStatusTag } from './status-tag.js';
+export { appealStatusToStatusText as appealStatusToStatusTag } from './status-tag.js';
 export { default as stripQueryParamsDev } from './strip-query-parameters.js';
 export { actionsParameterForDocumentStatus } from './actions-parameter-for-document-status.js';
 export { addConditionalHtml } from './add-conditional-html.js';

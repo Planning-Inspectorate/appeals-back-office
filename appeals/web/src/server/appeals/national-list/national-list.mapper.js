@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
+import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
@@ -56,9 +56,9 @@ export function nationalListPage(
 			inspectorFilter
 		].some((filter) => filter && filter !== 'all');
 
-	const appealStatusFilterItemsArray = ['all', ...(appeals?.statuses || [])].map(
+	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
 		(appealStatus) => ({
-			text: appealStatusToStatusTag(appealStatus),
+			text: appealStatusToStatusText(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})

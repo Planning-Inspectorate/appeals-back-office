@@ -169,7 +169,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -243,7 +244,8 @@ describe('appeals list routes', () => {
 					page: 2,
 					pageCount: 2,
 					pageSize: 1,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -350,7 +352,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -457,7 +460,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -564,7 +568,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -653,7 +658,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -744,7 +750,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -833,7 +840,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -1064,7 +1072,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 		page: 1,
 		pageCount: 1,
 		pageSize: 30,
-		statuses: ['assign_case_officer']
+		statuses: ['assign_case_officer'],
+		statusesInNationalList: ['assign_case_officer']
 	});
 });
 

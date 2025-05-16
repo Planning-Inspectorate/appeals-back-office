@@ -11,25 +11,25 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
+const allStatusesOrdered = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION,
+	APPEAL_CASE_STATUS.READY_TO_START,
+	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+	APPEAL_CASE_STATUS.EVENT,
+	APPEAL_CASE_STATUS.AWAITING_EVENT,
+	APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+	APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+	APPEAL_CASE_STATUS.COMPLETE,
+	APPEAL_CASE_STATUS.STATEMENTS,
+	APPEAL_CASE_STATUS.FINAL_COMMENTS
+];
+
 /**
  * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
  * @returns {string[]}
  */
 export const mapAppealStatuses = (rawStatuses) => {
-	const statusOrder = [
-		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-		APPEAL_CASE_STATUS.VALIDATION,
-		APPEAL_CASE_STATUS.READY_TO_START,
-		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-		APPEAL_CASE_STATUS.EVENT,
-		APPEAL_CASE_STATUS.AWAITING_EVENT,
-		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
-		APPEAL_CASE_STATUS.COMPLETE,
-		APPEAL_CASE_STATUS.STATEMENTS,
-		APPEAL_CASE_STATUS.FINAL_COMMENTS
-	];
-
 	const extractedStatuses = [
 		...new Set(
 			rawStatuses
@@ -43,7 +43,7 @@ export const mapAppealStatuses = (rawStatuses) => {
 	// return the two arrays above with duplicates removed
 	return Array.from(
 		new Set([
-			...statusOrder.filter((status) => extractedStatuses.includes(status)),
+			...allStatusesOrdered.filter((status) => extractedStatuses.includes(status)),
 			...extractedStatuses
 		])
 	);
@@ -127,7 +127,7 @@ const mapAppeals = (appeals) =>
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
- * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -159,9 +159,11 @@ const retrieveAppealListData = async (
 	const mappedLPAs = mapAppealLPAs(appeals);
 	const mappedInspectors = await mapInspectors(appeals);
 	const mappedCaseOfficers = await mapCaseOfficers(appeals);
+	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
 
 	return {
 		mappedStatuses,
+		statusesInNationalList,
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers,

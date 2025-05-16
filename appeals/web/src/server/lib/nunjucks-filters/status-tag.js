@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  * @param {string} appealStatus
  * @returns {string}
  */
-export function appealStatusToStatusTag(appealStatus) {
+export function appealStatusToStatusText(appealStatus) {
 	return capitalizeFirstLetter(
 		appealStatus
 			.replace('issue_determination', 'issue_decision')
