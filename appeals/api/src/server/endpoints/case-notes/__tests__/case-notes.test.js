@@ -107,6 +107,9 @@ describe('appeal case notes routes', () => {
 
 				expect(response.status).toEqual(400);
 			});
+
+			// TODO: A2-3316: add test case `returns 400 when the comment exceeds the character limit`
+
 			it('returns 200 when the submission is valid', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
