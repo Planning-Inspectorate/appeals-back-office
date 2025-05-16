@@ -40,7 +40,7 @@ describe('appeal-type-change-non-has.md', () => {
 			'',
 			'# Next steps',
 			'',
-			'You need to submit a new D by 01 January 2025 at https://appeal-planning-decision.service.gov.uk/before-you-start.',
+			'You need to submit a new D by 01 January 2025 at /mock-front-office-url/before-you-start.',
 			'',
 			'We have closed your Householder.',
 			'',

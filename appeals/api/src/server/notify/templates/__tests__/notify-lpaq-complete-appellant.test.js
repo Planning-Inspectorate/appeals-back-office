@@ -20,7 +20,7 @@ describe('lpaq-complete-appellant.md', () => {
 		const expectedContent = [
 			'We have received the local planning authority’s questionnaire.',
 			'',
-			'You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/).',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			'',
 			'# Appeal details',
 			'',

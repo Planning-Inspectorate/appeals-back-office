@@ -10,7 +10,7 @@ We will decide the appeal by {{procedure_type}}. You can tell us if you think a 
 
 # Next steps
 
-[Submit your questionnaire](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address) by {{questionnaire_due_date}}.
+[Submit your questionnaire]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) by {{questionnaire_due_date}}.
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

@@ -7,7 +7,7 @@ Start date: {{start_date}}
 
 # Next steps
 
-[Submit your questionnaire and other documents](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk
