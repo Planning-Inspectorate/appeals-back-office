@@ -22,8 +22,6 @@ import {
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
-/** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
-
 /**
  * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, emailAddress: string }} values
@@ -185,45 +183,6 @@ export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
 		month: values.month,
 		year: values.year
 	})
-});
-
-/**
- * @param {number} caseId
- * @param {number} folderId
- * @param {number} redactionStatus
- * @param {string} blobStorageHost
- * @param {string} blobStorageContainer
- * @param {{ files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
- * @returns {AddDocumentsRequest}
- */
-export const mapFileUploadInfoToMappedDocuments = (
-	caseId,
-	folderId,
-	redactionStatus,
-	blobStorageHost,
-	blobStorageContainer,
-	fileUploadInfo
-) => ({
-	blobStorageHost,
-	blobStorageContainer,
-	documents: fileUploadInfo.files.map(
-		/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */
-		(file) =>
-			/** @type {import('@pins/appeals/index.js').MappedDocument} */
-			({
-				caseId,
-				documentName: file.name,
-				documentType: file.documentType,
-				mimeType: file.mimeType,
-				documentSize: file.size,
-				stage: file.stage,
-				folderId,
-				GUID: file.GUID,
-				receivedDate: file.receivedDate,
-				redactionStatusId: redactionStatus || 1,
-				blobStoragePath: file.blobStoreUrl
-			})
-	)
 });
 
 /**
