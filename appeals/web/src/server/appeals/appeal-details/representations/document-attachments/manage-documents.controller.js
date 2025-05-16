@@ -14,6 +14,7 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import logger from '#lib/logger.js';
 import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
@@ -141,12 +142,21 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(
+		request.apiClient,
+		currentAppeal.appealId,
+		request.params.documentId
+	);
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `${baseUrl}/${request.params.folderId}/${request.params.documentId}`,
-		nextPageUrl: `${baseUrl}/add-document-details/${request.params.folderId}/${request.params.documentId}`
+		nextPageUrl: `${baseUrl}/add-document-details/${request.params.folderId}/${request.params.documentId}`,
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		pageHeadingTextOverride: 'Supporting documents',
+		uploadContainerHeadingTextOverride: 'Upload supporting documents'
 	});
 };
 

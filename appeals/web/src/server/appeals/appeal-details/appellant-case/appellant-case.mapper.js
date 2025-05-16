@@ -783,3 +783,34 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 			break;
 	}
 }
+
+/**
+ * @param {string} folderPath
+ * @returns {string | undefined}
+ */
+export function getDocumentNameFromFolder(folderPath) {
+	switch (folderPath.split('/')[1]) {
+		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
+			return 'decision letter from the local planning authority';
+		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
+			return 'plans, drawings and list of plans';
+		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
+			return 'application form';
+		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
+			return 'evidence of your agreement to change the description of development';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
+			return 'appeal statement';
+		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:
+			return 'planning obligation';
+		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
+			return 'separate ownership certificate and agricultural land declaration';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION:
+			return 'application for an award of appeal costs';
+		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
+			return 'design and access statement';
+		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
+			return 'new plans or drawings';
+		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
+			return 'other new supporting documents';
+	}
+}

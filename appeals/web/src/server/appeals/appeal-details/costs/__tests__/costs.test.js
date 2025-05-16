@@ -184,7 +184,9 @@ describe('costs', () => {
 						const element = parseHtml(response.text);
 
 						expect(element.innerHTML).toMatchSnapshot();
-						expect(element.innerHTML).toContain('Upload an updated document</h1>');
+						expect(element.innerHTML).toContain(
+							`${costsCategory === 'lpa' ? 'LPA' : 'Appellant'} ${costsDocumentType}</h1>`
+						);
 						expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
 						expect(element.innerHTML).toContain('Choose file</button>');
 					});
