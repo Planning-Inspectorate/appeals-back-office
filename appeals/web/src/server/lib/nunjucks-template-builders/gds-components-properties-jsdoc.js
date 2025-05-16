@@ -722,7 +722,9 @@
 /**
  * @typedef CaseNotesProperties
  * @type {Object<string, any>}
- * @property {CaseNote[]} casenotes
+ * @property {CaseNote[]} caseNotes
+ * @property {string} sessionComment
+ * @property {number} characterLimit
  */
 
 /**
