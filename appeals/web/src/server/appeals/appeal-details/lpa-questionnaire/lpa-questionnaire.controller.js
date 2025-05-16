@@ -8,6 +8,7 @@ import {
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '#lib/constants.js';
 import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import {
 	renderDocumentUpload,
@@ -32,6 +33,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -572,6 +574,8 @@ export const getAddDocumentVersion = async (request, response) => {
 		request.params.documentId
 	);
 
+	const pageHeading = DOCUMENT_FOLDER_DISPLAY_LABELS[currentFolder.path.split('/')[1]];
+
 	await renderDocumentUpload({
 		request,
 		response,
@@ -579,7 +583,11 @@ export const getAddDocumentVersion = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
-		allowedTypes: allowedType ? [allowedType] : undefined
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(pageHeading && {
+			pageHeadingTextOverride: pageHeading,
+			uploadContainerHeadingTextOverride: `Upload ${uncapitalizeFirstLetter(pageHeading)}`
+		})
 	});
 };
 

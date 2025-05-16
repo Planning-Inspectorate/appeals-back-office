@@ -6,7 +6,8 @@ import {
 	checkAndConfirmPage,
 	getValidationOutcomeFromAppellantCase,
 	getPageHeadingTextOverrideForFolder,
-	getPageHeadingTextOverrideForAddDocuments
+	getPageHeadingTextOverrideForAddDocuments,
+	getDocumentNameFromFolder
 } from './appellant-case.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
@@ -31,6 +32,7 @@ import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  *
@@ -444,6 +446,8 @@ export const getAddDocumentVersion = async (request, response) => {
 		request.params.documentId
 	);
 
+	const documentName = getDocumentNameFromFolder(currentFolder.path);
+
 	await renderDocumentUpload({
 		request,
 		response,
@@ -451,7 +455,11 @@ export const getAddDocumentVersion = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		allowedTypes: allowedType ? [allowedType] : undefined
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(documentName && {
+			pageHeadingTextOverride: capitalizeFirstLetter(documentName),
+			uploadContainerHeadingTextOverride: `Upload ${documentName}`
+		})
 	});
 };
 

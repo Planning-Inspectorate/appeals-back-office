@@ -23,6 +23,7 @@ import {
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
@@ -98,6 +99,13 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const [pageHeading, uploadContainerHeading] = (() => {
+		const categoryText = costsCategory === 'lpa' ? 'LPA' : costsCategory;
+		const headingText = `${categoryText} ${costsDocumentType}`;
+
+		return [capitalizeFirstLetter(headingText), `Upload ${headingText}`];
+	})();
+
 	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
 
 	await renderDocumentUpload({
@@ -113,7 +121,9 @@ export const getDocumentVersionUpload = async (request, response) => {
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
 		allowMultipleFiles: false,
-		allowedTypes: allowedType ? [allowedType] : undefined
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		pageHeadingTextOverride: pageHeading,
+		uploadContainerHeadingTextOverride: uploadContainerHeading
 	});
 };
 
