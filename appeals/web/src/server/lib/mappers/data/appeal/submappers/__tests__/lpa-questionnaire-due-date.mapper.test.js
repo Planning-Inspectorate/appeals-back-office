@@ -33,6 +33,9 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 				status: DOCUMENT_STATUS_NOT_RECEIVED
 			}
 		};
+		data.appealDetails.appealStatus = 'lpa_questionnaire';
+		data.appealDetails.appealType = 'Householder';
+
 		const mappedData = mapLpaQuestionnaireDueDate(data);
 		expect(mappedData).toEqual({
 			display: {

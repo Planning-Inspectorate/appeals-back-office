@@ -1,3 +1,8 @@
+import {
+	createDateInputDateInPastOrTodayValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
@@ -18,6 +23,26 @@ export const validateLpaCostsDecision = createValidator(
 		.notEmpty()
 		.withMessage("Select yes if you want to issue the LPA's cost decision")
 );
+
+export const validateDecisionLetterDate = createValidator(
+	body('decision-letter-date')
+		.trim()
+		.notEmpty()
+		.withMessage('Please tell us the date on your decision letter')
+);
+
+export const validateVisitDateFields = createDateInputFieldsValidator(
+	'decision-letter-date',
+	'Decision letter date'
+);
+
+export const validateVisitDateValid = createDateInputDateValidityValidator(
+	'decision-letter-date',
+	'Decision letter date'
+);
+
+export const validateDueDateInPastOrToday =
+	createDateInputDateInPastOrTodayValidator('decision-letter-date');
 
 export const validateCheckDecision = createValidator(
 	body('ready-to-send')

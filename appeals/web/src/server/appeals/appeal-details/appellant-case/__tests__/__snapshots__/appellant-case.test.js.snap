@@ -5926,7 +5926,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5987,7 +5987,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6048,7 +6048,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6109,7 +6109,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6170,7 +6170,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6231,7 +6231,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6292,7 +6292,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6353,7 +6353,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6414,7 +6414,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6473,7 +6473,11 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day, a month and a year</a>
+                            <li><a href="#due-date-day">Date must include a day</a>
+                            </li>
+                            <li><a href="#due-date-month">Date must include a month</a>
+                            </li>
+                            <li><a href="#due-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -6532,7 +6536,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be in the future</a>
+                            <li><a href="#">The Date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -7315,7 +7319,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7388,7 +7392,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7461,7 +7465,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7532,7 +7536,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7605,7 +7609,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7678,7 +7682,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7751,7 +7755,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7824,7 +7828,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7897,7 +7901,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -8039,7 +8043,11 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day, a month and a year</a>
+                            <li><a href="#valid-date-day">Date must include a day</a>
+                            </li>
+                            <li><a href="#valid-date-month">Date must include a month</a>
+                            </li>
+                            <li><a href="#valid-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>

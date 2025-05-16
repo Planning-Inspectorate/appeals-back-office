@@ -1,5 +1,6 @@
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -16,23 +17,12 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  */
 
 /**
- * @type {Object.<'lpa-questionnaire' | 'ip-comments' | 'appellant-statement' | 'lpa-statement' | 'final-comments' | 'lpa-final-comments' | 's106-obligation' , 'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'appellantStatementDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 's106ObligationDueDate'>}
- */
-export const routeToObjectMapper = {
-	'lpa-questionnaire': 'lpaQuestionnaireDueDate',
-	'ip-comments': 'ipCommentsDueDate',
-	'appellant-statement': 'appellantStatementDueDate',
-	'lpa-statement': 'lpaStatementDueDate',
-	'final-comments': 'finalCommentsDueDate',
-	's106-obligation': 's106ObligationDueDate'
-};
-
-/**
- * @param {import('./timetable.service.js').AppealTimetables} appealTimetables
+ * @param {import('./timetable.service.js').AppealTimetables} appealTimetable
  * @param {Appeal} appealDetails
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export const mapEditTimetablePage = (appealTimetables, appealDetails) => {
+export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = undefined) => {
 	/** @type {PageContent} */
 	let pageContent = {
 		title: `Timetable due dates`,
@@ -49,11 +39,26 @@ export const mapEditTimetablePage = (appealTimetables, appealDetails) => {
 
 	/** @type {PageComponent[]} */
 	const pageComponents = timeTableTypes.map((timetableType) => {
-		const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
+		const currentDueDateIso = appealTimetable && appealTimetable[timetableType];
 		const currentDueDateDayMonthYear =
 			currentDueDateIso && dateISOStringToDayMonthYearHourMinute(currentDueDateIso);
 		const timetableTypeText = getTimetableTypeText(timetableType);
 		const idText = getIdText(timetableType);
+
+		const errorMessages = [];
+
+		// Example: Combine multiple error messages
+		if (errors != undefined) {
+			if (errors?.[`${idText}-due-date-day`]) {
+				errorMessages.push(errors[`${idText}-due-date-day`].msg);
+			}
+			if (errors?.[`${idText}-due-date-month`]) {
+				errorMessages.push(errors[`${idText}-due-date-month`].msg);
+			}
+			if (errors?.[`${idText}-due-date-year`]) {
+				errorMessages.push(getErrorByFieldname(errors, `${idText}-due-date-year`)?.text);
+			}
+		}
 
 		return {
 			type: 'date-input',
@@ -69,6 +74,11 @@ export const mapEditTimetablePage = (appealTimetables, appealDetails) => {
 						classes: 'govuk-fieldset__legend--m'
 					}
 				},
+				errorMessage: errorMessages.length
+					? {
+							html: errorMessages.join('<br>')
+					  }
+					: undefined,
 				...(currentDueDateDayMonthYear && {
 					items: [
 						{
@@ -134,7 +144,7 @@ const getTimetableTypeText = (timetableType) => {
  * @param {AppealTimetableType} timetableType
  * @returns {string}
  */
-const getIdText = (timetableType) => {
+export const getIdText = (timetableType) => {
 	switch (timetableType) {
 		case 'lpaQuestionnaireDueDate':
 			return 'lpa-questionnaire';
@@ -153,7 +163,7 @@ const getIdText = (timetableType) => {
  * @param {string|undefined|null} appealType
  * @returns {AppealTimetableType[]}
  */
-const getAppealTimetableTypes = (appealType) => {
+export const getAppealTimetableTypes = (appealType) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
