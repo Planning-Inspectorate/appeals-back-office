@@ -371,11 +371,20 @@ export function checkAndConfirmPage(
 						text: `${capitalize(validationOutcomeAsString)} reasons`
 					},
 					value: {
-						html: mapReasonsToReasonsListHtml(
-							reasonOptions,
-							invalidOrIncompleteReasons,
-							invalidOrIncompleteReasonsText
-						)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: mapReasonsToReasonsListHtml(
+										reasonOptions,
+										invalidOrIncompleteReasons,
+										invalidOrIncompleteReasonsText
+									),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -419,6 +428,11 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
@@ -428,7 +442,7 @@ export function checkAndConfirmPage(
 				: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent]
+		pageComponents
 	};
 
 	if (

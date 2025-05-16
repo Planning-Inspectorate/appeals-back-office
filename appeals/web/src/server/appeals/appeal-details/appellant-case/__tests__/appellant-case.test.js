@@ -1428,7 +1428,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1441,7 +1441,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1452,7 +1452,7 @@ describe('appellant-case', () => {
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1465,7 +1465,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1488,7 +1488,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					]
 				});
 
@@ -1517,11 +1517,11 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					],
 					[`invalidReason-${invalidReasonsWithTextIds[1]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength),
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength),
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					]
 				});
 
@@ -1675,7 +1675,7 @@ describe('appellant-case', () => {
 				.send({
 					incompleteReason: incompleteReasonsWithTextIds[0],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1688,7 +1688,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1699,7 +1699,7 @@ describe('appellant-case', () => {
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1712,7 +1712,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 

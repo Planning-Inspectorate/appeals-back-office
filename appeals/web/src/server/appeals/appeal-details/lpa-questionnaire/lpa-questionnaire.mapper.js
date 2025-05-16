@@ -420,11 +420,20 @@ export function checkAndConfirmPage(
 						text: 'Incomplete reasons'
 					},
 					value: {
-						html: mapReasonsToReasonsListHtml(
-							incompleteReasonOptions,
-							incompleteReasons,
-							incompleteReasonsText
-						)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: mapReasonsToReasonsListHtml(
+										incompleteReasonOptions,
+										incompleteReasons,
+										incompleteReasonsText
+									),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -468,13 +477,18 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent],
+		pageComponents,
 		submitButtonText: 'Confirm'
 	};
 
