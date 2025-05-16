@@ -25,11 +25,11 @@ export const validateChangeAppealFinalDate = createValidator(
 
 export const validateChangeAppealFinalDateFields = createDateInputFieldsValidator(
 	'change-appeal-final-date',
-	'final date'
+	'Final date'
 );
 export const validateChangeAppealFinalDateValid = createDateInputDateValidityValidator(
 	'change-appeal-final-date',
-	'final date'
+	'Final date'
 );
 export const validateChangeAppealFinalDateInFuture = createDateInputDateInFutureValidator(
 	'change-appeal-final-date'

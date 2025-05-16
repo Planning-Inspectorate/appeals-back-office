@@ -1992,7 +1992,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a month');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a year');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -2302,7 +2304,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
@@ -2581,7 +2583,9 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a month');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a year');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
@@ -2662,7 +2666,7 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
@@ -2710,7 +2714,7 @@ describe('appellant-case', () => {
 
 					expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 					expect(unprettifiedErrorSummaryHtml).toContain(expectedErrorMessageHtml);
-					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 				});
 			});
 		});
@@ -2738,7 +2742,7 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -2764,7 +2768,7 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {
@@ -2789,7 +2793,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {

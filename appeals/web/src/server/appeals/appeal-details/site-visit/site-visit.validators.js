@@ -14,14 +14,14 @@ export const validateSiteVisitType = createValidator(
 	body('visit-type').trim().notEmpty().withMessage('Please select a visit type')
 );
 
-export const validateVisitDateFields = createDateInputFieldsValidator('visit-date', 'visit date');
+export const validateVisitDateFields = createDateInputFieldsValidator('visit-date', 'Visit date');
 export const validateVisitDateValid = createDateInputDateValidityValidator(
 	'visit-date',
-	'visit date'
+	'Visit date'
 );
 export const validateVisitDateInFuture = createDateInputDateInFutureValidator(
 	'visit-date',
-	'visit date'
+	'Visit date'
 );
 export const validateVisitStartTime = createTimeInputValidator(
 	'visit-start-time',

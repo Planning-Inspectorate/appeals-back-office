@@ -46,11 +46,11 @@ export const validateDecisionLetterDate = createValidator(
 );
 export const validateVisitDateFields = createDateInputFieldsValidator(
 	'decision-letter-date',
-	'decision letter date'
+	'Decision letter date'
 );
 export const validateVisitDateValid = createDateInputDateValidityValidator(
 	'decision-letter-date',
-	'decision letter date'
+	'Decision letter date'
 );
 export const validateDueDateInPastOrToday =
 	createDateInputDateInPastOrTodayValidator('decision-letter-date');

@@ -483,7 +483,7 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#decision-letter-date-day">Decision letter date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
+                            <li><a href="#">Decision letter date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -553,7 +553,7 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#decision-letter-date-month">Decision letter date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
+                            <li><a href="#">Decision letter date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -623,7 +623,7 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#decision-letter-date-year">Decision letter date year must be a number</a>
                             </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
+                            <li><a href="#">Decision letter date must be a real date</a>
                             </li>
                         </ul>
                     </div>

@@ -14,11 +14,11 @@ export const validateWithdrawalRequestDate = createValidator(
 );
 export const validateRequestDateFields = createDateInputFieldsValidator(
 	'withdrawal-request-date',
-	'withdrawal request date'
+	'Withdrawal request date'
 );
 export const validateRequestDateValid = createDateInputDateValidityValidator(
 	'withdrawal-request-date',
-	'withdrawal request date'
+	'Withdrawal request date'
 );
 export const validateDueDateInPastOrToday =
 	createDateInputDateInPastOrTodayValidator('withdrawal-request-date');

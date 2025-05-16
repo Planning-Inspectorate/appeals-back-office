@@ -19,9 +19,9 @@ router
 	.route('/date')
 	.get(asyncHandler(controller.getHearingDate))
 	.post(
-		createDateInputFieldsValidator('hearing-date', 'hearing date'),
-		createDateInputDateValidityValidator('hearing-date', 'hearing date'),
-		createDateInputDateInFutureValidator('hearing-date', 'hearing date'),
+		createDateInputFieldsValidator('hearing-date', 'Hearing date'),
+		createDateInputDateValidityValidator('hearing-date', 'Hearing date'),
+		createDateInputDateInFutureValidator('hearing-date', 'Hearing date'),
 		createTimeInputValidator('hearing-time', 'hearing time'),
 		saveBodyToSession('setUpHearing'),
 		asyncHandler(controller.postHearingDate)

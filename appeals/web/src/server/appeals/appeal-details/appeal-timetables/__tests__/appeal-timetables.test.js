@@ -54,7 +54,9 @@ describe('Appeal Timetables', () => {
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('Change final comments due date</h1>');
 		expect(element.innerHTML).toContain('There is a problem</h2>');
-		expect(element.innerHTML).toContain('Date must include a day, a month and a year');
+		expect(element.innerHTML).toContain('Date must include a day</a>');
+		expect(element.innerHTML).toContain('Date must include a month</a>');
+		expect(element.innerHTML).toContain('Date must include a year</a>');
 	});
 
 	it('should render "Change final comments due date" with error (api error)', async () => {

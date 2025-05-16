@@ -119,7 +119,9 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Visit date must include a day');
+			expect(errorSummaryHtml).toContain('Visit date must include a month');
+			expect(errorSummaryHtml).toContain('Visit date must include a year');
 			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
 			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
@@ -297,7 +299,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Visit date must be a valid date</a>');
+			expect(errorSummaryHtml).toContain('Visit date must be a real date</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if provided date is not in the future', async () => {
@@ -323,7 +325,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Visit date must be in the future</a>');
+			expect(errorSummaryHtml).toContain('The Visit date must be in the future</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {
@@ -717,7 +719,9 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a day, a month and a year</a>');
+			expect(errorSummaryHtml).toContain('Visit date must include a day</a>');
+			expect(errorSummaryHtml).toContain('Visit date must include a month</a>');
+			expect(errorSummaryHtml).toContain('Visit date must include a year</a>');
 			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
 			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
@@ -895,7 +899,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Visit date must be a valid date</a>');
+			expect(errorSummaryHtml).toContain('Visit date must be a real date</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if provided date is not in the future', async () => {
@@ -921,7 +925,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Visit date must be in the future</a>');
+			expect(errorSummaryHtml).toContain('The Visit date must be in the future</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time hour is invalid', async () => {

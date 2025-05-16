@@ -134,7 +134,7 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Hearing date must be a valid date');
+			expect(errorSummaryHtml).toContain('Hearing date must be a real date');
 		});
 
 		it('should return 400 on missing date with appropriate error message', async () => {
@@ -151,7 +151,9 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Hearing date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Hearing date must include a day');
+			expect(errorSummaryHtml).toContain('Hearing date must include a month');
+			expect(errorSummaryHtml).toContain('Hearing date must include a year');
 		});
 
 		it('should return 400 on date in the past with appropriate error message', async () => {
@@ -171,7 +173,7 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Hearing date must be in the future');
+			expect(errorSummaryHtml).toContain('The Hearing date must be in the future');
 		});
 
 		it('should return 400 on invalid time with appropriate error message', async () => {
