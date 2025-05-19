@@ -500,7 +500,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The Visit date must be in the future</a>
+                            <li><a href="#">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -2582,7 +2582,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The Visit date must be in the future</a>
+                            <li><a href="#">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>

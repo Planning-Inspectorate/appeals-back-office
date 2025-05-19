@@ -5,6 +5,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 describe('lpa-questionnaire-due-date.mapper', () => {
 	let data;
 	beforeEach(() => {
@@ -33,7 +34,7 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 				status: DOCUMENT_STATUS_NOT_RECEIVED
 			}
 		};
-		data.appealDetails.appealStatus = 'lpa_questionnaire';
+		data.appealDetails.appealStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 		data.appealDetails.appealType = 'Householder';
 
 		const mappedData = mapLpaQuestionnaireDueDate(data);
