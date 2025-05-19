@@ -86,5 +86,6 @@ export interface RepresentationRequest {
 	ipAddress: Address;
 	attachments: any[];
 	redactionStatus: string;
+	dateCreated: string;
 	source: 'citizen' | ODW_SYSTEM_ID;
 }
