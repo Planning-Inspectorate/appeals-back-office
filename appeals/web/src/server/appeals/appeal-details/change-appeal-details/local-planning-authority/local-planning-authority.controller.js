@@ -65,7 +65,7 @@ const renderChangeLpa = async (request, response) => {
 		const lpaList = await getLpaList(apiClient);
 		const backlinkUrl = generateBacklinkUrl(request.originalUrl);
 
-		const mappedPageContent = changeLpaPage(currentAppeal, lpaList, backlinkUrl);
+		const mappedPageContent = changeLpaPage(currentAppeal, lpaList, backlinkUrl, errors);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,
