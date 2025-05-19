@@ -1,13 +1,14 @@
 import config from '@pins/appeals.web/environment/config.js';
 
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
+/** @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem */
 
 /**
  * @param {Object} params
  * @param {string|number} params.caseId
  * @param {number} params.folderId
  * @param {number} [params.redactionStatus]
- * @param {{ files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} params.fileUploadInfo - The file upload information object.
+ * @param {{ files: FileUploadInfoItem[] }} params.fileUploadInfo
  * @returns {AddDocumentsRequest}
  */
 export const mapFileUploadInfoToMappedDocuments = ({

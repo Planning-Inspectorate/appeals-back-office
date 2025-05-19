@@ -21,6 +21,8 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { getTodaysISOString } from '#lib/dates.js';
 
+/** @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem */
+
 /**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
@@ -129,14 +131,7 @@ function storeFileUploadInfo(session, decisionType) {
  * @param {string} decisionType
  */
 function restoreFileUploadInfo(session, decisionType) {
-	// eslint-disable-next-line no-unused-vars
-	const { outcome, ...fileUploadInfo } = session[decisionType] || {};
-
-	if (fileUploadInfo) {
-		session.fileUploadInfo = cloneDeep(fileUploadInfo);
-	} else {
-		delete session.fileUploadInfo;
-	}
+	session.fileUploadInfo = cloneDeep(session[decisionType] || {});
 }
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -447,7 +442,7 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 /**
  * @param {object} params
  * @param {import('got').Got} params.apiClient
- * @param {{appealId: number|string, folderId: number, letterDate: string, files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} params.decision - The decision object.
+ * @param {{appealId: number|string, folderId: number, letterDate: string, files: FileUploadInfoItem[]  }} params.decision - The decision object.
  * @returns {Promise<*>}
  */
 const postDecision = async ({ apiClient, decision }) => {
