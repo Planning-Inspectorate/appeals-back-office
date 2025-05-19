@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { representationHasAddress } from '#lib/address-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList } from './common.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -11,35 +11,31 @@ import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
  * @param {Appeal} appealDetails
  * @param {Representation} comment
  * @param {import('@pins/express').Session} session
+ * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function reviewInterestedPartyCommentPage(appealDetails, comment, session) {
+export function reviewInterestedPartyCommentPage(appealDetails, comment, session, errors) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const hasAddress = representationHasAddress(comment);
 
 	const commentSummaryList = generateCommentSummaryList(appealDetails.appealId, comment, {
 		isReviewPage: true
 	});
 
+	const siteVisitFieldName = 'site-visit-request';
 	/** @type {PageComponent} */
 	const siteVisitRequestCheckbox = {
 		type: 'checkboxes',
 		parameters: {
-			name: 'siteVisitRequested',
-			idPrefix: 'site-visit-request',
+			name: siteVisitFieldName,
+			idPrefix: siteVisitFieldName,
 			items: [
 				{
 					text: 'Comment includes a site visit request',
 					value: 'site-visit',
-					checked: comment?.siteVisitRequested,
-					disabled: !hasAddress,
-					hint: !hasAddress
-						? {
-								text: 'Address is required to setup the site visit'
-						  }
-						: undefined
+					checked: comment?.siteVisitRequested
 				}
-			]
+			],
+			errorMessage: getErrorByFieldname(errors, siteVisitFieldName)
 		}
 	};
 
