@@ -9,7 +9,11 @@ import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { dateISOStringToDayMonthYearHourMinute, getTodaysISOString } from '#lib/dates.js';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	getTodaysISOString,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
@@ -156,7 +160,7 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId, fil
 });
 
 /**
- * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'day': string, 'month': string, 'year': string }} values
  * @param {{ files: [{ GUID: string }] }} fileUpload
  * @returns {RepresentationRequest}
  */
@@ -175,7 +179,12 @@ export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
 	},
 	attachments: fileUpload.files.map((file) => file.GUID) || [],
 	redactionStatus: values.redactionStatus,
-	source: ODW_SYSTEM_ID
+	source: ODW_SYSTEM_ID,
+	dateCreated: dayMonthYearHourMinuteToISOString({
+		day: values.day,
+		month: values.month,
+		year: values.year
+	})
 });
 
 /**
@@ -220,11 +229,11 @@ export const mapFileUploadInfoToMappedDocuments = (
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {ReqBody} date
+ * @param {ReqBody} commentData
  * @param {string} backLinkUrl
  * @returns {PageContent}
  * */
-export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
+export const dateSubmitted = (appealDetails, errors, commentData, backLinkUrl) => ({
 	title: 'When did the interested party submit the comment?',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -233,8 +242,8 @@ export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
 			id: 'date',
 			name: 'date',
 			value:
-				date.day && date.month && date.year
-					? date
+				commentData.day && commentData.month && commentData.year
+					? { day: commentData.day, month: commentData.month, year: commentData.year }
 					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
 			legendText: 'When did the interested party submit the comment?',
 			legendIsPageHeading: true,
