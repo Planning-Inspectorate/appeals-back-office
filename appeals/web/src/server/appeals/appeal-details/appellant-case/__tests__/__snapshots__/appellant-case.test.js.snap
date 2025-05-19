@@ -8243,11 +8243,13 @@ exports[`appellant-case change LPA page POST /appellant-case/change-appeal-detai
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="localPlanningAuthority-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
                                 </legend>
+                                <p id="localPlanningAuthority-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the local planning
+                                    authority.</p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="localPlanningAuthority" name="localPlanningAuthority"
