@@ -7,7 +7,7 @@ import {
 	dateIsInThePast,
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
-import { capitalize } from 'lodash-es';
+import { capitalize, lowerCase } from 'lodash-es';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -150,11 +150,7 @@ export const createDateInputDateBusinessDayValidator = async (
 				}
 				return result;
 			})
-			.withMessage(
-				`The ${
-					(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-				}must be a business day`
-			)
+			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be a business day`)
 	);
 
 export const createDateInputDateInFutureValidator = (
@@ -181,9 +177,7 @@ export const createDateInputDateInFutureValidator = (
 
 				return dateIsInTheFuture({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
-			.withMessage(
-				`The ${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be in the future`
-			)
+			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`)
 	);
 
 export const createDateInputDateInPastOrTodayValidator = (

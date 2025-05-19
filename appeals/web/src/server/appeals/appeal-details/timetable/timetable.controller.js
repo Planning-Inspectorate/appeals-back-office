@@ -71,7 +71,7 @@ const renderEditTimetable = async (request, response) => {
 	}
 
 	/** @type {import("@pins/express").ValidationErrors | undefined}*/
-	let errors = request.errors;
+	const errors = request.errors;
 
 	const appealId = currentAppeal.appealId;
 	const appealTimetable = request.session.appealTimetable ?? currentAppeal.appealTimetable;

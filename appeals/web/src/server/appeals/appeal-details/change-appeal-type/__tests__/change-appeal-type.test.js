@@ -354,7 +354,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Date must be a business day</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('The date must be a business day</a>');
 	});
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {

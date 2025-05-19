@@ -2030,7 +2030,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be in the future</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The date must be in the future</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {

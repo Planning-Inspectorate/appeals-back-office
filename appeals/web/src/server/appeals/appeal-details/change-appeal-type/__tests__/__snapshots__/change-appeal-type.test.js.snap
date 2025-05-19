@@ -762,7 +762,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The Date must be a business day</a>
+                            <li><a href="#">The date must be a business day</a>
                             </li>
                         </ul>
                     </div>

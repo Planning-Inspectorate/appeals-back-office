@@ -325,7 +325,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The Visit date must be in the future</a>');
+			expect(errorSummaryHtml).toContain('The visit date must be in the future</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {
@@ -925,7 +925,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The Visit date must be in the future</a>');
+			expect(errorSummaryHtml).toContain('The visit date must be in the future</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time hour is invalid', async () => {

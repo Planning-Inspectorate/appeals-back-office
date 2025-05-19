@@ -47,7 +47,6 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 
 		const errorMessages = [];
 
-		// Example: Combine multiple error messages
 		if (errors != undefined) {
 			if (errors?.[`${idText}-due-date-day`]) {
 				errorMessages.push(errors[`${idText}-due-date-day`].msg);

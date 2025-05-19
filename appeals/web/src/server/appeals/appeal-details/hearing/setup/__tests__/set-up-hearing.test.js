@@ -174,7 +174,7 @@ describe('set up hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The Hearing date must be in the future');
+			expect(errorSummaryHtml).toContain('The hearing date must be in the future');
 		});
 
 		it('should return 400 on invalid time with appropriate error message', async () => {
