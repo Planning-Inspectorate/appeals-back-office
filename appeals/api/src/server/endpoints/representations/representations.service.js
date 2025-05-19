@@ -70,6 +70,7 @@ export const getRepresentation = representationRepository.getById;
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
+ * @property {string | undefined} dateCreated
  * @property {string} redactionStatus
  * @property {string} source
  *
@@ -101,7 +102,8 @@ export const createRepresentation = async (appealId, input) => {
 		appealId,
 		representedId: represented.id,
 		representationType: input.representationType,
-		source: input.source
+		source: input.source,
+		dateCreated: input.dateCreated
 	});
 
 	if (input.attachments.length > 0) {
