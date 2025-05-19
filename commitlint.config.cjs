@@ -111,5 +111,7 @@ module.exports = {
 				}
 			}
 		}
-	]
+	],
+	// ignore commits from dependabot - check for "chore(deps" which also captures "chore(deps-dev)"
+	ignores: [(commit) => commit.startsWith('chore(deps') && commit.includes('dependabot')]
 };
