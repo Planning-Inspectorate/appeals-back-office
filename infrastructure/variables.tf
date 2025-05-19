@@ -177,6 +177,7 @@ variable "sb_topic_names" {
       listed_building       = string
       service_user          = string
       appeal_representation = string
+      appeal_event_estimate = string
     })
   })
 }
