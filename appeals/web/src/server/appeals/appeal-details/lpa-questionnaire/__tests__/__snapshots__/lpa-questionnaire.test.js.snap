@@ -6264,7 +6264,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The Date must be in the future</a>
+                            <li><a href="#">The date must be in the future</a>
                             </li>
                         </ul>
                     </div>
