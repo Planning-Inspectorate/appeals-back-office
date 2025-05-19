@@ -28,6 +28,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1437,11 +1438,11 @@ describe('appeal-details', () => {
 				expect(element).toContain('2 case notes');
 				expect(submitRequest.isDone()).toBe(false);
 			});
-			it('should not submit and re-render case details with an error if the comment exceeds 300 characters', async () => {
+			it('should not submit and re-render case details with an error if the comment exceeds the character limit', async () => {
 				nock.cleanAll();
 				const appealId = appealData.appealId.toString();
 				const caseNotesResponse = [...caseNotes];
-				const comment = 'a'.repeat(301); // Create a string that's 301 characters long
+				const comment = 'a'.repeat(501);
 
 				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
 				nock('http://test/')
@@ -1472,7 +1473,9 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(pageElements).toContain('error-summary');
-				expect(pageElements).toContain('Case note must be 300 characters or less');
+				expect(pageElements).toContain(
+					`Case note must be ${textInputCharacterLimits.caseNoteTextInputLength} characters or less`
+				);
 				expect(element).toContain('2 case notes');
 				expect(submitRequest.isDone()).toBe(false);
 			});
