@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -1491,7 +1492,6 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage folder page with one document item for each document present in the folder if the folderId is valid (${correspondenceCategory})`, async () => {
 				const response = await request.get(
-					// @ts-ignore
 					`${baseUrl}/1/internal-correspondence/${correspondenceCategory}/manage-documents/${folder.folderId}`
 				);
 				const element = parseHtml(response.text);
@@ -1503,6 +1503,9 @@ describe('internal correspondence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitle(correspondenceCategory)} correspondence documents</h1>`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
 				);
 			});
 		}

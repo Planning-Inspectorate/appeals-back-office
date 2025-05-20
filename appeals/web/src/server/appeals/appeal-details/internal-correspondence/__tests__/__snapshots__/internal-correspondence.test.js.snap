@@ -631,7 +631,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -687,7 +688,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/upload-documents/11"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -743,7 +745,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/internal-correspondence/main-party/upload-documents/22"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 

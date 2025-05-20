@@ -892,18 +892,22 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
+ * @param {string} params.addButtonUrl
  * @param {FolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @returns {PageContent}
  */
 export function manageFolderPage({
 	backLinkUrl,
 	viewAndEditUrl,
+	addButtonUrl,
 	folder,
 	request,
 	pageHeadingTextOverride,
+	addButtonTextOverride,
 	dateColumnLabelTextOverride
 }) {
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -939,6 +943,15 @@ export function manageFolderPage({
 			}
 		});
 	}
+
+	/** @type {PageComponent} */
+	const buttonComponent = {
+		type: 'button',
+		parameters: {
+			text: addButtonTextOverride || 'Add documents',
+			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString())
+		}
+	};
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -1013,7 +1026,8 @@ export function manageFolderPage({
 						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
 					])
 				}
-			}
+			},
+			buttonComponent
 		]
 	};
 

@@ -36,12 +36,16 @@ export const getManageFolder = async (request, response) => {
 				.join('/')
 		: representationBackLinkUrlSegments.join('/');
 
+	const addButtonUrl = manageFolderBaseUrl.replace('manage-documents', 'add-document');
+
 	await renderManageFolder({
 		request,
 		response,
 		backLinkUrl,
 		viewAndEditUrl: `${manageFolderBaseUrl}/{{folderId}}/{{documentId}}`,
+		addButtonUrl,
 		pageHeadingTextOverride: 'Supporting documents',
+		addButtonTextOverride: 'Add document',
 		dateColumnLabelTextOverride: 'Date submitted'
 	});
 };

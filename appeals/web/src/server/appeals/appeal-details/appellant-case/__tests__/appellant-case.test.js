@@ -4933,6 +4933,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('sample-20s-documentFolderInfo.mp4</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+			);
 		});
 
 		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {

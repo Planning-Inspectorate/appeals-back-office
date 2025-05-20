@@ -1194,6 +1194,9 @@ describe('costs', () => {
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
 							} costs ${costsDocumentType} documents</h1>`
 						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+						);
 					});
 				}
 			}
@@ -2592,6 +2595,9 @@ describe('costs', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision documents</h1>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+				);
 			});
 		});
 

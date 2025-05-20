@@ -253,6 +253,9 @@ export const getManageFolder = async (request, response) => {
 		viewAndEditUrl: `${environmentalAssessmentUrl(request.params.appealId)}/manage-documents/${
 			currentFolder.folderId
 		}/{{documentId}}`,
+		addButtonUrl: `${environmentalAssessmentUrl(request.params.appealId)}/upload-documents/${
+			currentFolder.folderId
+		}`,
 		pageHeadingTextOverride: pageHeadingText
 	});
 };

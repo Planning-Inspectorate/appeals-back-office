@@ -2951,7 +2951,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -3077,7 +3078,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2865"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 

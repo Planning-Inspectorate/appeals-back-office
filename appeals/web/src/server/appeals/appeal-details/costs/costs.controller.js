@@ -346,7 +346,12 @@ export const getManageFolder = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
 				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		addButtonUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/upload-documents/${currentFolder.folderId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder.folderId}`,
 		pageHeadingTextOverride: costsCategoryLabel,
+		addButtonTextOverride: `Add document${costsCategory === 'decision' ? 's' : ''}`,
 		...(costsCategory === 'decision' && {
 			dateColumnLabelTextOverride: 'Decision date'
 		})
