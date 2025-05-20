@@ -87,22 +87,10 @@ export const postIssueDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderIssueDecision = async (request, response) => {
-	const { errors } = request;
-
-	const appealId = request.params.appealId;
-	const appealData = request.currentAppeal;
-
-	if (
-		request.session?.inspectorDecision?.appealId &&
-		request.session?.inspectorDecision?.appealId !== appealId
-	) {
-		request.session.inspectorDecision = {};
-		request.session.appellantCostsDecision = {};
-		request.session.lpaCostsDecision = {};
-	}
+	const { errors, currentAppeal } = request;
 
 	const mappedPageContent = issueDecisionPage(
-		appealData,
+		currentAppeal,
 		request.session.inspectorDecision,
 		getBackLinkUrlFromQuery(request),
 		errors
@@ -120,6 +108,8 @@ export const renderIssueDecision = async (request, response) => {
  * @param {string} decisionType
  */
 function storeFileUploadInfo(session, decisionType) {
+	// Note that postDocumentUpload and renderDocumentUpload functions use the fileUploadInfo at the route of the session object.
+	// This makes sure the values are stored in the session for the decision type so the session.fileUploadInfo can be reused.
 	const { outcome } = session[decisionType] || {};
 	session[decisionType] = cloneDeep({ outcome, ...session.fileUploadInfo });
 	delete session.fileUploadInfo;
@@ -131,6 +121,8 @@ function storeFileUploadInfo(session, decisionType) {
  * @param {string} decisionType
  */
 function restoreFileUploadInfo(session, decisionType) {
+	// Note that postDocumentUpload and renderDocumentUpload functions use the fileUploadInfo at the route of the session object.
+	// This makes sure the values are restored from the session for the decision type so the session.fileUploadInfo can be reused.
 	session.fileUploadInfo = cloneDeep(session[decisionType] || {});
 }
 
@@ -245,20 +237,10 @@ export const postAppellantCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAppellantCostsDecision = async (request, response) => {
-	const { errors } = request;
-
-	const appealId = request.params.appealId;
-	const appealData = request.currentAppeal;
-
-	if (
-		request.session?.appellantCostsDecision?.appealId &&
-		request.session?.appellantCostsDecision?.appealId !== appealId
-	) {
-		request.session.appellantCostsDecision = {};
-	}
+	const { errors, currentAppeal } = request;
 
 	const mappedPageContent = appellantCostsDecisionPage(
-		appealData,
+		currentAppeal,
 		request.session.appellantCostsDecision,
 		getBackLinkUrlFromQuery(request),
 		errors
@@ -364,20 +346,10 @@ export const postLpaCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderLpaCostsDecision = async (request, response) => {
-	const { errors } = request;
-
-	const appealId = request.params.appealId;
-	const appealData = request.currentAppeal;
-
-	if (
-		request.session?.lpaCostsDecision?.appealId &&
-		request.session?.lpaCostsDecision?.appealId !== appealId
-	) {
-		request.session.lpaCostsDecision = {};
-	}
+	const { errors, currentAppeal } = request;
 
 	const mappedPageContent = lpaCostsDecisionPage(
-		appealData,
+		currentAppeal,
 		request.session.lpaCostsDecision,
 		getBackLinkUrlFromQuery(request),
 		errors
