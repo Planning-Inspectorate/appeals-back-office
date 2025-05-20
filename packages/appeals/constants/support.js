@@ -13,6 +13,10 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
+export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
+export const DECISION_TYPE_LPA_COSTS = 'lpa-costs-decision';
+
 export const AUDIT_TRAIL_REP_SHARED = '{replacement0} shared';
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED =
 	'LPA statement status updated to {replacement0}';
@@ -147,6 +151,10 @@ export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
+
+export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
+export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 

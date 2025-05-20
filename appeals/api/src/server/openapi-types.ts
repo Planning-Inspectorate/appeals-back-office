@@ -348,6 +348,19 @@ export interface RepresentationData {
 }
 
 export interface DecisionInfo {
+	decisions?: {
+		/** @example "inspector-decision" */
+		decisionType?: string;
+		/** @example "allowed" */
+		outcome?: string;
+		/** @example "c957e9d0-1a02-4650-acdc-f9fdd689c210" */
+		documentGuid?: string;
+		/** @example "2024-08-17" */
+		documentDate?: string;
+	}[];
+}
+
+export interface OldDecisionInfo {
 	/** @example "allowed" */
 	outcome?: string;
 	/** @example "c957e9d0-1a02-4650-acdc-f9fdd689c210" */

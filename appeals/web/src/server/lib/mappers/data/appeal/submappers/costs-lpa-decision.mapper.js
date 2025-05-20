@@ -1,5 +1,6 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsLpaDecision = ({
@@ -19,6 +20,8 @@ export const mapCostsLpaDecision = ({
 
 	const isIssued = (lpaDecisionFolder?.documents?.length ?? 0) > 0;
 
+	const { id: documentId = '', name: documentName = '' } = lpaDecisionFolder?.documents?.[0] || {};
+
 	const actionText = (() => {
 		if (isIssued) {
 			return 'View';
@@ -35,7 +38,9 @@ export const mapCostsLpaDecision = ({
 		id: 'lpa-costs-decision',
 		text: 'LPA costs decision',
 		value: isIssued ? 'Issued' : 'Not issued',
-		link: `${currentRoute}/costs/lpa-decision`,
+		link: isIssued
+			? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
+			: `${currentRoute}/costs/lpa-decision`,
 		actionText,
 		editable: userHasUpdateCasePermission && Boolean(actionText),
 		classes: 'costs-lpa-decision'

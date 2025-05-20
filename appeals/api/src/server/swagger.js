@@ -103,6 +103,17 @@ export const spec = {
 			...validRepresentationIp
 		},
 		DecisionInfo: {
+			decisions: [
+				{
+					decisionType: 'inspector-decision',
+					outcome: 'allowed',
+					documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
+					documentDate: '2024-08-17'
+				}
+			]
+		},
+		//ToDo: Remove once the new version of issue decisions is released
+		OldDecisionInfo: {
 			outcome: 'allowed',
 			documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
 			documentDate: '2024-08-17'
