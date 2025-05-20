@@ -2,11 +2,13 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './issue-decision.controller.js';
 import * as validators from './issue-decision.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { clearIssueDecisionCache } from '#appeals/appeal-details/issue-decision/issue-decision.middleware.js';
 
 const router = createRouter({ mergeParams: true });
+
+router.use(clearIssueDecisionCache);
 
 router
 	.route('/decision')
@@ -23,12 +25,10 @@ router
 router
 	.route('/decision-letter-upload')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.renderDecisionLetterUpload)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postDecisionLetterUpload)
 	);
@@ -41,7 +41,6 @@ router
 	)
 	.post(
 		validators.validateAppellantCostsDecision,
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postAppellantCostsDecision)
 	);
@@ -49,12 +48,10 @@ router
 router
 	.route('/appellant-costs-decision-letter-upload')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.renderAppellantCostsDecisionLetterUpload)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postAppellantCostsDecisionLetterUpload)
 	);
@@ -67,7 +64,6 @@ router
 	)
 	.post(
 		validators.validateLpaCostsDecision,
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postLpaCostsDecision)
 	);
@@ -75,12 +71,10 @@ router
 router
 	.route('/lpa-costs-decision-letter-upload')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.renderLpaCostsDecisionLetterUpload)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postLpaCostsDecisionLetterUpload)
 	);
@@ -88,12 +82,10 @@ router
 router
 	.route('/check-your-decision')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.renderCheckDecision)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postCheckDecision)
 	);
