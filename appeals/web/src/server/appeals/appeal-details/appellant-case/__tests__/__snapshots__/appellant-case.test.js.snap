@@ -3443,7 +3443,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2864"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -3569,7 +3570,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2865"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 

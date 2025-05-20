@@ -121,7 +121,8 @@ exports[`final-comments GET /manage-documents/:folderId/ should render manage fo
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
 </main>"
 `;
 
