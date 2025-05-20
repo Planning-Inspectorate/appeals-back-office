@@ -25,18 +25,18 @@ describe('Setup hearing and add hearing estimates', () => {
 		navigateToHearingSection();
 	});
 
-	it.only('should not accept current date with no time - Hearing Time', () => {
+	it('should not accept current date with no time - Hearing Time', () => {
 		caseDetailsPage.clickHearingButton();
-		// hearingSection.setUpHearing(new Date(), ' ', ' ');
-		//
-		// verifyErrorMessages({
-		// 	messages: [
-		// 		'Hearing date must be in the future',
-		// 		'Hearing time must include an hour',
-		// 		'Hearing time must include a minute'
-		// 	],
-		// 	fields: ['hearing-time-hour', 'hearing-time-minute']
-		// });
+		hearingSection.setUpHearing(new Date(), ' ', ' ');
+
+		verifyErrorMessages({
+			messages: [
+				'Hearing date must be in the future',
+				'Hearing time must include an hour',
+				'Hearing time must include a minute'
+			],
+			fields: ['hearing-time-hour', 'hearing-time-minute']
+		});
 	});
 
 	it('should navigate back to overview page - Hearing Time', () => {
@@ -151,20 +151,34 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should add and update hearing date', () => {
+	// it('should handle missing yes/no selection', () => {
+	// 	caseDetailsPage.clickHearingButton();
+	// 	cy.getBusinessActualDate(new Date(), 2).then((date) => {
+	// 		hearingSection.setUpHearing(date, '10', '30');
+	// 	});
+	//
+	// 	caseDetailsPage.clickButtonByText('Continue');
+	//
+	// 	verifyErrorMessages({
+	// 		messages: ['Select yes if you know the address of where the hearing will take place'],
+	// 		fields: ['address-known']
+	// 	});
+	// });
+
+	it('should not accept invalid input - Hearing Address', () => {
 		caseDetailsPage.clickHearingButton();
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			hearingSection.setUpHearing(date, '10', '30');
 		});
-	});
 
-	it('should add and update hearing date', () => {
-		caseDetailsPage.clickHearingButton();
-		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			hearingSection.setUpHearing(date, '10', '30');
+		// Handle missing yes/no selection
+		caseDetailsPage.clickButtonByText('Continue');
+
+		verifyErrorMessages({
+			messages: ['Select yes if you know the address of where the hearing will take place'],
+			fields: ['address-known']
 		});
 
-		// caseDetailsPage.selectRadioButtonByValue('Yes');
 		hearingSection.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
 
@@ -187,6 +201,59 @@ describe('Setup hearing and add hearing estimates', () => {
 			fields: ['address-line-1', 'post-code'],
 			verifyInlineErrors: true
 		});
+	});
+
+	it.only('should set up hearing without location', () => {
+		caseDetailsPage.clickHearingButton();
+		const currentDate = new Date();
+
+		cy.getBusinessActualDate(currentDate, 2).then((date) => {
+			hearingSection.setUpHearing(date, currentDate.getHours(), currentDate.getMinutes());
+			const newDate = new Date(date);
+			const formattedDate = newDate.toLocaleDateString('en-GB', {
+				day: 'numeric',
+				month: 'long',
+				year: 'numeric'
+			});
+			console.log(formattedDate);
+			const expectedDate = { rowIndex: 0, cellIndex: 1, textToMatch: formattedDate, strict: true };
+			hearingSection.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+
+			listCasesPage.verifyTableCellText(expectedDate);
+		});
+
+		// caseDetailsPage.selectRadioButtonByValue('Yes');
+
+		// const date = new Date('Thu May 22 2025 00:00:00 GMT+0100 (British Summer Time)');
+		// const formattedDate = date.toLocaleDateString('en-GB', {
+		// 	day: 'numeric',
+		// 	month: 'long',
+		// 	year: 'numeric'
+		// });
+
+		// caseDetailsPage.clickButtonByText('Set up hearing');
+		// caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+
+		// hearingSection.addHearingLocationAddress(' ', ' ', ' ', ' ', ' ');
+		// verifyErrorMessages({
+		// 	messages: ['Enter address line 1', 'Enter town or city', 'Enter postcode'],
+		// 	fields: ['address-line-1', 'town', 'post-code'],
+		// 	verifyInlineErrors: true
+		// });
+		//
+		// const address1 = 'e2e Hearing Test Address'.repeat(20).substring(0, 251);
+		// const address2 = 'Hearing Street';
+		// const town = 'Hearing Town';
+		// const county = 'Somewhere';
+		// const postcode = 'BS20';
+		// hearingSection.addHearingLocationAddress(address1, address2, town, county, postcode);
+		//
+		// verifyErrorMessages({
+		// 	messages: ['Address line 1 must be 250 characters or less', 'Enter a full UK postcode'],
+		// 	fields: ['address-line-1', 'post-code'],
+		// 	verifyInlineErrors: true
+		// });
 	});
 
 	const setupTestCase = () => {
