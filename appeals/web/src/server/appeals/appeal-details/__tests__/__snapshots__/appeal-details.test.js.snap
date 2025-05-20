@@ -1211,10 +1211,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-inset-text">
-        <p>Appeal completed: 25 December 2023</p>
-        <p>Decision: Dismissed</p>
-        <p><span class="govuk-body">View decision letter</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
-        </p>
+        <ul class="govuk-list">
+            <li>Decision: Dismissed</li>
+            <li>Decision issued on 25 December 2023</li>
+            <li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+            </li>
+        </ul>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">

@@ -624,6 +624,110 @@ describe('issue-decision', () => {
 	});
 });
 
+describe('POST /issue-decision/check-your-decision', () => {
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let issueDecisionResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let uploadDecisionLetterResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let issueAppellantCostsDecisionResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let uploadAppellantCostsDecisionLetterResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let issueLpaCostsDecisionResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let uploadLpaCostsDecisionLetterResponse;
+
+	beforeEach(async () => {
+		nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+		nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
+		nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+		nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
+		nock('http://test/')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses)
+			.persist();
+
+		issueDecisionResponse = await request
+			.post(`${baseUrl}/1/issue-decision/decision`)
+			.send({ decision: 'Allowed' });
+	});
+	afterEach(teardown);
+
+	it('should render a 500 error page if no decision files are sent', async () => {
+		const response = await request
+			.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+			.send({});
+
+		expect(response.statusCode).toBe(500);
+		const element = parseHtml(response.text);
+		expect(element.innerHTML).toMatchSnapshot();
+
+		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(unprettifiedElement.innerHTML).toContain(
+			'Sorry, there is a problem with the service</h1>'
+		);
+	});
+
+	it('should redirect to the case details page', async () => {
+		uploadDecisionLetterResponse = await request
+			.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+			.send({
+				'upload-info':
+					'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+			});
+
+		issueAppellantCostsDecisionResponse = await request
+			.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+			.send({ appellantCostsDecision: 'true' });
+
+		uploadAppellantCostsDecisionLetterResponse = await request
+			.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+			.send({
+				'upload-info':
+					'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+			});
+
+		issueLpaCostsDecisionResponse = await request
+			.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+			.send({ lpaCostsDecision: 'true' });
+
+		uploadLpaCostsDecisionLetterResponse = await request
+			.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+			.send({
+				'upload-info':
+					'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+			});
+
+		expect(issueDecisionResponse.statusCode).toBe(302);
+		expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+		expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
+		expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
+		expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
+		expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
+
+		const response = await request
+			.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+			.send({});
+
+		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+	});
+});
+
 describe('mapDecisionOutcome', () => {
 	it('should map "allowed" to "Allowed"', () => {
 		const result = mapDecisionOutcome('allowed');

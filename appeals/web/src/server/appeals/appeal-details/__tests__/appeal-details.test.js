@@ -1720,12 +1720,13 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
 				rootElement: '.govuk-inset-text'
 			}).innerHTML;
-			expect(insetTextElementHTML).toContain('<p>Appeal completed:');
-			expect(insetTextElementHTML).toContain('<p>Decision:');
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<p><span class="govuk-body">View decision letter</span>'
+				'<li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
 			);
 		});
 
@@ -3103,6 +3104,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'issue_determination',
+						stateList: [{ key: 'event', completed: true }],
 						decision: {
 							...appealData.decision,
 							outcome: null

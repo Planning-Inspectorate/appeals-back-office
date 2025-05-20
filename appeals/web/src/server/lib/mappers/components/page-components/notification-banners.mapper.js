@@ -389,7 +389,7 @@ export const notificationBannerDefinitions = {
 	issuedDecisionValid: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Decision sent'
+		text: 'Decision issued'
 	},
 	issuedDecisionInvalid: {
 		type: 'success',
