@@ -20,7 +20,7 @@ export function changeLpaPage(appealDetails, lpaList, backLinkUrl, errors) {
 		type: 'radios',
 		parameters: {
 			name: 'localPlanningAuthority',
-			idPrefix: 'localPlanningAuthority',
+			idPrefix: 'local-planning-authority',
 			fieldset: {
 				legend: {
 					text: 'Local planning authority',
