@@ -23,7 +23,6 @@ import { mapCrossTeamCorrespondence } from './submappers/cross-team-corresponden
 import { mapDecision } from './submappers/decision.mapper.js';
 import { mapDownloadCaseFiles } from './submappers/case-files-download.mapper.js';
 import { mapInspectorCorrespondence } from './submappers/inspector-correspondence.mapper.js';
-import { mapAppellantCorrespondence } from './submappers/appellant-correspondence.mapper.js';
 import { mapInspectorNeighbouringSites } from './submappers/inspector-neighbouring-sites.mapper.js';
 import { mapInspector } from './submappers/inspector.mapper.js';
 import { mapIssueDeterminationDate } from './submappers/issue-determination-date.mapper.js';
@@ -82,7 +81,7 @@ export const submaps = {
 	inspector: mapInspector,
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,
 	inspectorCorrespondence: mapInspectorCorrespondence,
-	appellantCorrespondence: mapAppellantCorrespondence,
+	mainPartyCorrespondence: mapMainPartyCorrespondence,
 	caseHistory: mapCaseHistory,
 	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
@@ -101,6 +100,5 @@ export const submaps = {
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
 	appellantHealthAndSafety: mapAppellantHealthAndSafety,
-	lpaNeighbouringSites: mapLpaNeighbouringSites,
-	mainPartyCorrespondence: mapMainPartyCorrespondence
+	lpaNeighbouringSites: mapLpaNeighbouringSites
 };
