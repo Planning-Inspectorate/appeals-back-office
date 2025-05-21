@@ -374,6 +374,10 @@ const clientActions = (container) => {
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
+		if (container.dataset?.documentStage === 'representation') {
+			return null;
+		}
+
 		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
 		const filenamesInFolderArray =
