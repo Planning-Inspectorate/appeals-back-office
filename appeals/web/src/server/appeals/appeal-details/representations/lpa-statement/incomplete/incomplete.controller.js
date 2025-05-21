@@ -78,7 +78,7 @@ export const postReasons = async (request, response, next) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderSetNewDate(request, response) {
-	const extendedDeadline = await addBusinessDays(request.apiClient, new Date(), 7);
+	const extendedDeadline = await addBusinessDays(request.apiClient, new Date(), 3);
 	const deadlineString = dateISOStringToDisplayDate(extendedDeadline.toISOString());
 	const pageContent = setNewDatePage(request.currentAppeal, deadlineString);
 
