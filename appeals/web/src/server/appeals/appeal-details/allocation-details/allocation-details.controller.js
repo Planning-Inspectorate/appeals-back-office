@@ -30,7 +30,8 @@ const renderAllocationDetailsLevels = async (request, response, errors = null) =
 			appealDetails.appealId === request.session.appealId
 				? request.session.allocationLevel
 				: undefined,
-			appealDetails
+			appealDetails,
+			errors && typeof errors === 'object' ? errors['allocation-level'].msg : undefined
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -83,7 +84,8 @@ const renderAllocationDetailsSpecialism = async (request, response, errors = nul
 			{ allocationDetailsLevels, allocationDetailsSpecialisms },
 			appealDetails.appealId === request.session.appealId ? selectedAllocationLevel : undefined,
 			request.session.allocationSpecialisms,
-			appealDetails
+			appealDetails,
+			errors && typeof errors === 'object' ? errors['allocation-specialisms'].msg : undefined
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -257,11 +259,19 @@ export const postAllocationDetailsCheckAnswers = async (request, response) => {
 		delete request.session.allocationLevel;
 		delete request.session.allocationSpecialisms;
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'allocationDetailsUpdated',
-			appealId: appealDetails.appealId
-		});
+		if (appealDetails.allocationDetails) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'allocationDetailsUpdated',
+				appealId: appealDetails.appealId
+			});
+		} else {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'allocationDetailsAdded',
+				appealId: appealDetails.appealId
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
 	} catch (error) {

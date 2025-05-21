@@ -17,9 +17,10 @@ import { getAppealTypesFromId } from './change-appeal-type.service.js';
  * @param {Appeal} appealDetails
  * @param {AppealType[]} appealTypes
  * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
-export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
+export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMessage) {
 	/** @type {PageComponent} */
 	const selectAppealTypeRadiosComponent = {
 		type: 'radios',
@@ -33,6 +34,11 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 					classes: 'govuk-fieldset__legend--l'
 				}
 			},
+			errorMessage: errorMessage
+				? {
+						text: errorMessage
+				  }
+				: undefined,
 			items: mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal)
 		}
 	};
@@ -70,9 +76,10 @@ export function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal) 
  *
  * @param {Appeal} appealDetails
  * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
-export function resubmitAppealPage(appealDetails, changeAppeal) {
+export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 	/** @type {PageComponent} */
 	const selectResubmitAppealComponent = {
 		type: 'radios',
@@ -97,7 +104,12 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 					text: 'No',
 					checked: changeAppeal?.resubmit === false
 				}
-			]
+			],
+			errorMessage: errorMessage
+				? {
+						text: errorMessage
+				  }
+				: undefined
 		}
 	};
 
@@ -296,16 +308,24 @@ function mapAppealTypeToDisplayText(appealType) {
  * @param {Appeal} appealDetails
  * @param { number } changeDay
  * @param { number } changeMonth
- * @param { number } changeYear
+ * @param { number } changeYear,
+ * @param {import('@pins/express').ValidationErrors|undefined}  errors
  * @returns {PageContent}
  */
-export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth, changeYear) {
+export function changeAppealFinalDatePage(
+	appealDetails,
+	changeDay,
+	changeMonth,
+	changeYear,
+	errors
+) {
 	/** @type {PageComponent} */
 	const selectDateComponent = {
 		type: 'date-input',
 		parameters: {
 			id: 'change-appeal-final-date',
 			namePrefix: 'change-appeal-final-date',
+			name: 'change-appeal-final-date',
 			fieldset: {
 				legend: {
 					text: 'What is the final date the appellant must resubmit by?',
@@ -332,7 +352,19 @@ export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth,
 					name: 'year',
 					value: changeYear || ''
 				}
-			]
+			],
+			errorMessage: errors
+				? {
+						html: [
+							errors['']?.msg,
+							errors['change-appeal-final-date-day']?.msg,
+							errors['change-appeal-final-date-month']?.msg,
+							errors['change-appeal-final-date-year']?.msg
+						]
+							.filter(Boolean)
+							.join('<br>')
+				  }
+				: undefined
 		}
 	};
 
