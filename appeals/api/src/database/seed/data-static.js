@@ -25,6 +25,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.Specialism} Specialism
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus
  * @typedef {import('@pins/appeals.api').Schema.RepresentationRejectionReason} RepresentationRejectionReason
+ * @typedef {import('@pins/appeals.api').Schema.CaseTeam} CaseTeam
  */
 
 /**
@@ -439,6 +440,25 @@ export const representationRejectionReasons = [
 		hasText: true
 	}
 ];
+/**
+ * An array of case team email addresses
+ *
+ * @type {Pick<CaseTeam, 'email'>[]}
+ */
+export const caseTeams = [
+	{ email: 'east1@planninginspectorate.gov.uk' },
+	{ email: 'east2@planninginspectorate.gov.uk' },
+	{ email: 'east3@planninginspectorate.gov.uk' },
+	{ email: 'east4@planninginspectorate.gov.uk' },
+	{ email: 'ecat@planninginspectorate.gov.uk' },
+	{ email: 'north1@planninginspectorate.gov.uk' },
+	{ email: 'north2@planninginspectorate.gov.uk' },
+	{ email: 'rt1@planninginspectorate.gov.uk' },
+	{ email: 'west1@planninginspectorate.gov.uk' },
+	{ email: 'west2@planninginspectorate.gov.uk' },
+	{ email: 'west3@planninginspectorate.gov.uk' },
+	{ email: 'west4@planninginspectorate.gov.uk' }
+];
 
 /**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
@@ -562,6 +582,14 @@ export async function seedStaticData(databaseConnector) {
 				}
 			},
 			update: {}
+		});
+	}
+
+	for (const caseTeam of caseTeams) {
+		await databaseConnector.caseTeam.upsert({
+			create: caseTeam,
+			where: { email: caseTeam.email },
+			update: caseTeam
 		});
 	}
 

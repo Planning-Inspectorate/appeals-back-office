@@ -2652,6 +2652,7 @@ export interface Team {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	caseTeam?: object | null;
 }
 
 export interface AppealSummary {
@@ -10833,6 +10834,7 @@ export interface Appeal {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	caseTeam?: object | null;
 	allocation?: {
 		level: string;
 		band: number;

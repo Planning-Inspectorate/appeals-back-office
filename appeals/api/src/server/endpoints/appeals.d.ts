@@ -52,6 +52,7 @@ interface SingleAppealDetailsResponse {
 	appellant?: ServiceUserResponse | null;
 	agent?: ServiceUserResponse | null;
 	caseOfficer?: string | null;
+	caseTeam?: CaseTeam | null;
 	costs: {
 		appellantApplicationFolder?: FolderInfo | null;
 		appellantWithdrawalFolder?: FolderInfo | null;
@@ -921,6 +922,11 @@ type ServiceUserResponse = {
 	email?: string | null;
 	organisationName?: string | null;
 	phoneNumber?: string | null;
+};
+
+type CaseTeam = {
+	id: number;
+	email?: string | null;
 };
 
 type AssignedUser = 'caseOfficer' | 'inspector';

@@ -76,6 +76,7 @@ const appealDetailsInclude = {
 	appealTimetable: true,
 	appealType: true,
 	caseOfficer: true,
+	caseTeam: true,
 	inspector: true,
 	inspectorDecision: true,
 	lpaQuestionnaire: {

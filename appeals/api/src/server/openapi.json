@@ -11242,6 +11242,10 @@
 						"type": "string",
 						"format": "uuid",
 						"nullable": true
+					},
+					"caseTeam": {
+						"type": "object",
+						"nullable": true
 					}
 				}
 			},
@@ -25893,6 +25897,10 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"caseTeam": {
+						"type": "object",
 						"nullable": true
 					},
 					"allocation": {
