@@ -47,13 +47,13 @@ describe('Setup hearing and add hearing estimates', () => {
 		navigateToHearingSection();
 	});
 
-	it.skip('should not accept current date with no time - Hearing Time', () => {
+	it('should not accept current date with no time - Hearing Time', () => {
 		caseDetailsPage.clickHearingButton();
 		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
 
 		verifyErrorMessages({
 			messages: [
-				'Hearing date must be in the future', // Bug : The Hearing date must be in the future
+				'The hearing date must be in the future',
 				'Hearing time must include an hour',
 				'Hearing time must include a minute'
 			],
