@@ -48,6 +48,8 @@ model Appeal {
   caseOfficerUserId     Int?
   inspector             User?                @relation("inspector", fields: [inspectorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   inspectorUserId       Int?
+  caseTeam              CaseTeam?            @relation("caseTeam", fields: [caseTeamId], references: [id])
+  caseTeamId            Int?
   appellantCase         AppellantCase?
   lpaQuestionnaire      LPAQuestionnaire?
   siteVisit             SiteVisit?
@@ -217,6 +219,14 @@ model User {
   inspector     Appeal[]     @relation("inspector")
   auditTrail    AuditTrail[]
   caseNotes     CaseNote[]
+}
+
+/// CaseTeam model
+/// Contains information on the case team assigned to the appeal
+model CaseTeam {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  caseTeam Appeal[] @relation("caseTeam")
 }
 
 /// Address model

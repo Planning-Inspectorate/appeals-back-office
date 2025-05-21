@@ -31,7 +31,9 @@ export interface Appeal extends schema.Appeal {
 	appellantProcedurePreferenceDuration?: number | null;
 	representations?: Representation[] | null;
 	hearingEstimate?: HearingEstimate | null;
+	caseTeam?: CaseTeam | null;
 }
+
 export interface CaseNote extends schema.CaseNote {
 	user: User;
 }
@@ -178,3 +180,5 @@ export interface RepresentationRejectionReasonText
 }
 
 export interface AppealNotification extends schema.AppealNotification {}
+
+export interface CaseTeam extends schema.CaseTeam {}

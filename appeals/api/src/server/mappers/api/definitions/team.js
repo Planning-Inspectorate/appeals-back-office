@@ -11,6 +11,10 @@ const team = {
 			type: 'string',
 			format: 'uuid',
 			nullable: true
+		},
+		caseTeam: {
+			type: 'object',
+			nullable: true
 		}
 	}
 };
