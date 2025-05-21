@@ -1,0 +1,52 @@
+services:
+  api:
+    profiles: ['all']
+    image: node:22-alpine3.20
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/opt
+    working_dir: /opt/appeals/api
+    depends_on:
+      - pins_azurite
+      - pins_sql_server
+    command: npm run dev
+
+  web:
+    profiles: ['all']
+    image: node:22-alpine3.20
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/opt    
+    working_dir: /opt/appeals/web
+    depends_on:
+      - api
+    command: npm run dev
+
+  pins_azurite:
+    profiles: ['all', 'initial-setup']
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - '10000:10000'
+      - '10001:10001'
+      - '10002:10002'
+    volumes:
+      - ./appeals/web/certificate.pem:/workspace/certificate.pem
+      - ./appeals/web/certificate-key.pem:/workspace/certificate-key.pem
+    command: azurite --silent --blobHost 0.0.0.0 --cert /workspace/certificate.pem --key /workspace/certificate-key.pem --oauth basic --skipApiVersionCheck
+
+  pins_sql_server:
+    profiles: ['all', 'initial-setup']
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    platform: 'linux/amd64' # force platform, ARM machines to use emulation
+    container_name: pins_sql_server
+    cap_add: ['SYS_PTRACE']
+    user: root
+    init: true
+    environment:
+      - 'ACCEPT_EULA=1'
+      - 'MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>'
+    ports:
+      - 1433:1433
+    hostname: pins_sql_server
