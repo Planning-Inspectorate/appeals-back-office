@@ -188,15 +188,20 @@ describe('environmental-assessment', () => {
 			);
 			expect(response.statusCode).toBe(200);
 
-			const headingElement = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
-			expect(headingElement.innerHTML).toMatchSnapshot();
-			expect(headingElement.innerHTML).toContain('Manage folder</span>');
-			expect(headingElement.innerHTML).toContain('Environmental assessment documents</h1>');
+			const element = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage folder</span>');
+			expect(element.innerHTML).toContain('Environmental assessment documents</h1>');
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedHtml.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/${appealId}/environmental-assessment/upload-documents/${folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+			);
 		});
 	});
 
 	describe('GET /environmental-assessment/manage-documents/:folderId/:documentId', () => {
-		it('should render the manage documents page', async () => {
+		it('should render the manage document page', async () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/environmental-assessment/manage-documents/${folderId}/${documentId}`
 			);

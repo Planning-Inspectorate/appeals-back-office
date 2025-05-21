@@ -251,7 +251,9 @@ export const renderDocumentDetails = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
+ * @param {string} params.addButtonUrl
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  */
 export const renderManageFolder = async ({
@@ -259,7 +261,9 @@ export const renderManageFolder = async ({
 	response,
 	backLinkUrl,
 	viewAndEditUrl,
+	addButtonUrl,
 	pageHeadingTextOverride,
+	addButtonTextOverride,
 	dateColumnLabelTextOverride
 }) => {
 	const { currentFolder, errors } = request;
@@ -271,9 +275,11 @@ export const renderManageFolder = async ({
 	const mappedPageContent = manageFolderPage({
 		backLinkUrl,
 		viewAndEditUrl,
+		addButtonUrl,
 		folder: currentFolder,
 		request,
 		pageHeadingTextOverride,
+		addButtonTextOverride,
 		dateColumnLabelTextOverride
 	});
 
