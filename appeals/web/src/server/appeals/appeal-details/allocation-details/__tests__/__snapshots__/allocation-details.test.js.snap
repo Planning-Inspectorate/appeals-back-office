@@ -81,7 +81,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#allocation-specialisms">Please select one or more allocation specialisms</a>
+                            <li><a href="#allocation-specialisms">Select the allocation specialisms</a>
                             </li>
                         </ul>
                     </div>
@@ -168,7 +168,7 @@ exports[`Allocation Details should render "Select the allocation level" with err
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#allocation-level">Allocation level must be provided</a>
+                            <li><a href="#allocation-level">Select the allocation level</a>
                             </li>
                         </ul>
                     </div>

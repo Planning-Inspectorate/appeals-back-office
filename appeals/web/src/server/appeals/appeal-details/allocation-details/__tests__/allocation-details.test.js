@@ -38,7 +38,7 @@ describe('Allocation Details', () => {
 
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('There is a problem</h2>');
-		expect(element.innerHTML).toContain('Allocation level must be provided</a>');
+		expect(element.innerHTML).toContain('Select the allocation level</a>');
 	});
 
 	it('should redirect to "Allocation specialism" page if no errors are present and posted allocation-level is provided', async () => {
@@ -93,7 +93,7 @@ describe('Allocation Details', () => {
 
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('There is a problem</h2>');
-		expect(element.innerHTML).toContain('Please select one or more allocation specialisms</a>');
+		expect(element.innerHTML).toContain('Select the allocation specialisms</a>');
 	});
 
 	it('should redirect to "Check answer" page if no errors are present and posted allocation-specialisms is provided', async () => {
