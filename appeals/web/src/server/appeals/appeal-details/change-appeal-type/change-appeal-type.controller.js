@@ -79,7 +79,8 @@ const renderAppealType = async (request, response) => {
 	const mappedPageContent = appealTypePage(
 		appealData,
 		appealTypes,
-		request.session.changeAppealType
+		request.session.changeAppealType,
+		errors ? errors['appealType'].msg : undefined
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -144,7 +145,11 @@ const renderResubmitAppeal = async (request, response) => {
 	const { errors } = request;
 
 	const appealData = request.currentAppeal;
-	const mappedPageContent = resubmitAppealPage(appealData, request.session.changeAppealType);
+	const mappedPageContent = resubmitAppealPage(
+		appealData,
+		request.session.changeAppealType,
+		errors ? errors['appealResubmit'].msg : undefined
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -221,11 +226,21 @@ const renderChangeAppealFinalDate = async (request, response) => {
 
 	const appealData = request.currentAppeal;
 
+	//if the errors object contains a value in the empty string key - map this error to the day field to link to the day field
+	//remove other errors from the object so only the top priority error is displayed
+	if (errors && errors['']) {
+		errors['change-appeal-final-date-day'] = errors[''];
+		delete errors[''];
+		delete errors['change-appeal-final-date-month'];
+		delete errors['change-appeal-final-date-year'];
+	}
+
 	const mappedPageContent = changeAppealFinalDatePage(
 		appealData,
 		changeDay,
 		changeMonth,
-		changeYear
+		changeYear,
+		errors ? errors : undefined
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

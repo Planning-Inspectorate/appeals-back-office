@@ -9,6 +9,32 @@ import {
 } from '../dates.js';
 import { capitalize, lowerCase } from 'lodash-es';
 
+export const createDateInputNoEmptyFieldsValidator = (
+	fieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
+	dayFieldName = '-day',
+	monthFieldName = '-month',
+	yearFieldName = '-year',
+	bodyScope = ''
+) => {
+	const _day = bodyScope ? `[${dayFieldName}]` : dayFieldName;
+	const _month = bodyScope ? `[${monthFieldName}]` : monthFieldName;
+	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
+
+	return createValidator(
+		body().custom((bodyFields) => {
+			const day = bodyFields[`${bodyScope}${fieldNamePrefix}${_day}`];
+			const month = bodyFields[`${bodyScope}${fieldNamePrefix}${_month}`];
+			const year = bodyFields[`${bodyScope}${fieldNamePrefix}${_year}`];
+
+			if (!day && !month && !year) {
+				throw new Error(`Enter the ${messageFieldNamePrefix}`);
+			}
+			return true;
+		})
+	);
+};
+
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
 	messageFieldNamePrefix = 'Date',
@@ -102,6 +128,30 @@ export const createDateInputDateValidityValidator = (
 			)
 	);
 
+export const createDateInputEmptyFieldsValidator = (
+	fieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
+	dayFieldName = '-day',
+	monthFieldName = '-month',
+	yearFieldName = '-year',
+	bodyScope = ''
+) => {
+	const _day = bodyScope ? `[${dayFieldName}]` : dayFieldName;
+	const _month = bodyScope ? `[${monthFieldName}]` : monthFieldName;
+	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
+
+	return createValidator(
+		body().custom((bodyFields) => {
+			const day = bodyFields[`${bodyScope}${fieldNamePrefix}${_day}`];
+			const month = bodyFields[`${bodyScope}${fieldNamePrefix}${_month}`];
+			const year = bodyFields[`${bodyScope}${fieldNamePrefix}${_year}`];
+			if (!day && !month && !year) {
+				throw new Error(`Enter the ${messageFieldNamePrefix.toLowerCase()}`);
+			}
+			return true;
+		})
+	);
+};
 /**
  * @param {import('got').Got} apiClient
  * @param {string} value
