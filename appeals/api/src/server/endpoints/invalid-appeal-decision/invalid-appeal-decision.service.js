@@ -42,7 +42,7 @@ export const publishInvalidDecision = async (
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			reasons: invalidDecisionReason
+			reasons: [invalidDecisionReason]
 		};
 
 		if (!recipientEmail || !appeal.lpa?.email) {
