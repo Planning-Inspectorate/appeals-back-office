@@ -4,35 +4,46 @@ import {
 	createDateInputFieldsValidator,
 	createDateInputDateValidityValidator,
 	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator
+	createDateInputDateBusinessDayValidator,
+	createDateInputEmptyFieldsValidator,
+	createDateInputNoEmptyFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import { checkAppealReferenceExistsInHorizon } from './change-appeal-type.service.js';
 
 export const validateAppealType = createValidator(
-	body('appealType').trim().notEmpty().withMessage('Please choose an appeal type')
+	body('appealType').trim().notEmpty().withMessage('Select the appeal type')
 );
 
 export const validateResubmitAppeal = createValidator(
 	body('appealResubmit')
 		.trim()
 		.notEmpty()
-		.withMessage('Please specify if the appeal should be resubmitted')
+		.withMessage('Select yes if the appellant should be asked to resubmit the appeal')
 );
 
 export const validateChangeAppealFinalDate = createValidator(
-	body('appealType').trim().notEmpty().withMessage('Please choose an appeal type')
+	body('appealType').trim().notEmpty().withMessage('Select the appeal type')
 );
 
+export const validateChangeAppealNoFieldsEmpty = createDateInputNoEmptyFieldsValidator(
+	'change-appeal-final-date',
+	'deadline to resubmit the appeal'
+);
 export const validateChangeAppealFinalDateFields = createDateInputFieldsValidator(
 	'change-appeal-final-date',
-	'Final date'
+	'Deadline to resubmit the appeal'
 );
 export const validateChangeAppealFinalDateValid = createDateInputDateValidityValidator(
 	'change-appeal-final-date',
-	'Final date'
+	'Deadline to resubmit the appeal'
 );
 export const validateChangeAppealFinalDateInFuture = createDateInputDateInFutureValidator(
-	'change-appeal-final-date'
+	'change-appeal-final-date',
+	'Deadline to resubmit the appeal'
+);
+export const validateChangeAppealFinalDateEmptyFields = createDateInputEmptyFieldsValidator(
+	'change-appeal-final-date',
+	'Deadline to resubmit the appeal'
 );
 
 export const validateChangeAppealFinalDateIsBusinessDay = createDateInputDateBusinessDayValidator(

@@ -71,7 +71,7 @@ describe('change-appeal-type', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Please choose an appeal type</a>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Select the appeal type</a>');
 		});
 	});
 
@@ -135,7 +135,7 @@ describe('change-appeal-type', () => {
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Please specify if the appeal should be resubmitted</a>'
+				'Select yes if the appellant should be asked to resubmit the appeal</a>'
 			);
 		});
 	});
@@ -219,9 +219,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a day');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a month');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a year');
+		expect(unprettifiedErrorSummaryHTML).toContain('Enter the deadline to resubmit the appeal');
 	});
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
@@ -247,8 +245,12 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date day must be between 1 and 31</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
@@ -274,8 +276,12 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date month must be between 1 and 12</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
@@ -301,8 +307,12 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date year must be a number</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
@@ -328,7 +338,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {

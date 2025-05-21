@@ -81,7 +81,7 @@ exports[`Allocation Details should render "Select allocation specialism" with er
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#allocation-specialisms">Please select one or more allocation specialisms</a>
+                            <li><a href="#allocation-specialisms">Select the allocation specialisms</a>
                             </li>
                         </ul>
                     </div>
@@ -98,21 +98,23 @@ exports[`Allocation Details should render "Select allocation specialism" with er
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <p id="allocation-specialisms-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the allocation
+                        specialisms</p>
                     <div class="govuk-checkboxes govuk-checkboxes--medium" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="allocation-specialisms" name="allocation-specialisms"
-                            type="checkbox" value="1">
+                            type="checkbox" value="1" aria-describedby="allocation-specialisms-error">
                             <label class="govuk-label govuk-checkboxes__label" for="allocation-specialisms">Specialism 1</label>
                         </div>
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="allocation-specialisms-2" name="allocation-specialisms"
-                            type="checkbox" value="2">
+                            type="checkbox" value="2" aria-describedby="allocation-specialisms-error">
                             <label class="govuk-label govuk-checkboxes__label" for="allocation-specialisms-2">Specialism 2</label>
                         </div>
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="allocation-specialisms-3" name="allocation-specialisms"
-                            type="checkbox" value="3">
+                            type="checkbox" value="3" aria-describedby="allocation-specialisms-error">
                             <label class="govuk-label govuk-checkboxes__label" for="allocation-specialisms-3">Specialism 3</label>
                         </div>
                     </div>
@@ -168,7 +170,7 @@ exports[`Allocation Details should render "Select the allocation level" with err
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#allocation-level">Allocation level must be provided</a>
+                            <li><a href="#allocation-level">Select the allocation level</a>
                             </li>
                         </ul>
                     </div>
@@ -183,11 +185,13 @@ exports[`Allocation Details should render "Select the allocation level" with err
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset" aria-describedby="allocation-level-error">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                             <h1 class="govuk-fieldset__heading"> Allocation level</h1>
                         </legend>
+                        <p id="allocation-level-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the allocation
+                            level</p>
                         <div class="govuk-radios" data-module="govuk-radios">
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="allocation-level" name="allocation-level"
