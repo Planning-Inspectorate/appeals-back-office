@@ -4,6 +4,7 @@ import { request } from '#tests/../app-test.js';
 import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash-es';
+import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -718,6 +719,10 @@ describe('/appeals/:id/reps/publish', () => {
 				{ representationType: 'lpa_statement' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
