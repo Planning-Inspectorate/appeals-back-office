@@ -752,6 +752,12 @@ function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, 
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+				return generateS20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for S20');
+			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
@@ -921,42 +927,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
  * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+const generateSharedS78S20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
-
-	pageComponents.push({
-		/** @type {'summary-list'} */
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'constraints-summary'
-			},
-			card: {
-				title: {
-					text: '1. Constraints, designations and other issues'
-				}
-			},
-			rows: [
-				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
-				mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
-				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
-				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
-				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
-				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
-				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
-				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
-				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
-				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
-				mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
-				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem
-			].filter(isDefined)
-		}
-	});
 
 	pageComponents.push({
 		/** @type {'summary-list'} */
@@ -1102,6 +1075,117 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			].filter(isDefined)
 		}
 	});
+
+	return pageComponents;
+};
+/**
+ *
+ * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
+ * @returns {PageComponent[]}
+ */
+const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+	/** @type {PageComponent[]} */
+	const pageComponents = [];
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'constraints-summary'
+			},
+			card: {
+				title: {
+					text: '1. Constraints, designations and other issues'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+				mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
+				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
+				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
+				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
+				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
+				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
+	pageComponents.push(
+		...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails)
+	);
+	return pageComponents;
+};
+
+/**
+ *
+ * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
+ * @returns {PageComponent[]}
+ */
+const generateS20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+	/** @type {PageComponent[]} */
+	const pageComponents = [];
+
+	const loanToPreserveListedBuildingRows = Object.values(mappedLPAQData.lpaq)
+		.filter((key) => key.id.startsWith('loan-to-preserve-listed-building-'))
+		.map((key) => key.display.summaryListItem);
+
+	const affectsLoanToPreserveListedBuildingRows = Object.values(mappedLPAQData.lpaq)
+		.filter((key) => key.id.startsWith('affects-loan-to-preserve-listed-building-'))
+		.map((key) => key.display.summaryListItem);
+
+	const rows = [
+		mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+		mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
+		...loanToPreserveListedBuildingRows,
+		mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
+		...affectsLoanToPreserveListedBuildingRows,
+		mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
+		mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
+		mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
+		mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
+		mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
+		mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
+		mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
+		mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
+		mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem,
+		mappedLPAQData.lpaq?.historicEnglandConsultation?.display.summaryListItem
+	];
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'constraints-summary'
+			},
+			card: {
+				title: {
+					text: '1. Constraints, designations and other issues'
+				}
+			},
+			rows: [...rows].filter(isDefined)
+		}
+	});
+
+	pageComponents.push(
+		...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails)
+	);
 
 	return pageComponents;
 };
