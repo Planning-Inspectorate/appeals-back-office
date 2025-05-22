@@ -9,7 +9,7 @@
 {%- for log in pageContent.auditTrails -%}
 	{%- set row = [
 		{ html: [log.date, '<br><span>', log.time, '</span>'] | join },
-		{ text: log.details | safe },
+		{ html: log.details | safe },
 		{ text: log.user }
 	] -%}
 	{%- set rows = rows | concat([row]) -%}
