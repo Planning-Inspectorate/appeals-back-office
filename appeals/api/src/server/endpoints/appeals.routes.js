@@ -23,6 +23,7 @@ import { addressesRoutes } from './addresses/addresses.routes.js';
 import { appealTimetablesRoutes } from './appeal-timetables/appeal-timetables.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
 import { auditTrailsRoutes } from './audit-trails/audit-trails.routes.js';
+import { decisionRoutes } from './decision/decision.routes.js';
 import { appealsDecisionRoutes } from './appeal-decision/appeal-decision.routes.js';
 import { invalidAppealDecisionRoutes } from './invalid-appeal-decision/invalid-appeal-decision.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
@@ -73,6 +74,7 @@ router.use(localPlanningAuthoritiesRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
+router.use(decisionRoutes);
 router.use(appealsDecisionRoutes);
 router.use(invalidAppealDecisionRoutes);
 router.use(addressesRoutes);

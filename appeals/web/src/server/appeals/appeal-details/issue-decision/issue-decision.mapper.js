@@ -4,7 +4,6 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -277,11 +276,8 @@ function checkAndConfirmPageRows(appealData, session) {
 		}
 	];
 
-	const caseDecisionLetter =
-		session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER];
-
-	if (caseDecisionLetter) {
-		const file = caseDecisionLetter?.files[0] || {};
+	if (session.inspectorDecision) {
+		const file = session.inspectorDecision?.files[0] || {};
 		const href = mapUncommittedDocumentDownloadUrl(
 			appealData.appealReference,
 			file.GUID,
@@ -317,11 +313,7 @@ function checkAndConfirmPageRows(appealData, session) {
 		});
 
 		if (appellantCostsDecisionOutcome === 'true') {
-			const appellantCostsDecisionLetter =
-				session.inspectorDecision.fileUploadInfo[
-					APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
-				];
-			const file = appellantCostsDecisionLetter?.files[0] || {};
+			const file = session.appellantCostsDecision?.files[0] || {};
 			const href = mapUncommittedDocumentDownloadUrl(
 				appealData.appealReference,
 				file.GUID,
@@ -358,10 +350,7 @@ function checkAndConfirmPageRows(appealData, session) {
 		});
 
 		if (lpaCostsDecisionOutcome === 'true') {
-			const lpaCostsDecisionLetter =
-				session.inspectorDecision.fileUploadInfo[APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER];
-
-			const file = lpaCostsDecisionLetter?.files[0] || {};
+			const file = session.lpaCostsDecision?.files[0] || {};
 			const href = mapUncommittedDocumentDownloadUrl(
 				appealData.appealReference,
 				file.GUID,

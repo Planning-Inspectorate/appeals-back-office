@@ -112,7 +112,7 @@ exports[`appeal-details GET /:appealId Appellant costs decision should render a 
 
 exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="300"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 300 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
+exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="500"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 500 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
 exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 1`] = `"<th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>"`;
 
@@ -790,10 +790,10 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -1146,12 +1146,6 @@ exports[`appeal-details GET /:appealId should not render action links to the man
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -1217,10 +1211,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-inset-text">
-        <p>Appeal completed: 25 December 2023</p>
-        <p>Decision: Dismissed</p>
-        <p><span class="govuk-body">View decision letter</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
-        </p>
+        <ul class="govuk-list">
+            <li>Decision: Dismissed</li>
+            <li>Decision issued on 25 December 2023</li>
+            <li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+            </li>
+        </ul>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -1265,10 +1261,10 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -1611,12 +1607,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -1709,10 +1699,10 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -2062,12 +2052,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -2160,10 +2144,10 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -2516,12 +2500,6 @@ exports[`appeal-details GET /:appealId should render a lead tag next to the appe
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -2649,10 +2627,10 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -2995,12 +2973,6 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -3093,10 +3065,10 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -3461,12 +3433,6 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -3559,10 +3525,10 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -3917,12 +3883,6 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -4015,10 +3975,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -4364,12 +4324,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -4462,10 +4416,10 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -4811,12 +4765,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -4909,10 +4857,10 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -5267,12 +5215,6 @@ exports[`appeal-details GET /:appealId should render the case reference for each
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -5393,10 +5335,10 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -5751,12 +5693,6 @@ exports[`appeal-details GET /:appealId should render the lead or child status af
                         </div>
                         <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -5849,10 +5785,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -6219,12 +6155,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div id="accordion-default3-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/internal-correspondence/cross-team/upload-documents/10"
@@ -6317,10 +6247,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -6663,12 +6593,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/upload-documents/10"
@@ -6761,10 +6685,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
                                     <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                    data-maxlength="300">
+                                    data-maxlength="500">
                                         <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                         name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                        <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                     </div>
                                 </div>
                             </div>
@@ -7126,12 +7050,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         </div>
                         <div id="accordion-default2-content-8" class="govuk-accordion__section-content">
                             <dl class="govuk-summary-list">
-                                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                    <dd                                     class="govuk-summary-list__value">No documents</dd>
-                                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                            data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                        </dd>
-                                </div>
                                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                     <dd                                     class="govuk-summary-list__value">No documents</dd>
                                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -7224,10 +7142,10 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                data-maxlength="300">
+                                data-maxlength="500">
                                     <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                     name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                    <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
                         </div>
@@ -7556,12 +7474,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </div>
                     <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                <dd                                 class="govuk-summary-list__value">No documents</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                        data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                    </dd>
-                            </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
                                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"
@@ -7690,10 +7602,10 @@ exports[`appeal-details should not render a back button 1`] = `
                                     <div class="govuk-grid-row">
                                         <div class="govuk-grid-column-two-thirds">
                                             <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                                            data-maxlength="300">
+                                            data-maxlength="500">
                                                 <textarea class="govuk-textarea govuk-js-character-count" id="comment"
                                                 name="comment" rows="5" aria-describedby="comment-info"></textarea>
-                                                <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 300 characters</div>
+                                                <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                             </div>
                                         </div>
                                     </div>
@@ -8036,12 +7948,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                 </div>
                                 <div id="accordion-default2-content-8" class="govuk-accordion__section-content">
                                     <dl class="govuk-summary-list">
-                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant correspondence</dt>
-                                            <dd                                             class="govuk-summary-list__value">No documents</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/appellant/upload-documents/3"
-                                                    data-cy="add-appellant-correspondence">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                                </dd>
-                                        </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                             <dd                                             class="govuk-summary-list__value">No documents</dd>
                                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/internal-correspondence/cross-team/upload-documents/10"

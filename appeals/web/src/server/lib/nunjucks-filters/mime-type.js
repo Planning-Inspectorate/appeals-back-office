@@ -59,13 +59,11 @@ export const formattedFileTypes = (extensions) => {
  * Returns extension from MIME type
  *
  * @param {string} mime
- * @returns {string}
+ * @returns {string | null}
  */
 export const fileType = (mime) => {
 	const MIMEList = Object.values(MIMEs);
 	const mimeIndex = MIMEList.indexOf(mime);
 
-	if (mimeIndex < 0) return '';
-
-	return Object.keys(MIMEs)[mimeIndex].toUpperCase();
+	return Object.keys(MIMEs)[mimeIndex] ?? null;
 };

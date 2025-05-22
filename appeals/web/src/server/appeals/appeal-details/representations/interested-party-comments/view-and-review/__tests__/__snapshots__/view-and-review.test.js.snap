@@ -70,7 +70,8 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
 </main>"
 `;
 

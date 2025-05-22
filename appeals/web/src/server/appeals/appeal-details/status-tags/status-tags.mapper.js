@@ -58,16 +58,34 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		);
 
+		const insetTextRows = [
+			`Decision: ${mapDecisionOutcome(appealDetails.decision?.outcome || '')}`,
+			`Decision issued on ${letterDate}`
+		];
+
+		if (appealDetails.costs.appellantDecisionFolder?.documents?.length) {
+			insetTextRows.push(`Appellant costs decision: Issued`);
+		}
+
+		if (appealDetails.costs.lpaDecisionFolder?.documents?.length) {
+			insetTextRows.push(`LPA costs decision: Issued`);
+		}
+
+		if (virusCheckStatus.checked && virusCheckStatus.safe) {
+			insetTextRows.push(generateDecisionDocumentDownloadHtml(appealDetails, 'View decision'));
+		} else {
+			insetTextRows.push(
+				`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
+			);
+		}
+
+		const html =
+			`<ul class="govuk-list">` + insetTextRows.map((row) => `<li>${row}</li>`).join('') + `</ul>`;
+
 		statusTagsComponentGroup.push({
 			type: 'inset-text',
 			parameters: {
-				html: `<p>Appeal completed: ${letterDate}</p>
-						<p>Decision: ${mapDecisionOutcome(appealDetails.decision?.outcome || '')}</p>
-						<p>${
-							!(virusCheckStatus.checked && virusCheckStatus.safe)
-								? '<span class="govuk-body">View decision letter</span> '
-								: ''
-						}${generateDecisionDocumentDownloadHtml(appealDetails, 'View decision letter')}</p>`
+				html
 			}
 		});
 	} else if (

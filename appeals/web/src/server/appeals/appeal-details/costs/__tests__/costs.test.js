@@ -184,7 +184,9 @@ describe('costs', () => {
 						const element = parseHtml(response.text);
 
 						expect(element.innerHTML).toMatchSnapshot();
-						expect(element.innerHTML).toContain('Upload an updated document</h1>');
+						expect(element.innerHTML).toContain(
+							`${costsCategory === 'lpa' ? 'LPA' : 'Appellant'} ${costsDocumentType}</h1>`
+						);
 						expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
 						expect(element.innerHTML).toContain('Choose file</button>');
 					});
@@ -1193,6 +1195,9 @@ describe('costs', () => {
 							`${
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
 							} costs ${costsDocumentType} documents</h1>`
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
 						);
 					});
 				}
@@ -2592,6 +2597,9 @@ describe('costs', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision documents</h1>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+				);
 			});
 		});
 

@@ -1,5 +1,6 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsAppellantDecision = ({
@@ -19,6 +20,9 @@ export const mapCostsAppellantDecision = ({
 
 	const isIssued = appellantDecisionFolder?.documents?.length ?? 0 > 0;
 
+	const { id: documentId = '', name: documentName = '' } =
+		appellantDecisionFolder?.documents?.[0] || {};
+
 	const actionText = (() => {
 		if (isIssued) {
 			return 'View';
@@ -33,7 +37,9 @@ export const mapCostsAppellantDecision = ({
 		id: 'appellant-costs-decision',
 		text: 'Appellant costs decision',
 		value: isIssued ? 'Issued' : 'Not issued',
-		link: `${currentRoute}/costs/appellant-decision`,
+		link: isIssued
+			? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
+			: `${currentRoute}/costs/appellant-decision`,
 		actionText,
 		editable: userHasUpdateCasePermission && Boolean(actionText),
 		classes: 'costs-appellant-decision'

@@ -13,6 +13,7 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
@@ -74,6 +75,7 @@ export const postDocumentUploadPage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDocumentVersionUpload = async (request, response) => {
 	const {
+		apiClient,
 		currentAppeal,
 		currentFolder,
 		params: { documentId }
@@ -82,6 +84,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
+
+	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
 
 	await renderDocumentUpload({
 		request,
@@ -93,7 +97,8 @@ export const getDocumentVersionUpload = async (request, response) => {
 		nextPageUrl: `${environmentalAssessmentUrl(currentAppeal.appealId)}/check-your-answers/${
 			currentFolder.folderId
 		}/${documentId}`,
-		allowMultipleFiles: false
+		allowMultipleFiles: false,
+		allowedTypes: allowedType ? [allowedType] : undefined
 	});
 };
 
@@ -253,6 +258,9 @@ export const getManageFolder = async (request, response) => {
 		viewAndEditUrl: `${environmentalAssessmentUrl(request.params.appealId)}/manage-documents/${
 			currentFolder.folderId
 		}/{{documentId}}`,
+		addButtonUrl: `${environmentalAssessmentUrl(request.params.appealId)}/upload-documents/${
+			currentFolder.folderId
+		}`,
 		pageHeadingTextOverride: pageHeadingText
 	});
 };
