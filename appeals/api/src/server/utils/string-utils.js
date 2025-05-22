@@ -29,4 +29,16 @@ const camelToScreamingSnake = (str) => {
 		.toUpperCase(); // Convert the entire string to uppercase
 };
 
-export { camelToScreamingSnake };
+/**
+ * @param {string} str
+ * @returns {string}
+ * */
+function capitalizeFirstLetter(str) {
+	if (str.length > 1) {
+		return str.charAt(0)?.toUpperCase() + str.slice(1);
+	}
+
+	return str.toUpperCase();
+}
+
+export { camelToScreamingSnake, capitalizeFirstLetter };

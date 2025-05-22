@@ -251,7 +251,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
+						details: stringTokenReplacement(AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED, ['30.6']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
