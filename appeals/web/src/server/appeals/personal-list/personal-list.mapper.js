@@ -181,7 +181,7 @@ export function personalListPage(
 								type: 'status-tag',
 								parameters: {
 									status: appeal.appealStatus
-										? mapStatusText(appeal.appealStatus, appeal.appealType)
+										? mapStatusText(appeal.appealStatus, appeal.appealType, appeal.procedureType)
 										: 'ERROR'
 								}
 							}

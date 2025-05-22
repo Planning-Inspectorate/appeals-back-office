@@ -102,6 +102,7 @@ const getAllAppeals = async (
 				}
 			},
 			appealType: true,
+			procedureType: true,
 			lpa: true,
 			appellantCase: {
 				include: {
@@ -183,6 +184,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				},
 				appealTimetable: true,
 				appealType: true,
+				procedureType: true,
 				appellantCase: {
 					include: {
 						appellantCaseIncompleteReasonsSelected: {

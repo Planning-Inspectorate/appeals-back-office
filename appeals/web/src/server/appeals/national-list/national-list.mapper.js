@@ -2,7 +2,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
@@ -58,7 +57,7 @@ export function nationalListPage(
 
 	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
 		(appealStatus) => ({
-			text: appealStatusToStatusText(appealStatus),
+			text: appealStatusToStatusFilterLabel(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})
@@ -457,7 +456,11 @@ export function nationalListPage(
 										{
 											type: 'status-tag',
 											parameters: {
-												status: mapStatusText(appeal.appealStatus, appeal.appealType)
+												status: mapStatusText(
+													appeal.appealStatus,
+													appeal.appealType,
+													appeal.procedureType
+												)
 											}
 										}
 									]
@@ -481,4 +484,19 @@ export function nationalListPage(
 	}
 
 	return pageContent;
+}
+
+/**
+ * Maps appealStatus values to status filter dropdown labels
+ * @param {string} appealStatus
+ * @returns {string}
+ */
+function appealStatusToStatusFilterLabel(appealStatus) {
+	return capitalizeFirstLetter(
+		appealStatus
+			.replace('awaiting_event', 'awaiting_EVENT')
+			.replace('event', 'EVENT_ready_to_set_up')
+			.replace('EVENT', 'event')
+			.replaceAll('_', ' ')
+	);
 }

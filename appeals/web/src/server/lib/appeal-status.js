@@ -5,20 +5,40 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 /**
  * @param {string} appealStatus
  * @param {string} appealType
+ * @param {string|undefined} appealProcedureType
  * @returns {string}
  * */
-export function mapStatusText(appealStatus, appealType) {
+export function mapStatusText(appealStatus, appealType, appealProcedureType) {
 	if (![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78].includes(appealType)) {
 		return appealStatus;
 	}
 
 	switch (appealStatus) {
 		case 'event':
-			return 'site_visit_ready_to_set_up';
+			return `${mapAppealProcedureTypeToEventName(appealProcedureType)}_ready_to_set_up`;
 		case 'awaiting_event':
-			return 'awaiting_site_visit';
+			return `awaiting_${mapAppealProcedureTypeToEventName(appealProcedureType)}`;
 		default:
 			return appealStatus;
+	}
+}
+
+/**
+ * Returns the name of the event associated with the supplied procedure type (eg. site visit, hearing, inquiry)
+ * @param {string|undefined} appealProcedureType
+ * @returns {'hearing'|'inquiry'|'site_visit'} see `appeals/web/src/server/views/appeals/components/status-tag.njk` for usage
+ */
+function mapAppealProcedureTypeToEventName(appealProcedureType) {
+	const lowercaseProcedureType = appealProcedureType?.toLowerCase();
+
+	switch (lowercaseProcedureType) {
+		case 'hearing':
+			return 'hearing';
+		case 'inquiry':
+			return 'inquiry';
+		case 'written':
+		default:
+			return 'site_visit';
 	}
 }
 
