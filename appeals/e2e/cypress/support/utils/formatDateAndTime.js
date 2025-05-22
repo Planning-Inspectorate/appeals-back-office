@@ -4,19 +4,19 @@ function formatDateAndTime(date) {
 	}
 
 	// Format date (e.g., "22 May 2025")
-	const formattedDate = date.toLocaleDateString('en-GB', {
+	const formattedDate = new Intl.DateTimeFormat('en-GB', {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric'
-	});
+	}).format(date);
 
 	// Format time (e.g., "2:31am")
-	const formattedTime = date
-		.toLocaleTimeString('en-GB', {
-			hour: 'numeric',
-			minute: 'numeric',
-			hour12: true
-		})
+	const formattedTime = new Intl.DateTimeFormat('en-GB', {
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true
+	})
+		.format(date)
 		.toLowerCase()
 		.replace(' ', '');
 

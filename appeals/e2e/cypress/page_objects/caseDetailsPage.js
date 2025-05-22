@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { Then } from '@badeball/cypress-cucumber-preprocessor';
+
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
+import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
@@ -527,7 +528,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 	verifyDateChanges(timeTableRow, date) {
-		const formattedDate = dateTimeSection.formatDate(date);
+		const formattedDate = formatDateAndTime(date).date;
 		this.elements
 			.getTimetableDate(timeTableRow)
 			.invoke('text')
@@ -542,7 +543,7 @@ export class CaseDetailsPage extends Page {
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {
 		//verify the date on check your answer page is correct
-		const formattedDate = dateTimeSection.formatDate(dateToday);
+		const formattedDate = formatDateAndTime(dateToday).date;
 		this.basePageElements
 			.summaryListKey()
 			.contains(rowName)
