@@ -13,6 +13,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
+import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -64,7 +65,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}
  */
-const formatMyAppeals = (appeal, linkedAppeals) => ({
+const formatMyAppeals = async (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -74,7 +75,7 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	localPlanningDepartment: appeal.lpa?.name || '',
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 	documentationSummary: formatDocumentationSummary(appeal),
-	dueDate: mapAppealToDueDate(
+	dueDate: await mapAppealToDueDate(
 		appeal,
 		appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
 		appeal.caseExtensionDate
@@ -206,12 +207,9 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.appealTimetable?.issueDeterminationDate) {
-				return new Date(appeal.appealTimetable?.issueDeterminationDate);
-			}
 			if (appeal.siteVisit) {
-				return addBusinessDays(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
+				return calculateIssueDecisionDeadline(
+					appeal,
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
