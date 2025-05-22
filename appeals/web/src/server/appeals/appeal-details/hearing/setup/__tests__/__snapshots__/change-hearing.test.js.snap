@@ -106,17 +106,20 @@ exports[`set up hearing GET /hearing/change/check-details when all pages have be
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                                 <dd class="govuk-summary-list__value">1 February 3025</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                                 <dd class="govuk-summary-list__value">12:00pm</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address">Change</a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address"
+                                        data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
@@ -125,7 +128,8 @@ exports[`set up hearing GET /hearing/change/check-details when all pages have be
                                     <br>Bristleton
                                     <br>Tuscany
                                     <br>T12 3YZ</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details"
+                                    data-cy="change-address-details">Change<span class="govuk-visually-hidden"> Address</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -154,17 +158,20 @@ exports[`set up hearing GET /hearing/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address">Change</a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address"
+                                        data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
@@ -173,7 +180,8 @@ exports[`set up hearing GET /hearing/change/check-details when only address deta
                                     <br>Bristleton
                                     <br>Tuscany
                                     <br>T12 3YZ</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details"
+                                    data-cy="change-address-details">Change<span class="govuk-visually-hidden"> Address</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -202,17 +210,20 @@ exports[`set up hearing GET /hearing/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">No</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address">Change</a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address"
+                                        data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                                     </dd>
                             </div>
                         </dl>
@@ -241,17 +252,20 @@ exports[`set up hearing GET /hearing/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/date"
+                                    data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address">Change</a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address"
+                                        data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
@@ -260,7 +274,8 @@ exports[`set up hearing GET /hearing/change/check-details when only yes and addr
                                     <br>Bristleton
                                     <br>Tuscany
                                     <br>T12 3YZ</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details">Change</a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/hearing/change/address-details"
+                                    data-cy="change-address-details">Change<span class="govuk-visually-hidden"> Address</span></a>
                                 </dd>
                             </div>
                         </dl>
