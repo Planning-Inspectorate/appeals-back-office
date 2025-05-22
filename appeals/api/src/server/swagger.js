@@ -936,7 +936,13 @@ export const spec = {
 		],
 		LPAChangeRequest: {
 			newLpaId: 2
-		}
+		},
+		CaseTeams: [
+			{
+				id: 1,
+				email: 'caseteam@example.com'
+			}
+		]
 	},
 	'@definitions': {
 		SingleLinkableAppealSummaryResponse: {

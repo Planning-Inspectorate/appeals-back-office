@@ -112,6 +112,7 @@ const mockRepresentationCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
 const mockLpaFindMany = jest.fn().mockResolvedValue({});
 const mockLpaFindUnique = jest.fn().mockResolvedValue({});
+const mockCaseTeamsFindMany = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -474,6 +475,12 @@ class MockPrismaClient {
 		return {
 			findMany: mockLpaFindMany,
 			findUnique: mockLpaFindUnique
+		};
+	}
+
+	get caseTeam() {
+		return {
+			findMany: mockCaseTeamsFindMany
 		};
 	}
 

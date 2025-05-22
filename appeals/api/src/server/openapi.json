@@ -1572,6 +1572,43 @@
 				}
 			}
 		},
+		"/appeals/case-teams": {
+			"get": {
+				"tags": ["Case Teams List"],
+				"description": "Gets list of case teams",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Case Teams",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseTeams"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseTeams"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals": {
 			"get": {
 				"tags": ["Appeal Lists"],
@@ -10598,6 +10635,25 @@
 				},
 				"xml": {
 					"name": "LPAChangeRequest"
+				}
+			},
+			"CaseTeams": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number",
+							"example": 1
+						},
+						"email": {
+							"type": "string",
+							"example": "caseteam@example.com"
+						}
+					}
+				},
+				"xml": {
+					"name": "CaseTeams"
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {

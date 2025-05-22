@@ -46,6 +46,7 @@ import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/loc
 import { hearingRoutes } from './hearings/hearing.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
 import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
+import { caseTeamsRoutes } from './case-teams/case-teams.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 
 const router = createRouter();
@@ -71,6 +72,7 @@ router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
 router.use(localPlanningAuthoritiesRoutes);
+router.use(caseTeamsRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);

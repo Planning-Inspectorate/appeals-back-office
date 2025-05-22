@@ -2279,6 +2279,13 @@ export interface LPAChangeRequest {
 	newLpaId?: number;
 }
 
+export type CaseTeams = {
+	/** @example 1 */
+	id?: number;
+	/** @example "caseteam@example.com" */
+	email?: string;
+}[];
+
 export interface SingleLinkableAppealSummaryResponse {
 	/**
 	 * ID in back-office or horizon
