@@ -1,4 +1,4 @@
-import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '#lib/constants.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 
 /**
  * @param {string|undefined} folderPath
