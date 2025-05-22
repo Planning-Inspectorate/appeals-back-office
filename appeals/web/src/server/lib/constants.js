@@ -52,5 +52,6 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = {
 	[APPEAL_DOCUMENT_TYPE.UNCATEGORISED]: 'Documents',
 	[APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER]: 'Decision letter',
 	[APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE]: 'Main party correspondence',
+	[APPEAL_DOCUMENT_TYPE.HISTORIC_ENGLAND_CONSULTATION]: 'Historic England consultation',
 	representationAttachments: ''
 };
