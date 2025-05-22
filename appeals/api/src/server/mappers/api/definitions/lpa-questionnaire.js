@@ -199,7 +199,8 @@ const lpaQuestionnaire = {
 				eiaScreeningOpinion: { ...Folder },
 				eiaScreeningDirection: { ...Folder },
 				lpaCaseCorrespondence: { ...Folder },
-				otherRelevantPolicies: { ...Folder }
+				otherRelevantPolicies: { ...Folder },
+				historicEnglandConsultation: { ...Folder },
 			},
 			nullable: true
 		}

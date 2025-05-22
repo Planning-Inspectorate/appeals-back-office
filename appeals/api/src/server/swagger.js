@@ -558,7 +558,8 @@ export const spec = {
 				screeningDirection: folderWithDocs,
 				siteNotice: folderWithDocs,
 				supplementaryPlanningtestDocuments: folderWithDocs,
-				treePreservationOrder: folderWithDocs
+				treePreservationOrder: folderWithDocs,
+				historicEnglandConsultation: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,
