@@ -324,6 +324,7 @@ interface SingleLPAQuestionnaireResponse {
 		eiaScreeningDirection?: FolderInfo | null;
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
+		historicEnglandConsultation?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -367,6 +368,7 @@ interface SingleLPAQuestionnaireResponse {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	loanToPreserveListedBuilding?: LoanToPreserveListedBuilding[] | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -909,6 +911,12 @@ type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
 	affectsListedBuilding: boolean;
+};
+
+type LoanToPreserveListedBuilding = {
+	id: number;
+	listEntry: string;
+	loanToPreserveListedBuilding: boolean;
 };
 
 type LookupTables = AppellantCaseIncompleteReason | AppellantCaseInvalidReason | ValidationOutcome;
