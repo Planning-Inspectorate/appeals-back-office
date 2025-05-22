@@ -69,7 +69,7 @@ const createHearingById = (data) => {
  *  appealId: number;
  * 	hearingStartTime: Date;
  * 	hearingEndTime?: Date ;
- *  address?: Omit<Address, 'id'>
+ *  address?: Omit<Address, 'id'> | null
  *  addressId?: number
  * }} data
  * @returns {PrismaPromise<object>}
@@ -77,21 +77,25 @@ const createHearingById = (data) => {
 const updateHearingById = (id, data) => {
 	const { appealId, hearingStartTime, hearingEndTime, address, addressId } = data;
 
-	let addressStatement;
+	let addressStatement = {};
 
 	if (addressId) {
-		addressStatement = { connect: { id: addressId } };
+		addressStatement = { address: { connect: { id: addressId } } };
 	} else if (address) {
 		addressStatement = {
-			create: {
-				addressLine1: address.addressLine1 ?? null,
-				addressLine2: address.addressLine2 ?? null,
-				addressTown: address.addressTown ?? null,
-				addressCounty: address.addressCounty ?? null,
-				postcode: address.postcode ?? null,
-				addressCountry: address.addressCountry ?? null
+			address: {
+				create: {
+					addressLine1: address.addressLine1 ?? null,
+					addressLine2: address.addressLine2 ?? null,
+					addressTown: address.addressTown ?? null,
+					addressCounty: address.addressCounty ?? null,
+					postcode: address.postcode ?? null,
+					addressCountry: address.addressCountry ?? null
+				}
 			}
 		};
+	} else if (address === null) {
+		addressStatement = { address: { disconnect: true } };
 	}
 
 	const hearingData = {
@@ -102,7 +106,7 @@ const updateHearingById = (id, data) => {
 		}),
 		hearingStartTime,
 		hearingEndTime,
-		...(addressStatement && { address: addressStatement })
+		...addressStatement
 	};
 
 	return databaseConnector.hearing.update({
