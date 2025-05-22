@@ -31,8 +31,6 @@ export function generateS78Components(
 			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
 	);
 
-	console.log('S78 site details component index', siteDetailsComponentIndex);
-
 	if (siteDetailsComponentIndex !== -1) {
 		/**
 		 * @type {PageComponent}
