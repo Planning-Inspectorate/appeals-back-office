@@ -5,6 +5,12 @@ import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import {
+	fetchBankHolidaysForDivision,
+	getNumberOfBankHolidaysBetweenDates,
+	setTimeInTimeZone
+} from '#utils/business-days.js';
+import { addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -48,6 +54,29 @@ export const mapAppealStatuses = (rawStatuses) => {
 		])
 	);
 };
+
+/**
+ *
+ * @param {DBAppeals} appeal
+ * @param {number} businessDays
+ * @returns Date
+ */
+async function calculateIssueDecisionDeadline(appeal, businessDays) {
+	const siteVisitDateTimeZone = setTimeInTimeZone(
+		new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
+		0,
+		0
+	);
+	const siteVisitPlusBusinessDays = addBusinessDays(siteVisitDateTimeZone, businessDays);
+	const numberOfBankHolidays = getNumberOfBankHolidaysBetweenDates(
+		siteVisitDateTimeZone,
+		siteVisitPlusBusinessDays,
+		await fetchBankHolidaysForDivision()
+	);
+	return siteVisitPlusBusinessDays.setDate(
+		siteVisitPlusBusinessDays.getDate() + numberOfBankHolidays
+	);
+}
 
 /**
  *
@@ -185,4 +214,4 @@ async function updateCompletedEvents(azureAdUserId) {
 	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));
 }
 
-export { retrieveAppealListData, updateCompletedEvents };
+export { calculateIssueDecisionDeadline, retrieveAppealListData, updateCompletedEvents };
