@@ -128,7 +128,11 @@ export function checkDetailsPage(appealData, values, action) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`,
+						visuallyHiddenText: 'Date',
+						attributes: {
+							'data-cy': 'change-date'
+						}
 					}
 				]
 			}
@@ -140,7 +144,11 @@ export function checkDetailsPage(appealData, values, action) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`,
+						visuallyHiddenText: 'Time',
+						attributes: {
+							'data-cy': 'change-time'
+						}
 					}
 				]
 			}
@@ -152,7 +160,11 @@ export function checkDetailsPage(appealData, values, action) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`,
+						visuallyHiddenText: 'Whether the address is known or not',
+						attributes: {
+							'data-cy': 'change-address-known'
+						}
 					}
 				]
 			}
@@ -167,7 +179,11 @@ export function checkDetailsPage(appealData, values, action) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address-details`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address-details`,
+						visuallyHiddenText: 'Address',
+						attributes: {
+							'data-cy': 'change-address-details'
+						}
 					}
 				]
 			}
