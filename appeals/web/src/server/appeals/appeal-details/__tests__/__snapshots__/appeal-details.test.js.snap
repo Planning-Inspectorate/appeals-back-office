@@ -645,6 +645,44 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Assign case officer" and a green modifier class if appeal status is assign_case_officer 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Assign case officer</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting hearing" and a yellow modifier class if appeal status is awaiting_hearing 1`] = `"<strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-4">Awaiting hearing</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting inquiry" and a yellow modifier class if appeal status is awaiting_inquiry 1`] = `"<strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-4">Awaiting inquiry</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting site visit" and a yellow modifier class if appeal status is awaiting_site_visit 1`] = `"<strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-4">Awaiting site visit</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting transfer" and a green modifier class if appeal status is awaiting_transfer 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Awaiting transfer</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Complete" and a blue modifier class if appeal status is complete 1`] = `"<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4">Complete</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Evidence" and a green modifier class if appeal status is evidence 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Evidence</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Final comments" and a green modifier class if appeal status is final_comments 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Final comments</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing ready to set up" and a green modifier class if appeal status is hearing_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Hearing ready to set up</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Inquiry ready to set up" and a green modifier class if appeal status is inquiry_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Inquiry ready to set up</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Invalid" and a grey modifier class if appeal status is invalid 1`] = `"<strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Invalid</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Issue decision" and a green modifier class if appeal status is issue_determination 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Issue decision</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "LPA questionnaire" and a green modifier class if appeal status is lpa_questionnaire 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">LPA questionnaire</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Ready to start" and a green modifier class if appeal status is ready_to_start 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Ready to start</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Site visit ready to set up" and a green modifier class if appeal status is site_visit_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Site visit ready to set up</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Statements" and a green modifier class if appeal status is statements 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Statements</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Transferred" and a grey modifier class if appeal status is transferred 1`] = `"<strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Transferred</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Validation" and a green modifier class if appeal status is validation 1`] = `"<strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Validation</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Withdrawn" and a grey modifier class if appeal status is withdrawn 1`] = `"<strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-4">Withdrawn</strong>"`;
+
 exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with a Valid date row and a Start date row including no date and start action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -1228,7 +1266,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Complete</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4">Complete</strong>
         </div>
     </div>
     <div class="govuk-inset-text">
@@ -2602,7 +2640,7 @@ exports[`appeal-details GET /:appealId should render an Issue a decision notific
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--pink govuk-!-margin-bottom-4">Issue decision</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Issue decision</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3040,7 +3078,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--yellow govuk-!-margin-bottom-4">LPA questionnaire</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">LPA questionnaire</strong>
         </div>
     </div><strong class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
     <div     class="govuk-grid-row">
@@ -3950,7 +3988,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--orange govuk-!-margin-bottom-4">Validation</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Validation</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4391,7 +4429,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--orange govuk-!-margin-bottom-4">Validation</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-4">Validation</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
