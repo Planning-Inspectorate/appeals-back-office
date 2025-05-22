@@ -161,12 +161,21 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value">15 May 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
             <dd class="govuk-summary-list__value">123 Main St
@@ -174,6 +183,9 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
                 <br>Anytown
                 <br>Anycounty
                 <br>AA1 1AA</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address-details"
+                data-cy="change-address">Change<span class="govuk-visually-hidden"> Address</span></a>
+            </dd>
         </div>
     </dl>
     <h3 class="govuk-heading-m">Hearing estimates</h3>
@@ -189,12 +201,21 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value">15 May 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
         </div>
     </dl>
     <h3 class="govuk-heading-m">Hearing estimates</h3>

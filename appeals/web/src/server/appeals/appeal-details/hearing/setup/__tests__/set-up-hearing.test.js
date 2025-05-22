@@ -64,9 +64,7 @@ describe('set up hearing', () => {
 		it('should render any saved response', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId });
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.twice()
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request

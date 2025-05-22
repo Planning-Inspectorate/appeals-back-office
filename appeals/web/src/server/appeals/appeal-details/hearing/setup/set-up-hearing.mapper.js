@@ -14,15 +14,15 @@ import { capitalize } from 'lodash-es';
 
 /**
  * @param {Appeal} appealData
- * @param {{ day: string, month: string, year: string, hour: string, minute: string }} values
+ * @param {{ day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number }} values
  * @returns {PageContent}
  */
 export function hearingDatePage(appealData, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
 	const time =
-		values.hour || values.minute
-			? { hour: values.hour || '', minute: values.minute || '' }
+		String(values.hour) || String(values.minute)
+			? { hour: String(values.hour) || '', minute: String(values.minute).padStart(2, '0') || '' }
 			: { hour: '10', minute: '00' };
 
 	const dateComponent = dateInput({
@@ -58,10 +58,11 @@ export function hearingDatePage(appealData, values) {
 
 /**
  * @param {Appeal} appealData
- * @param {{ addressKnown: string }} values
+ * @param {string} action
+ * @param {{ addressKnown: string }} [values]
  * @returns {PageContent}
  */
-export function addressKnownPage(appealData, values) {
+export function addressKnownPage(appealData, action, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const addressKnownComponent = yesNoInput({
@@ -69,13 +70,13 @@ export function addressKnownPage(appealData, values) {
 		id: 'address-known',
 		legendText: 'Do you know the address of where the hearing will take place?',
 		legendIsPageHeading: true,
-		value: values.addressKnown
+		value: values?.addressKnown
 	});
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Address - set up hearing - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/date`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`,
 		preHeading: `Appeal ${shortAppealReference} - set up hearing`,
 		pageComponents: [addressKnownComponent]
 	};
@@ -86,17 +87,17 @@ export function addressKnownPage(appealData, values) {
 /**
  * @param {Appeal} appealData
  * @param {import('@pins/appeals').Address} currentAddress
- * @param {string} backLinkUrl
+ * @param {'setup' | 'change'} action
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function addressDetailsPage(appealData, backLinkUrl, currentAddress, errors) {
+export function addressDetailsPage(appealData, action, currentAddress, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Address - set up hearing - ${shortAppealReference}`,
-		backLinkUrl,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Address',
 		pageComponents: addressInputs({ address: currentAddress, errors })
@@ -112,9 +113,10 @@ export function addressDetailsPage(appealData, backLinkUrl, currentAddress, erro
 /**
  * @param {Appeal} appealData
  * @param {{ hearingDateTime?: string, addressKnown?: string, address?: Address }} values
+ * @param {string} action
  * @returns {PageContent}
  */
-export function checkDetailsPage(appealData, values = {}) {
+export function checkDetailsPage(appealData, values, action) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {SummaryListRowProperties[]} */
@@ -126,7 +128,7 @@ export function checkDetailsPage(appealData, values = {}) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/date`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`
 					}
 				]
 			}
@@ -138,7 +140,7 @@ export function checkDetailsPage(appealData, values = {}) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/date`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/date`
 					}
 				]
 			}
@@ -150,7 +152,7 @@ export function checkDetailsPage(appealData, values = {}) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/address`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`
 					}
 				]
 			}
@@ -165,7 +167,7 @@ export function checkDetailsPage(appealData, values = {}) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/address-details`
+						href: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address-details`
 					}
 				]
 			}
@@ -180,8 +182,8 @@ export function checkDetailsPage(appealData, values = {}) {
 
 	const backLinkUrl =
 		values.addressKnown === 'yes'
-			? `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/address-details`
-			: `/appeals-service/appeal-details/${appealData.appealId}/hearing/setup/address`;
+			? `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address-details`
+			: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -190,7 +192,7 @@ export function checkDetailsPage(appealData, values = {}) {
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `Check details and set up hearing`,
 		pageComponents: [summaryListComponent],
-		submitButtonText: 'Set up hearing'
+		submitButtonText: action === 'change' ? 'Update hearing' : 'Set up hearing'
 	};
 
 	return pageContent;

@@ -2957,6 +2957,21 @@ describe('appeal-details', () => {
 						?.innerHTML.split('<br>')
 						.map((line) => line.trim())
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector(
+						'a[data-cy="change-whether-the-address-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
+						?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address-details`);
 			});
 
 			it('should render the hearing details summary list when hearing is present with no address', async () => {
