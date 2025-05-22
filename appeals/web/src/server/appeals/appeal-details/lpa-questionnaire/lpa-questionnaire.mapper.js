@@ -978,6 +978,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaScopingOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
 			].filter(isDefined)
