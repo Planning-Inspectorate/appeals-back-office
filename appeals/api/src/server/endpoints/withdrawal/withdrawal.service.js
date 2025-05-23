@@ -31,7 +31,7 @@ export const publishWithdrawal = async (
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 
-	const eventType = !appeal.siteVisit ? '' : 'site visit';
+	const eventType = appeal.siteVisit ? 'site visit' : '';
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
