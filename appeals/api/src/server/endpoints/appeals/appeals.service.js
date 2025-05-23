@@ -7,10 +7,9 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	fetchBankHolidaysForDivision,
-	getNumberOfBankHolidaysBetweenDates,
-	setTimeInTimeZone
+	getNumberOfBankHolidaysBetweenDates
 } from '#utils/business-days.js';
-import { addBusinessDays } from 'date-fns';
+import { add, addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -56,26 +55,20 @@ export const mapAppealStatuses = (rawStatuses) => {
 };
 
 /**
- *
- * @param {DBAppeals} appeal
+ * @param {Date} eventDate
  * @param {number} businessDays
- * @returns Date
+ * @returns {Promise<Date>}
  */
-async function calculateIssueDecisionDeadline(appeal, businessDays) {
-	const siteVisitDateTimeZone = setTimeInTimeZone(
-		new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
-		0,
-		0
-	);
-	const siteVisitPlusBusinessDays = addBusinessDays(siteVisitDateTimeZone, businessDays);
+async function calculateIssueDecisionDeadline(eventDate, businessDays) {
+	const deadline = addBusinessDays(eventDate, businessDays);
 	const numberOfBankHolidays = getNumberOfBankHolidaysBetweenDates(
-		siteVisitDateTimeZone,
-		siteVisitPlusBusinessDays,
+		eventDate,
+		deadline,
 		await fetchBankHolidaysForDivision()
 	);
-	return siteVisitPlusBusinessDays.setDate(
-		siteVisitPlusBusinessDays.getDate() + numberOfBankHolidays
-	);
+	return add(new Date(deadline), {
+		days: numberOfBankHolidays
+	});
 }
 
 /**
