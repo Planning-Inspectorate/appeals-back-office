@@ -241,9 +241,7 @@ export const getAddDocuments = async (request, response) => {
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404.njk');
 	}
-
 	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(currentFolder);
-
 	await renderDocumentUpload({
 		request,
 		response,
@@ -251,7 +249,8 @@ export const getAddDocuments = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		pageHeadingTextOverride
+		pageHeadingTextOverride,
+		documentTitle: getDocumentNameFromFolder(currentFolder.path) || ''
 	});
 };
 

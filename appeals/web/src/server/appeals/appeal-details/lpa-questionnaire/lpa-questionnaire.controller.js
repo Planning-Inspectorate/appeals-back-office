@@ -8,7 +8,6 @@ import {
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '#lib/constants.js';
 import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import {
 	renderDocumentUpload,
@@ -30,6 +29,7 @@ import {
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';

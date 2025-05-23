@@ -64,9 +64,7 @@ describe('set up hearing', () => {
 		it('should render any saved response', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId });
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.twice()
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request
@@ -226,7 +224,13 @@ describe('set up hearing', () => {
 		beforeAll(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
+				.twice()
 				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({
+				addressKnown: 'yes'
+			});
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address`);
 			pageHtml = parseHtml(response.text);
@@ -248,6 +252,12 @@ describe('set up hearing', () => {
 
 		it('should render a radio button for address unknown', () => {
 			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
+		});
+
+		it('should check the submitted value', () => {
+			expect(
+				pageHtml.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeDefined();
 		});
 	});
 

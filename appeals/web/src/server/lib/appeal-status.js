@@ -14,9 +14,9 @@ export function mapStatusText(appealStatus, appealType) {
 
 	switch (appealStatus) {
 		case 'event':
-			return 'site visit ready to set up';
+			return 'site_visit_ready_to_set_up';
 		case 'awaiting_event':
-			return 'awaiting site visit';
+			return 'awaiting_site_visit';
 		default:
 			return appealStatus;
 	}

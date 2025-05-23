@@ -374,6 +374,10 @@ const clientActions = (container) => {
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
+		if (container.dataset?.documentStage === 'representation') {
+			return null;
+		}
+
 		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
 		const filenamesInFolderArray =
@@ -514,7 +518,7 @@ const clientActions = (container) => {
 					message: 'NO_FILE',
 					formId: container.dataset?.formId || '',
 					metadata: {
-						fileTitle: container.dataset?.documentTitle || 'a file'
+						fileTitle: container.dataset?.documentTitle || 'file'
 					}
 				},
 				container

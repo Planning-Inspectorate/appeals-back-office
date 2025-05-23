@@ -875,13 +875,14 @@ type CreateHearing = {
 	hearingEndTime: Date | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
+
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
 	hearingStartTime: Date;
 	hearingEndTime: Date | undefined;
-	addressId: number | undefined;
-	address: Omit<Schema.Address, 'id'> | undefined;
+	addressId?: number;
+	address?: Omit<Schema.Address, 'id'> | null;
 };
 
 type HearingResponse = {

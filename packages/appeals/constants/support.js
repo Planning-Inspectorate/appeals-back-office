@@ -54,8 +54,7 @@ export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
-export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
-	'Document {replacement0} uploaded (version {replacement1})';
+export const AUDIT_TRAIL_DOCUMENT_UPLOADED = "'{replacement0}' updated to {replacement1}";
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
@@ -88,24 +87,49 @@ export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address wa
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
-export const AUDIT_TRAIL_SERVICE_USER_UPDATED = 'The {replacement0}’s details were updated';
+export const AUDIT_TRAIL_SERVICE_USER_UPDATED =
+	'{replacement0} contact details updated to\n{replacement1}';
 export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
-	'The {replacement0}’s address details were updated';
+	"The {replacement0}'s address details were updated";
 export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
-export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated';
-export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
+export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacement0}';
+export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
 export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
-export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated';
-export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED = 'Green belt status updated';
-export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED = 'Site ownership updated';
-export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED = 'Owners known updated';
-export const AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED = 'Inspector access (appellant) updated';
+export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
+export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED =
+	"'Is the site in a green belt?' updated to {replacement0}";
+export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
+	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =
+	"'Does the appellant know who owns the land involved in the appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED =
+	"'Will an inspector need to access your land or property?' updated to\n{replacement0}";
 export const AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED =
-	'Site health and safety risks (appellant answer) updated';
-export const AUDIT_TRAIL_APPLICATION_DATE_UPDATED = 'Date application submitted updated';
+	"'Are there any health and safety issues on the appeal site?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPLICATION_DATE_UPDATED =
+	'Application submitted date updated to {replacement0}';
 export const AUDIT_TRAIL_DEVELOPMENT_DESCRIPTION_UPDATED =
-	'Original development description has been updated';
-export const AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED = 'Application decision date updated';
+	'Description of development updated to\n{replacement0}';
+export const AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED =
+	'Application decision date updated to {replacement0}';
+export const AUDIT_TRAIL_AGRICULTURAL_HOLDING_UPDATED =
+	"'Is the appeal site part of an agricultural holding?' updated to {replacement0}";
+export const AUDIT_TRAIL_TENANT_AGRICULTURAL_HOLDING_UPDATED =
+	"'Are you a tenant of the agricultural holding?' updated to {replacement0}";
+export const AUDIT_TRAIL_OTHER_TENANTS_AGRICULTURAL_HOLDING_UPDATED =
+	"'Are there any other tenants?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPLICATION_DECISION_UPDATED =
+	"'Was your application granted or refused?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_UPDATED =
+	"'How would you prefer us to decide your appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DETAILS_UPDATED =
+	"'Why would you prefer this appeal procedure?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DURATION_UPDATED =
+	"'How many days would you expect the inquiry to last?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED =
+	"'How many witnesses would you expect to give evidence at the inquiry?' updated to {replacement0}";
+export const AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED =
+	"'What is the status of your planning obligation?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_UPDATED = 'LPA questionnaire updated';
 export const AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED =
 	'Correct appeal type (LPA response) has been updated';

@@ -230,6 +230,38 @@ describe('hearing routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
+			test('removes the address if address is null', async () => {
+				const { hearing } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
+					.send({ hearingStartTime: hearing.hearingStartTime, address: null })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: householdAppeal.id
+							}
+						},
+						hearingStartTime: hearing.hearingStartTime,
+						hearingEndTime: undefined,
+						address: {
+							disconnect: true
+						}
+					},
+					where: {
+						id: hearing.id
+					}
+				});
+
+				expect(response.status).toEqual(201);
+			});
+
 			test('returns an error if appealId is not provided', async () => {
 				const { hearing } = householdAppeal;
 

@@ -11,15 +11,16 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {Appeal} appealDetails
  * @param {LPA[]} lpaList
  * @param {string} backLinkUrl
+ * @param {import('@pins/express').ValidationErrors|null|undefined} errors
  * @returns {PageContent}
  */
-export function changeLpaPage(appealDetails, lpaList, backLinkUrl) {
+export function changeLpaPage(appealDetails, lpaList, backLinkUrl, errors) {
 	/** @type {PageComponent} */
 	const selectLpaRadiosComponent = {
 		type: 'radios',
 		parameters: {
 			name: 'localPlanningAuthority',
-			idPrefix: 'localPlanningAuthority',
+			idPrefix: 'local-planning-authority',
 			fieldset: {
 				legend: {
 					text: 'Local planning authority',
@@ -27,7 +28,8 @@ export function changeLpaPage(appealDetails, lpaList, backLinkUrl) {
 					classes: 'govuk-fieldset__legend--l'
 				}
 			},
-			items: mapLpasToSelectItemParameters(lpaList)
+			items: mapLpasToSelectItemParameters(lpaList),
+			errorMessage: errors ? { text: errors.localPlanningAuthority.msg } : null
 		}
 	};
 

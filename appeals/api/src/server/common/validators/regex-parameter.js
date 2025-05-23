@@ -12,7 +12,7 @@ const validateRegex = (parameterName, regex, parentKeyOptional = null) => {
 	const chain = body(parameterName);
 
 	if (parentKeyOptional) {
-		chain.if(body(parentKeyOptional).exists());
+		chain.if(body(parentKeyOptional).exists({ values: 'null' }));
 	}
 	return chain.exists({ checkFalsy: true }).matches(regex);
 };
