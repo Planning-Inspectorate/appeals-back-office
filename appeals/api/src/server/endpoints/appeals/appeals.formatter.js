@@ -7,7 +7,7 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add, addBusinessDays } from 'date-fns';
+import { add } from 'date-fns';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
@@ -64,7 +64,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 /**
  * @param {DBUserAppeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
- * @returns {AppealListResponse}
+ * @returns {Promise<AppealListResponse>}
  */
 const formatMyAppeals = async (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
@@ -186,12 +186,12 @@ function formatAppealTimetable(appeal) {
  * @param {DBAppeal | DBUserAppeal} appeal
  * @param {string} appellantCaseStatus
  * @param {Date | null} appellantCaseDueDate
- * @returns { Date | null | undefined }
+ * @returns {Promise<Date | null | undefined>}
  */
-export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDueDate) => {
+export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantCaseDueDate) => {
 	switch (appeal.appealStatus[0].status) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appellantCaseStatus == 'Incomplete' && appellantCaseDueDate) {
+			if (appellantCaseStatus === 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
@@ -210,12 +210,12 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			});
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.siteVisit) {
-				return calculateIssueDecisionDeadline(
-					appeal,
+				return await calculateIssueDecisionDeadline(
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
-			return addBusinessDays(
+			return await calculateIssueDecisionDeadline(
 				new Date(appeal.caseCreatedDate),
 				approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
 			);
