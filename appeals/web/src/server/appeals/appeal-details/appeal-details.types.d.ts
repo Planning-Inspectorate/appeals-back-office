@@ -400,6 +400,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		withdrawalRequestDate: string | null;
 	};
 	environmentalAssessment?: FolderInfo | null;
+	procedureType?: string | undefined;
 }
 
 export interface WebServiceUser {

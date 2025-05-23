@@ -109,7 +109,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -160,7 +161,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: fullPlanningAppeal.applicationReference
+							planningApplicationReference: fullPlanningAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -235,7 +237,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: fullPlanningAppeal.applicationReference
+							planningApplicationReference: fullPlanningAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -343,7 +346,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -451,7 +455,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -559,7 +564,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -649,7 +655,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -741,7 +748,8 @@ describe('appeals list routes', () => {
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -831,7 +839,8 @@ describe('appeals list routes', () => {
 							dueDate: null,
 							isParentAppeal: false,
 							isChildAppeal: false,
-							planningApplicationReference: householdAppeal.applicationReference
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written'
 						}
 					],
 					lpas,
@@ -1063,7 +1072,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 				},
 				isParentAppeal: false,
 				isChildAppeal: false,
-				planningApplicationReference: householdAppeal.applicationReference
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: 'Written'
 			}
 		],
 		lpas,

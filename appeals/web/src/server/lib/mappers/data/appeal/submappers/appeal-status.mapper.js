@@ -24,7 +24,11 @@ export const mapAppealStatus = ({ appealDetails }) => ({
 					return '';
 				}
 
-				return mapStatusText(appealDetails.appealStatus, appealDetails.appealType);
+				return mapStatusText(
+					appealDetails.appealStatus,
+					appealDetails.appealType,
+					appealDetails.procedureType
+				);
 			})(),
 			classes: 'govuk-!-margin-bottom-4'
 		}
