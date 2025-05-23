@@ -24,7 +24,8 @@ import {
 	appellantCaseDataInvalidOutcome,
 	fileUploadInfo,
 	text300Characters,
-	text301Characters
+	text301Characters,
+	appealDataListedBuilding
 } from '#testing/app/fixtures/referencedata.js';
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -139,6 +140,56 @@ describe('appellant-case', () => {
 				'Are you a tenant of the agricultural holding?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Separate ownership certificate and agricultural land declaration</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+		});
+		it('should render the appellant case page with the expected content (Listed building planning appeal / S20)', async () => {
+			nock('http://test/')
+				.get('/appeals/3')
+				.reply(200, {
+					...appealDataListedBuilding,
+					appealId: 3
+				});
+			nock('http://test/')
+				.get('/appeals/3/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request.get(`${baseUrl}/3${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'Is the appeal site part of an agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'Are you a tenant of the agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Are there any other tenants?</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Separate ownership certificate and agricultural land declaration</dt>'
 			);

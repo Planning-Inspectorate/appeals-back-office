@@ -32,6 +32,7 @@ import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { generateS20Components } from './page-components/s20.mapper.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -712,7 +713,6 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.S78:
-		case APPEAL_TYPE.PLANNED_LISTED_BUILDING: //TODO: new field mappings and feature flag logic
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78Components(
 					appealDetails,
@@ -722,6 +722,17 @@ function generateCaseTypeSpecificComponents(
 				);
 			} else {
 				throw new Error('Feature flag inactive for S78');
+			}
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING: //TODO: new field mappings and feature flag logic
+			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+				return generateS20Components(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
+			} else {
+				throw new Error('Feature flag inactive for S20');
 			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');

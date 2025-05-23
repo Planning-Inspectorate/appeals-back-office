@@ -391,6 +391,11 @@ export const appealDataFullPlanning = {
 	appealType: 'Planning appeal'
 };
 
+export const appealDataListedBuilding = {
+	...appealData,
+	appealType: 'Planning listed building and conservation area appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
