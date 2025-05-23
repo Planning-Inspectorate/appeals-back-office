@@ -305,8 +305,33 @@ const getAppealsStatusesInNationalList = async () => {
 	);
 };
 
+/**
+ * @returns {Promise<string[]>} a duplicate-free list of all appeal procedure types in the national list
+ */
+const getAppealsProcedureTypesInNationalList = async () => {
+	const where = {
+		appealType: {
+			key: { in: getEnabledAppealTypes() }
+		},
+	};
+
+	const results = await databaseConnector.appeal.findMany({
+		where,
+		select: {
+			procedureType: true
+		}
+	});
+
+	return uniq(
+		results.flatMap((result) =>
+			result.procedureType?.key || 'written'
+		)
+	);
+};
+
 export default {
 	getAllAppeals,
 	getUserAppeals,
-	getAppealsStatusesInNationalList
+	getAppealsStatusesInNationalList,
+	getAppealsProcedureTypesInNationalList
 };

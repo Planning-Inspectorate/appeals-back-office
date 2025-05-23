@@ -4,7 +4,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
@@ -55,7 +55,19 @@ export function nationalListPage(
 			inspectorFilter
 		].some((filter) => filter && filter !== 'all');
 
-	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
+	const mappedStatusesInNationalList = (appeals?.statusesInNationalList || []).flatMap(
+		(status) => {
+			if (status === APPEAL_CASE_STATUS.EVENT) {
+				return appeals?.procedureTypesInNationalList.map(procedureType => `${procedureType === 'written' ? 'site_visit' : procedureType}_ready_to_set_up`)
+			}
+			if (status === APPEAL_CASE_STATUS.AWAITING_EVENT) {
+				return appeals?.procedureTypesInNationalList.map(procedureType => `awaiting_${procedureType === 'written' ? 'site_visit' : procedureType}`)
+			}
+			return status;
+		}
+	);
+
+	const appealStatusFilterItemsArray = ['all', ...mappedStatusesInNationalList].map(
 		(appealStatus) => ({
 			text: appealStatusToStatusFilterLabel(appealStatus),
 			value: appealStatus,
@@ -493,10 +505,6 @@ export function nationalListPage(
  */
 function appealStatusToStatusFilterLabel(appealStatus) {
 	return capitalizeFirstLetter(
-		appealStatus
-			.replace('awaiting_event', 'awaiting_EVENT')
-			.replace('event', 'EVENT_ready_to_set_up')
-			.replace('EVENT', 'event')
-			.replaceAll('_', ' ')
+		appealStatus.replaceAll('_', ' ')
 	);
 }

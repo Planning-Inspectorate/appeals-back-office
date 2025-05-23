@@ -31,6 +31,7 @@ export interface AppealList {
 	items: AppealSummary[];
 	statuses: string[];
 	statusesInNationalList: string[];
+	procedureTypesInNationalList: string[];
 	lpas: { name: string; lpaCode: string }[];
 	inspectors: { azureAdUserId: string; id: number }[];
 	caseOfficers: { azureAdUserId: string; id: number }[];

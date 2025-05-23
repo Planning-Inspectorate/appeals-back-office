@@ -32,6 +32,7 @@ const getAppeals = async (req, res) => {
 		mappedAppeals,
 		mappedStatuses,
 		statusesInNationalList,
+		procedureTypesInNationalList,
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers
@@ -54,6 +55,7 @@ const getAppeals = async (req, res) => {
 		items: mappedAppeals,
 		statuses: mappedStatuses,
 		statusesInNationalList,
+		procedureTypesInNationalList,
 		lpas: mappedLPAs,
 		inspectors: mappedInspectors,
 		caseOfficers: mappedCaseOfficers,

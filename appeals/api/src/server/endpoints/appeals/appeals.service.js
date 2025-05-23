@@ -127,7 +127,7 @@ const mapAppeals = (appeals) =>
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
- * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], procedureTypesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -160,10 +160,12 @@ const retrieveAppealListData = async (
 	const mappedInspectors = await mapInspectors(appeals);
 	const mappedCaseOfficers = await mapCaseOfficers(appeals);
 	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
+	const procedureTypesInNationalList = await appealListRepository.getAppealsProcedureTypesInNationalList();
 
 	return {
 		mappedStatuses,
 		statusesInNationalList,
+		procedureTypesInNationalList,
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers,
