@@ -91,7 +91,9 @@ const deleteUnwantedFixtures = () => {
 		'users.js',
 		'test.pdf',
 		'appeals-api-requests.js',
-		'appealsApiRequests.js'
+		'appealsApiRequests.js',
+		'sample-file-2.doc',
+		'sample-file-3.doc'
 	];
 	fs.readdir(folderPath, (err, files) => {
 		if (err) {

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Page } from './basePage';
+import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S
@@ -43,18 +44,16 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
 
-	/*enterWithdrawalDate(day, month, year) {
-		cy.get('#withdrawal-request-date-day').type(day);
-		cy.get('#withdrawal-request-date-month').type(month);
-		cy.get('#withdrawal-request-date-year').type(year);
-	}*/
-
 	enterWithdrawalRequestDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.withdrawalRequestDate, date);
 	}
 
 	enterValidDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.validDate, date);
+	}
+
+	enterDecisionLetterDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.decisionLetterDate, date);
 	}
 
 	enterVisitDate(date) {
@@ -67,16 +66,8 @@ export class DateTimeSection extends Page {
 		cy.get('#withdrawal-request-date-year').clear();
 	}
 
-	enterDecisionLetterDate(date) {
-		this.#setAllDateFields(this.selectorPrefix.decisionLetterDate, date);
-	}
-
 	enterChangeAppealTypeResubmissionDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.changeAppealDate, date);
-	}
-
-	clickSkipButton(text) {
-		this.elements.clickSkipButton(text).click();
 	}
 
 	enterVisitStartTime(hour, minute) {
@@ -87,29 +78,6 @@ export class DateTimeSection extends Page {
 	enterVisitEndTime(hour, minute) {
 		this.#set(this.elements.enterVisitEndHour(), hour);
 		this.#set(this.elements.enterVisitEndMinute(), minute);
-	}
-
-	formatDate(date) {
-		return new Intl.DateTimeFormat('en-GB', {
-			day: 'numeric',
-			month: 'long',
-			year: 'numeric'
-		}).format(date);
-	}
-
-	removeVisitStartTimeHour(index = 0) {
-		this.elements.enterVisitStartHour().eq(index).clear();
-	}
-
-	removeVisitStartTimeMinute(index = 0) {
-		this.elements.enterVisitStartMinute().eq(index).clear();
-	}
-
-	removeVisitEndTimeHour(index = 0) {
-		this.elements.enterVisitEndHour().eq(index).clear();
-	}
-	removeVisitEndTimeMinute(index = 0) {
-		this.elements.enterVisitEndMinute().eq(index).clear();
 	}
 
 	enterHearingDate(date) {
@@ -134,16 +102,5 @@ export class DateTimeSection extends Page {
 
 	#getElement(dateSelectorPrefix, dateType) {
 		return cy.get(dateSelectorPrefix + dateType);
-	}
-
-	verifyCheckYourAnswerDate(rowName, dateToday) {
-		const formattedDate = dateTimeSection.formatDate(dateToday);
-		cy.get('.govuk-summary-list__key')
-			.contains(rowName)
-			.next()
-			.invoke('prop', 'innerText')
-			.then((dateText) => {
-				expect(dateText.trim()).to.equal(formattedDate);
-			});
 	}
 }

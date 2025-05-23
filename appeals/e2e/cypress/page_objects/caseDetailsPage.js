@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { Then } from '@badeball/cypress-cucumber-preprocessor';
+
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
+import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
@@ -50,7 +51,6 @@ export class CaseDetailsPage extends Page {
 		reviewLpaStatement: 'review-lpa-statement',
 		changeApplicationReference: 'change-application-reference',
 		viewCaseHistory: 'view-case-history',
-		reviewLpaStatement: 'review-lpa-statement', 
 		uploadFile: 'upload-file-button'
 	};
 
@@ -58,7 +58,7 @@ export class CaseDetailsPage extends Page {
 
 	sampleFiles = {
 		document: 'sample-file.doc',
-		document2:'sample-file-2.doc',
+		document2: 'sample-file-2.doc',
 		document3: 'sample-file-3.doc',
 		img: 'sample-img.jpeg',
 		pdf: 'test.pdf'
@@ -155,9 +155,6 @@ export class CaseDetailsPage extends Page {
 			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
 		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
 		caseDetailsHearingEstimateLink: () => cy.get('#case-details-hearing-section p > a'),
-		estimatedPreparationTime: () => cy.get('#preparation-time'),
-		estimatedSittingTime: () => cy.get('#sitting-time'),
-		estimatedReportingTime: () => cy.get('#reporting-time'),
 		changeApplicationReferenceLink: () =>
 			cy.getByData(this._cyDataSelectors.changeApplicationReference),
 		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
@@ -225,19 +222,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.assignCaseOfficer().click();
 	}
 
-	clickChangeCaseOfficer() {
-		this.clickAccordionByText('Team');
-		this.elements.changeCaseOfficer().click();
-	}
-
 	clickAssignInspector() {
 		this.clickAccordionByText('Team');
 		this.elements.assignInspector().click();
-	}
-
-	clickChangeInspector() {
-		this.clickAccordionByText('Team');
-		this.elements.changeInspector().click();
 	}
 
 	clickReviewAppellantCase() {
@@ -364,7 +351,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	uploadSampleFile(fileName) {
-		this.elements.uploadFile().click().selectFile(this.fixturesPath + fileName, {action:'drag-drop'}, { force: true });
+		this.elements
+			.uploadFile()
+			.click()
+			.selectFile(this.fixturesPath + fileName, { action: 'drag-drop' }, { force: true });
 	}
 
 	clickViewAppealWithdrawal() {
@@ -447,7 +437,7 @@ export class CaseDetailsPage extends Page {
 		this.elements.viewCaseHistory().click();
 	}
 	/***************************************************************
-	 ************************ Verfifications ************************
+	 ************************ Verification ************************
 	 ****************************************************************/
 
 	checkAdditonalDocsAppellantCase(value) {
@@ -538,7 +528,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 	verifyDateChanges(timeTableRow, date) {
-		const formattedDate = dateTimeSection.formatDate(date);
+		const formattedDate = formatDateAndTime(date).date;
 		this.elements
 			.getTimetableDate(timeTableRow)
 			.invoke('text')
@@ -548,23 +538,25 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyAppellantEmailAddress(rowName, text) {
-		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
-	}
-
-	verifyAgentEmailAddress(rowName, text) {
-		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
+		this.basePageElements
+			.summaryListKey()
+			.then(($elem) => {
+				return $elem.filter((index, el) => el.innerText.trim() === rowName);
+			})
+			.next()
+			.contains(text);
 	}
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {
-		//verifys the date on check your answer page is correct
-		const formattedDate = dateTimeSection.formatDate(dateToday);
-		let answer = this.basePageElements
+		//verify the date on check your answer page is correct
+		const formattedDate = formatDateAndTime(dateToday).date;
+		this.basePageElements
 			.summaryListKey()
 			.contains(rowName)
 			.next()
 			.invoke('prop', 'innerText')
 			.then((dateText) => {
-				expect(dateText.trim()).to.equal(formattedDate);
+				expect(dateText.toString().trim()).to.equal(formattedDate);
 			});
 	}
 
@@ -650,19 +642,6 @@ export class CaseDetailsPage extends Page {
 		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
 	}
 
-	setUpHearing(date, hour, minute) {
-		dateTimeSection.enterHearingDate(date);
-		dateTimeSection.enterHearingTime(hour, minute);
-		this.clickButtonByText('Continue');
-	}
-
-	addHearingEstimates(preparationTime, sittingTime, reportingTime) {
-		this.elements.estimatedPreparationTime().clear().type(preparationTime);
-		this.elements.estimatedSittingTime().clear().type(sittingTime);
-		this.elements.estimatedReportingTime().clear().type(reportingTime);
-		this.clickButtonByText('Continue');
-	}
-
 	clickChangeApplicationReferenceLink() {
 		this.elements.changeApplicationReferenceLink().click();
 	}
@@ -670,17 +649,5 @@ export class CaseDetailsPage extends Page {
 	updatePlanningApplicationReference(reference) {
 		this.elements.planningApplicationReferenceField().clear().type(reference);
 		this.clickButtonByText('Continue');
-	}
-
-	verifyHearingEstimatedValue(estimateField, value) {
-		const numberOfDays = parseFloat(value);
-		const suffix = numberOfDays === 1 ? 'day' : 'days';
-		this.elements.rowChangeLink(`${estimateField}`).then(($el) => {
-			cy.wrap($el)
-				.parent('dd')
-				.siblings('dd')
-				.should('contain.text', `${numberOfDays} ${suffix}`)
-				.and('be.visible');
-		});
 	}
 }
