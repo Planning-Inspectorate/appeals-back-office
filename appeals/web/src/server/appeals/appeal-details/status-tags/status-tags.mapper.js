@@ -5,6 +5,7 @@ import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/c
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { mapDecisionOutcome } from '../issue-decision/issue-decision.mapper.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -47,9 +48,15 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		statusTagsComponentGroup.push(leadOrChildTag);
 	}
 
-	const isAppealComplete = appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE;
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
-	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
+
+	if (
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+		statusTag &&
+		(appealDetails.decision.documentId ||
+			appealDetails.costs.appellantDecisionFolder?.documents?.length ||
+			appealDetails.costs.lpaDecisionFolder?.documents?.length)
+	) {
 		const letterDate = appealDetails.decision?.letterDate
 			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
 			: dateISOStringToDisplayDate(getTodaysISOString());
@@ -58,10 +65,12 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 		);
 
-		const insetTextRows = [
-			`Decision: ${mapDecisionOutcome(appealDetails.decision?.outcome || '')}`,
-			`Decision issued on ${letterDate}`
-		];
+		const insetTextRows = [];
+
+		if (appealDetails.decision?.outcome) {
+			insetTextRows.push(`Decision: ${mapDecisionOutcome(appealDetails.decision.outcome)}`);
+			insetTextRows.push(`Decision issued on ${letterDate}`);
+		}
 
 		if (appealDetails.costs.appellantDecisionFolder?.documents?.length) {
 			insetTextRows.push(`Appellant costs decision: Issued`);
@@ -71,12 +80,14 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			insetTextRows.push(`LPA costs decision: Issued`);
 		}
 
-		if (virusCheckStatus.checked && virusCheckStatus.safe) {
-			insetTextRows.push(generateDecisionDocumentDownloadHtml(appealDetails, 'View decision'));
-		} else {
-			insetTextRows.push(
-				`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
-			);
+		if (appealDetails.decision.documentId) {
+			if (virusCheckStatus.checked && virusCheckStatus.safe) {
+				insetTextRows.push(generateDecisionDocumentDownloadHtml(appealDetails, 'View decision'));
+			} else {
+				insetTextRows.push(
+					`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
+				);
+			}
 		}
 
 		const html =

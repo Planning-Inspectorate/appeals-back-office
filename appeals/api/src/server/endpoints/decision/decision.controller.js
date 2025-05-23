@@ -24,7 +24,12 @@ export const postInspectorDecision = async (req, res) => {
 	const { appeal } = req;
 	const { decisions } = req.body;
 
-	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
+	if (
+		decisions.some(
+			(/** @type {Decision} */ decision) => decision?.decisionType === DECISION_TYPE_INSPECTOR
+		) &&
+		appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+	) {
 		return res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}
 

@@ -4,6 +4,12 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import {
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_LPA_COSTS
+} from '@pins/appeals/constants/support.js';
+import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -11,6 +17,7 @@ import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-han
  * @typedef {import('./issue-decision.types.js').AppellantCostsDecisionRequest} AppellantCostsDecisionRequest
  * @typedef {import('./issue-decision.types.js').LpaCostsDecisionRequest} LpaCostsDecisionRequest
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
  */
 
 /**
@@ -253,52 +260,55 @@ export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, e
 
 /**
  *
- * @param {Appeal} appealData
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {Appeal} appealData *
+ * @param {Request} request
  * @returns {{ key: { text: string; }; value: { html: string; text?: undefined; } | { text: string; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }[]}
  */
-function checkAndConfirmPageRows(appealData, session) {
-	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
+function checkAndConfirmPageRows(appealData, request) {
+	const { session, specificDecisionType } = request;
 	const baseRoute = `/appeals-service/appeal-details/${appealData.appealId}/issue-decision`;
-	const currentRoute = encodeURIComponent(`${baseRoute}/check-your-decision`);
-	const rows = [
-		{
-			key: 'Decision',
-			value: decisionOutcome,
-			href: '',
-			actions: [
-				{
-					text: 'Change',
-					href: `${baseRoute}/decision?backUrl=${currentRoute}`,
-					visuallyHiddenText: 'decision'
-				}
-			]
-		}
-	];
+
+	const rows = [];
 
 	if (session.inspectorDecision) {
-		const file = session.inspectorDecision?.files[0] || {};
-		const href = mapUncommittedDocumentDownloadUrl(
-			appealData.appealReference,
-			file.GUID,
-			file.name
-		);
-		rows.push({
-			key: 'Decision letter',
-			value: file.name,
-			href,
-			actions: [
-				{
-					text: 'Change',
-					href: `${baseRoute}/decision-letter-upload?backUrl=${currentRoute}`,
-					visuallyHiddenText: 'decision letter'
-				}
-			]
-		});
+		const decisionOutcome = mapDecisionOutcome(session.inspectorDecision.outcome);
+		if (decisionOutcome) {
+			rows.push({
+				key: 'Decision',
+				value: decisionOutcome,
+				href: '',
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(request, `${baseRoute}/decision`),
+						visuallyHiddenText: 'decision'
+					}
+				]
+			});
+
+			const file = session.inspectorDecision?.files[0] || {};
+			const href = mapUncommittedDocumentDownloadUrl(
+				appealData.appealReference,
+				file.GUID,
+				file.name
+			);
+			rows.push({
+				key: 'Decision letter',
+				value: file.name,
+				href,
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(request, `${baseRoute}/decision-letter-upload`),
+						visuallyHiddenText: 'decision letter'
+					}
+				]
+			});
+		}
 	}
 
 	const appellantCostsDecisionOutcome = session.appellantCostsDecision?.outcome;
-	if (appellantCostsDecisionOutcome) {
+	if (appellantCostsDecisionOutcome && !specificDecisionType) {
 		rows.push({
 			key: "Do you want to issue the appellant's costs decision?",
 			value: appellantCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
@@ -306,36 +316,44 @@ function checkAndConfirmPageRows(appealData, session) {
 			actions: [
 				{
 					text: 'Change',
-					href: `${baseRoute}/appellant-costs-decision?backUrl=${currentRoute}`,
+					href: addBackLinkQueryToUrl(request, `${baseRoute}/appellant-costs-decision`),
 					visuallyHiddenText: 'appellant cost decision'
 				}
 			]
 		});
+	}
 
-		if (appellantCostsDecisionOutcome === 'true') {
-			const file = session.appellantCostsDecision?.files[0] || {};
-			const href = mapUncommittedDocumentDownloadUrl(
-				appealData.appealReference,
-				file.GUID,
-				file.name
-			);
-			rows.push({
-				key: 'Appellant costs decision letter',
-				value: file.name,
-				href,
-				actions: [
-					{
-						text: 'Change',
-						href: `${baseRoute}/appellant-costs-decision-letter-upload?backUrl=${currentRoute}`,
-						visuallyHiddenText: 'appellant cost decision letter'
-					}
-				]
-			});
-		}
+	if (
+		appellantCostsDecisionOutcome === 'true' ||
+		specificDecisionType === DECISION_TYPE_APPELLANT_COSTS
+	) {
+		const file = session.appellantCostsDecision?.files[0] || {};
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			file.GUID,
+			file.name
+		);
+		rows.push({
+			key: 'Appellant costs decision letter',
+			value: file.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: addBackLinkQueryToUrl(
+						request,
+						specificDecisionType
+							? `${baseRoute}/issue-appellant-costs-decision-letter-upload`
+							: `${baseRoute}/appellant-costs-decision-letter-upload`
+					),
+					visuallyHiddenText: 'appellant cost decision letter'
+				}
+			]
+		});
 	}
 
 	const lpaCostsDecisionOutcome = session.lpaCostsDecision?.outcome;
-	if (lpaCostsDecisionOutcome) {
+	if (lpaCostsDecisionOutcome && !specificDecisionType) {
 		rows.push({
 			key: "Do you want to issue the LPA's costs decision?",
 			value: lpaCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
@@ -343,32 +361,37 @@ function checkAndConfirmPageRows(appealData, session) {
 			actions: [
 				{
 					text: 'Change',
-					href: `${baseRoute}/lpa-costs-decision?backUrl=${currentRoute}`,
+					href: addBackLinkQueryToUrl(request, `${baseRoute}/lpa-costs-decision`),
 					visuallyHiddenText: 'lpa cost decision'
 				}
 			]
 		});
+	}
 
-		if (lpaCostsDecisionOutcome === 'true') {
-			const file = session.lpaCostsDecision?.files[0] || {};
-			const href = mapUncommittedDocumentDownloadUrl(
-				appealData.appealReference,
-				file.GUID,
-				file.name
-			);
-			rows.push({
-				key: 'LPA costs decision letter',
-				value: file.name,
-				href,
-				actions: [
-					{
-						text: 'Change',
-						href: `${baseRoute}/lpa-costs-decision-letter-upload?backUrl=${currentRoute}`,
-						visuallyHiddenText: 'lpa costs decision letter'
-					}
-				]
-			});
-		}
+	if (lpaCostsDecisionOutcome === 'true' || specificDecisionType === DECISION_TYPE_LPA_COSTS) {
+		const file = session.lpaCostsDecision?.files[0] || {};
+		const href = mapUncommittedDocumentDownloadUrl(
+			appealData.appealReference,
+			file.GUID,
+			file.name
+		);
+		rows.push({
+			key: 'LPA costs decision letter',
+			value: file.name,
+			href,
+			actions: [
+				{
+					text: 'Change',
+					href: addBackLinkQueryToUrl(
+						request,
+						specificDecisionType
+							? `${baseRoute}/issue-lpa-costs-decision-letter-upload`
+							: `${baseRoute}/lpa-costs-decision-letter-upload`
+					),
+					visuallyHiddenText: 'lpa costs decision letter'
+				}
+			]
+		});
 	}
 
 	return rows.map(({ key, value, href = '', actions }) => {
@@ -386,25 +409,31 @@ function checkAndConfirmPageRows(appealData, session) {
 
 /**
  * @param {Appeal} appealData
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {Request} request
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(appealData, session) {
+export function checkAndConfirmPage(appealData, request) {
+	const { currentAppeal, specificDecisionType } = request;
+
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: checkAndConfirmPageRows(appealData, session)
+			rows: checkAndConfirmPageRows(appealData, request)
 		}
 	};
 
-	const title = 'Check details and issue decision';
+	const decisionTypeText = specificDecisionType
+		? specificDecisionType.replaceAll('-', ' ')
+		: 'decision';
+
+	const title = `Check details and issue ${decisionTypeText}`;
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+		backLinkUrl: getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/decision`,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Issue decision',
+		submitButtonText: `Issue ${decisionTypeText}`,
 		pageComponents: [summaryListComponent]
 	};
 
@@ -445,12 +474,11 @@ export function invalidReasonPage(appealData, invalidReason) {
 }
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {Request} request
  * @param {Appeal} appealData
- * @param  {import('./issue-decision.types.js').InspectorDecisionRequest} session
  * @returns {PageContent}
  */
-export function checkAndConfirmInvalidPage(request, appealData, session) {
+export function checkAndConfirmInvalidPage(request, appealData) {
 	const decisionOutcome = 'Invalid';
 
 	/** @type {PageComponent} */
@@ -480,7 +508,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						text: 'Reasons'
 					},
 					value: {
-						html: displayPageFormatter.formatFreeTextForDisplay(session.invalidReason)
+						html: displayPageFormatter.formatFreeTextForDisplay(request.session.invalidReason)
 					},
 					actions: {
 						items: [
