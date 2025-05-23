@@ -44,4 +44,27 @@ export const formatSortableDateTime = (date) => {
 	return formatInTimeZone(new Date(date), DEFAULT_TIMEZONE, 'yyyy-MM-dd HH:mm:ss:SSS');
 };
 
+/**
+ * @param {string | null | undefined} dateISOString
+ * @param {string} fallback
+ * @returns {string}
+ */
+export function dateISOStringToDisplayDate(dateISOString, fallback = '') {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
+		return fallback;
+	}
+
+	let displayDateString;
+
+	try {
+		displayDateString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'd MMMM yyyy', {
+			locale: enGB
+		});
+	} catch (e) {
+		displayDateString = '';
+	}
+
+	return displayDateString;
+}
+
 export default formatDate;
