@@ -19,7 +19,7 @@ exports[`set up hearing GET /hearing/setup/address should match the snapshot 1`]
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="address-known" name="addressKnown"
-                                        type="radio" value="yes">
+                                        type="radio" value="yes" checked>
                                         <label class="govuk-label govuk-radios__label" for="address-known">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
