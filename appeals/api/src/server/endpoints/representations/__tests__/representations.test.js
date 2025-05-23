@@ -419,6 +419,7 @@ describe('/appeals/:id/reps', () => {
 				}
 			});
 		});
+
 		test('400 when attachment guids are invalid and email is empty', async () => {
 			const response = await request
 				.post('/appeals/1/reps/comments')
@@ -436,7 +437,40 @@ describe('/appeals/:id/reps', () => {
 				}
 			});
 		});
+
+		test('200 when representation is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('200 when representation with address and attachment is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: 'abc 123', addressLine1: 'line 1' },
+					redactionStatus: 'unredacted',
+					attachments: ['0']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+		});
 	});
+
 	describe('PATCH /appeals/:appealId/reps/:repId/rejection-reasons', () => {
 		test('400 when payload id is not a number', async () => {
 			const response = await request

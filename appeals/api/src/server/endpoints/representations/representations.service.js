@@ -84,7 +84,8 @@ export const createRepresentation = async (appealId, input) => {
 	const { ipDetails, ipAddress } = input;
 
 	const address =
-		ipAddress &&
+		ipAddress?.addressLine1 &&
+		ipAddress?.postCode &&
 		(await addressRepository.createAddress({
 			addressLine1: ipAddress.addressLine1,
 			addressLine2: ipAddress.addressLine2,
@@ -97,7 +98,7 @@ export const createRepresentation = async (appealId, input) => {
 		firstName: ipDetails.firstName,
 		lastName: ipDetails.lastName,
 		email: ipDetails.email,
-		addressId: address?.id
+		addressId: address ? address.id : undefined
 	});
 
 	const representation = await representationRepository.createRepresentation({

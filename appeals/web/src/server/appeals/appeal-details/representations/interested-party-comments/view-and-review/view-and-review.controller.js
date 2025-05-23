@@ -56,7 +56,7 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		appealId,
 		commentId,
 		status,
-		body.siteVisitRequested === 'site-visit'
+		body['site-visit-request'] === 'site-visit'
 	);
 
 	addNotificationBannerToSession({
