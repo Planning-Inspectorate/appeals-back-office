@@ -1,12 +1,8 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import {
-	createPostcodeValidator,
-	createAddressLine1Validator,
-	createTownValidator
-} from '#lib/validators/address.validator.js';
 import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import * as controller from './edit-ip-comment.controller.js';
+import { validateInterestedPartyAddress } from '../common/validators.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 
 const router = createRouter({ mergeParams: true });
@@ -15,9 +11,7 @@ router
 	.route('/address')
 	.get(asyncHandler(controller.renderEditAddress))
 	.post(
-		createAddressLine1Validator(),
-		createTownValidator(),
-		createPostcodeValidator(),
+		validateInterestedPartyAddress,
 		saveBodyToSession('editIpComment'),
 		asyncHandler(controller.postEditAddress)
 	);

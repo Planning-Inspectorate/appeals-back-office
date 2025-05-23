@@ -70,7 +70,8 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
 </main>"
 `;
 
@@ -120,7 +121,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/5/manage-documents/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -150,7 +151,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -165,8 +166,8 @@ exports[`interested-party-comments GET /manage-documents/:folderId/:documentId s
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -209,7 +210,9 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you rejecting the comment?</dt>
-                    <dd                     class="govuk-summary-list__value"></dd>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="text"></div>
+                        </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/reject/select-reason">Change<span class="govuk-visually-hidden"> why you are rejecting the comment</span></a>
                         </dd>
                 </div>
@@ -346,7 +349,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__value">No documents</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
@@ -417,7 +420,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                     <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__value">No documents</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
@@ -489,11 +492,9 @@ exports[`interested-party-comments GET /view-comment with data should render vie
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
                     <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact">Redact</a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__value">No documents</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
@@ -592,7 +593,7 @@ exports[`interested-party-comments GET change-document-name/:folderId/:documentI
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
                     <div class="govuk-form-group">
                         <input class="govuk-input" id="documentId" name="documentId" type="hidden"
                         value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
@@ -600,7 +601,7 @@ exports[`interested-party-comments GET change-document-name/:folderId/:documentI
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
                         <input class="govuk-input" id="file-name" name="fileName"
-                        type="text" value="ph0-documentFileInfo.jpeg">
+                        type="text" value="ph0-documentFileInfo">
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>

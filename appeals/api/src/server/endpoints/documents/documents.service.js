@@ -1,11 +1,7 @@
 import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import logger from '#utils/logger.js';
 import config from '#config/config.js';
-import {
-	mapDocumentsForDatabase,
-	mapDocumentsForBlobStorage,
-	mapDocumentsForAuditTrail
-} from './documents.mapper.js';
+import { mapDocumentsForDatabase, mapDocumentsForAuditTrail } from './documents.mapper.js';
 import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
 import {
 	addDocument,
@@ -124,10 +120,12 @@ export const getRootFoldersForAppeal = async (appealId) => {
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`,
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`,
 		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`,
-		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`,
 		`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
 		`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.CROSS_TEAM_CORRESPONDENCE}`,
 		`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`,
+		`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE}`,
 		`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`,
 		`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	]);
@@ -193,7 +191,8 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`,
 				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`,
 				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`,
-				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
 			];
 			break;
 		case 'internal':
@@ -363,15 +362,12 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 		documentVersionCreated.version,
 		EventType.Update
 	);
-
-	const documentsToAddToBlobStorage = mapDocumentsForBlobStorage(
-		[documentVersionCreated],
-		appeal.reference,
-		documentVersionCreated.version
-	).filter((d) => d !== null);
+	const documentsToAddToAuditTrail = mapDocumentsForAuditTrail([documentVersionCreated]).filter(
+		(d) => d !== null
+	);
 
 	return {
-		documents: documentsToAddToBlobStorage
+		documents: documentsToAddToAuditTrail
 	};
 };
 

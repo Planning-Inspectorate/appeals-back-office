@@ -1,12 +1,8 @@
 We have received the local planning authority’s questionnaire.
 
-You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/).
+You can [view this information in the appeals service]({{front_office_url}}/appeals/{{appeal_reference_number}}).
 
-# Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 # What happens next
 

@@ -7,22 +7,46 @@
 		or https://github.dev/alphagov/govuk-frontend/src/govuk/components/tag/_index.scss
 	#}
 	{%- switch (status | string | lower) -%}
-		{%- case 'ready_to_start' -%}
-			{%- set statusTagColor = 'turquoise' -%}
-		{%- case 'lpa_questionnaire' -%}
-			{%- set statusTagColor = 'yellow' -%}
-		{%- case 'validation' -%}
-			{%- set statusTagColor = 'orange' -%}
-		{%- case 'statement_review' -%}
-			{%- set statusTagColor = 'orange' -%}
-		{%- case 'final_comment_review' -%}
-			{%- set statusTagColor = 'purple' -%}
-		{%- case 'event' -%}
-			{%- set statusTagColor = 'blue' -%}
-		{%- case 'issue_determination' -%}
-			{%- set statusTagColor = 'pink' -%}
-		{%- case 'complete' -%}
+		{# appeal statuses #}
+		{%- case 'assign_case_officer' -%}
 			{%- set statusTagColor = 'green' -%}
+		{%- case 'validation' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'ready_to_start' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'lpa_questionnaire' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'statements' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'final_comments' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'evidence' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'site_visit_ready_to_set_up' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'awaiting_site_visit' -%}
+			{%- set statusTagColor = 'yellow' -%}
+		{%- case 'hearing_ready_to_set_up' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'awaiting_hearing' -%}
+			{%- set statusTagColor = 'yellow' -%}
+		{%- case 'inquiry_ready_to_set_up' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'awaiting_inquiry' -%}
+			{%- set statusTagColor = 'yellow' -%}
+		{%- case 'issue_determination' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'complete' -%}
+			{%- set statusTagColor = 'blue' -%}
+		{%- case 'invalid' -%}
+			{%- set statusTagColor = 'grey' -%}
+		{%- case 'withdrawn' -%}
+			{%- set statusTagColor = 'grey' -%}
+		{%- case 'awaiting_transfer' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'transferred' -%}
+			{%- set statusTagColor = 'grey' -%}
+		{# other use-cases #}
 		{%- case 'overdue' -%}
 			{%- set statusTagColor = 'red' -%}
 		{%- case 'incomplete' -%}
@@ -33,8 +57,10 @@
 			{%- set statusTagColor = 'red' -%}
 		{%- case 'late_entry' -%}
 			{%- set statusTagColor = 'pink' -%}
-		{%- case 'awaiting_transfer' -%}
-			{%- set statusTagColor = 'red' -%}
+		{%- case 'lead' -%}
+			{%- set statusTagColor = 'grey' -%}
+		{%- case 'child' -%}
+			{%- set statusTagColor = 'grey' -%}
 	{%- endswitch -%}
-	<strong class="govuk-tag govuk-tag--{{ statusTagColor }} single-line{{ ' ' + classes if classes }}">{{ statusLabel | appealStatusToStatusTag }}</strong>
+	<strong class="govuk-tag govuk-tag--{{ statusTagColor }}{{' ' + classes if classes }}">{{ statusLabel | appealStatusToStatusTag }}</strong>
 {%- endmacro -%}

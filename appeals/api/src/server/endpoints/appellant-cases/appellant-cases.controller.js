@@ -5,9 +5,9 @@ import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
+import { renderAuditTrailDetail } from './appellant-cases.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -134,21 +134,9 @@ const updateAppellantCaseById = async (req, res) => {
 					developmentType
 			  });
 
-		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
-		let auditTrailDetail = CONSTANTS.AUDIT_TRAIL_APPELLANT_CASE_UPDATED;
+		const auditTrailDetail = renderAuditTrailDetail(body);
 
-		if (updatedProperties.length === 1) {
-			const updatedProperty = updatedProperties[0];
-			const constantKey = `AUDIT_TRAIL_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
-			// @ts-ignore
-			auditTrailDetail = CONSTANTS[constantKey] || auditTrailDetail;
-		} else if (updatedProperties.length > 1) {
-			if (updatedProperties.includes('ownsSomeLand') && updatedProperties.includes('ownsAllLand')) {
-				auditTrailDetail = CONSTANTS.AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED;
-			}
-		}
-
-		await createAuditTrail({
+		createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
 			details: auditTrailDetail

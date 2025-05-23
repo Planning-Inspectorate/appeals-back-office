@@ -97,7 +97,7 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<div class="govuk-grid-row pins-file-upload"'
 						);
-						expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+						expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 					});
 				}
 			}
@@ -184,9 +184,11 @@ describe('costs', () => {
 						const element = parseHtml(response.text);
 
 						expect(element.innerHTML).toMatchSnapshot();
-						expect(element.innerHTML).toContain('Upload an updated document</h1>');
+						expect(element.innerHTML).toContain(
+							`${costsCategory === 'lpa' ? 'LPA' : 'Appellant'} ${costsDocumentType}</h1>`
+						);
 						expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-						expect(element.innerHTML).toContain('Select files</button>');
+						expect(element.innerHTML).toContain('Choose file</button>');
 					});
 				}
 			}
@@ -1194,6 +1196,9 @@ describe('costs', () => {
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
 							} costs ${costsDocumentType} documents</h1>`
 						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+						);
 					});
 				}
 			}
@@ -1263,7 +1268,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1287,7 +1292,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1312,7 +1317,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+							'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -1344,10 +1349,10 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain(
-							'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+							'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -1549,7 +1554,7 @@ describe('costs', () => {
 
 						expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain('File name');
-						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 					});
 				}
 			}
@@ -1572,7 +1577,7 @@ describe('costs', () => {
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`
 							)
-							.send({ fileName: 'new-name.jpeg', documentId: '1' });
+							.send({ fileName: 'new-name', documentId: '1' });
 
 						expect(response.statusCode).toBe(302);
 						expect(response.text).toContain(
@@ -1600,7 +1605,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<div class="govuk-grid-row pins-file-upload"'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 			});
 		});
 
@@ -1673,7 +1678,7 @@ describe('costs', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('Upload an updated document</h1>');
 				expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-				expect(element.innerHTML).toContain('Select files</button>');
+				expect(element.innerHTML).toContain('Choose file</button>');
 			});
 		});
 
@@ -2592,6 +2597,9 @@ describe('costs', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision documents</h1>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+				);
 			});
 		});
 
@@ -2656,7 +2664,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -2680,7 +2688,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -2705,7 +2713,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -2737,10 +2745,10 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');

@@ -30,6 +30,7 @@ import {
  */
 
 /**
+ * @param {string|number} appealId
  * @param {string} backLinkUrl
  * @param {FolderInfo} folder
  * @param {string} withdrawalRequestDate
@@ -38,6 +39,7 @@ import {
  * @returns {PageContent}
  */
 export function manageWithdrawalRequestFolderPage(
+	appealId,
 	backLinkUrl,
 	folder,
 	withdrawalRequestDate,

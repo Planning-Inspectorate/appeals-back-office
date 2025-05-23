@@ -368,12 +368,13 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 	receivedAt: string | undefined | null;
 	representationStatus: string | undefined | null;
 	counts?: Record<string, number>;
+	isRedacted?: boolean;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {
 	appellantCase?: WebDocumentationSummaryEntry;
 	lpaQuestionnaire?: WebDocumentationSummaryEntry;
-	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate' | 'receivedAt'>;
+	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate'>;
 	appellantFinalComments?: WebDocumentationSummaryEntry;
 	lpaFinalComments?: WebDocumentationSummaryEntry;
 }
@@ -411,3 +412,14 @@ export interface WebServiceUser {
 	phoneNumber?: string | null;
 	addressId?: number | null;
 }
+
+export type Lpa = {
+	id: number;
+	name: string;
+	lpaCode: string;
+	email: string | null;
+};
+
+export type LpaChangeRequest = {
+	newLpaId: number;
+};

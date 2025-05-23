@@ -43,7 +43,9 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 						: ''
 				}`,
 				submissionDate: new Date(householdAppeal.caseCreatedDate).toISOString(),
-				source: 'back-office'
+				source: 'back-office',
+				childAppeals: [],
+				parentAppeals: []
 			});
 		});
 		test('gets a back office linkable appeal summary when the appeal does not exist in back office but exists in Horizon', async () => {

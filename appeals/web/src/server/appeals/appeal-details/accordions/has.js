@@ -19,7 +19,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData);
+	const siteDetails = getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = appealDetails.startedAt
@@ -31,8 +31,10 @@ export function generateAccordion(appealDetails, mappedData, session) {
 						rows: [
 							mappedData.appeal.validAt.display.summaryListItem,
 							mappedData.appeal.startedAt.display.summaryListItem,
-							mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
-							mappedData.appeal.siteVisitDate.display.summaryListItem
+							...(appealDetails.startedAt
+								? [mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem]
+								: []),
+							mappedData.appeal.siteVisitTimetable.display.summaryListItem
 						].filter(isDefined)
 					}
 				}
@@ -61,8 +63,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
-				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.appealDecision.display.tableItem
+				mappedData.appeal.lpaQuestionnaire.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}

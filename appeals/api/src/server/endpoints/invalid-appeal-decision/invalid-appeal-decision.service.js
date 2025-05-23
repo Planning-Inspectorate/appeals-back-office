@@ -1,16 +1,12 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import {
-	CASE_OUTCOME_INVALID,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	ERROR_NO_RECIPIENT_EMAIL
-} from '@pins/appeals/constants/support.js';
-import config from '#config/config.js';
+import { CASE_OUTCOME_INVALID, ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 // eslint-disable-next-line no-unused-vars
 import NotifyClient from '#utils/notify-client.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -39,36 +35,33 @@ export const publishInvalidDecision = async (
 
 	if (result) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		const lpaEmail = appeal.lpa?.email || '';
 		const siteAddress = appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available';
-		const emailVariables = {
+		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			reasons: invalidDecisionReason
+			reasons: [invalidDecisionReason]
 		};
 
 		if (!recipientEmail || !appeal.lpa?.email) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
-		try {
-			await Promise.all([
-				notifyClient.sendEmail(
-					config.govNotify.template.decisionIsInvalidAppellant,
-					recipientEmail,
-					emailVariables
-				),
-				notifyClient.sendEmail(
-					config.govNotify.template.decisionIsInvalidLPA,
-					lpaEmail,
-					emailVariables
-				)
-			]);
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-		}
+		await Promise.all([
+			await notifySend({
+				templateName: 'decision-is-invalid-appellant',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			}),
+			await notifySend({
+				templateName: 'decision-is-invalid-lpa',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			})
+		]);
 		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.INVALID);
 		await broadcasters.broadcastAppeal(appeal.id);
 

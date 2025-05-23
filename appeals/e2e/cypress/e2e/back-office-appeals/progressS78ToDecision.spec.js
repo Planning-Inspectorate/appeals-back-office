@@ -68,12 +68,13 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickIssueDecision(caseRef);
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.document);
+			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterDecisionLetterDate(new Date());
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.validateBannerMessage('Success', 'Decision sent');
 			caseDetailsPage.checkStatusOfCase('Complete', 0);
 			caseDetailsPage.checkDecisionOutcome('Allowed');
 			caseDetailsPage.viewDecisionLetter('View decision letter');

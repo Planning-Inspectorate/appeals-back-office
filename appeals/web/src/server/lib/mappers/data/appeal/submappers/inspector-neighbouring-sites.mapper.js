@@ -8,7 +8,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 	display: {
 		summaryListItem: {
 			key: {
-				text: 'Neighbouring sites (inspector and/or third party request)'
+				text: 'Interested party and neighbour addresses'
 			},
 			value: {
 				html:
@@ -16,7 +16,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 						? displayPageFormatter.formatListOfAddresses(
 								appealDetails.neighbouringSites.filter((site) => site.source === 'back-office')
 						  )
-						: 'None'
+						: 'No addresses'
 			},
 			actions: {
 				items: [
@@ -27,7 +27,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 								{
 									text: 'Manage',
 									href: `${currentRoute}/neighbouring-sites/manage`,
-									visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)',
+									visuallyHiddenText: 'Interested party and neighbour addresses',
 									attributes: { 'data-cy': 'manage-neighbouring-sites-inspector' }
 								}
 						  ]
@@ -37,7 +37,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 								{
 									text: 'Add',
 									href: `${currentRoute}/neighbouring-sites/add/back-office`,
-									visuallyHiddenText: 'Neighbouring sites (inspector and or third party request)',
+									visuallyHiddenText: 'Interested party and neighbour addresses',
 									attributes: { 'data-cy': 'add-neighbouring-sites-inspector' }
 								}
 						  ]

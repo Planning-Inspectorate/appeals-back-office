@@ -18,6 +18,7 @@ import { submaps as hasSubmaps } from './has.js';
  * @property {SessionWithAuth} session
  * @property {boolean} userHasUpdateCasePermission
  * @property {boolean} skipAssignedUsersData
+ * @property {import('@pins/express/types/express.js').Request} request
  * @property {{
  *     [x: string]: any;
  *   } | null} [caseOfficerUser]
@@ -35,13 +36,15 @@ import { submaps as hasSubmaps } from './has.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
-	[APPEAL_TYPE.S78]: s78Submaps
+	[APPEAL_TYPE.S78]: s78Submaps,
+	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s78Submaps
 };
 
 /**
  * @param {WebAppeal} appealDetails
  * @param {string} currentRoute
  * @param {SessionWithAuth} session
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {boolean} [skipAssignedUsersData]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
@@ -51,6 +54,7 @@ export async function initialiseAndMapAppealData(
 	appealDetails,
 	currentRoute,
 	session,
+	request,
 	skipAssignedUsersData = false,
 	appellantFinalComments,
 	lpaFinalComments
@@ -94,6 +98,7 @@ export async function initialiseAndMapAppealData(
 			appealDetails,
 			currentRoute,
 			session,
+			request,
 			skipAssignedUsersData,
 			userHasUpdateCasePermission,
 			caseOfficerUser,

@@ -15,20 +15,20 @@ import {
 	folderInfoCrossTeamCorrespondence,
 	folderInfoInspectorCorrespondence,
 	documentRedactionStatuses,
-	appealCostsDocumentItem,
 	linkedAppealsWithExternalLead,
 	fileUploadInfo,
 	caseNotes,
 	activeDirectoryUsersData,
-	text300Characters,
-	text301Characters,
 	finalCommentsForReview,
 	appellantFinalCommentsAwaitingReview,
-	lpaFinalCommentsAwaitingReview
+	lpaFinalCommentsAwaitingReview,
+	folderInfoMainPartyCorrespondence
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { capitalize } from 'lodash-es';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -117,7 +117,7 @@ describe('appeal-details', () => {
 					'Appeal ready to be assigned to case officer</p>'
 				);
 				expect(notificationBannerElementHTML).toContain(
-					'href="/appeals-service/appeal-details/2/assign-user/case-officer"'
+					`href="/appeals-service/appeal-details/2/assign-user/case-officer?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain('Assign case officer</a>');
 			});
@@ -351,54 +351,6 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
 			});
 
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a back-office appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryBackOffice);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
-					childId: appealData.appealId,
-					childRef: appealData.appealReference,
-					externaAppealType: null,
-					externalSource: false,
-					id: 1,
-					linkingDate: '2024-02-22T16:45:24.037Z',
-					parentId: linkableAppealSummaryBackOffice.appealId,
-					parentRef: linkableAppealSummaryBackOffice.appealReference,
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-				await request.post(`${baseUrl}/1/linked-appeals/add`).send({
-					'appeal-reference': appealReference
-				});
-
-				await request.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`).send({
-					confirmation: 'lead'
-				});
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
-			});
-
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
 				const appealReference = '1234567';
 
@@ -445,63 +397,6 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
 				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
-			});
-
-			it('should render a success notification banner with appropriate content if the appeal was just linked as the child of a legacy (Horizon) appeal', async () => {
-				const appealReference = '1234567';
-
-				nock.cleanAll();
-				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
-					.reply(200, linkableAppealSummaryHorizon);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}`)
-					.reply(200, appealData)
-					.persist();
-				nock('http://test/').post(`/appeals/${appealData.appealId}/link-legacy-appeal`).reply(200, {
-					childId: 5466,
-					childRef: 'TEST-489773',
-					externaAppealType: null,
-					externalSource: true,
-					id: 1,
-					linkingDate: '2024-02-22T17:16:57.654Z',
-					parentId: null,
-					parentRef: '3171066',
-					type: 'linked'
-				});
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/case-notes`)
-					.reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-
-				const addLinkedAppealReferencePostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add`)
-					.send({
-						'appeal-reference': appealReference
-					});
-
-				expect(addLinkedAppealReferencePostResponse.statusCode).toBe(302);
-
-				const addLinkedAppealCheckAndConfirmPostResponse = await request
-					.post(`${baseUrl}/1/linked-appeals/add/check-and-confirm`)
-					.send({
-						confirmation: 'lead'
-					});
-
-				expect(addLinkedAppealCheckAndConfirmPostResponse.statusCode).toBe(302);
-
-				const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-				const notificationBannerElementHTML = parseHtml(response.text, {
-					rootElement: notificationBannerElement
-				}).innerHTML;
-				expect(notificationBannerElementHTML).toMatchSnapshot();
-				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now a child of appeal');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
@@ -879,6 +774,11 @@ describe('appeal-details', () => {
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {
 				const appealId = appealData.appealId.toString();
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, { ...appealData, lpaQuestionnaireId: undefined })
+					.persist();
 				nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
 					planningApplicationReference: '12345/A/67890'
 				});
@@ -898,7 +798,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('LPA application reference updated</p>');
+				expect(notificationBannerElementHTML).toContain('Appeal updated</p>');
 			});
 
 			it('should render a success notification banner when the inspector access was updated', async () => {
@@ -1033,6 +933,45 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Inspector correspondence added</p>');
 			});
 
+			it('should render a success notification banner when a main party correspondence document was uploaded', async () => {
+				nock('http://test/')
+					.get('/appeals/1/document-folders/4')
+					.reply(200, folderInfoMainPartyCorrespondence)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/').post('/appeals/1/documents').reply(200);
+				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/main-party/upload-documents/4`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const postCheckAndConfirmResponse = await request
+					.post(`${baseUrl}/1/internal-correspondence/main-party/check-your-answers/4`)
+					.send({});
+
+				expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+				expect(postCheckAndConfirmResponse.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1'
+				);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Main party correspondence added</p>');
+			});
+
 			it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {
 				nock('http://test/')
 					.get('/appeals/2')
@@ -1077,7 +1016,7 @@ describe('appeal-details', () => {
 					'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>'
 				);
 				expect(unprettifiedElementHtml).toContain(
-					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'
+					'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'
 				);
 			});
 
@@ -1110,7 +1049,7 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Important</h3>');
 				expect(notificationBannerElementHTML).toContain('Appeal ready for validation</p>');
 				expect(notificationBannerElementHTML).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/appellant-case"`
+					`href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain('data-cy="validate-appeal"');
 				expect(notificationBannerElementHTML).toContain(
@@ -1149,7 +1088,7 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Important</h3>');
 				expect(notificationBannerElementHTML).toContain('LPA questionnaire ready for review</p>');
 				expect(notificationBannerElementHTML).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}"`
+					`href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain(
 					'data-cy="review-lpa-questionnaire-banner"'
@@ -1199,7 +1138,7 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Important</h3>');
 				expect(notificationBannerElementHTML).toContain('Site visit ready to set up</p>');
 				expect(notificationBannerElementHTML).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit"`
+					`href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain('data-cy="set-up-site-visit-banner"');
 				expect(notificationBannerElementHTML).toContain('Set up site visit</a>');
@@ -1271,7 +1210,7 @@ describe('appeal-details', () => {
 							`<p class="govuk-notification-banner__heading">${testCase.importantBannerHeading}</p>`
 						);
 						expect(unprettifiedElementHtml).toContain(
-							`<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/final-comments/${testCase.name}" data-cy="banner-review-${testCase.name}-final-comments">Review <span class="govuk-visually-hidden">${testCase.visuallyHiddenText}</span></a></p>`
+							`<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/${appealId}/final-comments/${testCase.name}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="banner-review-${testCase.name}-final-comments">Review <span class="govuk-visually-hidden">${testCase.visuallyHiddenText}</span></a></p>`
 						);
 					});
 
@@ -1499,11 +1438,11 @@ describe('appeal-details', () => {
 				expect(element).toContain('2 case notes');
 				expect(submitRequest.isDone()).toBe(false);
 			});
-			it('should not submit and re-render case details with an error if the comment exceeds 300 characters', async () => {
+			it('should not submit and re-render case details with an error if the comment exceeds the character limit', async () => {
 				nock.cleanAll();
 				const appealId = appealData.appealId.toString();
 				const caseNotesResponse = [...caseNotes];
-				const comment = 'a'.repeat(301); // Create a string that's 301 characters long
+				const comment = 'a'.repeat(501);
 
 				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
 				nock('http://test/')
@@ -1534,7 +1473,9 @@ describe('appeal-details', () => {
 				}).innerHTML;
 
 				expect(pageElements).toContain('error-summary');
-				expect(pageElements).toContain('Case note must be 300 characters or less');
+				expect(pageElements).toContain(
+					`Case note must be ${textInputCharacterLimits.caseNoteTextInputLength} characters or less`
+				);
 				expect(element).toContain('2 case notes');
 				expect(submitRequest.isDone()).toBe(false);
 			});
@@ -1574,6 +1515,103 @@ describe('appeal-details', () => {
 				expect(element).toContain('Download case');
 			});
 		});
+		describe('Status tags', () => {
+			const testCases = [
+				{
+					appealStatus: 'assign_case_officer',
+					statusTagContent: 'Assign case officer',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'validation', statusTagContent: 'Validation', statusTagColour: 'green' },
+				{
+					appealStatus: 'ready_to_start',
+					statusTagContent: 'Ready to start',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'lpa_questionnaire',
+					statusTagContent: 'LPA questionnaire',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'statements', statusTagContent: 'Statements', statusTagColour: 'green' },
+				{
+					appealStatus: 'final_comments',
+					statusTagContent: 'Final comments',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'evidence', statusTagContent: 'Evidence', statusTagColour: 'green' },
+				{
+					appealStatus: 'site_visit_ready_to_set_up',
+					statusTagContent: 'Site visit ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_site_visit',
+					statusTagContent: 'Awaiting site visit',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'hearing_ready_to_set_up',
+					statusTagContent: 'Hearing ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_hearing',
+					statusTagContent: 'Awaiting hearing',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'inquiry_ready_to_set_up',
+					statusTagContent: 'Inquiry ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_inquiry',
+					statusTagContent: 'Awaiting inquiry',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'issue_determination',
+					statusTagContent: 'Issue decision',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'complete', statusTagContent: 'Complete', statusTagColour: 'blue' },
+				{ appealStatus: 'invalid', statusTagContent: 'Invalid', statusTagColour: 'grey' },
+				{ appealStatus: 'withdrawn', statusTagContent: 'Withdrawn', statusTagColour: 'grey' },
+				{
+					appealStatus: 'awaiting_transfer',
+					statusTagContent: 'Awaiting transfer',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'transferred', statusTagContent: 'Transferred', statusTagColour: 'grey' }
+			];
+
+			for (const testCase of testCases) {
+				it(`should render a status tag with the content "${testCase.statusTagContent}" and a ${testCase.statusTagColour} modifier class if appeal status is ${testCase.appealStatus}`, async () => {
+					const appealId = 2;
+
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealStatus: testCase.appealStatus
+						});
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const statusTagHtml = parseHtml(response.text, {
+						rootElement: '#main-content .govuk-tag',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(statusTagHtml).toMatchSnapshot();
+					expect(statusTagHtml).toContain(testCase.statusTagContent);
+					expect(statusTagHtml).toContain(`govuk-tag govuk-tag--${testCase.statusTagColour}`);
+				});
+			}
+		});
 
 		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();
@@ -1589,10 +1627,10 @@ describe('appeal-details', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Case details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No appeals</span>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><span>No linked appeals</span>'
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
@@ -1762,7 +1800,7 @@ describe('appeal-details', () => {
 			expect(notificationBannerElementHTML).toContain('Important</h3>');
 			expect(notificationBannerElementHTML).toContain('Ready for decision</p>');
 			expect(notificationBannerElementHTML).toContain(
-				'href="/appeals-service/appeal-details/1/issue-decision/decision">Issue decision</a>'
+				`href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}">Issue decision</a>`
 			);
 		});
 
@@ -1779,12 +1817,13 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
 				rootElement: '.govuk-inset-text'
 			}).innerHTML;
-			expect(insetTextElementHTML).toContain('<p>Appeal completed:');
-			expect(insetTextElementHTML).toContain('<p>Decision:');
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<p><span class="govuk-body">View decision letter</span>'
+				'<li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
 			);
 		});
 
@@ -1812,7 +1851,7 @@ describe('appeal-details', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case</th><td class="govuk-table__cell">Incomplete</td>'
+				'Appeal</th><td class="govuk-table__cell">Incomplete</td>'
 			);
 		});
 
@@ -1847,63 +1886,11 @@ describe('appeal-details', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case</th><td class="govuk-table__cell">Incomplete</td>'
+				'Appeal</th><td class="govuk-table__cell">Incomplete</td>'
 			);
 		});
 
-		it('should render the appellant case status as "Overdue" if the appellant case validation status is incomplete, and the due date is in the past', async () => {
-			const appealId = '2';
-
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
-				.reply(200, {
-					...appealData,
-					appealStatus: 'validation',
-					documentationSummary: {
-						appellantCase: {
-							status: 'incomplete',
-							dueDate: '2024-02-01T10:27:06.626Z'
-						}
-					}
-				});
-			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-			const response = await request.get(`${baseUrl}/${appealId}`);
-
-			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appellant case</th><td class="govuk-table__cell">Overdue</td>'
-			);
-		});
-
-		it('should render an action link to the add linked appeal page in the linked appeals row, if there are no linked appeals', async () => {
-			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
-			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-				.reply(200, appellantFinalCommentsAwaitingReview);
-			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-				.reply(200, lpaFinalCommentsAwaitingReview);
-			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const linkedAppealsRowElement = parseHtml(response.text, {
-				rootElement: '.appeal-linked-appeals',
-				skipPrettyPrint: true
-			});
-			expect(linkedAppealsRowElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"'
-			);
-		});
-
-		it('should render action links to the manage linked appeals page and the add linked appeal page in the linked appeals row, if there are linked appeals', async () => {
+		it('should render an action link to the manage linked appeals page, if there are linked appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
@@ -1932,6 +1919,35 @@ describe('appeal-details', () => {
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
+		});
+
+		it('should render an action link to the add linked appeals page, if the appeal is in a state before STATEMENTS', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'lpa_questionnaire',
+					linkedAppeals
+				});
+			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
+				.reply(200, lpaFinalCommentsAwaitingReview);
+
+			const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const linkedAppealsRowElement = parseHtml(response.text, {
+				rootElement: '.appeal-linked-appeals',
+				skipPrettyPrint: true
+			});
+
 			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
@@ -2122,7 +2138,7 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toContain('Important</h3>');
 			expect(element.innerHTML).toContain('Appeal valid</p>');
 			expect(element.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/2/start-case/add?backUrl=/appeals-service/appeal-details/2">Start case</a>'
+				`href="/appeals-service/appeal-details/2/start-case/add?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}">Start case</a>`
 			);
 		});
 
@@ -2241,7 +2257,9 @@ describe('appeal-details', () => {
 
 					expect(element.innerHTML).toMatchSnapshot();
 					expect(element.innerHTML).toContain('Important</h3>');
-					expect(element.innerHTML).toContain(`href="/appeals-service/appeal-details/1/share"`);
+					expect(element.innerHTML).toContain(
+						`href="/appeals-service/appeal-details/1/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+					);
 					expect(element.innerHTML).toContain(`${testCase.bannerText}</a>`);
 				});
 			}
@@ -2269,12 +2287,15 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								lpaQuestionnaireDueDate: '3000-01-15T00:00:00.000Z'
+							},
 							documentationSummary: {
 								...appealDataFullPlanning.documentationSummary,
 								lpaQuestionnaire: {
 									...appealDataFullPlanning.documentationSummary.lpaQuestionnaire,
-									status: 'Incomplete',
-									dueDate: '3000-01-15T00:00:00.000Z'
+									status: 'Incomplete'
 								}
 							}
 						});
@@ -2398,11 +2419,11 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Not applicable</td><td class="govuk-table__cell govuk-!-text-align-right"></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Due by 12 October 2023</td>`
 						);
 					});
 
-					it(`should render an "${testCase.rowLabel}" row with a status of "Received", and the expected date in the "Received" column, and a "Review" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has ${testCase.name} final comments awaiting review`, async () => {
+					it(`should render an "${testCase.rowLabel}" row with a status of "Ready to review", and the expected date in the "Received" column, and a "Review" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has ${testCase.name} final comments awaiting review`, async () => {
 						nock('http://test/')
 							.get(`/appeals/${appealId}`)
 							.reply(200, {
@@ -2426,7 +2447,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Received</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Ready to review</td><td class="govuk-table__cell">Due by 12 October 2023</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="${testCase.cyAttribute}" class="govuk-link">Review<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 
@@ -2454,7 +2475,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Accepted</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 
@@ -2482,7 +2503,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 				}
@@ -2620,13 +2641,21 @@ describe('appeal-details', () => {
 					expect(caseTimeTable).toMatchSnapshot();
 				});
 
-				it('should render a "Timetable" with all rows with the Start date row including a date and change action link', async () => {
+				it('should render a "Timetable" with all rows with the Start & IP comments due date rows, both including a date and change action link', async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
-							appealId
+							appealId,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								ipComments: {}
+							}
 						});
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
@@ -2653,22 +2682,83 @@ describe('appeal-details', () => {
 
 					expect(startDateRow).toContain('data-cy="change-start-case-date">Change<span');
 
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
+
 					const caseTimeTable = parseHtml(response.text, {
 						rootElement: '.appeal-case-timetable'
 					}).innerHTML;
 
 					expect(caseTimeTable).toMatchSnapshot();
 				});
-				it('should render a "Timetable" with all rows with the Start date without an action link', async () => {
+
+				it('should render a "Timetable" with all rows with the IP comments due date and change link displaying when published IP comments count equals zero', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								ipComments: { count: 0 }
+							}
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
+				});
+
+				it('should render a "Timetable" with all rows with the Start date and IP comments due date without an action link', async () => {
 					const testDocumentationSummary = {
 						...appealDataFullPlanning.documentationSummary,
-						lpaQuestionnaire: { status: 'received' }
+						lpaQuestionnaire: { status: 'received' },
+						ipComments: { counts: { published: 1 } }
 					};
+
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							documentationSummary: testDocumentationSummary,
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: new Date('2025-4-29')
+							},
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
 							appealId
 						});
@@ -2698,6 +2788,23 @@ describe('appeal-details', () => {
 					expect(startDateRow).toContain('data-cy="-start-case-date"><span');
 
 					expect(response.text).toContain(`appeal-lpa-questionnaire-due-date`);
+
+					const ipCommentsDueDateRow = parseHtml(response.text, {
+						rootElement: '.appeal-ip-comments-due-date',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(ipCommentsDueDateRow).toContain(
+						`<dt class="govuk-summary-list__key"> Interested party comments due</dt>`
+					);
+
+					expect(ipCommentsDueDateRow).toContain(
+						'<dd class="govuk-summary-list__value"> 29 April 2025</dd>'
+					);
+
+					expect(ipCommentsDueDateRow).not.toContain(
+						'data-cy="change-ip-comments-due-date">Change<span'
+					);
 
 					const caseTimeTable = parseHtml(response.text, {
 						rootElement: '.appeal-case-timetable'
@@ -2791,186 +2898,311 @@ describe('appeal-details', () => {
 			});
 		});
 
-		describe('Costs', () => {
-			const appealIdWithoutCostsDocuments = 2;
-			const appealIdWithCostsDocuments = 3;
-			const costsCategoriesNotIncludingDecision = ['appellant', 'lpa'];
-			const costsDocumentTypes = ['application', 'correspondence', 'withdrawal'];
+		describe('Hearing', () => {
+			const appealId = 3;
 
 			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				nock('http://test/')
-					.get(`/appeals/${appealIdWithoutCostsDocuments}`)
-					.reply(200, appealData);
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+					.reply(200, appellantFinalCommentsAwaitingReview);
 				nock('http://test/')
-					.get(`/appeals/${appealIdWithCostsDocuments}`)
+					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+					.reply(200, lpaFinalCommentsAwaitingReview);
+			});
+
+			it('should not render the Hearing accordion for HAS cases', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealData,
-						costs: {
-							appellantApplicationFolder: {
-								...appealData.costs.appellantApplicationFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							appellantWithdrawalFolder: {
-								...appealData.costs.appellantWithdrawalFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							appellantCorrespondenceFolder: {
-								...appealData.costs.appellantCorrespondenceFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							lpaApplicationFolder: {
-								...appealData.costs.lpaApplicationFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							lpaWithdrawalFolder: {
-								...appealData.costs.lpaWithdrawalFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							lpaCorrespondenceFolder: {
-								...appealData.costs.lpaCorrespondenceFolder,
-								documents: [appealCostsDocumentItem]
-							},
-							decisionFolder: {
-								...appealData.costs.decisionFolder,
-								documents: [appealCostsDocumentItem]
+						appealId
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
+			});
+
+			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.INQUIRY]) {
+				it(`should not render the Hearing accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+					expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
+				});
+			}
+
+			it('should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
+				);
+				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
+				);
+			});
+
+			it('should render the hearing details summary list when hearing is present with address', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							address: {
+								addressLine1: '123 Main St',
+								addressLine2: 'Apt 1',
+								town: 'Anytown',
+								county: 'Anycounty',
+								postcode: 'AA1 1AA'
 							}
 						}
 					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.split('<br>')
+						.map((line) => line.trim())
+				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector(
+						'a[data-cy="change-whether-the-address-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
+						?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address-details`);
+			});
+
+			it('should render the hearing details summary list when hearing is present with no address', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealIdWithCostsDocuments}/case-notes`)
-					.reply(200, caseNotes);
-			});
-
-			for (const costsCategory of costsCategoriesNotIncludingDecision) {
-				for (const costsDocumentType of costsDocumentTypes) {
-					const costsFolder =
-						appealData.costs[`${costsCategory}${capitalize(costsDocumentType)}Folder`];
-
-					it(`should render a ${costsCategory} ${costsDocumentType} row in the costs accordion with empty status and "Add" action link, if the ${costsCategory} ${costsDocumentType} folder is empty`, async () => {
-						const response = await request.get(`${baseUrl}/${appealIdWithoutCostsDocuments}`);
-						const hiddenText = `${
-							costsCategory === 'appellant' ? 'Appellant' : 'LPA'
-						} ${costsDocumentType}`;
-
-						expect(response.statusCode).toBe(200);
-
-						const costsDocumentationElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-documentation`
-						});
-						const costsStatusElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-status`
-						});
-						const costsActionsElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-actions`
-						});
-
-						expect(costsDocumentationElement.innerHTML).toEqual(
-							`<th scope="row" class="govuk-table__header appeal-costs-${costsCategory}-${costsDocumentType}-documentation">${
-								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
-							} ${costsDocumentType}</th>`
-						);
-						expect(costsStatusElement.innerHTML).toEqual(
-							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status">No documents available</td>`
-						);
-						expect(costsActionsElement.innerHTML).not.toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`
-						);
-						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add<span class="govuk-visually-hidden"> ${hiddenText}</span></a>`
-						);
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2025-05-15T12:00:00.000Z'
+						}
 					});
 
-					it(`should render a appellant application row in the costs accordion with "Received" status and "Manage" and "Add" action links, if there are documents in the appellant application documents folder`, async () => {
-						const response = await request.get(`${baseUrl}/${appealIdWithCostsDocuments}`);
-
-						expect(response.statusCode).toBe(200);
-
-						const costsDocumentationElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-documentation`
-						});
-						const costsStatusElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-status`
-						});
-						const costsActionsElement = parseHtml(response.text, {
-							rootElement: `.appeal-costs-${costsCategory}-${costsDocumentType}-actions`
-						});
-
-						const displayText = `${
-							costsCategory === 'appellant' ? 'Appellant' : 'LPA'
-						} ${costsDocumentType}`;
-
-						expect(costsDocumentationElement.innerHTML).toEqual(
-							`<th scope="row" class="govuk-table__header appeal-costs-${costsCategory}-${costsDocumentType}-documentation">${displayText}</th>`
-						);
-						expect(costsStatusElement.innerHTML).toEqual(
-							`<td class="govuk-table__cell appeal-costs-${costsCategory}-${costsDocumentType}-status">Received</td>`
-						);
-						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder?.folderId}">Manage<span class="govuk-visually-hidden"> ${displayText}</span></a>`
-						);
-						expect(costsActionsElement.innerHTML).toContain(
-							`/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder?.folderId}">Add<span class="govuk-visually-hidden"> ${displayText}</span></a>`
-						);
-					});
-				}
-			}
-
-			it('should render a costs decision row in the costs accordion with empty status and "Add" action link, if the costs decision documents folder is empty', async () => {
-				const response = await request.get(`${baseUrl}/${appealIdWithoutCostsDocuments}`);
+				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				expect(response.statusCode).toBe(200);
 
-				const costsDocumentationElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-documentation'
-				});
-				const costsStatusElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-status'
-				});
-				const costsActionsElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-actions'
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
 				});
 
-				expect(costsDocumentationElement.innerHTML).toEqual(
-					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
-				);
-				expect(costsStatusElement.innerHTML).toEqual(
-					'<td class="govuk-table__cell appeal-costs-decision-status">No documents available</td>'
-				);
-				expect(costsActionsElement.innerHTML).not.toContain(
-					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage<span class="govuk-visually-hidden"> Costs decision</span></a>`
-				);
-				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add<span class="govuk-visually-hidden"> Costs decision</span></a>`
-				);
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('No');
+				expect(
+					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+				).toBeFalsy();
 			});
 
-			it('should render a costs decision row in the costs accordion with "Uploaded" status and "Add" and "Manage" action links, if there are documents in the costs decision documents folder', async () => {
-				const response = await request.get(`${baseUrl}/${appealIdWithCostsDocuments}`);
+			it('should render the Hearing estimates summary list when estimates are present', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearingEstimate: {
+							preparationTime: 1,
+							sittingTime: 2.5,
+							reportingTime: 3
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				expect(response.statusCode).toBe(200);
 
-				const costsDocumentationElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-documentation'
-				});
-				const costsStatusElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-status'
-				});
-				const costsActionsElement = parseHtml(response.text, {
-					rootElement: '.appeal-costs-decision-actions'
-				});
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-				expect(costsDocumentationElement.innerHTML).toEqual(
-					'<th scope="row" class="govuk-table__header appeal-costs-decision-documentation">Costs decision</th>'
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
 				);
-				expect(costsStatusElement.innerHTML).toEqual(
-					'<td class="govuk-table__cell appeal-costs-decision-status">Uploaded</td>'
+				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 1 day</dd>'
 				);
-				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/manage-documents/${appealData.costs.decisionFolder?.folderId}">Manage<span class="govuk-visually-hidden"> Costs decision</span></a>`
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 2.5 days</dd>'
 				);
-				expect(costsActionsElement.innerHTML).toContain(
-					`/costs/decision/upload-documents/${appealData.costs.decisionFolder?.folderId}">Add<span class="govuk-visually-hidden"> Costs decision</span></a>`
+				expect(unprettifiedHearingSectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 3 days</dd>'
 				);
+				expect(unprettifiedHearingSectionHtml).toContain(
+					`<dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/hearing/estimates/change"`
+				);
+			});
+		});
+
+		describe('Costs', () => {
+			it('should render a "Appellant application" row in the costs accordion', async () => {
+				const appealId = 2;
+
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const headerHtml = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-application-documentation',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(headerHtml).toMatchSnapshot();
+				expect(headerHtml).toContain('Appellant application</th>');
+
+				const statusHtml = parseHtml(response.text, {
+					rootElement: '.appeal-costs-appellant-application-status',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(statusHtml).toMatchSnapshot();
+				expect(statusHtml).toContain('No documents available</td>');
 			});
 		});
 
@@ -2984,6 +3216,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'issue_determination',
+						stateList: [{ key: 'event', completed: true }],
 						decision: {
 							...appealData.decision,
 							outcome: null
@@ -3000,7 +3233,7 @@ describe('appeal-details', () => {
 				expect(rowHtml).toMatchSnapshot();
 				expect(rowHtml).toContain('Decision</dt>');
 				expect(rowHtml).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a>'
+					`<a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a>`
 				);
 			});
 
@@ -3051,32 +3284,10 @@ describe('appeal-details', () => {
 					);
 				});
 			}
+		});
 
-			it('should render a row in the case documentation accordion with "Appeal decision" in the Documentation (label) column', async () => {
-				const response = await request.get(`${baseUrl}/1`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-documentation',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain('Appeal decision</th>');
-			});
-
-			it('should render a row in the case documentation accordion with "Awaiting decision" in the Status column, if a decision has not yet been issued', async () => {
-				const response = await request.get(`${baseUrl}/1`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-status',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain('Awaiting decision</td>');
-			});
-
-			it('should render a row in the case documentation accordion with "Sent" in the Status column, if a decision has been issued', async () => {
+		describe('Appellant costs decision', () => {
+			it('should render a row in the case overview accordion with an "Issue" action link', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -3084,421 +3295,161 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealData,
 						appealId,
-						appealStatus: 'complete',
-						decision: {
-							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
-							folderId: 72,
-							letterDate: '2024-06-26T00:00:00.000Z',
-							outcome: 'allowed',
-							virusCheckStatus: 'not_scanned'
+						appealStatus: 'issue_determination',
+						costs: {
+							appellantApplicationFolder: {
+								documents: [{ id: 1 }]
+							}
 						}
 					});
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-status',
+				const rowHtml = parseHtml(response.text, {
+					rootElement: '.govuk-summary-list__row.costs-appellant-decision',
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain('Sent</td>');
-			});
-
-			it('should render a row in the case documentation accordion with "Not applicable" in the Due date column', async () => {
-				const response = await request.get(`${baseUrl}/1`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-due-date',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<td class="govuk-table__cell appeal-decision-due-date">Not applicable</td>'
+				expect(rowHtml).toMatchSnapshot();
+				expect(rowHtml).toContain('Appellant costs decision</dt>');
+				expect(rowHtml).toContain(
+					'Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>'
 				);
 			});
 
-			it('should render a row in the case documentation accordion with "Issue" link to the issue decision start page in the Actions column, if the appeal status is "issue_determination"', async () => {
-				const appealId = 2;
+			const appealStatusesWithoutIssueDetermination = [
+				'assign_case_officer',
+				'awaiting_transfer',
+				'closed',
+				'complete',
+				'evidence',
+				'final_comments',
+				'invalid',
+				'lpa_questionnaire',
+				'ready_to_start',
+				'statements',
+				'transferred',
+				'validation',
+				'withdrawn',
+				'witnesses'
+			];
 
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'issue_determination'
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				const response = await request.get(`${baseUrl}/${appealId}`);
+			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
+				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
+					const appealId = 2;
 
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-actions',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'href="/appeals-service/appeal-details/2/issue-decision/decision">Issue</a>'
-				);
-			});
-
-			it('should render a row in the case documentation accordion with no link in the Actions column, if the appeal status is anything other than "issue_determination" or "complete"', async () => {
-				const appealId = 2;
-
-				const statuses = [
-					'assign_case_officer',
-					'validation',
-					'ready_to_start',
-					'lpa_questionnaire',
-					'statement_review',
-					'final_comment_review',
-					'invalid',
-					'withdrawn',
-					'closed',
-					'awaiting_transfer',
-					'transferred'
-				];
-
-				for (const status of statuses) {
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealData,
 							appealId,
-							appealStatus: status
+							appealStatus,
+							costs: {
+								appellantApplicationFolder: {
+									documents: [{ id: 1 }]
+								}
+							}
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
 
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
-					const columnHtml = parseHtml(response.text, {
-						rootElement: '.appeal-decision-actions',
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.govuk-summary-list__row.costs-appellant-decision',
 						skipPrettyPrint: true
 					}).innerHTML;
 
-					expect(columnHtml).toMatchSnapshot();
-					expect(columnHtml).toContain(
-						status === 'awaiting_transfer'
-							? '<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"></td>'
-							: '<td class="govuk-table__cell govuk-!-text-align-right appeal-decision-actions"><ul class="govuk-summary-list__actions-list"></ul></td>'
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('Appellant costs decision</dt>');
+					expect(rowHtml).not.toContain(
+						'Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>'
 					);
-				}
-			});
-
-			it('should render a row in the case documentation accordion with "Virus scanning" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is pending', async () => {
-				const appealId = 2;
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'complete',
-						decision: {
-							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
-							folderId: 72,
-							letterDate: '2024-06-26T00:00:00.000Z',
-							outcome: 'allowed',
-							virusCheckStatus: 'not_scanned'
-						}
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-actions',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></li>'
-				);
-			});
-
-			it('should render a row in the case documentation accordion with "Virus found" status tag in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is unsafe', async () => {
-				const appealId = 2;
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'complete',
-						decision: {
-							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
-							folderId: 72,
-							letterDate: '2024-06-26T00:00:00.000Z',
-							outcome: 'allowed',
-							virusCheckStatus: 'affected'
-						}
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-actions',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></li>'
-				);
-			});
-
-			it('should render a row in the case documentation accordion with "View" download link to the decision document in the Actions column, if the appeal status is "complete" and the document virus scan is complete and the scan result indicates the document is safe', async () => {
-				const appealId = 2;
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'complete',
-						decision: {
-							documentId: '448efec9-43d4-406a-92b7-1aecbdcd5e87',
-							folderId: 72,
-							letterDate: '2024-06-26T00:00:00.000Z',
-							documentName: 'test-document.txt',
-							outcome: 'allowed',
-							virusCheckStatus: 'scanned'
-						}
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const columnHtml = parseHtml(response.text, {
-					rootElement: '.appeal-decision-actions',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(columnHtml).toMatchSnapshot();
-				expect(columnHtml).toContain(
-					'<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/documents/2/download/448efec9-43d4-406a-92b7-1aecbdcd5e87/test-document.txt" target="_blank">View</a></li>'
-				);
-			});
+				});
+			}
 		});
 
-		describe('show more', () => {
-			describe('Inspection access (LPA answer)', () => {
-				it('should not render a "show more" component on the "Inspection access (LPA answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							inspectorAccess: {
-								...appealData.inspectorAccess,
-								lpaQuestionnaire: {
-									isRequired: true,
-									details: text300Characters
-								}
+		describe('LPA costs decision', () => {
+			it('should render a row in the case overview accordion with an "Issue" action link', async () => {
+				const appealId = 2;
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'issue_determination',
+						costs: {
+							lpaApplicationFolder: {
+								documents: [{ id: 1 }]
 							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-lpa-inspector-access',
-						skipPrettyPrint: true
+						}
 					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
-					);
-					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
-				});
+				const response = await request.get(`${baseUrl}/${appealId}`);
 
-				it('should render a "show more" component with the expected HTML on the "Inspection access (LPA answer)" row if the associated value is over 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							inspectorAccess: {
-								...appealData.inspectorAccess,
-								lpaQuestionnaire: {
-									isRequired: true,
-									details: text301Characters
-								}
-							}
-						});
+				const rowHtml = parseHtml(response.text, {
+					rootElement: '.govuk-summary-list__row.costs-lpa-decision',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-lpa-inspector-access',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspection access details (LPA answer)" data-mode="text">${text301Characters}</div></dd>`
-					);
-				});
+				expect(rowHtml).toMatchSnapshot();
+				expect(rowHtml).toContain('LPA costs decision</dt>');
+				expect(rowHtml).toContain(
+					'Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>'
+				);
 			});
 
-			describe('Inspection access (appellant answer)', () => {
-				it('should not render a "show more" component on the "Inspection access (appellant answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
+			const appealStatusesWithoutIssueDetermination = [
+				'assign_case_officer',
+				'awaiting_transfer',
+				'closed',
+				'complete',
+				'evidence',
+				'final_comments',
+				'invalid',
+				'lpa_questionnaire',
+				'ready_to_start',
+				'statements',
+				'transferred',
+				'validation',
+				'withdrawn',
+				'witnesses'
+			];
+
+			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
+				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
+					const appealId = 2;
+
 					nock('http://test/')
-						.get('/appeals/2')
+						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealData,
-							inspectorAccess: {
-								...appealData.inspectorAccess,
-								appellantCase: {
-									isRequired: true,
-									details: text300Characters
+							appealId,
+							appealStatus,
+							costs: {
+								lpaApplicationFolder: {
+									documents: [{ id: 1 }]
 								}
 							}
 						});
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-appellant-inspector-access',
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.govuk-summary-list__row.costs-lpa-decision',
 						skipPrettyPrint: true
-					});
+					}).innerHTML;
 
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
-					);
-					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
-				});
-
-				it('should render a "show more" component with the expected HTML on the "Inspection access (appellant answer)" row if the associated value is over 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							inspectorAccess: {
-								...appealData.inspectorAccess,
-								appellantCase: {
-									isRequired: true,
-									details: text301Characters
-								}
-							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-appellant-inspector-access',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Inspection access details (appellant answer)" data-mode="text">${text301Characters}</div></dd>`
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('LPA costs decision</dt>');
+					expect(rowHtml).not.toContain(
+						'Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>'
 					);
 				});
-			});
-
-			describe('Potential safety risks (LPA answer)', () => {
-				it('should not render a "show more" component on the "Potential safety risks (LPA answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							healthAndSafety: {
-								...appealData.healthAndSafety,
-								lpaQuestionnaire: {
-									hasIssues: true,
-									details: text300Characters
-								}
-							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-lpa-health-and-safety',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
-					);
-					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
-				});
-
-				it('should render a "show more" component with the expected HTML on the "Potential safety risks (LPA answer)" row if the associated value is over 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							healthAndSafety: {
-								...appealData.healthAndSafety,
-								lpaQuestionnaire: {
-									hasIssues: true,
-									details: text301Characters
-								}
-							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-lpa-health-and-safety',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details (LPA answer)" data-mode="text">${text301Characters}</div></dd>`
-					);
-				});
-			});
-
-			describe('Potential safety risks (appellant answer)', () => {
-				it('should not render a "show more" component on the "Potential safety risks (appellant answer)" row if the associated value is less than or equal to 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							healthAndSafety: {
-								...appealData.healthAndSafety,
-								appellantCase: {
-									hasIssues: true,
-									details: text300Characters
-								}
-							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-appellant-health-and-safety',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><span>${text300Characters}</span></dd>`
-					);
-					expect(unprettifiedElement.innerHTML).not.toContain('class="pins-show-more"');
-				});
-
-				it('should render a "show more" component with the expected HTML on the "Potential safety risks (appellant answer)" row if the associated value is over 300 characters in length', async () => {
-					nock('http://test/')
-						.get('/appeals/2')
-						.reply(200, {
-							...appealData,
-							healthAndSafety: {
-								...appealData.healthAndSafety,
-								appellantCase: {
-									hasIssues: true,
-									details: text301Characters
-								}
-							}
-						});
-
-					const response = await request.get(`${baseUrl}/2`);
-					const unprettifiedElement = parseHtml(response.text, {
-						rootElement: '.appeal-appellant-health-and-safety',
-						skipPrettyPrint: true
-					});
-
-					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Potential safety risks details (appellant answer)" data-mode="text">${text301Characters}</div></dd>`
-					);
-				});
-			});
+			}
 		});
 	});
 
@@ -3522,40 +3473,5 @@ describe('appeal-details', () => {
 
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).not.toContain('class="govuk-back-link"');
-	});
-
-	it('should render "change" action links for appeal with LPAQ status "received"', async () => {
-		const appealId = '3';
-
-		nock('http://test/')
-			.get(`/appeals/${appealId}`)
-			.reply(200, {
-				...appealData,
-				appealId,
-				documentationSummary: {
-					appellantCase: {
-						status: 'received',
-						dueDate: '2024-10-02T10:27:06.626Z',
-						receivedAt: '2024-08-02T10:27:06.626Z'
-					},
-					lpaQuestionnaire: {
-						status: 'received',
-						dueDate: '2024-10-11T10:27:06.626Z',
-						receivedAt: '2024-08-02T10:27:06.626Z'
-					}
-				}
-			});
-
-		nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-
-		const response = await request.get(`${baseUrl}/${appealId}`);
-
-		const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-		expect(unprettifiedElement.innerHTML).toContain(
-			`href="/appeals-service/appeal-details/3/inspector-access/change/lpa"`
-		);
-		expect(unprettifiedElement.innerHTML).toContain(
-			`href="/appeals-service/appeal-details/3/safety-risks/change/lpa"`
-		);
 	});
 });

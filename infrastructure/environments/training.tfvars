@@ -5,6 +5,7 @@ apps_config = {
   node_environment           = "production"
   private_endpoint_enabled   = true
   session_max_age            = 10800000
+  front_office_url           = "https://appeals-service-training.planninginspectorate.gov.uk"
 
   auth = {
     client_id = "68721db0-46ce-4ac5-b404-a4eebdb5c8e1" # Appeals Back Office Training
@@ -26,48 +27,19 @@ apps_config = {
     service_bus_broadcast_enabled = true
     enable_test_endpoints         = false
     notify_template_ids = {
-      appeal_generic_id                                               = "b29bbd23-6cf9-4173-b831-a915c79cf040"
-      appeal_confirmed_id                                             = "1776217e-b40d-4d78-82d1-8d881dcec897"
-      appeal_incomplete_id                                            = "4001ac42-0d2f-4520-b1c0-cae481dd18ba"
-      appeal_invalid_id                                               = "fdce6d3b-f712-4d12-94c6-e8a994fdbdaf"
-      appeal_start_date_change_appellant_id                           = "76fc3001-5393-48ef-ae1a-377089e6ec5e"
-      appeal_start_date_change_lpa_id                                 = "e238c035-e087-4e3e-ba37-a3869478fff1"
-      appeal_type_changed_non_has_id                                  = "0792f620-b5ec-44e8-a757-cebf9f564175"
-      appeal_valid_start_case_appellant_id                            = "b2e2a6a9-a788-4e6d-ab88-4fdf5f01b8ce"
-      appeal_valid_start_case_lpa_id                                  = "6fc2ea73-4c82-42ec-bdab-e6026e1ef4b2"
-      appeal_valid_start_case_s78_appellant_id                        = "12d7a181-9e8e-45c2-bb77-8e4e0bfe50a7"
-      appeal_valid_start_case_s78_lpa_id                              = "6fc2ea73-4c82-42ec-bdab-e6026e1ef4b2"
-      appeal_withdrawn_appellant_id                                   = "e1ec7728-11c0-4032-9c9e-574ea553c15c"
-      appeal_withdrawn_lpa_id                                         = "852d47e1-2e0b-48e8-96c0-f5ab5e0721ed"
-      decision_is_allowed_split_dismissed_appellant_id                = "3bbe584f-810f-4f1c-9124-8695d5a94b60"
-      decision_is_allowed_split_dismissed_lpa_id                      = "7eddc354-a436-4b99-b94c-e10ec8e9b484"
-      decision_is_invalid_appellant_id                                = "3de3de2a-f957-4657-9ae6-c54b6bb235f4"
-      decision_is_invalid_lpa_id                                      = "8a71a1e7-45f4-4962-a5f2-324e7088f9ad"
-      site_visit_change_accompanied_date_change_appellant_id          = "695939b8-5bd8-4ecc-92ae-167641d5408a"
-      site_visit_change_accompanied_date_change_lpa_id                = "9c0fc905-6912-43a1-be4c-cc1f1e0303c2"
-      site_visit_change_accompanied_to_access_required_appellant_id   = "24fd5269-db45-4da4-a6d2-47ede5c2e5f6"
-      site_visit_change_accompanied_to_access_required_lpa_id         = "6571aec0-ea6b-416a-9365-f9414a931ab9"
-      site_visit_change_accompanied_to_unaccompanied_appellant_id     = "25552ae8-a4ea-48e3-bd8b-939cc02b5db0"
-      site_visit_change_accompanied_to_unaccompanied_lpa_id           = "6571aec0-ea6b-416a-9365-f9414a931ab9"
-      site_visit_change_access_required_date_change_appellant_id      = "fb097cae-f19c-4c75-81e2-c394ec80c31d"
-      site_visit_change_access_required_to_accompanied_appellant_id   = "9676a1cd-c54c-434f-aa5d-082c22ee9e78"
-      site_visit_change_access_required_to_accompanied_lpa_id         = "47983ef3-f92c-47b8-bb0f-8debd9a19856"
-      site_visit_change_access_required_to_unaccompanied_appellant_id = "832ea5b1-4aea-4c07-871b-3153beac13b4"
-      site_visit_change_unaccompanied_to_access_required_appellant_id = "24fd5269-db45-4da4-a6d2-47ede5c2e5f6"
-      site_visit_change_unaccompanied_to_accompanied_appellant_id     = "0345224c-d26c-4491-b412-7f49c1744e58"
-      site_visit_change_unaccompanied_to_accompanied_lpa_id           = "47983ef3-f92c-47b8-bb0f-8debd9a19856"
-      site_visit_schedule_access_required_appellant_id                = "7bd42625-5a45-46a4-8419-3271902c8e72"
-      site_visit_schedule_accompanied_appellant_id                    = "2b1bc1e3-c9bb-440b-b04b-074757794d32"
-      site_visit_schedule_accompanied_lpa_id                          = "47983ef3-f92c-47b8-bb0f-8debd9a19856"
-      site_visit_schedule_unaccompanied_appellant_id                  = "3f3714f0-00f0-4fc8-8c49-551e4a844643"
-      valid_appellant_case_id                                         = "76688636-beb1-4af5-8310-c99723c2ba41"
+      appeal_generic_id = "b29bbd23-6cf9-4173-b831-a915c79cf040"
     }
   }
 
   featureFlags = {
-    featureFlagS78Written = true
-    featureFlagS78Hearing = false
+    featureFlagS78Written    = true
+    featureFlagS78Hearing    = false
+    featureFlagLinkedAppeals = false
+    featureFlagS20           = false
+    featureFlagIssueDecision = false
   }
+
+  use_system_test_bc_for_change_lpa = false
 
   logging = {
     level_file   = "silent"

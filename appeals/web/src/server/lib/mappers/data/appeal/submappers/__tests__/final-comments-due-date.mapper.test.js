@@ -9,7 +9,7 @@ describe('final-comments-due-date.mapper', () => {
 			appealDetails: {
 				validAt: '2025-01-01',
 				appealTimetable: { finalCommentsDueDate: '2025-01-10' },
-				documentationSummary: { finalComments: { counts: { published: 0 } } }
+				documentationSummary: { finalComments: { representationStatus: 'published' } }
 			},
 			userHasUpdateCasePermission: true
 		};

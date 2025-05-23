@@ -130,6 +130,7 @@ export function yesNoInput({
  * @param {string|null} [params.value]
  * @param {string} [params.legendText]
  * @param {boolean} [params.legendIsPageHeading]
+ * @param {string} [params.errorMessage]
  * @returns {PageComponent}
  */
 export function radiosInput({
@@ -138,7 +139,8 @@ export function radiosInput({
 	idPrefix,
 	value,
 	legendText,
-	legendIsPageHeading = false
+	legendIsPageHeading = false,
+	errorMessage
 }) {
 	/** @type {PageComponent} */
 	const component = {
@@ -147,7 +149,8 @@ export function radiosInput({
 			name,
 			idPrefix,
 			items,
-			value
+			value,
+			errorMessage: errorMessage ? { text: errorMessage } : undefined
 		}
 	};
 	if (legendText) {

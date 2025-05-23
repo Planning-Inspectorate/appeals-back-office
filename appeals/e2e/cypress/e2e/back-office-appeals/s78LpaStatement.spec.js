@@ -64,7 +64,7 @@ describe('S78 - LPA Statement', () => {
 		caseDetailsPage.clickLpaStatementChangeLink(
 			'Do you need to update the allocation level and specialisms?'
 		);
-		caseDetailsPage.validateSectionHeader('Allocation level and specialisms');
+		caseDetailsPage.validateSectionHeader('Allocation level');
 	});
 
 	it('should accept LPA statement', () => {

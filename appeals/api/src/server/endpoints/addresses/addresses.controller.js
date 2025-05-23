@@ -3,9 +3,10 @@ import {
 	AUDIT_TRAIL_ADDRESS_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA
 } from '@pins/appeals/constants/support.js';
-import { formatAddress } from './addresses.formatter.js';
+import { formatAddress, formatAddressMultiline } from './addresses.formatter.js';
 import addressRepository from '#repositories/address.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -42,19 +43,20 @@ const updateAddressById = async (req, res) => {
 		addressTown: town
 	};
 
+	let updatedAddress;
 	try {
-		await addressRepository.updateAddressById(Number(addressId), updateAddress);
+		updatedAddress = await addressRepository.updateAddressById(Number(addressId), updateAddress);
 	} catch (error) {
-		if (error) {
-			logger.error(error);
-			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
-		}
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 
-	await createAuditTrail({
+	createAuditTrail({
 		appealId: parseInt(appealId),
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_ADDRESS_UPDATED
+		details: stringTokenReplacement(AUDIT_TRAIL_ADDRESS_UPDATED, [
+			formatAddressMultiline(updatedAddress)
+		])
 	});
 
 	return res.send(updateAddress);

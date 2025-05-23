@@ -18,6 +18,8 @@ import {
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import formatDate from '#utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
+import { EventType } from '@pins/event-client';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -70,6 +72,7 @@ export const getRepresentation = representationRepository.getById;
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
+ * @property {string | undefined} dateCreated
  * @property {string} redactionStatus
  * @property {string} source
  *
@@ -101,7 +104,8 @@ export const createRepresentation = async (appealId, input) => {
 		appealId,
 		representedId: represented.id,
 		representationType: input.representationType,
-		source: input.source
+		source: input.source,
+		dateCreated: input.dateCreated
 	});
 
 	if (input.attachments.length > 0) {
@@ -194,6 +198,15 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
 	}
 
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
+	}
+
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
 		{
@@ -256,6 +269,15 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
+	}
+
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
 	}
 
 	const result = await representationRepository.updateRepresentations(

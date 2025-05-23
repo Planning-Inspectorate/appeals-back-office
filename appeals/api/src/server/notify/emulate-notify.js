@@ -42,7 +42,7 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 		}
 		if (blockEnd && blockEnd <= index) {
 			blockEnd = 0;
-			return line ? `</div>\n${line}<br>` : '</div>';
+			return line ? `</div>\n${line}<br>` : '</div><br>';
 		}
 		return line ? `${line}<br>` : '<br>';
 	});
@@ -59,12 +59,30 @@ export function emulateSendEmail(templateName, recipientEmail, subject, content)
 	].join('<br>\n');
 
 	const outputDir = path.join(process.cwd(), 'temp');
+
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
 
-	const fileName = `${formatSortableDateTime(new Date())} ${templateName}.html`;
-	const fullName = path.join(outputDir, fileName);
+	// Allow for both Linux (Mac) and Windows file systems
+	const fileName = `${formatSortableDateTime(new Date())} ${templateName}.html`.replaceAll(
+		':',
+		'_'
+	);
+
+	const fullName = path.join(process.cwd(), 'temp', fileName);
 	fs.writeFileSync(fullName, emailHtml);
 	return fullName;
+}
+
+/**
+ * Deletes the local temporary folder and the emails within it
+ *
+ * @returns {void}
+ */
+export function initNotifyEmulator() {
+	const outputDir = path.join(process.cwd(), 'temp');
+	if (fs.existsSync(outputDir)) {
+		fs.rmdirSync(outputDir, { recursive: true });
+	}
 }

@@ -5,10 +5,11 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
-import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
+import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
@@ -21,7 +22,7 @@ import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions
  * @param {string} urlWithoutQuery
  * @param {string|undefined} appealStatusFilter
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageContent}
  */
 
@@ -30,14 +31,14 @@ export function personalListPage(
 	urlWithoutQuery,
 	appealStatusFilter,
 	session,
-	currentRoute
+	request
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])].map(
 		(appealStatus) => ({
-			text: capitalizeFirstLetter(appealStatusToStatusTag(appealStatus)),
+			text: capitalizeFirstLetter(appealStatusToStatusText(appealStatus)),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})
@@ -168,7 +169,7 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute)
+						html: mapActionLinksForAppeal(appeal, isCaseOfficer, request)
 					},
 					{
 						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
@@ -240,7 +241,7 @@ export function personalListPage(
  * @param {boolean} isCaseOfficer
  * @param {number} appealId
  * @param {number|null|undefined} lpaQuestionnaireId
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -248,25 +249,37 @@ function mapRequiredActionToPersonalListActionHtml(
 	isCaseOfficer,
 	appealId,
 	lpaQuestionnaireId,
-	currentRoute
+	request
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference`
+			)}">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'arrangeSiteVisit': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit`
+			)}">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingAppellantUpdate': {
 			return isCaseOfficer
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealId}/appellant-case`
+				  )}">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Awaiting appellant update';
 		}
 		case 'awaitingFinalComments': {
 			return 'Awaiting final comments';
 		}
 		case 'awaitingIpComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">Awaiting IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments`
+			)}">Awaiting IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingLpaQuestionnaire': {
 			return 'Awaiting LPA questionnaire';
@@ -278,53 +291,92 @@ function mapRequiredActionToPersonalListActionHtml(
 			return 'Awaiting LPA update';
 		}
 		case 'issueDecision': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/decision">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/issue-decision/decision`
+			)}">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'lpaQuestionnaireOverdue': {
 			return 'LPA questionnaire overdue';
 		}
 		case 'progressFromFinalComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress case</a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress case</a>`;
 		}
 		case 'progressFromStatements': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewAppellantCase': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case">Review appellant case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/appellant-case`
+			)}">Review appellant case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewAppellantFinalComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/final-comments/appellant`
+			)}">Review appellant final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewIpComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments?backUrl=/personal-list">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/interested-party-comments`
+			)}">Review IP comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewLpaFinalComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/final-comments/lpa`
+			)}">Review LPA final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewLpaQuestionnaire': {
 			if (!lpaQuestionnaireId) {
 				return '';
 			}
 			return isCaseOfficer
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+				  )}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Review LPA questionnaire';
 		}
 		case 'reviewLpaStatement': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement?backUrl=/personal-list">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/lpa-statement`
+			)}">Review LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'shareFinalComments': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share final comments</a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Share final comments</a>`;
 		}
 		case 'shareIpCommentsAndLpaStatement': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=/personal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'startAppeal': {
 			return isCaseOfficer
-				? `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=${currentRoute}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealId}/start-case/add`
+				  )}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Start case';
 		}
 		case 'updateLpaStatement': {
-			return `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">Update LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/lpa-statement`
+			)}">Update LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		default: {
 			return '';
@@ -335,10 +387,10 @@ function mapRequiredActionToPersonalListActionHtml(
 /**
  * @param {PersonalListAppeal} appeal
  * @param {boolean} isCaseOfficer
- * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string}
  */
-export function mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute) {
+export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 	const requiredActions = getRequiredActionsForAppeal({
 		...appeal,
 		appealTimetable: appeal.appealTimetable || {}
@@ -357,7 +409,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, currentRoute) {
 				isCaseOfficer,
 				appealId,
 				lpaQuestionnaireId,
-				currentRoute
+				request
 			);
 		})
 		.join('<br>');

@@ -1,4 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isLpaqReceived } from '#lib/mappers/utils/is-lpaq-received.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLocalPlanningAuthority = ({
@@ -8,9 +9,10 @@ export const mapLocalPlanningAuthority = ({
 }) =>
 	textSummaryListItem({
 		id: 'local-planning-authority',
-		text: 'Local planning authority (LPA)',
+		text: 'LPA',
 		value: appealDetails.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		editable: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission && !isLpaqReceived(appealDetails),
+		actionText: 'Change',
 		classes: 'appeal-local-planning-authority'
 	});

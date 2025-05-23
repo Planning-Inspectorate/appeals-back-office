@@ -1,50 +1,58 @@
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { generateDecisionDocumentDownloadHtml } from '../common.js';
-import { documentationFolderTableItem } from '#lib/mappers/index.js';
-
-/**
- * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
- */
-
-/**
- * @param {WebAppeal} appealDetails
- * @returns {string}
- */
-function generateAppealDecisionActionListItems(appealDetails) {
-	switch (appealDetails.appealStatus) {
-		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			return `<li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="${generateIssueDecisionUrl(
-				appealDetails.appealId
-			)}">Issue</a><span class="govuk-visually-hidden"> decision</span></li>`;
-		}
-		case APPEAL_CASE_STATUS.COMPLETE: {
-			return `<li class="govuk-summary-list__actions-list-item">${generateDecisionDocumentDownloadHtml(
-				appealDetails
-			)}</li>`;
-		}
-		default: {
-			return '';
-		}
-	}
-}
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { documentationFolderTableItem, textSummaryListItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppealDecision = ({ appealDetails }) =>
-	documentationFolderTableItem({
+// @ts-ignore
+export const mapAppealDecision = ({ appealDetails, request }) => {
+	const actionText = (() => {
+		switch (appealDetails.appealStatus) {
+			case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
+				return 'Issue';
+			case APPEAL_CASE_STATUS.INVALID:
+			case APPEAL_CASE_STATUS.COMPLETE:
+				return 'View';
+			default:
+				return null;
+		}
+	})();
+
+	if (
+		appealDetails.appealStatus !== APPEAL_CASE_STATUS.COMPLETE &&
+		appealDetails.appealStatus !== APPEAL_CASE_STATUS.INVALID
+	) {
+		return documentationFolderTableItem({
+			id: 'appeal-decision',
+			text: 'Decision',
+			textClasses: 'appeal-decision-documentation',
+			statusText:
+				appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ||
+				appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
+					? 'Issued'
+					: 'Awaiting decision',
+			statusTextClasses: 'appeal-decision-status',
+			receivedText: appealDetails.decision?.letterDate
+				? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
+				: 'Not applicable',
+			receivedTextClasses: 'appeal-decision-due-date',
+			actionHtml: actionText
+				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+						request,
+						generateIssueDecisionUrl(appealDetails.appealId)
+				  )}">${actionText}<span class="govuk-visually-hidden"> decision</span></a>`
+				: '',
+			actionHtmlClasses: 'appeal-decision-actions'
+		});
+	}
+
+	return textSummaryListItem({
 		id: 'appeal-decision',
-		text: 'Appeal decision',
-		textClasses: 'appeal-decision-documentation',
-		statusText:
-			appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ||
-			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
-				? 'Sent'
-				: 'Awaiting decision',
-		statusTextClasses: 'appeal-decision-status',
-		receivedText: 'Not applicable',
-		receivedTextClasses: 'appeal-decision-due-date',
-		actionHtml: `<ul class="govuk-summary-list__actions-list">${generateAppealDecisionActionListItems(
-			appealDetails
-		)}</ul>`,
-		actionHtmlClasses: 'appeal-decision-actions'
+		text: '',
+		value: '',
+		link: '',
+		actionText: '',
+		editable: false
 	});
+};

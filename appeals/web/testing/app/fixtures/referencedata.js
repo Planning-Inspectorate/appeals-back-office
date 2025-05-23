@@ -132,6 +132,17 @@ export const appealsNationalList = {
 		'issue_determination',
 		'complete'
 	],
+	statusesInNationalList: [
+		'assign_case_officer',
+		'lpa_questionnaire',
+		'statements',
+		'ready_to_start',
+		'validation',
+		'final_comments',
+		'invalid',
+		'issue_determination',
+		'withdrawn'
+	],
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
@@ -221,6 +232,18 @@ export const appealData = {
 			folderId: 7,
 			path: 'costs/costsDecisionLetter',
 			documents: []
+		},
+		appellantDecisionFolder: {
+			caseId: '1',
+			folderId: 8,
+			path: 'costs/appellantCostsDecision',
+			documents: []
+		},
+		lpaDecisionFolder: {
+			caseId: '1',
+			folderId: 9,
+			path: 'costs/lpaCostsDecision',
+			documents: []
 		}
 	},
 	decision: {
@@ -240,6 +263,12 @@ export const appealData = {
 			caseId: '1',
 			folderId: 11,
 			path: 'internal/inspector',
+			documents: []
+		},
+		mainParty: {
+			caseId: '1',
+			folderId: 22,
+			path: 'internal/mainParty',
 			documents: []
 		}
 	},
@@ -335,6 +364,25 @@ export const appealData = {
 		folderId: 17935,
 		path: 'appellant-case/environmentalAssessment',
 		documents: []
+	}
+};
+
+export const publishedAppealData = {
+	...appealData,
+	appealId: 2,
+	appellantCaseId: 2,
+	appealReference: 'APP/Q9999/D/21/SHAREDTEST',
+	appealStatus: 'statements',
+	documentationSummary: {
+		...appealData.documentationSummary,
+		ipComments: {
+			counts: {
+				published: 2,
+				awaiting_review: 0,
+				valid: 0,
+				invalid: 0
+			}
+		}
 	}
 };
 
@@ -2812,6 +2860,12 @@ export const folderInfoInspectorCorrespondence = {
 	path: 'internal/inspectorCorrespondence'
 };
 
+export const folderInfoMainPartyCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 22,
+	path: 'internal/mainPartyCorrespondence'
+};
+
 export const appealCostsDocumentItem = {
 	guid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
 	name: '_821df3b2-08ea-4f56-b8e7-97c3502cd73a_test-doc-alternate.docx',
@@ -3130,6 +3184,55 @@ export const interestedPartyCommentForReview = {
 			postCode: ''
 		}
 	}
+};
+
+export const interestedPartyCommentsPublished = {
+	itemCount: 2, // Example: 2 published comments
+	items: [
+		{
+			id: 5001,
+			origin: 'citizen',
+			author: 'Alice Wonderland',
+			status: 'published',
+			originalRepresentation: 'Comment 1',
+			redactedRepresentation: '',
+			created: '2025-04-01T09:15:00.000Z',
+			notes: 'Some internal notes if applicable',
+			attachments: [],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		},
+		{
+			id: 5002,
+			origin: 'organisation',
+			author: 'Cheshire Cat Council',
+			status: 'published',
+			originalRepresentation: 'Comment 2',
+			redactedRepresentation: null,
+			created: '2025-04-02T14:05:30.000Z',
+			notes: '',
+			attachments: [],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1, // Assuming all items fit on one page for this mock
+	pageSize: 25 // Example page size (should match service default or query)
 };
 
 export const finalCommentsTypes = [

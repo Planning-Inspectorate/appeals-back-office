@@ -18,35 +18,26 @@ export function generateDecisionDocumentDownloadHtml(appealDetails, linkText = '
 		appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
 	);
 
-	let html = '';
-
-	if (virusCheckStatus.checked) {
-		if (virusCheckStatus.safe) {
-			const { decision } = appealDetails;
-
-			html = `<a class="govuk-link" href="${
-				decision?.documentId && decision?.documentName
-					? mapDocumentDownloadUrl(
-							appealDetails.appealId,
-							decision?.documentId,
-							decision?.documentName
-					  )
-					: '#'
-			}" target="_blank">${linkText}</a>`;
-		} else {
-			html = '<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>';
-		}
-	} else {
-		html = '<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>';
+	if (!virusCheckStatus.checked) {
+		return '<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>';
 	}
 
-	return html;
+	if (!virusCheckStatus.safe) {
+		return '<strong class="govuk-tag govuk-tag--red">Virus detected</strong>';
+	}
+
+	const { decision } = appealDetails;
+
+	return `<a class="govuk-link" href="${
+		decision?.documentId && decision?.documentName
+			? mapDocumentDownloadUrl(appealDetails.appealId, decision?.documentId, decision?.documentName)
+			: '#'
+	}" target="_blank">${linkText}</a>`;
 }
 
 /**
  * @param {string | undefined} lpaQStatus
  * @returns {boolean}
  */
-export function shouldDisplayChangeLinksForLPAQStatus(lpaQStatus) {
-	return !lpaQStatus || lpaQStatus !== 'not_received';
-}
+export const shouldDisplayChangeLinksForLPAQStatus = (lpaQStatus) =>
+	!lpaQStatus || lpaQStatus !== 'not_received';

@@ -1,4 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isLpaqReceived } from '#lib/mappers/utils/is-lpaq-received.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaContactDetails = ({
@@ -10,9 +11,12 @@ export const mapLpaContactDetails = ({
 		id: 'lpa-contact-details',
 		text: 'Local planning authority (LPA)',
 		value: {
-			html: `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li><li>${appealDetails.lpaEmailAddress}</li></ul>`
+			html:
+				appealDetails.localPlanningDepartment && appealDetails.lpaEmailAddress
+					? `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li><li>${appealDetails.lpaEmailAddress}</li></ul>`
+					: 'Awaiting questionnaire'
 		},
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		editable: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission && !isLpaqReceived(appealDetails),
 		classes: 'appeal-lpa-contact-details'
 	});

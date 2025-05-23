@@ -6,7 +6,8 @@ import {
 	checkAndConfirmPage,
 	getValidationOutcomeFromAppellantCase,
 	getPageHeadingTextOverrideForFolder,
-	getPageHeadingTextOverrideForAddDocuments
+	getPageHeadingTextOverrideForAddDocuments,
+	getDocumentNameFromFolder
 } from './appellant-case.mapper.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
@@ -26,9 +27,12 @@ import {
 	renderChangeDocumentFileName,
 	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  *
@@ -54,7 +58,8 @@ const renderAppellantCase = async (request, response) => {
 		const mappedPageContent = await appellantCasePage(
 			appellantCaseResponse,
 			currentAppeal,
-			request.originalUrl,
+			stripQueryString(request.originalUrl),
+			getBackLinkUrlFromQuery(request),
 			request.session
 		);
 
@@ -236,9 +241,7 @@ export const getAddDocuments = async (request, response) => {
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404.njk');
 	}
-
 	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(currentFolder);
-
 	await renderDocumentUpload({
 		request,
 		response,
@@ -246,7 +249,8 @@ export const getAddDocuments = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		pageHeadingTextOverride
+		pageHeadingTextOverride,
+		documentTitle: getDocumentNameFromFolder(currentFolder.path) || ''
 	});
 };
 
@@ -405,6 +409,7 @@ export const getManageFolder = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/`,
 		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
+		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
 		...(headingTextOverride && {
 			pageHeadingTextOverride: capitalize(headingTextOverride)
 		})
@@ -424,7 +429,7 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersion = async (request, response) => {
-	const { currentAppeal, currentFolder } = request;
+	const { apiClient, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -435,13 +440,26 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(
+		apiClient,
+		currentAppeal.appealId,
+		request.params.documentId
+	);
+
+	const documentName = getDocumentNameFromFolder(currentFolder.path);
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/${request.params.folderId}/${request.params.documentId}`,
-		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid'
+		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(documentName && {
+			pageHeadingTextOverride: capitalizeFirstLetter(documentName),
+			uploadContainerHeadingTextOverride: `Upload ${documentName}`
+		})
 	});
 };
 

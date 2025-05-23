@@ -41,3 +41,35 @@ export function safeRedirect(request, response, url) {
 		return response.redirect('/');
 	}
 }
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} url
+ * @returns {string}
+ */
+export function addBackLinkQueryToUrl(request, url) {
+	const urlParts = url.split('#');
+
+	return `${urlParts[0]}?backUrl=${encodeURIComponent(request.originalUrl)}${
+		urlParts.length > 1 ? `#${urlParts[1]}` : ''
+	}`;
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string|undefined}
+ */
+export function getBackLinkUrlFromQuery(request) {
+	if (!request.query.backUrl) {
+		return;
+	}
+	return decodeURIComponent(request.query.backUrl.toString());
+}
+
+/**
+ * @param {string} url
+ * @returns {string}
+ */
+export function stripQueryString(url) {
+	return url.split('?')[0];
+}

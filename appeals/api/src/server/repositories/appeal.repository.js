@@ -80,7 +80,11 @@ const appealDetailsInclude = {
 	inspectorDecision: true,
 	lpaQuestionnaire: {
 		include: {
-			listedBuildingDetails: true,
+			listedBuildingDetails: {
+				include: {
+					listedBuilding: true
+				}
+			},
 			designatedSiteNames: {
 				include: {
 					designatedSite: true
@@ -105,6 +109,11 @@ const appealDetailsInclude = {
 			siteVisitType: true
 		}
 	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
 	caseNotes: true,
 	folders: {
 		include: {
@@ -119,7 +128,8 @@ const appealDetailsInclude = {
 			}
 		}
 	},
-	representations: true
+	representations: true,
+	hearingEstimate: true
 };
 
 /**

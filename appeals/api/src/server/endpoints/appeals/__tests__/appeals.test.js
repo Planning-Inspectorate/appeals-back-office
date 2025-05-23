@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
-	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
+	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
@@ -82,11 +82,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -94,31 +91,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -142,11 +133,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -154,31 +142,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -187,7 +169,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -225,11 +208,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -237,31 +217,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -270,7 +244,8 @@ describe('appeals list routes', () => {
 					page: 2,
 					pageCount: 2,
 					pageSize: 1,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -300,6 +275,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21'
+									}
 								}
 							],
 							appealStatus: {
@@ -336,11 +316,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -348,31 +325,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -381,7 +352,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -411,6 +383,11 @@ describe('appeals list routes', () => {
 											contains: 'md21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'md21'
+									}
 								}
 							],
 							appealStatus: {
@@ -447,11 +424,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -459,31 +433,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -492,7 +460,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -522,6 +491,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21 5XY'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21 5XY'
+									}
 								}
 							],
 							appealStatus: {
@@ -558,11 +532,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -570,31 +541,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -603,7 +568,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -656,11 +622,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -668,31 +631,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -701,7 +658,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -756,11 +714,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -768,31 +723,25 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -801,7 +750,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -853,11 +803,8 @@ describe('appeals list routes', () => {
 								},
 								ipComments: {
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									counts: {},
+									isRedacted: false
 								},
 								lpaQuestionnaire: {
 									receivedAt: '2024-06-24T00:00:00.000Z',
@@ -865,32 +812,26 @@ describe('appeals list routes', () => {
 								},
 								lpaStatement: {
 									status: 'not_received',
-									representationStatus: null
+									representationStatus: null,
+									isRedacted: false
 								},
 								lpaFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {
-										awaiting_review: 0,
-										valid: 0,
-										published: 0
-									}
+									isRedacted: false
 								}
 							},
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference
 						}
 					],
 					lpas,
@@ -899,7 +840,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -989,20 +931,20 @@ describe('appeals list routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
 
-			test('returns an error if searchTerm is more than 8 characters', async () => {
+			test('returns an error if searchTerm is more than 50 characters', async () => {
 				const response = await request
-					.get('/appeals?searchTerm=aaaaaaaaa')
+					.get(`/appeals?searchTerm=${'a'.repeat(51)}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
@@ -1094,11 +1036,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 					},
 					ipComments: {
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						counts: {},
+						isRedacted: false
 					},
 					lpaQuestionnaire: {
 						receivedAt: '2024-06-24T00:00:00.000Z',
@@ -1106,31 +1045,25 @@ test('gets appeals when given a appealTypeId param', async () => {
 					},
 					lpaStatement: {
 						status: 'not_received',
-						representationStatus: null
+						representationStatus: null,
+						isRedacted: false
 					},
 					lpaFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						isRedacted: false
 					},
 					appellantFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {
-							awaiting_review: 0,
-							valid: 0,
-							published: 0
-						}
+						isRedacted: false
 					}
 				},
 				isParentAppeal: false,
-				isChildAppeal: false
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference
 			}
 		],
 		lpas,
@@ -1139,7 +1072,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 		page: 1,
 		pageCount: 1,
 		pageSize: 30,
-		statuses: ['assign_case_officer']
+		statuses: ['assign_case_officer'],
+		statusesInNationalList: ['assign_case_officer']
 	});
 });
 
@@ -1249,10 +1183,10 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 
-		const createdAtPlusTenBusinessDays = new Date('2023-02-15T00:00:00.000Z');
+		const createdAtPlusFortyBusinessDays = new Date('2023-03-29T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusTenBusinessDays);
+		expect(dueDate).toEqual(createdAtPlusFortyBusinessDays);
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', () => {

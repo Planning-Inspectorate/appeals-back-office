@@ -3,6 +3,7 @@ import { personalListPage } from './personal-list.mapper.js';
 import { getAppealsAssignedToCurrentUser } from './personal-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -16,7 +17,7 @@ export const viewPersonalList = async (request, response) => {
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 
-	const urlWithoutQuery = originalUrl.split('?')[0];
+	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
 
 	const assignedAppeals = await getAppealsAssignedToCurrentUser(
@@ -35,7 +36,7 @@ export const viewPersonalList = async (request, response) => {
 		urlWithoutQuery,
 		appealStatusFilter,
 		request.session,
-		originalUrl
+		request
 	);
 
 	const pagination = mapPagination(

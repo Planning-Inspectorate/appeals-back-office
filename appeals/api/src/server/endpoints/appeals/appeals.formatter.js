@@ -1,10 +1,7 @@
-import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
-} from '@pins/appeals/constants/common.js';
+import { countBy } from 'lodash-es';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
 import isFPA from '#utils/is-fpa.js';
-import count from '#utils/count-array.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
@@ -22,7 +19,7 @@ const approxStageCompletion = {
 	STATE_TARGET_LPA_QUESTIONNAIRE_DUE: 10,
 	STATE_TARGET_ASSIGN_CASE_OFFICER: 15,
 	STATE_TARGET_ISSUE_DETERMINATION: 30,
-	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 10,
+	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 40,
 	STATE_TARGET_STATEMENT_REVIEW: 55,
 	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
 };
@@ -58,7 +55,8 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	documentationSummary: formatDocumentationSummary(appeal),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
 
 /**
@@ -83,21 +81,9 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference
 });
-
-/**
- * @param {Representation[]} reps
- * @param {APPEAL_REPRESENTATION_STATUS[]} statuses
- * */
-const makeCounts = (reps, statuses) =>
-	statuses.reduce(
-		(acc, status) => ({
-			...acc,
-			[status]: count(reps, (rep) => rep.status === status)
-		}),
-		{}
-	);
 
 /**
  * @param {DBAppeal | DBUserAppeal} appeal
@@ -138,43 +124,31 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		ipComments: {
 			status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			counts: makeCounts(ipComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			counts: countBy(ipComments, 'status'),
+			isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		lpaStatement: {
 			status: formatLpaStatementStatus(lpaStatement ?? null),
 			representationStatus: lpaStatement?.status ?? null,
-			receivedAt: lpaStatement?.dateCreated
+			receivedAt: lpaStatement?.dateCreated,
+			isRedacted: Boolean(lpaStatement?.redactedRepresentation)
 		},
 		lpaFinalComments: {
 			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: We might want to remove these fields (receivedAt, representationStatus) and just use the `counts` field as with ipComments, but this will be a breaking change for the front end
 			receivedAt: lpaFinalComments[0]?.dateCreated
 				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: lpaFinalComments[0]?.status ?? null,
-			counts: makeCounts(lpaFinalComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			isRedacted: lpaFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		appellantFinalComments: {
 			status:
 				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: See todo above
 			receivedAt: appellantFinalComments[0]?.dateCreated
 				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: appellantFinalComments[0]?.status ?? null,
-			counts: makeCounts(appellantFinalComments, [
-				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.VALID,
-				APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			])
+			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		}
 	};
 };

@@ -1,6 +1,11 @@
 // @ts-nocheck
 import { mapLpaQuestionnaireDueDate } from '#lib/mappers/data/appeal/submappers/lpa-questionnaire-due-date.mapper.js';
-
+import {
+	DOCUMENT_STATUS_RECEIVED,
+	DOCUMENT_STATUS_NOT_RECEIVED
+	// @ts-ignore
+} from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 describe('lpa-questionnaire-due-date.mapper', () => {
 	let data;
 	beforeEach(() => {
@@ -24,6 +29,14 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 
 	it('should display LPA Questionnaire due date with Change action link', () => {
 		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.documentationSummary = {
+			lpaQuestionnaire: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED
+			}
+		};
+		data.appealDetails.appealStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
+		data.appealDetails.appealType = 'Householder';
+
 		const mappedData = mapLpaQuestionnaireDueDate(data);
 		expect(mappedData).toEqual({
 			display: {
@@ -34,11 +47,38 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-lpa-questionnaire-due-date'
 								},
-								href: '/test/appeal-timetables/lpa-questionnaire',
+								href: '/test/timetable/edit',
 								text: 'Change',
 								visuallyHiddenText: 'LPA questionnaire due'
 							}
 						]
+					},
+					classes: 'appeal-lpa-questionnaire-due-date',
+					key: {
+						text: 'LPA questionnaire due'
+					},
+					value: {
+						text: '10 January 2025'
+					}
+				}
+			},
+			id: 'lpa-questionnaire-due-date'
+		});
+	});
+
+	it('should display LPA Questionnaire due date without Change action link', () => {
+		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.documentationSummary = {
+			lpaQuestionnaire: {
+				status: DOCUMENT_STATUS_RECEIVED
+			}
+		};
+		const mappedData = mapLpaQuestionnaireDueDate(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
 					},
 					classes: 'appeal-lpa-questionnaire-due-date',
 					key: {

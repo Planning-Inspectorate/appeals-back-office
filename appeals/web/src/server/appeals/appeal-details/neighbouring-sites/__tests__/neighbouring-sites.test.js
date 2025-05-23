@@ -3,6 +3,7 @@ import supertest from 'supertest';
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import nock from 'nock';
+import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -19,9 +20,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -41,9 +40,7 @@ describe('neighbouring-sites', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
+			expect(element.innerHTML).toContain('Add interested party address</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -57,231 +54,9 @@ describe('neighbouring-sites', () => {
 	});
 
 	describe('POST /add', () => {
-		it('should re-render getAllNeighbouringSite page if addressLine1 is null', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: null,
-				addressLine2: null,
-				town: 'London',
-				county: null,
-				postCode: 'E1 8RU'
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Enter address line 1, typically the building and street</a>'
-			);
-		});
-
-		it('should re-render getAllNeighbouringSite page if addressLine1 is an empty string', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '',
-				addressLine2: null,
-				town: 'London',
-				county: null,
-				postCode: 'E1 8RU'
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Enter address line 1, typically the building and street</a>'
-			);
-		});
-
-		it('should re-render getAllNeighbouringSite page if town is null', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '123 Long Road',
-				addressLine2: null,
-				town: null,
-				county: null,
-				postCode: 'E1 8RU'
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter town or city</a>');
-		});
-
-		it('should re-render getAllNeighbouringSite page if town is an empty string', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '123 Long Road',
-				addressLine2: null,
-				town: '',
-				county: null,
-				postCode: 'E1 8RU'
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter town or city</a>');
-		});
-
-		it('should re-render getAllNeighbouringSite page if the postcode is null', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '123 Long Road',
-				addressLine2: null,
-				town: 'London',
-				county: null,
-				postCode: null
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
-		});
-
-		it('should re-render getAllNeighbouringSite page if the postcode is invalid', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '123 Long Road',
-				addressLine2: null,
-				town: 'London',
-				county: null,
-				postCode: '111'
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Invalid postcode</a>');
-		});
-
-		it('should re-render getAllNeighbouringSite page if the postcode is an empty string', async () => {
-			const appealId = appealData.appealId.toString();
-
-			const invalidData = {
-				addressLine1: '123 Long Road',
-				addressLine2: null,
-				town: 'London',
-				county: null,
-				postCode: ''
-			};
-			const response = await request
-				.post(`${baseUrl}/${appealId}/neighbouring-sites/add/back-office`)
-				.send(invalidData);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Tell us the address of the neighbour’s land or property</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
+		behavesLikeAddressForm({
+			request,
+			url: `${baseUrl}/${appealData.appealId}/neighbouring-sites/add/back-office`
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {
@@ -617,9 +392,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Enter address line 1, typically the building and street</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter address line 1</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if addressLine1 is an empty string', async () => {
@@ -649,9 +422,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Enter address line 1, typically the building and street</a>'
-			);
+			expect(errorSummaryHtml).toContain('Enter address line 1</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if town is null', async () => {
@@ -740,7 +511,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is invalid', async () => {
@@ -770,7 +541,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Invalid postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
 		});
 
 		it('should re-render changeNeighbouringSite page if the postcode is an empty string', async () => {
@@ -800,7 +571,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a full UK postcode</a>');
+			expect(errorSummaryHtml).toContain('Enter postcode</a>');
 		});
 
 		it('should re-direct to the check and confirm page if the data is valid', async () => {

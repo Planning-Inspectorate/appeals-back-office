@@ -4,14 +4,12 @@
 
 import { sub } from 'date-fns';
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS
-} from '@pins/appeals/constants/support.js';
-import {
 	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
 	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,
 	APPEAL_LPA_PROCEDURE_PREFERENCE,
-	APPEAL_APPELLANT_PROCEDURE_PREFERENCE
+	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_DEVELOPMENT_TYPE,
+	APPEAL_CASE_TYPE
 } from 'pins-data-model';
 import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
 
@@ -197,7 +195,7 @@ export const addressListForTrainers = addressesList.map((address) => ({
  */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 	switch (appealTypeShorthand) {
-		case APPEAL_TYPE_SHORTHAND_HAS:
+		case APPEAL_CASE_TYPE.D:
 			return {
 				siteSafetyDetails: 'There may be no mobile reception at the site',
 				siteAccessDetails:
@@ -211,7 +209,8 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
 				isGreenBelt: randomBool()
 			};
-		case APPEAL_TYPE_SHORTHAND_FPA:
+		case APPEAL_CASE_TYPE.W:
+		case APPEAL_CASE_TYPE.Y:
 			return {
 				siteSafetyDetails: 'There may be no mobile reception at the site',
 				siteAccessDetails:
@@ -286,7 +285,7 @@ export const incompleteReviewQuestionnaireSample = {
  * @type {Object<string, import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput>}
  */
 export const appellantCaseList = {
-	[APPEAL_TYPE_SHORTHAND_HAS]: {
+	[APPEAL_CASE_TYPE.D]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,
@@ -298,7 +297,7 @@ export const appellantCaseList = {
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 })
 	},
-	[APPEAL_TYPE_SHORTHAND_FPA]: {
+	[APPEAL_CASE_TYPE.W]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,
@@ -321,7 +320,34 @@ export const appellantCaseList = {
 		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 		appellantProcedurePreferenceWitnessCount: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
-		applicationDate: sub(new Date(), { weeks: 6 })
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE)
+	},
+	[APPEAL_CASE_TYPE.Y]: {
+		siteAreaSquareMetres: 30.9,
+		floorSpaceSquareMetres: 9.7,
+		ownsAllLand: true,
+		ownsSomeLand: false,
+		hasAdvertisedAppeal: false,
+		originalDevelopmentDescription: 'lorem ipsum',
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool(),
+		planningObligation: true,
+		statusPlanningObligation: null,
+		agriculturalHolding: randomBool(),
+		tenantAgriculturalHolding: false,
+		otherTenantsAgriculturalHolding: false,
+		informedTenantsAgriculturalHolding: false,
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+		appellantProcedurePreferenceWitnessCount: 1,
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE)
 	}
 };
 
@@ -335,7 +361,8 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 	};
 
 	switch (appealTypeShorthand) {
-		case APPEAL_TYPE_SHORTHAND_FPA:
+		case APPEAL_CASE_TYPE.W:
+		case APPEAL_CASE_TYPE.Y:
 			appellantCaseCreateInput.agriculturalHolding = randomBool();
 			appellantCaseCreateInput.tenantAgriculturalHolding =
 				appellantCaseCreateInput.agriculturalHolding && randomBool();

@@ -17,7 +17,7 @@ import { acceptRepresentation } from '../../representations.service.js';
 export function renderAllocationCheck(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const pageContent = allocationCheckPage(currentAppeal, session.acceptLPAStatement);
+	const pageContent = allocationCheckPage(currentAppeal, 'valid', session.acceptLPAStatement);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -60,7 +60,7 @@ export function postAllocationCheck(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderAllocationLevel(request, response) {
-	const { errors, currentAppeal, currentRepresentation, session } = request;
+	const { errors, currentAppeal, session } = request;
 
 	const allocationLevels = await (async () => {
 		const levels = await api.getAllocationDetailsLevels(request.apiClient);
@@ -69,7 +69,6 @@ export async function renderAllocationLevel(request, response) {
 
 	const pageContent = allocationLevelPage(
 		currentAppeal,
-		currentRepresentation,
 		allocationLevels,
 		session.acceptLPAStatement,
 		'valid'
@@ -113,7 +112,8 @@ export async function renderAllocationSpecialisms(request, response) {
 	const pageContent = allocationSpecialismsPage(
 		currentAppeal,
 		specialisms,
-		session.acceptLPAStatement
+		session.acceptLPAStatement,
+		'valid'
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -154,7 +154,7 @@ export async function renderConfirm(request, response) {
 
 	const pageContent = confirmPage(currentAppeal, currentRepresentation, specialisms, session);
 
-	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
 		pageContent
 	});

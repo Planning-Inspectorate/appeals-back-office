@@ -48,6 +48,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -55,7 +70,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -63,7 +78,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -146,10 +161,13 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -296,7 +314,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">LPA application reference updated</p>
+                    <p class="govuk-notification-banner__heading">Appeal updated</p>
                 </div>
             </div>
         </div>
@@ -307,6 +325,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -314,7 +347,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -322,7 +355,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -405,11 +438,17 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Application details)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
@@ -605,6 +644,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -612,7 +666,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -620,7 +674,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -703,10 +757,13 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -877,6 +934,21 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -884,7 +956,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -892,7 +964,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -975,10 +1047,13 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1220,6 +1295,21 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1227,7 +1317,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1235,7 +1325,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1318,10 +1408,13 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1491,6 +1584,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1498,7 +1606,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1506,7 +1614,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1604,10 +1712,13 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -1640,6 +1751,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
                                     data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
                                 </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
+                            <dd class="govuk-summary-list__value">Not provided</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-type/change"
+                                data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (3. Application details)</span></a>
+                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1805,6 +1922,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -1812,7 +1944,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -1820,7 +1952,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -1903,10 +2035,13 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -2104,22 +2239,27 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-            data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2153,22 +2293,26 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2206,22 +2350,26 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2259,22 +2407,26 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2312,7 +2464,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2331,22 +2483,26 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2374,28 +2530,30 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload an updated document</h1>
+            <h1 class="govuk-heading-l">Evidence of your agreement to change the description of development</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-document-id="1" data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2429,22 +2587,25 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2482,22 +2643,25 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2535,22 +2699,25 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2588,7 +2755,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2607,22 +2774,25 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2711,13 +2881,15 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
-                            <li>Attachments and/or appendices have not been included to the full statement
-                                of case: test reason text 1</li>
-                            <li>Attachments and/or appendices have not been included to the full statement
-                                of case: test reason text 2</li>
-                            <li>LPA's decision notice is incorrect or incomplete: test reason text 1</li>
-                        </ul>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 1</li>
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 2</li>
+                                <li>LPA's decision notice is incorrect or incomplete: test reason text 1</li>
+                            </ul>
+                        </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete">Change<span class="govuk-visually-hidden"> Incomplete reasons</span></a>
                     </dd>
@@ -2759,11 +2931,13 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
-                            <li>Documents have not been submitted on time: test reason text 1</li>
-                            <li>Other: test reason text 1</li>
-                            <li>Other: test reason text 2</li>
-                        </ul>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Documents have not been submitted on time: test reason text 1</li>
+                                <li>Other: test reason text 1</li>
+                                <li>Other: test reason text 2</li>
+                            </ul>
+                        </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
                     </dd>
@@ -2947,7 +3121,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2991,7 +3165,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3211,7 +3385,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3227,7 +3401,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">2 March 2024</td>
@@ -3243,7 +3417,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3270,7 +3444,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2864"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -3329,7 +3504,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -3345,12 +3520,12 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">
                             <div>2 March 2024</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3365,7 +3540,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3385,7 +3560,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                         </td>
                         <td class="govuk-table__cell">
                             <div>3 April 2025</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3396,7 +3571,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2865"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -3464,7 +3640,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3494,7 +3670,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3510,9 +3686,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                                     </div>
                                 </td>
                                 <td class="govuk-table__cell"></td>
@@ -3523,8 +3699,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3572,7 +3748,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3612,7 +3788,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3627,8 +3803,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3676,7 +3852,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3706,7 +3882,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3721,8 +3897,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3794,7 +3970,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3810,7 +3986,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
                                         target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
                                 </td>
                                 <td class="govuk-table__cell">
                                     <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
@@ -3857,7 +4033,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3887,7 +4063,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3902,8 +4078,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3950,7 +4126,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3980,7 +4156,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3995,8 +4171,8 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -4178,6 +4354,21 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
         </div>
     </div>
     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
@@ -4185,7 +4376,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant&#39;s contact details</dt>
+                        <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
                                     <li>Roger Simmons</li>
@@ -4193,7 +4384,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                 </ul>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/service-user/change/appellant"
-                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Appellant&#39;s contact details (1. Appellant details)</span></a>
+                                    data-cy="appellant">Change<span class="govuk-visually-hidden"> Update appellant details (1. Appellant details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-agent"><dt class="govuk-summary-list__key"> Agent’s contact details</dt>
@@ -4276,10 +4467,13 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
@@ -4513,7 +4707,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -4557,7 +4751,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
                                             id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -5381,7 +5575,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -5425,7 +5619,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
                                             id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -5729,7 +5923,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5739,7 +5933,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5790,7 +5984,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5800,7 +5994,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5851,7 +6045,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5861,7 +6055,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5912,7 +6106,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5922,7 +6116,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5973,7 +6167,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5983,7 +6177,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6034,7 +6228,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6044,7 +6238,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6095,7 +6289,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6105,7 +6299,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6156,7 +6350,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6166,7 +6360,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6217,7 +6411,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6227,7 +6421,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6276,7 +6470,11 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day, a month and a year</a>
+                            <li><a href="#due-date-day">Date must include a day</a>
+                            </li>
+                            <li><a href="#due-date-month">Date must include a month</a>
+                            </li>
+                            <li><a href="#due-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -6286,7 +6484,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6335,7 +6533,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be in the future</a>
+                            <li><a href="#">The date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -6345,7 +6543,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update appeal due date</h1>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6411,7 +6609,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -6453,7 +6651,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -6914,7 +7112,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -6956,7 +7154,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="invalid-reason-22-1" name="invalidReason-22" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -7118,7 +7316,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7191,7 +7389,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7264,7 +7462,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7335,7 +7533,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7408,7 +7606,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7481,7 +7679,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7554,7 +7752,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7627,7 +7825,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7700,7 +7898,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7842,7 +8040,11 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day, a month and a year</a>
+                            <li><a href="#valid-date-day">Date must include a day</a>
+                            </li>
+                            <li><a href="#valid-date-month">Date must include a month</a>
+                            </li>
+                            <li><a href="#valid-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -7967,6 +8169,103 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case change LPA page GET /appellant-case/change-appeal-details/local-planning-authority should render the local planning authority page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case change LPA page POST /appellant-case/change-appeal-details/local-planning-authority should re-render the page with an error message if required field is missing 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#local-planning-authority">Select the local planning authority.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="local-planning-authority-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <p id="local-planning-authority-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the local planning
+                                    authority.</p>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>

@@ -10,19 +10,19 @@ import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_NOT_BE_IN_FUTURE,
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
-	ERROR_INVALID_APPEAL_STATE,
-	FRONT_OFFICE_URL
+	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
-import config from '#config/config.js';
 
 describe('appeal decision routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		process.env.FRONT_OFFICE_URL =
+			'https://appeal-planning-decision.service.gov.uk/appeals/1345264';
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -176,41 +176,35 @@ describe('appeal decision routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.decisionIsAllowedSplitDismissed.appellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.any(Object),
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					decision_date: formatDate(utcDate, false),
+					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+				},
+				recipientEmail: 'test@136s7.com'
+			});
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.decisionIsAllowedSplitDismissed.lpa.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						url: FRONT_OFFICE_URL,
-						decision_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					decision_date: formatDate(utcDate, false),
+					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: 'test@136s7.com'
+			});
 
 			expect(response.status).toEqual(201);
 		});

@@ -52,10 +52,6 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 	const pageComponents = [
 		{
 			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
 			parameters: {
 				rows: [
 					{
@@ -75,7 +71,7 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+						value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 						actions: {
 							items: [
 								...(lpaStatement.attachments?.length > 0

@@ -27,7 +27,6 @@ import {
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
-import config from '#config/config.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 describe('appellant cases routes', () => {
@@ -252,7 +251,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
+						details: stringTokenReplacement(AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED, ['30.6']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -325,7 +324,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -409,7 +408,7 @@ describe('appellant cases routes', () => {
 				);
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -501,7 +500,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -572,7 +571,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -608,26 +607,23 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealIncomplete.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							due_date: '14 July 2099',
-							reasons: [
-								'The original application form is incomplete',
-								'Other: Appellant contact information is incorrect or missing'
-							]
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						due_date: '14 July 2099',
+						reasons: [
+							'The original application form is incomplete',
+							'Other: Appellant contact information is incorrect or missing'
+						]
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'appeal-incomplete'
+				});
 
 				expect(response.status).toEqual(200);
 			});
@@ -705,7 +701,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -783,7 +779,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -841,7 +837,7 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
 			});
@@ -879,25 +875,22 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealInvalid.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-							reasons: [
-								'Appeal has not been submitted on time',
-								'Other: The appeal site address does not match'
-							]
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						lpa_reference: '48269/APP/2021/1482',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reasons: [
+							'Appeal has not been submitted on time',
+							'Other: The appeal site address does not match'
+						]
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'appeal-invalid'
+				});
 
 				expect(response.status).toEqual(200);
 			});
@@ -960,21 +953,18 @@ describe('appellant cases routes', () => {
 				});
 
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 				// eslint-disable-next-line no-undef
-				expect(mockSendEmail).toHaveBeenCalledWith(
-					config.govNotify.template.appealConfirmed.id,
-					'test@136s7.com',
-					{
-						emailReplyToId: null,
-						personalisation: {
-							appeal_reference_number: '1345264',
-							lpa_reference: '48269/APP/2021/1482',
-							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
-						},
-						reference: null
-					}
-				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: '48269/APP/2021/1482',
+						appeal_reference_number: '1345264',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'appeal-confirmed'
+				});
 
 				expect(response.status).toEqual(200);
 			});
@@ -1141,6 +1131,85 @@ describe('appellant cases routes', () => {
 					'must be 1000 characters or less'
 				);
 			});
+		});
+	});
+
+	describe('PATCH /appeals/:appealId/appellant-cases/:appellantCaseId', () => {
+		test('updates appellant case development type and logs the correct label', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const patchBody = {
+				developmentType: 'other-minor'
+			};
+			const expectedLabel = 'other minor developments';
+
+			const { appellantCase, id } = householdAppeal;
+			const response = await request
+				.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+				.send(patchBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: appellantCase.id },
+				data: {
+					developmentType: patchBody.developmentType
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: `Development type updated to ${expectedLabel}`,
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('handles unmapped development type gracefully', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const patchBody = {
+				developmentType: 'unknown-type'
+			};
+
+			const { appellantCase, id } = householdAppeal;
+			const response = await request
+				.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+				.send(patchBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: appellantCase.id },
+				data: {
+					developmentType: patchBody.developmentType
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: 'Development type updated to unknown-type',
+					loggedAt: expect.any(Date),
+					userId: householdAppeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(200);
 		});
 	});
 });

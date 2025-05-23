@@ -219,9 +219,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Final date must include a day, a month and a year'
-		);
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a day');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a month');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must include a year');
 	});
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
@@ -248,7 +248,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain('Final date day must be between 1 and 31</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
@@ -275,7 +275,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain('Final date month must be between 1 and 12</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
@@ -302,7 +302,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain('Final date year must be a number</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
 	});
 
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
@@ -328,7 +328,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a real date</a>');
 	});
 
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {
@@ -354,7 +354,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Date must be a business day</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('The date must be a business day</a>');
 	});
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {

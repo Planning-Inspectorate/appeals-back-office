@@ -14,7 +14,7 @@
 		<div class="govuk-grid-column-two-thirds top-errors-hook"></div>
 	</div>
   {{ pageHeading({
-    preHeading: "Appeal " + appealShortReference,
+    preHeading: preHeadingText,
     heading: pageHeadingText if pageHeadingText else "Upload files"
   }) }}
 {%- endblock -%}
@@ -52,8 +52,10 @@
 				accessToken: accessToken,
 				blobStorageContainer: blobStorageContainer,
 				nextPageUrl: nextPageUrl if nextPageUrl else (['/appeals-service/appeal-details/', caseId] | join),
-				allowedTypes: allowedTypes if allowedTypes else (['pdf','doc','docx','ppt','pptx','xls','xlsx','msg','jpg','jpeg','mpeg','mp3','mp4','mov','png','tif','tiff' ]),
+				allowedTypes: allowedTypes if allowedTypes|length else (['pdf','doc','docx','ppt','pptx','xls','xlsx','msg','jpg','jpeg','mpeg','mp3','mp4','mov','png','tif','tiff' ]),
 				multiple: multiple,
+				uploadContainerHeadingText: uploadContainerHeadingText if uploadContainerHeadingText else (pageHeadingText if pageHeadingText else "Upload files"),
+				documentTitle: documentTitle,
 				displayCorrectFolderConfirmationContent: displayCorrectFolderConfirmationContent,
 				uncommittedFiles: uncommittedFiles,
 				filenamesInFolder: filenamesInFolder

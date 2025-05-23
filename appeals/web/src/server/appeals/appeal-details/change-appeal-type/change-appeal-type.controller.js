@@ -14,6 +14,7 @@ import {
 } from './change-appeal-type.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -251,7 +252,7 @@ const renderAddHorizonReference = async (request, response) => {
 
 	const appealData = request.currentAppeal;
 
-	const mappedPageContent = addHorizonReferencePage(appealData);
+	const mappedPageContent = addHorizonReferencePage(appealData, getBackLinkUrlFromQuery(request));
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

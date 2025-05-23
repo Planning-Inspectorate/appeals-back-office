@@ -78,7 +78,7 @@ export const postReasons = async (request, response, next) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderSetNewDate(request, response) {
-	const extendedDeadline = await addBusinessDays(request.apiClient, new Date(), 7);
+	const extendedDeadline = await addBusinessDays(request.apiClient, new Date(), 3);
 	const deadlineString = dateISOStringToDisplayDate(extendedDeadline.toISOString());
 	const pageContent = setNewDatePage(request.currentAppeal, deadlineString);
 
@@ -179,7 +179,7 @@ export const renderCheckYourAnswers = async (
 					]
 				},
 				'Supporting documents': {
-					value: !attachmentsList?.length ? 'Not provided' : undefined,
+					value: !attachmentsList?.length ? 'No documents' : undefined,
 					html: attachmentsList?.length ? attachmentsList : undefined,
 					actions: {
 						Manage: {
@@ -203,7 +203,16 @@ export const renderCheckYourAnswers = async (
 					}
 				},
 				'Why is the statement incomplete?': {
-					html: rejectionReasonHtml(rejectionReasons),
+					html: '',
+					pageComponents: [
+						{
+							type: 'show-more',
+							parameters: {
+								html: rejectionReasonHtml(rejectionReasons),
+								labelText: 'Read more'
+							}
+						}
+					],
 					actions: {
 						Change: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/incomplete/reasons`,
@@ -256,7 +265,7 @@ export const postCheckYourAnswers = async (request, response) => {
 	);
 
 	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
-		allowResubmit: session.lpaStatement.setNewDate
+		allowResubmit: session.lpaStatement[appealId].setNewDate
 	});
 
 	addNotificationBannerToSession({

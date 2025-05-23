@@ -38,146 +38,6 @@ export default joi
 					.object({
 						generic: joi.object({
 							id: joi.string().required()
-						}),
-						appealConfirmed: joi.object({
-							id: joi.string().required()
-						}),
-						appealIncomplete: joi.object({
-							id: joi.string().required()
-						}),
-						appealInvalid: joi.object({
-							id: joi.string().required()
-						}),
-						appealWithdrawn: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						appealStartDateChange: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						appealTypeChangedNonHas: joi.object({
-							id: joi.string().required()
-						}),
-						appealValidStartCase: joi.object({
-							has: {
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							},
-							s78: {
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}
-						}),
-						decisionIsAllowedSplitDismissed: joi.object({
-							appellant: joi.object({
-								id: joi.string().required()
-							}),
-							lpa: joi.object({
-								id: joi.string().required()
-							})
-						}),
-						decisionIsInvalidAppellant: joi.object({
-							id: joi.string()
-						}),
-						decisionIsInvalidLPA: joi.object({
-							id: joi.string()
-						}),
-						siteVisitChange: joi.object({
-							accompaniedDateChange: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accompaniedToAccessRequired: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accompaniedToUnaccompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accessRequiredDateChange: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accessRequiredToAccompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accessRequiredToUnaccompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							unaccompaniedToAccessRequired: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							unaccompaniedToAccompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							})
-						}),
-						siteVisitSchedule: joi.object({
-							accompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								}),
-								lpa: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							accessRequired: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								})
-							}),
-							unaccompanied: joi.object({
-								appellant: joi.object({
-									id: joi.string().required()
-								})
-							})
-						}),
-						validAppellantCase: joi.object({
-							id: joi.string().required()
 						})
 					})
 					.required(),
@@ -198,6 +58,9 @@ export default joi
 			url: joi.string().optional(),
 			mock: joi.bool().optional(),
 			timeoutLimit: joi.number().optional()
-		})
+		}),
+		frontOffice: {
+			url: joi.string().optional()
+		}
 	})
 	.options({ presence: 'required' }); // required by default;

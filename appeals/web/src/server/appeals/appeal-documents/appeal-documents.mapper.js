@@ -26,27 +26,33 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
+
 /**
- * @param {string} appealId
- * @param {string} appealReference
- * @param {string} folderId
- * @param {string} folderPath
- * @param {string} documentId
- * @param {string} documentName
- * @param {number} latestVersion
- * @param {string} backButtonUrl
- * @param {string|undefined} nextPageUrl
- * @param {boolean} isLateEntry
- * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} fileUploadInfo
- * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @param {string} [pageHeadingTextOverride]
- * @param {PageComponent[]} [pageBodyComponents]
- * @param {boolean} [allowMultipleFiles]
- * @param {string} [documentType]
- * @param {string} [filenamesInFolder]
+ * @param {Object} params
+ * @param {string} params.appealId
+ * @param {string} params.appealReference
+ * @param {string} params.folderId
+ * @param {string} params.folderPath
+ * @param {string} params.documentId
+ * @param {string|undefined} params.documentName
+ * @param {number|undefined} params.latestVersion
+ * @param {string} params.backButtonUrl
+ * @param {string|undefined} params.nextPageUrl
+ * @param {boolean} params.isLateEntry
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} params.fileUploadInfo
+ * @param {import('@pins/express').ValidationErrors|undefined} params.errors
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
+ * @param {PageComponent[]} [params.pageBodyComponents]
+ * @param {boolean} [params.allowMultipleFiles]
+ * @param {string} [params.documentType]
+ * @param {string} [params.filenamesInFolder]
+ * @param {string[]} [params.allowedTypes]
+ * @param {string} [params.uploadContainerHeadingTextOverride]
+ * @param {string} [params.documentTitle]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
-export async function documentUploadPage(
+export async function documentUploadPage({
 	appealId,
 	appealReference,
 	folderId,
@@ -60,14 +66,21 @@ export async function documentUploadPage(
 	fileUploadInfo,
 	errors,
 	pageHeadingTextOverride,
+	preHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
 	documentType,
-	filenamesInFolder
-) {
+	filenamesInFolder,
+	allowedTypes = [],
+	uploadContainerHeadingTextOverride = '',
+	documentTitle = ''
+}) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
+	const uploadContainerHeadingText = uploadContainerHeadingTextOverride || pageHeadingText;
+	const preHeadingText =
+		preHeadingTextOverride || 'Appeal ' + appealShortReference(appealReference);
 	const pathComponents = folderPath ? folderPath.split('/') : [];
 	const documentStage = pathComponents.length > 0 ? pathComponents[0] : 'unknown';
 	const documentTypeComputed =
@@ -97,10 +110,13 @@ export async function documentUploadPage(
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
 		pageTitle: pageHeadingTextOverride || 'Upload documents',
-		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText,
+		preHeadingText,
 		pageBodyComponents,
+		uploadContainerHeadingText,
+		documentTitle,
 		documentType: documentTypeComputed,
+		allowedTypes,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||
 			backButtonUrl?.replace('{{folderId}}', folderId),
@@ -292,6 +308,14 @@ function mapManageFolderPageHeading(folderPath) {
 	}
 
 	return `${folderPathToFolderNameText(folderPath)} documents`;
+}
+
+/**
+ * @param {string} fileName
+ * @returns {string}
+ */
+function stripFileExtension(fileName) {
+	return fileName.replace(/\.\w+$/, '');
 }
 
 /**
@@ -595,7 +619,9 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 	const pageComponents = [
 		{
 			wrapperHtml: {
-				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.originalFilename}</h2>`,
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${stripFileExtension(
+					item.originalFilename
+				)}</h2>`,
 				closing: ''
 			},
 			type: 'input',
@@ -618,7 +644,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 					text: 'File name',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
 				},
-				value: fileName
+				value: stripFileExtension(fileName)
 			}
 		}
 	];
@@ -640,6 +666,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
  * @param {string} [params.titleTextOverride]
  * @param {string} [params.summaryListNameLabelOverride]
  * @param {string} [params.summaryListDateLabelOverride]
+ * @param {string} [params.folderPath]
  * @returns {PageContent}
  */
 export function addDocumentsCheckAndConfirmPage({
@@ -654,14 +681,26 @@ export function addDocumentsCheckAndConfirmPage({
 	documentFileName,
 	titleTextOverride,
 	summaryListNameLabelOverride,
-	summaryListDateLabelOverride
+	summaryListDateLabelOverride,
+	folderPath
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleTextOverride || 'Check your answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check your answers',
+		heading:
+			folderPath === 'internal/mainPartyCorrespondence'
+				? 'Check details and add main party correspondence'
+				: 'Check your answers',
+		submitButtonProperties: {
+			text:
+				folderPath === 'internal/mainPartyCorrespondence'
+					? 'Add main party correspondence'
+					: 'Confirm',
+			type: 'submit',
+			preventDoubleClick: true
+		},
 		pageComponents: []
 	};
 
@@ -853,18 +892,22 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
+ * @param {string} params.addButtonUrl
  * @param {FolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @returns {PageContent}
  */
 export function manageFolderPage({
 	backLinkUrl,
 	viewAndEditUrl,
+	addButtonUrl,
 	folder,
 	request,
 	pageHeadingTextOverride,
+	addButtonTextOverride,
 	dateColumnLabelTextOverride
 }) {
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -900,6 +943,15 @@ export function manageFolderPage({
 			}
 		});
 	}
+
+	/** @type {PageComponent} */
+	const buttonComponent = {
+		type: 'button',
+		parameters: {
+			text: addButtonTextOverride || 'Add documents',
+			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString())
+		}
+	};
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -974,7 +1026,8 @@ export function manageFolderPage({
 						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
 					])
 				}
-			}
+			},
+			buttonComponent
 		]
 	};
 
@@ -1106,7 +1159,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 		htmlProperty.pageComponents.push({
 			type: 'html',
 			parameters: {
-				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>`
+				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>`
 			}
 		});
 	}
@@ -1390,7 +1443,6 @@ export async function manageDocumentPage({
 				{
 					type: 'table',
 					parameters: {
-						classes: 'govuk-!-font-size-16',
 						head: [
 							{
 								text: 'Version'

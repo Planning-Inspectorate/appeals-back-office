@@ -22,6 +22,7 @@ const SELECTORS = {
 	submitButton: '.pins-file-upload__submit',
 	removeButton: '.pins-file-upload__remove'
 };
+const MAX_FILE_SIZE = 26214400; // 25MB
 
 /**
  * Actions on the client for the file upload process
@@ -51,11 +52,6 @@ const clientActions = (container) => {
 	const { uploadFiles, deleteFiles, deleteUncommittedFileFromSession } = serverActions(container);
 
 	function setupDropzone() {
-		if (allowSingleFileOnly() || isNewVersionOfExistingFile()) {
-			fileInputContainer?.classList.add(CLASSES.dropZoneDisabled);
-			return;
-		}
-
 		dropZone = document.createElement('div');
 		dropZone.className = CLASSES.dropZone;
 		fileInputContainer?.parentNode?.insertBefore(dropZone, fileInputContainer);
@@ -102,7 +98,7 @@ const clientActions = (container) => {
 		}
 
 		addSelectedFiles(uploadInput?.files);
-		updateUploadButton();
+		updateUploadControlsVisibility();
 	}
 
 	if (
@@ -258,24 +254,35 @@ const clientActions = (container) => {
 			return;
 		}
 
+		stagedFiles.errors.length = 0;
+
+		if (allowSingleFileOnly() && (fileList.length > 1 || stagedFiles.files?.length)) {
+			await showErrors(
+				{
+					message: 'FILE_SPECIFIC_ERRORS',
+					details: [
+						{
+							message: 'SINGLE_FILE_ONLY',
+							guid: '',
+							name: '',
+							formId: container.dataset?.formId || ''
+						}
+					]
+				},
+				container
+			);
+			updateStagedFilesUI(stagedFiles);
+			return;
+		}
+
 		showProgressMessage(container);
 
-		let addedFiles = Array.from(fileList).map((file) => ({
+		const addedFiles = Array.from(fileList || []).map((file) => ({
 			file,
 			guid: isNewVersionOfExistingFile()
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID()
 		}));
-
-		if (allowSingleFileOnly()) {
-			stagedFiles.files.forEach(async (file) => {
-				await removeFileByGUID(file.guid);
-			});
-
-			addedFiles = [addedFiles[0]];
-		}
-
-		stagedFiles.errors.length = 0;
 
 		for (const addedFile of addedFiles) {
 			const validationError = validateSelectedFile(addedFile.file);
@@ -284,7 +291,9 @@ const clientActions = (container) => {
 				stagedFiles.errors.push({
 					message: validationError.message || '',
 					name: addedFile.file.name,
-					guid: addedFile.guid
+					guid: addedFile.guid,
+					metadata: validationError.metadata,
+					formId: container.dataset?.formId || ''
 				});
 			}
 		}
@@ -359,23 +368,16 @@ const clientActions = (container) => {
 		}
 	};
 
-	function updateUploadButton() {
-		const filesRowsNumber = globalDataTransfer.files.length;
-
-		if (uploadButton) {
-			uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
-			uploadButton.blur();
-		}
-
-		updateUploadControlsVisibility();
-	}
-
 	/**
 	 * @param {File} selectedFile
-	 * @returns {{message: string} | null}
+	 * @returns {{message: string, metadata?: {fileExtension?: string}} | null}
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
+		if (container.dataset?.documentStage === 'representation') {
+			return null;
+		}
+
 		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
 		const filenamesInFolderArray =
@@ -392,8 +394,21 @@ const clientActions = (container) => {
 		if (selectedFile.name.length > maximumAllowedFileNameLength) {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
+		const originalFileExtension = container.dataset.documentOriginalFileName?.split('.').pop();
+		if (originalFileExtension && selectedFile.name.split('.').pop() !== originalFileExtension) {
+			return {
+				message: 'DIFFERENT_FILE_EXTENSION',
+				metadata: { fileExtension: originalFileExtension.toUpperCase() }
+			};
+		}
 		if (!allowedMimeTypes.includes(selectedFile.type)) {
-			return { message: 'TYPE_SINGLE_FILE' };
+			return {
+				message: 'DIFFERENT_FILE_EXTENSION',
+				metadata: { fileExtension: container.dataset.formattedAllowedTypes }
+			};
+		}
+		if (selectedFile.size > MAX_FILE_SIZE) {
+			return { message: 'SIZE_SINGLE_FILE' };
 		}
 
 		return null;
@@ -433,7 +448,9 @@ const clientActions = (container) => {
 					...stagedFiles.errors.map((errorItem) => ({
 						message: errorItem.message,
 						name: errorItem.name,
-						guid: errorItem.guid
+						guid: errorItem.guid,
+						metadata: errorItem.metadata,
+						formId: container.dataset?.formId || ''
 					})),
 					...failedUploads
 				].flat()
@@ -498,7 +515,11 @@ const clientActions = (container) => {
 		} else {
 			showErrors(
 				{
-					message: 'NO_FILE'
+					message: 'NO_FILE',
+					formId: container.dataset?.formId || '',
+					metadata: {
+						fileTitle: container.dataset?.documentTitle || 'file'
+					}
 				},
 				container
 			);

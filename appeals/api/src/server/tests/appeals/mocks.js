@@ -190,6 +190,22 @@ export const householdAppeal = {
 			key: 'site_visit_access_required'
 		}
 	},
+	hearing: {
+		id: 1,
+		appealId: 1,
+		hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	lpaQuestionnaire: {
@@ -290,6 +306,12 @@ export const householdAppealLPAQuestionnaireComplete = {
 
 export const householdAppealLPAQuestionnaireIncomplete = {
 	...householdAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
 	lpaQuestionnaire: {
 		...householdAppeal.lpaQuestionnaire,
 		...incompleteLPAQuestionnaireOutcome

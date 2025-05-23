@@ -33,6 +33,7 @@ import createManyToManyRelationData from '#utils/create-many-to-many-relation-da
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { ERROR_MAX_LENGTH_CHARACTERS } from '@pins/appeals/constants/support.js';
 
 describe('lpa questionnaires routes', () => {
 	afterEach(() => {
@@ -318,6 +319,90 @@ describe('lpa questionnaires routes', () => {
 						site_address: expectedSiteAddress
 					},
 					recipientEmail: householdAppeal.appellant.email,
+					templateName: 'lpaq-complete-has-appellant'
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('sends a correctly formatted notify email when the outcome is complete for a full planning appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce({
+						...fullPlanningAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+								valid: true
+							}
+						]
+					})
+					.mockResolvedValue({
+						...fullPlanningAppeal,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.EVENT,
+								valid: true
+							}
+						]
+					});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+
+				const body = {
+					validationOutcome: 'complete'
+				};
+				const { id, lpaQuestionnaire } = fullPlanningAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => fullPlanningAppeal.address[key])
+					.join(', ');
+
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						appeal_reference_number: fullPlanningAppeal.reference,
+						site_address: expectedSiteAddress
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'lpaq-complete-lpa'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						appeal_reference_number: householdAppeal.reference,
+						site_address: expectedSiteAddress
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'lpaq-complete-appellant'
 				});
 
@@ -528,7 +613,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2025-04-18T00:00:00.000Z',
+					lpaQuestionnaireDueDate: '2125-04-18T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -1556,6 +1641,53 @@ describe('lpa questionnaires routes', () => {
 				expect(response.body).toEqual(body);
 			});
 
+			test('updates newConditionDetails when given string is less than 8000 characters', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const requestBody = {
+					extraConditions: 'a'.repeat(6000)
+				};
+				const responseBody = {
+					extraConditions: 'a'.repeat(6000)
+				};
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(requestBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {
+						newConditionDetails: 'a'.repeat(6000)
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(responseBody);
+			});
+
+			test('returns an error if newConditionDetails is more than 8000 characters', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const body = {
+					extraConditions: 'a'.repeat(8001)
+				};
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						extraConditions: stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [8000])
+					}
+				});
+			});
+
 			test('does not return an error when given an empty body', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -1595,14 +1727,6 @@ describe('lpa questionnaires routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
-					data: {
-						lpaQuestionnaireValidationOutcomeId: lpaQuestionnaireValidationOutcomes[0].id
-					},
-					where: {
-						id: householdAppeal.lpaQuestionnaire.id
-					}
-				});
 				expect(response.status).toEqual(500);
 				expect(response.body).toEqual({
 					errors: {

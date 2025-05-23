@@ -26,10 +26,14 @@ import {
 	renderChangeDocumentFileName,
 	postChangeDocumentFileName
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -56,8 +60,10 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 	const mappedPageContent = await lpaQuestionnairePage(
 		lpaQuestionnaire,
 		currentAppeal,
-		request.originalUrl,
-		session
+		stripQueryString(request.originalUrl),
+		session,
+		request,
+		getBackLinkUrlFromQuery(request)
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -93,38 +99,25 @@ export const postLpaQuestionnaire = async (request, response) => {
 
 		request.session.reviewOutcome = reviewOutcome;
 
-		if (currentAppeal) {
-			if (reviewOutcome === 'complete') {
-				if (currentAppeal.appealType === APPEAL_TYPE.HOUSEHOLDER) {
-					await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
-						request.apiClient,
-						appealId,
-						lpaQuestionnaireId,
-						mapWebValidationOutcomeToApiValidationOutcome('complete')
-					);
-					addNotificationBannerToSession({
-						session: request.session,
-						bannerDefinitionKey: 'lpaqReviewComplete',
-						appealId: currentAppeal.appealId
-					});
-					return response.redirect(`/appeals-service/appeal-details/${appealId}`);
-				} else {
-					return response.redirect(
-						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
-					);
-				}
-			} else if (reviewOutcome === 'incomplete') {
-				addNotificationBannerToSession({
-					session: request.session,
-					bannerDefinitionKey: 'lpaqReviewIncomplete',
-					appealId: currentAppeal.appealId
-				});
+		if (reviewOutcome === 'complete') {
+			if (currentAppeal.appealType !== APPEAL_TYPE.HOUSEHOLDER) {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
 			}
-		} else {
-			return response.status(500).render('app/500.njk');
+
+			await lpaQuestionnaireService.setReviewOutcomeForLpaQuestionnaire(
+				request.apiClient,
+				appealId,
+				lpaQuestionnaireId,
+				mapWebValidationOutcomeToApiValidationOutcome('complete')
+			);
+
+			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		} else if (reviewOutcome === 'incomplete') {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete`
+			);
 		}
 	} catch (error) {
 		let errorMessage = 'Something went wrong when completing lpa questionnaire review';
@@ -137,6 +130,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		return renderLpaQuestionnaire(request, response, errorMessage);
 	}
 };
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
@@ -244,15 +238,10 @@ const renderCheckAndConfirm = async (request, response) => {
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when completing lpa questionnaire review'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`
 		);
-
-		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -286,6 +275,15 @@ export const postCheckAndConfirm = async (request, response) => {
 			)
 		);
 
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey:
+				request.session.reviewOutcome === 'complete'
+					? 'lpaqReviewComplete'
+					: 'lpaqReviewIncomplete',
+			appealId: currentAppeal.appealId
+		});
+
 		delete request.session.reviewOutcome;
 
 		if (webLPAQuestionnaireReviewOutcome.updatedDueDate) {
@@ -296,15 +294,10 @@ export const postCheckAndConfirm = async (request, response) => {
 		delete request.session.webLPAQuestionnaireReviewOutcome;
 
 		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when completing lpa questionnaire review'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`
 		);
-
-		return response.status(500).render('app/500.njk');
 	}
 };
 
@@ -477,15 +470,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				});
 			}
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when adding documents to lpa questionnaire'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when adding documents to lpa questionnaire: ${error.message}`
 		);
-
-		return response.render('app/500.njk');
 	}
 };
 
@@ -503,15 +491,10 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 			response,
 			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}`
 		});
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error
-				? error.message
-				: 'Something went wrong when adding document version to lpa questionnaire'
+	} catch (/** @type {*} */ error) {
+		throw new Error(
+			`Something went wrong when adding document version to lpa questionnaire: ${error.message}`
 		);
-
-		return response.render('app/500.njk');
 	}
 };
 
@@ -557,6 +540,7 @@ export const getManageFolder = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/`,
 		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/{{folderId}}/{{documentId}}`,
+		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-documents/{{folderId}}`,
 		pageHeadingTextOverride: managePageHeadingText
 	});
 };
@@ -574,7 +558,7 @@ export const getManageDocument = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getAddDocumentVersion = async (request, response) => {
-	const { currentAppeal, currentFolder } = request;
+	const { apiClient, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -585,13 +569,26 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(
+		apiClient,
+		currentAppeal.appealId,
+		request.params.documentId
+	);
+
+	const pageHeading = DOCUMENT_FOLDER_DISPLAY_LABELS[currentFolder.path.split('/')[1]];
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/lpa-questionnaire/${request.params.lpaQuestionnaireId}/add-document-details/${request.params.folderId}/${request.params.documentId}`,
-		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete'
+		isLateEntry: getValidationOutcomeFromLpaQuestionnaire(lpaQuestionnaireDetails) === 'complete',
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(pageHeading && {
+			pageHeadingTextOverride: pageHeading,
+			uploadContainerHeadingTextOverride: `Upload ${uncapitalizeFirstLetter(pageHeading)}`
+		})
 	});
 };
 

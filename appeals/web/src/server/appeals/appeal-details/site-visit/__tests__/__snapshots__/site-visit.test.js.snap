@@ -35,7 +35,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -108,7 +108,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="09">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="38">
@@ -117,7 +117,7 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="00">
@@ -167,7 +167,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -240,7 +240,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="09">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="09">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="38">
@@ -249,7 +249,7 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="00">
@@ -353,7 +353,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -394,7 +394,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -467,7 +467,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -476,7 +476,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -500,7 +500,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be in the future</a>
+                            <li><a href="#">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -541,7 +541,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -614,7 +614,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -623,7 +623,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -649,7 +649,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -690,7 +690,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -763,7 +763,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -772,7 +772,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -798,7 +798,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -839,7 +839,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -912,7 +912,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -921,7 +921,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -947,7 +947,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -988,7 +988,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1061,7 +1061,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1070,7 +1070,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -1096,7 +1096,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -1137,7 +1137,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1210,7 +1210,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1219,7 +1219,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -1245,7 +1245,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -1286,7 +1286,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1359,7 +1359,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1368,7 +1368,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -1394,7 +1394,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -1435,7 +1435,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1508,7 +1508,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1517,7 +1517,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -1582,7 +1582,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1655,7 +1655,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1664,7 +1664,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="24">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -1729,7 +1729,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1802,7 +1802,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1811,7 +1811,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="60">
@@ -1878,7 +1878,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -1951,7 +1951,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="24">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -1960,7 +1960,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -2025,7 +2025,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2098,7 +2098,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -2107,7 +2107,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="00">
@@ -2172,7 +2172,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2245,7 +2245,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="60">
@@ -2254,7 +2254,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -2280,7 +2280,11 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#">Visit date must include a day, a month and a year</a>
+                            <li><a href="#visit-date-day">Visit date must include a day</a>
+                            </li>
+                            <li><a href="#visit-date-month">Visit date must include a month</a>
+                            </li>
+                            <li><a href="#visit-date-year">Visit date must include a year</a>
                             </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
@@ -2325,7 +2329,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2398,7 +2402,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="">
@@ -2407,7 +2411,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="">
@@ -2431,7 +2435,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -2472,7 +2476,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2545,7 +2549,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -2554,7 +2558,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -2578,7 +2582,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be in the future</a>
+                            <li><a href="#">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -2619,7 +2623,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2692,7 +2696,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -2701,7 +2705,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -2727,7 +2731,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -2768,7 +2772,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2841,7 +2845,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -2850,7 +2854,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -2876,7 +2880,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -2917,7 +2921,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -2990,7 +2994,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -2999,7 +3003,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3025,7 +3029,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -3066,7 +3070,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3139,7 +3143,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3148,7 +3152,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3174,7 +3178,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -3215,7 +3219,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3288,7 +3292,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3297,7 +3301,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3323,7 +3327,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -3364,7 +3368,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3437,7 +3441,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3446,7 +3450,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3472,7 +3476,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a valid date</a>
+                            <li><a href="#">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -3513,7 +3517,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3586,7 +3590,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3595,7 +3599,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3660,7 +3664,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3733,7 +3737,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3742,7 +3746,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="24">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -3807,7 +3811,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -3880,7 +3884,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -3889,7 +3893,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="60">
@@ -3956,7 +3960,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4029,7 +4033,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="24">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="24">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -4038,7 +4042,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -4103,7 +4107,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4176,7 +4180,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -4185,7 +4189,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="00">
@@ -4250,7 +4254,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4323,7 +4327,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="60">
@@ -4332,7 +4336,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -4401,7 +4405,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4474,7 +4478,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
@@ -4483,7 +4487,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="">
@@ -4550,7 +4554,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4623,7 +4627,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="">
@@ -4632,7 +4636,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="30">
@@ -4699,7 +4703,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4772,7 +4776,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="">
@@ -4781,7 +4785,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="">
@@ -4807,7 +4811,11 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#">Visit date must include a day, a month and a year</a>
+                            <li><a href="#visit-date-day">Visit date must include a day</a>
+                            </li>
+                            <li><a href="#visit-date-month">Visit date must include a month</a>
+                            </li>
+                            <li><a href="#visit-date-year">Visit date must include a year</a>
                             </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
@@ -4852,7 +4860,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         </ul>
                                         </dd>
                                 </div>
-                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Neighbouring sites (inspector and/or third party request)</dt>
+                                <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                                     <dd                                     class="govuk-summary-list__value">
                                         <ul class="govuk-list govuk-list--bullet">
                                             <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
@@ -4925,7 +4933,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-start-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="">
@@ -4934,7 +4942,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">&nbsp;:&nbsp;
+                            name="visit-end-time-hour" type="number" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
                             name="visit-end-time-minute" type="number" value="">

@@ -27,10 +27,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Householder the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is householder the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -58,7 +58,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -95,7 +95,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -157,7 +157,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -188,7 +188,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -394,10 +394,10 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Householder the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is householder the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -425,7 +425,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -462,7 +462,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -524,7 +524,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -555,7 +555,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -726,10 +726,10 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Planning appeal the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is planning appeal the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Planning appeal the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is planning appeal the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development change a listed building?</dt>
@@ -776,7 +776,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -908,7 +908,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -970,7 +970,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1014,7 +1014,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1298,10 +1298,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Householder the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is householder the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -1329,9 +1329,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1368,7 +1368,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1430,7 +1430,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1461,7 +1461,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1647,10 +1647,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Householder the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is householder the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -1678,9 +1678,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">applicationForm.docx</div><strong class="govuk-tag govuk-tag--red">Virus detected</strong></span>
                                     </li>
                                 </ol>
                                 </dd>
@@ -1717,7 +1717,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1779,7 +1779,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1810,7 +1810,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -1988,11 +1988,13 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
                     <dd class="govuk-summary-list__value">
-                        <ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet">
-                            <li>Documents or information are missing: test reason text 1</li>
-                            <li>Documents or information are missing: test reason text 2</li>
-                            <li>Policies are missing: test reason text 1</li>
-                        </ul>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Documents or information are missing: test reason text 1</li>
+                                <li>Documents or information are missing: test reason text 2</li>
+                                <li>Policies are missing: test reason text 1</li>
+                            </ul>
+                        </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/incomplete">Change<span class="govuk-visually-hidden"> incomplete reasons</span></a>
                     </dd>
@@ -2176,7 +2178,7 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2265,22 +2267,26 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2864"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-            data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2314,22 +2320,26 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2367,22 +2377,26 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2420,7 +2434,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2439,22 +2453,26 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2865"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="appellantCaseCorrespondence" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file or multiple files to upload.</label><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The files must be PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
-                                multiple><span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-                                <button                                 type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2482,28 +2500,30 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload an updated document</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2864"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-document-id="1" data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload agreement to change description evidence</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2531,28 +2551,31 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Update additional document</h1>
+            <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2584,28 +2607,31 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Update additional document</h1>
+            <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2637,13 +2663,13 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Update additional document</h1>
+            <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                 </div>
             </div>
             <div class="govuk-grid-row">
@@ -2662,22 +2688,25 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1/1"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="2865"
-            data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
-            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-id="1" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
-            data-document-version="1" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -2858,7 +2887,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -2874,7 +2903,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">2 March 2024</td>
@@ -2890,7 +2919,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -2917,7 +2946,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -2976,7 +3006,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>PDF, 129 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">1 February 2023</td>
@@ -2992,12 +3022,12 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>MP4, 11.8 MB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">
                             <div>2 March 2024</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3012,7 +3042,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                             <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
                                 <dd>JPEG, 59 KB</dd>
                             </dl>
-                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">3 April 2025</td>
@@ -3032,7 +3062,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                         </td>
                         <td class="govuk-table__cell">
                             <div>3 April 2025</div>
-                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                            <div class="govuk-!-margin-top-3"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                             </div>
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
@@ -3043,7 +3073,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2865"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
 </main>"
 `;
 
@@ -3111,7 +3142,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3141,7 +3172,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3157,9 +3188,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                                     </div>
-                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>
+                                    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
                                     </div>
                                 </td>
                                 <td class="govuk-table__cell"></td>
@@ -3170,8 +3201,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3219,7 +3250,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3259,7 +3290,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3274,8 +3305,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3323,7 +3354,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3353,7 +3384,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3368,8 +3399,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3441,7 +3472,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3457,7 +3488,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><a class="govuk-link" href="/documents/103/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/test-pdf-documentFileVersionsInfo.pdf"
                                         target="_blank">test-pdf-documentFileVersionsInfo.pdf</a>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
                                 </td>
                                 <td class="govuk-table__cell">
                                     <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
@@ -3504,7 +3535,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3534,7 +3565,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3549,8 +3580,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3597,7 +3628,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -3627,7 +3658,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -3642,8 +3673,8 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -3757,7 +3788,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
                     <div class="govuk-form-group">
                         <input class="govuk-input" id="documentId" name="documentId" type="hidden"
                         value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
@@ -3765,7 +3796,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
                         <input class="govuk-input" id="file-name" name="fileName"
-                        type="text" value="ph0-documentFileInfo.jpeg">
+                        type="text" value="ph0-documentFileInfo">
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4068,10 +4099,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is Householder the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is householder the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is Householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is householder the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -4099,7 +4130,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Conservation area map and guidance</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">conservationAreaMap.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -4136,7 +4167,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -4198,7 +4229,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Representations from members of the public or other parties</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">representations.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -4229,7 +4260,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer&#39;s report</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></span>
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
                                     </li>
                                 </ul>
                                 </dd>
@@ -4382,7 +4413,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -4419,7 +4450,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="incomplete-reason-1-1" name="incompleteReason-1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -5265,7 +5296,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 300 characters</a>
+                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -5329,7 +5360,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                                     <div class="govuk-grid-column-full">
                                         <div class="govuk-form-group">
                                             <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                            id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                                            id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
                                         </div>
                                     </div>
                                 </div>
@@ -5600,7 +5631,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5610,7 +5641,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5663,7 +5694,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5673,7 +5704,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5726,7 +5757,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5736,7 +5767,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5789,7 +5820,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5799,7 +5830,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5852,7 +5883,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5862,7 +5893,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5915,7 +5946,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5925,7 +5956,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5978,7 +6009,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5988,7 +6019,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6041,7 +6072,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6051,7 +6082,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6104,7 +6135,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a valid date</a>
+                            <li><a href="#">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6114,7 +6145,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6165,7 +6196,11 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day, a month and a year</a>
+                            <li><a href="#due-date-day">Date must include a day</a>
+                            </li>
+                            <li><a href="#due-date-month">Date must include a month</a>
+                            </li>
+                            <li><a href="#due-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -6175,7 +6210,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6226,7 +6261,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be in the future</a>
+                            <li><a href="#">The date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -6236,7 +6271,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Update LPA questionnaire due date</h1>
+            <h1 class="govuk-heading-l">Update LPA questionnaire due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -6390,6 +6425,103 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/environment-service-
                 <div class="govuk-grid-column-full">
                     <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review change LPA link GET /lpa-questionnaire/1/change-appeal-details/local-planning-authority should render the local planning authority page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review change LPA link POST /lpa-questionnaire/1/change-appeal-details/local-planning-authority should re-render the page with an error message if required field is missing 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#local-planning-authority">Select the local planning authority.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="local-planning-authority-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
+                                </legend>
+                                <p id="local-planning-authority-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the local planning
+                                    authority.</p>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
+                                        type="radio" value="3">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
+                                        type="radio" value="2">
+                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
             </div>
         </div>

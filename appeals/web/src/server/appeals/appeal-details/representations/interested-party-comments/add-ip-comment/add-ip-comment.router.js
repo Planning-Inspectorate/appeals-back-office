@@ -9,9 +9,9 @@ import { Router as createRouter } from 'express';
 import * as controller from './add-ip-comment.controller.js';
 import {
 	validateCheckAddress,
-	validateInterestedPartyAddress,
 	validateInterestedPartyDetails
 } from './add-ip-comment.validators.js';
+import { validateInterestedPartyAddress } from '../common/validators.js';
 import { validateRedactionStatus } from '../../representations.validators.js';
 
 const router = createRouter({ mergeParams: true });
@@ -61,9 +61,9 @@ router
 	.route('/date-submitted')
 	.get(asyncHandler(controller.renderDateSubmitted))
 	.post(
-		createDateInputFieldsValidator('', 'submitted date', 'day', 'month', 'year'),
-		createDateInputDateValidityValidator('', 'submitted date', 'day', 'month', 'year'),
-		createDateInputDateInPastOrTodayValidator('', 'submitted date', 'day', 'month', 'year'),
+		createDateInputFieldsValidator('', 'Submitted date', 'day', 'month', 'year'),
+		createDateInputDateValidityValidator('', 'Submitted date', 'day', 'month', 'year'),
+		createDateInputDateInPastOrTodayValidator('', 'Submitted date', 'day', 'month', 'year'),
 		saveBodyToSession('addIpComment'),
 		asyncHandler(controller.postDateSubmitted)
 	);

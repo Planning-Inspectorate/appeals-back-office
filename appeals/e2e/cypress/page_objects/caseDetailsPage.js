@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { Then } from '@badeball/cypress-cucumber-preprocessor';
+
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
+import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
@@ -16,6 +17,7 @@ export class CaseDetailsPage extends Page {
 		assignInspector: 'assign-inspector',
 		changeInspector: 'change-inspector',
 		reviewAppellantCase: 'review-appellant-case',
+		setUpSiteVisit: 'set up-site-visit',
 		changeSetVisitType: 'change-set-visit-type',
 		changeScheduleVisit: 'change-schedule-visit',
 		arrangeScheduleVisit: 'arrange-schedule-visit',
@@ -26,8 +28,10 @@ export class CaseDetailsPage extends Page {
 		addRelatedAppeals: 'add-related-appeals',
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
+		addMainPartyCorrespondence: 'add-main-party-correspondence',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
 		manageInspectorCorrespondence: 'manage-inspector-correspondence',
+		manageMainPartyCorrespondence: 'manage-main-party-correspondence',
 		manageRelatedAppeals: 'manage-related-appeals',
 		changeAppealType: 'change-appeal-type',
 		addAgreementToChangeDescriptionEvidence: 'add-agreement-to-change-description-evidence',
@@ -44,13 +48,18 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'review-lpa-statement'
+		reviewLpaStatement: 'review-lpa-statement',
+		changeApplicationReference: 'change-application-reference',
+		viewCaseHistory: 'view-case-history',
+		uploadFile: 'upload-file-button'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
 
 	sampleFiles = {
 		document: 'sample-file.doc',
+		document2: 'sample-file-2.doc',
+		document3: 'sample-file-3.doc',
 		img: 'sample-img.jpeg',
 		pdf: 'test.pdf'
 	};
@@ -58,12 +67,13 @@ export class CaseDetailsPage extends Page {
 	elements = {
 		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
-		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer),
+		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer).last(),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
 		changeInspector: () => cy.getByData(this._cyDataSelectors.changeInspector),
 		answerCellAppeals: (answer) =>
 			cy.contains(this.selectors.summaryListValue, answer, { matchCase: false }),
 		reviewAppeallantCase: () => cy.getByData(this._cyDataSelectors.reviewAppellantCase),
+		setUpSiteVisit: () => cy.getByData(this._cyDataSelectors.setUpSiteVisit),
 		changeSetVisitType: () => cy.getByData(this._cyDataSelectors.changeSetVisitType),
 		changeScheduleVisit: () => cy.getByData(this._cyDataSelectors.changeScheduleVisit),
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
@@ -75,11 +85,13 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.addCrossTeamCorrespondence),
 		addInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.addInspectorCorrespondence),
+		addMainPartyCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.addMainPartyCorrespondence),
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
-		uploadFile: () => cy.get('#upload-file-1'),
+		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
@@ -110,6 +122,8 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
 		manageInspectorCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageInspectorCorrespondence),
+		manageMainPartyCorrespondence: () =>
+			cy.getByData(this._cyDataSelectors.manageMainPartyCorrespondence),
 		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
 		manageCostDecision: () =>
 			cy
@@ -134,11 +148,17 @@ export class CaseDetailsPage extends Page {
 		ipCommentsReviewLink: () => cy.getByData(this._cyDataSelectors.reviewIpComments),
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
-		timeTableRowChangeLink: (row) => cy.getByData(`change-${row}`),
+		rowChangeLink: (row) => cy.getByData(`change-${row}`),
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
-			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a')
+			cy.get('.govuk-summary-list__key').contains(row).siblings().children('a'),
+		caseDetailsHearingSectionButton: () => cy.get('#case-details-hearing-section > .govuk-button'),
+		caseDetailsHearingEstimateLink: () => cy.get('#case-details-hearing-section p > a'),
+		changeApplicationReferenceLink: () =>
+			cy.getByData(this._cyDataSelectors.changeApplicationReference),
+		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
+		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -202,19 +222,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.assignCaseOfficer().click();
 	}
 
-	clickChangeCaseOfficer() {
-		this.clickAccordionByText('Team');
-		this.elements.changeCaseOfficer().click();
-	}
-
 	clickAssignInspector() {
 		this.clickAccordionByText('Team');
 		this.elements.assignInspector().click();
-	}
-
-	clickChangeInspector() {
-		this.clickAccordionByText('Team');
-		this.elements.changeInspector().click();
 	}
 
 	clickReviewAppellantCase() {
@@ -222,9 +232,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.reviewAppeallantCase().click();
 	}
 
-	clickChangeVisitTypeHasSiteDetails() {
+	clickSetUpSiteVisitType() {
 		this.clickAccordionByButton('Site');
-		this.elements.changeSetVisitType().click();
+		this.elements.setUpSiteVisit().click();
 	}
 
 	clickReadyToStartCase() {
@@ -289,12 +299,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.addInspectorCorrespondence().click();
 	}
 
+	clickAddMainPartyCorrespondence() {
+		this.elements.addMainPartyCorrespondence().click();
+	}
+
 	clickManageInspectorCorrespondence() {
 		this.elements.manageInspectorCorrespondence().click();
 	}
 
 	clickManageCrossTeamCorrespondence() {
 		this.elements.manageCrossTeamCorrespondence().click();
+	}
+
+	clickManageMainPartyCorrespondence() {
+		this.elements.manageMainPartyCorrespondence().click();
 	}
 
 	clickChangeAppealType() {
@@ -333,7 +351,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	uploadSampleFile(fileName) {
-		this.elements.uploadFile().selectFile(this.fixturesPath + fileName, { force: true });
+		this.elements
+			.uploadFile()
+			.click()
+			.selectFile(this.fixturesPath + fileName, { action: 'drag-drop' }, { force: true });
 	}
 
 	clickViewAppealWithdrawal() {
@@ -396,24 +417,31 @@ export class CaseDetailsPage extends Page {
 		this.elements.siteVisitBanner(caseRef).click();
 	}
 
-	clickTimetableChangeLink(row) {
-		this.elements.timeTableRowChangeLink(row).click();
+	clickRowChangeLink(row) {
+		this.elements.rowChangeLink(row).click();
 	}
 
 	clickLpaStatementChangeLink(row) {
 		this.elements.lPAStatementTableChangeLink(row).click();
 	}
 
+	clickHearingButton() {
+		this.elements.caseDetailsHearingSectionButton().click();
+	}
+
+	clickHearingEstimateLink() {
+		this.elements.caseDetailsHearingEstimateLink().click();
+	}
+
+	clickViewCaseHistory() {
+		this.elements.viewCaseHistory().click();
+	}
 	/***************************************************************
-	 ************************ Verfifications ************************
+	 ************************ Verification ************************
 	 ****************************************************************/
 
 	checkAdditonalDocsAppellantCase(value) {
 		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
-	}
-
-	checkErrorMessageDisplays(errorMessage) {
-		cy.get('li').contains(errorMessage).should('be.visible');
 	}
 
 	checkFileNameDisplays(fileName) {
@@ -500,7 +528,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 	verifyDateChanges(timeTableRow, date) {
-		const formattedDate = dateTimeSection.formatDate(date);
+		const formattedDate = formatDateAndTime(date).date;
 		this.elements
 			.getTimetableDate(timeTableRow)
 			.invoke('text')
@@ -510,23 +538,25 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyAppellantEmailAddress(rowName, text) {
-		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
-	}
-
-	verifyAgentEmailAddress(rowName, text) {
-		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
+		this.basePageElements
+			.summaryListKey()
+			.then(($elem) => {
+				return $elem.filter((index, el) => el.innerText.trim() === rowName);
+			})
+			.next()
+			.contains(text);
 	}
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {
-		//verifys the date on check your answer page is correct
-		const formattedDate = dateTimeSection.formatDate(dateToday);
-		let answer = this.basePageElements
+		//verify the date on check your answer page is correct
+		const formattedDate = formatDateAndTime(dateToday).date;
+		this.basePageElements
 			.summaryListKey()
 			.contains(rowName)
 			.next()
 			.invoke('prop', 'innerText')
 			.then((dateText) => {
-				expect(dateText.trim()).to.equal(formattedDate);
+				expect(dateText.toString().trim()).to.equal(formattedDate);
 			});
 	}
 
@@ -605,5 +635,19 @@ export class CaseDetailsPage extends Page {
 			this.elements.showMoreToggle().should('not.exist');
 		}
 		this.elements.showMoreContent().should('contain.text', statement);
+	}
+
+	verifyHearingSectionIsDisplayed() {
+		this.elements.caseDetailsHearingSectionButton().should('be.visible');
+		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
+	}
+
+	clickChangeApplicationReferenceLink() {
+		this.elements.changeApplicationReferenceLink().click();
+	}
+
+	updatePlanningApplicationReference(reference) {
+		this.elements.planningApplicationReferenceField().clear().type(reference);
+		this.clickButtonByText('Continue');
 	}
 }

@@ -644,4 +644,198 @@ describe('appeal timetables routes', () => {
 			});
 		});
 	});
+	describe('/appeals/:appealId/appeal-timetables', () => {
+		describe('POST', () => {
+			test('updates a household appeal timetable', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
+
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						appeal_type: 'Householder',
+						appellant_email_address: householdAppeal.appellant.email,
+						comment_deadline: '',
+						due_date: '12 June 2024',
+						final_comments_deadline: '',
+						ip_comments_deadline: '',
+						local_planning_authority: 'Maidstone Borough Council',
+						lpa_reference: '48269/APP/2021/1482',
+						lpa_statement_deadline: '',
+						procedure_type: 'a written procedure',
+						questionnaire_due_date: '12 June 2024',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						start_date: '5 June 2024'
+					},
+					recipientEmail: householdAppeal.appellant.email,
+					templateName: 'appeal-start-date-change-appellant'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						appeal_type: 'Householder',
+						appellant_email_address: householdAppeal.appellant.email,
+						comment_deadline: '',
+						due_date: '12 June 2024',
+						final_comments_deadline: '',
+						ip_comments_deadline: '',
+						local_planning_authority: 'Maidstone Borough Council',
+						lpa_reference: '48269/APP/2021/1482',
+						lpa_statement_deadline: '',
+						procedure_type: 'a written procedure',
+						questionnaire_due_date: '12 June 2024',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						start_date: '5 June 2024'
+					},
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'appeal-start-date-change-lpa'
+				});
+			});
+			test('start a household appeal timetable', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
+
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						appeal_type: 'Householder',
+						appellant_email_address: householdAppeal.appellant.email,
+						comment_deadline: '',
+						due_date: '12 June 2024',
+						final_comments_deadline: '',
+						ip_comments_deadline: '',
+						local_planning_authority: 'Maidstone Borough Council',
+						lpa_reference: '48269/APP/2021/1482',
+						lpa_statement_deadline: '',
+						procedure_type: 'a written procedure',
+						questionnaire_due_date: '12 June 2024',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						start_date: '5 June 2024'
+					},
+					recipientEmail: householdAppeal.appellant.email,
+					templateName: 'appeal-valid-start-case-appellant'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						appeal_type: 'Householder',
+						appellant_email_address: householdAppeal.appellant.email,
+						comment_deadline: '',
+						due_date: '12 June 2024',
+						final_comments_deadline: '',
+						ip_comments_deadline: '',
+						local_planning_authority: 'Maidstone Borough Council',
+						lpa_reference: '48269/APP/2021/1482',
+						lpa_statement_deadline: '',
+						procedure_type: 'a written procedure',
+						questionnaire_due_date: '12 June 2024',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						start_date: '5 June 2024'
+					},
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'appeal-valid-start-case-lpa'
+				});
+			});
+
+			test('empty object', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({});
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({ errors: { appealId: 'Not found' } });
+			});
+
+			test('null return', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(null);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({ errors: { appealId: 'Not found' } });
+			});
+
+			test('start an appeal timetable with no appeal type', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					appealType: {}
+				});
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					errors: { appealId: 'Not found' }
+				});
+			});
+		});
+	});
 });

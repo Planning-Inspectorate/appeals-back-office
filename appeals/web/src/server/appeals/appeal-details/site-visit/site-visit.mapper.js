@@ -8,7 +8,7 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	dateISOStringToDayMonthYearHourMinute
 } from '#lib/dates.js';
-
+import { timeInput } from '#lib/mappers/components/page-components/time.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -50,7 +50,9 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {'schedule' | 'manage'} pageType
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
+ * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {WebSiteVisitType|null|undefined} visitType
  * @param {string|number|null|undefined} visitDateDay
  * @param {string|number|null|undefined} visitDateMonth
@@ -65,7 +67,9 @@ export async function scheduleOrManageSiteVisitPage(
 	pageType,
 	appealDetails,
 	currentRoute,
+	backUrl,
 	session,
+	request,
 	visitType,
 	visitDateDay,
 	visitDateMonth,
@@ -75,7 +79,13 @@ export async function scheduleOrManageSiteVisitPage(
 	visitEndTimeHour,
 	visitEndTimeMinute
 ) {
-	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session, true);
+	const mappedData = await initialiseAndMapAppealData(
+		appealDetails,
+		currentRoute,
+		session,
+		request,
+		true
+	);
 	const titlePrefix = capitalize(pageType);
 
 	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
@@ -124,7 +134,7 @@ export async function scheduleOrManageSiteVisitPage(
 							mappedData.appeal.appellantHealthAndSafety.display.summaryListItem,
 							mappedData.appeal.lpaNeighbouringSites.display.summaryListItem,
 							mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
-						].map((row) => removeSummaryListActions(row))
+						].map(removeSummaryListActions)
 					}
 				}
 			]
@@ -204,43 +214,23 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
-	/** @type {PageComponent} */
-	const selectStartTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-4"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-start-time',
-			hour: {
-				value: visitStartTimeHour
-			},
-			minute: {
-				value: visitStartTimeMinute
-			}
-		}
-	};
+	const selectStartTimeComponent = timeInput({
+		id: 'visit-start-time',
+		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
+		legendText: 'Start time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-4',
+		showLabels: false
+	});
 
-	/** @type {PageComponent} */
-	const selectEndTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-6"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-end-time',
-			hour: {
-				value: visitEndTimeHour
-			},
-			minute: {
-				value: visitEndTimeMinute
-			}
-		}
-	};
+	const selectEndTimeComponent = timeInput({
+		id: 'visit-end-time',
+		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
+		legendText: 'End time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-6',
+		showLabels: false
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {
@@ -255,7 +245,7 @@ export async function scheduleOrManageSiteVisitPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `${titlePrefix} site visit - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `${titlePrefix} site visit`,
 		submitButtonText: 'Confirm',

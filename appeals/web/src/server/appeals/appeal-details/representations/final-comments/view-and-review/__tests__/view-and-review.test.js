@@ -201,8 +201,10 @@ describe('final-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Date submitted</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
-
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+			);
 		});
 	});
 
@@ -309,7 +311,7 @@ describe('final-comments', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 
@@ -511,11 +513,11 @@ describe('final-comments', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Supporting documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'

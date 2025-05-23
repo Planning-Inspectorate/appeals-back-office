@@ -11,17 +11,15 @@ import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	AUDIT_TRAIL_SYSTEM_UUID,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	ERROR_NOT_FOUND,
-	FRONT_OFFICE_URL
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '#utils/date-formatter.js';
-import config from '#config/config.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -78,17 +76,18 @@ const startCase = async (
 
 		/** @type {Record<string, string>} */
 		const appealTypeMap = {
-			D: 'has',
-			W: 's78'
+			D: '-',
+			W: '-s78-',
+			Y: '-s78-'
 		};
 
 		const appellantTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.appellant
-			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].appellant;
+			? 'appeal-start-date-change-appellant'
+			: `appeal-valid-start-case${[appealTypeMap[appealType.key]]}appellant`;
 
 		const lpaTemplate = appeal.caseStartedDate
-			? config.govNotify.template.appealStartDateChange.lpa
-			: config.govNotify.template.appealValidStartCase[appealTypeMap[appealType.key]].lpa;
+			? 'appeal-start-date-change-lpa'
+			: `appeal-valid-start-case${[appealTypeMap[appealType.key]]}lpa`;
 
 		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
 
@@ -108,8 +107,10 @@ const startCase = async (
 				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
 			});
 
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 			const lpaEmail = appeal.lpa?.email || '';
+			const { type } = appeal.appealType || {};
+			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
 
 			// Note that those properties not used within the specified template will be ignored
 			const commonEmailVariables = {
@@ -117,9 +118,8 @@ const startCase = async (
 				lpa_reference: appeal.applicationReference || '',
 				site_address: siteAddress,
 				start_date: formatDate(new Date(startDate || ''), false),
-				appellant_email_address: recipientEmail || '',
-				url: FRONT_OFFICE_URL,
-				appeal_type: appeal.appealType?.type || '',
+				appellant_email_address: appellantEmail || '',
+				appeal_type: appealType || '',
 				procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType?.key || 'written'],
 				questionnaire_due_date: formatDate(
 					new Date(timetable.lpaQuestionnaireDueDate || ''),
@@ -133,20 +133,22 @@ const startCase = async (
 				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
 			};
 
-			if (recipientEmail) {
-				try {
-					await notifyClient.sendEmail(appellantTemplate, recipientEmail, commonEmailVariables);
-				} catch (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
+			if (appellantEmail) {
+				await notifySend({
+					templateName: appellantTemplate,
+					notifyClient,
+					recipientEmail: appellantEmail,
+					personalisation: commonEmailVariables
+				});
 			}
 
 			if (lpaEmail) {
-				try {
-					await notifyClient.sendEmail(lpaTemplate, lpaEmail, commonEmailVariables);
-				} catch (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
+				await notifySend({
+					templateName: lpaTemplate,
+					notifyClient,
+					recipientEmail: lpaEmail,
+					personalisation: commonEmailVariables
+				});
 			}
 
 			await transitionState(

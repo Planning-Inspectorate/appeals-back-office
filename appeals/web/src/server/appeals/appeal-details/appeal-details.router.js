@@ -1,5 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import config from '#environment/config.js';
 import startDateRouter from './start-case/start-case.router.js';
 import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router.js';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
@@ -14,6 +15,7 @@ import {
 import { auditRouter } from './audit/audit.router.js';
 import * as controller from './appeal-details.controller.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
+import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
@@ -34,6 +36,11 @@ import finalCommentsRouter from './representations/final-comments/final-comments
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import representationsRouter from './representations/representations.router.js';
+import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
+import hearingRouter from './hearing/hearing.router.js';
+import siteAddressRouter from './appellant-case/address/address.router.js';
+import timetableRouter from './timetable/timetable.router.js';
 
 const router = createRouter();
 
@@ -41,6 +48,7 @@ router
 	.route('/:appealId')
 	.get(
 		validateAppeal,
+		clearUncommittedFilesFromSession,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -59,6 +67,7 @@ router.use(
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);
+router.use('/:appealId/timetable', timetableRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
 router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use('/:appealId/final-comments', finalCommentsRouter);
@@ -90,7 +99,7 @@ router.use(
 	'/:appealId/issue-decision',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
-	issueDecisionRouter
+	config.featureFlags.featureFlagIssueDecision ? issueDecisionRouter : issueDecisionOldRouter
 );
 router.use(
 	'/:appealId/change-appeal-type',
@@ -167,6 +176,27 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	withdrawalRouter
+);
+
+router.use(
+	'/:appealId/change-appeal-details',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeAppealDetailsRouter
+);
+
+router.use(
+	'/:appealId/hearing',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	hearingRouter
+);
+
+router.use(
+	'/:appealId/site-address',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAddressRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);

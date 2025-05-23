@@ -12,6 +12,12 @@
 .pins-header-domainname {
 	margin: 0;
 	text-align: left;
+	line-height: 1.2;
+
+	@include mixins.govuk-media-query ($from: map-get(settings.$govuk-breakpoints, 'desktop')) {
+		width: max-content;
+		line-height: 1;
+	}
 }
 
 .pins-header-navigation {

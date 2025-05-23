@@ -15,6 +15,7 @@ import { mapStatusPlanningObligation } from './submappers/status-planning-obliga
 import { mapPartOfAgriculturalHolding } from './submappers/part-of-agricultural-holding.js';
 import { mapTenantOfAgriculturalHolding } from './submappers/tenant-of-agricultural-holding.js';
 import { mapOtherTenantsOfAgriculturalHolding } from './submappers/other-tenants-of-agricultural-holding.js';
+import { mapDevelopmentType } from './submappers/development-type.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -34,5 +35,6 @@ export const submaps = {
 	partOfAgriculturalHolding: mapPartOfAgriculturalHolding,
 	tenantOfAgriculturalHolding: mapTenantOfAgriculturalHolding,
 	otherTenantsOfAgriculturalHolding: mapOtherTenantsOfAgriculturalHolding,
-	procedurePreferenceDetails: mapProcedurePreferenceDetails
+	procedurePreferenceDetails: mapProcedurePreferenceDetails,
+	developmentType: mapDevelopmentType
 };

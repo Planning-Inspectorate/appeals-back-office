@@ -54,6 +54,9 @@ export function loadConfig() {
 		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_HEARING,
+		FEATURE_FLAG_LINKED_APPEALS,
+		FEATURE_FLAG_S20,
+		FEATURE_FLAG_ISSUE_DECISION,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -66,7 +69,8 @@ export function loadConfig() {
 		SSL_CERT_FILE,
 		SSL_KEY_FILE,
 		RETRY_MAX_ATTEMPTS,
-		RETRY_STATUS_CODES
+		RETRY_STATUS_CODES,
+		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	} = environment;
 
 	const config = {
@@ -122,8 +126,12 @@ export function loadConfig() {
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
 			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
-			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true'
-		}
+			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
+			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
+			featureFlagS20: FEATURE_FLAG_S20 === 'true',
+			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true'
+		},
+		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	};
 
 	const { value: validatedConfig, error } = schema.validate(config);

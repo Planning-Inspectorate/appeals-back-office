@@ -85,7 +85,7 @@ export const confirmRejectFinalCommentPage = (
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
+						value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' }
 					},
 					{
 						key: { text: 'Review decision' },
@@ -107,7 +107,16 @@ export const confirmRejectFinalCommentPage = (
 							)}'s final comments?`
 						},
 						value: {
-							html: rejectionReasonHtml(rejectionReasons)
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										html: rejectionReasonHtml(rejectionReasons),
+										labelText: 'Read more'
+									}
+								}
+							]
 						},
 						actions: {
 							items: [

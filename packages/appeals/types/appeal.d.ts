@@ -22,12 +22,14 @@ export interface AppealSummary {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
+	planningApplicationReference: string | null;
 }
 
 export interface AppealList {
 	itemCount: number;
 	items: AppealSummary[];
 	statuses: string[];
+	statusesInNationalList: string[];
 	lpas: { name: string; lpaCode: string }[];
 	inspectors: { azureAdUserId: string; id: number }[];
 	caseOfficers: { azureAdUserId: string; id: number }[];

@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`application-development-type GET /change should render the development type change page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType" name="developmentType"
+                                        type="radio" value="householder">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType">Householder developments</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-2" name="developmentType"
+                                        type="radio" value="change-of-use">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-2">Change of use</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-3" name="developmentType"
+                                        type="radio" value="major-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-3">Major dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
+                                        type="radio" value="major-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-5" name="developmentType"
+                                        type="radio" value="major-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-5">Major offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
+                                        type="radio" value="major-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
+                                        type="radio" value="major-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
+                                        type="radio" value="mineral-working">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-9" name="developmentType"
+                                        type="radio" value="minor-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-9">Minor dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
+                                        type="radio" value="minor-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-11" name="developmentType"
+                                        type="radio" value="minor-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-11">Minor offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
+                                        type="radio" value="minor-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
+                                        type="radio" value="minor-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-14" name="developmentType"
+                                        type="radio" value="other-major">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-14">Other major development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-15" name="developmentType"
+                                        type="radio" value="other-minor">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-15">Other minor developments</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`application-development-type POST /change should re-render page if invalid value submitted 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#development-type">Select a valid development type from the list</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType" name="developmentType"
+                                        type="radio" value="householder">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType">Householder developments</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-2" name="developmentType"
+                                        type="radio" value="change-of-use">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-2">Change of use</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-3" name="developmentType"
+                                        type="radio" value="major-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-3">Major dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
+                                        type="radio" value="major-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-5" name="developmentType"
+                                        type="radio" value="major-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-5">Major offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
+                                        type="radio" value="major-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
+                                        type="radio" value="major-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
+                                        type="radio" value="mineral-working">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-9" name="developmentType"
+                                        type="radio" value="minor-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-9">Minor dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
+                                        type="radio" value="minor-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-11" name="developmentType"
+                                        type="radio" value="minor-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-11">Minor offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
+                                        type="radio" value="minor-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
+                                        type="radio" value="minor-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-14" name="developmentType"
+                                        type="radio" value="other-major">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-14">Other major development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-15" name="developmentType"
+                                        type="radio" value="other-minor">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-15">Other minor developments</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`application-development-type POST /change should re-render page if no selection made 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#development-type">Select a development type</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType" name="developmentType"
+                                        type="radio" value="householder">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType">Householder developments</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-2" name="developmentType"
+                                        type="radio" value="change-of-use">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-2">Change of use</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-3" name="developmentType"
+                                        type="radio" value="major-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-3">Major dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
+                                        type="radio" value="major-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-5" name="developmentType"
+                                        type="radio" value="major-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-5">Major offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
+                                        type="radio" value="major-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
+                                        type="radio" value="major-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
+                                        type="radio" value="mineral-working">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-9" name="developmentType"
+                                        type="radio" value="minor-dwellings">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-9">Minor dwellings</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
+                                        type="radio" value="minor-general-industry">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-11" name="developmentType"
+                                        type="radio" value="minor-offices">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-11">Minor offices/R&amp;D/light industry</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
+                                        type="radio" value="minor-retail">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
+                                        type="radio" value="minor-traveller">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-14" name="developmentType"
+                                        type="radio" value="other-major">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-14">Other major development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="developmentType-15" name="developmentType"
+                                        type="radio" value="other-minor">
+                                        <label class="govuk-label govuk-radios__label" for="developmentType-15">Other minor developments</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

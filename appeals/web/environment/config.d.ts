@@ -75,6 +75,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	featureFlags: {
 		[key: string]: boolean;
 	};
+	useSystemTestBcForChangeLpa: boolean;
 }
 
 export function loadConfig(): EnvironmentConfig;

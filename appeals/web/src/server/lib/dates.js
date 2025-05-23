@@ -1,6 +1,6 @@
 import { formatInTimeZone, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
-import { isValid, isBefore, isAfter, parseISO, add } from 'date-fns';
+import { add, isAfter, isBefore, isValid, parseISO } from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
@@ -273,4 +273,31 @@ const getExtendedDeadlineConfiguration = (appealType) => {
 			return null;
 		}
 	}
+};
+
+/**
+ *
+ * @param {Date} date
+ * @returns {Date}
+ */
+export const oneMonthBefore = (date) => {
+	const dateOneMonthBefore = new Date(date.getTime());
+	dateOneMonthBefore.setMonth(dateOneMonthBefore.getMonth() - 1);
+	return dateOneMonthBefore;
+};
+
+/**
+ * Returns the days with one or no decimal places, followed by 'day' or 'days
+ * @param {string | number | undefined} days
+ * @returns {string}
+ */
+export const formatDays = (days) => {
+	if (typeof days === 'undefined') {
+		return '';
+	}
+
+	const numberOfDays = typeof days === 'string' ? parseFloat(days) : days;
+	const suffix = numberOfDays === 1 ? 'day' : 'days';
+
+	return `${numberOfDays} ${suffix}`;
 };

@@ -59,6 +59,17 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
+  hearing               Hearing?
+  appealNotifications   AppealNotification[]
+  hearingEstimate       HearingEstimate?
+
+  @@index([addressId])
+  @@index([appealTypeId])
+  @@index([procedureTypeId])
+  @@index([lpaId])
+  @@index([caseOfficerUserId])
+  @@index([inspectorUserId])
+  @@index([applicationReference])
 }
 
 /// AppealRelationship model
@@ -78,6 +89,9 @@ model AppealRelationship {
   externalAppealType String?
   externalId         String?
   linkingDate        DateTime @default(now())
+
+  @@index([parentId])
+  @@index([childId])
 }
 
 /// AppealType model
@@ -122,6 +136,8 @@ model AppealStatus {
   appealId            Int
   subStateMachineName String?
   compoundStateName   String?
+
+  @@index([appealId])
 }
 
 /// AppealAllocation model
@@ -216,6 +232,7 @@ model Address {
   Appeal            Appeal[]
   ServiceUser       ServiceUser[]
   NeighbouringSites NeighbouringSite[]
+  Hearing           Hearing?
 }
 
 /// NeighbouringSite model
@@ -284,6 +301,8 @@ model AppellantCase {
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
+
+  @@index([appealId])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -380,7 +399,7 @@ model LPAQuestionnaire {
   lpaqCreatedDate                           DateTime                                    @default(now())
   lpaQuestionnaireSubmittedDate             DateTime?
   lpaStatement                              String?
-  newConditionDetails                       String?
+  newConditionDetails                       String?                                     @db.NVarChar(Max)
   siteAccessDetails                         String?
   siteSafetyDetails                         String?
   listedBuildingDetails                     ListedBuildingSelected[]
@@ -429,6 +448,9 @@ model LPAQuestionnaire {
   siteNoticesSentDate                 DateTime?
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
+
+  @@index([appealId])
+  @@index([isGreenBelt])
 }
 
 /// LPAQuestionnaireValidationOutcome model
@@ -476,7 +498,8 @@ model LPAQuestionnaireIncompleteReasonText {
 model ListedBuildingSelected {
   id                    Int               @id @default(autoincrement())
   lpaQuestionnaireId    Int?
-  listEntry             String?
+  listEntry             String
+  listedBuilding        ListedBuilding    @relation(fields: [listEntry], references: [reference], onUpdate: NoAction, onDelete: NoAction)
   affectsListedBuilding Boolean           @default(true)
   lpaQuestionnaire      LPAQuestionnaire? @relation(fields: [lpaQuestionnaireId], references: [id])
 }
@@ -568,6 +591,7 @@ model Folder {
   documents Document[]
 
   @@unique([caseId, path])
+  @@index([path])
 }
 
 /// Document model
@@ -590,6 +614,7 @@ model Document {
 
   @@unique([name, folderId])
   @@unique([guid, latestVersionId])
+  @@index([caseId, folderId])
 }
 
 /// DocumentVersion model
@@ -632,6 +657,9 @@ model DocumentVersion {
 
   @@id([documentGuid, version])
   @@index([documentGuid], map: "documentGuid")
+  @@index([documentURI])
+  @@index([documentType])
+  @@index([stage])
 }
 
 /// DocumentVersionAvScan model
@@ -680,6 +708,8 @@ model AuditTrail {
   appeal   Appeal                @relation(fields: [appealId], references: [id])
   user     User                  @relation(fields: [userId], references: [id])
   doc      DocumentVersionAudit? @relation("auditTrails")
+
+  @@index([appealId])
 }
 
 /// Representation model
@@ -706,6 +736,8 @@ model Representation {
   siteVisitRequested                     Boolean                                  @default(false)
   source                                 String                                   @default("citizen")
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
+
+  @@index([appealId])
 }
 
 /// Representation model
@@ -718,6 +750,7 @@ model RepresentationAttachment {
   representationId Int
 
   @@id([documentGuid, version])
+  @@index([representationId])
 }
 
 /// RepresentationRejectionReason model
@@ -765,4 +798,56 @@ model CaseNote {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   archived  Boolean  @default(false)
+
+  @@index([caseId])
+}
+
+//Hearing model
+//Store hearing related information
+model Hearing {
+  id               Int       @id @default(autoincrement())
+  appealId         Int       @unique
+  hearingStartTime DateTime
+  hearingEndTime   DateTime?
+  addressId        Int?      @unique
+  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// ListedBuilding model
+/// Stores the listed buildings dataset
+model ListedBuilding {
+  reference String                   @id
+  name      String
+  grade     String
+  selected  ListedBuildingSelected[]
+}
+
+/// AppealNotification model
+/// Stores a log of sent notifications
+model AppealNotification {
+  id            Int      @id @default(autoincrement())
+  case          Appeal   @relation(fields: [caseReference], references: [reference])
+  caseReference String
+  template      String
+  subject       String
+  recipient     String
+  message       String   @db.NVarChar(Max)
+  success       Boolean  @default(true)
+  dateCreated   DateTime @default(now())
+
+  @@index([caseReference])
+  @@index([template])
+  @@index([dateCreated(sort: Desc)])
+}
+
+/// HearingEstimate model
+/// Contains information on the hearing estimates for an appeal
+model HearingEstimate {
+  id              Int      @id @default(autoincrement())
+  appealId        Int      @unique
+  preparationTime Decimal?
+  sittingTime     Decimal?
+  reportingTime   Decimal?
+  appeal          Appeal   @relation(fields: [appealId], references: [id])
 }

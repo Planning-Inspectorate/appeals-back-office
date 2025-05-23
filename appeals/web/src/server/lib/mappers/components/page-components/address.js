@@ -1,7 +1,9 @@
 import {
 	errorAddressLine1,
+	errorAddressLine2,
 	errorPostcode,
-	errorTown
+	errorTown,
+	errorCounty
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**
@@ -37,7 +39,8 @@ export function addressInputs({ address, operationType, errors }) {
 				label: {
 					text: 'Address line 2 (optional)'
 				},
-				value: address?.addressLine2 ?? ''
+				value: address?.addressLine2 ?? '',
+				errorMessage: errorAddressLine2(errors)
 			}
 		},
 		{
@@ -64,7 +67,8 @@ export function addressInputs({ address, operationType, errors }) {
 				label: {
 					text: 'County (optional)'
 				},
-				value: address?.county ?? ''
+				value: address?.county ?? '',
+				errorMessage: errorCounty(errors)
 			}
 		},
 		{

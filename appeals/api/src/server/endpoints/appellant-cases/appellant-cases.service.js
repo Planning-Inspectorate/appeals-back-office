@@ -1,3 +1,4 @@
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	isOutcomeIncomplete,
 	isOutcomeInvalid,
@@ -6,7 +7,6 @@ import {
 
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
@@ -16,12 +16,14 @@ import transitionState from '../../state/transition-state.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import config from '#config/config.js';
 import formatDate from '#utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { notifySend } from '#notify/notify-send.js';
+import { APPEAL_DEVELOPMENT_TYPES } from './appellant-cases.constants.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -34,7 +36,7 @@ import { EventType } from '@pins/event-client';
  * @param {NextFunction} next
  * @returns {Response | void}
  */
-const checkAppellantCaseExists = (req, res, next) => {
+export const checkAppellantCaseExists = (req, res, next) => {
 	const {
 		appeal,
 		params: { appellantCaseId }
@@ -52,7 +54,7 @@ const checkAppellantCaseExists = (req, res, next) => {
  * @param {UpdateAppellantCaseValidationOutcomeParams} param0
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
-const updateAppellantCaseValidationOutcome = async (
+export const updateAppellantCaseValidationOutcome = async (
 	{ appeal, appellantCaseId, azureAdUserId, data, validationOutcome, validAt, siteAddress },
 	notifyClient
 ) => {
@@ -92,17 +94,17 @@ const updateAppellantCaseValidationOutcome = async (
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
-		try {
-			await notifyClient.sendEmail(config.govNotify.template.appealConfirmed, recipientEmail, {
-				appeal_reference_number: appeal.reference,
-				site_address: siteAddress,
-				lpa_reference: appeal.applicationReference
-			});
-		} catch (error) {
-			if (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
-		}
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress
+		};
+		await notifySend({
+			templateName: 'appeal-confirmed',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -121,19 +123,20 @@ const updateAppellantCaseValidationOutcome = async (
 			);
 
 			if (updatedDueDate) {
-				try {
-					await notifyClient.sendEmail(config.govNotify.template.appealIncomplete, recipientEmail, {
-						appeal_reference_number: appeal.reference,
-						lpa_reference: appeal.applicationReference,
-						site_address: siteAddress,
-						due_date: formatDate(new Date(updatedDueDate), false),
-						reasons: incompleteReasonsList
-					});
-				} catch (error) {
-					if (error) {
-						throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-					}
-				}
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: siteAddress,
+					due_date: formatDate(new Date(updatedDueDate), false),
+					reasons: incompleteReasonsList
+				};
+
+				await notifySend({
+					templateName: 'appeal-incomplete',
+					notifyClient,
+					recipientEmail,
+					personalisation
+				});
 			}
 		}
 
@@ -146,21 +149,97 @@ const updateAppellantCaseValidationOutcome = async (
 			const invalidReasonsList = getFormattedReasons(
 				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
 			);
-
-			try {
-				await notifyClient.sendEmail(config.govNotify.template.appealInvalid, recipientEmail, {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					reasons: invalidReasonsList
-				});
-			} catch (error) {
-				if (error) {
-					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-				}
-			}
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: siteAddress,
+				reasons: invalidReasonsList
+			};
+			await notifySend({
+				templateName: 'appeal-invalid',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
 		}
 	}
 };
 
-export { checkAppellantCaseExists, updateAppellantCaseValidationOutcome };
+/**
+ * @param {Record<string, unknown>} data
+ * @returns {string}
+ * */
+export function renderAuditTrailDetail(data) {
+	const genericResult = CONSTANTS.AUDIT_TRAIL_APPELLANT_CASE_UPDATED;
+
+	const dataKeys = Object.keys(data).filter((key) => data[key] !== undefined);
+	if (dataKeys.length === 0) {
+		return genericResult;
+	}
+
+	if (dataKeys.includes('ownsSomeLand') && dataKeys.includes('ownsAllLand')) {
+		const parameter = (() => {
+			if (data.ownsAllLand) {
+				return 'Fully owned';
+			}
+
+			if (data.ownsSomeLand) {
+				return 'Partially owned';
+			}
+
+			return 'Not owned';
+		})();
+
+		return stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED, [parameter]);
+	}
+
+	if (dataKeys.length !== 1) {
+		return genericResult;
+	}
+
+	const field = dataKeys[0];
+	const constantKey = `AUDIT_TRAIL_${camelToScreamingSnake(field)}_UPDATED`;
+
+	/** @type {Record<string, *>} */
+	const auditTrailParameters = {
+		AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED: () =>
+			APPEAL_DEVELOPMENT_TYPES.find(({ value }) => value === data.developmentType)?.label ||
+			data.developmentType,
+		AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED: () => data.siteAreaSquareMetres,
+		AUDIT_TRAIL_IS_GREEN_BELT_UPDATED: () => (data.isGreenBelt ? 'Yes' : 'No'),
+		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners,
+		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
+			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',
+		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () => (data.siteSafetyDetails ? 'Yes' : 'No'),
+		AUDIT_TRAIL_APPLICATION_DATE_UPDATED: () =>
+			data.applicationDate
+				? formatDate(new Date(/** @type {string} */ (data.applicationDate)))
+				: undefined,
+		// @ts-ignore
+		AUDIT_TRAIL_DEVELOPMENT_DESCRIPTION_UPDATED: () => data.developmentDescription?.details,
+		AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED: () =>
+			data.applicationDecisionDate
+				? formatDate(new Date(/** @type {string} */ (data.applicationDecisionDate)))
+				: undefined,
+		AUDIT_TRAIL_AGRICULTURAL_HOLDING_UPDATED: () => (data.agriculturalHolding ? 'Yes' : 'No'),
+		AUDIT_TRAIL_TENANT_AGRICULTURAL_HOLDING_UPDATED: () =>
+			data.tenantAgriculturalHolding ? 'Yes' : 'No',
+		AUDIT_TRAIL_OTHER_TENANTS_AGRICULTURAL_HOLDING_UPDATED: () =>
+			data.otherTenantsAgriculturalHolding,
+		AUDIT_TRAIL_APPLICATION_DECISION_UPDATED: () => data.applicationDecision,
+		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_UPDATED: () => data.appellantProcedurePreference,
+		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DETAILS_UPDATED: () =>
+			data.appellantProcedurePreferenceDetails,
+		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DURATION_UPDATE: () =>
+			data.appellantProcedurePreferenceDuration,
+		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED: () =>
+			data.appellantProcedurePreferenceWitnessCount,
+		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () => data.planningObligation
+	};
+
+	if (!auditTrailParameters[constantKey]) {
+		return constantKey in auditTrailParameters ? CONSTANTS[constantKey] : genericResult;
+	}
+
+	return stringTokenReplacement(CONSTANTS[constantKey], [auditTrailParameters[constantKey]()]);
+}

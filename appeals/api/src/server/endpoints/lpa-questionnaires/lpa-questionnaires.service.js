@@ -16,6 +16,9 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -51,8 +54,13 @@ const updateLPAQuestionnaireValidationOutcome = async (
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, applicationReference: lpaReference } = appeal;
+	const { id: appealId, applicationReference: lpaReference, appealStatus } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
+
+	if (appealStatus[0].status != APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) {
+		logger.error('LPAQ already validated');
+		throw new Error('LPAQ already validated');
+	}
 
 	if (lpaQuestionnaireDueDate) {
 		timetable = {
@@ -150,7 +158,11 @@ function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
  * */
 function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
-	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, 'lpaq-complete-appellant', email);
+	const templateName =
+		appeal.appealType?.type === APPEAL_TYPE.HOUSEHOLDER
+			? 'lpaq-complete-has-appellant'
+			: 'lpaq-complete-appellant';
+	return sendLpaqCompleteEmail(notifyClient, appeal, siteAddress, templateName, email);
 }
 
 /**

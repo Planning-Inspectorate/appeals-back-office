@@ -47,7 +47,9 @@ function createDataMap(mappingRequest) {
 
 	const caseData = createMap(apiMappers.apiSharedMappers, mappingRequest);
 
+	//TODO: add maps for specific appeal types for UI
 	switch (appeal.appealType?.key) {
+		case APPEAL_CASE_TYPE.Y:
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
@@ -68,7 +70,9 @@ function createIntegrationMap(mappingRequest) {
 	const caseData = createMap(integrationMappers.integrationSharedMappers, mappingRequest);
 
 	switch (appeal.appealType?.key) {
-		case APPEAL_CASE_TYPE.W: {
+		//TODO: validate with Data Model
+		case APPEAL_CASE_TYPE.W:
+		case APPEAL_CASE_TYPE.Y: {
 			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
 		}
@@ -240,9 +244,15 @@ function createFoldersLayout(folders, context) {
 							f.path ===
 							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE}`
 					),
-					decisionFolder: folders.find(
+					appellantDecisionFolder: folders.find(
 						(f) =>
-							f.path === `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.COSTS_DECISION_LETTER}`
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
+					),
+					lpaDecisionFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
 					)
 				},
 				internalCorrespondence: {
@@ -255,6 +265,11 @@ function createFoldersLayout(folders, context) {
 						(f) =>
 							f.path ===
 							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE}`
+					),
+					mainParty: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE}`
 					)
 				}
 			};

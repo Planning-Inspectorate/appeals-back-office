@@ -173,8 +173,10 @@ const s78AppealDto = {
 			counts: {
 				awaiting_review: 5,
 				valid: 4,
-				published: 0
-			}
+				invalid: 1
+			},
+			isRedacted: false,
+			receivedAt: '2024-11-27T15:08:55.670Z'
 		},
 		lpaFinalComments: {
 			receivedAt: '2024-11-27T15:08:55.711Z',
@@ -184,7 +186,8 @@ const s78AppealDto = {
 		lpaStatement: {
 			status: 'not_received',
 			receivedAt: null,
-			representationStatus: null
+			representationStatus: null,
+			isRedacted: false
 		}
 	},
 	healthAndSafety: {
@@ -221,6 +224,13 @@ const s78AppealDto = {
 	validAt: fullPlanningAppeal.caseValidDate?.toISOString()
 };
 
+const folders = [
+	{
+		...savedFolder,
+		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+	}
+];
+
 describe('Appeal detail routes', () => {
 	describe('/appeals/:appealId', () => {
 		describe('GET', () => {
@@ -228,12 +238,7 @@ describe('Appeal detail routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...mocks.householdAppeal,
-					folders: [
-						{
-							...savedFolder,
-							path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
-						}
-					]
+					folders
 				});
 
 				const response = await request
@@ -285,6 +290,74 @@ describe('Appeal detail routes', () => {
 				expect(response.body).toEqual({
 					errors: {
 						appealId: ERROR_NOT_FOUND
+					}
+				});
+			});
+
+			test('gets an appeal with a hearing', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					folders,
+					hearing: {
+						id: '123',
+						hearingStartTime: new Date('2025-05-15T12:00:00.000Z'),
+						address: {
+							id: '123',
+							addressLine1: '123 Main St',
+							addressLine2: 'Apt 1',
+							addressTown: 'Anytown',
+							addressCounty: 'Anycounty',
+							postcode: 'AA1 1AA'
+						}
+					}
+				});
+
+				const response = await request
+					.get(`/appeals/${fullPlanningAppeal.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...s78AppealDto,
+					hearing: {
+						hearingId: '123',
+						hearingStartTime: '2025-05-15T12:00:00.000Z',
+						hearingEndTime: '',
+						address: {
+							addressLine1: '123 Main St',
+							addressLine2: 'Apt 1',
+							town: 'Anytown',
+							county: 'Anycounty',
+							postcode: 'AA1 1AA'
+						}
+					}
+				});
+			});
+
+			test('gets an appeal with a hearing with no address', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					folders,
+					hearing: {
+						id: '123',
+						hearingStartTime: new Date('2025-05-15T12:00:00.000Z'),
+						address: null
+					}
+				});
+
+				const response = await request
+					.get(`/appeals/${fullPlanningAppeal.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...s78AppealDto,
+					hearing: {
+						hearingId: '123',
+						hearingStartTime: '2025-05-15T12:00:00.000Z',
+						hearingEndTime: ''
 					}
 				});
 			});

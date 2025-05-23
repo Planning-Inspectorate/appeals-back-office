@@ -10,9 +10,7 @@ import {
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import config from '#config/config.js';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
-
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('appeal withdrawal routes', () => {
@@ -66,7 +64,7 @@ describe('appeal withdrawal routes', () => {
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.EVENT,
 						valid: true
 					}
 				]
@@ -85,39 +83,37 @@ describe('appeal withdrawal routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.appellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					withdrawal_date: formatDate(utcDate, false),
+					event_set: true,
+					event_type: 'site visit'
+				},
+				recipientEmail: 'test@136s7.com',
+				templateName: 'appeal-withdrawn-appellant'
+			});
 
 			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.lpa.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: '1345264',
+					lpa_reference: '48269/APP/2021/1482',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					withdrawal_date: formatDate(utcDate, false),
+					event_set: true,
+					event_type: 'site visit'
+				},
+				recipientEmail: 'maid@lpa-email.gov.uk',
+				templateName: 'appeal-withdrawn-lpa'
+			});
 
 			expect(response.status).toEqual(200);
 		});

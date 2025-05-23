@@ -17,6 +17,7 @@ sb_topic_names = {
     listed_building       = "listed-building"
     service_user          = "appeal-service-user"
     appeal_representation = "appeal-representation"
+    appeal_event_estimate = "appeal-event-estimate"
   }
 }
 

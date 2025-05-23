@@ -7,11 +7,11 @@ import {
 	dateIsInThePast,
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
-import { capitalize } from 'lodash-es';
+import { capitalize, lowerCase } from 'lodash-es';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
-	messageFieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year',
@@ -22,65 +22,60 @@ export const createDateInputFieldsValidator = (
 	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
 
 	return createValidator(
-		body(bodyScope).custom((value) => {
-			const day = value[`${fieldNamePrefix}${dayFieldName}`];
-			const month = value[`${fieldNamePrefix}${monthFieldName}`];
-			const year = value[`${fieldNamePrefix}${yearFieldName}`];
-
-			if (day && month && year) {
-				return true;
-			}
-
-			let missingParts = [];
-			if (!day) missingParts.push('a day');
-			if (!month) missingParts.push('a month');
-			if (!year) missingParts.push('a year');
-
-			const messageSuffix = missingParts.reduce((acc, part, index) => {
-				if (index === missingParts.length - 1) {
-					return `${acc}${part}`;
-				}
-				if (index === missingParts.length - 2) {
-					return `${acc}${part} and `;
-				}
-				return `${acc}${part}, `;
-			}, '');
-
-			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
-		}),
 		body(`${bodyScope}${fieldNamePrefix}${_day}`)
+			.custom((value) => {
+				if (!value) {
+					throw new Error(`${messageFieldNamePrefix} must include a day`);
+				}
+				return true;
+			})
+			.bail()
 			.if(Boolean)
 			.isInt()
-			.withMessage(capitalize(`${messageFieldNamePrefix} day must be a number`))
+			.withMessage(`${messageFieldNamePrefix} day must be a number`)
 			.bail()
 			.isLength({ min: 1, max: 2 })
-			.withMessage(capitalize(`${messageFieldNamePrefix} day must be 1 or 2 digits`))
+			.withMessage(`${messageFieldNamePrefix} day must be 1 or 2 digits`)
 			.bail()
 			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
-			.withMessage(capitalize(`${messageFieldNamePrefix} day must be between 1 and 31`)),
+			.withMessage(`${messageFieldNamePrefix} day must be between 1 and 31`),
 		body(`${bodyScope}${fieldNamePrefix}${_month}`)
+			.custom((value) => {
+				if (!value) {
+					throw new Error(`${messageFieldNamePrefix} must include a month`);
+				}
+				return true;
+			})
+			.bail()
 			.if(Boolean)
 			.isInt()
-			.withMessage(capitalize(`${messageFieldNamePrefix} month must be a number`))
+			.withMessage(`${messageFieldNamePrefix} month must be a number`)
 			.bail()
 			.isLength({ min: 1, max: 2 })
-			.withMessage(capitalize(`${messageFieldNamePrefix} month must be 1 or 2 digits`))
+			.withMessage(`${messageFieldNamePrefix} month must be 1 or 2 digits`)
 			.bail()
 			.matches(/^0?[1-9]$|^1[0-2]$/)
-			.withMessage(capitalize(`${messageFieldNamePrefix} month must be between 1 and 12`)),
+			.withMessage(`${messageFieldNamePrefix} month must be between 1 and 12`),
 		body(`${bodyScope}${fieldNamePrefix}${_year}`)
+			.custom((value) => {
+				if (!value) {
+					throw new Error(`${messageFieldNamePrefix} must include a year`);
+				}
+				return true;
+			})
+			.bail()
 			.if(Boolean)
 			.isInt()
-			.withMessage(capitalize(`${messageFieldNamePrefix} year must be a number`))
+			.withMessage(`${messageFieldNamePrefix} year must be a number`)
 			.bail()
 			.isLength({ min: 4, max: 4 })
-			.withMessage(capitalize(`${messageFieldNamePrefix} year must be 4 digits`))
+			.withMessage(`${messageFieldNamePrefix} year must be 4 digits`)
 	);
 };
 
 export const createDateInputDateValidityValidator = (
 	fieldNamePrefix = 'date',
-	messageFieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year'
@@ -103,9 +98,7 @@ export const createDateInputDateValidityValidator = (
 				return dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a valid date`
-				)
+				`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a real date`
 			)
 	);
 
@@ -129,7 +122,7 @@ const dateIsABusinessDay = async (apiClient, value) => {
 
 export const createDateInputDateBusinessDayValidator = async (
 	fieldNamePrefix = 'date',
-	messageFieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year'
@@ -157,16 +150,12 @@ export const createDateInputDateBusinessDayValidator = async (
 				}
 				return result;
 			})
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a business day`
-				)
-			)
+			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be a business day`)
 	);
 
 export const createDateInputDateInFutureValidator = (
 	fieldNamePrefix = 'date',
-	messageFieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year'
@@ -179,7 +168,7 @@ export const createDateInputDateInFutureValidator = (
 				const year = bodyFields[`${fieldNamePrefix}${yearFieldName}`];
 
 				if (!day || !month || !year) {
-					return false;
+					return true;
 				}
 
 				const dayNumber = Number.parseInt(day, 10);
@@ -188,11 +177,7 @@ export const createDateInputDateInFutureValidator = (
 
 				return dateIsInTheFuture({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be in the future`
-				)
-			)
+			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`)
 	);
 
 export const createDateInputDateInPastOrTodayValidator = (

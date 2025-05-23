@@ -26,20 +26,44 @@ const MIMEs = {
  * @returns {string}
  */
 export const MIME = (extension) => {
-	return `.${extension}${MIMEs[extension] ? `,${MIMEs[extension]}` : ''},`;
+	return MIMEs[extension] ? MIMEs[extension] : '';
+};
+
+/**
+ * Returns a list of mime types
+ *
+ * @param {string[]} extensions
+ * @returns {string}
+ */
+export const allowedMimeTypes = (extensions) => {
+	return extensions?.map((extension) => MIME(extension)).join(',') || '';
+};
+
+/**
+ * Returns a string of formatted file types
+ *
+ * @param {string[]} extensions
+ * @returns {string}
+ */
+export const formattedFileTypes = (extensions) => {
+	const fileTypeList =
+		extensions?.map((extension) => MIME(extension) && extension.toUpperCase()) || [];
+	if (fileTypeList.length > 1) {
+		const last = fileTypeList.pop();
+		return `${fileTypeList.join(', ')} or ${last}`;
+	}
+	return fileTypeList.join('');
 };
 
 /**
  * Returns extension from MIME type
  *
  * @param {string} mime
- * @returns {string}
+ * @returns {string | null}
  */
 export const fileType = (mime) => {
 	const MIMEList = Object.values(MIMEs);
 	const mimeIndex = MIMEList.indexOf(mime);
 
-	if (mimeIndex < 0) return '';
-
-	return Object.keys(MIMEs)[mimeIndex].toUpperCase();
+	return Object.keys(MIMEs)[mimeIndex] ?? null;
 };

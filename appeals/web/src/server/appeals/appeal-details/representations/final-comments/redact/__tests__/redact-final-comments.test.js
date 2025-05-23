@@ -1,4 +1,5 @@
 /* eslint-disable jest/expect-expect */
+import { findButtonText } from '#lib/revert-text.js';
 import {
 	appealDataFullPlanning,
 	finalCommentsForReview
@@ -73,7 +74,9 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain('Awaiting final comments review</textarea>');
 				expect(unprettifiedHTML).toContain('Redact selected text</button>');
-				expect(unprettifiedHTML).toContain('Undo all changes</button>');
+				const buttonText = findButtonText(finalCommentsType.type);
+				expect(unprettifiedHTML).toContain(`${buttonText}</button>`);
+				expect(unprettifiedHTML).toContain('Undo changes</button>');
 				expect(unprettifiedHTML).toContain('Continue</button>');
 			});
 		}
@@ -158,7 +161,7 @@ describe('final-comments', () => {
 					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact">Change<span class="govuk-visually-hidden"> redacted final comments</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
-				expect(unprettifiedHTML).toContain(`Not provided</dd>`);
+				expect(unprettifiedHTML).toContain(`No documents</dd>`);
 				expect(unprettifiedHTML).toContain('Review decision</dt>');
 				expect(unprettifiedHTML).toContain('Redact and accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(

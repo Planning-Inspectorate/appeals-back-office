@@ -5,6 +5,7 @@ import { nationalListPage } from './national-list.mapper.js';
 import { getAppeals, getAppealTypes } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -41,14 +42,15 @@ export const viewNationalList = async (request, response) => {
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
 
-	if (searchTerm && searchTerm.length && (searchTerm.length === 1 || searchTerm.length >= 9)) {
+	if (searchTerm && searchTerm.length && (searchTerm.length === 1 || searchTerm.length > 50)) {
 		searchTerm = '';
-		searchTermError = 'Search query must be between 2 and 8 characters';
+		searchTermError =
+			'Appeal reference, planning application reference or postcode must be between 2 and 50 characters';
 	}
 
 	const appealTypes = await getAppealTypes(request.apiClient);
 
-	const urlWithoutQuery = originalUrl.split('?')[0];
+	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
 	const appeals = await getAppeals(
 		request.apiClient,

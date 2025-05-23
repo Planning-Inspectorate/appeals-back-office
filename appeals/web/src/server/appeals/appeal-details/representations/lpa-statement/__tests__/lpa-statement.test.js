@@ -152,6 +152,12 @@ describe('lpa-statements', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('>LPA statement</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>'
+			);
 			expect(unprettifiedElement.innerHTML).not.toContain('Review decision</legend>');
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'name="status" type="radio" value="valid">'
@@ -483,8 +489,10 @@ describe('lpa-statements', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Date submitted</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
-
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/2/lpa-statement/add-document" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+			);
 		});
 	});
 
@@ -591,7 +599,7 @@ describe('lpa-statements', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 

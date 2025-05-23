@@ -45,9 +45,18 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string|undefined} backUrl
  * @returns {Promise<PageContent>}
  */
-export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
+export async function lpaQuestionnairePage(
+	lpaqDetails,
+	appealDetails,
+	currentRoute,
+	session,
+	request,
+	backUrl
+) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(
 		lpaqDetails,
 		appealDetails,
@@ -58,6 +67,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		appealDetails,
 		currentRoute,
 		session,
+		request,
 		true
 	);
 
@@ -67,6 +77,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		mappedAppealDetails,
 		mappedLpaqDetails
 	);
+
+	const lpaText = 'LPA';
 
 	/**
 	 * @type {PageComponent}
@@ -88,7 +100,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 							{
 								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
 								key: {
-									text: 'LPA'
+									text: lpaText
 								}
 							}
 					  ]
@@ -183,7 +195,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `LPA questionnaire - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
@@ -408,11 +420,20 @@ export function checkAndConfirmPage(
 						text: 'Incomplete reasons'
 					},
 					value: {
-						html: mapReasonsToReasonsListHtml(
-							incompleteReasonOptions,
-							incompleteReasons,
-							incompleteReasonsText
-						)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: mapReasonsToReasonsListHtml(
+										incompleteReasonOptions,
+										incompleteReasons,
+										incompleteReasonsText
+									),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -456,13 +477,18 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent],
+		pageComponents,
 		submitButtonText: 'Confirm'
 	};
 

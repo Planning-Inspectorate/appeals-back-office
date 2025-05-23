@@ -7,7 +7,8 @@ export const EVENT_TYPE = Object.freeze({
 
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
-	SECTION_78_HEARING: 'featureFlagS78Hearing'
+	SECTION_78_HEARING: 'featureFlagS78Hearing',
+	SECTION_20: 'featureFlagS20'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -62,4 +63,11 @@ export const COMMENT_STATUS = Object.freeze({
 	INVALID: 'invalid',
 	VALID_REQUIRES_REDACTION: 'valid_requires_redaction',
 	INCOMPLETE: 'incomplete'
+});
+
+export const REVERT_BUTTON_TEXT = Object.freeze({
+	LPA_STATEMENT: 'Revert to original LPA statement',
+	LPA_FINAL_COMMENT: 'Revert to original LPA final comments',
+	APPELLANT_FINAL_COMMENT: 'Revert to original appellant final comments',
+	DEFAULT_TEXT: 'Revert to original comment'
 });
