@@ -2,7 +2,6 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import {
-	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_BUSINESS_DAY,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -104,7 +103,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
+						details: 'LPA questionnaire due date changed to 10 June 2024',
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
