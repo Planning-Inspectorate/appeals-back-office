@@ -128,7 +128,7 @@ export const postChangeHearingDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getHearingAddress = async (request, response) => {
-	return renderHearingAddress(request, response, 'setup');
+	return renderHearingAddress(request, response, 'setup', request.session.setUpHearing || {});
 };
 
 /**
