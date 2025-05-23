@@ -36,7 +36,7 @@ describe('Issue Decision', () => {
 				caseDetailsPage.clickIssueDecision(caseRef);
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleFile(sampleFiles.document);
+				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 				caseDetailsPage.clickButtonByText('Continue');
 				dateTimeSection.enterDecisionLetterDate(today);
 				caseDetailsPage.clickButtonByText('Continue');

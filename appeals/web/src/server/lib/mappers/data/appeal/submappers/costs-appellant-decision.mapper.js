@@ -1,24 +1,28 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { textSummaryListItem } from '#lib/mappers/index.js';
+import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { permissionNames } from '#environment/permissions.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapCostsAppellantDecision = ({
-	appealDetails,
-	currentRoute,
-	userHasUpdateCasePermission
-}) => {
+export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session, request }) => {
 	const { appellantApplicationFolder, appellantWithdrawalFolder, appellantDecisionFolder } =
 		appealDetails.costs ?? {};
 
 	if (
-		appellantApplicationFolder?.documents?.length === 0 ||
-		(appellantWithdrawalFolder?.documents?.length ?? 0) > 0
+		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		!appellantApplicationFolder?.documents?.length ||
+		appellantWithdrawalFolder?.documents?.length
 	) {
 		return { id: 'appellant-costs-decision', display: {} };
 	}
 
-	const isIssued = appellantDecisionFolder?.documents?.length ?? 0 > 0;
+	const editable =
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+		userHasPermission(permissionNames.setCaseOutcome, session);
+
+	const isIssued = appellantDecisionFolder?.documents?.length;
 
 	const { id: documentId = '', name: documentName = '' } =
 		appellantDecisionFolder?.documents?.[0] || {};
@@ -28,20 +32,25 @@ export const mapCostsAppellantDecision = ({
 			return 'View';
 		}
 
-		if (appealDetails.appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
+		if (editable) {
 			return 'Issue';
 		}
 	})();
+
+	const link = isIssued
+		? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
+		: addBackLinkQueryToUrl(
+				request,
+				`${currentRoute}/issue-decision/issue-appellant-costs-decision-letter-upload`
+		  );
 
 	return textSummaryListItem({
 		id: 'appellant-costs-decision',
 		text: 'Appellant costs decision',
 		value: isIssued ? 'Issued' : 'Not issued',
-		link: isIssued
-			? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
-			: `${currentRoute}/costs/appellant-decision`,
+		link,
 		actionText,
-		editable: userHasUpdateCasePermission && Boolean(actionText),
+		editable,
 		classes: 'costs-appellant-decision'
 	});
 };

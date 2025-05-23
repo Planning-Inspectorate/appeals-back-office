@@ -30,10 +30,8 @@ const getDecisionTypeValidator = composeMiddleware(
 );
 
 const getOutcomeValidator = composeMiddleware(
-	body('decisions.*.outcome').optional().isString().withMessage(ERROR_MUST_BE_STRING),
 	body('decisions.*.outcome')
-		.optional()
-		.isIn([CASE_OUTCOME_ALLOWED, CASE_OUTCOME_DISMISSED, CASE_OUTCOME_SPLIT_DECISION])
+		.isIn([CASE_OUTCOME_ALLOWED, CASE_OUTCOME_DISMISSED, CASE_OUTCOME_SPLIT_DECISION, null])
 		.withMessage(ERROR_CASE_OUTCOME_MUST_BE_ONE_OF),
 	validationErrorHandler
 );
