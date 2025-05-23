@@ -3,9 +3,14 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { setAppealTimetables } from './timetable.service.js';
 import { mapEditTimetablePage, getAppealTimetableTypes, getIdText } from './timetable.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import {
+	dateISOStringToDisplayDate,
+	dayMonthYearHourMinuteToISOString,
+	setTimeInTimeZone
+} from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getEditTimetable = async (request, response) => {
@@ -145,6 +150,25 @@ export const postAppealTimetables = async (request, response) => {
 	const appealId = appealDetails.appealId;
 	const { appealTimetableId } = appealDetails.appealTimetable;
 
+	const sessionTimetable = session.appealTimetable || {};
+	const originalTimetable = appealDetails.appealTimetable || {};
+
+	//need to set time in timezone with deadline etc
+	const isUnchanged = Object.keys(sessionTimetable).every(
+		(key) =>
+			setTimeInTimeZone(sessionTimetable[key], DEADLINE_HOUR, DEADLINE_MINUTE).toISOString() ===
+			originalTimetable[key]
+	);
+
+	if (isUnchanged) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'timetableDueDateUpdated',
+			appealId
+		});
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	}
+
 	try {
 		const setAppealTimetableResponse = await setAppealTimetables(
 			request.apiClient,
@@ -158,7 +182,7 @@ export const postAppealTimetables = async (request, response) => {
 		}
 
 		addNotificationBannerToSession({
-			session: request.session,
+			session,
 			bannerDefinitionKey: 'timetableDueDateUpdated',
 			appealId
 		});

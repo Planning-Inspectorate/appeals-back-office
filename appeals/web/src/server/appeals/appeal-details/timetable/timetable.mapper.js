@@ -7,12 +7,6 @@ import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-han
  */
 
 /**
- * @typedef {Object} AppealTimetablesMap
- * @property {string | null | undefined} sideNote
- * @property { object } page
- */
-
-/**
  * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate'} AppealTimetableType
  */
 
