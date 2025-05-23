@@ -1,24 +1,27 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { textSummaryListItem } from '#lib/mappers/index.js';
+import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { permissionNames } from '#environment/permissions.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapCostsLpaDecision = ({
-	appealDetails,
-	currentRoute,
-	userHasUpdateCasePermission
-}) => {
+export const mapCostsLpaDecision = ({ appealDetails, session, currentRoute }) => {
+	const editable =
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.EVENT) &&
+		userHasPermission(permissionNames.setCaseOutcome, session);
+
 	const { lpaApplicationFolder, lpaWithdrawalFolder, lpaDecisionFolder } =
 		appealDetails.costs ?? {};
 
 	if (
-		lpaApplicationFolder?.documents?.length === 0 ||
-		(lpaWithdrawalFolder?.documents?.length ?? 0) > 0
+		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.EVENT) ||
+		!lpaApplicationFolder?.documents?.length ||
+		lpaWithdrawalFolder?.documents?.length
 	) {
 		return { id: 'lpa-costs-decision', display: {} };
 	}
 
-	const isIssued = (lpaDecisionFolder?.documents?.length ?? 0) > 0;
+	const isIssued = lpaDecisionFolder?.documents?.length;
 
 	const { id: documentId = '', name: documentName = '' } = lpaDecisionFolder?.documents?.[0] || {};
 
@@ -27,11 +30,9 @@ export const mapCostsLpaDecision = ({
 			return 'View';
 		}
 
-		if (appealDetails.appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
+		if (editable) {
 			return 'Issue';
 		}
-
-		return '';
 	})();
 
 	return textSummaryListItem({
@@ -42,7 +43,7 @@ export const mapCostsLpaDecision = ({
 			? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
 			: `${currentRoute}/costs/lpa-decision`,
 		actionText,
-		editable: userHasUpdateCasePermission && Boolean(actionText),
+		editable,
 		classes: 'costs-lpa-decision'
 	});
 };
