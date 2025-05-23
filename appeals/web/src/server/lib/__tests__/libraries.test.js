@@ -42,6 +42,13 @@ import {
 } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
+import {
+	mapStatusText,
+	mapAppealProcedureTypeToEventName,
+	mapStatusFilterLabel
+} from '#lib/appeal-status.js';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1634,5 +1641,216 @@ describe('url-utilities', () => {
 		it('should return the supplied URL intact, if there is no query string', () => {
 			expect(stripQueryString('/test/url/without-query')).toBe('/test/url/without-query');
 		});
+	});
+});
+
+describe('appeal-status', () => {
+	describe('mapStatusText', () => {
+		const appealTypesNotIncludingHouseholderAndS78 = [
+			APPEAL_TYPE.HOUSEHOLDER,
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+			APPEAL_TYPE.ADVERTISEMENT,
+			APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
+			APPEAL_TYPE.PLANNING_OBLIGATION,
+			APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION,
+			APPEAL_TYPE.CALL_IN_APPLICATION,
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			APPEAL_TYPE.COMMERCIAL
+		];
+
+		for (const appealType of appealTypesNotIncludingHouseholderAndS78) {
+			it(`should return the appealStatus unchanged if the appeal type is anything other than HAS or S78 (${appealType})`, () => {
+				expect(
+					mapStatusText(
+						APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+						appealType,
+						APPEAL_CASE_PROCEDURE.WRITTEN
+					)
+				).toBe(APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER);
+			});
+		}
+
+		const appealStatusesNotIncludingEventStatuses = [
+			APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+			APPEAL_CASE_STATUS.CLOSED,
+			APPEAL_CASE_STATUS.COMPLETE,
+			APPEAL_CASE_STATUS.EVIDENCE,
+			APPEAL_CASE_STATUS.FINAL_COMMENTS,
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			APPEAL_CASE_STATUS.READY_TO_START,
+			APPEAL_CASE_STATUS.STATEMENTS,
+			APPEAL_CASE_STATUS.TRANSFERRED,
+			APPEAL_CASE_STATUS.VALIDATION,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.WITNESSES
+		];
+
+		for (const appealStatus of appealStatusesNotIncludingEventStatuses) {
+			it(`should return the appealStatus unchanged (${appealStatus}) if appealStatus is not an event status`, () => {
+				expect(mapStatusText(appealStatus, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)).toBe(
+					appealStatus
+				);
+			});
+		}
+
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is undefined`, () => {
+			expect(mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, undefined)).toBe(
+				'site_visit_ready_to_set_up'
+			);
+		});
+
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)
+			).toBe('site_visit_ready_to_set_up');
+		});
+
+		it(`should return 'hearing_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'hearing'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.HEARING)
+			).toBe('hearing_ready_to_set_up');
+		});
+
+		it(`should return 'inquiry_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'inquiry'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.INQUIRY)
+			).toBe('inquiry_ready_to_set_up');
+		});
+
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is undefined`, () => {
+			expect(mapStatusText(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_TYPE.S78, undefined)).toBe(
+				'awaiting_site_visit'
+			);
+		});
+
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.WRITTEN
+				)
+			).toBe('awaiting_site_visit');
+		});
+
+		it(`should return 'awaiting_hearing' if appealStatus is 'awaiting_event' and appealProcedureType is 'hearing'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.HEARING
+				)
+			).toBe('awaiting_hearing');
+		});
+
+		it(`should return 'awaiting_inquiry' if appealStatus is 'awaiting_event' and appealProcedureType is 'inquiry'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.INQUIRY
+				)
+			).toBe('awaiting_inquiry');
+		});
+	});
+
+	describe('mapAppealProcedureTypeToEventName', () => {
+		it(`should return 'hearing' if appealProcedureType is 'hearing'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.HEARING)).toBe('hearing');
+		});
+
+		it(`should return 'inquiry' if appealProcedureType is 'inquiry'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.INQUIRY)).toBe('inquiry');
+		});
+
+		it(`should return 'site_visit' if appealProcedureType is 'written'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.WRITTEN)).toBe('site_visit');
+		});
+
+		it(`should return 'site_visit' if appealProcedureType is undefined`, () => {
+			expect(mapAppealProcedureTypeToEventName(undefined)).toBe('site_visit');
+		});
+	});
+
+	describe('mapStatusFilterLabel', () => {
+		const testCases = [
+			{
+				appealStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+				expectedLabel: 'Assign case officer'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				expectedLabel: 'Awaiting event'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				expectedLabel: 'Awaiting transfer'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.CLOSED,
+				expectedLabel: 'Closed'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+				expectedLabel: 'Complete'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.EVENT,
+				expectedLabel: 'Event ready to set up'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+				expectedLabel: 'Evidence'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.INVALID,
+				expectedLabel: 'Invalid'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				expectedLabel: 'Issue decision'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				expectedLabel: 'LPA questionnaire'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+				expectedLabel: 'Ready to start'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				expectedLabel: 'Statements'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.TRANSFERRED,
+				expectedLabel: 'Transferred'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION,
+				expectedLabel: 'Validation'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.WITHDRAWN,
+				expectedLabel: 'Withdrawn'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.WITNESSES,
+				expectedLabel: 'Witnesses'
+			}
+		];
+
+		for (const testCase of testCases) {
+			it(`should return '${testCase.expectedLabel}' if appealStatus is '${testCase.appealStatus}'`, () => {
+				expect(mapStatusFilterLabel(testCase.appealStatus)).toBe(testCase.expectedLabel);
+			});
+		}
 	});
 });
