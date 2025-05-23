@@ -1,21 +1,22 @@
 import { Router as createRouter } from 'express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { postInspectorDecision } from './appeal-decision.controller.js';
+import { postInspectorDecision } from './decision.controller.js';
 import {
 	getOutcomeValidator,
 	getDateValidator,
-	getDocumentValidator
-} from './appeal-decision.validator.js';
+	getDocumentValidator,
+	getDecisionTypeValidator,
+	getDecisionsValidator
+} from './decision.validator.js';
 import { asyncHandler } from '@pins/express';
-import { checkDocumentExistsAndAddToRequest } from '#middleware/document.js';
 
 const router = createRouter();
 
 router.post(
-	'/:appealId/inspector-decision',
+	'/:appealId/decision',
 	/*
-		#swagger.tags = ['Inspector Decision']
-		#swagger.path = '/appeals/{appealId}/inspector-decision'
+		#swagger.tags = ['Decision']
+		#swagger.path = '/appeals/{appealId}/decision'
 		#swagger.description = Closes an appeal by setting the inspector decision
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -25,22 +26,23 @@ router.post(
 		#swagger.requestBody = {
 			in: 'body',
 			description: 'Decision info',
-			schema: { $ref: '#/components/schemas/OldDecisionInfo' },
+			schema: { $ref: '#/components/schemas/DecisionInfo' },
 			required: true
 		}
 		#swagger.responses[201] = {
 			description: 'Gets the decision info or null',
-			schema: { $ref: '#/components/schemas/OldDecisionInfo' }
+			schema: { $ref: '#/components/schemas/DecisionInfo' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
 	checkAppealExistsByIdAndAddToRequest,
+	getDecisionsValidator,
+	getDecisionTypeValidator,
 	getOutcomeValidator,
 	getDateValidator,
 	getDocumentValidator,
-	checkDocumentExistsAndAddToRequest,
 	asyncHandler(postInspectorDecision)
 );
 
-export { router as appealsDecisionRoutes };
+export { router as decisionRoutes };

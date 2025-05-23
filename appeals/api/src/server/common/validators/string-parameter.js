@@ -80,7 +80,7 @@ export const validateRequiredStringParameter = (
 	const chain = body(parameterName);
 
 	if (parentKeyIsOptional) {
-		chain.if(body(parentKeyIsOptional).exists());
+		chain.if(body(parentKeyIsOptional).exists({ values: 'null' }));
 	}
 
 	return chain

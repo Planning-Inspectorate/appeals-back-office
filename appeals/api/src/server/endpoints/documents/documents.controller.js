@@ -11,6 +11,7 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
 import * as documentRepository from '#repositories/document.repository.js';
@@ -75,10 +76,12 @@ const getDocument = async (req, res) => {
  */
 const getDocumentAndVersions = async (req, res) => {
 	const { documentId } = req.params;
+
 	const document = await documentRepository.getDocumentWithAllVersionsById(documentId);
 	if (!document || document.isDeleted) {
 		return res.status(404).send({ errors: { documentId: ERROR_NOT_FOUND } });
 	}
+
 	return res.send(formatDocument(document));
 };
 
@@ -99,9 +102,8 @@ const addDocuments = async (req, res) => {
 					appealId: appeal.id,
 					azureAdUserId: req.get('azureAdUserId'),
 					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-						document.documentName,
-						1,
-						document.redactionStatus
+						DOCUMENT_FOLDER_DISPLAY_LABELS[document.documentType],
+						document.documentName
 					])
 				});
 
@@ -148,29 +150,26 @@ const addDocumentVersion = async (req, res) => {
 	const documentInfo = await service.addVersionToDocument(body, appeal, document);
 	const updatedDocument = documentInfo.documents[0];
 
-	if (updatedDocument) {
+	if (!updatedDocument) {
+		return res.sendStatus(404);
+	}
+
+	(async () => {
 		const auditTrail = await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
 			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-				updatedDocument.documentName,
-				updatedDocument.versionId,
-				updatedDocument.redactionStatus
+				DOCUMENT_FOLDER_DISPLAY_LABELS[updatedDocument.documentType],
+				updatedDocument.documentName
 			])
 		});
+
 		if (auditTrail) {
-			await service.addDocumentAudit(
-				document.guid,
-				updatedDocument.versionId,
-				auditTrail,
-				'Create'
-			);
+			service.addDocumentAudit(document.guid, updatedDocument.versionId, auditTrail, 'Create');
 		}
+	})();
 
-		return res.status(201).send(getStorageInfo(documentInfo.documents));
-	}
-
-	return res.sendStatus(404);
+	return res.status(201).send(getStorageInfo(documentInfo.documents));
 };
 
 /**
@@ -183,21 +182,23 @@ const deleteDocumentVersion = async (req, res) => {
 	const { version } = req.params;
 
 	const documentInfo = await service.deleteDocument(document, Number(version));
+	if (!documentInfo) {
+		return res.sendStatus(404);
+	}
 
-	if (documentInfo) {
+	(async () => {
 		const auditTrail = await createAuditTrail({
 			appealId: document.caseId,
 			azureAdUserId: req.get('azureAdUserId'),
 			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_DELETED, [document.name, version])
 		});
+
 		if (auditTrail) {
-			await service.addDocumentAudit(document.guid, Number(version), auditTrail, 'Delete');
+			service.addDocumentAudit(document.guid, Number(version), auditTrail, 'Delete');
 		}
+	})();
 
-		return res.send(documentInfo);
-	}
-
-	return res.sendStatus(404);
+	return res.send(documentInfo);
 };
 
 /**

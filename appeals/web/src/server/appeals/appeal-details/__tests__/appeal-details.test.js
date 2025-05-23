@@ -1515,6 +1515,103 @@ describe('appeal-details', () => {
 				expect(element).toContain('Download case');
 			});
 		});
+		describe('Status tags', () => {
+			const testCases = [
+				{
+					appealStatus: 'assign_case_officer',
+					statusTagContent: 'Assign case officer',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'validation', statusTagContent: 'Validation', statusTagColour: 'green' },
+				{
+					appealStatus: 'ready_to_start',
+					statusTagContent: 'Ready to start',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'lpa_questionnaire',
+					statusTagContent: 'LPA questionnaire',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'statements', statusTagContent: 'Statements', statusTagColour: 'green' },
+				{
+					appealStatus: 'final_comments',
+					statusTagContent: 'Final comments',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'evidence', statusTagContent: 'Evidence', statusTagColour: 'green' },
+				{
+					appealStatus: 'site_visit_ready_to_set_up',
+					statusTagContent: 'Site visit ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_site_visit',
+					statusTagContent: 'Awaiting site visit',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'hearing_ready_to_set_up',
+					statusTagContent: 'Hearing ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_hearing',
+					statusTagContent: 'Awaiting hearing',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'inquiry_ready_to_set_up',
+					statusTagContent: 'Inquiry ready to set up',
+					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'awaiting_inquiry',
+					statusTagContent: 'Awaiting inquiry',
+					statusTagColour: 'yellow'
+				},
+				{
+					appealStatus: 'issue_determination',
+					statusTagContent: 'Issue decision',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'complete', statusTagContent: 'Complete', statusTagColour: 'blue' },
+				{ appealStatus: 'invalid', statusTagContent: 'Invalid', statusTagColour: 'grey' },
+				{ appealStatus: 'withdrawn', statusTagContent: 'Withdrawn', statusTagColour: 'grey' },
+				{
+					appealStatus: 'awaiting_transfer',
+					statusTagContent: 'Awaiting transfer',
+					statusTagColour: 'green'
+				},
+				{ appealStatus: 'transferred', statusTagContent: 'Transferred', statusTagColour: 'grey' }
+			];
+
+			for (const testCase of testCases) {
+				it(`should render a status tag with the content "${testCase.statusTagContent}" and a ${testCase.statusTagColour} modifier class if appeal status is ${testCase.appealStatus}`, async () => {
+					const appealId = 2;
+
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealStatus: testCase.appealStatus
+						});
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const statusTagHtml = parseHtml(response.text, {
+						rootElement: '#main-content .govuk-tag',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(statusTagHtml).toMatchSnapshot();
+					expect(statusTagHtml).toContain(testCase.statusTagContent);
+					expect(statusTagHtml).toContain(`govuk-tag govuk-tag--${testCase.statusTagColour}`);
+				});
+			}
+		});
 
 		it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
 			const appealId = appealData.appealId.toString();
@@ -1720,12 +1817,13 @@ describe('appeal-details', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
 				rootElement: '.govuk-inset-text'
 			}).innerHTML;
-			expect(insetTextElementHTML).toContain('<p>Appeal completed:');
-			expect(insetTextElementHTML).toContain('<p>Decision:');
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<p><span class="govuk-body">View decision letter</span>'
+				'<li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
 			);
 		});
 
@@ -2956,6 +3054,21 @@ describe('appeal-details', () => {
 						?.innerHTML.split('<br>')
 						.map((line) => line.trim())
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector(
+						'a[data-cy="change-whether-the-address-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address`);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
+						?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/change/address-details`);
 			});
 
 			it('should render the hearing details summary list when hearing is present with no address', async () => {
@@ -3103,6 +3216,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'issue_determination',
+						stateList: [{ key: 'event', completed: true }],
 						decision: {
 							...appealData.decision,
 							outcome: null

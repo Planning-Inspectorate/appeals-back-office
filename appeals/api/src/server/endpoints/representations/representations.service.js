@@ -18,6 +18,8 @@ import {
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import formatDate from '#utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
+import { EventType } from '@pins/event-client';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -196,6 +198,15 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
 	}
 
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
+	}
+
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
 		{
@@ -258,6 +269,15 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
 	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
+	}
+
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
 	}
 
 	const result = await representationRepository.updateRepresentations(

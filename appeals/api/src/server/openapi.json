@@ -171,12 +171,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/DecisionInfo"
+									"$ref": "#/components/schemas/OldDecisionInfo"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/DecisionInfo"
+									"$ref": "#/components/schemas/OldDecisionInfo"
 								}
 							}
 						}
@@ -195,12 +195,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/DecisionInfo"
+								"$ref": "#/components/schemas/OldDecisionInfo"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/DecisionInfo"
+								"$ref": "#/components/schemas/OldDecisionInfo"
 							}
 						}
 					}
@@ -1784,6 +1784,71 @@
 					},
 					"400": {
 						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/decision": {
+			"post": {
+				"tags": ["Decision"],
+				"description": "Closes an appeal by setting the inspector decision",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Gets the decision info or null",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DecisionInfo"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/DecisionInfo"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Decision info",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DecisionInfo"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/DecisionInfo"
+							}
+						}
 					}
 				}
 			}
@@ -6207,6 +6272,38 @@
 			"DecisionInfo": {
 				"type": "object",
 				"properties": {
+					"decisions": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"decisionType": {
+									"type": "string",
+									"example": "inspector-decision"
+								},
+								"outcome": {
+									"type": "string",
+									"example": "allowed"
+								},
+								"documentGuid": {
+									"type": "string",
+									"example": "c957e9d0-1a02-4650-acdc-f9fdd689c210"
+								},
+								"documentDate": {
+									"type": "string",
+									"example": "2024-08-17"
+								}
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "DecisionInfo"
+				}
+			},
+			"OldDecisionInfo": {
+				"type": "object",
+				"properties": {
 					"outcome": {
 						"type": "string",
 						"example": "allowed"
@@ -6221,7 +6318,7 @@
 					}
 				},
 				"xml": {
-					"name": "DecisionInfo"
+					"name": "OldDecisionInfo"
 				}
 			},
 			"InvalidDecisionInfo": {

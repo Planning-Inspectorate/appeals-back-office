@@ -47,7 +47,7 @@ export const patchHearingValidator = composeMiddleware(
 	validateDateParameter({ parameterName: 'hearingStartTime', isRequired: true }),
 	validateDateParameter({ parameterName: 'hearingEndTime' }),
 	body('addressId').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
-	body('address').optional(),
+	body('address').optional({ values: 'null' }),
 	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
 	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
 	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),

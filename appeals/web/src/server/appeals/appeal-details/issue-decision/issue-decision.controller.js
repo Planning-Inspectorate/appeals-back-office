@@ -1,14 +1,14 @@
 import { postInspectorDecision } from './issue-decision.service.js';
 import {
+	appellantCostsDecisionPage,
 	checkAndConfirmPage,
 	issueDecisionPage,
-	mapDecisionOutcome,
-	appellantCostsDecisionPage,
-	lpaCostsDecisionPage
+	lpaCostsDecisionPage,
+	mapDecisionOutcome
 } from './issue-decision.mapper.js';
 import {
-	renderDocumentUpload,
-	postDocumentUpload
+	postDocumentUpload,
+	renderDocumentUpload
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -20,6 +20,11 @@ import { cloneDeep } from 'lodash-es';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { getTodaysISOString } from '#lib/dates.js';
+import {
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR,
+	DECISION_TYPE_LPA_COSTS
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem */
 
@@ -414,10 +419,10 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 /**
  * @param {object} params
  * @param {import('got').Got} params.apiClient
- * @param {{appealId: number|string, folderId: number, letterDate: string, files: FileUploadInfoItem[]  }} params.decision - The decision object.
+ * @param {{decisionType: string, appealId: number|string, folderId: number, letterDate: string, files: FileUploadInfoItem[]  }} params.decision - The decision object.
  * @returns {Promise<*>}
  */
-const postDecision = async ({ apiClient, decision }) => {
+const postDecisionDocument = async ({ apiClient, decision }) => {
 	const { appealId, folderId, ...fileUploadInfo } = decision;
 
 	const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments({
@@ -443,9 +448,11 @@ export const postCheckDecision = async (request, response) => {
 
 	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = session;
 
-	const decisions = [inspectorDecision, appellantCostsDecision, lpaCostsDecision].filter(
-		(decision) => decision?.files?.length
-	);
+	const decisions = [
+		{ ...inspectorDecision, decisionType: DECISION_TYPE_INSPECTOR },
+		{ ...appellantCostsDecision, decisionType: DECISION_TYPE_APPELLANT_COSTS },
+		{ ...lpaCostsDecision, decisionType: DECISION_TYPE_LPA_COSTS }
+	].filter((decision) => decision?.files?.length);
 
 	if (!decisions.length) {
 		return response.status(500).render('app/500.njk');
@@ -455,15 +462,19 @@ export const postCheckDecision = async (request, response) => {
 		return renderCheckDecision(request, response);
 	}
 
-	await Promise.all(decisions.map((decision) => postDecision({ apiClient, decision })));
+	await Promise.all(decisions.map((decision) => postDecisionDocument({ apiClient, decision })));
+	const decisionsToPost = decisions.map((decision) => {
+		const { decisionType, outcome, files } = decision;
+		return {
+			decisionType,
+			documentGuid: files[0].GUID,
+			documentDate: getTodaysISOString(),
+			outcome:
+				decisionType === DECISION_TYPE_INSPECTOR ? mapDecisionOutcome(outcome).toLowerCase() : null
+		};
+	});
 
-	await postInspectorDecision(
-		apiClient,
-		appealId,
-		mapDecisionOutcome(inspectorDecision.outcome).toLowerCase(),
-		inspectorDecision.files[0].GUID,
-		getTodaysISOString()
-	);
+	await postInspectorDecision(apiClient, appealId, decisionsToPost);
 
 	addNotificationBannerToSession({
 		session: request.session,

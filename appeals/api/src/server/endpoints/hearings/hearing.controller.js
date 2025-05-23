@@ -78,15 +78,18 @@ export const rearrangeHearing = async (req, res) => {
 			hearingStartTime,
 			hearingEndTime,
 			addressId,
-			...(address && {
-				address: {
-					addressLine1: address.addressLine1,
-					addressLine2: address.addressLine2,
-					addressTown: address.town,
-					addressCounty: address.county,
-					postcode: address.postcode,
-					addressCountry: address.country
-				}
+			...(address !== undefined && {
+				address:
+					address === null
+						? null
+						: {
+								addressLine1: address.addressLine1,
+								addressLine2: address.addressLine2,
+								addressTown: address.town,
+								addressCounty: address.county,
+								postcode: address.postcode,
+								addressCountry: address.country
+						  }
 			})
 		});
 	} catch (error) {
