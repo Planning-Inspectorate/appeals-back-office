@@ -538,7 +538,13 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyAppellantEmailAddress(rowName, text) {
-		this.basePageElements.summaryListKey().contains(rowName).next().contains(text);
+		this.basePageElements
+			.summaryListKey()
+			.then(($elem) => {
+				return $elem.filter((index, el) => el.innerText.trim() === rowName);
+			})
+			.next()
+			.contains(text);
 	}
 
 	verifyCheckYourAnswerDate(rowName, dateToday) {

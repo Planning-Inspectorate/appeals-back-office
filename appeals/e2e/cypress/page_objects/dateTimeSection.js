@@ -52,6 +52,10 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.validDate, date);
 	}
 
+	enterDecisionLetterDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.decisionLetterDate, date);
+	}
+
 	enterVisitDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.visitDate, date);
 	}
