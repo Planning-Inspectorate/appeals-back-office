@@ -57,6 +57,17 @@ router
 	);
 
 router
+	.route('/issue-appellant-costs-decision-letter-upload')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderIssueAppellantCostsDecisionLetterUpload)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.postIssueAppellantCostsDecisionLetterUpload)
+	);
+
+router
 	.route('/lpa-costs-decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),

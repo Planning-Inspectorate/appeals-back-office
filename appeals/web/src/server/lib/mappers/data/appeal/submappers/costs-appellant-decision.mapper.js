@@ -3,9 +3,10 @@ import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { permissionNames } from '#environment/permissions.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session }) => {
+export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session, request }) => {
 	const editable =
 		isStatePassed(appealDetails, APPEAL_CASE_STATUS.EVENT) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
@@ -36,13 +37,18 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 		}
 	})();
 
+	const link = isIssued
+		? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
+		: addBackLinkQueryToUrl(
+				request,
+				`${currentRoute}/issue-decision/issue-appellant-costs-decision-letter-upload`
+		  );
+
 	return textSummaryListItem({
 		id: 'appellant-costs-decision',
 		text: 'Appellant costs decision',
 		value: isIssued ? 'Issued' : 'Not issued',
-		link: isIssued
-			? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
-			: `${currentRoute}/costs/appellant-decision`,
+		link,
 		actionText,
 		editable,
 		classes: 'costs-appellant-decision'

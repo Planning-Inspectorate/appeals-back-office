@@ -316,6 +316,58 @@ export const renderAppellantCostsDecisionLetterUpload = async (request, response
 	});
 };
 
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postIssueAppellantCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal, session } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404');
+	}
+
+	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
+
+	const nextPageUrl = `${baseUrl(currentAppeal)}/check-your-appellant-costs-decision`;
+
+	await postDocumentUpload({
+		request,
+		response,
+		nextPageUrl,
+		callBack: async () => {
+			storeFileUploadInfo(session, 'appellantCostsDecision');
+		}
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderIssueAppellantCostsDecisionLetterUpload = async (request, response) => {
+	const { currentAppeal } = request;
+
+	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
+
+	restoreFileUploadInfo(request.session, 'appellantCostsDecision');
+
+	await renderDocumentUpload({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl:
+			getBackLinkUrlFromQuery(request) ||
+			`/appeals-service/appeal-details/${request.params.appealId}`,
+		pageHeadingTextOverride: 'Appellant costs decision letter',
+		preHeadingTextOverride: `Appeal ${appealShortReference(
+			currentAppeal.appealReference
+		)} - issue appellant costs decision`,
+		uploadContainerHeadingTextOverride: 'Upload appellant costs decision letter',
+		documentTitle: 'appellant costs decision letter',
+		allowMultipleFiles: false,
+		allowedTypes: ['pdf']
+	});
+};
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
