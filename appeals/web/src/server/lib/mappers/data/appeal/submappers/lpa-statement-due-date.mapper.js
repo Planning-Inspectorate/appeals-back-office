@@ -17,7 +17,7 @@ export const mapLpaStatementDueDate = ({
 		id,
 		text: 'LPA statement due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate),
-		link: `${currentRoute}/appeal-timetables/lpa-statement`,
+		link: `${currentRoute}/timetable/edit`,
 		editable:
 			userHasUpdateCasePermission && !isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS),
 		classes: 'appeal-lpa-statement-due-date'

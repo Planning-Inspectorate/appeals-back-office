@@ -29,7 +29,7 @@ export const postEditTimetable = async (request, response) => {
 
 	session.appealTimetable = {};
 
-	const timeTableTypes = getAppealTimetableTypes(appealDetails.appealType);
+	const timeTableTypes = getAppealTimetableTypes(appealDetails);
 
 	timeTableTypes.forEach((timetableType) => {
 		const idText = getIdText(timetableType);

@@ -15,7 +15,7 @@ export const mapIpCommentsDueDate = ({
 		id,
 		text: 'Interested party comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/ip-comments`,
+		link: `${currentRoute}/timetable/edit`,
 		editable:
 			!appealDetails.documentationSummary.ipComments?.counts?.published &&
 			userHasUpdateCasePermission &&
