@@ -23,7 +23,40 @@ describe('final-comments-due-date.mapper', () => {
 		});
 	});
 
-	it('should display Final Comments due date with Change action link', () => {
+	it('should display Final Comments due date with new Change action link', () => {
+		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.procedureType = 'written';
+		data.appealDetails.appealType = 'Planning appeal';
+		const mappedData = mapFinalCommentDueDate(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-final-comments-due-date'
+								},
+								href: '/test/timetable/edit',
+								text: 'Change',
+								visuallyHiddenText: 'Final comments due'
+							}
+						]
+					},
+					classes: 'appeal-final-comments-due-date',
+					key: {
+						text: 'Final comments due'
+					},
+					value: {
+						text: '10 January 2025'
+					}
+				}
+			},
+			id: 'final-comments-due-date'
+		});
+	});
+
+	it('should display Final Comments due date with old Change action link', () => {
 		data.appealDetails.startedAt = '2025-01-01';
 		const mappedData = mapFinalCommentDueDate(data);
 		expect(mappedData).toEqual({

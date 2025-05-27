@@ -23,7 +23,40 @@ describe('ip-comments-due-date.mapper', () => {
 		});
 	});
 
-	it('should display IP Comments due date with Change action link when appeal has started and 0 published IP comments', () => {
+	it('should display IP Comments due date with new Change action link when appeal has started and 0 published IP comments', () => {
+		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.procedureType = 'written';
+		data.appealDetails.appealType = 'Planning appeal';
+		const mappedData = mapIpCommentsDueDate(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-ip-comments-due-date'
+								},
+								href: '/test/timetable/edit',
+								text: 'Change',
+								visuallyHiddenText: 'Interested party comments due'
+							}
+						]
+					},
+					classes: 'appeal-ip-comments-due-date',
+					key: {
+						text: 'Interested party comments due'
+					},
+					value: {
+						text: '10 January 2025'
+					}
+				}
+			},
+			id: 'ip-comments-due-date'
+		});
+	});
+
+	it('should display IP Comments due date with old Change action link when appeal has started and 0 published IP comments', () => {
 		data.appealDetails.startedAt = '2025-01-01';
 		const mappedData = mapIpCommentsDueDate(data);
 		expect(mappedData).toEqual({
@@ -56,6 +89,9 @@ describe('ip-comments-due-date.mapper', () => {
 
 	it('should display IP Comments due date with Change action link when appeal has started and undefined published IP commentsin documentation summary', () => {
 		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.procedureType = 'written';
+		data.appealDetails.appealType = 'Planning appeal';
+
 		const mappedData = mapIpCommentsDueDate(data);
 		data.appealDetails.documentationSummary.ipComments = {};
 		expect(mappedData).toEqual({
@@ -67,7 +103,7 @@ describe('ip-comments-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-ip-comments-due-date'
 								},
-								href: '/test/appeal-timetables/ip-comments',
+								href: '/test/timetable/edit',
 								text: 'Change',
 								visuallyHiddenText: 'Interested party comments due'
 							}

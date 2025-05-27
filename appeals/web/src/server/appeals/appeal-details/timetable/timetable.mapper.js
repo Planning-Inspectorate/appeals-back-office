@@ -18,19 +18,19 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
  * @returns {PageContent}
  */
 export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = undefined) => {
+	const timeTableTypes = getAppealTimetableTypes(appealDetails);
+
 	/** @type {PageContent} */
 	let pageContent = {
 		title: `Timetable due dates`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-		heading: `Timetable due dates`,
+		heading: timeTableTypes.length > 1 ? `Timetable due dates` : '',
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
 		}
 	};
-
-	const timeTableTypes = getAppealTimetableTypes(appealDetails);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = timeTableTypes.map((timetableType) => {
@@ -147,14 +147,16 @@ export const getAppealTimetableTypes = (appeal) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
-	//TODO: check procedure type equal to written - otherwise redirect to old pages instead.
 	switch (appeal.appealType) {
 		case 'Householder':
 			validAppealTimetableType = ['lpaQuestionnaireDueDate'];
 			break;
 		case 'Planning appeal':
 			validAppealTimetableType = [];
-			if (appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) {
+			if (
+				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
+				appeal.documentationSummary?.lpaQuestionnaire?.status !== 'received'
+			) {
 				validAppealTimetableType.push('lpaQuestionnaireDueDate');
 			}
 			if (

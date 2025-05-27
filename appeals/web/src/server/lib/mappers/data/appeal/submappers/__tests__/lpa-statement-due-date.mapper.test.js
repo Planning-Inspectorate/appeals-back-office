@@ -22,8 +22,43 @@ describe('lpa-statement-due-date.mapper', () => {
 		});
 	});
 
-	it('should display LPA Statement due date with Change action link', () => {
+	it('should display LPA Statement due date with new Change action link', () => {
 		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.procedureType = 'written';
+		data.appealDetails.appealType = 'Planning appeal';
+
+		const mappedData = mapLpaStatementDueDate(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-lpa-statement-due-date'
+								},
+								href: '/test/timetable/edit',
+								text: 'Change',
+								visuallyHiddenText: 'LPA statement due'
+							}
+						]
+					},
+					classes: 'appeal-lpa-statement-due-date',
+					key: {
+						text: 'LPA statement due'
+					},
+					value: {
+						text: '10 January 2025'
+					}
+				}
+			},
+			id: 'lpa-statement-due-date'
+		});
+	});
+
+	it('should display LPA Statement due date with old Change action link', () => {
+		data.appealDetails.startedAt = '2025-01-01';
+
 		const mappedData = mapLpaStatementDueDate(data);
 		expect(mappedData).toEqual({
 			display: {
