@@ -68,7 +68,5 @@ export function generateS78Components(
 		pageComponents[siteDetailsComponentIndex] = appealSiteSummary;
 	}
 
-	console.log('S78 page components', JSON.stringify(pageComponents));
-
 	return pageComponents;
 }
