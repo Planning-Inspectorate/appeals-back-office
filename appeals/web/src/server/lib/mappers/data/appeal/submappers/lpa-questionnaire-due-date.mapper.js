@@ -4,7 +4,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaQuestionnaireDueDate = ({
@@ -25,12 +25,18 @@ export const mapLpaQuestionnaireDueDate = ({
 	) {
 		editable = false;
 	}
+	const useNewTimetableRoute =
+		appealDetails.appealType === 'Householder' ||
+		(appealDetails.appealType === 'Planning appeal' &&
+			appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 
 	return textSummaryListItem({
 		id,
 		text: 'LPA questionnaire due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate),
-		link: `${currentRoute}/timetable/edit`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
 		editable,
 		classes: 'appeal-lpa-questionnaire-due-date'
 	});
