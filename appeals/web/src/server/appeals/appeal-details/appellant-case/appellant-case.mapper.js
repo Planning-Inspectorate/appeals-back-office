@@ -723,7 +723,7 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}
-		case APPEAL_TYPE.PLANNED_LISTED_BUILDING: //TODO: new field mappings and feature flag logic
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
 				return generateS20Components(
 					appealDetails,
