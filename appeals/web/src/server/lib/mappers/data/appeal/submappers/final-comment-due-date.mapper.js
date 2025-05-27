@@ -17,7 +17,7 @@ export const mapFinalCommentDueDate = ({
 		id,
 		text: 'Final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/final-comments`,
+		link: `${currentRoute}/timetable/edit`,
 		editable:
 			userHasUpdateCasePermission &&
 			!isStatePassed(appealDetails, APPEAL_CASE_STATUS.FINAL_COMMENTS),
