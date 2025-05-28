@@ -1137,20 +1137,11 @@ const generateS20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
-	const loanToPreserveListedBuildingRows = Object.values(mappedLPAQData.lpaq)
-		.filter((key) => key.id.startsWith('loan-to-preserve-listed-building-'))
-		.map((key) => key.display.summaryListItem);
-
-	const affectsLoanToPreserveListedBuildingRows = Object.values(mappedLPAQData.lpaq)
-		.filter((key) => key.id.startsWith('affects-loan-to-preserve-listed-building-'))
-		.map((key) => key.display.summaryListItem);
-
 	const rows = [
 		mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
 		mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
-		...loanToPreserveListedBuildingRows,
 		mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
-		...affectsLoanToPreserveListedBuildingRows,
+		mappedLPAQData.lpaq?.grantLoanToPreserve?.display.summaryListItem,
 		mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
 		mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
 		mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
