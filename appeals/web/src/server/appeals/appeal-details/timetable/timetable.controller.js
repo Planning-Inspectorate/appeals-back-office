@@ -153,7 +153,6 @@ export const postAppealTimetables = async (request, response) => {
 	const sessionTimetable = session.appealTimetable || {};
 	const originalTimetable = appealDetails.appealTimetable || {};
 
-	//need to set time in timezone with deadline etc
 	const isUnchanged = Object.keys(sessionTimetable).every(
 		(key) =>
 			setTimeInTimeZone(sessionTimetable[key], DEADLINE_HOUR, DEADLINE_MINUTE).toISOString() ===
@@ -161,11 +160,7 @@ export const postAppealTimetables = async (request, response) => {
 	);
 
 	if (isUnchanged) {
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'timetableDueDateUpdated',
-			appealId
-		});
+		// no success banner since user made no changes
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	}
 
