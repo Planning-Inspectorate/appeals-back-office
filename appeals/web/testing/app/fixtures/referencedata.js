@@ -391,6 +391,11 @@ export const appealDataFullPlanning = {
 	appealType: 'Planning appeal'
 };
 
+export const appealDataListedBuilding = {
+	...appealData,
+	appealType: 'Planning listed building and conservation area appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
@@ -3878,5 +3883,83 @@ export const designatedSiteNames = [
 		id: 0,
 		key: 'custom',
 		name: 'test custom designation'
+	}
+];
+
+export const caseAuditLog = [
+	{
+		azureAdUserId: '00000000-0000-0000-0000-000000000000',
+		details: 'The case has progressed to issue_determination',
+		loggedDate: '2025-05-27T09:55:36.910Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to awaiting_event',
+		loggedDate: '2025-05-27T09:55:30.175Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The site visit was arranged for Thursday 2 October',
+		loggedDate: '2025-05-27T09:55:30.106Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Final comments shared',
+		loggedDate: '2025-05-27T09:55:22.784Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to event',
+		loggedDate: '2025-05-27T09:55:22.781Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'LPA final comments accepted',
+		loggedDate: '2025-05-27T09:55:09.783Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Appellant final comments accepted',
+		loggedDate: '2025-05-27T09:55:05.167Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Statements and IP comments shared',
+		loggedDate: '2025-05-27T09:54:59.262Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to final_comments',
+		loggedDate: '2025-05-27T09:54:59.237Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'LPA questionnaire updated',
+		loggedDate: '2025-05-27T09:52:39.322Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to statements',
+		loggedDate: '2025-05-27T09:52:39.253Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to lpa_questionnaire',
+		loggedDate: '2025-05-27T09:52:30.000Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case timeline was created',
+		loggedDate: '2025-05-27T09:52:29.903Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Case updated',
+		loggedDate: '2025-05-27T09:52:23.680Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to ready_to_start',
+		loggedDate: '2025-05-27T09:52:23.597Z'
 	}
 ];

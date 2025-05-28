@@ -7,12 +7,13 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add, addBusinessDays } from 'date-fns';
+import { add } from 'date-fns';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
+import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -63,9 +64,9 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 /**
  * @param {DBUserAppeal} appeal
  * @param {AppealRelationship[]} linkedAppeals
- * @returns {AppealListResponse}
+ * @returns {Promise<AppealListResponse>}
  */
-const formatMyAppeals = (appeal, linkedAppeals) => ({
+const formatMyAppeals = async (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -76,7 +77,7 @@ const formatMyAppeals = (appeal, linkedAppeals) => ({
 	localPlanningDepartment: appeal.lpa?.name || '',
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 	documentationSummary: formatDocumentationSummary(appeal),
-	dueDate: mapAppealToDueDate(
+	dueDate: await mapAppealToDueDate(
 		appeal,
 		appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
 		appeal.caseExtensionDate
@@ -185,12 +186,12 @@ function formatAppealTimetable(appeal) {
  * @param {DBAppeal | DBUserAppeal} appeal
  * @param {string} appellantCaseStatus
  * @param {Date | null} appellantCaseDueDate
- * @returns { Date | null | undefined }
+ * @returns {Promise<Date | null | undefined>}
  */
-export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDueDate) => {
+export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantCaseDueDate) => {
 	switch (appeal.appealStatus[0].status) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appellantCaseStatus == 'Incomplete' && appellantCaseDueDate) {
+			if (appellantCaseStatus === 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
@@ -208,16 +209,13 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.appealTimetable?.issueDeterminationDate) {
-				return new Date(appeal.appealTimetable?.issueDeterminationDate);
-			}
 			if (appeal.siteVisit) {
-				return addBusinessDays(
+				return await calculateIssueDecisionDeadline(
 					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
-			return addBusinessDays(
+			return await calculateIssueDecisionDeadline(
 				new Date(appeal.caseCreatedDate),
 				approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
 			);

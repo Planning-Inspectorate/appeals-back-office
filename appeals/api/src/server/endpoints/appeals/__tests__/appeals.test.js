@@ -1138,31 +1138,31 @@ describe('mapAppealToDueDate Tests', () => {
 		};
 	});
 
-	test('maps STATE_TARGET_READY_TO_START status', () => {
+	test('maps STATE_TARGET_READY_TO_START status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
+		const dueDate = await mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
 		expect(dueDate).toEqual(new Date('2023-02-01'));
 	});
 
-	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', () => {
+	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFiveDate);
 	});
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', () => {
+	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusTenDate);
 	});
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', () => {
+	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1176,39 +1176,40 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', () => {
+	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
 
 		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFifteenDate);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
-
 		const createdAtPlusFortyBusinessDays = new Date('2023-03-29T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFortyBusinessDays);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
-		const createdAtPlusThirtyBusinessDays = new Date('2023-02-10T00:00:00.000Z');
+		const createdAtPlusThirtyBusinessDays = new Date('2025-07-04T00:00:00.000Z');
+		mockAppeal.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
+
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1220,22 +1221,23 @@ describe('mapAppealToDueDate Tests', () => {
 			}
 		};
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
-
+		mockAppealWithTimetable.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		// dueDate.setDate(dueDate.getDate());
+		expect(dueDate).toEqual(new Date('2025-07-04T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW', () => {
+	test('maps STATE_TARGET_STATEMENT_REVIEW', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
 	});
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', () => {
+	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1250,25 +1252,25 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', () => {
+	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 
 		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusSixtyDate);
 	});
 
-	test('handles STATE_TARGET_AWAITING_SITE_VISIT', () => {
+	test('handles STATE_TARGET_AWAITING_SITE_VISIT', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
 	});
 
@@ -1287,35 +1289,35 @@ describe('mapAppealToDueDate Tests', () => {
 			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
 		});
 
-		test('when final comments due date does not exist', () => {
+		test('when final comments due date does not exist', async () => {
 			// @ts-ignore
-			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.lpaQuestionnaireDueDate);
 		});
 
-		test('when final comments due date does exist', () => {
+		test('when final comments due date does exist', async () => {
 			// @ts-ignore
 			mockAppealWithTimetable.appealTimetable.finalCommentsDueDate = new Date(
 				'2023-03-22T00:00:00.000Z'
 			);
-			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.finalCommentsDueDate);
 		});
 	});
 
-	test('handles STATE_TARGET_COMPLETE', () => {
+	test('handles STATE_TARGET_COMPLETE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toBeNull();
 	});
 
-	test('handles unexpected status (default case)', () => {
+	test('handles unexpected status (default case)', async () => {
 		mockAppeal.appealStatus[0].status = 'unexpected_status';
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toBeUndefined();
 	});
 });

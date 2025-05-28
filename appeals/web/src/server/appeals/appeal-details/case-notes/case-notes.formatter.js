@@ -3,7 +3,7 @@ import {
 	dateISOStringToDisplayTime12hr,
 	getDayFromISODate
 } from '#lib/dates.js';
-import { tryMapUsers } from '#appeals/appeal-details/audit/audit.service.js';
+import { tryMapUsers } from '#appeals/appeal-details/audit/audit.mapper.js';
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 /**
