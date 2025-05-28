@@ -6,7 +6,7 @@
  * @param {MappingRequest} data
  * @returns {LpaQuestionnaire|undefined}
  */
-export const mapLpaQuestionnaire = (data) => {
+export const mapS78LpaQuestionnaire = (data) => {
 	const {
 		appeal: { lpaQuestionnaire }
 	} = data;

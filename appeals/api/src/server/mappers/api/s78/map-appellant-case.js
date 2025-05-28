@@ -2,35 +2,26 @@
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
-import { isValidDevelopmentType } from '#utils/mapping/map-enums.js';
+import { mapS20AppellantCase } from '../s20/map-appellant-case.js';
 
 /**
  *
  * @param {MappingRequest} data
  * @returns {AppellantCase|undefined}
  */
-export const mapAppellantCase = (data) => {
+export const mapS78AppellantCase = (data) => {
 	const {
 		appeal: { appellantCase }
 	} = data;
 
+	const sharedS20Mappers = mapS20AppellantCase(data);
+
 	return {
-		appellantProcedurePreference: appellantCase?.appellantProcedurePreference,
-		appellantProcedurePreferenceDetails: appellantCase?.appellantProcedurePreferenceDetails,
-		appellantProcedurePreferenceDuration: appellantCase?.appellantProcedurePreferenceDuration,
-		appellantProcedurePreferenceWitnessCount:
-			appellantCase?.appellantProcedurePreferenceWitnessCount,
-		planningObligation: {
-			hasObligation: appellantCase?.planningObligation,
-			status: appellantCase?.statusPlanningObligation
-		},
+		...sharedS20Mappers,
 		agriculturalHolding: {
 			isPartOfAgriculturalHolding: appellantCase?.agriculturalHolding,
 			isTenant: appellantCase?.tenantAgriculturalHolding,
 			hasOtherTenants: appellantCase?.otherTenantsAgriculturalHolding
-		},
-		developmentType: isValidDevelopmentType(appellantCase?.developmentType)
-			? appellantCase?.developmentType
-			: null
+		}
 	};
 };
