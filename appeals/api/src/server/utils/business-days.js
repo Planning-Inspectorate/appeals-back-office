@@ -33,7 +33,7 @@ import isFPA from './is-fpa.js';
  * @param {BankHolidayFeedEvents} bankHolidays
  * @returns {number}
  */
-const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => {
+export const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => {
 	return bankHolidays.filter(
 		({ date }) =>
 			(isSameDay(new Date(date), new Date(dateFrom)) ||
@@ -46,7 +46,9 @@ const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => 
  * @param {BankHolidayFeedDivisions} division
  * @returns {Promise<BankHolidayFeedEvents>}
  */
-const fetchBankHolidaysForDivision = async (division = BANK_HOLIDAY_FEED_DIVISION_ENGLAND) => {
+export const fetchBankHolidaysForDivision = async (
+	division = BANK_HOLIDAY_FEED_DIVISION_ENGLAND
+) => {
 	try {
 		const cacheKey = 'bankHolidayFeedJsonCache';
 
@@ -72,7 +74,7 @@ const fetchBankHolidaysForDivision = async (division = BANK_HOLIDAY_FEED_DIVISIO
  * @param {BankHolidayFeedEvents} bankHolidays
  * @returns {{ bankHolidayCount: number, calculatedDate: Date }}
  */
-const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
+export const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
 	const bankHolidayCount = getNumberOfBankHolidaysBetweenDates(dateFrom, dateTo, bankHolidays);
 
 	if (bankHolidayCount) {

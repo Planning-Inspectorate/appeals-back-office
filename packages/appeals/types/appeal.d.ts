@@ -13,6 +13,7 @@ export interface AppealSummary {
 	appealStatus: string;
 	appealSite: Address;
 	appealType: string;
+	procedureType?: string | undefined;
 	localPlanningDepartment: string;
 	dueDate: string;
 	lpaQuestionnaireId?: number | null;

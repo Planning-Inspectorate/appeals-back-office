@@ -571,7 +571,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                             name="appealStatusFilter">
                                 <option value="all">All</option>
                                 <option value="awaiting_transfer">Awaiting transfer</option>
-                                <option value="event">Site visit ready to set up</option>
+                                <option value="event">Event ready to set up</option>
                                 <option value="lpa_questionnaire" selected>LPA questionnaire</option>
                                 <option value="final_comments">Final comments</option>
                             </select>
@@ -696,7 +696,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                             name="appealStatusFilter">
                                 <option value="all">All</option>
                                 <option value="awaiting_transfer">Awaiting transfer</option>
-                                <option value="event">Site visit ready to set up</option>
+                                <option value="event">Event ready to set up</option>
                                 <option value="lpa_questionnaire">LPA questionnaire</option>
                                 <option value="final_comments">Final comments</option>
                             </select>

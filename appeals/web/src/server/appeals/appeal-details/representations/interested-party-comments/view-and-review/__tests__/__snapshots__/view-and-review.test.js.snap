@@ -362,7 +362,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="site-visit-request" name="siteVisitRequested"
+                            <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
                             type="checkbox" value="site-visit">
                             <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
                         </div>
@@ -433,7 +433,7 @@ exports[`interested-party-comments GET /review-comment with data should render r
                 <div class="govuk-form-group">
                     <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="site-visit-request" name="siteVisitRequested"
+                            <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
                             type="checkbox" value="site-visit">
                             <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
                         </div>

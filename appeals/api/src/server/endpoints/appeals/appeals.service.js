@@ -5,6 +5,11 @@ import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import {
+	fetchBankHolidaysForDivision,
+	getNumberOfBankHolidaysBetweenDates
+} from '#utils/business-days.js';
+import { add, addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -48,6 +53,23 @@ export const mapAppealStatuses = (rawStatuses) => {
 		])
 	);
 };
+
+/**
+ * @param {Date} eventDate
+ * @param {number} businessDays
+ * @returns {Promise<Date>}
+ */
+async function calculateIssueDecisionDeadline(eventDate, businessDays) {
+	const deadline = addBusinessDays(eventDate, businessDays);
+	const numberOfBankHolidays = getNumberOfBankHolidaysBetweenDates(
+		eventDate,
+		deadline,
+		await fetchBankHolidaysForDivision()
+	);
+	return add(new Date(deadline), {
+		days: numberOfBankHolidays
+	});
+}
 
 /**
  *
@@ -185,4 +207,4 @@ async function updateCompletedEvents(azureAdUserId) {
 	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));
 }
 
-export { retrieveAppealListData, updateCompletedEvents };
+export { calculateIssueDecisionDeadline, retrieveAppealListData, updateCompletedEvents };

@@ -2,9 +2,8 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { mapStatusText } from '#lib/appeal-status.js';
+import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -58,7 +57,7 @@ export function nationalListPage(
 
 	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
 		(appealStatus) => ({
-			text: appealStatusToStatusText(appealStatus),
+			text: mapStatusFilterLabel(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})
@@ -457,7 +456,11 @@ export function nationalListPage(
 										{
 											type: 'status-tag',
 											parameters: {
-												status: mapStatusText(appeal.appealStatus, appeal.appealType)
+												status: mapStatusText(
+													appeal.appealStatus,
+													appeal.appealType,
+													appeal.procedureType
+												)
 											}
 										}
 									]

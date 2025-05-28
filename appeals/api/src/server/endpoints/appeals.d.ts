@@ -526,6 +526,7 @@ interface AppealListResponse {
 	appealSite: AppealSite;
 	appealStatus: string;
 	appealType?: string;
+	procedureType?: string;
 	createdAt: Date;
 	localPlanningDepartment: string;
 	dueDate: Date | undefined | null;

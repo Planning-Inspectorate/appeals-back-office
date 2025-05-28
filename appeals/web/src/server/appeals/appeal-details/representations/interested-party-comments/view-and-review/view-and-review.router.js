@@ -7,7 +7,10 @@ import {
 	redirectIfCommentIsUnreviewed
 } from './view-and-review.middleware.js';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
-import { validateStatus } from '#appeals/appeal-details/representations/common/validators.js';
+import {
+	validateSiteVisit,
+	validateStatus
+} from '#appeals/appeal-details/representations/common/validators.js';
 import manageDocumentsRouter from '#appeals/appeal-details/representations/document-attachments/manage-documents.router.js';
 import { validateComment } from '#appeals/appeal-details/representations/interested-party-comments/interested-party-comments.middleware.js';
 import addDocumentRouter from '#appeals/appeal-details/representations/document-attachments/add-document.router.js';
@@ -29,7 +32,11 @@ router
 router
 	.route('/review')
 	.get(redirectIfCommentIsReviewed, asyncHandler(controller.renderReviewInterestedPartyComment))
-	.post(validateStatus, asyncHandler(controller.postReviewInterestedPartyComment));
+	.post(
+		validateSiteVisit,
+		validateStatus,
+		asyncHandler(controller.postReviewInterestedPartyComment)
+	);
 
 router.use('/manage-documents', manageDocumentsRouter);
 
