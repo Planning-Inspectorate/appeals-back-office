@@ -12,9 +12,10 @@ exports[`Appeal Timetables should render "Timetable due dates" page for househol
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
-                <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
+                </legend>
+                <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -62,7 +63,9 @@ exports[`Appeal Timetables should render correct "Timetable due dates" page for 
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h1 class="govuk-fieldset__heading"> Final comments due</h1>
+                </legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">

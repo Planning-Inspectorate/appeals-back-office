@@ -25,7 +25,7 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('LPA questionnaire due</legend>');
+		expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
 		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
 		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
 		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
@@ -146,7 +146,7 @@ describe('Appeal Timetables', () => {
 		const element = parseHtml(response.text);
 
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Final comments due</legend>');
+		expect(element.innerHTML).toContain('Final comments due</h1>');
 		expect(element.innerHTML).toContain('name="final-comments-due-date-day');
 		expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
 		expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
