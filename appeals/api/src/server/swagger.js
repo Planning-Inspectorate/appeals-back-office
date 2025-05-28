@@ -1417,6 +1417,19 @@ export const spec = {
 				}
 			}
 		},
+		CancelHearing: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				hearingId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

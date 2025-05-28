@@ -1,10 +1,17 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { getHearingById, postHearing, rearrangeHearing } from './hearing.controller.js';
+import {
+	cancelHearing,
+	getHearingById,
+	postHearing,
+	rearrangeHearing
+} from './hearing.controller.js';
 import {
 	getHearingValidator,
 	patchHearingValidator,
-	postHearingValidator
+	postHearingValidator,
+	deleteHearingParamsValidator,
+	deleteHearingDateValidator
 } from './hearing.validator.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { checkHearingExists } from './hearing.service.js';
@@ -92,6 +99,31 @@ router.patch(
 	checkAppealExistsByIdAndAddToRequest,
 	checkHearingExists,
 	asyncHandler(rearrangeHearing)
+);
+
+router.delete(
+	'/:appealId/hearing/:hearingId',
+	/*
+        #swagger.tags = ['Hearing Details']
+        #swagger.path = '/appeals/{appealId}/hearing/{hearingId}'
+        #swagger.description = 'Cancels a single hearing by id'
+        #swagger.parameters['azureAdUserId'] = {
+            in: 'header',
+            required: true,
+            example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+        }
+        #swagger.responses[200] = {
+            description: 'Cancels a single hearing by id',
+            schema: { $ref: '#/components/schemas/CancelHearing' }
+        }
+        #swagger.responses[400] = {}
+        #swagger.responses[500] = {}
+     */
+	deleteHearingParamsValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	checkHearingExists,
+	deleteHearingDateValidator,
+	asyncHandler(cancelHearing)
 );
 
 export { router as hearingRoutes };

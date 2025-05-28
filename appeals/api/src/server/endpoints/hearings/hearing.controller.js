@@ -1,7 +1,7 @@
 import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { formatHearing } from './hearing.formatter.js';
-import { createHearing, updateHearing } from './hearing.service.js';
+import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -98,4 +98,24 @@ export const rearrangeHearing = async (req, res) => {
 	}
 
 	return res.status(201).send({ appealId, hearingStartTime, hearingEndTime });
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const cancelHearing = async (req, res) => {
+	const {
+		params: { appealId, hearingId }
+	} = req;
+
+	try {
+		await deleteHearing({ hearingId: Number(hearingId) });
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+
+	return res.status(200).send({ appealId, hearingId });
 };

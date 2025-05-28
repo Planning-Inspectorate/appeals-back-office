@@ -115,4 +115,11 @@ const updateHearingById = (id, data) => {
 	});
 };
 
-export default { getHearingById, createHearingById, updateHearingById };
+/**
+ * @param {number} id
+ */
+const deleteHearingById = (id) => {
+	return databaseConnector.hearing.delete({ where: { id } });
+};
+
+export default { getHearingById, createHearingById, updateHearingById, deleteHearingById };

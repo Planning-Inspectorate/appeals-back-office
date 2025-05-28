@@ -886,6 +886,11 @@ type UpdateHearing = {
 	address?: Omit<Schema.Address, 'id'> | null;
 };
 
+type CancelHearing = {
+	appealId?: number;
+	hearingId: number;
+};
+
 type HearingResponse = {
 	appealId: number;
 	hearingId: number;
@@ -980,5 +985,6 @@ export {
 	HearingAddress,
 	CreateHearing,
 	UpdateHearing,
+	CancelHearing,
 	HearingResponse
 };
