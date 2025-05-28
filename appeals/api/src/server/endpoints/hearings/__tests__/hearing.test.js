@@ -18,18 +18,20 @@ describe('hearing routes', () => {
 		postcode: householdAppealData.address.postcode,
 		country: householdAppealData.address.addressCountry
 	};
+	const hearing = {
+		...householdAppealData.hearing,
+		hearingStartTime: new Date('2999-01-01')
+	};
 
 	beforeEach(() => {
 		householdAppeal = JSON.parse(JSON.stringify(householdAppealData));
 		// @ts-ignore
 		databaseConnector.appeal.findUnique.mockResolvedValue({
-			...householdAppeal.hearing,
+			hearing,
 			householdAppeal
 		});
 		// @ts-ignore
-		databaseConnector.hearing.findUnique.mockResolvedValue({
-			...householdAppeal.hearing
-		});
+		databaseConnector.hearing.findUnique.mockResolvedValue({ ...hearing });
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -119,6 +121,7 @@ describe('hearing routes', () => {
 				});
 			});
 		});
+
 		describe('PATCH', () => {
 			test('updates a single hearing with address', async () => {
 				const { hearing } = householdAppeal;
@@ -1546,6 +1549,78 @@ describe('hearing routes', () => {
 					errors: {
 						'address.postcode': 'needs to be a valid and include spaces'
 					}
+				});
+			});
+		});
+
+		describe('DELETE', () => {
+			test('deletes a single hearing', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({ ...householdAppeal, hearing });
+
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/hearing/${hearing.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.hearing.delete).toHaveBeenCalledWith({
+					where: {
+						id: hearing.id
+					}
+				});
+			});
+
+			test('returns an error if appealId is not a number', async () => {
+				const { hearing } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.delete(`/appeals/BUSSIN/hearing/${hearing.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { appealId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if hearingId is not a number', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/hearing/BUSSIN`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { hearingId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if the hearing has already occurred', async () => {
+				const appeal = {
+					...householdAppeal,
+					hearing: {
+						...householdAppeal.hearing,
+						hearingStartTime: new Date('2020-01-01')
+					}
+				};
+				const { hearing } = appeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+				const response = await request
+					.delete(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { hearingStartTime: 'must be in the future' }
 				});
 			});
 		});

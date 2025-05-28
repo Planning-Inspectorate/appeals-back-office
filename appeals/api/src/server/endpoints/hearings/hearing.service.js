@@ -5,6 +5,7 @@ import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateHearing} CreateHearing */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateHearing} UpdateHearing */
+/** @typedef {import('@pins/appeals.api').Appeals.CancelHearing} CancelHearing */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -81,4 +82,17 @@ const updateHearing = async (updateHearingData) => {
 	}
 };
 
-export { checkHearingExists, createHearing, updateHearing };
+/**
+ * @param {CancelHearing} deleteHearingData
+ */
+const deleteHearing = async (deleteHearingData) => {
+	try {
+		const { hearingId } = deleteHearingData;
+
+		await hearingRepository.deleteHearingById(hearingId);
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+export { checkHearingExists, createHearing, updateHearing, deleteHearing };

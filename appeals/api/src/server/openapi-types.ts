@@ -2573,6 +2573,13 @@ export interface HearingEstimateResponse {
 	hearingEstimateId?: number;
 }
 
+export interface CancelHearing {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	hearingId?: number;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;

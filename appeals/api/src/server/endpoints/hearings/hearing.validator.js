@@ -7,6 +7,8 @@ import {
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
+import { dateIsAfterDate } from '#utils/date-comparison.js';
+import { ERROR_MUST_BE_IN_FUTURE } from '@pins/appeals/constants/support.js';
 import {
 	ERROR_INVALID_POSTCODE,
 	ERROR_MUST_BE_NUMBER,
@@ -15,7 +17,7 @@ import {
 	UK_POSTCODE_REGEX
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
+import { body, check } from 'express-validator';
 
 export const getHearingValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -57,5 +59,21 @@ export const patchHearingValidator = composeMiddleware(
 	validateRegex('address.postcode', UK_POSTCODE_REGEX, 'address').withMessage(
 		ERROR_INVALID_POSTCODE
 	),
+	validationErrorHandler
+);
+
+export const deleteHearingParamsValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('hearingId'),
+	validationErrorHandler
+);
+
+export const deleteHearingDateValidator = composeMiddleware(
+	check('hearingStartTime').custom(async (_value, { req }) => {
+		const { hearingStartTime } = req.appeal.hearing;
+		if (!dateIsAfterDate(hearingStartTime, new Date())) {
+			throw new Error(ERROR_MUST_BE_IN_FUTURE);
+		}
+	}),
 	validationErrorHandler
 );

@@ -5034,6 +5034,63 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"tags": ["Hearing Details"],
+				"description": "Cancels a single hearing by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hearingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Cancels a single hearing by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelHearing"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
 			}
 		},
 		"/appeals/{appealId}/hearing": {
@@ -10976,6 +11033,19 @@
 				"type": "object",
 				"properties": {
 					"hearingEstimateId": {
+						"type": "number",
+						"example": 1
+					}
+				}
+			},
+			"CancelHearing": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"hearingId": {
 						"type": "number",
 						"example": 1
 					}
