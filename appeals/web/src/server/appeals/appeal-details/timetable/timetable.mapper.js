@@ -25,7 +25,7 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 		title: `Timetable due dates`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-		heading: timeTableTypes.length > 1 ? `Timetable due dates` : '',
+		heading: timeTableTypes.length > 1 ? `Timetable due dates` : ``,
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
@@ -65,6 +65,7 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 				fieldset: {
 					legend: {
 						text: `${timetableTypeText} due`,
+						isPageHeading: timeTableTypes.length < 2,
 						classes: 'govuk-fieldset__legend--m'
 					}
 				},
