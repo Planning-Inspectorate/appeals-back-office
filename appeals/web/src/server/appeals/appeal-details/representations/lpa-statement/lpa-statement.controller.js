@@ -56,16 +56,19 @@ export const postReviewLpaStatement = async (request, response) => {
 			if (!('acceptLPAStatement' in session)) {
 				session.acceptLPAStatement = {};
 			}
+			if (!(currentAppeal.appealId in session['acceptLPAStatement'])) {
+				session.acceptLPAStatement[currentAppeal.appealId] = {};
+			}
 			if (
 				!currentAppeal.allocationDetails?.level ||
 				!currentAppeal.allocationDetails?.specialisms?.length
 			) {
-				session.acceptLPAStatement.forcedAllocation = true;
+				session.acceptLPAStatement[currentAppeal.appealId].forcedAllocation = true;
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
 				);
 			}
-			delete session.acceptLPAStatement.forcedAllocation;
+			delete session.acceptLPAStatement[currentAppeal.appealId].forcedAllocation;
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
 			);

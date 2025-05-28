@@ -12,12 +12,12 @@ import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documen
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
- * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } }} session
+ * @param {SessionWithAuth & { acceptLPAStatement?: { [key: number]: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } } }} session
  * @returns {PageContent}
  * */
 export const confirmPage = (appealDetails, lpaStatement, specialismData, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const sessionData = session.acceptLPAStatement;
+	const sessionData = session.acceptLPAStatement?.[appealDetails.appealId];
 	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
 
 	const specialisms = (() => {

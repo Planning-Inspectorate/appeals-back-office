@@ -17,7 +17,11 @@ import { acceptRepresentation } from '../../representations.service.js';
 export function renderAllocationCheck(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const pageContent = allocationCheckPage(currentAppeal, 'valid', session.acceptLPAStatement);
+	const pageContent = allocationCheckPage(
+		currentAppeal,
+		'valid',
+		session.acceptLPAStatement?.[currentAppeal.appealId]
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -35,6 +39,7 @@ export function postAllocationCheck(request, response) {
 		errors,
 		params: { appealId },
 		body,
+		currentAppeal,
 		session
 	} = request;
 
@@ -42,9 +47,12 @@ export function postAllocationCheck(request, response) {
 		return renderAllocationCheck(request, response);
 	}
 
-	if (session.acceptLPAStatement && body.allocationLevelAndSpecialisms === 'no') {
-		delete session.acceptLPAStatement.allocationLevel;
-		delete session.acceptLPAStatement.allocationSpecialisms;
+	if (
+		session.acceptLPAStatement[currentAppeal.appealId] &&
+		body.allocationLevelAndSpecialisms === 'no'
+	) {
+		delete session.acceptLPAStatement[currentAppeal.appealId].allocationLevel;
+		delete session.acceptLPAStatement[currentAppeal.appealId].allocationSpecialisms;
 	}
 
 	return response.redirect(
@@ -70,7 +78,7 @@ export async function renderAllocationLevel(request, response) {
 	const pageContent = allocationLevelPage(
 		currentAppeal,
 		allocationLevels,
-		session.acceptLPAStatement,
+		session.acceptLPAStatement?.[currentAppeal.appealId],
 		'valid'
 	);
 
@@ -112,7 +120,7 @@ export async function renderAllocationSpecialisms(request, response) {
 	const pageContent = allocationSpecialismsPage(
 		currentAppeal,
 		specialisms,
-		session.acceptLPAStatement,
+		session.acceptLPAStatement?.[currentAppeal.appealId],
 		'valid'
 	);
 
@@ -170,19 +178,24 @@ export async function postAcceptStatement(request, response) {
 		apiClient,
 		params: { appealId },
 		session,
+		currentAppeal,
 		currentRepresentation
 	} = request;
 
-	if (session.acceptLPAStatement.allocationLevelAndSpecialisms === 'yes') {
-		const specialisms = ensureArray(session.acceptLPAStatement.allocationSpecialisms).map(Number);
+	if (
+		session.acceptLPAStatement?.[currentAppeal.appealId].allocationLevelAndSpecialisms === 'yes'
+	) {
+		const specialisms = ensureArray(
+			session.acceptLPAStatement[currentAppeal.appealId].allocationSpecialisms
+		).map(Number);
 
 		await api.setAllocationDetails(request.apiClient, appealId, {
-			level: session.acceptLPAStatement.allocationLevel,
+			level: session.acceptLPAStatement[currentAppeal.appealId].allocationLevel,
 			specialisms
 		});
 	}
 
-	await acceptRepresentation(apiClient, parseInt(appealId), currentRepresentation.id);
+	await acceptRepresentation(apiClient, parseInt(currentAppeal.appealId), currentRepresentation.id);
 
 	addNotificationBannerToSession({
 		session,
