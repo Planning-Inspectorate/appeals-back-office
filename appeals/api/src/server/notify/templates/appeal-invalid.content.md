@@ -4,7 +4,7 @@
 
 We have reviewed your appeal and it is not valid.
 
-## Why your appeal is not valid
+## Why your appeal is invalid
 {% for reason in reasons %}
 - {{reason}}
 {%- endfor %}
