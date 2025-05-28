@@ -49,7 +49,10 @@ function createDataMap(mappingRequest) {
 
 	//TODO: add maps for specific appeal types for UI
 	switch (appeal.appealType?.key) {
-		case APPEAL_CASE_TYPE.Y:
+		case APPEAL_CASE_TYPE.Y: {
+			const s20 = createMap(apiMappers.apiS20Mappers, mappingRequest);
+			return mergeMaps(caseData, s20);
+		}
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
