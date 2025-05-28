@@ -1,4 +1,5 @@
-import { getAppealAudit, tryMapUsers, mapMessageContent } from './audit.service.js';
+import { getAppealAudit } from './audit.service.js';
+import { tryMapUsers, mapMessageContent } from './audit.mapper.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime24hr } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
