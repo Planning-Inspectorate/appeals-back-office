@@ -128,5 +128,5 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = Object.freeze({
 	[APPEAL_DOCUMENT_TYPE.UNCATEGORISED]: 'Documents',
 	[APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER]: 'Decision letter',
 	[APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE]: 'Main party correspondence',
-	representationAttachments: ''
+	representationAttachments: 'Supporting document'
 });
