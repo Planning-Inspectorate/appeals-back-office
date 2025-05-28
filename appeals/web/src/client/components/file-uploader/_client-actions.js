@@ -374,10 +374,6 @@ const clientActions = (container) => {
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
-		if (container.dataset?.documentStage === 'representation') {
-			return null;
-		}
-
 		const filenamesInFolderBase64String = form?.dataset.filenamesInFolder || '';
 		const filenamesInFolderString = window.atob(filenamesInFolderBase64String);
 		const filenamesInFolderArray =
@@ -385,30 +381,27 @@ const clientActions = (container) => {
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
 		const filenamesInStagedFiles = stagedFiles.files.map((stagedFile) => stagedFile.name);
 
-		if (filenamesInStagedFiles.includes(selectedFile.name)) {
-			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
-		}
-		if (filenamesInFolder.includes(selectedFile.name)) {
-			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
-		}
 		if (selectedFile.name.length > maximumAllowedFileNameLength) {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
-		const originalFileExtension = container.dataset.documentOriginalFileName?.split('.').pop();
-		if (originalFileExtension && selectedFile.name.split('.').pop() !== originalFileExtension) {
-			return {
-				message: 'DIFFERENT_FILE_EXTENSION',
-				metadata: { fileExtension: originalFileExtension.toUpperCase() }
-			};
-		}
+
 		if (!allowedMimeTypes.includes(selectedFile.type)) {
 			return {
 				message: 'DIFFERENT_FILE_EXTENSION',
 				metadata: { fileExtension: container.dataset.formattedAllowedTypes }
 			};
 		}
+
 		if (selectedFile.size > MAX_FILE_SIZE) {
 			return { message: 'SIZE_SINGLE_FILE' };
+		}
+
+		if (container.dataset?.documentStage === 'representation') {
+			return null;
+		}
+
+		if ([...filenamesInStagedFiles, ...filenamesInFolder].includes(selectedFile.name)) {
+			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
 		}
 
 		return null;
