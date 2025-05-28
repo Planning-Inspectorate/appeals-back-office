@@ -4,7 +4,6 @@ import { userHasPermission } from '#lib/mappers/index.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 import { submaps as s20Submaps } from './s20.js';
-import { generateLoanToPreserveListedBuildingSubMaps } from './submappers/map-loan-to-preserve-listed-building.js';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth & Express.Request["session"]} SessionWithAuth
@@ -58,15 +57,6 @@ export function initialiseAndMapLPAQData(
 	const mappedData = { lpaq: {} };
 
 	const submappers = submaps[appealDetails.appealType];
-
-	if (appealDetails.appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING) {
-		const loanToPreserveListedBuildingsSubmaps = generateLoanToPreserveListedBuildingSubMaps({
-			lpaQuestionnaireData,
-			currentRoute,
-			userHasUpdateCase
-		});
-		Object.assign(submappers, loanToPreserveListedBuildingsSubmaps);
-	}
 
 	Object.entries(submappers).forEach(([key, submapper]) => {
 		mappedData.lpaq[key] = submapper({
