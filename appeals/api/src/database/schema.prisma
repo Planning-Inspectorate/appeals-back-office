@@ -451,6 +451,7 @@ model LPAQuestionnaire {
 
   //S20 fields
   historicEnglandConsultation Boolean?
+  grantLoanPreserve           Boolean?
 
   @@index([appealId])
   @@index([isGreenBelt])
