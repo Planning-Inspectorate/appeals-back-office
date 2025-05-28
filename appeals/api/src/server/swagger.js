@@ -619,7 +619,8 @@ export const spec = {
 				outcome: 'Incomplete',
 				incompleteReasons: ['Documents or information are missing', 'Policies are missing', 'Other']
 			},
-			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site'
+			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site',
+			grantLoanPreserve: true
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',
@@ -679,7 +680,8 @@ export const spec = {
 			scheduleType: 1,
 			sensitiveAreaDetails: 'The area is liable to flooding',
 			validationOutcome: 'incomplete',
-			isGreenBelt: true
+			isGreenBelt: true,
+			grantLoanPreserve: true
 		},
 		UpdateLPAQuestionnaireResponse: {},
 		AllAppellantCaseIncompleteReasonsResponse: [

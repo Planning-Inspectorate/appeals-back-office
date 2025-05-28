@@ -9507,6 +9507,10 @@
 					"reasonForNeighbourVisits": {
 						"type": "string",
 						"example": "The inspector needs to access the neighbouring site"
+					},
+					"grantLoanPreserve": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -9736,6 +9740,10 @@
 						"example": "incomplete"
 					},
 					"isGreenBelt": {
+						"type": "boolean",
+						"example": true
+					},
+					"grantLoanPreserve": {
 						"type": "boolean",
 						"example": true
 					}
@@ -17928,6 +17936,10 @@
 					},
 					"reasonForNeighbourVisits": {
 						"type": "string",
+						"nullable": true
+					},
+					"grantLoanPreserve": {
+						"type": "boolean",
 						"nullable": true
 					},
 					"designatedSiteNames": {
@@ -32062,6 +32074,10 @@
 					},
 					"reasonForNeighbourVisits": {
 						"type": "string",
+						"nullable": true
+					},
+					"grantLoanPreserve": {
+						"type": "boolean",
 						"nullable": true
 					},
 					"designatedSiteNames": {
